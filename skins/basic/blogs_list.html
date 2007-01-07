@@ -1,0 +1,22 @@
+<h2>My Blogs</h2>
+
+<table class="blog_list" id="my_blog_list">
+<tr>
+	<th></th>
+	<th>Post Title</th>
+	<th>Date</th>
+	<th></th>
+</tr>
+<loop name="my_blogs">
+<tr>
+	<td class="links_edit"><a href="blogs_addedit.php?post_id={my_blogs.post_id}&o={o}&r={r}&ob={ob}&od={od}">Edit</a></td>
+	<td class="title">{my_blogs.title}</td>
+	<td class="date">{my_blogs.date_posted}</td>
+	<td class="links_other"><a href="blog_read.php?post_id={my_blogs.post_id}&o={o}&r={r}&ob={ob}&od={od}">View</a> | <a href="processors/blog_delete.php?post_id={my_blogs.post_id}&o={o}&r={r}&ob={ob}&od={od}">Delete</a></td>
+</tr>
+<noloop name="my_blogs">
+<tr>
+	<td colspan="4">You haven't posted a blog yet. Add one now - <a href="blogs_addedit.php">post a blog</a>.</td>
+</noloop name="my_blogs">
+</loop name="my_blogs">
+</table>

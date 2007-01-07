@@ -1,0 +1,8 @@
+DirectoryIndex index.php
+Options -Indexes
+php_flag session.use_cookies on
+php_flag register_globals off
+php_flag session.use_trans_sid off
+php_value include_path "."
+php_value error_reporting 2047
+php_flag display_errors on

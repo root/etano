@@ -1,0 +1,91 @@
+<script type="text/javascript" src="js/join.js.php?p={page}"></script>
+
+<form action="processors/join.php" method="post" id="join_form" onsubmit="return(check_form(this))">
+<input type="hidden" name="page" value="{page}" />
+<fieldset id="join_fs_page{page}">
+	<legend>Page {page}</legend>
+	<opt name="page1">
+	<div class="clear"></div>
+	<div class="new_row">
+		<div class="label">Choose a Username:</div>
+		<div class="wrapper">
+			<div class="field {my_values.error_user}"><input type="text" name="user" id="user" value="{my_values.user}" class="text" tabindex="1" /></div>
+			<div class="comment"><input type="button" value="Check" onclick="req_check_username()" /></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="new_row">
+		<div class="label">Choose a Password:</div>
+		<div class="wrapper">
+			<div class="field {my_values.error_pass}"><input type="password" name="pass" class="text" tabindex="2" /></div>
+			<div class="comment"> </div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="new_row">
+		<div class="label">Email:</div>
+		<div class="wrapper">
+			<div class="field {my_values.error_email}"><input type="text" name="email" id="email" value="{my_values.email}" class="text" tabindex="3" /></div>
+			<div class="comment"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="new_row">
+		<div class="label">Re-enter Email:</div>
+		<div class="wrapper">
+			<div class="field {my_values.error_email}"><input type="text" name="email2" id="email2" value="{my_values.email2}" class="text" tabindex="4" /></div>
+			<div class="comment">This is needed to make sure you receive the activation email</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	</opt name="page1">
+
+	<loop name="my_rows">
+	<div class="new_row {my_rows.class}" id="row_{my_rows.dbfield}">
+		<div class="label"><opt name="my_rows.required"><span class="required">*</span></opt name="my_rows.required"> {my_rows.label}</div>
+		<div class="wrapper">
+			<div class="field {my_rows.class_error}">{my_rows.field}</div>
+			<div class="comment">{my_rows.help_text}</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	</loop name="my_rows">
+
+	<opt name="page1">
+	<div class="new_row" id="reg_verif">
+		<div class="label">Verify registration:</div>
+		<div class="wrapper">
+			<div class="field"><img src="show_captcha.php?{rand}" /></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="new_row">
+		<div class="label">&nbsp;</div>
+		<div class="wrapper">
+			<div class="{my_values.error_captcha}"><input type="text" name="captcha" size="4" tabindex="50" /> Enter the characters from above.</div>
+			<div class="comment"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="new_row">
+		<div class="label">&nbsp;</div>
+		<div class="wrapper">
+			<div class="{my_values.error_agree}"><input type="checkbox" name="agree" id="agree" value="1" {my_values.agree} tabindex="51" /> I agree to {tplvars.sitename}'s <a target="_blank" href="tos.php">terms of services</a>.</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	</opt name="page1">
+
+	<div class="new_row">
+		<div class="label">&nbsp;</div>
+		<div class="wrapper">
+			<div><input type="submit" value="Sign Up" id="btn_signup" tabindex="52" /></div>
+			<div class="comment"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</fieldset>
+</form>
+<script type="text/javascript">
+	document.getElementById('join_form').elements[2].focus();
+</script>

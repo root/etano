@@ -1,0 +1,55 @@
+<h1>Manage the profile fields</h1>
+
+<div class="content_submenu">
+	<span>Go to:</span>
+	<ul>
+		<li><a href="profile_fields.php">Profile Fields</a></li>
+		<li><a href="profile_categories.php">Profile Categories</a></li>
+	</ul>
+</div>
+
+<div class="hint"><strong>Add, edit, remove the fields available in member profiles:</strong></div>
+<div id="pager_holder_top">{pager1}</div>
+<table cellspacing="0" id="pfields_list" class="results_table">
+<tr>
+	<th width="38"></th>
+	<th>Label</th>
+	<th>Html Type</th>
+	<th>Searchable?</th>
+	<th>At Registration?</th>
+	<th>Required?</th>
+	<th>Category</th>
+	<th>Accepted<br />Values</th>
+	<th>Order</th>
+</tr>
+<loop name="profile_fields">
+<tr class="result_item {profile_fields.myclass}" align="center">
+	<td><a href="processors/profile_fields_delete.php?pfield_id={profile_fields.pfield_id}&amp;o={o}&amp;r={r}" onclick="return(confirm('Are you sure you want to remove this field?'))" title="Delete field"><img src="skin/images/del.gif" alt="delete" /></a> | <a href="profile_fields_addedit.php?pfield_id={profile_fields.pfield_id}&amp;o={o}&amp;r={r}"><img src="skin/images/edit.gif" alt="edit" /></a></td>
+	<td>{profile_fields.label}</td>
+	<td>{profile_fields.html_type}</td>
+	<td>{profile_fields.searchable}</td>
+	<td>{profile_fields.at_registration}</td>
+	<td>{profile_fields.required}</td>
+	<td>{profile_fields.fk_pcat_id}</td>
+	<td>{profile_fields.accepted_values}</td>
+	<td><a href="processors/profile_fields_sort.php?pfield_id={profile_fields.pfield_id}&amp;move=d&amp;o={o}&amp;r={r}" title="move down"><img src="skin/images/down.gif" alt="move down" /></a> <a href="processors/profile_fields_sort.php?pfield_id={profile_fields.pfield_id}&amp;move=u&amp;o={o}&amp;r={r}" title="move up"><img src="skin/images/up.gif" alt="move up" /></a></td>
+</tr>
+<noloop name="profile_fields">
+<tr>
+	<td colspan="10" class="no_result_item">No fields found!</td>
+</tr>
+</noloop name="profile_fields">
+</loop name="profile_fields">
+</table>
+<div id="pager_holder_btm">{pager2}</div>
+<div id="bottom_links">
+	Add new field
+	<form action="profile_fields_addedit.php" method="get">
+	<input type="hidden" name="o" value="{o}" />
+	<input type="hidden" name="r" value="{r}" />
+	<select name="html_type">
+	{html_type}
+	</select>
+	<input type="submit" class="button" value="add" />
+	</form>
+</div>

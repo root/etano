@@ -1,0 +1,20 @@
+<div class="menu_widget">
+	<h3>Contact Details</h3>
+	<div class="content">
+		<opt name="mail.from_id"><a href="profile.php?uid={mail.from_id}"></opt name="mail.from_id"><img id="sender_photo" class="user_photo" src="{tplvars.relative_path}media/pics/t1/{mail.photo}" /><opt name="mail.from_id"></a></opt name="mail.from_id">
+		<p><opt name="mail.from_id"><a href="profile.php?uid={mail.from_id}"></opt name="mail.from_id">{mail._user_from}<opt name="mail.from_id"></a></opt name="mail.from_id"></p>
+	</div>
+</div>
+
+<div class="menu_widget">
+	<h3>Your Folders</h3>
+	<div class="content">
+		<ul id="user_folders">
+		<li><a href="inbox.php">INBOX</a></li>
+		<loop name="loopfolders">
+		<li><a href="inbox.php?fid={loopfolders.folder_id}">{loopfolders.folder}</a></li>
+		</loop name="loopfolders">
+		</ul>
+		<a class="link_add" href="folders.php">Add new</a>
+	</div>
+</div>

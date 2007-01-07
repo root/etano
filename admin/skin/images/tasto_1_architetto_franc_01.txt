@@ -1,0 +1,4 @@
+Title:    Tasto 1
+Author:   Architetto Francesco Rollandin
+License:  http://web.resource.org/cc/PublicDomain
+Keywords: unsorted

@@ -1,0 +1,26 @@
+<script type="text/javascript" src="js/message_read.js"></script>
+
+<div id="message_read">
+	<h2>Read a message</h2>
+	<form action="processors/message_proxy.php" method="post" id="mread_form">
+	<input type="hidden" name="act" value="" />
+	<input type="hidden" name="mail_id" value="{mail.mail_id}" />
+	<p id="from"><label>From:</label> <span><opt name="mail.from_id"><a href="profile.php?uid={mail.from_id}"></opt name="mail.from_id">{mail._user_from}<opt name="mail.from_id"></a></opt name="mail.from_id"></span></p>
+	<p id="date"><label>Sent on:</label> <span>{mail.date_sent}</span></p>
+	<p id="subject"><label>Subject:</label> <span>{mail.subject}</span></p>
+	<ul id="actions">
+		<li><input type="button" value="Reply" onclick="send_form('reply')" /></li>
+		<li><input type="button" value="Delete" onclick="send_form('del')" /></li>
+		<li><input type="button" value="Spam" onclick="send_form('spam')" /></li>
+		<opt name="folder_options">
+		<li>Move to <select name="folder_id" id="folder_id">{folder_options}</select> <input type="button" value="Move" onclick="send_form('move')" /></li>
+		</opt name="folder_options">
+	</ul>
+	<div id="message_body">
+		{mail.message_body}
+	</div>
+
+	<div id="bottom_links"><a class="link_back" href="inbox.php?o={o}&r={r}&ob={ob}&od={od}">Back to inbox</a></div>
+
+	</form>
+</div>

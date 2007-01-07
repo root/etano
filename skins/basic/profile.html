@@ -1,0 +1,9 @@
+<h2>{profile.user}</h2>
+
+<div id="profile_pic">
+	<opt name="profile.photo"><a href="javascript:;" onclick="popWin('popup_photo_view.php?uid={profile.user_id}&main=1','photo',{tplvars.pic_width},{tplvars.pic_width},1)"><img class="user_photo" src="media/pics/t1/{profile.photo}" /></a></opt name="profile.photo">
+	<opt name="!profile.photo"><img class="user_photo" src="media/pics/t1/no_photo.gif" /></opt name="!profile.photo">
+</div>
+<loop name="categs">
+	{categs.content}
+</loop name="categs">

@@ -1,0 +1,27 @@
+<script type="text/javascript" src="js/member_search.js"></script>
+
+<div id="member_search">
+	<h2>Search Results</h2>
+
+	<loop name="profile">
+	<div class="member_details">
+		<a class="link_bare" href="profile.php?uid={profile.fk_user_id}&search={search_md5}&amp;o={o}&amp;r={r}"><img class="user_photo" src="{tplvars.relative_path}media/pics/t1/{profile._photo}" /></a>
+		<p>{profile._user} (<opt name="profile.pending"><span class="alert_ppending">Needs your approval</span></opt name="profile.pending"><opt name="profile.need_edit"><span class="alert_pedit">Needs editing</span></opt name="profile.need_edit"><opt name="profile.approved"><span class="alert_papproved">Approved</span></opt name="profile.approved">)</p>
+		<p>{profile.field_46_label} {profile.field_46}</p>
+		<p>{profile.field_47_label} {profile.field_47}</p>
+		<p>{profile.field_48_label} {profile.field_48}</p>
+		<p>{profile.field_50_label} {profile.field_50}</p>
+		<div class="actions">
+			<ul>
+			<li><a href="profile.php?uid={profile.fk_user_id}&search={search_md5}&amp;o={o}&amp;r={r}">View</a></li>
+			</ul>
+		</div>
+	</div>
+	<noloop name="profile">
+	<div class="member_details">
+	No members found meeting your search criteria.
+	</div>
+	</noloop name="profile">
+	</loop name="profile">
+	{pager2}
+</div>

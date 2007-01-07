@@ -1,0 +1,64 @@
+<script type="text/javascript" src="js/auto_subscriptions_addedit.js"></script>
+
+<h1>Auto Subscription Assignment</h1>
+
+<div class="hint">Please enter the auto subscription info:</div>
+
+<form action="processors/auto_subscriptions_addedit.php" method="post" id="auto_subscriptions_addedit" onsubmit="return(check_form(this))">
+<input type="hidden" name="asubscr_id" value="{auto_subscriptions.asubscr_id}" />
+<table id="asubscr_addedit" class="form_table">
+<tr>
+	<td class="label"><label>On:</label></td>
+	<td class="field">
+		<table>
+		<tr>
+			<td>Join</td>
+		</tr>
+		</table>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="fk_subscr_id">Assign Subscription:</label></td>
+	<td class="field {auto_subscriptions.error_fk_subscr_id}">
+		<select name="fk_subscr_id" id="fk_subscr_id" tabindex="1">
+		{auto_subscriptions.fk_subscr_id}
+		</select>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label>To Members:</label></td>
+	<td class="field">
+		<table>
+		<tr>
+			<td><input type="radio" name="to_members" id="to_members_1" value="1" tabindex="2" {auto_subscriptions.to_members_1} /> <label for="to_members_1">All</a></td>
+		</tr>
+		<tr>
+			<td>
+				<input type="radio" name="to_members" id="to_members_2" value="2" tabindex="3" {auto_subscriptions.to_members_2} />
+				having field
+				<select name="dbfield" id="dbfield" tabindex="4" onchange="req_field_change(this.value)">
+				<option value=""></option>
+				{auto_subscriptions.dbfield}
+				</select> =
+				<select name="field_value" id="field_value" tabindex="5">
+				{auto_subscriptions.field_value}
+				</select>
+			</td>
+		</tr>
+		</table>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" id="btn_save" tabindex="9" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+<div id="bottom_links"><a class="back" href="auto_subscriptions.php">Back to list</a></div>
+<script type="text/javascript">
+	document.getElementById('fk_subscr_id').focus();
+</script>

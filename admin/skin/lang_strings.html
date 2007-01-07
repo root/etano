@@ -1,0 +1,37 @@
+<h1>Language strings</h1>
+
+<div class="hint"><strong>Change the language strings for the '{skin}' skin:</strong></div>
+
+<form action="processors/lang_strings.php" id="langstrings_form" method="post">
+<input type="hidden" name="skin" value="{skin}" />
+<table id="translate_field" class="results_table">
+<tr>
+	<th width="3%">Key</th>
+	<th>String</th>
+	<th>Description</th>
+</tr>
+<loop name="lang_strings">
+<tr>
+	<td align="center">{lang_strings.lk_id}</td>
+	<td>
+		<opt name="lang_strings.tf">
+			<input style="width:95%" type="text" name="lang_strings[{lang_strings.lk_id}]" id="lang_strings_{lang_strings.lk_id}" size="50" value="{lang_strings.lang_value}" />
+		</opt name="lang_strings.tf">
+		<opt name="!lang_strings.tf">
+			<textarea style="width:95%" name="lang_strings[{lang_strings.lk_id}]" id="lang_strings_{lang_strings.lk_id}" cols="2" rows="2">{lang_strings.lang_value}</textarea>
+		</opt name="!lang_strings.tf">
+	</td>
+	<td> {lang_strings.lk_diz}</td>
+</tr>
+</loop name="lang_strings">
+<tr>
+	<td></td>
+	<td><input type="submit" value="Save" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+<div id="bottom_links"><a class="back" href="site_skins.php">Back to skins</a></div>
+<script type="text/javascript">
+	document.getElementById('langstrings_form').elements[1].focus();
+</script>

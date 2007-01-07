@@ -1,0 +1,45 @@
+<script type="text/javascript" src="js/countries_addedit.js"></script>
+
+<h1>Country info</h1>
+
+<div class="hint">Please enter the country info:</div>
+
+<form action="processors/loc_countries_addedit.php" method="post" id="loc_countries_addedit" onsubmit="return(check_form(this))">
+<input type="hidden" name="country_id" value="{countries.country_id}" />
+<input type="hidden" name="o" value="{o}" />
+<input type="hidden" name="r" value="{r}" />
+<table id="countries_addedit" class="form_table">
+<tr>
+	<td class="label"><label for="country">Country:</label></td>
+	<td class="field {countries.error_country}">
+		<input class="text" type="text" name="country" id="country" value="{countries.country}" size="40" tabindex="1" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="iso3166">ISO3166 code:</label></td>
+	<td class="field {countries.error_iso3166}">
+		<input class="text" type="text" name="iso3166" id="iso3166" value="{countries.iso3166}" size="2" maxlength="2" tabindex="2" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="prefered_input">Prefered input:</label></td>
+	<td class="field {countries.error_prefered_input}">
+		<select name="prefered_input" id="prefered_input" tabindex="3">
+		{countries.prefered_input}
+		</select>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" id="btn_save" tabindex="4" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+<div id="bottom_links"><a class="back" href="loc_countries.php?o={o}&amp;r={r}">Back to list</a></div>
+<script type="text/javascript">
+	document.getElementById('country').focus();
+</script>

@@ -1,0 +1,32 @@
+<script type="text/javascript" src="js/blogs_addedit.js"></script>
+
+<div id="blogs_addedit">
+	<form action="processors/blogs_addedit.php" method="post" id="blog_form">
+	<input type="hidden" name="post_id" value="{blog_posts.post_id}" />
+	<input type="hidden" name="item_type" value="1" />
+	<input type="hidden" name="o" value="{o}" />
+	<input type="hidden" name="r" value="{r}" />
+	<input type="hidden" name="ob" value="{ob}" />
+	<input type="hidden" name="od" value="{od}" />
+	<div class="rich_ta_wrapper" id="blog_content">
+		<label for="title">Title:</label>
+		<input class="text" type="text" name="title" id="title" value="{blog_posts.title}" tabindex="1" />
+		<p class="bb_tools">
+			<a href="javascript:;" onclick="add_bbcode('[b]','[/b]',document.getElementById('post_content'))"><img src="{tplvars.tplrelpath}/images/rich_bold.gif" /></a>
+			<a href="javascript:;" onclick="add_bbcode('[u]','[/u]',document.getElementById('post_content'))"><img src="{tplvars.tplrelpath}/images/rich_underline.gif" /></a>
+			<a href="javascript:;" onclick="add_bbcode('[url]','[/url]',document.getElementById('post_content'))"><img src="{tplvars.tplrelpath}/images/rich_link.gif" /></a>
+			<a href="javascript:;" onclick="add_bbcode('[quote]','[/quote]',document.getElementById('post_content'))"><img src="{tplvars.tplrelpath}/images/rich_quote.gif" /></a>
+		</p>
+		<textarea name="post_content" id="post_content" tabindex="2">{blog_posts.post_content}</textarea>
+		<input class="button" type="submit" value="Post" />
+		<p class="post_options">
+			<input type="checkbox" name="allow_comments" id="allow_comments" value="1" {blog_posts.allow_comments} />
+			<label for="allow_comments">Allow comments for this post?</label>
+		</p>
+	</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	document.getElementById('blog_form').elements[6].focus();
+</script>
