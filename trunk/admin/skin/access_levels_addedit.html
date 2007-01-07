@@ -1,0 +1,28 @@
+<script type="text/javascript" src="js/access_levels_addedit.js"></script>
+
+<h1>Add / Edit Access Levels</h1>
+
+<div class="hint">Please enter the level details:</div>
+<form action="processors/access_levels_addedit.php" method="post" id="access_levels_form" onsubmit="return(check_form(this))">
+<input type="hidden" name="level_id" value="{access_levels.level_id}" />
+<table id="access_levels_table" class="form_table">
+<tr>
+	<td class="label"><label for="level_code">Level Code:</label></td>
+	<td class="field {access_levels.error_level_code}"><input type="text" name="level_code" id="level_code" value="{access_levels.level_code}" tabindex="1" /></td>
+	<td class="comment">A short code to identify the level. It is better to avoid spaces in the code.</td>
+</tr>
+<tr>
+	<td class="label"><label for="level_diz">Description:</label></td>
+	<td colspan="2" class="field {access_levels.error_level_diz}"><input type="text" name="level_diz" id="level_diz" value="{access_levels.level_diz}" tabindex="2" size="50" /></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+<div id="bottom_links"><a class="back" href="access_levels.php">Back to list</a></div>
+<script type="text/javascript">
+	document.getElementById('level_code').focus();
+</script>

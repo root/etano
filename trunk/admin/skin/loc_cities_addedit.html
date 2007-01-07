@@ -1,0 +1,54 @@
+<script type="text/javascript" src="js/cities_addedit.js"></script>
+
+<h1>State info</h1>
+
+<div class="hint">Please enter the state info:</div>
+
+<form action="processors/loc_cities_addedit.php" method="post" id="loc_cities_addedit" onsubmit="return(check_form(this))">
+<input type="hidden" name="city_id" value="{city.city_id}" />
+<input type="hidden" name="fk_state_id" value="{city.fk_state_id}" />
+<input type="hidden" name="fk_country_id" value="{city.fk_country_id}" />
+<input type="hidden" name="o" value="{o}" />
+<input type="hidden" name="r" value="{r}" />
+<input type="hidden" name="so" value="{so}" />
+<input type="hidden" name="sr" value="{sr}" />
+<input type="hidden" name="co" value="{co}" />
+<input type="hidden" name="cr" value="{cr}" />
+<table id="cities_addedit" class="form_table">
+<tr>
+	<td class="label">State:</td>
+	<td class="field">{city.country} / {city.state}</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="city">City:</label></td>
+	<td class="field {city.error_city}">
+		<input class="text" type="text" name="city" id="city" value="{city.city}" size="40" tabindex="1" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="latitude">Latitude:</label></td>
+	<td class="field {city.error_latitude}">
+		<input class="text" type="text" name="latitude" id="latitude" value="{city.latitude}" tabindex="2" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="longitude">Longitude:</label></td>
+	<td class="field {city.error_longitude}">
+		<input class="text" type="text" name="longitude" id="longitude" value="{city.longitude}" tabindex="3" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" id="btn_save" tabindex="4" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+<div id="bottom_links"><a class="back" href="loc_cities.php?state_id={city.fk_state_id}&amp;country_id={city.fk_country_id}&amp;o={o}&amp;r={r}&amp;so={so}&amp;sr={sr}&amp;co={co}&amp;cr={cr}">Back to cities list</a></div>
+<script type="text/javascript">
+	document.getElementById('city').focus();
+</script>

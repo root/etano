@@ -1,0 +1,37 @@
+<script type="text/javascript" src="js/states_addedit.js"></script>
+
+<h1>State info</h1>
+
+<div class="hint">Please enter the state info:</div>
+
+<form action="processors/loc_states_addedit.php" method="post" id="loc_states_addedit" onsubmit="return(check_form(this))">
+<input type="hidden" name="state_id" value="{states.state_id}" />
+<input type="hidden" name="fk_country_id" value="{states.fk_country_id}" />
+<input type="hidden" name="o" value="{o}" />
+<input type="hidden" name="r" value="{r}" />
+<input type="hidden" name="co" value="{co}" />
+<input type="hidden" name="cr" value="{cr}" />
+<table id="states_addedit" class="form_table">
+<tr>
+	<td class="label">Country:</td>
+	<td class="field">{states.country}</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="state">State:</label></td>
+	<td class="field {states.error_state}">
+		<input class="text" type="text" name="state" id="state" value="{states.state}" size="40" tabindex="1" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" id="btn_save" tabindex="2" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+<div id="bottom_links"><a class="back" href="loc_states.php?country_id={states.fk_country_id}&amp;o={o}&amp;r={r}&amp;co={co}&amp;cr={cr}">Back to states list</a></div>
+<script type="text/javascript">
+	document.getElementById('state').focus();
+</script>

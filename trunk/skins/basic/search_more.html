@@ -1,0 +1,22 @@
+<script type="text/javascript" src="js/search_more.js"></script>
+
+<h2>Advanced search</h2>
+
+<div id="search_more">
+	<form action="search.php" method="get" id="search_form">
+	<input type="hidden" name="st" value="adv" />
+	<loop name="search">
+	<div class="edit_row {search.class}" id="row_{search.dbfield}">
+		<div class="label">{search.label}</div>
+		<div class="field">{search.field}</div>
+	</div>
+	</loop name="search">
+	<div class="edit_row">
+		<div class="label"></div>
+		<div class="field"><input type="submit" value="Search" /></div>
+	</div>
+	</form>
+</div> <!--#search-->
+<script type="text/javascript">
+	document.getElementById('search_form').elements[1].focus();
+</script>

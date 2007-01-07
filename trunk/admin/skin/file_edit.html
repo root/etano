@@ -1,0 +1,13 @@
+<script type="text/javascript" src="js/file_edit.js"></script>
+
+<h1>Edit a File</h1>
+
+<div id="file_edit">
+	<h3>File: {file_edit.file}</h3>
+	<form action="processors/file_edit.php" method="post" onsubmit="return(check_form(this))">
+	<input type="hidden" name="file" value="{file_edit.file}" />
+	<textarea name="file_content" id="file_content" cols="60" rows="30" wrap="off">{file_edit.file_content}</textarea>
+	<p><input class="button" type="submit" value="Save" />	<input class="button" type="reset" value="Reset" /></p>
+	</form>
+	<div id="bottom_links"><a class="back" href="file_browser.php?path={path}">Back to list</a></div>
+</div>

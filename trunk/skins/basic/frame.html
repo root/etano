@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="html" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{tplvars.title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="{meta_diz}" />
+<meta name="keywords" content="{meta_keywords}" />
+<meta name="distribution" content="global" />
+<meta name="robots" content="index,follow" />
+<link rel="stylesheet" type="text/css" href="{tplvars.tplrelpath}/styles/screen.css" />
+<script type="text/javascript" src="{tplvars.baseurl}/js/general.js"></script>
+<script type="text/javascript" src="{tplvars.baseurl}/ajax/scoax.js"></script>
+</head>
+<body>
+	<div id="trim">
+		<div id="header">
+			<div id="logo">	<h1>{tplvars.sitename}</h1>	</div>
+			<!--widget="login"-->
+			<div class="clear"></div>
+			<div id="main_menu">
+				<ul>
+				<li><a href="home.php">Home</a></li>
+				<li><a href="search.php">Search</a></li>
+				<li><a href="join.php">Join</a></li>
+				</ul>
+			</div> <!--#main_menu-->
+		</div> <!--#header-->
+
+		<div id="content">
+			<div id="middle_column">
+<opt name="message.text">
+				<div id="message_wrapper" class="{message.type}">{message.text}</div>
+</opt name="message.text">
+				{content}
+			</div>
+
+			<div id="left_column">
+				{left_content}
+			</div>
+
+			<div id="right_column">
+				{right_content}
+			</div>
+
+		</div> <!--#content-->
+
+		<div id="footer">
+			<div id="footer_left">
+				<span><a href="home.php">Home</a> | <a href="about_us.php">About Us</a> | <a href="contact_us.php">Contact Us</a> | <a href="help.php">Help</a> | <a href="tos.php">Terms of Service</a> | <a href="privacy.php">Privacy</a></span>
+				<p>Copyright <script type="text/javascript">curdate=new Date(); document.write(curdate.getFullYear());</script> {tplvars.sitename}. All rights reserved.</p>
+			</div>
+		</div> <!--#footer-->
+	</div> <!--#trim-->
+</body>
+</html>

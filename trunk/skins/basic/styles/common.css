@@ -1,0 +1,172 @@
+/* GENERAL STUFF */
+
+* {
+	margin: 0px;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	font-family:  Arial, Tahoma, Helvetica, Sans-serif;
+	font-size: 62.5%;	/* makes 1em==10px */
+	background-color: #636958;
+}
+
+img {
+	border: none;
+}
+
+	/* with this all headings should look the same in all browsers */
+
+h1, h2, h3, h4, h5, h6, p {
+	line-height: 150%;
+}
+
+h1 {
+	font-size: 150%;
+}
+
+h2 {
+	font-size: 100%;
+}
+
+h3 {
+	font-size: 80%;
+}
+
+h4 {
+	font-size: 75%;
+}
+
+h5 {
+	font-size: 70%;
+}
+
+h6 {
+	font-size: 60%;
+}
+
+
+/* LINKS  */
+
+a {
+  	color: #2687FD;
+  	text-decoration: none;
+  	border-bottom: 1px dotted #2687FD;
+}
+
+a:hover {
+	color: #01408B;
+	text-decoration: none;
+  	border-bottom: 1px solid #01408B;
+}
+
+
+/* --header stuff -- */
+
+#logo {
+	float: left;
+	width: 400px;
+}
+
+#logo h1 {
+	background: url(../images/logo.gif) no-repeat;
+	margin-left: 1.5em;
+	height: 50px;
+	padding: 20px 0 0 50px;
+}
+
+#login {
+	float: right;
+	display: inline;
+}
+
+#login p {
+	color: #473C28;
+	font-size: 110%;
+	padding: .4em 0;
+}
+
+#login form {
+	position: relative;
+}
+
+#login form * {
+	float: left;
+	margin:0px;
+}
+
+#login form span {
+	position: relative;
+	padding-bottom: 12px;
+	margin-right: .8em;
+}
+
+#login form label {
+	display: block;
+	position: absolute;
+	left: 1px;
+	bottom: 0;
+	overflow: hidden;
+	font-variant: small-caps;
+	color: #473C28;
+	font-size: 90%;
+}
+
+#forgotpass {
+	width: 100px;
+}
+
+#login label a {
+
+}
+
+#login form input {
+	width: 8em;
+	line-height: 1.14;
+	height: 1.14em;
+	padding: .15em .2em;
+	font-size: 120%;
+	color: #473C28;
+	border: 1px solid #CD8021;
+}
+
+#login form button {
+	background: url(../images/btn_login.gif) no-repeat left;
+	width: 49px;
+	height: 22px;
+	text-indent: -9999px;
+	overflow: hidden;
+	border:0px;
+}
+
+#login form button:hover {
+	background-position: right;
+	margin:0px;
+}
+
+.full_width {
+	width: 100%;
+}
+
+#main_menu {
+	border-top: 1px solid #fff;
+	text-align: center;
+	background: #99CC00;
+	color: #FFF;
+	height: 2.5em;
+	padding-top: .5em;
+}
+
+#main_menu a {
+	color: #FFF;
+	border-bottom: 2px solid #fff;
+}
+
+#main_menu li {
+	display: inline;
+	font-size: 1.5em;
+	margin-right: 1em;
+}

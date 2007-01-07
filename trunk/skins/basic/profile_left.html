@@ -1,0 +1,25 @@
+<div class="menu_widget">
+	<h3>Connect</h3>
+	<div class="content">
+		<ul id="user_connect">
+		<li><a href="bookmark.php?uid={uid}">Bookmark</a></li>
+		<li><a href="message_send.php?to_id={uid}">Send message</a></li>
+		<li><a href="flirt_send.php?to_id={uid}">Send a flirt</a></li>
+		<li><a href="block.php?uid={uid}">Block</a></li>
+		</ul>
+	</div>
+</div>
+
+<div class="menu_widget">
+	<h3>Friends</h3>
+	<div class="content">
+		<ul id="user_friends">
+		<loop name="user_friends">
+		<li><a href="block.php?uid={uid}">Block</a></li>
+		<noloop name="user_friends">
+		<li>No friends yet</li>
+		</noloop name="user_friends">
+		</loop name="user_friends">
+		</ul>
+	</div>
+</div>

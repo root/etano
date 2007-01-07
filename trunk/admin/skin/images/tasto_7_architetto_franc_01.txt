@@ -1,0 +1,4 @@
+Title:    Tasto 7
+Author:   Architetto Francesco Rollandin
+License:  http://web.resource.org/cc/PublicDomain
+Keywords: unsorted

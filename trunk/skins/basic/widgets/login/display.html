@@ -1,0 +1,13 @@
+<div id="login">
+<opt name="tplvars.user_logged">
+	Signed in as {tplvars.myself.user} <a href="{tplvars.relative_path}processors/logout.php">Sign Out</a>
+</opt name="tplvars.user_logged">
+<opt name="!tplvars.user_logged">
+	<p>Hello guest, please login below, or <a href="join.php">sign up FREE</a>.</p>
+	<form id="login_form" action="{tplvars.relative_path}processors/login.php" method="post">
+	<span><input type="text" id="username" name="user" /><label for="username">User name</label></span>
+	<span><input type="password" id="password" name="pass" /><label for="password">Password</label></span>
+	<span id="forgotpass"><button type="submit" id="login-btn">Log In</button><label><a href="forgot_pass.php">Forgot pass?</a></label></span>
+	</form>
+</opt name="!tplvars.user_logged">
+</div>

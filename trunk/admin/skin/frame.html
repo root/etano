@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="html" dir="ltr" xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{tplvars.title}</title>
+<link rel="stylesheet" type="text/css" media="screen" href="skin/styles/screen.css" />
+<script type="text/javascript" src="{tplvars.baseurl}/ajax/scoax.js"></script>
+<script type="text/javascript" src="{tplvars.baseurl}/js/general.js"></script>
+<script type="text/javascript" src="{tplvars.baseurl}/admin/js/jquery.js"></script>
+</head>
+<body id="adminframe">
+<div id="trim">
+	<div id="container">
+		<div id="header">
+			<div id="logo">
+				<h1>{tplvars.sitename}</h1>
+			</div>
+			<div id="logout"><a href="processors/logout.php">logout</a></div>
+		</div>	<!--header-->
+
+		<div id="bluebar">	</div> <!--bluebar-->
+
+		<div id="fpcontent">
+			<div id="menu">
+				<div id="m_members" class="menu_widget">
+					<h4>Member Management</h4>
+					<div class="box">
+						<ul>
+							<li><a href="search.php">Search</a></li>
+							<li><a href="admin_accounts.php">Site admins</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div id="m_setting" class="menu_widget">
+					<h4>General Settings</h4>
+					<div class="box">
+						<ul>
+							<li><a href="site_skins.php">Skin Settings</a></li>
+							<li><a href="access_levels.php">Access Levels</a></li>
+							<li><a href="profile_fields.php">Profile Fields</a></li>
+							<li><a href="site_options.php">Features and Options</a></li>
+							<li><a href="subscriptions.php">Subscriptions</a></li>
+							<li><a href="file_browser.php">File Browser</a></li>
+							<li><a href="loc_countries.php">Locations</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div id="content">
+<opt name="message.text">
+				<div id="message_wrapper" class="{message.type}">{message.text}</div>
+</opt name="message.text">
+				{content}
+				<div id="c_bar-btm" class="bar">
+					&nbsp;
+				</div>
+
+				<div id="footer">
+					<div id="n_footer" class="nav">
+						<a href="http://forum.datemill.com">Datemill forum</a> | <a href="http://www.datemill.com/contact.php">contact us</a> | <a href="help.php">help topics</a>
+					</div>
+					<div id="c_disclaimer">
+						<span id="m_copyright">Powered by <a href="http://www.datemill.com">Datemill</a></span>
+					</div>
+				</div>	<!--footer-->
+			</div>	<!--content-->
+
+		</div><!--fpcontent-->
+	</div>
+</div>
+</body>
+</html>

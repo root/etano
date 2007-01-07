@@ -1,0 +1,52 @@
+<script type="text/javascript">
+	function check_form() {
+		the=document.getElementById('site_skins_addedit');
+		if (the.skin_name.value=='') {
+			alert('Please enter the name of this skin!');
+			the.skin_name.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+<h1>Change Skin Settings</h1>
+<div class="hint">Please enter the required info below:</div>
+<form action="processors/site_skins_addedit.php" method="post" id="site_skins_addedit" onsubmit="return(check_form())">
+<input type="hidden" name="skin_id" value="{site_skins.skin_id}" />
+<input type="hidden" name="o" value="{o}" />
+<input type="hidden" name="r" value="{r}" />
+<input type="hidden" name="ob" value="{ob}" />
+<input type="hidden" name="od" value="{od}" />
+<input type="hidden" name="is_default" value="{site_skins.is_default}" />
+<table id="skin_addedit" class="form_table">
+<tr>
+	<td class="label">Skin code:</td>
+	<td class="field">{site_skins.skin_code}</td>
+	<td class="comment">This is the name of the skin folder in the 'skins' directory. You cannot change this name.</td>
+</tr>
+<tr>
+	<td class="label"><label for="skin_name">Skin Name:</label></td>
+	<td class="field {site_skins.error_skin_name}"><input type="text" name="skin_name" id="skin_name" value="{site_skins.skin_name}" /></td>
+	<td class="comment">This is a readable name you may want to give to this skin.</td>
+</tr>
+<tr>
+	<td class="label"><label for="fk_locale_id">Locale:</label></td>
+	<td class="field {site_skins.error_fk_locale_id}">
+		<select name="fk_locale_id" id="fk_locale_id">
+		<option value="0"></option>
+		{site_skins.fk_locale_id}
+		</select>
+	</td>
+	<td class="comment">If your server supports locales, dates will be formated according to this locale.</td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+<div id="bottom_links"><a class="back" href="site_skins.php?o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Back to skins</a></div>
+<script type="text/javascript">
+	document.getElementById('skin_name').focus();
+</script>
