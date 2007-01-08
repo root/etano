@@ -7,9 +7,9 @@ function update_list() {
 	for (i=0;i<accvals.length;i++) {
 		towrite+='<li>'+accvals[i]+' <a href="javascript:;" onclick="addedit_accval(\'edit\','+i+')" title="Edit"><img src="skin/images/edit.gif" alt="Edit" /></a>&nbsp; &nbsp;<a href="javascript:;" onclick="addedit_accval(\'add\','+(i+1)+')" title="Add after"><img src="skin/images/add.gif" alt="Add after" /></a>&nbsp; &nbsp;<a href="javascript:;" onclick="delete_accval('+i+')" title="Delete"><img src="skin/images/del.gif" alt="Delete" /></a>';
 		if (html_type==3) {	//_HTML_SELECT_
-			towrite+=' <input type="radio" name="default_value" value="'+i+'" onclick="adddel_defval(this.checked,'+i+')"';
+			towrite+=' <input type="radio" name="default_value" value="'+i+'" id="default_value_'+i+'" onclick="adddel_defval(this.checked,'+i+')"';
 		} else if (html_type==10) {	//_HTML_CHECKBOX_LARGE_
-			towrite+=' <input type="checkbox" name="default_value['+i+']" value="1" onclick="adddel_defval(this.checked,'+i+')"';
+			towrite+=' <input type="checkbox" name="default_value['+i+']" id="default_value_'+i+'" value="1" onclick="adddel_defval(this.checked,'+i+')"';
 		}
 		for (j=0;j<default_value.length;j++) {
 			if (parseInt(default_value[j])==i) {
@@ -17,7 +17,14 @@ function update_list() {
 				break;
 			}
 		}
-		towrite+=' /></li>';
+		towrite+=' />';
+		if (search_type==3) {	//_HTML_SELECT_
+			towrite+=' <input type="radio" name="default_search" value="'+i+'" id="default_search_'+i+'" onclick="adddel_defsearch(this.checked,'+i+')"';
+		} else if (search_type==10) {	//_HTML_CHECKBOX_LARGE_
+			towrite+=' <input type="checkbox" name="default_value['+i+']" id="default_value_'+i+'" value="1" onclick="adddel_defval(this.checked,'+i+')"';
+		}
+
+		towrite+='</li>';
 	}
 	document.getElementById('litems').innerHTML=towrite;
 }
@@ -155,11 +162,9 @@ function manage_change(e) {
 
 function showhide(strCheck,strHide) {
 	if (document.getElementById(strCheck).checked==true) {
-		document.getElementById(strHide).style.visibility='visible';
-		document.getElementById(strHide).style.display='';
+		$("#"+strHide).show();
 	} else {
-		document.getElementById(strHide).style.visibility='hidden';
-		document.getElementById(strHide).style.display='none';
+		$("#"+strHide).hide();
 	}
 }
 

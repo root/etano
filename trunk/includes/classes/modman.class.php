@@ -636,12 +636,12 @@ class fileop {
 						$myreturn=$this->_ftp_delete($files[$i]);
 					}
 				}
-				$myreturn=ftp_rmdir($this->ftp_id,$source);
+				$myreturn=@ftp_rmdir($this->ftp_id,$source);
 			} else {
 				$myreturn=false;// not enough.Should also break out of the recurring function in the for() above if $myreturn==false
 			}
 		} else {
-			$myreturn=ftp_delete($this->ftp_id,$source);
+			$myreturn=@ftp_delete($this->ftp_id,$source);
 		}
 		return $myreturn;
 	}

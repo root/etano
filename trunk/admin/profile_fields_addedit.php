@@ -73,6 +73,10 @@ if ($profile_fields['html_type']==_HTML_TEXTFIELD_) {
 	if (!empty($profile_fields['default_value']) && $profile_fields['default_value']!='||') {
 		$profile_fields['default_value']=substr($profile_fields['default_value'],1,-1);
 	}
+	if ($profile_fields['search_type']==_HTML_SELECT_ && !empty($profile_fields['default_search']) && $profile_fields['default_search']!='||') {
+			$profile_fields['default_search']=substr($profile_fields['default_search'],1,-1);
+		}
+	}
 	$profile_fields['row_searchable']=true;
 	$profile_fields['row_st']='visible';
 	$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(_HTML_TEXTFIELD_,_HTML_TEXTAREA_,_HTML_DATE_,_HTML_LOCATION_));
@@ -81,6 +85,7 @@ if ($profile_fields['html_type']==_HTML_TEXTFIELD_) {
 	// revert $accepted_values values to db original and add slashes
 	$profile_fields['accepted_values_jsarr']=vector2jsarr(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
 	$profile_fields['default_value_jsarr']=$profile_fields['default_value'];
+	$profile_fields['default_search_jsarr']=$profile_fields['default_search'];
 } elseif ($profile_fields['html_type']==_HTML_CHECKBOX_LARGE_) {
 	$profile_fields['row_searchable']=true;
 	$profile_fields['row_st']='visible';
@@ -90,6 +95,7 @@ if ($profile_fields['html_type']==_HTML_TEXTFIELD_) {
 	// revert $accepted_values values to db original and add slashes
 	$profile_fields['accepted_values_jsarr']=vector2jsarr(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
 	$profile_fields['default_value_jsarr']=str_replace('|',"','",substr($profile_fields['default_value'],1,-1));
+	$profile_fields['default_search_jsarr']=str_replace('|',"','",substr($profile_fields['default_search'],1,-1));
 	$profile_fields['row_accval_date']=false;
 } elseif ($profile_fields['html_type']==_HTML_DATE_) {
 	$profile_fields['row_searchable']=true;

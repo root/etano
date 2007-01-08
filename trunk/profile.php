@@ -15,7 +15,6 @@ require_once 'includes/sessions.inc.php';
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/vars.inc.php';
-require_once 'includes/classes/user_cache.class.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(2);
 
@@ -28,14 +27,18 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	$user=sanitize_and_format($_GET['user'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
 	$uid=get_userid_by_user($user);
 } elseif (isset($_SESSION['user']['user_id']) && !empty($_SESSION['user']['user_id'])) {
-//	$uid=(string)$_SESSION['user']['user_id'];
-	redirect2page('my_profile.php');
+	$uid=(string)$_SESSION['user']['user_id'];
 } else {
 	redirect2page('index.php');
 }
 
+if (isset($_SESSION['user']['user_id']) && !empty($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']==$uid) {
+	redirect2page('my_profile.php');
+}
+
 $categs=array();
 $profile=array();
+require_once 'includes/classes/user_cache.class.php';
 $user_cache=new user_cache(get_my_skin());
 $temp=$user_cache->get_cache($uid,'profile');
 if (!empty($temp)) {
@@ -52,9 +55,12 @@ if (!empty($temp)) {
 				++$j;
 			}
 		} else {
-// maybe we should say something here...
+			// not allowed to view this member info
+// maybe we should say something here like "upgrade your membership to view this info"...
 		}
 	}
+} else {
+	$tpl->set_var('content','');
 }
 
 if (isset($_SESSION['user']['user_id']) && $uid==$_SESSION['user']['user_id']) {

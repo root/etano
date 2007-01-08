@@ -10,7 +10,7 @@ $_pfields[1]['editable']=true;
 $_pfields[1]['visible']=true;
 $_pfields[1]['dbfield']='field_46';
 $_pfields[1]['fk_pcat_id']=1;
-$_pfields[1]['accepted_values']=array('-','Man','Woman','&#039;&quot;');
+$_pfields[1]['accepted_values']=array('-','Man','Woman');
 $_pfields[1]['default_value']=array();
 $_pfields[1]['help_text']=$_lang[503];
 
@@ -40,7 +40,7 @@ $_pfields[3]['editable']=true;
 $_pfields[3]['visible']=true;
 $_pfields[3]['dbfield']='field_48';
 $_pfields[3]['fk_pcat_id']=1;
-$_pfields[3]['accepted_values']=array('-','1950','1988');
+$_pfields[3]['accepted_values']=array('-','1950','1989');
 $_pfields[3]['default_value']=array('18','35');
 $_pfields[3]['help_text']=$_lang[509];
 
@@ -118,10 +118,18 @@ $_pfields[9]['accepted_values']=array('-','Romanian','American','Mexican','Sarma
 $_pfields[9]['default_value']=array();
 $_pfields[9]['help_text']=$_lang[534];
 
+$_pfields[10]['label']=$_lang[535];
+$_pfields[10]['html_type']=4;
+$_pfields[10]['editable']=true;
+$_pfields[10]['visible']=true;
+$_pfields[10]['dbfield']='f56';
+$_pfields[10]['fk_pcat_id']=1;
+$_pfields[10]['help_text']=$_lang[537];
+
 
 $_pcats[1]['pcat_name']=$_lang[500];
 $_pcats[1]['access_level']=7;
-$_pcats[1]['fields']=array(1,2,3,4,8,9);
+$_pcats[1]['fields']=array(1,2,3,4,8,9,10);
 $_pcats[5]['pcat_name']=$_lang[519];
 $_pcats[5]['access_level']=7;
 $_pcats[5]['fields']=array(5,6,7);
