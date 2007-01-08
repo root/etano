@@ -10,7 +10,7 @@ $_pfields[1]['editable']=true;
 $_pfields[1]['visible']=true;
 $_pfields[1]['dbfield']='field_46';
 $_pfields[1]['fk_pcat_id']=1;
-$_pfields[1]['accepted_values']=array('-','Man','Woman');
+$_pfields[1]['accepted_values']=array('-','Man','Woman','&#039;&quot;');
 $_pfields[1]['default_value']=array();
 $_pfields[1]['help_text']=$_lang[503];
 

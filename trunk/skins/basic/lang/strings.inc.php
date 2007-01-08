@@ -1,4 +1,4 @@
-<?
+<?php
 setlocale(LC_TIME,array('en_US','english'));
 $_lang[1]='Invalid user name or password. Please try again.';
 $_lang[2]='We&#039;re sorry but you tried to login too many times. Please wait for a while before trying that again.';

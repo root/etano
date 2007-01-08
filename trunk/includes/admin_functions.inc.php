@@ -78,7 +78,7 @@ function allow_dept($levels=DEPT_ADMIN) {
 
 
 function regenerate_acclevels_array() {
-	require_once 'classes/modman.class.php';
+	require_once _BASEPATH_.'/includes/classes/modman.class.php';
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	$query="SELECT `level_id`,`level` FROM `{$dbtable_prefix}access_levels`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -94,7 +94,7 @@ function regenerate_acclevels_array() {
 
 
 function regenerate_fields_array() {
-	require_once 'modman.class.php';
+	require_once _BASEPATH_.'/includes/classes/modman.class.php';
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	$query="SELECT * FROM `{$dbtable_prefix}profile_fields` ORDER BY `order_num` ASC";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -166,7 +166,7 @@ function regenerate_fields_array() {
 
 
 function regenerate_langstrings_array() {
-	require_once 'modman.class.php';
+	require_once _BASEPATH_.'/includes/classes/modman.class.php';
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	$modman=new modman();
 	$query="SELECT `skin_code` FROM `{$dbtable_prefix}site_skins`";
