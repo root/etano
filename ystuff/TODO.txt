@@ -1,0 +1,98 @@
+- de adaugat vector2checkboxes_alt in sco_functions pt TYPE_CHECKBOX (si in html2format)
+(admin\profile_categories_addedit.php are un vector2checkboxes_new)
+
+- poate ca ar trebui adaugat un DEFAULT_VALUE care sa fie afisat la toate campurile care nu au nimic introdus.
+
+- delete skin
+
+- nu ar trebui sa generez lk pentru search label daca nu e searchable.
+- in caz de eroare la profile_edit
+
+- ar trebui inlocuit 		$site_skins[$i]['is_default']='<img src="skin/images/check.gif" />';
+in php cu o clasa pt un <span> care sa aiba ca bgimage skin/images/check.gif pentru checked si altceva (nimic) pt not checked.
+In felul asta userul poate sa isi aleaga ce se afiseaza
+
+- in check_login_member tb verificate ban-urile
+
+- dbtable2options('`memberships`' sa il facem $accepted_memberships ?
+
+- de setat skin-ul default in get_my_skin() (_DEFAULT_SKIN_) based on 'make default' din site_skins_list.php
+
+- ar trebui creat un regenerate_langstrings_array_diff(action,lk,lang_val,skin) (si restul de functii regenerate)
+	care sa faca un include() (nu include_once()) la fisierul lor, sa modifice diferenta si sa il rescrie.
+	action ar tb sa fie add|del|mod
+
+- accepted_values tb sa fie dependente de lang
+
+- de scos vector2checkboxes_new din admin/profile_categories_addedit si de verif ca merge fara.
+
+- if photo approvals are automatic then we can make this photo the main photo now.
+	Otherwise it will have to be done upon approval!!!	(in processors/photo_settings.php)
+
+- ce se intampla daca sunt mai multe aplicatii create de mine in acelasi domeniu? $_SESSION['user']['user_id'] o sa
+autentifice automat userii dintr-o aplicatie in cealalta...Ar trebui creat un unique id (poate bazat pe licenta) a.i. sa avem
+$_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
+
+- cauta "translate" ca sa gasesti toate stringurile de tradus hardcodate in scripts.
+
+- ar fi bine sa separam mesajele de eroare/info de restul de lang_strings folosite. Mesajele se folosesc doar in procesoare....
+
+- de creat indecsi cand se creaza/modifica campuri in user_details (numai cand un camp este searchable).
+
+- de verif toate check_login_member() ca au id-urile nashpa (networks.php)
+
+- la search tb sa corelez access_level-ul cu campurile cautate.
+
+- generatorul de cache care ruleaza la 10 minute ar trebui sa decida daca sa stearga site_search-ul sau nu.
+	daca nu a adaugat/modificat nici un user nu are rost...
+
+- daca intr-un *_left.php exista optionale si tb sa process(,TPL_OPTIONAL) atunci optionalele din html care depind de $tplvars
+	vor fi sterse pt ca tplvars se proceseaza abea in frame.
+
+- cand se sterge un user as putea sa fac fk_user_id=0 peste tot pe unde era setat (in special in inbox). In felul asta
+	nu mai trebuie sa fac left join cu user_details sa vad daca userul care a trimis emailul mai exista sau nu...
+
+- welcome message in inbox cand se inregistreaza un membru de tipul _MESS_SYSTEM_
+
+- blocked users pot fi membri in network-ul 'Blocked Users'
+
+
+
+TODO
+- user_settings2
+- user_alerts
+- saved searches list (cu delete search/make default/alerte search)
+- bbtags
+- blog cache + blogs.php + my_blogs.php
+- la profile.php: user friends, blogs
+- rss feeds
+- auto subscriptions in join.php
+- [don't] use captcha
+- captcha audio
+- scris in poza fara freettf (in captcha si watermark)
+- installer + modman
+- rate limiter in pagini
+- spambox, block member, queue send/verif de spam
+- events
+- rewritten urls list
+- licenta si verificari
+- js field check
+- site bans
+- modman: ftp low level?
+- flirts
+- processors/login.php: account suspended/unactivated
+- read zip files. extract files from zip archives (pt modmanager).
+- formatare la date of birth
+- create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
+- help texts pentru campurile textarea
+
+- admin: send newsletter/emails/messages
+- admin: field search default value
+- admin: admin accounts
+- admin: translate field values!!!!!!!!!
+- admin: flirts manager
+- admin: DEPT_ADMIN | DEPT_MODERATOR
+- admin: user mail read
+- admin: latest datemill news
+- admin: delete skin
+

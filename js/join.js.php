@@ -75,7 +75,7 @@ if (empty($_GET['page']) || $_GET['page']==1) {
 		theform.agree.focus();
 		return false;
 	}
-<?php}?>
+<?php }?>
 	return true;
 }
 

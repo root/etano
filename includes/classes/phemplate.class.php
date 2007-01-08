@@ -416,23 +416,25 @@ class phemplate {
 	*/
 	function include_widget($handle) {
 		$str = $this->get_var($handle);
-		while (is_int($pos=strpos($str,'<!--widget="'))) {
-			$pos += 12;
-			$endpos = strpos($str, '"-->', $pos);
-			$wdg_call=substr($str, $pos, $endpos-$pos);
-			$tag = '<!--widget="'.$wdg_call.'"-->';
-			if (strpos($wdg_call,'(')===false) {
-				$wdg_call.='()';
+		if (!empty($str)) {
+			while (is_int($pos=strpos($str,'<!--widget="'))) {
+				$pos += 12;
+				$endpos = strpos($str, '"-->', $pos);
+				$wdg_call=substr($str, $pos, $endpos-$pos);
+				$tag = '<!--widget="'.$wdg_call.'"-->';
+				if (strpos($wdg_call,'(')===false) {
+					$wdg_call.='()';
+				}
+				$wdg_name=substr($wdg_call,0,strpos($wdg_call,'('));
+				if (is_file(_BASEPATH_.'/plugins/widget/'.$wdg_name.'/'.$wdg_name.'.class.php')) {
+					require_once _BASEPATH_.'/plugins/widget/'.$wdg_name.'/'.$wdg_name.'.class.php';
+					eval("\$temp=new widget_$wdg_call;");
+					$replacement=$temp->display($this);
+				} else {
+					$replacement='';
+				}
+				$str=str_replace($tag,$replacement,$str);
 			}
-			$wdg_name=substr($wdg_call,0,strpos($wdg_call,'('));
-			if (is_file(_BASEPATH_.'/plugins/widget/'.$wdg_name.'/'.$wdg_name.'.class.php')) {
-				require_once _BASEPATH_.'/plugins/widget/'.$wdg_name.'/'.$wdg_name.'.class.php';
-				eval("\$temp=new widget_$wdg_call;");
-				$replacement=$temp->display($this);
-			} else {
-				$replacement='';
-			}
-			$str=str_replace($tag,$replacement,$str);
 		}
 		return $str;
 	}
@@ -442,15 +444,17 @@ class phemplate {
 	*	@return string
 	*/
 	function parse_loops($handle,$loop_mode=false) {
-		$str = $this->get_var($handle);
+		$str=$this->get_var($handle);
 		reset($this->loops);
-		while (list($loop_name,$loop_ar)=each($this->loops)) {
-			$start_pos=strpos($str,'<loop name="'.$loop_name.'">')+strlen('<loop name="'.$loop_name.'">');
-			if ($start_pos!==false) {
-				$end_pos=strpos($str,'</loop name="'.$loop_name.'">',$start_pos);
-				$loop_code=substr($str,$start_pos,$end_pos-$start_pos);
-				$new_code=$this->parse_one_loop($loop_code,$loop_name,$loop_ar,$loop_mode);
-				$str=str_replace('<loop name="'.$loop_name.'">'.$loop_code.'</loop name="'.$loop_name.'">',$new_code,$str);
+		if (!empty($str)) {
+			while (list($loop_name,$loop_ar)=each($this->loops)) {
+				$start_pos=strpos($str,'<loop name="'.$loop_name.'">')+strlen('<loop name="'.$loop_name.'">');
+				if ($start_pos!==false) {
+					$end_pos=strpos($str,'</loop name="'.$loop_name.'">',$start_pos);
+					$loop_code=substr($str,$start_pos,$end_pos-$start_pos);
+					$new_code=$this->parse_one_loop($loop_code,$loop_name,$loop_ar,$loop_mode);
+					$str=str_replace('<loop name="'.$loop_name.'">'.$loop_code.'</loop name="'.$loop_name.'">',$new_code,$str);
+				}
 			}
 		}
 		return $str;
@@ -508,16 +512,18 @@ class phemplate {
 	}
 
 	function parse_unknown_loops($str,$loop_ar,$loop_mode) {
-		while(is_long($start_pos=strpos($str,'<loop name="'))) {
-			$start_pos+=12;
-			$tag_endpos=strpos($str,'">',$start_pos);
-			$loop_name=substr($str,$start_pos,$tag_endpos-$start_pos);
-			if (isset($loop_ar[$loop_name])) {
-				$start_pos+=strlen($loop_name)+2;
-				$endpos=strpos($str,'</loop name="'.$loop_name.'">',$start_pos);
-				$loop_code=substr($str,$start_pos,$endpos-$start_pos);
-				$new_code=$this->parse_one_loop($loop_code,$loop_name,$loop_ar[$loop_name],$loop_mode);
-				$str=str_replace('<loop name="'.$loop_name.'">'.$loop_code.'</loop name="'.$loop_name.'">', $new_code, $str);
+		if (!empty($str)) {
+			while(is_long($start_pos=strpos($str,'<loop name="'))) {
+				$start_pos+=12;
+				$tag_endpos=strpos($str,'">',$start_pos);
+				$loop_name=substr($str,$start_pos,$tag_endpos-$start_pos);
+				if (isset($loop_ar[$loop_name])) {
+					$start_pos+=strlen($loop_name)+2;
+					$endpos=strpos($str,'</loop name="'.$loop_name.'">',$start_pos);
+					$loop_code=substr($str,$start_pos,$endpos-$start_pos);
+					$new_code=$this->parse_one_loop($loop_code,$loop_name,$loop_ar[$loop_name],$loop_mode);
+					$str=str_replace('<loop name="'.$loop_name.'">'.$loop_code.'</loop name="'.$loop_name.'">', $new_code, $str);
+				}
 			}
 		}
 		return $str;
@@ -528,64 +534,30 @@ class phemplate {
 		@author ZaZa (Sergej Kurakin) 2003.05.05 21:52
 	*/
 	function parse($string) {
-		$str = explode('{', $string);
-		$res = '';
+		$res='';
+		if (!empty($string)) {
+			$str = explode('{', $string);
+			$res = '';
 
-		for ($i = 0; isset($str[$i]); ++$i) {
-			if ($i === 0) {
-				$res .= $str[$i];
-			} else {
-				$line = explode('}', $str[$i]);
-				$key = $line[0];
-				unset($line[0]);
-
-				if ( $key && isset($this->vars[$key]) ) {
-					$res .= $this->vars[$key].implode('}', $line);
+			for ($i = 0; isset($str[$i]); ++$i) {
+				if ($i === 0) {
+					$res .= $str[$i];
 				} else {
-// commented out by Dan Caragea.
-// The finish process should take place in the process() function based on TPL_FINISH, not here
-// if you need to uncomment then make sure you delete these 5 rows:
-					$res .= '{'.$key;
-					if (count ($line) >	0) {
-						$res .= '}';
-						$res .= implode('}', $line);
+					$line = explode('}', $str[$i]);
+					$key = $line[0];
+					unset($line[0]);
+
+					if ( $key && isset($this->vars[$key]) ) {
+						$res .= $this->vars[$key].implode('}', $line);
+					} else {
+	// previous code removed by Dan Caragea.
+	// The finish process should take place in the process() function based on TPL_FINISH, not here
+						$res .= '{'.$key;
+						if (count ($line) >	0) {
+							$res .= '}';
+							$res .= implode('}', $line);
+						}
 					}
-
-/*
-					switch ($this->unknowns) {
-						case 'keep':
-							$res .= '{'.$key;
-							if (count ($line) >	0) {
-								$res .= '}';
-								$res .= implode('}', $line);
-							}
-						break;
-
-						case 'remove':
-							$res .= implode('', $line);
-						break;
-
-						case 'remove_nonjs':
-							if (!empty($key) && preg_match('/[^a-zA-Z0-9\-_\.]/',$key)===0) {
-								$res .= implode('}', $line);
-							} else {
-								$res .= '{'.$key;
-								if (count ($line) >	0) {
-									$res .= '}';
-									$res .= implode('}', $line);
-								}
-							}
-						break;
-
-						case 'comment':
-							$res .= '<!-- '.$key.' -->'.implode('', $line);
-						break;
-
-						case 'space':
-							$res .= '&nbsp;'.implode('', $line);
-						break;
-					}
-*/
 				}
 			}
 		}
@@ -597,21 +569,23 @@ class phemplate {
 	*	process left variables
 	*/
 	function finish($str) {
-		switch ($this->unknowns) {
-			case 'keep':
-			break;
+		if (!empty($str)) {
+			switch ($this->unknowns) {
+				case 'keep':
+				break;
 
-			case 'remove':
-			$str = preg_replace('/\{[a-zA-Z0-9\-_\.]+?\}/', '', $str);
-			break;
+				case 'remove':
+				$str = preg_replace('/\{[a-zA-Z0-9\-_\.]+?\}/', '', $str);
+				break;
 
-			case 'comment':
-			$str = preg_replace('/\{([a-zA-Z0-9\-_\.]+?)\}/', '<!-- {\\1} -->', $str);
-			break;
+				case 'comment':
+				$str = preg_replace('/\{([a-zA-Z0-9\-_\.]+?)\}/', '<!-- {\\1} -->', $str);
+				break;
 
-			case 'space':
-			$str = preg_replace('/\{[a-zA-Z0-9\-_\.]+?\}/', '&nbsp;', $str);
-			break;
+				case 'space':
+				$str = preg_replace('/\{[a-zA-Z0-9\-_\.]+?\}/', '&nbsp;', $str);
+				break;
+			}
 		}
 		return $str;
 	}
@@ -622,48 +596,50 @@ class phemplate {
 	*	@return string
 	*/
 	function optional($str) {
-		$bl_start = 0;
+		if (!empty($str)) {
+			$bl_start = 0;
 
-		// extract and clean them from parent handle
-		while(is_long($bl_start = strpos($str, '<opt name="', $bl_start))) {
-			$pos = $bl_start + 11;
-			$endpos = strpos($str, '">', $pos);
-			$varname = substr($str, $pos, $endpos-$pos);
+			// extract and clean them from parent handle
+			while(is_long($bl_start = strpos($str, '<opt name="', $bl_start))) {
+				$pos = $bl_start + 11;
+				$endpos = strpos($str, '">', $pos);
+				$varname = substr($str, $pos, $endpos-$pos);
 
-			$tag = '<opt name="'.$varname.'">';
-			$endtag = '</opt name="'.$varname.'">';
+				$tag = '<opt name="'.$varname.'">';
+				$endtag = '</opt name="'.$varname.'">';
 
-			$negate=false;
-			if ($varname{0}=='!') {
-				$negate=true;
-				$varname=substr($varname,1);
-			}
-
-			$end_pos = strpos($str, $endtag, $bl_start);
-			if (!$end_pos) { $this->error('phemplate(): optional \''.$varname.'\' has no ending tag', 'fatal'); }
-
-			$bl_end = $end_pos + strlen($endtag);
-
-			$before_opt= substr($str, 0, $bl_start);
-			$after_opt= substr($str, $bl_end, strlen($str));
-
-			$value = $this->get_var_silent($varname);
-
-			if (!$negate) {
-				if ($value || $value===0 || $value==='0') {
-					$start_pos = $bl_start + strlen($tag);
-					$block_code = substr($str, $start_pos, $end_pos-$start_pos);
-					$str=$before_opt.$this->parse($block_code).$after_opt;
-				} else {
-					$str=$before_opt.$after_opt;
+				$negate=false;
+				if ($varname{0}=='!') {
+					$negate=true;
+					$varname=substr($varname,1);
 				}
-			} else {
-				if ($value || $value===0 || $value==='0') {
-					$str=$before_opt.$after_opt;
+
+				$end_pos = strpos($str, $endtag, $bl_start);
+				if (!$end_pos) { $this->error('phemplate(): optional \''.$varname.'\' has no ending tag', 'fatal'); }
+
+				$bl_end = $end_pos + strlen($endtag);
+
+				$before_opt= substr($str, 0, $bl_start);
+				$after_opt= substr($str, $bl_end, strlen($str));
+
+				$value = $this->get_var_silent($varname);
+
+				if (!$negate) {
+					if ($value || $value===0 || $value==='0') {
+						$start_pos = $bl_start + strlen($tag);
+						$block_code = substr($str, $start_pos, $end_pos-$start_pos);
+						$str=$before_opt.$this->parse($block_code).$after_opt;
+					} else {
+						$str=$before_opt.$after_opt;
+					}
 				} else {
-					$start_pos = $bl_start + strlen($tag);
-					$block_code = substr($str, $start_pos, $end_pos-$start_pos);
-					$str=$before_opt.$this->parse($block_code).$after_opt;
+					if ($value || $value===0 || $value==='0') {
+						$str=$before_opt.$after_opt;
+					} else {
+						$start_pos = $bl_start + strlen($tag);
+						$block_code = substr($str, $start_pos, $end_pos-$start_pos);
+						$str=$before_opt.$this->parse($block_code).$after_opt;
+					}
 				}
 			}
 		}
@@ -718,8 +694,7 @@ class phemplate {
 	*	@access	private
 	*/
 	function read_file($filename) {
-		$filename = $this->root . $filename;
-
+		$filename = $this->root.$filename;
 		if (!file_exists($filename)) {
 			$this->error('phemplate::read_file(): file '.$filename.' does not exist.', 'fatal');
 			return '';
