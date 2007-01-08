@@ -121,6 +121,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Your profile has been changed.';
 		} else {
 			$nextpage='edit_profile.php';
+			$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 			$input['pcat_id']=$pcat_id;
 			$topass['input']=$input;
 		}
