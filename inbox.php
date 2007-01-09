@@ -44,7 +44,7 @@ if (isset($_GET['fid']) && !empty($_GET['fid'])) {
 $del=0;
 if (isset($_GET['del']) && !empty($_GET['del'])) {
 	$del=1;
-	$mailbox_name='Recyclebox';
+	$mailbox_name='Trash';
 	unset($fk_folder_id);	// force no folder
 }
 
