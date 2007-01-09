@@ -32,27 +32,44 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$num_messages=1;
 	}
 
-	if ($_POST['act']=='del') {
+	if ($_POST['act']=='del' && $_POST['mailbox_id']!=='trash') {
+		$folder_id=sanitize_and_format($_POST['mailbox_id'],TYPE_INT,0,0);
 		if (is_array($mail_id)) {
 			$num_messages=count($mail_id);
 			$mail_id=join("','",array_keys($mail_id));
 		}
-		$query="UPDATE `{$dbtable_prefix}user_inbox` SET `del`=1 WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+		$query="UPDATE `{$dbtable_prefix}user_inbox` SET `fk_folder_id`=0,`del`=1 WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']=sprintf('%1s messages deleted.',$num_messages);
+		$topass['message']['text']=sprintf('%1s message(s) deleted.',$num_messages);     // translate
 		$nextpage='inbox.php';
+		$qs.=$qs_sep.'fid='.$folder_id;
+		$qs_sep='&';
+	} elseif ($_POST['act']=='del' && $_POST['mailbox_id']=='trash') {
+		if (is_array($mail_id)) {
+					$num_messages=count($mail_id);
+					$mail_id=join("','",array_keys($mail_id));
+				}
+				$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('$mail_id') AND `del`=1 AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$topass['message']['type']=MESSAGE_INFO;
+				$topass['message']['text']=sprintf('%1s message(s) permanently deleted.',$num_messages);     // translate
+		$nextpage='inbox.php?del=1';
+		$qs.=$qs_sep.'del=1';
+		$qs_sep='&';
 	} elseif ($_POST['act']=='move') {
 		$folder_id=sanitize_and_format_gpc($_POST,'folder_id',TYPE_INT,0,0);
 		if (is_array($mail_id)) {
 			$num_messages=count($mail_id);
 			$mail_id=join("','",array_keys($mail_id));
 		}
-		$query="UPDATE `{$dbtable_prefix}user_inbox` SET `fk_folder_id`='$folder_id' WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+		$query="UPDATE `{$dbtable_prefix}user_inbox` SET `fk_folder_id`='$folder_id', `del`=0 WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']=sprintf('%1s messages moved.',$num_messages);
+		$topass['message']['text']=sprintf('%1s message(s) moved.',$num_messages);     // translate
 		$nextpage='inbox.php';
+		$qs.=$qs_sep.'fid='.$folder_id;
+		$qs_sep='&';
 	} elseif ($_POST['act']=='reply') {
 		$qs='mail_id='.$mail_id;
 		redirect2page('message_send.php',array(),$qs);

@@ -35,7 +35,7 @@ if ($ob>=0) {
 		$orderby.=' DESC';
 	}
 }
-$mailbox_name='Inbox';
+$mailbox_name='Inbox';     // translate
 $fk_folder_id=0;
 if (isset($_GET['fid']) && !empty($_GET['fid'])) {
 	$fk_folder_id=(int)$_GET['fid'];
@@ -44,8 +44,8 @@ if (isset($_GET['fid']) && !empty($_GET['fid'])) {
 $del=0;
 if (isset($_GET['del']) && !empty($_GET['del'])) {
 	$del=1;
-	$mailbox_name='Trash';
-	unset($fk_folder_id);	// force no folder
+	$mailbox_name='Trash';     // translate
+	$fk_folder_id='trash';
 }
 
 $from="`{$dbtable_prefix}user_inbox` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id_from`=b.`fk_user_id`";
@@ -84,6 +84,7 @@ if (!empty($folders)) {
 $tpl->set_file('content','inbox.html');
 $tpl->set_loop('mails',$mails);
 $tpl->set_var('mailbox_name',$mailbox_name);
+$tpl->set_var('mailbox_id',$fk_folder_id);
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->set_var('ob',$ob);
