@@ -617,37 +617,6 @@ label.checkbox {
 	width: 20%;
 }
 
-/* profile.php */
-
-#profile {
-	width: 100%;
-}
-
-#profile_pic {
-	float: left;
-}
-
-#member_actions {
-	vertical-align: top;
-	width: 25%;
-}
-
-#member_profile {
-	vertical-align: top;
-}
-
-.edit_row {
-	clear: both;
-}
-
-.edit_row .mainlabel {
-	float: left;
-	display: block;
-	width: 10em;
-	text-align: right;
-	margin-right: 3px;
-}
-
 .visible {
 	visibility: visible;
 }
@@ -672,84 +641,6 @@ label.checkbox {
 	float: left;
 	width: 200px;
 	clear: both;
-}
-
-/* site_options.php */
-.module_content {
-	border: 1px solid #CCC;
-	margin-bottom: 1em;
-}
-
-.module_content a.header {
-	display: block;
-	color: #666;
-	padding: 0px 5px 0px 50px;
-	font-size: 90%;
-	font-weight: bold;
-	text-decoration: none;
-	height: 1.5em;
-}
-
-.module_content label {
-	font-weight: normal;
-}
-
-.module_content .config_diz {
-	width: 60%;
-	float: left;
-}
-
-.module_content .field {
-	width: 40%;
-	float: right;
-}
-
-.module_content li {
-	clear: both;
-	padding: .2em;
-	margin-bottom: 1em;
-}
-
-.module_content li:hover {
-	background-color: #E5F8FE;
-}
-
-div.shown_options ul {
-	display: block;
-	visibility: visible;
-}
-
-div.hidden_options ul {
-	display: none;
-	visibility: hidden;
-}
-
-.hidden_options a.header {
-	background: #E5F8FE url(../images/plus.gif) no-repeat left center;
-}
-
-.shown_options a.header {
-	background: #E5F8FE url(../images/minus.gif) no-repeat left center;
-}
-
-/* subscriptions_addedit.php */
-
-#subscr_addedit .label {
-	width: 30%;
-}
-
-#subscr_addedit .field {
-	width: 30%;
-}
-
-#subscr_addedit .comment {
-	width: 40%;
-}
-
-/* auto_subscriptions_addedit.php */
-
-#asubscr_addedit .field {
-	width: 50%;
 }
 
 /* PAGER */
@@ -812,6 +703,84 @@ li.file, li.file_php, li.file_html {
 	padding-left: 20px;
 }
 
+/* subscriptions_addedit.php */
+
+#subscr_addedit .label {
+	width: 30%;
+}
+
+#subscr_addedit .field {
+	width: 30%;
+}
+
+#subscr_addedit .comment {
+	width: 40%;
+}
+
+/* site_options.php */
+.module_content {
+	border: 1px solid #CCC;
+	margin-bottom: 1em;
+}
+
+.module_content a.header {
+	display: block;
+	color: #666;
+	padding: 0px 5px 0px 50px;
+	font-size: 90%;
+	font-weight: bold;
+	text-decoration: none;
+	height: 1.5em;
+}
+
+.module_content label {
+	font-weight: normal;
+}
+
+.module_content .config_diz {
+	width: 60%;
+	float: left;
+}
+
+.module_content .field {
+	width: 40%;
+	float: right;
+}
+
+.module_content li {
+	clear: both;
+	padding: .2em;
+	margin-bottom: 1em;
+}
+
+.module_content li:hover {
+	background-color: #E5F8FE;
+}
+
+div.shown_options ul {
+	display: block;
+	visibility: visible;
+}
+
+div.hidden_options ul {
+	display: none;
+	visibility: hidden;
+}
+
+.hidden_options a.header {
+	background: #E5F8FE url(../images/plus.gif) no-repeat left center;
+}
+
+.shown_options a.header {
+	background: #E5F8FE url(../images/minus.gif) no-repeat left center;
+}
+
+/* auto_subscriptions_addedit.php */
+
+#asubscr_addedit .field {
+	width: 50%;
+}
+
 /* file_edit.php */
 
 #file_content {
@@ -840,4 +809,52 @@ li.file, li.file_php, li.file_html {
 #save_tpl {
 	margin-left: 50%;
 	text-align: right;
+}
+
+/* profile.php */
+
+#profile {
+	width: 100%;
+}
+
+#profile_pic {
+	float: left;
+}
+
+#member_actions {
+	vertical-align: top;
+	width: 25%;
+}
+
+#member_profile {
+	vertical-align: top;
+}
+
+.edit_row {
+	clear: both;
+}
+
+.edit_row .mainlabel {
+	float: left;
+	display: block;
+	width: 10em;
+	text-align: right;
+	margin-right: 3px;
+}
+
+/* profile_fields_addedit.php */
+
+ul#litems li {
+	clear: both;
+	border-bottom: 1px solid #ccc;
+	height: 20px;
+}
+
+li span.litem_text {
+	float: left;
+}
+
+li span.litem_tools {
+	float: right;
+	z-index: 2;
 }

@@ -5,11 +5,11 @@ function check_form() {
 function update_list() {
 	towrite='';
 	for (i=0;i<accvals.length;i++) {
-		towrite+='<li>'+accvals[i]+' <a href="javascript:;" onclick="addedit_accval(\'edit\','+i+')" title="Edit"><img src="skin/images/edit.gif" alt="Edit" /></a>&nbsp; &nbsp;<a href="javascript:;" onclick="addedit_accval(\'add\','+(i+1)+')" title="Add after"><img src="skin/images/add.gif" alt="Add after" /></a>&nbsp; &nbsp;<a href="javascript:;" onclick="delete_accval('+i+')" title="Delete"><img src="skin/images/del.gif" alt="Delete" /></a>';
+		towrite+='<li><span class="litem_text">'+accvals[i]+'</span> <span class="litem_tools"><a href="javascript:;" onclick="addedit_accval(\'edit\','+i+')" title="Edit"><img src="skin/images/edit.gif" alt="Edit" /></a>&nbsp; &nbsp;<a href="javascript:;" onclick="addedit_accval(\'add\','+(i+1)+')" title="Add after"><img src="skin/images/add.gif" alt="Add after" /></a>&nbsp; &nbsp;<a href="javascript:;" onclick="delete_accval('+i+')" title="Delete"><img src="skin/images/del.gif" alt="Delete" /></a>';
 		if (html_type==3) {	//_HTML_SELECT_
-			towrite+=' <input type="radio" name="default_value" value="'+i+'" id="default_value_'+i+'" onclick="adddel_defval(this.checked,'+i+')"';
+			towrite+=' <input type="radio" name="default_value" value="'+i+'" id="default_value_'+i+'" title="Default value" onclick="adddel_defval(this.checked,'+i+')"';
 		} else if (html_type==10) {	//_HTML_CHECKBOX_LARGE_
-			towrite+=' <input type="checkbox" name="default_value['+i+']" id="default_value_'+i+'" value="1" onclick="adddel_defval(this.checked,'+i+')"';
+			towrite+=' <input type="checkbox" name="default_value['+i+']" id="default_value_'+i+'" value="1" title="Default value" onclick="adddel_defval(this.checked,'+i+')"';
 		}
 		for (j=0;j<default_value.length;j++) {
 			if (parseInt(default_value[j])==i) {
@@ -18,13 +18,12 @@ function update_list() {
 			}
 		}
 		towrite+=' />';
-		if (search_type==3) {	//_HTML_SELECT_
-			towrite+=' <input type="radio" name="default_search" value="'+i+'" id="default_search_'+i+'" onclick="adddel_defsearch(this.checked,'+i+')"';
-		} else if (search_type==10) {	//_HTML_CHECKBOX_LARGE_
-			towrite+=' <input type="checkbox" name="default_value['+i+']" id="default_value_'+i+'" value="1" onclick="adddel_defval(this.checked,'+i+')"';
+		if ($("#search_type").val()==3) {	//_HTML_SELECT_
+			towrite+=' <input type="radio" name="default_search" value="'+i+'" id="default_search_'+i+'" title="Default search value" onclick="adddel_defsearch(this.checked,'+i+')"';
+		} else if ($("#search_type").val()==10) {	//_HTML_CHECKBOX_LARGE_
+			towrite+=' <input type="checkbox" name="default_value['+i+']" id="default_value_'+i+'" value="1" title="Default search value" onclick="adddel_defval(this.checked,'+i+')"';
 		}
-
-		towrite+='</li>';
+		towrite+='</span></li>';
 	}
 	document.getElementById('litems').innerHTML=towrite;
 }
@@ -54,6 +53,38 @@ function adddel_defval(type,position) {
 			for (i=0;i<default_value.length;i++) {
 				if (parseInt(default_value[i])==position) {
 					default_value=default_value.slice(0,i).concat(default_value.slice(i+1));
+					break;
+				}
+			}
+		}
+	}
+}
+
+function adddel_defsearch(type,position) {
+	if ($('#search_type').val==3) {	//_HTML_SELECT_
+		if (type) {
+			default_search[0]=position;
+		} else {
+			if (parseInt(default_search[0])==position) {
+				default_search=new Array();
+			}
+		}
+	} else if ($('#search_type').val==10) { 	//_HTML_CHECKBOX_LARGE_
+		if (type) {	// add here
+			doadd=true;
+			for (i=0;i<default_search.length;i++) {
+				if (parseInt(default_search[i])==position) {
+					doadd=false;
+					break;
+				}
+			}
+			if (doadd) {
+				default_search[default_search.length]=position.toString();
+			}
+		} else {	// del here
+			for (i=0;i<default_search.length;i++) {
+				if (parseInt(default_search[i])==position) {
+					default_search=default_search.slice(0,i).concat(default_search.slice(i+1));
 					break;
 				}
 			}
