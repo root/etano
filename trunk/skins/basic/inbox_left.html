@@ -3,6 +3,7 @@
 	<div class="content">
 		<ul id="user_folders">
 		<li><a href="inbox.php">INBOX</a></li>
+		<li><a href="inbox.php?del=1">TRASH</a></li>
 		<loop name="loopfolders">
 		<li><a href="inbox.php?fid={loopfolders.folder_id}">{loopfolders.folder}</a></li>
 		</loop name="loopfolders">
