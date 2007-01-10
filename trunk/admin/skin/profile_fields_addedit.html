@@ -98,11 +98,11 @@
 	</td>
 </tr>
 
-<opt name="profile_fields.row_accval_select">
+<opt name="profile_fields.row_accval_selcheck">
 <tr>
 	<td class="label">Accepted Values:</td>
 	<td class="field {profile_fields.error_accepted_values}">
-		<a href="javascript:;" onclick="addedit_accval('add',accvals.length,3)">Add new value</a> (at the end of the list)
+		<a href="javascript:;" onclick="addedit_accval('add',accvals.length)">Add new value</a> (at the end of the list)
 		<div id="accvals_div">
 			<ul id="litems">
 			{profile_fields.accepted_values_litems}
@@ -114,25 +114,7 @@
 		You must be very careful if you do one of these actions on a live site because it could break member choices for this field.
 	</td>
 </tr>
-</opt name="profile_fields.row_accval_select">
-
-<opt name="profile_fields.row_accval_checkbox">
-<tr>
-	<td class="label">Accepted Values:</td>
-	<td class="field {profile_fields.error_accepted_values}">
-		<a href="javascript:;" onclick="addedit_accval('add',accvals.length,9)">Add new value</a> (at the end of the list)
-		<div id="accvals_div">
-			<ul id="litems">
-			{profile_fields.accepted_values_litems}
-			</ul>
-		</div>
-		<input type="hidden" name="accepted_values" id="accepted_values" value="{profile_fields.accepted_values}" />
-	</td>
-	<td class="comment">Adding new values BETWEEN existing ones and deleting values from the middle of the list would break the indexes of the rest of the values.<br />
-		You must be very careful if you do one of these actions on a live site because it could break member choices for this field.
-	</td>
-</tr>
-</opt name="profile_fields.row_accval_checkbox">
+</opt name="profile_fields.row_accval_selcheck">
 
 <opt name="profile_fields.row_accval_date">
 <tr>

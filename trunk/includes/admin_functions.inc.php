@@ -145,6 +145,19 @@ function regenerate_fields_array() {
 			} else {
 				$towrite.="\$_pfields[$id]['default_value']=array();\n";
 			}
+			if (!empty($rsrow['default_search']) && $rsrow['default_search']!='||') {
+				$rsrow['default_search']=explode('|',substr($rsrow['default_search'],1,-1));
+				// for all fields whose default_searches are indexes in accepted_values we increment them with 1 because we
+				// add the default value "-" as the first element in every accepted_values array.
+				if ($rsrow['html_type']!=_HTML_DATE_ && $rsrow['html_type']!=_HTML_LOCATION_) {
+					for ($i=0;isset($rsrow['default_search'][$i]);++$i) {
+						++$rsrow['default_search'][$i];
+					}
+				}
+				$towrite.="\$_pfields[$id]['default_search']=array('".join("','",$rsrow['default_search'])."');\n";
+			} else {
+				$towrite.="\$_pfields[$id]['default_search']=array();\n";
+			}
 		}
 		$towrite.="\$_pfields[$id]['help_text']=\$_lang[".$rsrow['fk_lk_id_help']."];\n";
 		$towrite.="\n";
