@@ -10,8 +10,9 @@ $_pfields[1]['editable']=true;
 $_pfields[1]['visible']=true;
 $_pfields[1]['dbfield']='field_46';
 $_pfields[1]['fk_pcat_id']=1;
-$_pfields[1]['accepted_values']=array('-','Man','Woman','asdasdasd');
-$_pfields[1]['default_value']=array();
+$_pfields[1]['accepted_values']=array('-','Man','Woman');
+$_pfields[1]['default_value']=array('1');
+$_pfields[1]['default_search']=array('1','2');
 $_pfields[1]['help_text']=$_lang[503];
 
 $_pfields[2]['label']=$_lang[504];
@@ -27,6 +28,7 @@ $_pfields[2]['dbfield']='field_47';
 $_pfields[2]['fk_pcat_id']=1;
 $_pfields[2]['accepted_values']=array('-','Men','Women');
 $_pfields[2]['default_value']=array('2');
+$_pfields[2]['default_search']=array();
 $_pfields[2]['help_text']=$_lang[506];
 
 $_pfields[3]['label']=$_lang[507];
@@ -42,6 +44,7 @@ $_pfields[3]['dbfield']='field_48';
 $_pfields[3]['fk_pcat_id']=1;
 $_pfields[3]['accepted_values']=array('-','1950','1989');
 $_pfields[3]['default_value']=array('18','35');
+$_pfields[3]['default_search']=array();
 $_pfields[3]['help_text']=$_lang[509];
 
 $_pfields[4]['label']=$_lang[516];
@@ -57,6 +60,7 @@ $_pfields[4]['dbfield']='field_50';
 $_pfields[4]['fk_pcat_id']=1;
 $_pfields[4]['fn_on_change']='update_location';
 $_pfields[4]['default_value']=array('218');
+$_pfields[4]['default_search']=array();
 $_pfields[4]['help_text']=$_lang[518];
 
 $_pfields[5]['label']=$_lang[520];
@@ -70,6 +74,7 @@ $_pfields[5]['dbfield']='f51';
 $_pfields[5]['fk_pcat_id']=5;
 $_pfields[5]['accepted_values']=array('-','1m','1,2m','1,4m','1,5m','1,6m','1,7m');
 $_pfields[5]['default_value']=array();
+$_pfields[5]['default_search']=array();
 $_pfields[5]['help_text']=$_lang[522];
 
 $_pfields[6]['label']=$_lang[523];
@@ -83,6 +88,7 @@ $_pfields[6]['dbfield']='f52';
 $_pfields[6]['fk_pcat_id']=5;
 $_pfields[6]['accepted_values']=array('-','50kg','55kg','60kg','100kg');
 $_pfields[6]['default_value']=array();
+$_pfields[6]['default_search']=array();
 $_pfields[6]['help_text']=$_lang[525];
 
 $_pfields[7]['label']=$_lang[526];
@@ -96,6 +102,7 @@ $_pfields[7]['dbfield']='f53';
 $_pfields[7]['fk_pcat_id']=5;
 $_pfields[7]['accepted_values']=array('-','Petite','Slim','Overweight','Muscular');
 $_pfields[7]['default_value']=array();
+$_pfields[7]['default_search']=array();
 $_pfields[7]['help_text']=$_lang[528];
 
 $_pfields[8]['label']=$_lang[529];
@@ -106,6 +113,7 @@ $_pfields[8]['dbfield']='f54';
 $_pfields[8]['fk_pcat_id']=1;
 $_pfields[8]['accepted_values']=array('-','Blue','Red','Brown','Black','Yellow');
 $_pfields[8]['default_value']=array();
+$_pfields[8]['default_search']=array();
 $_pfields[8]['help_text']=$_lang[531];
 
 $_pfields[9]['label']=$_lang[532];
@@ -116,6 +124,7 @@ $_pfields[9]['dbfield']='f55';
 $_pfields[9]['fk_pcat_id']=1;
 $_pfields[9]['accepted_values']=array('-','Romanian','American','Mexican','Sarmale','Spicy','Ciorba','Borsh');
 $_pfields[9]['default_value']=array();
+$_pfields[9]['default_search']=array();
 $_pfields[9]['help_text']=$_lang[534];
 
 $_pfields[10]['label']=$_lang[535];

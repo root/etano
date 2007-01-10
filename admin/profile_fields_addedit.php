@@ -57,71 +57,62 @@ if (isset($_SESSION['topass']['input'])) {
 	$profile_fields['html_type']=(int)$_GET['html_type'];
 }
 
-if ($profile_fields['html_type']==_HTML_TEXTFIELD_) {
-	$profile_fields['row_searchable']=true;
-	$profile_fields['row_st']='invisible';
-	$profile_fields['search_type']='';
-	$profile_fields['row_accval_select']=false;
-	$profile_fields['row_accval_checkbox']=false;
-} elseif ($profile_fields['html_type']==_HTML_TEXTAREA_) {
-	$profile_fields['row_searchable']=true;
-	$profile_fields['row_st']='invisible';
-	$profile_fields['search_type']='';
-	$profile_fields['row_accval_select']=false;
-	$profile_fields['row_accval_checkbox']=false;
-} elseif ($profile_fields['html_type']==_HTML_SELECT_) {
-	if (!empty($profile_fields['default_value']) && $profile_fields['default_value']!='||') {
-		$profile_fields['default_value']=substr($profile_fields['default_value'],1,-1);
-	}
-	if (!empty($profile_fields['default_search']) && $profile_fields['default_search']!='||') {
-		if ($profile_fields['search_type']==_HTML_SELECT_) {
-			$profile_fields['default_search']=substr($profile_fields['default_search'],1,-1);
-			$profile_fields['default_search_jsarr']=$profile_fields['default_search'];
-		} elseif ($profile_fields['search_type']==_HTML_CHECKBOX_LARGE_) {
+switch ($profile_fields['html_type']) {
+
+	case _HTML_TEXTFIELD_:
+		$profile_fields['row_searchable']=true;
+		$profile_fields['row_st']='invisible';
+		$profile_fields['search_type']='';
+		$profile_fields['row_accval_select']=false;
+		$profile_fields['row_accval_checkbox']=false;
+		break;
+
+	case _HTML_TEXTAREA_:
+		$profile_fields['row_searchable']=true;
+		$profile_fields['row_st']='invisible';
+		$profile_fields['search_type']='';
+		$profile_fields['row_accval_select']=false;
+		$profile_fields['row_accval_checkbox']=false;
+		break;
+
+	case _HTML_SELECT_:
+
+	case _HTML_CHECKBOX_LARGE_:
+		$profile_fields['row_searchable']=true;
+		$profile_fields['row_st']='visible';
+		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(_HTML_TEXTFIELD_,_HTML_TEXTAREA_,_HTML_DATE_,_HTML_LOCATION_));
+		$profile_fields['row_accval_selcheck']=true;
+		// revert $accepted_values values to db original and add slashes
+		$profile_fields['accepted_values_jsarr']=vector2jsarr(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
+		if (!empty($profile_fields['default_value']) && $profile_fields['default_value']!='||') {
+			$profile_fields['default_value_jsarr']=str_replace('|',"','",substr($profile_fields['default_value'],1,-1));
+		}
+		if (!empty($profile_fields['default_search']) && $profile_fields['default_search']!='||') {
 			$profile_fields['default_search_jsarr']=str_replace('|',"','",substr($profile_fields['default_search'],1,-1));
 		}
-	}
-	$profile_fields['accepted_values_litems']=vector2list($profile_fields['html_type'],$profile_fields['search_type'],$accepted_values,$profile_fields['default_value'],$profile_fields['default_search']);
-	$profile_fields['row_searchable']=true;
-	$profile_fields['row_st']='visible';
-	$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(_HTML_TEXTFIELD_,_HTML_TEXTAREA_,_HTML_DATE_,_HTML_LOCATION_));
-	$profile_fields['row_accval_select']=true;
-	// revert $accepted_values values to db original and add slashes
-	$profile_fields['accepted_values_jsarr']=vector2jsarr(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
-	$profile_fields['default_value_jsarr']=$profile_fields['default_value'];
-} elseif ($profile_fields['html_type']==_HTML_CHECKBOX_LARGE_) {
-	if ($profile_fields['search_type']==_HTML_SELECT_) {
-		$profile_fields['default_search']=substr($profile_fields['default_search'],1,-1);
-		$profile_fields['default_search_jsarr']=$profile_fields['default_search'];
-	} elseif ($profile_fields['search_type']==_HTML_CHECKBOX_LARGE_) {
-		$profile_fields['default_search_jsarr']=str_replace('|',"','",substr($profile_fields['default_search'],1,-1));
-	}
-	$profile_fields['accepted_values_litems']=vector2list($profile_fields['html_type'],$profile_fields['search_type'],$accepted_values,$profile_fields['default_value'],$profile_fields['default_search']);
-	$profile_fields['row_searchable']=true;
-	$profile_fields['row_st']='visible';
-	$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(_HTML_TEXTFIELD_,_HTML_TEXTAREA_,_HTML_DATE_,_HTML_LOCATION_));
-	$profile_fields['row_accval_checkbox']=true;
-	// revert $accepted_values values to db original and add slashes
-	$profile_fields['accepted_values_jsarr']=vector2jsarr(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
-	$profile_fields['default_value_jsarr']=str_replace('|',"','",substr($profile_fields['default_value'],1,-1));
-	$profile_fields['row_accval_date']=false;
-} elseif ($profile_fields['html_type']==_HTML_DATE_) {
-	$profile_fields['row_searchable']=true;
-	$profile_fields['row_st']='visible';
-	$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(_HTML_TEXTFIELD_,_HTML_TEXTAREA_,_HTML_SELECT_,_HTML_CHECKBOX_LARGE_,_HTML_LOCATION_));
-	$profile_fields['row_accval_date']=true;
-	$profile_fields['year_start']=(isset($accepted_values[0]) && !empty($accepted_values[0])) ? $accepted_values[0] : 0;
-	$profile_fields['year_end']=isset($accepted_values[1]) ? $accepted_values[1] : 0;
-	$default_value=explode('|',substr($profile_fields['default_value'],1,-1));
-	$profile_fields['def_start']=(isset($default_value[0]) && !empty($default_value[0])) ? $default_value[0] : 0;
-	$profile_fields['def_end']=isset($default_value[1]) ? $default_value[1] : 0;
-} elseif ($profile_fields['html_type']==_HTML_LOCATION_) {
-	$profile_fields['default_value']=substr($profile_fields['default_value'],1,-1);
-	$profile_fields['row_searchable']=true;
-	$profile_fields['row_st']='visible';
-	$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(_HTML_TEXTFIELD_,_HTML_TEXTAREA_,_HTML_SELECT_,_HTML_CHECKBOX_LARGE_,_HTML_DATE_));
-	$profile_fields['row_accval_location']=true;
-	$profile_fields['default_value']=dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$profile_fields['default_value']);
+		break;
+
+	case _HTML_DATE_:
+		$profile_fields['row_searchable']=true;
+		$profile_fields['row_st']='visible';
+		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(_HTML_TEXTFIELD_,_HTML_TEXTAREA_,_HTML_SELECT_,_HTML_CHECKBOX_LARGE_,_HTML_LOCATION_));
+		$profile_fields['row_accval_date']=true;
+		$profile_fields['year_start']=(isset($accepted_values[0]) && !empty($accepted_values[0])) ? $accepted_values[0] : 0;
+		$profile_fields['year_end']=isset($accepted_values[1]) ? $accepted_values[1] : 0;
+		$default_value=explode('|',substr($profile_fields['default_value'],1,-1));
+		$profile_fields['def_start']=(isset($default_value[0]) && !empty($default_value[0])) ? $default_value[0] : 0;
+		$profile_fields['def_end']=isset($default_value[1]) ? $default_value[1] : 0;
+		break;
+
+	case _HTML_LOCATION_:
+		$profile_fields['default_value']=substr($profile_fields['default_value'],1,-1);
+		$profile_fields['row_searchable']=true;
+		$profile_fields['row_st']='visible';
+		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(_HTML_TEXTFIELD_,_HTML_TEXTAREA_,_HTML_SELECT_,_HTML_CHECKBOX_LARGE_,_HTML_DATE_));
+		$profile_fields['row_accval_location']=true;
+		$profile_fields['default_value']=dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$profile_fields['default_value']);
+		break;
+
 }
 
 $profile_fields['htmltype_text']=$accepted_htmltype[$profile_fields['html_type']];
@@ -151,38 +142,6 @@ $tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']='Profile Fields Management';
 include 'frame.php';
-
-
-function vector2list($html_type,$search_type,$myarray=array(),$defval=0,$defsearch=0) {
-	$myreturn='';
-	if (is_array($myarray)) {
-		while (list($k,$v)=each($myarray)) {
-			$myreturn.="<li><span class=\"litem_text\">{$v}</span> <span class=\"litem_tools\"><a href=\"javascript:;\" onclick=\"addedit_accval('edit',{$k})\" title=\"Edit\"><img src=\"skin/images/edit.gif\" alt=\"Edit\" /></a>&nbsp; &nbsp;<a href=\"javascript:;\" onclick=\"addedit_accval('add',".($k+1).")\" title=\"Add after\"><img src=\"skin/images/add.gif\" alt=\"Add after\" /></a>&nbsp; &nbsp;<a href=\"javascript:;\" onclick=\"delete_accval({$k})\" title=\"Delete\"><img src=\"skin/images/del.gif\" alt=\"Delete\" /></a>";
-			$myreturn.=' <input type="checkbox" name="default_value['.$k.']" value="1" title="Default value" onclick="adddel_defval(this.checked,'.$k.')"';
-			if (strpos($defval,"|$k|")!==false) {
-				$myreturn.=' checked="checked"';
-			}
-			$myreturn.=' />';
-			}
-			if ($search_type==_HTML_SELECT_) {
-				$myreturn.=' <input type="radio" name="default_search" id="default_search_'.$k.'" value="'.$k.'" title="Default search value" onclick="adddel_defsearch(this.checked,'.$k.')"';
-				if ($k==$defsearch) {
-					$myreturn.=' checked="checked"';
-				}
-				$myreturn.=' />';
-			} elseif ($search_type==_HTML_CHECKBOX_LARGE_) {
-				$myreturn.=' <input type="checkbox" name="default_search['.$k.']" id="default_search_'.$k.'" value="1" title="Default search value" onclick="adddel_defsearch(this.checked,'.$k.')"';
-				if (strpos($defsearch,"|$k|")!==false) {
-					$myreturn.=' checked="checked"';
-				}
-				$myreturn.=' />';
-			}
-
-			$myreturn.="</span></li>\n";
-		}
-	}
-	return $myreturn;
-}
 
 
 function vector2jsarr($myarray=array()) {

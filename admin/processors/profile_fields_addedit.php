@@ -75,56 +75,67 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['error_fk_pcat_id']='red_border';
 	}
 
-	if ($input['html_type']==_HTML_SELECT_) {
-		if ($input['default_value']!=='') {
-			$input['default_value']='|'.$input['default_value'].'|';
-		}
-	} elseif ($input['html_type']==_HTML_CHECKBOX_LARGE_) {
-		if (!empty($input['default_value'])) {
-			unset($input['default_value']['']);
-			$input['default_value']='|'.join('|',array_keys($input['default_value'])).'|';
-		} else {
-			$input['default_value']='';
-		}
-	} elseif ($input['html_type']==_HTML_DATE_) {
-		if (!$error && empty($input['year_start']) || empty($input['year_end']) || $input['year_start']<1000 || $input['year_end']<1000) {
-			$error=true;
-			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Please enter the start and end years!';
-			$input['error_accepted_values']='red_border';
-		}
-		if (!$error && empty($input['def_start']) || empty($input['def_end'])) {
-			$error=true;
-			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Please enter the default values for the search interval (age)!';
-			$input['error_default_value']='red_border';
-		}
-		$min=min($input['year_start'],$input['year_end']);
-		$max=max($input['year_start'],$input['year_end']);
-		$input['year_start']=$min;
-		$input['year_end']=$max;
-		$min=min($input['def_start'],$input['def_end']);
-		$max=max($input['def_start'],$input['def_end']);
-		$input['def_start']=$min;
-		$input['def_end']=$max;
+	switch ($input['html_type']) {
 
-		$input['accepted_values']='|'.$input['year_start'].'|'.$input['year_end'].'|';
-		$input['default_value']='|'.$input['def_start'].'|'.$input['def_end'].'|';
-		$now=date('Y');
-		if (!$error && $input['def_start']<$now-$input['year_end'] || $input['def_start']>$now-$input['year_start']) {
-			$error=true;
-			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']=sprintf('The minimum default search value is not within the years range. Allowed values are between %s and %s.',$now-$input['year_end'],$now-$input['year_start']);
-			$input['error_default_value']='red_border';
-		}
-		if (!$error && $input['def_end']<$now-$input['year_end'] || $input['def_end']>$now-$input['year_start']) {
-			$error=true;
-			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']=sprintf('The maximum default search value is not within the years range. Allowed values are between %s and %s.',$now-$input['year_end'],$now-$input['year_start']);
-			$input['error_default_value']='red_border';
-		}
-	} elseif ($input['html_type']==_HTML_LOCATION_) {
-		$input['default_value']='|'.$input['default_value'].'|';
+		case _HTML_SELECT_:
+		case _HTML_CHECKBOX_LARGE_:
+			if (!empty($input['default_value'])) {
+				unset($input['default_value']['']);
+				$input['default_value']='|'.join('|',array_keys($input['default_value'])).'|';
+			} else {
+				$input['default_value']='';
+			}
+			if (!empty($input['default_search'])) {
+				unset($input['default_search']['']);
+				$input['default_search']='|'.join('|',array_keys($input['default_search'])).'|';
+			} else {
+				$input['default_search']='';
+			}
+			break;
+
+		case _HTML_DATE_:
+			if (!$error && empty($input['year_start']) || empty($input['year_end']) || $input['year_start']<1000 || $input['year_end']<1000) {
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']='Please enter the start and end years!';
+				$input['error_accepted_values']='red_border';
+			}
+			if (!$error && empty($input['def_start']) || empty($input['def_end'])) {
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']='Please enter the default values for the search interval (age)!';
+				$input['error_default_value']='red_border';
+			}
+			$min=min($input['year_start'],$input['year_end']);
+			$max=max($input['year_start'],$input['year_end']);
+			$input['year_start']=$min;
+			$input['year_end']=$max;
+			$min=min($input['def_start'],$input['def_end']);
+			$max=max($input['def_start'],$input['def_end']);
+			$input['def_start']=$min;
+			$input['def_end']=$max;
+
+			$input['accepted_values']='|'.$input['year_start'].'|'.$input['year_end'].'|';
+			$input['default_value']='|'.$input['def_start'].'|'.$input['def_end'].'|';
+			$now=date('Y');
+			if (!$error && $input['def_start']<$now-$input['year_end'] || $input['def_start']>$now-$input['year_start']) {
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']=sprintf('The minimum default search value is not within the years range. Allowed values are between %s and %s.',$now-$input['year_end'],$now-$input['year_start']);
+				$input['error_default_value']='red_border';
+			}
+			if (!$error && $input['def_end']<$now-$input['year_end'] || $input['def_end']>$now-$input['year_start']) {
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']=sprintf('The maximum default search value is not within the years range. Allowed values are between %s and %s.',$now-$input['year_end'],$now-$input['year_start']);
+				$input['error_default_value']='red_border';
+			}
+			break;
+
+		case _HTML_LOCATION_:
+			$input['default_value']='|'.$input['default_value'].'|';
+			break;
+
 	}
 
 	if (!$error) {
