@@ -87,7 +87,6 @@ TODO
 - help texts pentru campurile textarea
 
 - admin: send newsletter/emails/messages
-- admin: field search default value
 - admin: admin accounts
 - admin: translate field values!!!!!!!!!
 - admin: flirts manager
