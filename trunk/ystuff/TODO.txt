@@ -85,6 +85,7 @@ TODO
 - formatare la date of birth
 - create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
 - help texts pentru campurile textarea
+- de convertit scoax la jquery
 
 - admin: send newsletter/emails/messages
 - admin: admin accounts

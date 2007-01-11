@@ -1,7 +1,3 @@
-var FLAG_GREEN=1;
-var FLAG_YELLOW=2;
-var FLAG_RED=3;
-
 function is_alphanum(str) {
 	patn=/^[a-zA-Z0-9_]+$/;
 	if (patn.test(str)) {
@@ -44,18 +40,6 @@ function validate_email(str) {
 		return true;
 	}
 	return false;
-}
-
-function set_field_message(field,msg_type,msg_text) {
-	the_field=document.getElementById('msg_'+field);
-	the_field.innerHTML=msg_text;
-	if (msg_type==FLAG_GREEN) {
-		the_field.className='field_green_msg';
-	} else if (msg_type==FLAG_YELLOW) {
-		the_field.className='field_yellow_msg';
-	} else if (msg_type==FLAG_RED) {
-		the_field.className='field_red_msg';
-	}
 }
 
 function numbersonly(myfield,e,dec) {
