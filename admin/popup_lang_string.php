@@ -36,7 +36,7 @@ if (isset($_SESSION['topass']['input'])) {
 	}
 } elseif (isset($_GET['lk_id']) && !empty($_GET['lk_id'])) {
 	$lk_id=(int)$_GET['lk_id'];
-	$query="SELECT a.`lang_value`,a.`skin`,b.`skin_name` FROM `{$dbtable_prefix}lang_strings` a,`site_skins` b WHERE a.`skin`=b.`skin_code` AND a.`fk_lk_id`='$lk_id'";
+	$query="SELECT a.`lang_value`,a.`skin`,b.`skin_name` FROM `{$dbtable_prefix}lang_strings` a,`{$dbtable_prefix}site_skins` b WHERE a.`skin`=b.`skin_code` AND a.`fk_lk_id`='$lk_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$lang_strings=array();
 	$skins=array();

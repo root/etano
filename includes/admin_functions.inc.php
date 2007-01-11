@@ -11,17 +11,8 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-define('DEPT_SUBADMIN',2);
+define('DEPT_MODERATOR',2);
 define('DEPT_ADMIN',4);
-$accepted_htmltype=array(_HTML_TEXTFIELD_=>'Textfield',_HTML_TEXTAREA_=>'Textarea',_HTML_SELECT_=>'Drop-down box',_HTML_CHECKBOX_LARGE_=>'Multiple checkboxes',_HTML_DATE_=>'Date',_HTML_LOCATION_=>'Location');
-$field_dbtypes=array(_HTML_TEXTFIELD_=>"varchar(100) not null default ''",_HTML_SELECT_=>'int(5) not null default 0',_HTML_FK_SELECT_=>'int(10) not null default 0',_HTML_TEXTAREA_=>"text not null default ''",_HTML_CHECKBOX_LARGE_=>"text not null default ''",_HTML_FILE_=>"varchar(64) not null default ''",_HTML_DATE_=>'date',_HTML_INT_=>'int(5) not null default 0',_HTML_FLOAT_=>'double not null default 0');
-$accepted_admin_depts=array(DEPT_ADMIN=>'Master Admin',DEPT_SUBADMIN=>'Temp Admin');
-$accepted_astats=array(_ASTAT_SUSPENDED_=>'Suspended',_ASTAT_UNVERIFIED_=>'Unactivated',_ASTAT_ACTIVE_=>'Active');
-$accepted_pstats=array(PSTAT_PENDING=>'Awaiting approval',PSTAT_EDIT=>'Requires edit',PSTAT_APPROVED=>'Approved');
-$accepted_yesno=array(0=>'No',1=>'Yes');
-$country_prefered_input=array('s'=>'state/city selection','z'=>'zip/postal code');
-
-$tplvars['default_skin']=_DEFAULT_SKIN_;
 
 define('RELEVANT_FIELDS',4); // use first RELEVANT_FIELDS fields to search/display
 
@@ -32,6 +23,16 @@ define('OPTION_TEXTAREA',3);
 define('AMTPL_REJECT_MEMBER',1);
 define('AMTPL_REJECT_PHOTO',2);
 define('AMTPL_REJECT_BLOG',3);
+
+$accepted_htmltype=array(_HTML_TEXTFIELD_=>'Textfield',_HTML_TEXTAREA_=>'Textarea',_HTML_SELECT_=>'Drop-down box',_HTML_CHECKBOX_LARGE_=>'Multiple checkboxes',_HTML_DATE_=>'Date',_HTML_LOCATION_=>'Location');
+$field_dbtypes=array(_HTML_TEXTFIELD_=>"varchar(100) not null default ''",_HTML_SELECT_=>'int(5) not null default 0',_HTML_FK_SELECT_=>'int(10) not null default 0',_HTML_TEXTAREA_=>"text not null default ''",_HTML_CHECKBOX_LARGE_=>"text not null default ''",_HTML_FILE_=>"varchar(64) not null default ''",_HTML_DATE_=>'date',_HTML_INT_=>'int(5) not null default 0',_HTML_FLOAT_=>'double not null default 0');
+$accepted_admin_depts=array(DEPT_ADMIN=>'Administrator',DEPT_MODERATOR=>'Moderator');
+$accepted_astats=array(_ASTAT_SUSPENDED_=>'Suspended',_ASTAT_UNVERIFIED_=>'Unactivated',_ASTAT_ACTIVE_=>'Active');
+$accepted_pstats=array(PSTAT_PENDING=>'Awaiting approval',PSTAT_EDIT=>'Requires edit',PSTAT_APPROVED=>'Approved');
+$accepted_yesno=array(0=>'No',1=>'Yes');
+$country_prefered_input=array('s'=>'state/city selection','z'=>'zip/postal code');
+
+$tplvars['default_skin']=_DEFAULT_SKIN_;
 
 // you shouldn't call this function directly. Instead set this to set_error_handler() and use the trigger_error method
 function admin_error($errlevel,$text,$file='unset',$line='unset') {
