@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       admin/search_photos.php
+File:                       admin/photo_search.php
 $Revision: 85 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -16,7 +16,7 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/vars.inc.php';
 require_once '../includes/admin_functions.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
-allow_dept(DEPT_ADMIN);
+allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 

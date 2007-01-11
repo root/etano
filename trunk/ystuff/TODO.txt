@@ -88,10 +88,8 @@ TODO
 - de convertit scoax la jquery
 
 - admin: send newsletter/emails/messages
-- admin: admin accounts
 - admin: translate field values!!!!!!!!!
 - admin: flirts manager
-- admin: DEPT_ADMIN | DEPT_MODERATOR
 - admin: user mail read
 - admin: latest datemill news
 - admin: delete skin
