@@ -27,9 +27,108 @@ function update_list() {
 				break;
 			}
 		}
-		towrite+='</span></li>';
+		towrite+='</span></li>'+"\n";
 	}
 	document.getElementById('litems').innerHTML=towrite;
+}
+
+
+function addedit_accval(optype,position) {
+	defval='';
+	if (optype=='edit') {
+		defval=accvals[position];
+	}
+	badfield=true;
+	while (badfield) {
+		myval=prompt('Please enter the new value. DO NOT use the \'|\' character!',defval);
+		if (!myval || myval=='') {
+			return false;
+		}
+		if (myval.indexOf('|')<0) {
+			badfield=false;
+		}
+	}
+	myval=myval.replace(/</g,'&lt;');
+	myval=myval.replace(/>/g,'&gt;');
+
+	if (myval) {
+		if (optype=='add') {
+			lk=0;
+			$.post('ajax/field_values.php',
+					{'optype':'add','val':myval},
+					function(data) {
+						if (data!=null && data!='') {
+							lk=parseInt(data);
+						}
+					}
+				);
+			if (lk!=0) {
+				accvals=accvals.slice(0,position).concat(new Array(myval)).concat(accvals.slice(position));
+				accval_lks=accval_lks.slice(0,position).concat(new Array(lk)).concat(accval_lks.slice(position));
+				for (i=0;i<default_value.length;i++) {
+					if (parseInt(default_value[i])>=position) {
+						default_value[i]=(parseInt(default_value[i])+1).toString();
+					}
+				}
+				for (i=0;i<default_search.length;i++) {
+					if (parseInt(default_search[i])>=position) {
+						default_search[i]=(parseInt(default_search[i])+1).toString();
+					}
+				}
+			}
+		} else {	// edit
+			err=true;
+			$.post('ajax/field_values.php',
+					{'optype':'edit','pos':position,'val':myval},
+					function(data) {
+						if (data!=null && data!='') {
+							err=false;
+						}
+					}
+				);
+			if (!err) {
+				accvals[position]=myval;
+			}
+		}
+		$('#accepted_values').val(vector2psv(accval_lks));
+		update_list();
+	}
+}
+
+function delete_accval(position) {
+	if (confirm('Are you sure you want to remove "'+accvals[position]+'" from the list of values?')) {
+		err=true;
+		$.post('ajax/field_values.php',
+				{'optype':'del','pos':position},
+				function(data) {
+					if (data!=null && data!='') {
+						err=false;
+					}
+				}
+			);
+		if (!err) {
+			accvals=accvals.slice(0,position).concat(accvals.slice(position+1));
+			accval_lks=accval_lks.slice(0,position).concat(accval_lks.slice(position+1));
+			adddel_defval(false,position);
+			for (i=0;i<default_value.length;i++) {
+				if (parseInt(default_value[i])>=position) {
+					default_value[i]=(parseInt(default_value[i])-1).toString();
+				}
+			}
+			for (i=0;i<default_search.length;i++) {
+				if (parseInt(default_search[i])>=position) {
+					default_search[i]=(parseInt(default_search[i])-1).toString();
+				}
+			}
+			$('#accepted_values').val(vector2psv(accval_lks));
+			update_list();
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
 }
 
 function adddel_defval(type,position) {
@@ -68,7 +167,7 @@ function adddel_defval(type,position) {
 }
 
 function adddel_defsearch(type,position) {
-	if (document.getElementById('search_type').value==3) {	//_HTML_SELECT_
+	if ($('#search_type').val()==3) {	//_HTML_SELECT_
 		if (type) {		// add here
 			for (i=0;i<accvals.length;i++) {
 				if (i!=position) {
@@ -79,7 +178,7 @@ function adddel_defsearch(type,position) {
 		} else {		// del here
 			default_search=new Array();
 		}
-	} else if (document.getElementById('search_type').value==10) { 	//_HTML_CHECKBOX_LARGE_
+	} else if ($('search_type').val()==10) { 	//_HTML_CHECKBOX_LARGE_
 		if (type) {	// add here
 			doadd=true;
 			for (i=0;i<default_search.length;i++) {
@@ -99,67 +198,6 @@ function adddel_defsearch(type,position) {
 				}
 			}
 		}
-	}
-}
-
-function addedit_accval(optype,position) {
-	defval='';
-	if (optype=='edit') {
-		defval=accvals[position];
-	}
-	badfield=true;
-	while (badfield) {
-		myval=prompt('Please enter the new value. DO NOT use the \'|\' character!',defval);
-		if (!myval || myval=='') {
-			return false;
-		}
-		if (myval.indexOf('|')<0) {
-			badfield=false;
-		}
-	}
-	myval=myval.replace(/</g,'&lt;');
-	myval=myval.replace(/>/g,'&gt;');
-
-	if (myval) {
-		if (optype=='add') {
-			accvals=accvals.slice(0,position).concat(new Array(myval)).concat(accvals.slice(position));
-			for (i=0;i<default_value.length;i++) {
-				if (parseInt(default_value[i])>=position) {
-					default_value[i]=(parseInt(default_value[i])+1).toString();
-				}
-			}
-			for (i=0;i<default_search.length;i++) {
-				if (parseInt(default_search[i])>=position) {
-					default_search[i]=(parseInt(default_search[i])+1).toString();
-				}
-			}
-		} else {	// edit
-			accvals[position]=myval;
-		}
-		document.getElementById('accepted_values').value=vector2psv(accvals);
-		update_list();
-	}
-}
-
-function delete_accval(position) {
-	if (confirm('Are you sure you want to remove "'+accvals[position]+'" from the list of values?')) {
-		accvals=accvals.slice(0,position).concat(accvals.slice(position+1));
-		adddel_defval(false,position);
-		for (i=0;i<default_value.length;i++) {
-			if (parseInt(default_value[i])>=position) {
-				default_value[i]=(parseInt(default_value[i])-1).toString();
-			}
-		}
-		for (i=0;i<default_search.length;i++) {
-			if (parseInt(default_search[i])>=position) {
-				default_search[i]=(parseInt(default_search[i])-1).toString();
-			}
-		}
-		document.getElementById('accepted_values').value=vector2psv(accvals);
-		update_list();
-		return true;
-	} else {
-		return false;
 	}
 }
 

@@ -87,6 +87,7 @@ TODO
 - help texts pentru campurile textarea
 - de convertit scoax la jquery
 - member media must have a separate baseurl.
+- widget-ul feed ar trebui sa citeasca doar din db? insertul in db sa il faca un cron?
 
 - admin: send newsletter/emails/messages
 - admin: translate field values!!!!!!!!!
