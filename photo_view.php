@@ -53,6 +53,10 @@ if (!empty($photo_id)) {
 }
 
 $tplvars['pic_width']=get_site_option('pic_width','core_photo');
+$tplvars['bbcode_comments']=get_site_option('bbcode_comments','core');
+if (empty($tplvars['bbcode_comments'])) {
+	unset($tplvars['bbcode_comments']);
+}
 $tpl->set_file('content','photo_view.html');
 $tpl->set_var('photo',$photo);
 $tpl->set_var('user_id',$user_id);
@@ -63,6 +67,7 @@ if (isset($_GET['o'])) {
 if (isset($_GET['r'])) {
 	$tpl->set_var('r',$_GET['r']);
 }
+$tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('comments');
 

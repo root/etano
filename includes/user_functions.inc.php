@@ -210,3 +210,12 @@ function get_module_codes_by_type($module_type) {
 	}
 	return $myreturn;
 }
+
+
+// This function does NOT convert html to text.
+// Make sure that the string is clean before calling this function
+function bbcode2html($str) {
+	$str=str_replace(array('[b]','[/b]','[u]','[/u]','[quote]','[/quote]','[/url]'),array('<strong>','</strong>','<span class="underline">','</span>','<blockquote>','</blockquote>','</a>'));
+	$str=preg_replace('/\[url=(http://.*?)\]/','<a href="$1">',$str);
+	return $str;
+}

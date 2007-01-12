@@ -94,3 +94,4 @@ TODO
 - admin: latest datemill news
 - admin: delete skin
 
+- cron: check for and remove orpahned lk_ids
