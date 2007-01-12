@@ -86,6 +86,7 @@ TODO
 - create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
 - help texts pentru campurile textarea
 - de convertit scoax la jquery
+- member media must have a separate baseurl.
 
 - admin: send newsletter/emails/messages
 - admin: translate field values!!!!!!!!!

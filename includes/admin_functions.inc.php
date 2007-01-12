@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       includes/admin_functions.inc.php
+File:                       admin/includes/admin_functions.inc.php
 $Revision: 87 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
