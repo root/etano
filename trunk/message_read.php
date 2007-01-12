@@ -77,12 +77,12 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id'])) {
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='No such message.';
-		redirect2page('inbox.php');
+		redirect2page('mailbox.php');
 	}
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
 	$topass['message']['text']='No such message.';
-	redirect2page('inbox.php');
+	redirect2page('mailbox.php');
 }
 
 $tplvars['title']='Read a message';
