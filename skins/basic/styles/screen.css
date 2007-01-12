@@ -544,31 +544,31 @@ ul.pager li {
 	float: left;
 }
 
-/* inbox.php */
+/* mailbox.php */
 
-#inbox_rows {
+#mailbox_rows {
 	width: 99%;
 }
 
-.inbox_row td {
+.mailbox_row td {
 	padding: 4px;
 	background: #F8F8F8;
 	border-bottom: 1px solid #E8E8E8;
 }
 
-.inbox_row .selector {
+.mailbox_row .selector {
 	width: 5px;
 }
 
-.inbox_row .date {
+.mailbox_row .date {
 	text-align: center;
 }
 
-#inbox_rows .inbox_row:hover td {
+#mailbox_rows .mailbox_row:hover td {
 	background: #EEE;
 }
 
-#inbox_rows .no_result_item {
+#mailbox_rows .no_result_item {
 	text-align: center;
 }
 
@@ -600,12 +600,12 @@ ul.pager li {
 	display: inline;
 }
 
-#inbox #hint li {
+#mailbox #hint li {
 	display: inline;
 	margin-right: 1em;
 }
 
-#inbox #hint {
+#mailbox #hint {
 	border-bottom: 1px solid #999;
 	padding: 1em;
 }

@@ -13,7 +13,7 @@
 	<loop name="folders">
 	<tr class="folders_row">
 		<td><a class="link_del" href="processors/folders_delete.php?fid={folders.folder_id}" onclick="return(confirm('Are you sure you want to delete this folder?'))"><span>Delete</span></a> <a class="link_edit" href="javascript:;" onclick="rename_folder({folders.folder_id},'{folders.folder}')"><span>Rename</span></a></td>
-		<td class="folder"><a href="inbox.php?fid={folders.folder_id}">{folders.folder}</a></td>
+		<td class="folder"><a href="mailbox.php?fid={folders.folder_id}">{folders.folder}</a></td>
 		<td class="total_messages">{folders.total}</td>
 		<td class="new_messages">{folders.not_read}</td>
 	</tr>

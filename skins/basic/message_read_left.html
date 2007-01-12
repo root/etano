@@ -10,9 +10,9 @@
 	<h3>Your Folders</h3>
 	<div class="content">
 		<ul id="user_folders">
-		<li><a href="inbox.php">INBOX</a></li>
+		<li><a href="mailbox.php">INBOX</a></li>
 		<loop name="loopfolders">
-		<li><a href="inbox.php?fid={loopfolders.folder_id}">{loopfolders.folder}</a></li>
+		<li><a href="mailbox.php?fid={loopfolders.folder_id}">{loopfolders.folder}</a></li>
 		</loop name="loopfolders">
 		</ul>
 		<a class="link_add" href="folders.php">Add new</a>
