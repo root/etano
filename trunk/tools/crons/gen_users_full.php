@@ -13,6 +13,8 @@ for ($i=0;$i<mysql_num_rows($res);++$i) {
 	$skins[]=mysql_result($res,$i,0);
 }
 
+$config=get_site_option(array('bbcode_profile'),'core');
+
 $modman=new modman();
 
 $query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `status`='".PSTAT_APPROVED."'";
@@ -23,8 +25,13 @@ while ($profile=mysql_fetch_assoc($res)) {
 	foreach ($_pfields as $field_id=>$field) {
 		if ($field['visible']) {
 			$profile[$field['dbfield'].'_label']=$field['label'];
-			if ($field['html_type']==_HTML_TEXTFIELD_ || $field['html_type']==_HTML_TEXTAREA_) {
+			if ($field['html_type']==_HTML_TEXTFIELD_) {
 				$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			} elseif ($field['html_type']==_HTML_TEXTAREA_) {
+				$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				if ($config['bbcode_profile']) {
+					$profile[$field['dbfield']]=bbcode2html($profile[$field['dbfield']]);
+				}
 			} elseif ($field['html_type']==_HTML_SELECT_) {
 				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 			} elseif ($field['html_type']==_HTML_CHECKBOX_LARGE_) {
