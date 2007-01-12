@@ -114,10 +114,8 @@ if (isset($_SESSION['user'])) {
 	}
 }
 
-if (isset($_SESSION['admin']['admin_id']) && function_exists('admin_error')) {
-	set_error_handler('admin_error');
-} elseif (!isset($_SESSION['admin']['admin_id']) && function_exists('member_error')) {
-	set_error_handler('member_error');
+if (function_exists('error_handler')) {
+	set_error_handler('error_handler');
 } elseif (function_exists('general_error')) {
 	set_error_handler('general_error');
 }
