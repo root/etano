@@ -21,11 +21,35 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 
 $content='';
-if (isset($_GET['mail_id']) && !empty($_GET['mail_id'])) {
+if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) {
 	$mail=$user_inbox_default['defaults'];
 	$mail['mail_id']=(int)$_GET['mail_id'];
-
-	$query="SELECT a.*,UNIX_TIMESTAMP(a.`date_sent`) as `date_sent`,b.`fk_user_id` as `from_id`,b.`_photo` as `photo` FROM `{$dbtable_prefix}user_inbox` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id_from`=b.`fk_user_id` WHERE a.`fk_user_id`='".$_SESSION['user']['user_id']."' AND a.`mail_id`='".$mail['mail_id']."'";
+	$fk_folder_id=(int)$_GET['fid'];
+	$mailbox_name="Inbox";
+	$mailbox_table="inbox";
+	$send_or_receive="from";
+	
+	switch ($fk_folder_id) {
+		case 0:
+			break;
+		case -1:
+			$mailbox_name="Trash";
+			break;
+		case -2:
+			$mailbox_name="Outbox";
+			$mailbox_table="outbox";
+			$send_or_receive="to";
+			break;
+		case -3:
+			$mailbox_name="Spambox";
+			$mailbox_table="spambox";
+			break;
+		default:
+			$mailbox_name=get_user_folder_name($fk_folder_id,$_SESSION['user']['user_id']);
+			break;
+	}
+		
+	$query="SELECT a.*,UNIX_TIMESTAMP(a.`date_sent`) as `date_sent`,b.`fk_user_id` as `to_or_from_id`,b.`_photo` as `photo` FROM `{$dbtable_prefix}user_".$mailbox_table."` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id_".$send_or_receive."`=b.`fk_user_id` WHERE a.`fk_user_id`='".$_SESSION['user']['user_id']."' AND a.`mail_id`='".$mail['mail_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$mail=mysql_fetch_assoc($res);
@@ -38,21 +62,24 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id'])) {
 		if (empty($mail['photo'])) {
 			$mail['photo']='no_photo.gif';
 		}
-		if (empty($mail['from_id'])) {
-			unset($mail['from_id']);
+		if (empty($mail['to_or_from_id'])) {
+			unset($mail['to_or_from_id']);
 		}
 
 		$mail=sanitize_and_format($mail,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 
 		$tpl->set_file('content','message_read.html');
 		$tpl->set_var('mail',$mail);
+		$tpl->set_var('mailbox_id',$fk_folder_id);
+		$tpl->set_var('mailbox_name',$mailbox_name);
+		$tpl->set_var('send_or_receive',$send_or_receive);
 		$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$folders=array();
 		while ($rsrow=mysql_fetch_row($res)) {
 			$folders[$rsrow[0]]=$rsrow[1];
 		}
-		if (!empty($folders)) {
+		if (!empty($folders) && $fk_folder_id!==-2 && $fk_folder_id!==-3) {
 			$tpl->set_var('folder_options',vector2options($folders));
 		}
 		if (isset($_GET['o'])) {
@@ -68,8 +95,10 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id'])) {
 			$tpl->set_var('od',$_GET['od']);
 		}
 		$tpl->process('content','content',TPL_OPTIONAL);
-		$query="UPDATE `{$dbtable_prefix}user_inbox` SET `is_read`=1 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `mail_id`='".$mail['mail_id']."'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if ($fk_folder_id!==-2){
+			$query="UPDATE `{$dbtable_prefix}user_".$mailbox_table."` SET `is_read`=1 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `mail_id`='".$mail['mail_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		}
 
 		if (is_file('message_read_left.php')) {
 			include 'message_read_left.php';

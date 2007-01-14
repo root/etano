@@ -16,6 +16,7 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/vars.inc.php';
 require_once '../includes/tables/queue_message.inc.php';
+require_once '../includes/tables/user_outbox.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(5);
 
@@ -53,6 +54,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['_user_from']=$_SESSION['user']['user'];
 		$query="INSERT INTO `{$dbtable_prefix}queue_message` SET `date_sent`='".gmdate('YmdHis')."'";
 		foreach ($queue_message_default['defaults'] as $k=>$v) {
+			if (isset($input[$k])) {
+				$query.=",`$k`='".$input[$k]."'";
+			}
+		}
+		$input['fk_user_id_to']=$input['fk_user_id'];
+		$input['fk_user_id']=$_SESSION['user']['user_id'];
+		$input['_user_to']=get_user_by_userid($input['fk_user_id_to']);
+		$query="INSERT INTO `{$dbtable_prefix}user_outbox` SET `date_sent`='".gmdate('YmdHis')."'";
+		foreach ($user_outbox_default['defaults'] as $k=>$v) {
 			if (isset($input[$k])) {
 				$query.=",`$k`='".$input[$k]."'";
 			}
