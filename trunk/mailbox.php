@@ -69,6 +69,8 @@ switch ($fk_folder_id) {
 		$tpl->set_var('inbox_options',true);
 		break;
 	default:
+// daca se muta citirea lui $folders deasupra la acest switch putem sa facem mai jos $mailbox_name=$folders[$fk_folder_id]
+// in felul asta eliminam un query aici
 		$mailbox_name=get_user_folder_name($fk_folder_id,$_SESSION['user']['user_id']);
 		$del_where=" AND a.`del`='$del'";
 		$tpl->set_var('inbox_options',true);
