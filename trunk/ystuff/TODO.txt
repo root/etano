@@ -3,8 +3,6 @@
 
 - poate ca ar trebui adaugat un DEFAULT_VALUE care sa fie afisat la toate campurile care nu au nimic introdus.
 
-- delete skin
-
 - nu ar trebui sa generez lk pentru search label daca nu e searchable.
 - in caz de eroare la profile_edit
 
@@ -21,8 +19,6 @@ In felul asta userul poate sa isi aleaga ce se afiseaza
 - ar trebui creat un regenerate_langstrings_array_diff(action,lk,lang_val,skin) (si restul de functii regenerate)
 	care sa faca un include() (nu include_once()) la fisierul lor, sa modifice diferenta si sa il rescrie.
 	action ar tb sa fie add|del|mod
-
-- accepted_values tb sa fie dependente de lang
 
 - de scos vector2checkboxes_new din admin/profile_categories_addedit si de verif ca merge fara.
 
@@ -90,10 +86,11 @@ TODO
 - widget-ul feed ar trebui sa citeasca doar din db? insertul in db sa il faca un cron?
 
 - admin: send newsletter/emails/messages
-- admin: translate field values!!!!!!!!!
 - admin: flirts manager
 - admin: user mail read
+- admin: give a certain membership to a member until (or for xxx days)
 - admin: latest datemill news
-- admin: delete skin
+- admin: pic min/max file size
 
 - cron: check for and remove orpahned lk_ids
+- la stergerea unui user tb sa fac fk_user_id=0 peste tot pe unde exista referinte la id-ul userului sters.

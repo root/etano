@@ -25,7 +25,7 @@ if (isset($_GET['module_code']) && !empty($_GET['module_code'])) {
 	$active_module_code=sanitize_and_format($_GET['module_code'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
 }
 
-$query="SELECT a.*,b.`module_name`,b.`module_type` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b WHERE b.`module_code`=a.`fk_module_code` ORDER BY b.`module_type` ASC, a.`fk_module_code` ASC";
+$query="SELECT a.*,b.`module_name`,b.`module_type` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b WHERE b.`module_code`=a.`fk_module_code` AND a.`option_type`<>'".OPTION_NA."' ORDER BY b.`module_type` ASC, a.`fk_module_code` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $site_options=array();
 $i=-1;
@@ -47,6 +47,10 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 
 			case _MODULE_WIDGET_:
 				$site_options[$i]['module_name']='Widget: ';
+				break;
+
+			case _MODULE_SKIN_:
+				$site_options[$i]['module_name']='Skin: ';
 				break;
 
 		}
@@ -76,10 +80,6 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 
 		case OPTION_TEXTAREA:
 			$rsrow['field']='<textarea class="input_ta" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'">'.$rsrow['config_value'].'</textarea>';
-			break;
-
-		case 0:		// non editable option
-			--$j;
 			break;
 
 	}

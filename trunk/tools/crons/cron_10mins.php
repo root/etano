@@ -6,11 +6,11 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
 $tpl=new phemplate(_BASEPATH_.'/skins/','remove_nonjs');
 
-$query="SELECT `skin_code` FROM `{$dbtable_prefix}site_skins`";
+$query="SELECT b.`config_value` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='"._MODULE_SKIN_."' AND a.`module_code`=b.`fk_module_code` AND b.`config_value`='skin_dir'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-$skins=array();
+$skin_dirs=array();
 for ($i=0;$i<mysql_num_rows($res);++$i) {
-	$skins[]=mysql_result($res,$i,0);
+	$skin_dirs[]=mysql_result($res,$i,0);
 }
 
 $modman=new modman();
@@ -38,14 +38,14 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 		$profile['_photo']='no_photo.gif';
 	}
 	$tpl->set_var('profile',$profile);
-	for ($s=0;isset($skins[$s]);++$s) {
-		if (!is_dir(_BASEPATH_.'/skins/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'])) {
-			$modman->fileop->mkdir(_BASEPATH_.'/skins/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id']);
+	for ($s=0;isset($skin_dirs[$s]);++$s) {
+		if (!is_dir(_BASEPATH_.'/skins/'.$skin_dirs[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'])) {
+			$modman->fileop->mkdir(_BASEPATH_.'/skins/'.$skin_dirs[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id']);
 		}
 		// generate the user details mini
-		$tpl->set_file('temp',$skins[$s].'/static/user_details_mini.html');
+		$tpl->set_file('temp',$skin_dirs[$s].'/static/user_details_mini.html');
 		$towrite=$tpl->process('','temp');
-		$modman->fileop->file_put_contents(_BASEPATH_.'/skins/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/user_details_mini.html',$towrite);
+		$modman->fileop->file_put_contents(_BASEPATH_.'/skins/'.$skin_dirs[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/user_details_mini.html',$towrite);
 	}
 	$tpl->drop_var('user');
 }

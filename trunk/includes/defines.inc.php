@@ -7,7 +7,7 @@ define('_SITENAME_','Web Application');// Your site name
 define('_BASEURL_','http://dating.sco.ro/newdsb');// protocol required (http:// )
 define('_BASEPATH_','/www/htdocs/newdsb');// path on server to your site
 define('_RESULTS_',6);// default search results per page
-define('_DEFAULT_SKIN_','basic');
+define('_DEFAULT_SKIN_','skin_basic');
 define('_FTP_SERVER_','localhost');
 define('_FTPPATH_','/newdsb');
 define('_FTP_USER_','newdsb');

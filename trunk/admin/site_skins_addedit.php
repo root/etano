@@ -24,32 +24,17 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $site_skins=$site_skins_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$site_skins=$_SESSION['topass']['input'];
-} elseif (isset($_GET['skin_id']) && !empty($_GET['skin_id'])) {
-	$skin_id=(int)$_GET['skin_id'];
-	$query="SELECT * FROM `{$dbtable_prefix}site_skins` WHERE `skin_id`='$skin_id'";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_num_rows($res)) {
-		$site_skins=mysql_fetch_assoc($res);
-		$site_skins=sanitize_and_format($site_skins,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
-	}
+} elseif (isset($_GET['module_code']) && !empty($_GET['module_code'])) {
+	$module_code=sanitize_and_format($_GET['module_code'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
+	$site_skins=get_site_option(array(),$module_code);
+	$site_skins=sanitize_and_format($site_skins,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+	$site_skins['fk_module_code']=$module_code;
 }
 
 $site_skins['fk_locale_id']=dbtable2options("`{$dbtable_prefix}locales`",'`locale_id`','`locale_name`','`locale_name`',$site_skins['fk_locale_id']);
 
 $tpl->set_file('content','site_skins_addedit.html');
 $tpl->set_var('site_skins',$site_skins);
-if (isset($_GET['o'])) {
-	$tpl->set_var('o',$_GET['o']);
-}
-if (isset($_GET['r'])) {
-	$tpl->set_var('r',$_GET['r']);
-}
-if (isset($_GET['ob'])) {
-	$tpl->set_var('ob',$_GET['ob']);
-}
-if (isset($_GET['od'])) {
-	$tpl->set_var('od',$_GET['od']);
-}
 $tpl->process('content','content');
 
 $tplvars['title']='Site Skins';

@@ -53,42 +53,45 @@ function addedit_accval(optype,position) {
 
 	if (myval) {
 		if (optype=='add') {
-			lk=0;
-			$.post('ajax/field_values.php',
-					{'optype':'add','val':myval},
-					function(data) {
-						if (data!=null && data!='') {
-							lk=parseInt(data);
+			var lk_id=0;
+			$.ajax({url:'ajax/field_values.php',
+					type:'POST',
+					dataType:'html',
+					data:'optype=add&val='+myval,
+					async:false,
+					success:function(data) {
+						if (data!=null && data!='' && parseInt(data).toString()==data) {
+							lk_id=parseInt(data);
+							if (lk_id!=0) {
+								accvals=accvals.slice(0,position).concat(new Array(myval)).concat(accvals.slice(position));
+								accval_lks=accval_lks.slice(0,position).concat(new Array(lk_id.toString())).concat(accval_lks.slice(position));
+								for (i=0;i<default_value.length;i++) {
+									if (parseInt(default_value[i])>=position) {
+										default_value[i]=(parseInt(default_value[i])+1).toString();
+									}
+								}
+								for (i=0;i<default_search.length;i++) {
+									if (parseInt(default_search[i])>=position) {
+										default_search[i]=(parseInt(default_search[i])+1).toString();
+									}
+								}
+							}
 						}
 					}
-				);
-			if (lk!=0) {
-				accvals=accvals.slice(0,position).concat(new Array(myval)).concat(accvals.slice(position));
-				accval_lks=accval_lks.slice(0,position).concat(new Array(lk)).concat(accval_lks.slice(position));
-				for (i=0;i<default_value.length;i++) {
-					if (parseInt(default_value[i])>=position) {
-						default_value[i]=(parseInt(default_value[i])+1).toString();
-					}
-				}
-				for (i=0;i<default_search.length;i++) {
-					if (parseInt(default_search[i])>=position) {
-						default_search[i]=(parseInt(default_search[i])+1).toString();
-					}
-				}
-			}
+			});
 		} else {	// edit
 			err=true;
-			$.post('ajax/field_values.php',
-					{'optype':'edit','pos':position,'val':myval},
-					function(data) {
-						if (data!=null && data!='') {
-							err=false;
+			$.ajax({url:'ajax/field_values.php',
+					type:'POST',
+					dataType:'html',
+					data:'optype=edit&val='+myval+'&lk_id='+accval_lks[position],
+					async:false,
+					success:function(data) {
+						if (data!=null && data!='' && parseInt(data).toString()==data) {
+							accvals[position]=myval;
 						}
 					}
-				);
-			if (!err) {
-				accvals[position]=myval;
-			}
+			});
 		}
 		$('#accepted_values').val(vector2psv(accval_lks));
 		update_list();
@@ -98,36 +101,31 @@ function addedit_accval(optype,position) {
 function delete_accval(position) {
 	if (confirm('Are you sure you want to remove "'+accvals[position]+'" from the list of values?')) {
 		err=true;
-		$.post('ajax/field_values.php',
-				{'optype':'del','pos':position},
-				function(data) {
-					if (data!=null && data!='') {
-						err=false;
+		$.ajax({url:'ajax/field_values.php',
+				type:'POST',
+				dataType:'html',
+				data:'optype=del&lk_id='+accval_lks[position],
+				async:false,
+				success:function(data) {
+					if (data!=null && data!='' && parseInt(data).toString()==data) {
+						accvals=accvals.slice(0,position).concat(accvals.slice(position+1));
+						accval_lks=accval_lks.slice(0,position).concat(accval_lks.slice(position+1));
+						adddel_defval(false,position);
+						for (i=0;i<default_value.length;i++) {
+							if (parseInt(default_value[i])>=position) {
+								default_value[i]=(parseInt(default_value[i])-1).toString();
+							}
+						}
+						for (i=0;i<default_search.length;i++) {
+							if (parseInt(default_search[i])>=position) {
+								default_search[i]=(parseInt(default_search[i])-1).toString();
+							}
+						}
+						$('#accepted_values').val(vector2psv(accval_lks));
+						update_list();
 					}
 				}
-			);
-		if (!err) {
-			accvals=accvals.slice(0,position).concat(accvals.slice(position+1));
-			accval_lks=accval_lks.slice(0,position).concat(accval_lks.slice(position+1));
-			adddel_defval(false,position);
-			for (i=0;i<default_value.length;i++) {
-				if (parseInt(default_value[i])>=position) {
-					default_value[i]=(parseInt(default_value[i])-1).toString();
-				}
-			}
-			for (i=0;i<default_search.length;i++) {
-				if (parseInt(default_search[i])>=position) {
-					default_search[i]=(parseInt(default_search[i])-1).toString();
-				}
-			}
-			$('#accepted_values').val(vector2psv(accval_lks));
-			update_list();
-			return true;
-		} else {
-			return false;
-		}
-	} else {
-		return false;
+		});
 	}
 }
 

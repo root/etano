@@ -25,7 +25,7 @@ $topass=array();
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$query="SELECT `skin_code` FROM `{$dbtable_prefix}site_skins`";
+	$query="SELECT `module_code` FROM `{$dbtable_prefix}modules` WHERE `module_type`='"._MODULE_SKIN_."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$skins=array();
 	for ($i=0;$i<mysql_num_rows($res);++$i) {

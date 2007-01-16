@@ -4,19 +4,19 @@
 <table cellspacing="0" id="skins_list" class="results_table">
 <tr>
 	<th width="1%"></th>
-	<th>Skin Name <a href="site_skins.php?o={o}&amp;r={r}&amp;ob=1&amp;od=0" title="Order ascending"><img src="skin/images/up.gif" alt="up" /></a> <a href="site_skins.php?o={o}&amp;r={r}&amp;ob=1&amp;od=1" title="Order descending"><img src="skin/images/down.gif" alt="down" /></a></th>
-	<th>Skin Code</th>
+	<th>Skin Name</th>
+	<th>Skin Folder</th>
 	<th>Default</th>
 	<th></th>
 	<th width="30%"></th>
 </tr>
 <loop name="site_skins">
 <tr align="center" class="{site_skins.myclass}">
-	<td><a href="processors/site_skins_delete.php?skin_id={site_skins.skin_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" onclick="return(confirm('Are you sure you want to delete this skin?'))" title="Delete this skin"><img alt="Delete this skin" src="skin/images/del.gif" alt="delete" /></a></td>
-	<td><a href="site_skins_addedit.php?skin_id={site_skins.skin_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" title="Edit this skin settings">{site_skins.skin_name}</a></td>
-	<td>{site_skins.skin_code}</td>
-	<td>{site_skins.is_default}<opt name="!site_skins.is_default"><a href="processors/skin_default.php?skin_id={site_skins.skin_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Make default</a></opt name="!site_skins.is_default"></td>
-	<td><a href="lang_strings.php?s={site_skins.skin_code}">Translate</a> | <a href="processors/regenerate_skin.php?s={site_skins.skin_code}">Regenerate</a></td>
+	<td><a href="processors/site_skins_delete.php?module_code={site_skins.module_code}" onclick="return(confirm('Are you sure you want to delete this skin?'))" title="Delete this skin"><img alt="Delete this skin" src="skin/images/del.gif" alt="Delete" /></a></td>
+	<td><a href="site_skins_addedit.php?module_code={site_skins.module_code}" title="Edit this skin settings">{site_skins.skin_name}</a></td>
+	<td>{site_skins.skin_dir}</td>
+	<td>{site_skins.is_default}<opt name="!site_skins.is_default"><a href="processors/skin_default.php?module_code={site_skins.module_code}">Make default</a></opt name="!site_skins.is_default"></td>
+	<td><a href="lang_strings.php?s={site_skins.module_code}">Translate</a> | <a href="processors/regenerate_skin.php?s={site_skins.module_code}">Regenerate</a></td>
 	<td></td>
 </tr>
 <noloop name="site_skins">
