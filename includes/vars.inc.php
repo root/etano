@@ -51,6 +51,7 @@ define('_MODULE_REGULAR_',0);
 define('_MODULE_PAYMENT_',1);
 define('_MODULE_FRAUD_',2);
 define('_MODULE_WIDGET_',3);
+define('_MODULE_SKIN_',4);
 
 // Unset globally registered vars
 function _unset_vars(&$var) {

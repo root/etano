@@ -39,9 +39,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['error_skin_name']='red_border';
 	}
 
-	$query="SELECT `skin_id` FROM `{$dbtable_prefix}site_skins` WHERE `skin_name`='".$input['skin_name']."'";
+	$query="SELECT `fk_module_code` FROM `{$dbtable_prefix}site_options3` WHERE `config_option`='skin_name' AND `config_value`='".$input['skin_name']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_num_rows($res) && mysql_result($res,0,0)!=$input['skin_id']) {
+	if (mysql_num_rows($res) && mysql_result($res,0,0)!=$input['fk_module_code']) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='This skin name already exists! Please enter a unique name.';
@@ -49,17 +49,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		if (!empty($input['skin_id'])) {
-			unset($input['skin_code']);
-			$query="UPDATE `{$dbtable_prefix}site_skins` SET ";
+		if (!empty($input['fk_module_code'])) {
+			$fk_module_code=$input['fk_module_code'];
+			unset($input['fk_module_code']);
+			unset($input['skin_dir']);
 			foreach ($input as $k=>$v) {
-				$query.="`$k`='$v',";
+				set_site_option($k,$fk_module_code,$v);
 			}
-			$query=substr($query,0,-1);
-			$query.=" WHERE `skin_id`='".$input['skin_id']."'";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-			regenerate_langstrings_array();
+//			regenerate_langstrings_array();
 
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Skin settings saved.';
@@ -68,22 +66,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$nextpage='admin/site_skins_addedit.php';
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
-	}
-	if (isset($_POST['o'])) {
-		$qs.=$qs_sep.'o='.$_POST['o'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['r'])) {
-		$qs.=$qs_sep.'r='.$_POST['r'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['ob'])) {
-		$qs.=$qs_sep.'ob='.$_POST['ob'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['od'])) {
-		$qs.=$qs_sep.'od='.$_POST['od'];
-		$qs_sep='&';
 	}
 }
 redirect2page($nextpage,$topass,$qs);

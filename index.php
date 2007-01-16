@@ -27,9 +27,9 @@ for ($i=0;isset($search_fields[$i]);++$i) {
 		$search[$s]['label']=$_pfields[$search_fields[$i]]['search_label'];
 		$search[$s]['dbfield']=$_pfields[$search_fields[$i]]['dbfield'];
 		if ($_pfields[$search_fields[$i]]['search_type']==_HTML_SELECT_) {
-			$search[$s]['field']='<select name="'.$_pfields[$search_fields[$i]]['dbfield'].'" id="'.$_pfields[$search_fields[$i]]['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($_pfields[$search_fields[$i]]['accepted_values'],$_pfields[$search_fields[$i]]['default_value'][0],array(0)).'</select>';
+			$search[$s]['field']='<select name="'.$_pfields[$search_fields[$i]]['dbfield'].'" id="'.$_pfields[$search_fields[$i]]['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($_pfields[$search_fields[$i]]['accepted_values'],$_pfields[$search_fields[$i]]['default_search'][0],array(0)).'</select>';
 		} elseif ($_pfields[$search_fields[$i]]['search_type']==_HTML_CHECKBOX_LARGE_) {
-			$search[$s]['field']=vector2checkboxes_str($_pfields[$search_fields[$i]]['accepted_values'],array(0),$_pfields[$search_fields[$i]]['dbfield'],$_pfields[$search_fields[$i]]['default_value'],1,true,'tabindex="'.($i+4).'"');
+			$search[$s]['field']=vector2checkboxes_str($_pfields[$search_fields[$i]]['accepted_values'],array(0),$_pfields[$search_fields[$i]]['dbfield'],$_pfields[$search_fields[$i]]['default_search'],1,true,'tabindex="'.($i+4).'"');
 		} elseif ($_pfields[$search_fields[$i]]['search_type']==_HTML_DATE_) {
 			$search[$s]['field']='<select name="'.$_pfields[$search_fields[$i]]['dbfield'].'_min" id="'.$_pfields[$search_fields[$i]]['dbfield'].'_min" tabindex="'.($i+4).'">'.interval2options(date('Y')-$_pfields[$search_fields[$i]]['accepted_values'][2],date('Y')-$_pfields[$search_fields[$i]]['accepted_values'][1],$_pfields[$search_fields[$i]]['default_value'][0]).'</select> - ';
 			$search[$s]['field'].='<select name="'.$_pfields[$search_fields[$i]]['dbfield'].'_max" id="'.$_pfields[$search_fields[$i]]['dbfield'].'_max" tabindex="'.($i+4).'">'.interval2options(date('Y')-$_pfields[$search_fields[$i]]['accepted_values'][2],date('Y')-$_pfields[$search_fields[$i]]['accepted_values'][1],$_pfields[$search_fields[$i]]['default_value'][1]).'</select>';

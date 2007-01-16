@@ -1,12 +1,13 @@
 <?
 require_once '../../includes/classes/phemplate.class.php';
 require_once '../../includes/vars.inc.php';
+require_once '../../includes/user_functions.inc.php';
 require_once '../../includes/classes/modman.class.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
 $tpl=new phemplate(_BASEPATH_.'/skins/','remove_nonjs');
 
-$query="SELECT `skin_code` FROM `{$dbtable_prefix}site_skins`";
+$query="SELECT a.`config_value` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b WHERE a.`config_option`='skin_dir' AND a.`fk_module_code`=b.`module_code` AND b.`module_type`='"._MODULE_SKIN_."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $skins=array();
 for ($i=0;$i<mysql_num_rows($res);++$i) {

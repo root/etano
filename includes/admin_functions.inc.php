@@ -16,6 +16,7 @@ define('DEPT_ADMIN',4);
 
 define('RELEVANT_FIELDS',4); // use first RELEVANT_FIELDS fields to search/display
 
+define('OPTION_NA',0);
 define('OPTION_CHECKBOX',1);
 define('OPTION_TEXTFIELD',2);
 define('OPTION_TEXTAREA',3);
@@ -23,6 +24,11 @@ define('OPTION_TEXTAREA',3);
 define('AMTPL_REJECT_MEMBER',1);
 define('AMTPL_REJECT_PHOTO',2);
 define('AMTPL_REJECT_BLOG',3);
+
+// language key types
+define('LK_SITE',0);
+define('LK_FIELD',1);
+define('LK_MESSAGE',2);
 
 $accepted_htmltype=array(_HTML_TEXTFIELD_=>'Textfield',_HTML_TEXTAREA_=>'Textarea',_HTML_SELECT_=>'Drop-down box',_HTML_CHECKBOX_LARGE_=>'Multiple checkboxes',_HTML_DATE_=>'Date',_HTML_LOCATION_=>'Location');
 $field_dbtypes=array(_HTML_TEXTFIELD_=>"varchar(100) not null default ''",_HTML_SELECT_=>'int(5) not null default 0',_HTML_FK_SELECT_=>'int(10) not null default 0',_HTML_TEXTAREA_=>"text not null default ''",_HTML_CHECKBOX_LARGE_=>"text not null default ''",_HTML_FILE_=>"varchar(64) not null default ''",_HTML_DATE_=>'date',_HTML_INT_=>'int(5) not null default 0',_HTML_FLOAT_=>'double not null default 0');
@@ -125,41 +131,81 @@ function regenerate_fields_array() {
 		if (!empty($rsrow['fn_on_change'])) {
 			$towrite.="\$_pfields[$id]['fn_on_change']='".$rsrow['fn_on_change']."';\n";
 		}
-		if ($rsrow['html_type']!=_HTML_TEXTFIELD_ && $rsrow['html_type']!=_HTML_TEXTAREA_) {
-			if ($rsrow['html_type']!=_HTML_LOCATION_) {
+
+		switch ($rsrow['html_type']) {
+
+			case _HTML_SELECT_:
+			case _HTML_CHECKBOX_LARGE_:
+				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
+					$towrite.="\$_pfields[$id]['accepted_values']=array('-',\$_lang[".str_replace('|',"],\$_lang[",substr($rsrow['accepted_values'],1,-1))."]);\n";
+				} else {
+					$towrite.="\$_pfields[$id]['accepted_values']=array('-');\n";
+				}
+				if (!empty($rsrow['default_value']) && $rsrow['default_value']!='||') {
+					$rsrow['default_value']=explode('|',substr($rsrow['default_value'],1,-1));
+					// for all fields whose default_values are indexes in accepted_values we increment them with 1 because we
+					// add the default value "-" as the first element in every accepted_values array.
+					for ($i=0;isset($rsrow['default_value'][$i]);++$i) {
+						++$rsrow['default_value'][$i];
+					}
+					$towrite.="\$_pfields[$id]['default_value']=array('".join("','",$rsrow['default_value'])."');\n";
+				} else {
+					$towrite.="\$_pfields[$id]['default_value']=array();\n";
+				}
+				if (!empty($rsrow['default_search']) && $rsrow['default_search']!='||') {
+					$rsrow['default_search']=explode('|',substr($rsrow['default_search'],1,-1));
+					// for all fields whose default_searches are indexes in accepted_values we increment them with 1 because we
+					// add the default value "-" as the first element in every accepted_values array.
+					for ($i=0;isset($rsrow['default_search'][$i]);++$i) {
+						++$rsrow['default_search'][$i];
+					}
+					$towrite.="\$_pfields[$id]['default_search']=array('".join("','",$rsrow['default_search'])."');\n";
+				} else {
+					$towrite.="\$_pfields[$id]['default_search']=array();\n";
+				}
+				break;
+
+			case _HTML_DATE_:
 				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
 					$towrite.="\$_pfields[$id]['accepted_values']=array('-','".str_replace('|',"','",substr($rsrow['accepted_values'],1,-1))."');\n";
 				} else {
 					$towrite.="\$_pfields[$id]['accepted_values']=array('-');\n";
 				}
-			}
-			if (!empty($rsrow['default_value']) && $rsrow['default_value']!='||') {
-				$rsrow['default_value']=explode('|',substr($rsrow['default_value'],1,-1));
-				// for all fields whose default_values are indexes in accepted_values we increment them with 1 because we
-				// add the default value "-" as the first element in every accepted_values array.
-				if ($rsrow['html_type']!=_HTML_DATE_ && $rsrow['html_type']!=_HTML_LOCATION_) {
-					for ($i=0;isset($rsrow['default_value'][$i]);++$i) {
-						++$rsrow['default_value'][$i];
-					}
+				if (!empty($rsrow['default_value']) && $rsrow['default_value']!='||') {
+					$rsrow['default_value']=explode('|',substr($rsrow['default_value'],1,-1));
+					$towrite.="\$_pfields[$id]['default_value']=array('".join("','",$rsrow['default_value'])."');\n";
+				} else {
+					$towrite.="\$_pfields[$id]['default_value']=array();\n";
 				}
-				$towrite.="\$_pfields[$id]['default_value']=array('".join("','",$rsrow['default_value'])."');\n";
-			} else {
-				$towrite.="\$_pfields[$id]['default_value']=array();\n";
-			}
-			if (!empty($rsrow['default_search']) && $rsrow['default_search']!='||') {
-				$rsrow['default_search']=explode('|',substr($rsrow['default_search'],1,-1));
-				// for all fields whose default_searches are indexes in accepted_values we increment them with 1 because we
-				// add the default value "-" as the first element in every accepted_values array.
-				if ($rsrow['html_type']!=_HTML_DATE_ && $rsrow['html_type']!=_HTML_LOCATION_) {
-					for ($i=0;isset($rsrow['default_search'][$i]);++$i) {
-						++$rsrow['default_search'][$i];
-					}
+				if (!empty($rsrow['default_search']) && $rsrow['default_search']!='||') {
+					$rsrow['default_search']=explode('|',substr($rsrow['default_search'],1,-1));
+					$towrite.="\$_pfields[$id]['default_search']=array('".join("','",$rsrow['default_search'])."');\n";
+				} else {
+					$towrite.="\$_pfields[$id]['default_search']=array();\n";
 				}
-				$towrite.="\$_pfields[$id]['default_search']=array('".join("','",$rsrow['default_search'])."');\n";
-			} else {
-				$towrite.="\$_pfields[$id]['default_search']=array();\n";
-			}
+				break;
+
+			case _HTML_LOCATION_:
+				if (!empty($rsrow['default_value']) && $rsrow['default_value']!='||') {
+					$rsrow['default_value']=explode('|',substr($rsrow['default_value'],1,-1));
+					$towrite.="\$_pfields[$id]['default_value']=array('".join("','",$rsrow['default_value'])."');\n";
+				} else {
+					$towrite.="\$_pfields[$id]['default_value']=array();\n";
+				}
+				if (!empty($rsrow['default_search']) && $rsrow['default_search']!='||') {
+					$rsrow['default_search']=explode('|',substr($rsrow['default_search'],1,-1));
+					$towrite.="\$_pfields[$id]['default_search']=array('".join("','",$rsrow['default_search'])."');\n";
+				} else {
+					$towrite.="\$_pfields[$id]['default_search']=array();\n";
+				}
+				break;
+
+			case _HTML_TEXTFIELD_:
+			case _HTML_TEXTAREA_:
+				break;
+
 		}
+
 		$towrite.="\$_pfields[$id]['help_text']=\$_lang[".$rsrow['fk_lk_id_help']."];\n";
 		$towrite.="\n";
 	}
@@ -183,26 +229,26 @@ function regenerate_langstrings_array() {
 	require_once _BASEPATH_.'/includes/classes/modman.class.php';
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	$modman=new modman();
-	$query="SELECT `skin_code` FROM `{$dbtable_prefix}site_skins`";
+	$query="SELECT a.`module_code`,b.`config_value` as `skin_dir` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='"._MODULE_SKIN_."' AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_dir'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	for ($i=0;$i<mysql_num_rows($res);++$i) {
-		$skins[]=mysql_result($res,$i,0);
+	while ($rsrow=mysql_fetch_assoc($res)) {
+		$skins[]=$rsrow;
 	}
 	for ($i=0;isset($skins[$i]);++$i) {
 		$towrite="<?php\n";
-		$query="SELECT b.`codes` FROM `{$dbtable_prefix}site_skins` a,`{$dbtable_prefix}locales` b WHERE a.`fk_locale_id`=b.`locale_id` AND a.`skin_code`='".$skins[$i]."'";
+		$query="SELECT b.`codes` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}locales` b WHERE a.`config_option`='fk_locale_id' AND a.`config_value`=b.`locale_id` AND a.`fk_module_code`='".$skins[$i]['module_code']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$temp=mysql_result($res,0,0);
 			$towrite.="setlocale(LC_TIME,array('".str_replace(',',"','",$temp)."'));\n";
 		}
-		$query="SELECT a.`lk_id`,b.`lang_value` FROM `{$dbtable_prefix}lang_keys` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`lk_id`=b.`fk_lk_id` AND b.`skin`='".$skins[$i]."')";
+		$query="SELECT a.`lk_id`,b.`lang_value` FROM `{$dbtable_prefix}lang_keys` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`lk_id`=b.`fk_lk_id` AND b.`skin`='".$skins[$i]['module_code']."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT] | FORMAT_ADDSLASH,'');
 			$towrite.="\$_lang[".$rsrow['lk_id']."]='".$rsrow['lang_value']."';\n";
 		}
-		$modman->fileop->file_put_contents(_BASEPATH_.'/skins/'.$skins[$i].'/lang/strings.inc.php',$towrite);
+		$modman->fileop->file_put_contents(_BASEPATH_.'/skins/'.$skins[$i]['skin_dir'].'/lang/strings.inc.php',$towrite);
 	}
 }
 
@@ -320,4 +366,3 @@ function queue_or_send_email($email_addrs,$email) {
 	}
 	return $myreturn;
 }
-

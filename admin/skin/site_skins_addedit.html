@@ -1,6 +1,5 @@
 <script type="text/javascript">
-	function check_form() {
-		the=document.getElementById('site_skins_addedit');
+	function check_form(the) {
 		if (the.skin_name.value=='') {
 			alert('Please enter the name of this skin!');
 			the.skin_name.focus();
@@ -11,17 +10,13 @@
 </script>
 <h1>Change Skin Settings</h1>
 <div class="hint">Please enter the required info below:</div>
-<form action="processors/site_skins_addedit.php" method="post" id="site_skins_addedit" onsubmit="return(check_form())">
-<input type="hidden" name="skin_id" value="{site_skins.skin_id}" />
-<input type="hidden" name="o" value="{o}" />
-<input type="hidden" name="r" value="{r}" />
-<input type="hidden" name="ob" value="{ob}" />
-<input type="hidden" name="od" value="{od}" />
+<form action="processors/site_skins_addedit.php" method="post" id="site_skins_addedit" onsubmit="return(check_form(this))">
+<input type="hidden" name="fk_module_code" value="{site_skins.fk_module_code}" />
 <input type="hidden" name="is_default" value="{site_skins.is_default}" />
 <table id="skin_addedit" class="form_table">
 <tr>
-	<td class="label">Skin code:</td>
-	<td class="field">{site_skins.skin_code}</td>
+	<td class="label">Skin dir:</td>
+	<td class="field">{site_skins.skin_dir}</td>
 	<td class="comment">This is the name of the skin folder in the 'skins' directory. You cannot change this name.</td>
 </tr>
 <tr>
@@ -46,7 +41,7 @@
 </tr>
 </table>
 </form>
-<div id="bottom_links"><a class="back" href="site_skins.php?o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Back to skins</a></div>
+<div id="bottom_links"><a class="back" href="site_skins.php">Back to skins</a></div>
 <script type="text/javascript">
 	document.getElementById('skin_name').focus();
 </script>

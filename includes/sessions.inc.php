@@ -28,6 +28,8 @@ if (isset($_SERVER['HTTP_HOST'])) {
 			$cookie_domain='';
 		}
 		session_set_cookie_params(0,'/',$cookie_domain);
+	} else {
+		$cookie_domain='';
 	}
 }
 session_cache_limiter('nocache');

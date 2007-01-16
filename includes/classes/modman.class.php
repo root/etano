@@ -476,12 +476,11 @@ class fileop {
 		if ($this->op_mode=='disk') {
 			$myreturn=$this->_disk_delete($source);
 		} elseif ($this->op_mode=='ftp') {
-			$is_dir=false;	// needed to avoid the warning thrown by ftp_chdir(file_not_dir.ext)
-			if (is_dir($source)) {
-				$is_dir=true;
+			if (is_dir($source) && $source{strlen($source)-1}!='/') {
+				$source.='/';
 			}
 			$source=str_replace(_BASEPATH_,_FTPPATH_,$source);
-			$myreturn=$this->_ftp_delete($source,$is_dir);
+			$myreturn=$this->_ftp_delete($source);
 		}
 		return $myreturn;
 	}
@@ -610,7 +609,7 @@ class fileop {
 			$d=dir($source);
 			while ($file=$d->read()) {
 				if ($file!='.' && $file!='..') {
-					$myreturn=$this->_disk_delete($file);
+					$myreturn=$this->_disk_delete($source.'/'.$file);
 				}
 			}
 			$d->close();
@@ -624,16 +623,15 @@ class fileop {
 
 // internal function, do not call from outside. Call fileop->delete() instead
 // $source should have a full ftppath
-	function _ftp_delete($source,$is_dir=false) {
+	function _ftp_delete($source) {
 		$myreturn=false;
-		if ($is_dir) {
-			ftp_chdir($this->ftp_id,$source);
-// WARNING!!! nlist SHOULD BE REPLACED BY A rawlist. SOME WINDOWS SERVERS RETURN NOTHING ON nlist!!!!
-			$files=ftp_nlist($this->ftp_id,'');	// array or false on error.
+		if ($source{strlen($source)-1}=='/') {
+			@ftp_chdir($this->ftp_id,$source);
+			$files=ftp_nlist($this->ftp_id,'-aF');	// array or false on error. -F will append / to dirs
 			if ($files!==false) {
 				for ($i=0;isset($files[$i]);++$i) {
-					if ($files[$i]!='.' && $files[$i]!='..') {
-						$myreturn=$this->_ftp_delete($files[$i]);
+					if ($files[$i]!='./' && $files[$i]!='../') {
+						$myreturn=$this->_ftp_delete($source.'/'.$files[$i]);
 					}
 				}
 				$myreturn=@ftp_rmdir($this->ftp_id,$source);
