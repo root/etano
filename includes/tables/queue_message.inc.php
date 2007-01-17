@@ -3,7 +3,7 @@
 newdsb
 ===============================================================================
 File:                       includes/tables/queue_message.inc.php
-$Revision: 72 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

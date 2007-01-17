@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Jan 16, 2007 at 07:03 PM
+-- Generation Time: Jan 17, 2007 at 11:44 AM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 -- 
@@ -1238,7 +1238,9 @@ INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `
 (25, 0x736b696e5f646972, 'basic', 'Skin folder name in the skins folder.', 0, 0x736b696e5f6261736963),
 (26, 0x736b696e5f6e616d65, 'Basic', '', 0, 0x736b696e5f6261736963),
 (27, 0x666b5f6c6f63616c655f6964, '11', '', 0, 0x736b696e5f6261736963),
-(28, 0x69735f64656661756c74, '1', 'Is this skin the default site skin?', 0, 0x736b696e5f6261736963);
+(28, 0x69735f64656661756c74, '1', 'Is this skin the default site skin?', 0, 0x736b696e5f6261736963),
+(32, 0x6d696e5f73697a65, '0', 'Minimum photo file size in bytes (use 0 for not limited).', 2, 0x636f72655f70686f746f),
+(33, 0x6d61785f73697a65, '0', 'Maximum photo file size in bytes (use 0 for server default).', 2, 0x636f72655f70686f746f);
 
 -- --------------------------------------------------------
 

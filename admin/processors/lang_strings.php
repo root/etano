@@ -3,7 +3,7 @@
 newdsb
 ===============================================================================
 File:                       admin/processors/lang_strings.php
-$Revision: 85 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
