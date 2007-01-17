@@ -90,7 +90,6 @@ TODO
 - admin: user mail read
 - admin: give a certain membership to a member until (or for xxx days)
 - admin: latest datemill news
-- admin: pic min/max file size
 
 - cron: check for and remove orpahned lk_ids
 - la stergerea unui user tb sa fac fk_user_id=0 peste tot pe unde exista referinte la id-ul userului sters.

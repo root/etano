@@ -3,7 +3,7 @@
 newdsb
 ===============================================================================
 File:                       includes/tables/photo_comments.inc.php
-$Revision: 85 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
