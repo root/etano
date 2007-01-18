@@ -30,20 +30,21 @@ if (isset($_SESSION['topass']['input'])) {
 	$mail['to_name']=get_user_by_userid($mail['fk_user_id']);
 } elseif (isset($_GET['mail_id']) && !empty($_GET['mail_id'])) {
 	$mail_id=(int)$_GET['mail_id'];
-	$query="SELECT b.`fk_user_id`,a.`subject`,a.`message_body`,a.`_user_from` as `to_name` FROM `{$dbtable_prefix}user_inbox` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id_from`=b.`fk_user_id` AND a.`mail_id`='$mail_id' AND a.`fk_user_id`='".$_SESSION['user']['user_id']."'";
+	$query="SELECT b.`fk_user_id`,a.`subject`,a.`message_body`,a.`_user_other` as `to_name` FROM `{$dbtable_prefix}user_inbox` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id_other`=b.`fk_user_id` AND a.`mail_id`='$mail_id' AND a.`fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		list($mail['fk_user_id'],$mail['subject'],$mail['message_body'],$mail['to_name'])=mysql_fetch_row($res);
+		$mail['subject']='Re: '.$mail['subject'];
 		$mail['message_body']="\n\n[quote]".$mail['message_body'].'[/quote]';
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='The sender of this message could not be found.';
+		$topass['message']['text']='The sender of this message could not be found.';     // translate
 		$qs='mail_id='.$mail_id;
 		redirect2page('message_read.php',$topass,$qs);
 	}
 	$mail=sanitize_and_format($mail,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
 } else {
-	trigger_error('No receiver specified',E_USER_ERROR);
+	trigger_error('No receiver specified',E_USER_ERROR);     // translate
 }
 
 $tpl->set_file('content','message_send.html');
@@ -62,6 +63,6 @@ if (isset($_GET['od'])) {
 }
 $tpl->process('content','content');
 
-$tplvars['title']='Contact a member';
+$tplvars['title']='Contact a member';     // translate
 include 'frame.php';
 ?>

@@ -6,20 +6,19 @@
 	<input type="hidden" name="act" value="" />
 	<input type="hidden" name="mail_id" value="{mail.mail_id}" />
 	<input type="hidden" name="mailbox_id" value="{mailbox_id}" />
-	<p id="from"><label>Message {send_or_receive}:</label>
-		<span>
-			<opt name="mail.to_or_from_id"><a href="profile.php?uid={mail.to_or_from_id}"></opt name="mail.to_or_from_id">
-			<opt name="mail._user_from">{mail._user_from}</opt name="mail._user_from">
-			<opt name="mail._user_to">{mail._user_to}</opt name="mail._user_to">
-			<opt name="mail.to_or_from_id"></a></opt name="mail.to_or_from_id">
-		</span>
+	<p id="from">
+		<label>
+				<opt name="inbox_options">Message from: </opt name="inbox_options">
+				<opt name="outbox_options">Message to: </opt name="outbox_options">
+		</label>
+		<span><a href="profile.php?uid={mail.other_id}">{mail._user_other}</a></span>
 	</p>
 	<p id="date"><label>Sent on:</label> <span>{mail.date_sent}</span></p>
 	<p id="subject"><label>Subject:</label> <span>{mail.subject}</span></p>
 	<ul id="actions">
-		<opt name="mail._user_from"><li><input type="button" value="Reply" onclick="send_form('reply')" /></li></opt name="mail._user_from">
+		<opt name="inbox_options"><li><input type="button" value="Reply" onclick="send_form('reply')" /></li></opt name="inbox_options">
 		<li><input type="button" value="Delete" onclick="send_form('del')" /></li>
-		<opt name="mail._user_from"><li><input type="button" value="Spam" onclick="send_form('spam')" /></li></opt name="mail._user_from"></li>
+		<opt name="inbox_options"><li><input type="button" value="Spam" onclick="send_form('spam')" /></li></opt name="inbox_options"></li>
 		<opt name="folder_options">
 		<li>Move to <select name="folder_id" id="folder_id">
 						<option value="0">Inbox</option>
