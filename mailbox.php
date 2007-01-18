@@ -39,48 +39,59 @@ $mailbox_name='Inbox';     // translate
 $fk_folder_id=0;
 $del=0;
 $from="`{$dbtable_prefix}user_inbox`";
-$del_where="";
-$is_read="a.`is_read`,";
-$send_or_receive="from";
+$where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
+$is_read='`is_read`,';
 if (isset($_GET['fid']) && !empty($_GET['fid'])) {
 	$fk_folder_id=(int)$_GET['fid'];
 }
+
+$folders=array();
+$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+while ($rsrow=mysql_fetch_row($res)) {
+	$folders[$rsrow[0]]=$rsrow[1];
+}
+if (!empty($folders) && $fk_folder_id!==-2 && $fk_folder_id!==-3) {
+	$tpl->set_var('folder_options',vector2options($folders));
+}
+
 switch ($fk_folder_id) {
-	case 0:
-		$del_where=" AND a.`del`='$del'";
+
+	case 0:     // Inbox
+		$where.=" AND `del`='$del'";
 		$tpl->set_var('inbox_options',true);
 		break;
+
 	case -1:
-		$mailbox_name="Trash";
+		$mailbox_name='Trash';
 		$del=1;
-		$del_where=" AND a.`del`='$del'";
+		$where.=" AND `del`='$del'";
 		$tpl->set_var('inbox_options',true);
 		break;
+
 	case -2:
-		$mailbox_name="Outbox";
+		$mailbox_name='Outbox';
 		$from="`{$dbtable_prefix}user_outbox`";
-		$is_read="";
-		$send_or_receive="to";
+		$is_read='';
 		$tpl->set_var('outbox_options',true);
 		break;
+
 	case -3:
-		$mailbox_name="Spambox";
+		$mailbox_name='Spambox';
 		$from="`{$dbtable_prefix}user_spambox`";
 		$tpl->set_var('inbox_options',true);
 		break;
+
 	default:
-// daca se muta citirea lui $folders deasupra la acest switch putem sa facem mai jos $mailbox_name=$folders[$fk_folder_id]
-// in felul asta eliminam un query aici
-		$mailbox_name=get_user_folder_name($fk_folder_id,$_SESSION['user']['user_id']);
-		$del_where=" AND a.`del`='$del'";
+		$mailbox_name=$folders[$fk_folder_id];
+		$where.=" AND `del`='$del'";
 		$tpl->set_var('inbox_options',true);
 		break;
+
 }
 
-$from=$from." a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id_".$send_or_receive."`=b.`fk_user_id`";
-$where="a.`fk_user_id`='".$_SESSION['user']['user_id']."'".$del_where;
 if (isset($fk_folder_id) && ($fk_folder_id)>=0) {
-	 $where.=" AND a.`fk_folder_id`='$fk_folder_id'";
+	 $where.=" AND `fk_folder_id`='$fk_folder_id'";
 }
 
 $query="SELECT count(*) FROM $from WHERE $where";
@@ -88,9 +99,8 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $totalrows=mysql_result($res,0,0);
 
 $mails=array();
-$folders=array();
 if (!empty($totalrows)) {
-	$query="SELECT a.`mail_id`,".$is_read."a.`_user_".$send_or_receive."` as `to_or_from`,a.`subject`,UNIX_TIMESTAMP(a.`date_sent`) as `date_sent`,a.`message_type`,b.`fk_user_id` as `from_id` FROM $from WHERE $where $orderby LIMIT $o,$r";
+	$query="SELECT `mail_id`,".$is_read."`_user_other` as `other`,`subject`,UNIX_TIMESTAMP(`date_sent`) as `date_sent`,`message_type` FROM $from WHERE $where $orderby LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['date_sent']=strftime($_user_settings['datetime_format'],$rsrow['date_sent']+$_user_settings['time_offset']);
@@ -99,15 +109,6 @@ if (!empty($totalrows)) {
 		$mails[]=$rsrow;
 	}
 	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
-}
-
-$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-while ($rsrow=mysql_fetch_row($res)) {
-	$folders[$rsrow[0]]=$rsrow[1];
-}
-if (!empty($folders) && $fk_folder_id!==-2 && $fk_folder_id!==-3) {
-	$tpl->set_var('folder_options',vector2options($folders));
 }
 
 $tpl->set_file('content','mailbox.html');

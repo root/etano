@@ -40,25 +40,32 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']=sprintf('%1s message(s) permanently deleted.',$num_messages);     // translate
+		
 		switch ($folder_id) {
+			
 			case -1:     // Trash
 				$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('$mail_id') AND `del`=1 AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				break;
+			
 			case -2:	 // Outbox
 				$query="DELETE FROM `{$dbtable_prefix}user_outbox` WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				break;
+			
 			case -3:	 // Spambox
 				$query="DELETE FROM `{$dbtable_prefix}user_spambox` WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				break;
+			
 			default:
 				$query="UPDATE `{$dbtable_prefix}user_inbox` SET `fk_folder_id`=0,`del`=1 WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['text']=sprintf('%1s message(s) deleted.',$num_messages);     // translate
 				break;		
+		
 		}
+		
 		$nextpage='mailbox.php';		
 		$qs.=$qs_sep.'fid='.$folder_id;
 		$qs_sep='&';
