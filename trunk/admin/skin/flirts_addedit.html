@@ -1,0 +1,26 @@
+<script type="text/javascript" src="js/flirts_addedit.js"></script>
+<script type="text/javascript" src="../js/bbcode.js"></script>
+
+<h1>Flirts</h1>
+
+<div class="hint">Please enter the flirt below:</div>
+
+<form action="processors/flirts_addedit.php" method="post" id="flirts_addedit_form" onsubmit="return(check_form(this))">
+<input type="hidden" name="flirt_id" value="{flirts.flirt_id}" />
+<input type="hidden" name="o" value="{o}" />
+<input type="hidden" name="r" value="{r}" />
+<div class="rich_ta_wrapper">
+	<p class="bb_tools">
+		<a href="javascript:;" onclick="add_bbcode2('b',$('#flirt_text')[0])"><img src="{tplvars.tplrelpath}/images/rich_bold.gif" alt="bold" /></a>
+		<a href="javascript:;" onclick="add_bbcode2('u',$('#flirt_text')[0])"><img src="{tplvars.tplrelpath}/images/rich_underline.gif" alt="underline" /></a>
+		<a href="javascript:;" onclick="add_bbcode2('url',$('#flirt_text')[0])"><img src="{tplvars.tplrelpath}/images/rich_link.gif" alt="link" /></a>
+		<a href="javascript:;" onclick="add_bbcode2('quote',$('#flirt_text')[0])"><img src="{tplvars.tplrelpath}/images/rich_quote.gif" alt="quote" /></a>
+	</p>
+	<textarea name="flirt_text" id="flirt_text" tabindex="1">{flirts.flirt_text}</textarea>
+</div>
+<p><input type="submit" class="button" value="Save" id="btn_save" tabindex="2" /></p>
+</form>
+<div id="bottom_links"><a class="back" href="flirts.php?o={o}&amp;r={r}">Back to list</a></div>
+<script type="text/javascript">
+	document.getElementById('flirt_text').focus();
+</script>
