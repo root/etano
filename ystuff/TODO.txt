@@ -12,8 +12,6 @@ In felul asta userul poate sa isi aleaga ce se afiseaza
 
 - in check_login_member tb verificate ban-urile
 
-- dbtable2options('`memberships`' sa il facem $accepted_memberships ?
-
 - de setat skin-ul default in get_my_skin() (_DEFAULT_SKIN_) based on 'make default' din site_skins_list.php
 
 - ar trebui creat un regenerate_langstrings_array_diff(action,lk,lang_val,skin) (si restul de functii regenerate)
@@ -30,8 +28,6 @@ autentifice automat userii dintr-o aplicatie in cealalta...Ar trebui creat un un
 $_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
 
 - cauta "translate" ca sa gasesti toate stringurile de tradus hardcodate in scripts.
-
-- ar fi bine sa separam mesajele de eroare/info de restul de lang_strings folosite. Mesajele se folosesc doar in procesoare....
 
 - de creat indecsi cand se creaza/modifica campuri in user_details (numai cand un camp este searchable).
 
@@ -85,11 +81,14 @@ TODO
 - member media must have a separate baseurl.
 - widget-ul feed ar trebui sa citeasca doar din db? insertul in db sa il faca un cron?
 
+- niste functii din user_functions.inc.php ar trebui scoase intr-un fisier separat...
+
 - admin: send newsletter/emails/messages
-- admin: flirts manager
 - admin: user mail read
 - admin: give a certain membership to a member until (or for xxx days)
 - admin: latest datemill news
+- admin: delete member
 
 - cron: check for and remove orpahned lk_ids
+- cron: optimize tables
 - la stergerea unui user tb sa fac fk_user_id=0 peste tot pe unde exista referinte la id-ul userului sters.
