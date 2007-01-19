@@ -1,0 +1,33 @@
+<script type="text/javascript" src="js/filters.js"></script>
+
+<div id="filters">
+	<h2>Manage message filters</h2>
+
+	<form action="processors/filters.php" method="post" id="filters_form">
+
+	<table id="filter_rows">
+	<tr>
+		<th></th>
+		<th>Filter type</th>
+		<th>Blocked value</th>
+	</tr>
+	<loop name="filters">
+	<tr class="filter_row">
+		<td class="selector"><input type="checkbox" name="filter_id[{filters.filter_id}]" id="filter_id_{filters.filter_id}" value="1" /></td>
+		<td class="filter_type">{filters.filter_type}</td>
+		<td class="rule">{filters.rule}</td>
+	</tr>
+	<noloop name="filters">
+	<tr class="filter_row">
+		<td colspan="3" class="no_result_item">No filters found!</td>
+	</tr>
+	</noloop name="filters">
+	</loop name="filters">
+	</table>
+
+	<div id="action">
+		<input type="checkbox" name="check_all" id="check_all" onclick="check_uncheck(0,this,this.form,'filter_id')" /> <a href="javascript:;" onclick="check_uncheck(1,document.getElementById('check_all'),document.getElementById('filters_form'),'filter_id')">Select all</a>
+		<input type="submit" value="Delete" onclick="send_form('del')" />
+	</div>
+	</form>
+</div>

@@ -32,7 +32,8 @@
 		{mail.message_body}
 	</div>
 
-	<div id="bottom_links"><a class="link_back" href="mailbox.php?fid={mailbox_id}&o={o}&r={r}&ob={ob}&od={od}">Back to {mailbox_name}</a></div>
-
+	<div id="bottom_links">
+		<span><a class="link_back" href="mailbox.php?fid={mailbox_id}&o={o}&r={r}&ob={ob}&od={od}">Back to {mailbox_name}</a> | <a class="link_back" href="processors/filters.php?uid={mail.other_id}">Block this user</a></span>
+	</div>
 	</form>
 </div>
