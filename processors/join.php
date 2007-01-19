@@ -63,12 +63,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text'][]=$_lang[23];
 			$input['error_email']='red_border';
 		}
-		$captcha=sanitize_and_format_gpc($_POST,'captcha',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-		if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {
-			$error=true;
-			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]=$_lang[24];
-			$input['error_captcha']='red_border';
+		if (get_site_option('use_captcha','core')) {
+			$captcha=sanitize_and_format_gpc($_POST,'captcha',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+			if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=$_lang[24];
+				$input['error_captcha']='red_border';
+			}
 		}
 		unset($_SESSION['captcha_word']);
 		if (!$error && empty($input['agree'])) {
