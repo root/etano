@@ -610,6 +610,30 @@ ul.pager li {
 	padding: 1em;
 }
 
+/* filters.php */
+
+#filter_rows {
+	width: 99%;
+}
+
+.filter_row td {
+	padding: 4px;
+	background: #F8F8F8;
+	border-bottom: 1px solid #E8E8E8;
+}
+
+.filter_row .selector {
+	width: 5px;
+}
+
+#filter_rows .filter_row:hover td {
+	background: #EEE;
+}
+
+#filter_rows .no_result_item {
+	text-align: center;
+}
+
 .visible {
 	visibility: visible;
 }
