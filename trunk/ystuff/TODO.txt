@@ -59,7 +59,6 @@ TODO
 - la profile.php: user friends, blogs
 - rss feeds
 - auto subscriptions in join.php
-- [don't] use captcha
 - captcha audio
 - scris in poza fara freettf (in captcha si watermark)
 - installer + modman
@@ -71,7 +70,7 @@ TODO
 - js field check
 - site bans
 - modman: ftp low level?
-- flirts
+- flirts												<----adi
 - processors/login.php: account suspended/unactivated
 - read zip files. extract files from zip archives (pt modmanager).
 - formatare la date of birth
@@ -87,8 +86,8 @@ TODO
 - admin: user mail read
 - admin: give a certain membership to a member until (or for xxx days)
 - admin: latest datemill news
-- admin: delete member
 
 - cron: check for and remove orpahned lk_ids
 - cron: optimize tables
+- cron: delete members set as del
 - la stergerea unui user tb sa fac fk_user_id=0 peste tot pe unde exista referinte la id-ul userului sters.
