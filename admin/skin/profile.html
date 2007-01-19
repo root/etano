@@ -42,6 +42,8 @@
 				<opt name="profile.has_photo"><li><a href="photo_search.php?uid={profile.fk_user_id}">View album</a></li></opt name="profile.has_photo">
 				<li><a href="">Read mail</a></li>
 				<li><a href="javascript:;" onclick="change_password()">Change password</a></li>
+				<opt name="!profile.del"><li><a href="processors/member_delete.php?uid={profile.fk_user_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}" onclick="return(confirm('Are you sure you want to delete this member?'))">Delete member</a></li></opt name="!profile.del">
+				<opt name="profile.del"><li><a href="processors/member_delete.php?act=-1&amp;uid={profile.fk_user_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}">Undelete member</a></li></opt name="profile.del">
 				<li>&nbsp;</li>
 				<opt name="search_md5"><li><a class="back" href="member_search.php?search={search_md5}&amp;o={o}&amp;r={r}">Back to search</a></li></opt name="search_md5">
 				</ul>

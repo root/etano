@@ -274,7 +274,7 @@ if (!empty($totalrows)) {
 		}
 	}
 	$user_ids=array_slice($user_ids,$o,$r);
-	$query="SELECT `fk_user_id`,`_user`,`_photo`,`status`";
+	$query="SELECT `fk_user_id`,`_user`,`_photo`,`status`,`del`";
 	for ($i=1;$i<=RELEVANT_FIELDS;++$i) {
 		switch ($_pfields[$i]['html_type']) {
 
@@ -334,6 +334,9 @@ if (!empty($totalrows)) {
 			$rsrow['need_edit']=true;
 		} elseif ($rsrow['status']==PSTAT_APPROVED) {
 			$rsrow['approved']=true;
+		}
+		if (empty($rsrow['del'])) {
+			unset($rsrow['del']);
 		}
 		$profile[]=$rsrow;
 	}
