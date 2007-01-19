@@ -52,6 +52,9 @@ $query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='$uid'
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$profile=mysql_fetch_assoc($res);
+	if (empty($profile['del'])) {
+		unset($profile['del']);
+	}
 	$c=0;
 	foreach ($_pcats as $pcat_id=>$pcat) {
 		$categs[$c]['pcat_name']=$pcat['pcat_name'];

@@ -5,7 +5,7 @@
 
 	<loop name="profile">
 	<div class="member_details">
-		<a class="link_bare" href="profile.php?uid={profile.fk_user_id}&search={search_md5}&amp;o={o}&amp;r={r}"><img class="user_photo" src="{tplvars.relative_path}media/pics/t1/{profile._photo}" /></a>
+		<a class="link_bare" href="profile.php?uid={profile.fk_user_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}"><img class="user_photo" src="{tplvars.relative_path}media/pics/t1/{profile._photo}" /></a>
 		<p>{profile._user} (<opt name="profile.pending"><span class="alert_ppending">Needs your approval</span></opt name="profile.pending"><opt name="profile.need_edit"><span class="alert_pedit">Needs editing</span></opt name="profile.need_edit"><opt name="profile.approved"><span class="alert_papproved">Approved</span></opt name="profile.approved">)</p>
 		<p>{profile.field_46_label} {profile.field_46}</p>
 		<p>{profile.field_47_label} {profile.field_47}</p>
@@ -14,6 +14,7 @@
 		<div class="actions">
 			<ul>
 			<li><a href="profile.php?uid={profile.fk_user_id}&search={search_md5}&amp;o={o}&amp;r={r}">View</a></li>
+			<opt name="profile.del"><li><a href="processors/member_delete.php?act=-1&amp;uid={profile.fk_user_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}">Undelete</a></li></opt name="profile.del">
 			</ul>
 		</div>
 	</div>
