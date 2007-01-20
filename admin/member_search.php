@@ -351,6 +351,13 @@ $tpl->set_loop('profile',$profile);
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->set_var('search_md5',$search_md5);
+$return='member_search.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$return.='?'.$_SERVER['QUERY_STRING'];
+} else {
+	$return.='?search='.$search_md5;
+}
+$tpl->set_var('return',rawurlencode($return));
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('profile');
 

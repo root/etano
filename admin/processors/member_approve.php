@@ -22,29 +22,30 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-if (isset($_GET['uid']) && !empty($_GET['uid'])) {
-	$input['uid']=(int)$_GET['uid'];
+$input=array();
+if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
+	$input['search']=sanitize_and_format_gpc($_REQUEST,'search',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='"._SEARCH_USER_."'";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		$results=mysql_result($res,0,0);
+		$input['uids']=explode(',',$results);
+	}
+} elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
+	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,0);
+}
+$input['return']=rawurldecode(sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],''));
 
-	$query="UPDATE `{$dbtable_prefix}user_profiles` SET `status`='".PSTAT_APPROVED."',`last_changed`=now() WHERE `fk_user_id`='".$input['uid']."'";
+if (!empty($input['uids'])) {
+	$query="UPDATE `{$dbtable_prefix}user_profiles` SET `status`='".PSTAT_APPROVED."',`last_changed`=now() WHERE `fk_user_id` IN ('".join("','",$input['uids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$topass['message']['type']=MESSAGE_INFO;
-	$topass['message']['text']='Member approved. It will appear on site as soon as the cache for it is generated';
-
-	$qs.=$qs_sep.'uid='.$input['uid'];
-	$qs_sep='&';
+	$topass['message']['text']='Member(s) approved. They will appear on site as soon as the cache is generated';
 }
 
-if (isset($_GET['o'])) {
-	$qs.=$qs_sep.'o='.$_GET['o'];
-	$qs_sep='&';
+$nextpage=_BASEURL_.'/admin/search.php';
+if (isset($input['return']) && !empty($input['return'])) {
+	$nextpage=_BASEURL_.'/admin/'.$input['return'];
 }
-if (isset($_GET['r'])) {
-	$qs.=$qs_sep.'r='.$_GET['r'];
-	$qs_sep='&';
-}
-if (isset($_GET['search'])) {
-	$qs.=$qs_sep.'search='.$_GET['search'];
-	$qs_sep='&';
-}
-redirect2page('admin/profile.php',$topass,$qs);
+redirect2page($nextpage,$topass,$qs,true);
 ?>

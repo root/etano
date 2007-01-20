@@ -63,7 +63,7 @@ TODO
 - scris in poza fara freettf (in captcha si watermark)
 - installer + modman
 - rate limiter in pagini
-- spambox, block member, queue send/verif de spam
+- spambox, block member, queue send/verif de spam		<----adi
 - events
 - rewritten urls list
 - licenta si verificari
@@ -79,6 +79,8 @@ TODO
 - de convertit scoax la jquery
 - member media must have a separate baseurl.
 - widget-ul feed ar trebui sa citeasca doar din db? insertul in db sa il faca un cron?
+- phpmailer
+- cautare membri cu poze (in profil probabil...)
 
 - niste functii din user_functions.inc.php ar trebui scoase intr-un fisier separat...
 
@@ -86,6 +88,7 @@ TODO
 - admin: user mail read
 - admin: give a certain membership to a member until (or for xxx days)
 - admin: latest datemill news
+- admin: cautare membri cu/fara poza in profil.
 
 - cron: check for and remove orpahned lk_ids
 - cron: optimize tables
