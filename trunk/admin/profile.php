@@ -42,7 +42,7 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
 	$topass['message']['text']='No user selected';
-	redirect2page('cpanel.php',$topass);
+	redirect2page('admin/cpanel.php',$topass);
 }
 
 $categs=array();
@@ -118,10 +118,6 @@ if (mysql_num_rows($res)) {
 }
 
 $tplvars['pic_width']=get_site_option('pic_width','core_photo');
-$return='profile.php';
-if (!empty($_SERVER['QUERY_STRING'])) {
-	$return.='?'.$_SERVER['QUERY_STRING'];
-}
 
 $tpl->set_file('content','profile.html');
 $tpl->set_loop('categs',$categs);
@@ -136,7 +132,10 @@ if (isset($_GET['o'])) {
 if (isset($_GET['r'])) {
 	$tpl->set_var('r',$_GET['r']);
 }
-
+$return='profile.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$return.='?'.$_SERVER['QUERY_STRING'];
+}
 $tpl->set_var('return',rawurlencode($return));
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');

@@ -22,20 +22,27 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-if ($_SERVER['REQUEST_METHOD']=='POST') {
-	$input=array();
-// get the input we need and sanitize it
-	$input['act']=sanitize_and_format_gpc($_POST,'act',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-	$input['uid']=sanitize_and_format_gpc($_POST,'uid',TYPE_INT,0,0);
-	$input['search']=sanitize_and_format_gpc($_POST,'search',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-	$input['o']=sanitize_and_format_gpc($_POST,'o',TYPE_INT,0,0);
-	$input['r']=sanitize_and_format_gpc($_POST,'r',TYPE_INT,0,0);
+$input=array();
+if (isset($_POST['search']) && !empty($_POST['search'])) {
+	$input['search']=sanitize_and_format($_POST['search'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
+	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='"._SEARCH_USER_."'";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		$results=mysql_result($res,0,0);
+		$input['uids']=explode(',',$results);
+	}
+} elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
+	$input['uids']=sanitize_and_format_gpc($_POST,'uids',TYPE_INT,0,0);
+}
+$input['act']=sanitize_and_format_gpc($_POST,'act',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],''));
 
+if (!empty($input['uids'])) {
 	switch ($input['act']) {
 
 		case 'status':
 			$input['status']=sanitize_and_format_gpc($_POST,'status',TYPE_INT,0,0);
-			$query="UPDATE `{$dbtable_prefix}user_accounts` SET `status`='".$input['status']."' WHERE `user_id`='".$input['uid']."'";
+			$query="UPDATE `{$dbtable_prefix}user_accounts` SET `status`='".$input['status']."' WHERE `user_id` IN ('".join("','",$input['uids'])."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Account status changed succesfully';
@@ -43,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 		case 'skin':
 			$input['skin']=sanitize_and_format_gpc($_POST,'skin',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-			$query="UPDATE `{$dbtable_prefix}user_accounts` SET `skin`='".$input['skin']."' WHERE `user_id`='".$input['uid']."'";
+			$query="UPDATE `{$dbtable_prefix}user_accounts` SET `skin`='".$input['skin']."' WHERE `user_id` IN ('".join("','",$input['uids'])."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Skin changed';
@@ -51,22 +58,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 		case 'pass':
 			$input['pass']=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-			$query="UPDATE `{$dbtable_prefix}user_accounts` SET `pass`=md5('".$input['pass']."') WHERE `user_id`='".$input['uid']."'";
+			$query="UPDATE `{$dbtable_prefix}user_accounts` SET `pass`=md5('".$input['pass']."') WHERE `user_id`='".$input['uid'][0]."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Password changed succesfully';
 			break;
 
 	}
-	$qs.=$qs_sep.'uid='.$input['uid'];
-	$qs_sep='&amp;';
-	$qs.=$qs_sep.'search='.$input['search'];
-	$qs.=$qs_sep.'o='.$input['o'];
-	$qs.=$qs_sep.'r='.$input['r'];
 }
 if (!isset($_POST['silent'])) {
-	redirect2page('admin/profile.php',$topass,$qs);
+	$nextpage=_BASEURL_.'/admin/search.php';
+	if (isset($input['return']) && !empty($input['return'])) {
+		$nextpage=_BASEURL_.'/admin/'.$input['return'];
+	}
+	redirect2page($nextpage,$topass,$qs,true);
 } else {
-echo $topass['message']['text'];
+	echo $topass['message']['text'];
 }
 ?>
