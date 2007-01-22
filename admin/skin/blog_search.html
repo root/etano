@@ -1,0 +1,39 @@
+<script type="text/javascript" src="js/blog_search.js"></script>
+
+<h1>Search Blogs</h1>
+
+<div id="blog_search">
+	<div id="blog_submenu" class="menu_widget">
+		<h4>Quick links - blogs</h4>
+		<div class="box">
+			<ul>
+			<li><a href="blog_results.php">Browse all</a></li>
+			<li><a href="blog_results.php?stat=5">Awaiting approval</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<form action="blog_results.php" method="get" id="blog_search_form">
+	<fieldset>
+	<div class="edit_row" id="row_stat_blog">
+		<label class="mainlabel" for="bstat">Blog status:</label>
+		<div class="field">
+			<select name="stat" id="bstat" tabindex="53">
+			<option value="0">-</option>
+			{profile.pstat}
+			</select>
+		</div>
+	</div>
+
+	<div class="edit_row" id="row_submit_blog">
+		<label class="mainlabel">&nbsp;</label>
+		<div class="field"><input type="submit" value="Search" tabindex="54" /></div>
+	</div>
+	</fieldset>
+	</form>
+	<div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+	document.getElementById('blog_search_form').elements[0].focus();
+</script>

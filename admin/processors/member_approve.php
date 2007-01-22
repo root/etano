@@ -32,7 +32,7 @@ if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
 		$input['uids']=explode(',',$results);
 	}
 } elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
-	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,0);
+	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 }
 $input['return']=rawurldecode(sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],''));
 
@@ -43,7 +43,7 @@ if (!empty($input['uids'])) {
 	$topass['message']['text']='Member(s) approved. They will appear on site as soon as the cache is generated';
 }
 
-$nextpage=_BASEURL_.'/admin/search.php';
+$nextpage=_BASEURL_.'/admin/member_search.php';
 if (isset($input['return']) && !empty($input['return'])) {
 	$nextpage=_BASEURL_.'/admin/'.$input['return'];
 }

@@ -3,7 +3,11 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
+<<<<<<< .mine
+-- Generation Time: Jan 22, 2007 at 01:49 PM
+=======
 -- Generation Time: Jan 19, 2007 at 10:51 PM
+>>>>>>> .r29
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 -- 
@@ -99,30 +103,6 @@ CREATE TABLE `dsb_admin_mtpls` (
 
 INSERT INTO `dsb_admin_mtpls` (`amtpl_id`, `amtpl_name`, `subject`, `message_body`, `amtpl_type`) VALUES (1, 'Reject member profile', 'Your profile was not approved', '<html><head><title>Your profile has not been approved</title>   <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" /> </head><body> <div id="trim"> 	<div id="content"> 		<p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p> 		<p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest to other members.</p><p>Please update your profile with relevant information.<br /></p> 	</div> </div> </body></html>', 1),
 (2, 'Reject photo', 'Web Application: One of your photos was not approved', '<html>\n<head>\n<title>Your profile has not been approved</title>\n<link rel="stylesheet" type="text/css" media="screen" href="{tplvars.baseurl}/skins/basic/styles/screen.css" />\n</head>\n<body>\n<div id="trim">\n   <div id="content">\n       <p>Thank you for joining <a href="{tplvars.baseurl}">{tplvars.sitename}</a>.</p>\n       <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\n   </div>\n</div>\n</body>\n</html>', 2);
-
--- --------------------------------------------------------
-
--- 
--- Table structure for table `dsb_auto_subscriptions`
--- 
-
-DROP TABLE IF EXISTS `dsb_auto_subscriptions`;
-CREATE TABLE `dsb_auto_subscriptions` (
-  `asubscr_id` int(3) unsigned NOT NULL auto_increment,
-  `dbfield` varchar(32) NOT NULL default '',
-  `field_value` int(5) NOT NULL default '0',
-  `fk_subscr_id` int(2) unsigned NOT NULL default '0',
-  `date_start` date NOT NULL default '0000-00-00',
-  PRIMARY KEY  (`asubscr_id`)
-) TYPE=MyISAM;
-
--- 
--- Dumping data for table `dsb_auto_subscriptions`
--- 
-
-INSERT INTO `dsb_auto_subscriptions` (`asubscr_id`, `dbfield`, `field_value`, `fk_subscr_id`, `date_start`) VALUES (1, '', 0, 3, '0000-00-00'),
-(2, 'field_46', 2, 2, '0000-00-00'),
-(4, 'field_46', 2, 1, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -1414,6 +1394,30 @@ INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `pric
 (3, 'Trial', '', 0.00, 'USD', 0, 2, 4, 5, 'D', 0),
 (4, 'gold membership', 'this is the description for the gold membership which gives you unlimited access to all features for a couple of seconds', 100.00, 'USD', 0, 2, 4, 1, 'D', 1),
 (5, 'bronze membership', 'ala bala portocala', 130.00, 'EUR', 0, 2, 4, 365, 'D', 1);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `dsb_subscriptions_auto`
+-- 
+
+DROP TABLE IF EXISTS `dsb_subscriptions_auto`;
+CREATE TABLE `dsb_subscriptions_auto` (
+  `asubscr_id` int(3) unsigned NOT NULL auto_increment,
+  `dbfield` varchar(32) NOT NULL default '',
+  `field_value` int(5) NOT NULL default '0',
+  `fk_subscr_id` int(2) unsigned NOT NULL default '0',
+  `date_start` date NOT NULL default '0000-00-00',
+  PRIMARY KEY  (`asubscr_id`)
+) TYPE=MyISAM;
+
+-- 
+-- Dumping data for table `dsb_subscriptions_auto`
+-- 
+
+INSERT INTO `dsb_subscriptions_auto` (`asubscr_id`, `dbfield`, `field_value`, `fk_subscr_id`, `date_start`) VALUES (1, '', 0, 3, '0000-00-00'),
+(2, 'field_46', 2, 2, '0000-00-00'),
+(4, 'field_46', 2, 1, '0000-00-00');
 
 -- --------------------------------------------------------
 

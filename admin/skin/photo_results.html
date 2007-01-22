@@ -1,0 +1,27 @@
+<div id="photo_results">
+	<h2>Search Results - Photos</h2>
+
+	<loop name="photos">
+	<div class="member_details">
+		<a class="link_bare" href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={photos.photo_id}','photo',{tplvars.pic_width},{tplvars.pic_width},1)"><img class="user_photo" src="../media/pics/t1/{photos.photo}" /></a>
+		<p>Owner: <a href="profile.php?user={photos._user}">{photos._user}</a></p>
+		<p>Caption: {photos.caption}</p>
+		<p>Mode: {photos.is_private}</p>
+		<p>Comments: {photos.stat_comments} (<opt name="photos.pending"><span class="alert_ppending">Needs your approval</span></opt name="photos.pending"><opt name="photos.need_edit"><span class="alert_pedit">Needs editing</span></opt name="photos.need_edit"><opt name="photos.approved"><span class="alert_papproved">Approved</span></opt name="photos.approved">)</p>
+		<p>Views: {photos.stat_views}</p>
+		<div class="actions">
+			<ul>
+			<li><a href="photo_delete.php?photo_id={photos.photo_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}">Delete</a></li>
+			<opt name="photos.pending"><li><a href="processors/photo_approve.php?photo_id={photos.photo_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}">Approve</a></li></opt name="photos.pending">
+			<li><a href="reject.php?t=2&id={photos.photo_id}&amp;return={return}">Reject</a></li>
+			</ul>
+		</div>
+	</div>
+	<noloop name="photos">
+	<div class="member_details">
+	No members found meeting your search criteria.
+	</div>
+	</noloop name="photos">
+	</loop name="photos">
+	{pager2}
+</div>

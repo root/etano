@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       admin/processors/auto_subscriptions_delete.php
-$Revision$
+File:                       admin/processors/subscriptions_auto_delete.php
+$Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -23,11 +23,11 @@ $qs_sep='';
 $topass=array();
 $asubscr_id=isset($_GET['asubscr_id']) ? (int)$_GET['asubscr_id'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}auto_subscriptions` WHERE `asubscr_id`='$asubscr_id'";
+$query="DELETE FROM `{$dbtable_prefix}subscriptions_auto` WHERE `asubscr_id`='$asubscr_id'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Subscription assignment deleted.';
 
-redirect2page('admin/auto_subscriptions.php',$topass,$qs);
+redirect2page('admin/subscriptions_auto.php',$topass,$qs);
 ?>

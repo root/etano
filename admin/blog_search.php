@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       admin/photo_search.php
-$Revision$
+File:                       admin/blog_search.php
+$Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -23,7 +23,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $profile=array();
 $profile['pstat']=vector2options($accepted_pstats);
 
-$tpl->set_file('content','photo_search.html');
+$tpl->set_file('content','blog_search.html');
 $tpl->set_var('profile',$profile);
 
 $tpl->process('content','content',TPL_LOOP);

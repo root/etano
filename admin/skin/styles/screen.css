@@ -626,14 +626,14 @@ label.checkbox {
 	visibility: hidden;
 }
 
-#search_members,#search_photos {
+#member_search,#photo_search {
 	padding-bottom: 1em;
 	margin-bottom: 2em;
 	border-bottom: 1px dashed #CCC;
 	clear: both;
 }
 
-#search_members fieldset,#search_photos fieldset,#search_blogs fieldset {
+#member_search fieldset,#photo_search fieldset,#blog_search fieldset {
 	border: none;
 }
 
@@ -775,7 +775,7 @@ div.hidden_options ul {
 	background: #E5F8FE url(../images/minus.gif) no-repeat left center;
 }
 
-/* auto_subscriptions_addedit.php */
+/* subscriptions_auto_addedit.php */
 
 #asubscr_addedit .field {
 	width: 50%;
@@ -915,7 +915,7 @@ li span.litem_tools {
 		margin: .5em 1em .5em 1em;
 	}
 
-/* member_search.php */
+/* member_results.php */
 
 #mass_members {
 	margin-top: 20px;
