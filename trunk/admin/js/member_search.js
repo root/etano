@@ -1,55 +1,35 @@
-$(function() {
-	$('#dummy').bind('click',toogle_checked);
-});
-
-function toogle_checked() {
-	is_checked=$('#dummy')[0].checked;
-	$('#mass_member_form input:checkbox').each(function(i) {
-		this.checked=is_checked;
-	});
+function req_update_location(str_field,val) {
+	$.post('../ajax/location.php',
+			{'field':str_field,'val':val},
+			function(data) {
+				if (data!=null && data!='') {
+					allopts=data.split("\n");
+					str_field=allopts[0];
+					toshow=allopts[1].split('|');
+					$('#row_'+str_field+'state').removeClass('visible');
+					$('#row_'+str_field+'state').addClass('invisible');
+					$('#row_'+str_field+'city').removeClass('visible');
+					$('#row_'+str_field+'city').addClass('invisible');
+					$('#row_'+str_field+'zip').removeClass('visible');
+					$('#row_'+str_field+'zip').addClass('invisible');
+					for (i=0;i<toshow.length;i++) {
+						$('#row_'+toshow[i]).removeClass('invisible');
+						$('#row_'+toshow[i]).addClass('visible');
+					}
+					if (allopts.length>3) {
+						to_update=document.getElementById(str_field+allopts[2]);
+						to_update.options.length=0;
+						for (i=3;i<allopts.length;i++) {
+							oneopt=allopts[i].split('|');
+							opt=new Option(oneopt[1],oneopt[0]);
+							to_update.options.add(opt,to_update.length);
+						}
+					}
+				}
+			}
+	);
 }
 
-function handle_mass_member() {
-	if ($('#act').val()=='email') {
-		$('#mass_member_form').attr('action','email_send.php');
-
-	} else if ($('#act').val()=='message') {
-		$('#mass_member_form').attr('action','message_send.php');
-
-	} else if ($('#act').val()=='membership') {
-		$('#mass_member_form').attr('action','membership_set.php');
-
-	} else if ($('#act').val()=='astat_active') {
-//_ASTAT_ACTIVE_
-		$('#mass_member_form').attr('action','processors/account_changes.php');
-		$('#mass_member_form').append('<input type="hidden" name="act" value="status" /><input type="hidden" name="status" value="15" />');
-
-	} else if ($('#act').val()=='astat_suspend') {
-//_ASTAT_SUSPENDED_
-		$('#mass_member_form').attr('action','processors/account_changes.php');
-		$('#mass_member_form').append('<input type="hidden" name="act" value="status" /><input type="hidden" name="status" value="5" />');
-
-	} else if ($('#act').val()=='del') {
-		really=confirm('Are you sure you want to delete the selected members?');
-		if (!really) {
-			return false;
-		}
-		$('#mass_member_form').attr('action','processors/member_delete.php');
-	}
-
-	if ($('#sel').val()==1) {
-		one_checked=false;
-		$('#mass_member_form input:checkbox').each(function(i) {
-			if (this.checked) {
-				one_checked=true;
-			}
-		});
-		if (!one_checked) {
-			alert("You must select at least one member");
-			return false;
-		}
-		$('#search').val('');
-	}
-	$('#mass_member_form')[0].submit();
+function check_form(theform) {
 	return true;
 }

@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 }
 
-$nextpage=_BASEURL_.'/admin/search.php';
+$nextpage=_BASEURL_.'/admin/member_search.php';
 if (isset($input['return'])) {
 	$nextpage=_BASEURL_.'/admin/'.$input['return'];
 }

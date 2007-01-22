@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       admin/auto_subscriptions.php
-$Revision$
+File:                       admin/subscriptions_auto.php
+$Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -21,14 +21,14 @@ allow_dept(DEPT_ADMIN);
 $tpl=new phemplate('skin/','remove_nonjs');
 
 $where='a.`fk_subscr_id`=b.`subscr_id`';
-$from="`{$dbtable_prefix}auto_subscriptions` a,`{$dbtable_prefix}subscriptions` b";
+$from="`{$dbtable_prefix}subscriptions_auto` a,`{$dbtable_prefix}subscriptions` b";
 
 $query="SELECT count(*) FROM $from WHERE $where";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $totalrows=mysql_result($res,0,0);
 
 $date_format=get_site_option('date_format','core');
-$auto_subscriptions=array();
+$subscriptions_auto=array();
 if (!empty($totalrows)) {
 	// create the $pfields helper array for easier access to fields by dbfield
 	$pfields=array();
@@ -45,15 +45,15 @@ if (!empty($totalrows)) {
 		$rsrow['dbfield']=empty($rsrow['dbfield']) ? 'All' : 'Having '.$pfields[$rsrow['dbfield']]['label'].'('.$rsrow['dbfield'].') = '.$pfields[$rsrow['dbfield']]['accepted_values'][$rsrow['field_value']];
 		$rsrow['subscr_name']=sanitize_and_format($rsrow['subscr_name'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 		$rsrow['date_start']=empty($rsrow['date_start']) ? 'Join' : strftime($date_format,$rsrow['date_start']);
-		$auto_subscriptions[]=$rsrow;
+		$subscriptions_auto[]=$rsrow;
 	}
 }
 
 
-$tpl->set_file('content','auto_subscriptions.html');
-$tpl->set_loop('auto_subscriptions',$auto_subscriptions);
+$tpl->set_file('content','subscriptions_auto.html');
+$tpl->set_loop('subscriptions_auto',$subscriptions_auto);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
-$tpl->drop_loop('auto_subscriptions');
+$tpl->drop_loop('subscriptions_auto');
 
 $tplvars['title']='Site Auto Subscriptions';
 include 'frame.php';

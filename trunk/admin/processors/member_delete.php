@@ -32,7 +32,7 @@ if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
 		$input['uids']=explode(',',$results);
 	}
 } elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
-	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,0);
+	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 }
 
 $act=isset($_REQUEST['act']) ? (int)$_REQUEST['act'] : 1;
@@ -51,7 +51,7 @@ if (!empty($input['uids'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 
-$nextpage=_BASEURL_.'/admin/search.php';
+$nextpage=_BASEURL_.'/admin/member_search.php';
 if (isset($input['return']) && !empty($input['return'])) {
 	$nextpage=_BASEURL_.'/admin/'.$input['return'];
 }

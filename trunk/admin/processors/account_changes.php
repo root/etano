@@ -32,7 +32,7 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
 		$input['uids']=explode(',',$results);
 	}
 } elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
-	$input['uids']=sanitize_and_format_gpc($_POST,'uids',TYPE_INT,0,0);
+	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 }
 $input['act']=sanitize_and_format_gpc($_POST,'act',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
 $input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],''));
@@ -67,7 +67,7 @@ if (!empty($input['uids'])) {
 	}
 }
 if (!isset($_POST['silent'])) {
-	$nextpage=_BASEURL_.'/admin/search.php';
+	$nextpage=_BASEURL_.'/admin/member_search.php';
 	if (isset($input['return']) && !empty($input['return'])) {
 		$nextpage=_BASEURL_.'/admin/'.$input['return'];
 	}

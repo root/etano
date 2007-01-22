@@ -1,53 +1,68 @@
 <script type="text/javascript" src="js/member_search.js"></script>
 
-<div id="member_search">
-	<h2>Search Results</h2>
+<h1>Search Members</h1>
 
-	<form action="" method="post" id="mass_member_form">
-	<input type="hidden" name="search" id="search" value="{search_md5}" />
-	<input type="hidden" name="return" value="{return}" />
-	<loop name="profile">
-	<div class="member_details">
-		<input class="sel_user" type="checkbox" name="uids[]" value="{profile.fk_user_id}" id="uids_{profile.fk_user_id}" />
-		<a class="link_bare" href="profile.php?uid={profile.fk_user_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}"><img class="user_photo" src="{tplvars.relative_path}media/pics/t1/{profile._photo}" /></a>
-		<p><strong>{profile._user}</strong> (<opt name="profile.pending"><span class="alert_ppending">Needs your approval</span></opt name="profile.pending"><opt name="profile.need_edit"><span class="alert_pedit">Needs editing</span></opt name="profile.need_edit"><opt name="profile.approved"><span class="alert_papproved">Approved</span></opt name="profile.approved">)</p>
-		<p>{profile.field_46_label}: {profile.field_46}</p>
-		<p>{profile.field_47_label}: {profile.field_47}</p>
-		<p>{profile.field_48_label}: {profile.field_48}</p>
-		<p>{profile.field_50_label}: {profile.field_50}</p>
-		<div class="actions">
+<div id="member_search">
+	<div id="member_submenu" class="menu_widget">
+		<h4>Quick links</h4>
+		<div class="box">
 			<ul>
-			<li><a href="profile.php?uid={profile.fk_user_id}&search={search_md5}&amp;o={o}&amp;r={r}">View</a></li>
-			<opt name="profile.del"><li><a href="processors/member_delete.php?act=-1&amp;uids%5B%5D={profile.fk_user_id}&amp;return={return}">Undelete</a></li></opt name="profile.del">
+			<li><a href="member_results.php">Browse all</a></li>
+			<li><a href="member_results.php?pstat=5">Awaiting approval</a></li>
 			</ul>
 		</div>
 	</div>
-	<noloop name="profile">
-	<div class="member_details">
-	No members found meeting your search criteria.
-	</div>
-	</noloop name="profile">
-	</loop name="profile">
-	</form>
-	<p><input type="checkbox" id="dummy" /><label for="dummy">Select all</a>
-	{pager2}
 
-	<div id="mass_members">
-		<h3>Mass member management</h3>
-		<p>
-			<select name="sel" id="sel">
-			<option value="1">With selected</option>
-			<option value="2">With all found members</option>
-			</select>
-			<select name="act" id="act">
-			<option value="email">Send email</option>
-			<option value="message">Send on-site message</option>
-			<option value="membership">Set membership</option>
-			<option value="astat_active">Activate account</option>
-			<option value="astat_suspend">Suspend account</option>
-			<option value="del">Delete</option>
-			</select>
-			<input type="button" onclick="handle_mass_member()" value="Go" />
-		</p>
+	<form action="member_results.php" method="get" id="member_search_form">
+	<fieldset>
+	<div class="edit_row" id="row_user">
+		<label class="mainlabel" for="user">Username:</label>
+		<div class="field"><input type="text" name="user" id="user" tabindex="1" /></div>
 	</div>
+	<div class="edit_row" id="row_astat">
+		<label class="mainlabel" for="astat">Account status:</label>
+		<div class="field">
+			<select name="astat" id="astat" tabindex="2">
+			<option value="0">-</option>
+			{profile.astat}
+			</select>
+		</div>
+	</div>
+	<div class="edit_row" id="row_pstat">
+		<label class="mainlabel" for="pstat">Profile status:</label>
+		<div class="field">
+			<select name="pstat" id="pstat" tabindex="3">
+			<option value="0">-</option>
+			{profile.pstat}
+			</select>
+		</div>
+	</div>
+	<div class="edit_row" id="row_membership">
+		<label class="mainlabel" for="membership">Membership:</label>
+		<div class="field">
+			<select name="membership" id="membership" tabindex="4">
+			<option value="0">-</option>
+			{profile.membership}
+			</select>
+		</div>
+	</div>
+
+	<loop name="search">
+	<div class="edit_row {search.class}" id="row_{search.dbfield}">
+		<label class="mainlabel" for="{search.dbfield}">{search.label}</label>
+		<div class="field">{search.field}</div>
+	</div>
+	</loop name="search">
+
+	<div class="edit_row" id="row_submit">
+		<label class="mainlabel">&nbsp;</label>
+		<div class="field"><input type="submit" value="Search" tabindex="50" /></div>
+	</div>
+	</fieldset>
+	</form>
+	<div class="clear"></div>
 </div>
+
+<script type="text/javascript">
+	document.getElementById('member_search_form').elements[0].focus();
+</script>
