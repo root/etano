@@ -19,13 +19,11 @@ require_once '../includes/tables/queue_message.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(5);
 
-$error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
 $nextpage='mailbox.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-	$input=array();
 	$mail_id=sanitize_and_format_gpc($_POST,'mail_id',TYPE_INT,0,0);
 	$num_messages=0;
 	if (!empty($mail_id)) {
