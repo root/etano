@@ -873,7 +873,6 @@ li span.litem_tools {
 /* flirts_addedit.php */
 
 .rich_ta_wrapper {
-	width: 70%;
 	border: 2px solid #E1E7B8;
 	background: #F8F8EC;
 	margin-top: 5px;
@@ -927,3 +926,14 @@ li span.litem_tools {
 #mass_members h3 {
 	margin-bottom: 15px;
 }
+
+/* email_send.php */
+
+#email_send_table {
+	width: 100%;
+}
+
+#email_send_table .field {
+	width: 80%;
+}
+

@@ -30,7 +30,7 @@ $file=_BASEPATH_.'/'.$file_edit['file'];
 $mode=isset($_GET['m']) ? (int)$_GET['m'] : 1;
 
 if (is_file($file)) {
-	$file_edit['file_content']=sanitize_and_format(file_get_contents($file),TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+	$file_edit['file_content']=str_replace(array('{','}'),array('&#x007B;','&#x007D;'),sanitize_and_format(file_get_contents($file),TYPE_STRING,$__html2format[TEXT_DB2EDIT]));
 }
 
 $tpl->set_file('content','file_edit.html');
