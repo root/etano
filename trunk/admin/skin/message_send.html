@@ -1,0 +1,39 @@
+<script type="text/javascript" src="js/message_send.js"></script>
+<script type="text/javascript" src="../js/bbcode.js"></script>
+
+<h1>Send message</h1>
+
+<div id="message_send">
+	<form action="processors/message_send.php" method="post" id="message_send_form">
+	<input type="hidden" name="return" id="return" value="{output.return}" />
+	<input type="hidden" name="uids" id="uids" value="{output.uids}" />
+	<table id="message_send_table" class="form_table">
+	<tr>
+		<td class="label"><label for="subject">Subject:</label></td>
+		<td class="field {profile_fields.error_subject}"><input type="text" name="subject" id="subject" value="{output.subject}" size="50" tabindex="1" /></td>
+		<td class="comment"></td>
+	</tr>
+	<tr>
+		<td class="label"><label for="message_body">Message:</label></td>
+		<td class="field {profile_fields.error_message_body}">
+			<div class="rich_ta_wrapper">
+				<p class="bb_tools">
+					<a href="javascript:;" onclick="add_bbcode2('b',$('#message_body')[0])"><img src="{tplvars.tplrelpath}/images/rich_bold.gif" alt="bold" /></a>
+					<a href="javascript:;" onclick="add_bbcode2('u',$('#message_body')[0])"><img src="{tplvars.tplrelpath}/images/rich_underline.gif" alt="underline" /></a>
+					<a href="javascript:;" onclick="add_bbcode2('url',$('#message_body')[0])"><img src="{tplvars.tplrelpath}/images/rich_link.gif" alt="link" /></a>
+					<a href="javascript:;" onclick="add_bbcode2('quote',$('#message_body')[0])"><img src="{tplvars.tplrelpath}/images/rich_quote.gif" alt="quote" /></a>
+				</p>
+				<textarea name="message_body" id="message_body" cols="60" rows="30" wrap="off" tabindex="2">{output.message_body}</textarea>
+			</div>
+		</td>
+		<td class="comment"></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><input class="button" type="submit" value="Send" /></td>
+		<td class="comment"></td>
+	</tr>
+	</table>
+	</form>
+	<div id="bottom_links"><a class="back" href="{output.return2}">Back</a></div>
+</div>

@@ -51,6 +51,11 @@ $_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
 
 
 TODO
+				ADI
+- spambox, block member, queue send/verif de spam
+- clar nu se mai face join pt ID-ul senderului! Ce se intampla daca sender-ul este un admin? (_MESS_SYSTEM_)
+- flirts
+
 - user_settings2
 - user_alerts
 - saved searches list (cu delete search/make default/alerte search)
@@ -63,14 +68,12 @@ TODO
 - scris in poza fara freettf (in captcha si watermark)
 - installer + modman
 - rate limiter in pagini
-- spambox, block member, queue send/verif de spam		<----adi
 - events
 - rewritten urls list
 - licenta si verificari
 - js field check
 - site bans
 - modman: ftp low level?
-- flirts												<----adi
 - processors/login.php: account suspended/unactivated
 - read zip files. extract files from zip archives (pt modmanager).
 - formatare la date of birth
@@ -80,13 +83,12 @@ TODO
 - member media must have a separate baseurl.
 - widget-ul feed ar trebui sa citeasca doar din db? insertul in db sa il faca un cron?
 - phpmailer
-- cautare membri cu poze (in profil probabil...)
+- cautare membri cu poze (poza din profil probabil...)
 
 - niste functii din user_functions.inc.php ar trebui scoase intr-un fisier separat...
 
-- admin: send newsletter/emails/messages
+- admin: send newsletter
 - admin: user mail read
-- admin: give a certain membership to a member until (or for xxx days)
 - admin: latest datemill news
 - admin: cautare membri cu/fara poza in profil.
 - admin: member/photo/blog edit
@@ -100,3 +102,4 @@ TODO
 - la stergerea unui user tb sa fac fk_user_id=0 peste tot pe unde exista referinte la id-ul userului sters.
 - affiliates
 
+- [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]

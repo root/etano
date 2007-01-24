@@ -1,23 +1,24 @@
 <script type="text/javascript" src="js/reject.js"></script>
+<script type="text/javascript" src="fckeditor/fckeditor.js"></script>
 
-<opt name="input.reject_member"><h1>Reject a member profile</h1></opt name="input.reject_member">
-<opt name="input.reject_photo"><h1>Reject a photo</h1></opt name="input.reject_photo">
-<opt name="input.reject_blog"><h1>Reject a blog post</h1></opt name="input.reject_blog">
+<opt name="input.reject_member"><h1>Reject profile</h1></opt name="input.reject_member">
+<opt name="input.reject_photo"><h1>Reject photo</h1></opt name="input.reject_photo">
+<opt name="input.reject_blog"><h1>Reject blog post</h1></opt name="input.reject_blog">
 
 <div id="member_reject">
-	<h3>Member: <a href="profile.php?uid={input.user_id}">{input.user}</a></h3>
-	<opt name="input.reject_photo"><img class="user_photo" src="../media/pics/t1/{input.photo}" /></opt name="input.reject_photo">
+	<h3>Member: <a href="profile.php?uid={output.user_id}">{output.user}</a></h3>
+	<opt name="input.reject_photo"><img class="user_photo" src="../media/pics/t1/{output.photo}" /></opt name="input.reject_photo">
 
 	<form action="processors/reject.php" method="post" id="reject_form" onsubmit="return(check_form(this))">
-	<input type="hidden" name="return" id="t" value="{input.return}" />
-	<input type="hidden" name="t" id="t" value="{input.t}" />
-	<input type="hidden" name="id" value="{input.id}" />
+	<input type="hidden" name="return" id="return" value="{output.return}" />
+	<input type="hidden" name="t" id="t" value="{output.t}" />
+	<input type="hidden" name="id" value="{output.id}" />
 	<table id="reject_table" class="form_table">
 	<tr>
 		<td class="label"><label for="reason">Predefined reasons:</label></td>
 		<td colspan="2" class="field {profile_fields.error_reason}">
 			<select id="amtpl_id" onchange="get_reason()">
-			{input.amtpl_id}
+			{output.amtpl_id}
 			</select>
 			<span class="comment">Select one of these reasons or enter your own message</span>
 		</td>
@@ -30,14 +31,14 @@
 	<tr>
 		<td class="label"><label for="reason_title">Subject:</label></td>
 		<td class="field {profile_fields.error_reason_title}">
-			<input type="text" name="reason_title" id="reason_title" value="{input.reason_title}" />
+			<input type="text" name="reason_title" id="reason_title" value="{output.reason_title}" />
 		</td>
 		<td class="comment"></td>
 	</tr>
 	<tr>
 		<td class="label"><label for="reject_reason">Reason text:</label></td>
 		<td class="field {profile_fields.error_reject_reason}">
-			<textarea name="reject_reason" id="reject_reason" cols="60" rows="30" wrap="off">{input.reject_reason}</textarea>
+			<textarea name="reject_reason" id="reject_reason" cols="60" rows="30" wrap="off">{output.reject_reason}</textarea>
 		</td>
 		<td class="comment"></td>
 	</tr>
@@ -48,9 +49,8 @@
 	</tr>
 	</table>
 	</form>
-	<div id="bottom_links"><a class="back" href="profile.php?uid={input.id}&search={input.search}&o={input.o}&r={input.r}">Back to member profile</a></div>
+	<div id="bottom_links"><a class="back" href="profile.php?uid={output.id}&search={output.search}&o={output.o}&r={output.r}">Back to member profile</a></div>
 </div>
-<script type="text/javascript" src="fckeditor/fckeditor.js"></script>
 <script type="text/javascript">
 	window.onload = function() {
 		oFCKeditor=new FCKeditor('reject_reason');
