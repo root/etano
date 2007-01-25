@@ -36,6 +36,16 @@ if ($ob>=0) {
 	}
 }
 
+$folders=array();
+$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+while ($rsrow=mysql_fetch_row($res)) {
+	$folders[$rsrow[0]]=$rsrow[1];
+}
+if (!empty($folders)) {
+	$tpl->set_var('folder_options',vector2options($folders));
+}
+
 $from="`{$dbtable_prefix}message_filters`";
 $where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
 
@@ -48,19 +58,14 @@ if (!empty($totalrows)) {
 	$query="SELECT * FROM $from WHERE $where $orderby LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
+		if (isset($folders[$rsrow['fk_folder_id']]) && ($rsrow['fk_folder_id']>0)) {
+			$rsrow['folder_name']=$folders[$rsrow['fk_folder_id']];
+		} else {
+			$rsrow['folder_name']='SPAMBOX';
+		}
 		$filters[]=$rsrow;
 	}
 	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
-}
-
-$folders=array();
-$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-while ($rsrow=mysql_fetch_row($res)) {
-	$folders[$rsrow[0]]=$rsrow[1];
-}
-if (!empty($folders)) {
-	$tpl->set_var('folder_options',vector2options($folders));
 }
 
 $tpl->set_file('content','filters.html');
@@ -72,8 +77,8 @@ $tpl->set_var('od',$od);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('filters');
 
-if (is_file('mailbox_left.php')) {
-	include 'mailbox_left.php';
+if (is_file('filters_left.php')) {
+	include 'filters_left.php';
 }
 $tplvars['title']='Manage your filters';     // translate
 include 'frame.php';

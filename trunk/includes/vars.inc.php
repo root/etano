@@ -53,6 +53,10 @@ define('_MODULE_FRAUD_',2);
 define('_MODULE_WIDGET_',3);
 define('_MODULE_SKIN_',4);
 
+// filter types
+define('_FILTER_USER_',1);
+//define('_FILTER_COUNTRY_',2);
+
 // Unset globally registered vars
 function _unset_vars(&$var) {
 	$temp=array_keys($var);
