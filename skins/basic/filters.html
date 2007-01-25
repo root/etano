@@ -1,37 +1,26 @@
-<script type="text/javascript" src="js/filters.js"></script>
-
 <div id="filters">
 	<h2>Manage message filters</h2>
 
-	<form action="processors/filters.php" method="post" id="filters_form">
-	<input type="hidden" name="act" value="" />
-	<input type="hidden" name="o" value="{o}" />
-	<input type="hidden" name="r" value="{r}" />
-	<input type="hidden" name="ob" value="{ob}" />
-	<input type="hidden" name="od" value="{od}" />
 	<table id="filter_rows">
-	<tr>
-		<th></th>
-		<th>Filter type</th>
-		<th>Blocked value</th>
+		<tr>
+			<th></th>
+			<th></th>
+			<th>Rule</th>
+			<th>Move to</th>
 	</tr>
 	<loop name="filters">
 	<tr class="filter_row">
-		<td class="selector"><input type="checkbox" name="filter_id[{filters.filter_id}]" id="filter_id_{filters.filter_id}" value="1" /></td>
-		<td class="filter_type">{filters.filter_type}</td>
-		<td class="rule">{filters.rule}</td>
+		<td class="filters_edit"><a href="filters_addedit.php?filter_id={filters.filter_id}&o={o}&r={r}&ob={ob}&od={od}">Edit</a></td>
+		<td class="filters_del"><a href="processors/filters_delete.php?filter_id={filters.filter_id}&o={o}&r={r}&ob={ob}&od={od}">Delete</a></td>
+		<td class="filter_rule">{filters.filter_type} {filters.fk_user_id}</td>
+		<td class="filter_dest">{filters.folder_name}</td>
 	</tr>
 	<noloop name="filters">
 	<tr class="filter_row">
-		<td colspan="3" class="no_result_item">No filters found!</td>
+		<td colspan="4" class="no_result_item">No filters found!</td>
 	</tr>
 	</noloop name="filters">
 	</loop name="filters">
 	</table>
-
-	<div id="action">
-		<input type="checkbox" name="check_all" id="check_all" onclick="check_uncheck(0,this,this.form,'filter_id')" /> <a href="javascript:;" onclick="check_uncheck(1,document.getElementById('check_all'),document.getElementById('filters_form'),'filter_id')">Select all</a>
-		<input type="submit" value="Delete" onclick="send_form('del')" />
-	</div>
-	</form>
+	<a href="filters_addedit.php?o={o}&r={r}&ob={ob}&od={od}">Add new filter</a>
 </div>
