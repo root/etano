@@ -35,6 +35,6 @@ $tpl->set_loop('folders',$folders);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('folders');
 
-$tplvars['title']='Manage folders';
+$tplvars['title']='Manage folders';     // translate
 include 'frame.php';
 ?>
