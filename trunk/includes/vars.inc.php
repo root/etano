@@ -57,6 +57,12 @@ define('_MODULE_SKIN_',4);
 define('_FILTER_USER_',1);
 //define('_FILTER_COUNTRY_',2);
 
+// fixed folders types
+define('_FOLDER_INBOX_',0);
+define('_FOLDER_TRASH_',-1);
+define('_FOLDER_OUTBOX_',-2);
+define('_FOLDER_SPAMBOX_',-3);
+
 // Unset globally registered vars
 function _unset_vars(&$var) {
 	$temp=array_keys($var);
