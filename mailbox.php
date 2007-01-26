@@ -36,7 +36,7 @@ if ($ob>=0) {
 	}
 }
 $mailbox_name='Inbox';     // translate
-$fk_folder_id=0;
+$fk_folder_id=_FOLDER_INBOX_;
 $del=0;
 $from="`{$dbtable_prefix}user_inbox`";
 $where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
@@ -51,32 +51,32 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
 	$folders[$rsrow[0]]=$rsrow[1];
 }
-if (!empty($folders) && $fk_folder_id!==-2 && $fk_folder_id!==-3) {
+if (!empty($folders) && $fk_folder_id!=_FOLDER_OUTBOX_ && $fk_folder_id!=_FOLDER_SPAMBOX_) {
 	$tpl->set_var('folder_options',vector2options($folders));
 }
 
 switch ($fk_folder_id) {
 
-	case 0:     // Inbox
+	case _FOLDER_INBOX_:
 		$where.=" AND `del`='$del'";
 		$tpl->set_var('inbox_options',true);
 		break;
 
-	case -1:
+	case _FOLDER_TRASH_:
 		$mailbox_name='Trash';
 		$del=1;
 		$where.=" AND `del`='$del'";
 		$tpl->set_var('inbox_options',true);
 		break;
 
-	case -2:
+	case _FOLDER_OUTBOX_:
 		$mailbox_name='Outbox';
 		$from="`{$dbtable_prefix}user_outbox`";
 		$is_read='';
 		$tpl->set_var('outbox_options',true);
 		break;
 
-	case -3:
+	case _FOLDER_SPAMBOX_:
 		$mailbox_name='Spambox';
 		$from="`{$dbtable_prefix}user_spambox`";
 		$tpl->set_var('inbox_options',true);
@@ -90,7 +90,7 @@ switch ($fk_folder_id) {
 
 }
 
-if (isset($fk_folder_id) && ($fk_folder_id)>=0) {
+if (isset($fk_folder_id) && ($fk_folder_id)>=_FOLDER_INBOX_) {
 	 $where.=" AND `fk_folder_id`='$fk_folder_id'";
 }
 

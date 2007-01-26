@@ -41,17 +41,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		
 		switch ($folder_id) {
 			
-			case -1:     // Trash
+			case _FOLDER_TRASH_:    
 				$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('$mail_id') AND `del`=1 AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				break;
 			
-			case -2:	 // Outbox
+			case _FOLDER_OUTBOX_:	 // Outbox
 				$query="DELETE FROM `{$dbtable_prefix}user_outbox` WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				break;
 			
-			case -3:	 // Spambox
+			case _FOLDER_SPAMBOX_:	 // Spambox
 				$query="DELETE FROM `{$dbtable_prefix}user_spambox` WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				break;

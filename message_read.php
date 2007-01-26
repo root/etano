@@ -34,28 +34,28 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 	while ($rsrow=mysql_fetch_row($res)) {
 		$folders[$rsrow[0]]=$rsrow[1];
 	}
-	if (!empty($folders) && $fk_folder_id!==-2 && $fk_folder_id!==-3) {
+	if (!empty($folders) && $fk_folder_id!=_FOLDER_OUTBOX_ && $fk_folder_id!=_FOLDER_SPAMBOX_) {
 		$tpl->set_var('folder_options',vector2options($folders));
 	}
 	
 	switch ($fk_folder_id) {
 
-		case 0:						// Inbox
+		case _FOLDER_INBOX_:						
 			$tpl->set_var('inbox_options',true);			
 			break;
 
-		case -1:
+		case _FOLDER_TRASH_:
 			$tpl->set_var('inbox_options',true);
 			$mailbox_name='Trash';
 			break;
 
-		case -2:
+		case _FOLDER_OUTBOX_:
 			$tpl->set_var('outbox_options',true);
 			$mailbox_name='Outbox';
 			$mailbox_table='outbox';
 			break;
 
-		case -3:
+		case _FOLDER_SPAMBOX_:
 			$tpl->set_var('inbox_options',true);
 			$mailbox_name='Spambox';
 			$mailbox_table='spambox';
@@ -104,7 +104,7 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 			$tpl->set_var('od',$_GET['od']);
 		}
 		$tpl->process('content','content',TPL_OPTIONAL);
-		if ($fk_folder_id!==-2){
+		if ($fk_folder_id!=_FOLDER_OUTBOX_){
 			$query="UPDATE `{$dbtable_prefix}user_".$mailbox_table."` SET `is_read`=1 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `mail_id`='".$mail['mail_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
