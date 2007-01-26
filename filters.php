@@ -55,6 +55,7 @@ $totalrows=mysql_result($res,0,0);
 
 $filters=array();
 if (!empty($totalrows)) {
+	$users=array();
 	$query="SELECT * FROM $from WHERE $where $orderby LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
@@ -63,7 +64,13 @@ if (!empty($totalrows)) {
 		} else {
 			$rsrow['folder_name']='SPAMBOX';
 		}
+		$users[]=$rsrow['fk_user_id'];
 		$filters[]=$rsrow;
+	}
+	$query="SELECT `user_id`,`user` FROM `{$dbtable_prefix}user_accounts` WHERE `user_id` IN ('$users')";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	while ($rsrow_users=mysql_fetch_assoc($res)) {
+		// not finished
 	}
 	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
 }

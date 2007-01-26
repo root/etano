@@ -1,0 +1,19 @@
+<div id="folders">
+	<h2>Add/Edit your filters</h2>
+	<opt name="addedit_filter">
+	<div id="action">
+		<form action="processors/filters_addedit.php" method="post" id="filters_form">
+		<input type="hidden" name="{filter.filter_id}" />
+		Move messages from user <input type="text" name="filter_rule" value="{filters.rule_value}" /> into
+		<select name="folder_id">
+		{filters.fk_folder_id}
+		</select>
+		<input type="submit" value="Save filter" />
+		</form>
+	</div>
+	</opt name="addedit_filter">
+	<opt name="no_filter">
+	The filter is no longer needed. You may delete it!
+	</opt name="no_filter">
+	<a href="filters.php?filter_id={filters.filter_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Back to filters</a>
+</div>
