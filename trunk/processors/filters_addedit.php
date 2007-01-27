@@ -24,6 +24,7 @@ $qs='';
 $qs_sep='';
 $topass=array();
 $nextpage='filters.php';
+$input['field']='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
@@ -35,11 +36,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	
 	switch ($input['filter_type']) {
 	
-	case 1: // filter for user
-		if ($input['rule']=get_userid_by_user($input['rule_value'])){
-			
+	case _FILTER_USER_:
+		if ($input['field_value']=get_userid_by_user($input['rule_value'])){
+			$input['field']='fk_user_id';
+			$query="SELECT count(*) FROM `{$dbtable_prefix}message_filters` WHERE `field`='".$input['field']."' AND `filter_type`='"._FILTER_USER_."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$totalrows=mysql_result($res,0,0);
+			if (!empty($totalrows)) {
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']='A filter based on this user already exists. Filter not saved.';     // translate
+			}
 		} else {
 			$error=true;
+			$topass['message']['type']=MESSAGE_ERROR;
+			$topass['message']['text']='User \''.$input['rule_value'].'\' doesn\'t exist. Filter not saved.';     // translate
 		}
 		break;
 	
@@ -86,8 +97,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	} else {
 		$nextpage='filters_addedit.php';
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
-		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Error... Filter NOT saved.';
 		$topass['input']=$input;
 	}
 	if (isset($_POST['o'])) {
