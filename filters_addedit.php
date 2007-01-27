@@ -27,9 +27,15 @@ $ob=isset($_GET['ob']) ? (int)$_GET['ob'] : 7;
 $od=isset($_GET['od']) ? (int)$_GET['od'] : 1;
 
 $filters=$message_filters_default['defaults'];
-if (isset($_GET['filter_id']) && !empty($_GET['filter_id'])) {
+
+if (isset($_SESSION['topass']['input'])) {
+	$tpl->set_var('addedit_filter',true);
+	if (isset($_SESSION['topass']['input'])) {
+		$filters=$_SESSION['topass']['input'];
+	}
+} elseif (isset($_GET['filter_id']) && !empty($_GET['filter_id'])) {
 	$filter_id=(int)$_GET['filter_id'];
-	$query="SELECT a.*, b.`user` as `rule_value` FROM `{$dbtable_prefix}message_filters` a, `{$dbtable_prefix}user_accounts` b WHERE a.`filter_id`='$filter_id' AND a.`rule`=b.`user_id` AND a.`fk_user_id`='".$_SESSION['user']['user_id']."'";
+	$query="SELECT a.*, b.`user` as `rule_value` FROM `{$dbtable_prefix}message_filters` a, `{$dbtable_prefix}user_accounts` b WHERE a.`filter_id`='$filter_id' AND a.`field_value`=b.`user_id` AND a.`fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$filters=mysql_fetch_assoc($res);
@@ -38,9 +44,6 @@ if (isset($_GET['filter_id']) && !empty($_GET['filter_id'])) {
 	} 
 } else {
 	$tpl->set_var('addedit_filter',true);
-	if (isset($_SESSION['topass']['input'])) {
-		$filters=$_SESSION['topass']['input'];
-	}
 }
 
 $folders=array(_FOLDER_SPAMBOX_=>'Spambox');
