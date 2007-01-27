@@ -84,17 +84,16 @@ TODO
 - widget-ul feed ar trebui sa citeasca doar din db? insertul in db sa il faca un cron?
 - phpmailer
 - cautare membri cu poze (poza din profil probabil...)
+- about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
+- de adaugat in style.css clasele care se folosesc la bbcode
 
 - niste functii din user_functions.inc.php ar trebui scoase intr-un fisier separat...
 
 - admin: send newsletter
-- admin: user mail read
-- admin: latest datemill news
-- admin: cautare membri cu/fara poza in profil.
 - admin: member/photo/blog edit
-- admin: member payment history
 - admin: stats
 - admin: payment stats
+- admin: latest datemill news
 
 - cron: check for and remove orpahned lk_ids
 - cron: optimize tables
@@ -103,3 +102,4 @@ TODO
 - affiliates
 
 - [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]
+- addon: lightbox (vezi http://beta.zooomr.com)

@@ -1,0 +1,18 @@
+<script type="text/javascript" src="js/user_message_read.js"></script>
+
+<div id="message_read">
+	<h2>Read a message</h2>
+	<p id="from"><label>Message from:</label>
+		<span><opt name="output.fk_user_id_other"><a href="profile.php?uid={output.other_id}"></opt name="output.fk_user_id_other">{output._user_other}<opt name="output.fk_user_id_other"></a></opt name="output.fk_user_id_other"></span>
+	</p>
+	<p id="date"><label>Sent on:</label> <span>{output.date_sent}</span></p>
+	<p id="subject"><label>Subject:</label> <span>{output.subject}</span></p>
+	<div id="message_body">
+		{output.message_body}
+	</div>
+
+	<div id="bottom_links">
+		<a class="link_back" href="user_inbox.php?&o={output.o}&amp;r={output.r}">Back to inbox</a> | <a class="link_back" href="profile.php?uid={output.fk_user_id}">Back to profile</a>
+	</div>
+	</form>
+</div>

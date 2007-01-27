@@ -49,10 +49,27 @@
 
 	<loop name="search">
 	<div class="edit_row {search.class}" id="row_{search.dbfield}">
-		<label class="mainlabel" for="{search.dbfield}">{search.label}</label>
+		<label class="mainlabel" for="{search.dbfield}">{search.label}:</label>
 		<div class="field">{search.field}</div>
 	</div>
 	</loop name="search">
+
+	<div class="edit_row" id="row_photo">
+		<label class="mainlabel" for="wphoto">Main Photo:</label>
+		<div class="field">
+			<select name="photo" id="photo" tabindex="30">
+			<option value="0">-</option>
+			<option value="1">With main photo</option>
+			<option value="-1">Without main photo</option>
+			</select>
+		</div>
+	</div>
+	<div class="edit_row" id="row_album">
+		<label class="mainlabel" for="album">With album:</label>
+		<div class="field">
+			<input type="checkbox" name="album" id="album" value="1" tabindex="32" />
+		</div>
+	</div>
 
 	<div class="edit_row" id="row_submit">
 		<label class="mainlabel">&nbsp;</label>

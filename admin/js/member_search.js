@@ -1,3 +1,16 @@
+$(function() {
+	$('#wphoto').bind('click',function() {
+		if (this.checked) {
+			$('#wophoto')[0].checked=false;
+		}
+	});
+	$('#wophoto').bind('click',function() {
+		if (this.checked) {
+			$('#wphoto')[0].checked=false;
+		}
+	});
+});
+
 function req_update_location(str_field,val) {
 	$.post('../ajax/location.php',
 			{'field':str_field,'val':val},
