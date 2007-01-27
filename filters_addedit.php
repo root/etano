@@ -35,9 +35,7 @@ if (isset($_GET['filter_id']) && !empty($_GET['filter_id'])) {
 		$filters=mysql_fetch_assoc($res);
 		$filters=sanitize_and_format($filters,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
 		$tpl->set_var('addedit_filter',true);
-	} else {
-		$tpl->set_var('no_filter',true);
-	}
+	} 
 } else {
 	$tpl->set_var('addedit_filter',true);
 	if (isset($_SESSION['topass']['input'])) {
@@ -50,7 +48,6 @@ $query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
 	$folders[$rsrow[0]]=$rsrow[1];
-//	$folders[$rsrow['folder_id']]=$rsrow['folder'];
 }
 $filters['fk_folder_id']=vector2options($folders,$filters['fk_folder_id']);
 
