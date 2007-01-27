@@ -9,25 +9,44 @@
 			<ul>
 			<li><a href="photo_results.php">Browse all</a></li>
 			<li><a href="photo_results.php?stat=5">Awaiting approval</a></li>
+			<li><a href="photo_results.php?is_main=1">Main photos</a></li>
 			</ul>
 		</div>
 	</div>
 
 	<form action="photo_results.php" method="get" id="photo_search_form">
 	<fieldset>
-	<div class="edit_row" id="row_stat_photo">
-		<label class="mainlabel" for="phstat">Photo status:</label>
+	<div class="edit_row" id="row_pstat">
+		<label class="mainlabel" for="stat">Photo status:</label>
 		<div class="field">
-			<select name="stat" id="phstat" tabindex="1">
+			<select name="stat" id="stat" tabindex="1">
 			<option value="0">-</option>
-			{profile.pstat}
+			{output.stat}
 			</select>
+		</div>
+	</div>
+	<div class="edit_row" id="row_main">
+		<label class="mainlabel" for="is_main">Main only:</label>
+		<div class="field">
+			<input type="checkbox" name="is_main" id="is_main" value="1" tabindex="2" />
+		</div>
+	</div>
+	<div class="edit_row" id="row_private">
+		<label class="mainlabel" for="is_private">Private only:</label>
+		<div class="field">
+			<input type="checkbox" name="is_private" id="is_private" value="1" tabindex="3" />
+		</div>
+	</div>
+	<div class="edit_row" id="row_caption">
+		<label class="mainlabel" for="caption">With caption:</label>
+		<div class="field">
+			<input type="checkbox" name="caption" id="caption" value="1" tabindex="4" />
 		</div>
 	</div>
 
 	<div class="edit_row" id="row_submit_photo">
 		<label class="mainlabel">&nbsp;</label>
-		<div class="field"><input type="submit" value="Search" tabindex="2" /></div>
+		<div class="field"><input type="submit" value="Search" tabindex="5" /></div>
 	</div>
 	</fieldset>
 	</form>

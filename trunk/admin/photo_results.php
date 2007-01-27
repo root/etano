@@ -45,6 +45,18 @@ if (!empty($search_md5)) {
 	if (empty($input['stat'])) {
 		unset($input['stat']);
 	}
+	$input['is_main']=sanitize_and_format_gpc($_GET,'is_main',TYPE_INT,0,0);
+	if (empty($input['is_main'])) {
+		unset($input['is_main']);
+	}
+	$input['is_private']=sanitize_and_format_gpc($_GET,'is_private',TYPE_INT,0,0);
+	if (empty($input['is_private'])) {
+		unset($input['is_private']);
+	}
+	$input['caption']=sanitize_and_format_gpc($_GET,'caption',TYPE_INT,0,0);
+	if (empty($input['caption'])) {
+		unset($input['caption']);
+	}
 	$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
 	if (empty($input['uid'])) {
 		unset($input['uid']);
@@ -57,6 +69,15 @@ if ($do_query) {
 
 	if (isset($input['stat'])) {
 		$where.=" AND a.`status`='".$input['stat']."'";
+	}
+	if (isset($input['is_main'])) {
+		$where.=" AND a.`is_main`=1";
+	}
+	if (isset($input['is_private'])) {
+		$where.=" AND a.`is_private`=1";
+	}
+	if (isset($input['caption'])) {
+		$where.=" AND a.`caption`<>''";
 	}
 	if (isset($input['uid'])) {	// a user's photos
 		$where.=" AND a.`fk_user_id`=".$input['uid'];

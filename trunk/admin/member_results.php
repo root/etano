@@ -57,6 +57,14 @@ if (!empty($search_md5)) {
 	if (empty($input['membership'])) {
 		unset($input['membership']);
 	}
+	$input['photo']=sanitize_and_format_gpc($_GET,'photo',TYPE_INT,0,0);
+	if (empty($input['photo'])) {
+		unset($input['photo']);
+	}
+	$input['album']=sanitize_and_format_gpc($_GET,'album',TYPE_INT,0,0);
+	if (empty($input['album'])) {
+		unset($input['album']);
+	}
 
 	$search_fields=array();
 	foreach ($_pfields as $field_id=>$field) {
@@ -144,6 +152,17 @@ if ($do_query) {
 			$where.=" AND a.`fk_user_id`=b.`user_id`";
 			$from.=",`{$dbtable_prefix}user_accounts` b";
 		}
+	}
+	if (isset($input['photo'])) {
+		if ($input['photo']==1) {	// only members with main photo
+			$where.=" AND a.`_photo`<>''";
+		} elseif ($input['photo']==-1) {	// only members without main photo
+			$where.=" AND a.`_photo`=''";
+		}
+	}
+	if (isset($input['album'])) {	// only members with photo album
+		$where.=" AND a.`fk_user_id`=c.`fk_user_id` GROUP BY a.`fk_user_id`";
+		$from.=",`{$dbtable_prefix}user_photos` c";
 	}
 
 	if (empty($search_fields)) {
@@ -246,7 +265,7 @@ if ($do_query) {
 		}	//switch ($field['search_type'])
 	} // the for() that constructs the where
 
-	$query="SELECT `fk_user_id` FROM $from WHERE $where";
+	$query="SELECT a.`fk_user_id` FROM $from WHERE $where";
 //print $query;
 //die;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

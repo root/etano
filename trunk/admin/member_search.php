@@ -47,23 +47,23 @@ for ($i=1;$i<=RELEVANT_FIELDS;++$i) {
 				break;
 
 			case _HTML_LOCATION_:
-				$search[$s]['label']='Country:';	// translate this
+				$search[$s]['label']='Country';	// translate this
 				$search[$s]['dbfield']=$_pfields[$i]['dbfield'].'_country';
 				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'_country" id="'.$_pfields[$i]['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`').'</select>';
 				$prefered_input='s';
 				$num_states=0;
 				++$s;
-				$search[$s]['label']='State:';	// translate this
+				$search[$s]['label']='State';	// translate this
 				$search[$s]['dbfield']=$_pfields[$i]['dbfield'].'_state';
 				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'_state" id="'.$_pfields[$i]['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option></select>';	// translate this
 				$search[$s]['class']='invisible';
 				++$s;
-				$search[$s]['label']='City:';	// translate this
+				$search[$s]['label']='City';	// translate this
 				$search[$s]['dbfield']=$_pfields[$i]['dbfield'].'_city';
 				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'_city" id="'.$_pfields[$i]['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option></select>';	// translate this
 				$search[$s]['class']='invisible';
 				++$s;
-				$search[$s]['label']='Distance:';	// translate this
+				$search[$s]['label']='Distance';	// translate this
 				$search[$s]['dbfield']=$_pfields[$i]['dbfield'].'_zip';
 				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'_dist" id="'.$_pfields[$i]['dbfield'].'_dist" tabindex="'.($i+4).'">'.interval2options(1,10).'</select> miles from zip: <input type="text" name="'.$_pfields[$i]['dbfield'].'_zip" id="'.$_pfields[$i]['dbfield'].'_zip" tabindex="'.($i+4).'" size="5" />';
 				$search[$s]['class']='invisible';

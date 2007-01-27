@@ -55,7 +55,6 @@ define('_MODULE_SKIN_',4);
 
 // filter types
 define('_FILTER_USER_',1);
-//define('_FILTER_COUNTRY_',2);
 
 // fixed folders types
 define('_FOLDER_INBOX_',0);
