@@ -98,7 +98,7 @@ if ($do_query) {
 }
 $totalrows=count($photo_ids);
 
-// get the details for the found user_ids...unfortunately that's another query
+// get the details for the found photo_ids...unfortunately that's another query
 $photos=array();
 if (!empty($totalrows)) {
 	$photo_ids=array_slice($photo_ids,$o,$r);
@@ -123,14 +123,19 @@ if (!empty($totalrows)) {
 }
 
 $tplvars['pic_width']=get_site_option('pic_width','core_photo');
-$return=rawurlencode('photo_results.php?search='.$search_md5.'&o='.$o.'&r='.$r);
+$return='photo_results.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$return.='?'.$_SERVER['QUERY_STRING'];
+} else {
+	$return.='?search='.$search_md5;
+}
 
 $tpl->set_file('content','photo_results.html');
 $tpl->set_loop('photos',$photos);
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->set_var('search_md5',$search_md5);
-$tpl->set_var('return',$return);
+$tpl->set_var('return',rawurlencode($return));
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('photos');
 

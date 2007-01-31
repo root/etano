@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       edit_profile.php
-$Revision$
+File:                       profile_edit.php
+$Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -172,7 +172,7 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 	++$i;
 }
 
-$tpl->set_file('content','edit_profile.html');
+$tpl->set_file('content','profile_edit.html');
 $tpl->set_var('tplvars',$tplvars);
 $tpl->set_loop('profile',$profile);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP);

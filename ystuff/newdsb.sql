@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Jan 27, 2007 at 05:56 PM
+-- Generation Time: Jan 31, 2007 at 07:56 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 -- 
@@ -880,7 +880,8 @@ CREATE TABLE `dsb_message_filters` (
   `filter_id` int(10) NOT NULL auto_increment,
   `filter_type` tinyint(2) NOT NULL default '1',
   `fk_user_id` int(10) NOT NULL default '0',
-  `rule` int(10) NOT NULL default '0',
+  `field` varchar(32) binary NOT NULL default '',
+  `field_value` varchar(255) NOT NULL default '',
   `fk_folder_id` int(10) NOT NULL default '0',
   PRIMARY KEY  (`filter_id`)
 ) TYPE=MyISAM;
@@ -889,7 +890,9 @@ CREATE TABLE `dsb_message_filters` (
 -- Dumping data for table `dsb_message_filters`
 -- 
 
-INSERT INTO `dsb_message_filters` (`filter_id`, `filter_type`, `fk_user_id`, `rule`, `fk_folder_id`) VALUES (1, 1, 2, 2, -3);
+INSERT INTO `dsb_message_filters` (`filter_id`, `filter_type`, `fk_user_id`, `field`, `field_value`, `fk_folder_id`) VALUES (1, 1, 2, '', '2', -3),
+(2, 1, 2, 0x666b5f757365725f6964, '14', 2),
+(3, 1, 2, 0x636f756e7472795f6964, '1', 3);
 
 -- --------------------------------------------------------
 
@@ -974,6 +977,7 @@ CREATE TABLE `dsb_payments` (
   `paid_until` date NOT NULL default '0000-00-00',
   `is_suspect` tinyint(1) unsigned NOT NULL default '0',
   `suspect_reason` text NOT NULL,
+  `date` timestamp(14) NOT NULL,
   PRIMARY KEY  (`payment_id`)
 ) TYPE=MyISAM;
 
@@ -981,11 +985,11 @@ CREATE TABLE `dsb_payments` (
 -- Dumping data for table `dsb_payments`
 -- 
 
-INSERT INTO `dsb_payments` (`payment_id`, `fk_user_id`, `_user`, `gateway`, `fk_subscr_id`, `is_recuring`, `gw_txn`, `name`, `country`, `state`, `city`, `zip`, `street_address`, `email`, `phone`, `m_value_from`, `m_value_to`, `amount_paid`, `paid_from`, `paid_until`, `is_suspect`, `suspect_reason`) VALUES (1, 2, 'guest', 'paypal', 4, 0, '68K892680N420214D', 'Dan Caragea', 'United States', '', '', '', '', 'paypal@sco.ro', '', 2, 4, 100.00, '2006-12-12', '2006-12-13', 0, ''),
-(2, 2, 'guest', 'paypal', 1, 0, '69X88270JS012512S', 'Dan Caragea', 'United States', '', '', '', '', 'paypal@sco.ro', '', 2, 4, 30.00, '2006-12-13', '2007-01-12', 0, ''),
-(3, 1, 'dan', '', 0, 0, '', '', '', '', '', '', '', '', '', 2, 4, 0.00, '2007-01-23', '2007-02-22', 0, ''),
-(4, 2, 'test', '', 0, 0, '', '', '', '', '', '', '', '', '', 4, 4, 0.00, '2007-01-23', '2007-02-22', 0, ''),
-(5, 209, 'test2', '', 0, 0, '', '', '', '', '', '', '', '', '', 2, 4, 0.00, '2007-01-23', '2007-02-22', 0, '');
+INSERT INTO `dsb_payments` (`payment_id`, `fk_user_id`, `_user`, `gateway`, `fk_subscr_id`, `is_recuring`, `gw_txn`, `name`, `country`, `state`, `city`, `zip`, `street_address`, `email`, `phone`, `m_value_from`, `m_value_to`, `amount_paid`, `paid_from`, `paid_until`, `is_suspect`, `suspect_reason`, `date`) VALUES (1, 2, 'guest', 'paypal', 4, 0, '68K892680N420214D', 'Dan Caragea', 'United States', '', '', '', '', 'paypal@sco.ro', '', 2, 4, 100.00, '2006-12-12', '2006-12-13', 0, '', '20070127180529'),
+(2, 2, 'guest', 'paypal', 1, 0, '69X88270JS012512S', 'Dan Caragea', 'United States', '', '', '', '', 'paypal@sco.ro', '', 2, 4, 30.00, '2006-12-13', '2007-01-12', 0, '', '20070127180529'),
+(3, 1, 'dan', '', 0, 0, '', '', '', '', '', '', '', '', '', 2, 4, 0.00, '2007-01-23', '2007-02-22', 0, '', '20070127180529'),
+(4, 2, 'test', '', 0, 0, '', '', '', '', '', '', '', '', '', 4, 4, 0.00, '2007-01-23', '2007-02-22', 0, '', '20070127180529'),
+(5, 209, 'test2', '', 0, 0, '', '', '', '', '', '', '', '', '', 2, 4, 0.00, '2007-01-23', '2007-02-22', 0, '', '20070127180529');
 
 -- --------------------------------------------------------
 
@@ -1104,7 +1108,9 @@ CREATE TABLE `dsb_queue_email` (
 INSERT INTO `dsb_queue_email` (`mail_id`, `to`, `subject`, `message_body`, `date_added`) VALUES (1, 'dan@rdsct.ro', 'Your profile was not approved', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', '20061222002332'),
 (2, 'dan@sco.ro', 'r', '<html dir="ltr">\r\n    <head>\r\n    </head>\r\n    <body>\r\n        &lt;a href=&quot;&quot;&gt;asd&lt;/a&gt;<br />\r\n        <br />\r\n        asd<br />\r\n        asd<br />\r\n        asd<br />\r\n        &quot; ''<br />\r\n    </body>\r\n</html>', '20070124232308'),
 (3, 'dan@rdsct.ro', 'r', '<html dir="ltr">\r\n    <head>\r\n    </head>\r\n    <body>\r\n        &lt;a href=&quot;&quot;&gt;asd&lt;/a&gt;<br />\r\n        <br />\r\n        asd<br />\r\n        asd<br />\r\n        asd<br />\r\n        &quot; ''<br />\r\n    </body>\r\n</html>', '20070124232308'),
-(4, 'dan@rdsct.ro', 'r', '<html dir="ltr">\r\n    <head>\r\n    </head>\r\n    <body>\r\n        &lt;a href=&quot;&quot;&gt;asd&lt;/a&gt;<br />\r\n        <br />\r\n        asd<br />\r\n        asd<br />\r\n        asd<br />\r\n        &quot; ''<br />\r\n    </body>\r\n</html>', '20070124232308');
+(4, 'dan@rdsct.ro', 'r', '<html dir="ltr">\r\n    <head>\r\n    </head>\r\n    <body>\r\n        &lt;a href=&quot;&quot;&gt;asd&lt;/a&gt;<br />\r\n        <br />\r\n        asd<br />\r\n        asd<br />\r\n        asd<br />\r\n        &quot; ''<br />\r\n    </body>\r\n</html>', '20070124232308'),
+(5, 'dan@rdsct.ro', 'Web Application: One of your photos was not approved', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', '20070130134403'),
+(6, 'dan@rdsct.ro', 'Web Application: One of your photos was not approved', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', '20070130161551');
 
 -- --------------------------------------------------------
 
@@ -1288,23 +1294,8 @@ CREATE TABLE `dsb_site_searches` (
 -- Dumping data for table `dsb_site_searches`
 -- 
 
-INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('cfdc1aadf4017e675c47823917af056d', 2, 'a:1:{s:3:"uid";s:1:"2";}', '27,28,29,30,33,34,35,36,37,38', 0, '20061219134623'),
-('40cd750bba9870f18aada2478b24840a', 1, 'a:0:{}', '1,2,209', 0, '20061219155258'),
-('40cd750bba9870f18aada2478b24840a', 2, 'a:0:{}', '27,28,29,30,33,34,35,36,37,38', 0, '20061220160322'),
-('8be66aca9a1a9003f72585c258c916a5', 1, 'a:1:{s:11:"acclevel_id";i:17;}', '', 2, '20061222113940'),
-('a9ed76f7355b148cf3a870e8745aa764', 1, 'a:6:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:8:"field_47";a:1:{i:0;s:1:"2";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";s:16:"field_50_country";s:3:"218";}', '', 2, '20070106194507'),
-('e097eb6165576ce811ea859b9df97549', 1, 'a:5:{s:11:"acclevel_id";i:17;s:8:"field_47";a:1:{i:0;s:1:"2";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";s:16:"field_50_country";s:3:"218";}', '', 2, '20070106194511'),
-('8816b2c8b45df99a22880b00513d7867', 1, 'a:1:{s:5:"pstat";s:1:"5";}', '1', 0, '20070108165007'),
-('4101f936649ffe012c18c4a2aad2bcdf', 1, 'a:1:{s:4:"user";s:4:"test";}', '2,209', 0, '20070125122846'),
-('6017549d266aaf0bedef80f63a2372c4', 1, 'a:1:{s:5:"album";s:1:"1";}', '2', 0, '20070125130726'),
-('a7d680a64dd6b6535e36ec6c9fca60f7', 1, 'a:1:{s:7:"wophoto";s:1:"1";}', '1,209', 0, '20070125131331'),
-('82dd29774c45e2d44b8be91e9ac4449e', 1, 'a:1:{s:6:"wphoto";s:1:"1";}', '2', 0, '20070125131335'),
-('dfb91604070758abb437af0ea5540b59', 1, 'a:2:{s:7:"wophoto";s:1:"1";s:5:"album";s:1:"1";}', '', 0, '20070125131339'),
-('1aa8959f46075f6beaac17320dfecb64', 1, 'a:2:{s:6:"wphoto";s:1:"1";s:5:"album";s:1:"1";}', '2', 0, '20070125131348'),
-('7eb2c4fba0cbd2c3ffa0a7adb02265dc', 2, 'a:1:{s:7:"is_main";s:1:"1";}', '40', 0, '20070125131852'),
-('e27c84d0397e73b95f91def400629716', 2, 'a:1:{s:7:"caption";s:1:"1";}', '41,40,39', 0, '20070125153942'),
-('567e154947e6a8c46ecd823edf3a424d', 2, 'a:1:{s:10:"is_private";s:1:"1";}', '39', 0, '20070125153950'),
-('3a0b785e2faaff550198f79bdd016b4d', 2, 'a:2:{s:10:"is_private";s:1:"1";s:7:"caption";s:1:"1";}', '39', 0, '20070125154008');
+INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('40cd750bba9870f18aada2478b24840a', 2, 'a:0:{}', '39,40,41', 0, '20070130135241'),
+('40cd750bba9870f18aada2478b24840a', 1, 'a:0:{}', '1,2,209', 0, '20070130161608');
 
 -- --------------------------------------------------------
 
@@ -1623,9 +1614,9 @@ CREATE TABLE `dsb_user_photos` (
 -- Dumping data for table `dsb_user_photos`
 -- 
 
-INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `caption`, `status`, `reject_reason`, `stat_views`, `stat_comments`, `date_posted`, `last_changed`, `del`) VALUES (41, 2, 'test', '2/2_31168263188.jpg', 0, 0, 1, 'a boat and a lake', 15, '', 0, 0, '2007-01-08 13:33:17', '2007-01-08 13:34:04', 0),
-(40, 2, 'test', '9/2_21168263188.jpg', 1, 0, 1, 'the beeeee', 15, '', 0, 0, '2007-01-08 13:33:17', '2007-01-08 13:34:04', 0),
-(39, 2, 'test', '8/2_11168263188.jpg', 0, 1, 0, 'ground girl', 15, '', 0, 0, '2007-01-08 13:33:17', '2007-01-08 13:34:04', 0);
+INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `caption`, `status`, `reject_reason`, `stat_views`, `stat_comments`, `date_posted`, `last_changed`, `del`) VALUES (41, 2, 'test', '2/2_31168263188.jpg', 1, 0, 1, 'a boat and a lake', 15, '', 0, 0, '2007-01-08 13:33:17', '2007-01-31 17:48:37', 0),
+(40, 2, 'test', '9/2_21168263188.jpg', 0, 0, 0, 'the beeeee12', 10, '', 0, 0, '2007-01-31 15:32:43', '2007-01-31 17:48:23', 0),
+(39, 2, 'test', '8/2_11168263188.jpg', 0, 1, 0, 'ground girl', 10, '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 0, 0, '2007-01-08 13:33:17', '2007-01-30 16:15:51', 0);
 
 -- --------------------------------------------------------
 
@@ -1671,7 +1662,7 @@ CREATE TABLE `dsb_user_profiles` (
 -- 
 
 INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `last_changed`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `del`, `field_46`, `field_47`, `field_48`, `field_50_country`, `field_50_state`, `field_50_city`, `field_50_zip`, `f51`, `f52`, `f53`, `f54`, `f55`, `f56`) VALUES (1, 1, 15, '2007-01-08 16:50:11', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'dan', '', 0.0000000000, 0.0000000000, 0, 0, 0, '', NULL, 0, 0, 0, '', 0, 0, 0, 0, '', ''),
-(3, 2, 15, '2007-01-08 15:14:00', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test', '9/2_21168263188.jpg', -93.6367034912, 42.0276985168, 0, 0, 1, '|2|', '1976-11-01', 218, 16, 7089, '50010', 0, 0, 0, 0, '', 'Please enter a few\r\n words about you.'),
+(3, 2, 15, '2007-01-31 17:48:37', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test', '2/2_31168263188.jpg', -93.6367034912, 42.0276985168, 0, 0, 2, '|1|2|', '1986-01-03', 218, 16, 7089, '50010', 1, 1, 1, 0, '', ''),
 (620, 209, 10, '2006-12-22 00:23:32', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test2', '', 0.0000000000, 0.0000000000, 0, 0, 2, '|1|', '1981-04-05', 206, 0, 0, '', 0, 0, 0, 0, '', '');
 
 -- --------------------------------------------------------

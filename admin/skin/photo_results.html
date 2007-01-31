@@ -2,7 +2,7 @@
 	<h2>Search Results - Photos</h2>
 
 	<loop name="photos">
-	<div class="member_details">
+	<div class="photo_details">
 		<a class="link_bare" href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={photos.photo_id}','photo',{tplvars.pic_width},{tplvars.pic_width},1)"><img class="user_photo" src="../media/pics/t1/{photos.photo}" /></a>
 		<p>Owner: <a href="profile.php?user={photos._user}">{photos._user}</a></p>
 		<p>Caption: {photos.caption}</p>
@@ -11,14 +11,15 @@
 		<p>Views: {photos.stat_views}</p>
 		<div class="actions">
 			<ul>
-			<li><a href="photo_delete.php?photo_id={photos.photo_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}">Delete</a></li>
-			<opt name="photos.pending"><li><a href="processors/photo_approve.php?photo_id={photos.photo_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}">Approve</a></li></opt name="photos.pending">
-			<li><a href="reject.php?t=2&id={photos.photo_id}&amp;return={return}">Reject</a></li>
+			<li class="first"><a href="processors/photo_delete.php?photo_id={photos.photo_id}&amp;return={return}" title="Delete"><img src="skin/images/del.gif" alt="Delete" /></a></li>
+			<li><a href="photo_edit.php?photo_id={photos.photo_id}&amp;return={return}" title="Edit"><img src="skin/images/edit.gif" alt="Edit" /></a></li>
+			<opt name="photos.pending"><li><a href="processors/photo_approve.php?photo_id={photos.photo_id}&amp;return={return}" title="Approve"><img src="skin/images/approve.gif" alt="Approve" /></a></li></opt name="photos.pending">
+			<li><a href="reject.php?t=2&id={photos.photo_id}&amp;return={return}" title="Reject"><img src="skin/images/reject.gif" alt="Reject" /></a></li>
 			</ul>
 		</div>
 	</div>
 	<noloop name="photos">
-	<div class="member_details">
+	<div class="photo_details">
 	No members found meeting your search criteria.
 	</div>
 	</noloop name="photos">

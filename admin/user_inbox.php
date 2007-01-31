@@ -25,6 +25,7 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 	$output['r']=isset($_GET['r']) ? (int)$_GET['r'] : _RESULTS_;
 	$output['user']=get_user_by_userid($output['uid']);
+	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
 
 	$where="`fk_user_id`='".$output['uid']."' AND `del`=0";
 	$from="`{$dbtable_prefix}user_inbox`";

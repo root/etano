@@ -7,8 +7,8 @@
 - in caz de eroare la profile_edit
 
 - ar trebui inlocuit 		$site_skins[$i]['is_default']='<img src="skin/images/check.gif" />';
-in php cu o clasa pt un <span> care sa aiba ca bgimage skin/images/check.gif pentru checked si altceva (nimic) pt not checked.
-In felul asta userul poate sa isi aleaga ce se afiseaza
+in php cu o clasa pt un <span> care sa aiba ca bgimage skin/images/check.gif pentru checked si altceva (nimic) pt
+not checked. In felul asta userul poate sa isi aleaga ce se afiseaza
 
 - in check_login_member tb verificate ban-urile
 
@@ -23,9 +23,9 @@ In felul asta userul poate sa isi aleaga ce se afiseaza
 - if photo approvals are automatic then we can make this photo the main photo now.
 	Otherwise it will have to be done upon approval!!!	(in processors/photo_settings.php)
 
-- ce se intampla daca sunt mai multe aplicatii create de mine in acelasi domeniu? $_SESSION['user']['user_id'] o sa
-autentifice automat userii dintr-o aplicatie in cealalta...Ar trebui creat un unique id (poate bazat pe licenta) a.i. sa avem
-$_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
+- ce se intampla daca sunt mai multe aplicatii create de mine in acelasi domeniu? $_SESSION['user']['user_id'] o
+sa autentifice automat userii dintr-o aplicatie in cealalta...Ar trebui creat un unique id (poate bazat pe
+licenta) a.i. sa avem $_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
 
 - cauta "translate" ca sa gasesti toate stringurile de tradus hardcodate in scripts.
 
@@ -38,11 +38,11 @@ $_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
 - generatorul de cache care ruleaza la 10 minute ar trebui sa decida daca sa stearga site_search-ul sau nu.
 	daca nu a adaugat/modificat nici un user nu are rost...
 
-- daca intr-un *_left.php exista optionale si tb sa process(,TPL_OPTIONAL) atunci optionalele din html care depind de $tplvars
-	vor fi sterse pt ca tplvars se proceseaza abea in frame.
+- daca intr-un *_left.php exista optionale si tb sa process(,TPL_OPTIONAL) atunci optionalele din html care
+depind de $tplvars vor fi sterse pt ca tplvars se proceseaza abea in frame.
 
-- cand se sterge un user as putea sa fac fk_user_id=0 peste tot pe unde era setat (in special in inbox). In felul asta
-	nu mai trebuie sa fac left join cu user_details sa vad daca userul care a trimis emailul mai exista sau nu...
+- cand se sterge un user as putea sa fac fk_user_id=0 peste tot pe unde era setat (in special in inbox). In felul
+asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a trimis emailul mai exista sau nu...
 
 - welcome message in inbox cand se inregistreaza un membru de tipul _MESS_SYSTEM_
 
@@ -90,10 +90,11 @@ TODO
 - niste functii din user_functions.inc.php ar trebui scoase intr-un fisier separat...
 
 - admin: send newsletter
-- admin: member/photo/blog edit
+- admin: blog edit
 - admin: stats
-- admin: payment stats
+- admin: payment stats. rapoarte pe perioade. procent paid/free/gender
 - admin: latest datemill news
+- admin: impersonate this user (in frame ca sa se poata intoarce la admin)
 
 - cron: check for and remove orpahned lk_ids
 - cron: optimize tables
@@ -103,3 +104,9 @@ TODO
 
 - [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]
 - addon: lightbox (vezi http://beta.zooomr.com)
+
+- 		// replace '\r' and '\n' strings with <enter> in all textareas
+		$input['message_body']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['message_body']);
+in caz de eroare la procesoare. trebuie cautat mai bine si testat pentru ca unele procesoare nu au.
+
+- in admin (poate si la membri) rescris cu return in loc de o&r
