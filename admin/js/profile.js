@@ -4,9 +4,11 @@ function change_password() {
 		return false;
 	}
 	$.post('processors/account_changes.php',
-			{'silent':1,'act':pass,'uid':uid,'pass':newpass},
+			{'silent':1,'act':'pass','uids[]':uid,'pass':newpass},
 			function(data) {
-				alert(data);
+				if (data!=null && data!='') {
+					alert(data);
+				}
 			}
 	);
 }

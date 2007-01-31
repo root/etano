@@ -58,7 +58,7 @@ if (!empty($input['uids'])) {
 
 		case 'pass':
 			$input['pass']=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-			$query="UPDATE `{$dbtable_prefix}user_accounts` SET `pass`=md5('".$input['pass']."') WHERE `user_id`='".$input['uid'][0]."'";
+			$query="UPDATE `{$dbtable_prefix}user_accounts` SET `pass`=md5('".$input['pass']."') WHERE `user_id`='".$input['uids'][0]."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Password changed succesfully';
@@ -73,6 +73,7 @@ if (!isset($_POST['silent'])) {
 	}
 	redirect2page($nextpage,$topass,$qs,true);
 } else {
+// for ajax password change.
 	echo $topass['message']['text'];
 }
 ?>
