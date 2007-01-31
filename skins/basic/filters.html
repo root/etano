@@ -12,7 +12,7 @@
 	<tr class="filter_row">
 		<td class="filters_edit"><a href="filters_addedit.php?filter_id={filters.filter_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Edit</a></td>
 		<td class="filters_del"><a href="processors/filters_delete.php?filter_id={filters.filter_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Delete</a></td>
-		<td class="filter_rule">{filters.filter_type} {filters.fk_user_id}</td>
+		<td class="filter_rule">{filters.rule_type}: <a href="profile.php?uid={filters.field_value}">{filters.rule_value}</a></td>
 		<td class="filter_dest">{filters.folder_name}</td>
 	</tr>
 	<noloop name="filters">

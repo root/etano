@@ -106,6 +106,9 @@ if (!empty($totalrows)) {
 		$rsrow['date_sent']=strftime($_user_settings['datetime_format'],$rsrow['date_sent']+$_user_settings['time_offset']);
 		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 		$rsrow['is_read']=(empty($rsrow['is_read'])) ? 'mail_not_read'.$rsrow['message_type'] : 'mail_read'.$rsrow['message_type'];
+		if ($rsrow['message_type']==_MESS_SYSTEM_) {
+			$rsrow['other']='SYSTEM';     // translate
+		}
 		$mails[]=$rsrow;
 	}
 	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
