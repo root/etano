@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$query="SELECT `user_id`,`user`,`membership` FROM `{$dbtable_prefix}user_accounts` WHERE `user_id` IN ('".join("','",$input['uids'])."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$uids=array();
-		$insert="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`m_value_from`,`m_value_to`,`paid_from`,`paid_until`) VALUES ";
+		$insert="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`gateway`,`m_value_from`,`m_value_to`,`paid_from`,`paid_until`) VALUES ";
 		$query=$insert;
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			if (strlen($query)>$query_strlen) {
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$query=$insert;
 			}
-			$query.="('".$rsrow['user_id']."','".$rsrow['user']."','".$rsrow['membership']."','".$input['m_value']."',now(),now()+INTERVAL '".$input['duration']."' DAY),";
+			$query.="('".$rsrow['user_id']."','".$rsrow['user']."','manual','".$rsrow['membership']."','".$input['m_value']."',now(),now()+INTERVAL '".$input['duration']."' DAY),";
 		}
 		if ($query!=$insert) {
 			$query=substr($query,0,-1);

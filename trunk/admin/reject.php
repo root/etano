@@ -23,13 +23,12 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $output=array();
 $output['t']=sanitize_and_format_gpc($_GET,'t',TYPE_INT,0,0);
 $output['id']=sanitize_and_format_gpc($_GET,'id',TYPE_INT,0,0);
-$output['return']=rawurlencode(sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],''));
+$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+$output['return']=rawurlencode($output['return2']);
 
 $query="SELECT `amtpl_id`,`amtpl_name`,`subject`,`message_body` FROM `{$dbtable_prefix}admin_mtpls` WHERE `amtpl_type`='".$output['t']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $amtpls=array();
-$reason_title='';
-$reject_reason='';
 $i=0;
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
