@@ -39,14 +39,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	case _FILTER_USER_:
 		if ($input['field_value']=get_userid_by_user($input['rule_value'])){
 			$input['field']='fk_user_id';
-			$query="SELECT count(*) FROM `{$dbtable_prefix}message_filters` WHERE `field`='".$input['field']."' AND `filter_type`='"._FILTER_USER_."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$totalrows=mysql_result($res,0,0);
-			if (!empty($totalrows)) {
-				$error=true;
-				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='A filter based on this user already exists. Filter not saved.';     // translate
-			}
 		} else {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
@@ -61,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		if (!empty($input['filter_id'])) {
-			$query="UPDATE `{$dbtable_prefix}message_filters` SET ";
+			$query="UPDATE IGNORE `{$dbtable_prefix}message_filters` SET ";
 			$i=0;
 			foreach ($message_filters_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
@@ -75,10 +67,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			$query.=" WHERE `filter_id`='".$input['filter_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Filter changed successfully.';     // translate
+			if (!empty($affected_rows)) {
+				$topass['message']['type']=MESSAGE_INFO;
+				$topass['message']['text']='Filter changed successfully.';     // translate
+			} else {
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']='Filter not changed. A similar filter already exists.';     // translate
+			}
 		} else {
-			$query="INSERT INTO `{$dbtable_prefix}message_filters` SET ";
+			$query="INSERT IGNORE INTO `{$dbtable_prefix}message_filters` SET ";
 			$i=0;
 			foreach ($message_filters_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
@@ -91,8 +88,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				++$i;
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Filter added.';
+			$affected_rows=mysql_affected_rows();
+			if (!empty($affected_rows)) {
+				$topass['message']['type']=MESSAGE_INFO;
+				$topass['message']['text']='Filter added.';     // translate
+			} else {
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']='Filter not added. A similar filter already exists.';     // translate
+			}
 		}
 	} else {
 		$nextpage='filters_addedit.php';
