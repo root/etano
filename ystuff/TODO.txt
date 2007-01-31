@@ -94,7 +94,6 @@ TODO
 - admin: stats
 - admin: payment stats. rapoarte pe perioade. procent paid/free/gender
 - admin: latest datemill news
-- admin: impersonate this user (in frame ca sa se poata intoarce la admin)
 
 - cron: check for and remove orpahned lk_ids
 - cron: optimize tables
