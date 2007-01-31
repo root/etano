@@ -47,6 +47,7 @@
 				<opt name="profile.del"><li><a href="processors/member_delete.php?act=-1&amp;uids%5B%5D={profile.fk_user_id}&amp;return={return}">Undelete member</a></li></opt name="profile.del">
 				<li><a href="processors/user_sentmail_delete.php?uid={profile.fk_user_id}&amp;return={return}" onclick="return(confirm('Are you sure you want to delete all messages sent by this member from other member inboxes?'))">Delete sent mail</a></li>
 				<li><a href="javascript:;" onclick="popWin('user_payment_history.php?uid={profile.fk_user_id}','history',400,400,1)">Payment History</a></li>
+				<li><a href="user_login.php?uid={profile.fk_user_id}&amp;return={return}">Impersonate User</a></li>
 				<li>&nbsp;</li>
 				<opt name="search_md5"><li><a class="back" href="member_results.php?search={search_md5}&amp;o={o}&amp;r={r}">Back to search</a></li></opt name="search_md5">
 				</ul>
