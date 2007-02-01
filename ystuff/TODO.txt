@@ -88,6 +88,7 @@ TODO
 - de adaugat in style.css clasele care se folosesc la bbcode
 
 - niste functii din user_functions.inc.php ar trebui scoase intr-un fisier separat...
+- includes/site_options.inc.php cu setarile din site_options3 ?
 
 - admin: send newsletter
 - admin: blog edit

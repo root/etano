@@ -40,7 +40,7 @@
 					</form>
 				</li>
 				<li><a href="profile_edit.php?uid={profile.fk_user_id}&amp;return={return}">Edit profile</a></li>
-				<opt name="profile.has_photo"><li><a href="photo_results.php?uid={profile.fk_user_id}">View album</a></li></opt name="profile.has_photo">
+				<li><a href="photo_results.php?uid={profile.fk_user_id}">View album</a></li>
 				<li><a href="user_inbox.php?uid={profile.fk_user_id}&amp;return={return}">Read mail</a></li>
 				<li><a href="javascript:;" onclick="change_password()">Change password</a></li>
 				<opt name="!profile.del"><li><a href="processors/member_delete.php?uids%5B%5D={profile.fk_user_id}&amp;return={return}" onclick="return(confirm('Are you sure you want to delete this member?'))">Delete member</a></li></opt name="!profile.del">
