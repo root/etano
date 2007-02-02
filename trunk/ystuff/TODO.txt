@@ -97,9 +97,6 @@ TODO
 - admin: latest datemill news
 
 - cron: check for and remove orpahned lk_ids
-- cron: optimize tables
-- cron: delete members set as del
-- la stergerea unui user tb sa fac fk_user_id=0 peste tot pe unde exista referinte la id-ul userului sters.
 - affiliates
 
 - [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]
