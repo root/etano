@@ -16,4 +16,6 @@ $dbtable_prefix='dsb_';
 $accepted_results_per_page=array('6'=>6,'12'=>12,'24'=>24,'48'=>48);
 $accepted_images=array('jpg','jpeg','png');
 
+define('_LICENSE_KEY_','0917JJ8239HG8S623DFG45');
+
 $_user_settings=array('date_format'=>'%x','datetime_format'=>'%c','time_offset'=>7200);

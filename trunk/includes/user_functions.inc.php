@@ -12,6 +12,8 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 include 'logs.inc.php';
+$_access_level=array();
+require_once 'access_levels.inc.php';
 
 function get_userid_by_user($user) {
 	$myreturn=0;

@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       plugins/widget/feed/feed.class.php
-$Revision$
+File:                       plugins/widget/digg_tech/digg_tech.class.php
+$Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -13,10 +13,10 @@ Support at:                 http://forum.datemill.com
 
 require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 
-class widget_feed extends icontent_widget {
-	var $module_code='widget_feed';
+class widget_digg_tech extends icontent_widget {
+	var $module_code='digg_tech';
 
-	function widget_feed() {
+	function widget_digg_tech() {
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -40,21 +40,13 @@ class widget_feed extends icontent_widget {
 
 	function _content() {
 		$dbtable_prefix=$GLOBALS['dbtable_prefix'];
-		$this->tpl->set_file('widget_content','widgets/feed/display.html');
-		if (!empty($this->config['feed_url'])) {
-			$query="SELECT `feed_xml` FROM `{$dbtable_prefix}feed_cache` WHERE `feed_url`='".$this->config['feed_url']."' AND `update_time`>=now()-INTERVAL ".$this->config['refresh_interval']." MINUTE";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$this->tpl->set_file('widget_content','widgets/digg_tech/display.html');
+		$query="SELECT `feed_xml` FROM `{$dbtable_prefix}feed_cache` WHERE `module_code`='".$this->module_code."'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (mysql_num_rows($res)) {
 			require_once _BASEPATH_.'/includes/classes/feed_reader.class.php';
 			$fr=new feedReader();
-			if (mysql_num_rows($res)) {
-				$fr->setRawXML(mysql_result($res,0,0));
-			} else {
-				$ok=$fr->getFeed($this->config['feed_url']);
-				if ($ok) {
-					$query="REPLACE INTO `{$dbtable_prefix}feed_cache` SET `feed_url`='".$this->config['feed_url']."',`feed_xml`='".sanitize_and_format($fr->getRawXML(),TYPE_STRING,FORMAT_ADDSLASH)."',`update_time`=now()";
-					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				}
-			}
+			$fr->setRawXML(mysql_result($res,0,0));
 			$ok=$fr->parseFeed();
 			if ($ok) {
 				$items=$fr->getFeedOutputData();
