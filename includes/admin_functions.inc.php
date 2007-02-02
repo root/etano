@@ -315,14 +315,14 @@ function get_userid_by_user($user) {
 
 //	$email must have the keys: 'subject','message_body'
 //	Both the subject and the message_body are assumed to be NOT sanitized but STRIPSLASH_MQ'ed
-function queue_or_send_email($email_addrs,$email) {
+function queue_or_send_email($email_addrs,$email,$force_send=false) {
 	$myreturn=true;
 	if (is_string($email_addrs)) {
 		$email_addrs=array($email_addrs);
 	}
-	$opts=get_site_option(array('use_queue','mail_from'),'core');
+	$config=get_site_option(array('use_queue','mail_from'),'core');
 	$query_len=10000;
-	if (!empty($opts['use_queue'])) {
+	if (!$force_send && !empty($config['use_queue'])) {
 		$email=sanitize_and_format($email,TYPE_STRING,FORMAT_ADDSLASH);
 		$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 		$base="INSERT INTO `{$dbtable_prefix}queue_email` (`to`,`subject`,`message_body`) VALUES ";
@@ -347,8 +347,8 @@ function queue_or_send_email($email_addrs,$email) {
 		require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
 		$mail=new PHPMailer;
 		$mail->IsHTML(true);
-		$mail->From=$opts['mail_from'];
-		$mail->Sender=$opts['mail_from'];
+		$mail->From=$config['mail_from'];
+		$mail->Sender=$config['mail_from'];
 		$mail->FromName=_SITENAME_;
 		$mail->LE="\r\n";
 		$mail->IsMail();

@@ -1,8 +1,8 @@
-<?php
+<?
 /******************************************************************************
 File:                       includes/sco_functions.inc.php
 Info:   					general purpose functions library
-File version:				1.2006122201
+File version:				1.2007020201
 Created by:                 Dan Caragea (http://www.sco.ro - dan@rdsct.ro)
 ******************************************************************************/
 
@@ -280,14 +280,14 @@ function gen_pass($length=8) {
 
 
 function db_connect($dbhost,$dbuser,$dbpass,$dbname='') {
-	$myreturn=true;
+	$myreturn=false;
 	if ((float)(phpversion())>=4.3) {
 		if (!($myreturn=@mysql_connect($dbhost,$dbuser,$dbpass,MYSQL_CLIENT_COMPRESS))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	} else {
 		if (!($myreturn=@mysql_connect($dbhost,$dbuser,$dbpass))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
-	if (!empty($dbname)) {
-		if (!mysql_select_db($dbname)) {
+	if (!empty($dbname) && $myreturn) {
+		if (!mysql_select_db($dbname,$myreturn)) {
 			$myreturn=false;
 		}
 	}

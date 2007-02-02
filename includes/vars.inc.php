@@ -92,14 +92,12 @@ require_once 'sco_functions.inc.php';
 define('_HTML_LOCATION_',107);
 $__html2type[_HTML_LOCATION_]=TYPE_INT;
 $__html2format[_HTML_LOCATION_]=0;
-$_access_level=array();
-require_once 'access_levels.inc.php';
 $_lang=array();
 require_once _BASEPATH_.'/skins/'.get_my_skin().'/lang/strings.inc.php';
 //require_once _BASEPATH_.'/skins/'.get_my_skin().'/lang/choices.inc.php';
 $_pfields=array();
 $_pcats=array();
-require_once 'fields.inc.php';
+//require_once 'fields.inc.php';
 
 $accepted_months=array($_lang[4],$_lang[7],$_lang[8],$_lang[9],$_lang[10],$_lang[11],$_lang[12],$_lang[13],$_lang[14],$_lang[15],$_lang[16],$_lang[17],$_lang[18]);
 $accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
