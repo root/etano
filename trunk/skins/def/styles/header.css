@@ -1,0 +1,175 @@
+/* CSS Document */
+
+/* Primary navigation */
+
+* html #primary-nav {
+	bottom: -1px;
+}
+#primary-nav {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 450px;
+	height: 33px;
+	list-style-type: none;
+}
+
+#primary-nav li {
+	float: left;
+	margin-left: -1px;
+}
+
+#primary-nav a {
+	display: block;
+	height: 33px;
+	background-position: bottom;
+
+}
+
+#primary-nav a i {
+	display: none;
+}
+
+#primary-nav a:hover {
+	background-position: center;
+}
+
+#primary-nav li a:active, #primary-nav li.active a {
+	background-position: top;
+}
+
+#primary-nav a.home {
+	width: 66px;
+	background-image: url('../images/menu-home.gif');
+}
+
+#primary-nav a.search {
+	width: 80px;
+	background-image: url('../images/menu-search.gif');
+}
+
+#primary-nav a.link {
+	width: 120px;
+	background-image: url('../images/menu-link.gif');
+}
+
+#primary-nav a.other-link {
+	width: 176px;
+	background-image: url('../images/menu-other-link.gif');
+}
+
+
+/* Logotype */
+
+#logo-box {
+	position: absolute;
+	top: 16px;
+	left: 0;
+	width: 300px;
+	height: 42px;
+}
+
+#logo-box img {
+	display: block;
+	float: left;
+}
+
+#logo-box p {
+	margin: 13px 0 10px 54px;
+	font-size: 18px;
+	color: #FFFFFF;
+	text-transform: uppercase;
+}
+
+
+
+/* Login box */
+
+#login-box {
+	position: absolute;
+	top: 12px;
+	left: 625px;
+	width: 299px;
+}
+
+* html #login-box input {
+	padding: 2px 5px;
+}
+#login-box input {
+	border: 0;
+	background: none;
+	background-position: top left;
+	background-repeat: repeat-x;
+	font-size: 12px;
+	padding: 4px 5px 0;
+}
+
+* html #login-box #username {
+	margin-bottom: 4px;
+}
+#login-box #username {
+	width: 117px;
+	height: 16px;
+	margin-bottom: 7px;
+	background-image: url('../images/input-user-bg.gif');
+}
+
+* html #login-box #password {
+	margin-bottom: 4px;
+}
+#login-box #password {
+	width: 107px;
+	height: 16px;
+	margin-bottom: 7px;
+	background-image: url('../images/input-pass-bg.gif');
+}
+
+#login-box #login {
+	padding: 0;
+}
+#login-box fieldset > #login {
+	margin-bottom: 2px;
+}
+
+
+#login-box #logout {
+	float: right;
+	display: block;
+	width: 56px;
+	height: 20px;
+	background-image: url('../images/btn-logout.gif');
+	background-position: top;
+	margin: 4px 5px 0;
+}
+
+#login-box #logout:hover {
+	background-position: bottom;
+}
+
+#login-box #logout i {
+	display: none;
+}
+
+#login-box span {
+	color: #173459;
+}
+
+#login-box #lost-password {
+	float: right;
+}
+
+#login-box #hello-message {
+	float: right;
+	margin-top: 6px;
+	font-size: 14px;
+}
+
+#login-box a {
+	color: #FFF;
+	text-decoration: none;
+}
+
+#login-box a:hover, #login-box a:active {
+	color: #FFF;
+	text-decoration: underline;
+}

@@ -1,0 +1,63 @@
+/* CSS Document */
+
+html
+{
+	height: 100%;
+}
+
+body {
+	background-color: #FFFFFF;
+	color: #222222;
+	font: 11px "Trebuchet MS", Arial, sans-serif;
+	height: 100%;
+}
+
+* html #expandable-container {
+	height: 100%;
+}
+#expandable-container {
+	position: relative;
+	min-height: 100%;
+}
+
+#header-container {
+	height: 105px;
+	background-image: url('../images/header-bg.gif');
+	background-position: bottom;
+	background-repeat: repeat-x;
+}
+
+#header-body {
+	width: 924px;
+	height: 105px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#content-container {
+	width: 960px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#footer-cleaner {
+	clear: both;
+	width: 100%;
+	height: 85px;
+}
+
+#footer-container {
+	margin-top: -65px;
+	height: 65px;
+	position: relative;
+	background-image: url('../images/footer-bg.gif');
+	background-position: top;
+	background-repeat: repeat-x;
+}
+
+#footer-body {
+	width: 924px;
+	margin: 0 auto;
+	padding: 16px 0;
+	position: relative;
+}

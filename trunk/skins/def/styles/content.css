@@ -1,0 +1,139 @@
+/* Rounded box related */
+
+.rounded-box {
+	position: relative;
+	padding: 15px 18px;
+}
+.starting-box {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	height: 15px;
+	background-position: top;
+	background-repeat: no-repeat;
+}
+.closing-box {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+	height: 15px;
+	background-position: bottom;
+	background-repeat: no-repeat;
+}
+
+.large {
+	background-image: url('../images/box-large-middle.gif');
+	background-repeat: repeat-y;
+}
+	.large .starting-box {
+		width: 742px;
+		background-image: url('../images/box-large-top.gif');
+	}
+	.large .closing-box {
+		width: 742px;
+		background-image: url('../images/box-large-bottom.gif');
+	}
+
+.medium {
+	background-image: url('../images/box-medium-middle.gif');
+	background-repeat: repeat-y;
+}
+	.medium .starting-box {
+		width: 706px;
+		background-image: url('../images/box-medium-top.gif');
+	}
+	.medium .closing-box {
+		width: 706px;
+		background-image: url('../images/box-medium-bottom.gif');
+	}
+
+.small {
+	background-image: url('../images/box-small-middle.gif');
+	background-repeat: repeat-y;
+}
+	.small .starting-box {
+		width: 206px;
+		background-image: url('../images/box-small-top.gif');
+	}
+	.small .closing-box {
+		width: 206px;
+		background-image: url('../images/box-small-bottom.gif');
+	}
+
+
+/* Type */
+
+h1 {
+	font-size: 20px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+h2 {
+	font-size: 16px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+h3 {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+h4 {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+strong {
+	font-weight: bold;
+}
+
+/* Links */
+
+.content-link {
+	font-size: 11px;
+	color: #c57794;
+	padding: 0 3px 6px 25px;
+	text-decoration: none;
+	background-position: top left;
+	background-repeat: no-repeat;
+	font-weight: bold;
+}
+.content-link:hover {
+	text-decoration: underline;
+}
+
+.member-online {
+	background-image: url('../images/member-online-small-out.gif');
+	padding: 0 3px 0 15px;
+	background-position: top left;
+}
+.member-online:hover {
+	background-image: url('../images/member-online-small-over.gif');
+}
+
+.member-offline {
+	background-image: url('../images/member-offline-small-out.gif');
+	padding: 0 3px 0 15px;
+	background-position: top left;
+}
+.member-offline:hover {
+	background-image: url('../images/member-offline-small-over.gif');
+}
+
+.smart_table label {
+	padding-right: 5px;
+}
+
+.visible {
+	visibility: visible;
+}
+
+.invisible {
+	display: none;
+	visibility: hidden;
+}
+

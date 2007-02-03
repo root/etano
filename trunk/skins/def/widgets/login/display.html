@@ -1,0 +1,25 @@
+<form id="login-box" action="{tplvars.relative_path}processors/login.php" method="post">
+<opt name="tplvars.user_logged">
+	<fieldset>
+		<a href="processors/logout.php" id="logout" title="Sign out"><i>Sign out</i></a>
+		<span id="hello-message">
+			Hello, <a href="{tplvars.relative_path}my_profile.php" title="{tplvars.myself.user}">{tplvars.myself.user}</a>!
+		</span>
+	</fieldset>
+</opt name="tplvars.user_logged">
+<opt name="!tplvars.user_logged">
+	<fieldset>
+		<input type="text" id="username" name="user" />
+		<input type="password" id="password" name="pass" />
+		<input type="image" id="login" alt="Login" src="{tplvars.tplrelpath}/images/btn-login-out.gif" />
+	</fieldset>
+	<fieldset>
+		<span id="lost-password">
+			<a href="#" title="Lost password?">Lost password?</a>
+		</span>
+		<span id="sign-up">
+			Hello guest, please login above or <a href="join.php" title="Sign up">sign up</a>.
+		</span>
+	</fieldset>
+</opt name="!tplvars.user_logged">
+</form>

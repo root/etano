@@ -90,11 +90,14 @@ TODO
 - niste functii din user_functions.inc.php ar trebui scoase intr-un fisier separat...
 - includes/site_options.inc.php cu setarile din site_options3 ?
 
+- admin: adaugat search_type: range pt field_type: select
+- admin: default_value la field_type: date ar trebui sa fie search_value?
 - admin: send newsletter
 - admin: blog edit
 - admin: stats
 - admin: payment stats. rapoarte pe perioade. procent paid/free/gender
 - admin: latest datemill news
+
 
 - cron: check for and remove orpahned lk_ids
 - affiliates
