@@ -1,5 +1,17 @@
+$(function() {
+	$('input[@type=image]').mouseover(function() {
+		$(this).attr('src',function() {
+			return $(this).attr('src').replace(/out\.gif/g, 'over.gif');
+		})
+	}).mouseout(function() {
+		$(this).attr('src',function() {
+			return $(this).attr('src').replace(/over\.gif/g, 'out.gif');
+		})
+	});
+});
+
 /*
- * Allows only valid characters to be entered into input boxes.
+ * Allows only numbers to be entered into input boxes.
  *
  * @name     numeric
  * @param    use_dec      boolean value to allow/disallow using the decimal separator

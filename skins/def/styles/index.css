@@ -1,0 +1,241 @@
+/* CSS Document */
+
+/* Sidebar - Search box */
+
+* html #search {
+	margin-top: 18px;
+}
+#search {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0 0 18px;
+	width: 170px;
+	font-size: 14px;
+}
+
+#search fieldset {
+	margin: 7px 0;
+}
+
+#search select.big_select {
+	width: 100%;
+}
+
+* html #search fieldset.distance input {
+	width: 43px;
+}
+#search fieldset.distance input {
+	width: 40px;
+}
+#search label.field_label {
+	display: block;
+	font-size: 14px;
+}
+
+#search fieldset.controls {
+	background-image: url('../images/search-bg.gif');
+	background-position: top left;
+	background-repeat: no-repeat;
+	padding-top: 15px;
+	margin: 10px 0 0;
+	text-align: right;
+}
+
+#search fieldset.controls #search-btn {
+	margin-right: -5px;
+}
+
+#search label, #search select, #search input {
+	font: 12px "Trebuchet MS", Arial, sans-serif;
+}
+
+
+/* Content - Description box */
+
+* html #description {
+	height: 1%;
+}
+#description {
+	margin: 18px 0;
+	width: 706px;
+	overflow: hidden;
+	font-size: 14px;
+}
+
+* html #description .description-box {
+	height: 78px;
+}
+#description .description-box {
+	min-height: 78px;
+	float: left;
+	margin-top: 6px;
+	background-position: top right;
+	background-repeat: no-repeat;
+}
+
+#description-search {
+	width: 106px;
+	padding-right: 122px;
+	background-image: url('../images/description-search.gif');
+}
+
+#description-meet {
+	width: 103px;
+	padding: 0 120px 0 20px;
+	background-image: url('../images/description-meet.gif');
+}
+
+#description-have-fun {
+	width: 102px;
+	padding: 0 112px 0 20px;
+	background-image: url('../images/description-have-fun.gif');
+}
+
+* html #sign-up-now {
+	margin: 0;
+}
+#sign-up-now {
+	display: block;
+	float: right;
+	width: 126px;
+	height: 41px;
+	margin-right: -5px;
+	background-image: url('../images/btn-sign-up.gif');
+	background-position: top;
+}
+
+#sign-up-now:hover {
+	background-position: bottom;
+}
+
+#sign-up-now i {
+	display: none;
+}
+
+
+/* Content - Latest members section */
+
+#latest-members {
+	width: 704px;
+	padding: 0 18px;
+}
+
+* html #latest-members-listing {
+	margin-left: -6px;
+	width: 720px;
+	height: 1%;
+}
+#latest-members-listing {
+	width: 720px;
+	margin: 15px 0 10px -6px;
+	padding: 0 0 5px;
+	list-style-type: none;
+	overflow: hidden;
+}
+
+#latest-members-listing li {
+	float: left;
+	width: 110px;
+	margin-left: 10px;
+	text-align: center;
+}
+
+#latest-members-listing li.first {
+	margin: 0;
+}
+
+* html .more-new-members {
+	margin-right: -2px;
+}
+.more-new-members {
+	display: block;
+	float: right;
+	margin: -10px -5px 0 0;
+	background-image: url('../images/link-more-out.gif');
+	background-position: top right;
+	padding: 0 25px 6px 3px;
+}
+.more-new-members:hover {
+	background-image: url('../images/link-more-over.gif');
+}
+
+
+/* Content - Latest blogs section */
+
+#latest-blogs {
+	width: 704px;
+	margin: 5px 0;
+	padding: 15px 18px 0;
+	background-image: url('../images/blogs-box-bg.gif');
+	background-position: top center;
+	background-repeat: no-repeat;
+}
+
+#latest-blogs-listing {
+	width: 710px;
+	margin: 15px 0 10px -6px;
+	padding: 0;
+	list-style-type: none;
+}
+
+* html #latest-blogs-listing li {
+	height: 1%;
+}
+#latest-blogs-listing li {
+	overflow: hidden;
+	margin-top: 15px;
+	background-image: url('../images/blogs-listing-bg.gif');
+	background-position: bottom right;
+	background-repeat: no-repeat;
+}
+
+#latest-blogs-listing li.first {
+	margin: 0;
+}
+
+#latest-blogs-listing li.last {
+	background-image: none;
+}
+
+
+
+#latest-blogs-listing li .blog-photo {
+	float: left;
+	width: 110px;
+	text-align: center;
+}
+
+#latest-blogs-listing li .blog-details {
+	width: 585px;
+	margin-left: 120px;
+}
+
+#latest-blogs-listing li .blog-title {
+	padding: 0;
+	margin: 0;
+	font-size: 13px;
+	display: inline;
+}
+
+#latest-blogs-listing li .blog-details p {
+	margin: 10px 0;
+	font-size: 13px;
+}
+
+#latest-blogs-listing li .blog-details strong {
+	display: block;
+}
+
+#latest-blogs-listing li .read-more {
+	display: block;
+	background-image: url('../images/link-read-more-out.gif');
+	background-position: top right;
+	margin: 5px 0;
+	padding: 0 25px 6px 0;
+	width: 60px;
+	height: 25px;
+}
+#latest-blogs-listing li .read-more:hover {
+	background-image: url('../images/link-read-more-over.gif');
+}
