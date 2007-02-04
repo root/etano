@@ -21,14 +21,27 @@ check_login_member(5);
 $qs='';
 $qs_sep='';
 $topass=array();
+$nextpage='filters.php';
 $filter_id=isset($_GET['filter_id']) ? (int)$_GET['filter_id'] : 0;
+$where=isset($_GET['uid']) ? "`filter_type`='"._FILTER_USER_."' AND `field_value`='".(int)$_GET['uid']."' AND `fk_folder_id`='"._FOLDER_SPAMBOX_."'" : "`filter_id`='".$filter_id."'";
 
-$query="DELETE FROM `{$dbtable_prefix}message_filters` WHERE `filter_id`='$filter_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="DELETE FROM `{$dbtable_prefix}message_filters` WHERE $where AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Filter deleted.';     // translate
 
+if (isset($_GET['uid'])) {
+	$nextpage='message_read.php';
+}
+if (isset($_GET['mail_id'])) {
+	$qs.=$qs_sep.'mail_id='.$_GET['mail_id'];
+	$qs_sep='&';
+}
+if (isset($_GET['fid'])) {
+	$qs.=$qs_sep.'fid='.$_GET['fid'];
+	$qs_sep='&';
+}
 if (isset($_GET['o'])) {
 	$qs.=$qs_sep.'o='.$_GET['o'];
 	$qs_sep='&';
@@ -46,5 +59,5 @@ if (isset($_GET['od'])) {
 	$qs_sep='&';
 }
 
-redirect2page('filters.php',$topass,$qs);
+redirect2page($nextpage,$topass,$qs);
 ?>

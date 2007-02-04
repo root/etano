@@ -2,7 +2,7 @@
 	<h3>Contact Details</h3>
 	<div class="content">
 		<opt name="mail.other_id"><a href="profile.php?uid={mail.other_id}"></opt name="mail.other_id"><img id="sender_photo" class="user_photo" src="{tplvars.relative_path}media/pics/t1/{mail.photo}" /><opt name="mail.other_id"></a></opt name="mail.other_id">
-		<p><a href="profile.php?uid={mail.other_id}">{mail._user_other}</a></p>
+		<p><opt name="mail.other_id"><a href="profile.php?uid={mail.other_id}"></opt name="mail.other_id">{mail._user_other}<opt name="mail.other_id"></a></opt name="mail.other_id"></p>
 	</div>
 </div>
 

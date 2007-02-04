@@ -11,14 +11,14 @@
 				<opt name="inbox_options">Message from: </opt name="inbox_options">
 				<opt name="outbox_options">Message to: </opt name="outbox_options">
 		</label>
-		<span><a href="profile.php?uid={mail.other_id}">{mail._user_other}</a></span>
+		<span><opt name="mail.other_id"><a href="profile.php?uid={mail.other_id}"></opt name="mail.other_id">{mail._user_other}<opt name="mail.other_id"></a></opt name="mail.other_id"></span>
 	</p>
 	<p id="date"><label>Sent on:</label> <span>{mail.date_sent}</span></p>
 	<p id="subject"><label>Subject:</label> <span>{mail.subject}</span></p>
 	<ul id="actions">
 		<opt name="inbox_options"><li><input type="button" value="Reply" onclick="send_form('reply')" /></li></opt name="inbox_options">
 		<li><input type="button" value="Delete" onclick="send_form('del')" /></li>
-		<opt name="inbox_options"><li><input type="button" value="Spam" onclick="send_form('spam')" /></li></opt name="inbox_options"></li>
+		<opt name="spambox_options"><li><input type="button" value="Spam" onclick="send_form('spam')" /></li></opt name="spambox_options"></li>
 		<opt name="folder_options">
 		<li>Move to <select name="folder_id" id="folder_id">
 						<option value="0">Inbox</option>
@@ -33,7 +33,13 @@
 	</div>
 
 	<div id="bottom_links">
-		<span><a class="link_back" href="mailbox.php?fid={mailbox_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Back to {mailbox_name}</a> | <a class="link_back" href="processors/filters_addedit.php?uid={mail.other_id}">Block this user</a></span>
+		<span>
+			<a class="link_back" href="mailbox.php?fid={mailbox_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Back to {mailbox_name}</a>
+			<opt name="mail.other_id">
+				<opt name="unblock_user">| <a class="link_back" href="processors/filters_delete.php?uid={mail.other_id}&amp;mail_id={mail.mail_id}&amp;fid={mailbox_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Unblock this user</a></opt name="unblock_user">
+				<opt name="!unblock_user">| <a class="link_back" href="processors/filters_addedit.php?uid={mail.other_id}&amp;mail_id={mail.mail_id}&amp;fid={mailbox_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Block this user</a></opt name="!unblock_user">
+			</opt name="mail.other_id">
+		</span>
 	</div>
 	</form>
 </div>
