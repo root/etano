@@ -41,11 +41,13 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 	switch ($fk_folder_id) {
 
 		case _FOLDER_INBOX_:						
-			$tpl->set_var('inbox_options',true);			
+			$tpl->set_var('inbox_options',true);
+			$tpl->set_var('spambox_options',true);
 			break;
 
 		case _FOLDER_TRASH_:
 			$tpl->set_var('inbox_options',true);
+			$tpl->set_var('spambox_options',true);
 			$mailbox_name='Trash';
 			break;
 
@@ -63,6 +65,7 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 
 		default:
 			$tpl->set_var('inbox_options',true);
+			$tpl->set_var('spambox_options',true);
 			$mailbox_name=$folders[$fk_folder_id];
 			break;
 
@@ -76,6 +79,9 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 			check_login_member(4);
 		} elseif ($mail['message_type']==_MESS_FLIRT_) {
 			check_login_member(6);
+		} elseif ($mail['message_type']==_MESS_SYSTEM_) {
+			$mail['_user_other']='SYSTEM';     // translate
+			$tpl->set_var('spambox_options',false);
 		}
 		$mail['date_sent']=strftime($_user_settings['datetime_format'],$mail['date_sent']+$_user_settings['time_offset']);
 		if (empty($mail['photo'])) {
@@ -83,6 +89,12 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 		}
 		if (empty($mail['other_id'])) {
 			unset($mail['other_id']);
+		} else {
+			$query="SELECT * FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `filter_type`='"._FILTER_USER_."' AND `field_value`='".$mail['other_id']."' AND `fk_folder_id`='"._FOLDER_SPAMBOX_."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				$tpl->set_var('unblock_user',true);
+			}
 		}
 
 		$mail=sanitize_and_format($mail,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
@@ -114,15 +126,15 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='No such message.';
+		$topass['message']['text']='No such message.';      // translate
 		redirect2page('mailbox.php');
 	}
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
-	$topass['message']['text']='No such message.';
+	$topass['message']['text']='No such message.';     // translate
 	redirect2page('mailbox.php');
 }
 
-$tplvars['title']='Read a message';
+$tplvars['title']='Read a message';     // translate
 include 'frame.php';
 ?>

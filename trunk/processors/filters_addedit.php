@@ -24,18 +24,17 @@ $qs='';
 $qs_sep='';
 $topass=array();
 $nextpage='filters.php';
-$input['field']='';
+$input=array();
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-	$input=array();
 // get the input we need and sanitize it
 	foreach ($message_filters_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$message_filters_default['defaults'][$k]);
 	}
 	$input['fk_user_id']=$_SESSION['user']['user_id'];
-	$input['rule_value']=$_POST['rule_value'];
+	$input['rule_value']=isset($_POST['rule_value']) ? $_POST['rule_value'] : '';
 	
 	switch ($input['filter_type']) {
-	
+
 	case _FILTER_USER_:
 		if ($input['field_value']=get_userid_by_user($input['rule_value'])){
 			$input['field']='fk_user_id';
@@ -48,76 +47,94 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	
 	default:
 		break;
-		
+	
 	}
 
-	if (!$error) {
-		if (!empty($input['filter_id'])) {
-			$query="UPDATE IGNORE `{$dbtable_prefix}message_filters` SET ";
-			$i=0;
-			foreach ($message_filters_default['defaults'] as $k=>$v) {
-				if (isset($input[$k])) {
-					if ($i==0) {
-						$query.="`$k`='".$input[$k]."'";
-					} else {
-						$query.=",`$k`='".$input[$k]."'";
-					}
+} else {
+	$input['filter_id']=$message_filters_default['defaults']['filter_id'];
+	$input['filter_type']=_FILTER_USER_;
+	$input['fk_user_id']=$_SESSION['user']['user_id'];
+	$input['field']='fk_user_id';
+	$input['field_value']=isset($_GET['uid']) ? (int)$_GET['uid'] : 0;
+	$input['fk_folder_id']=_FOLDER_SPAMBOX_;
+	$nextpage='message_read.php';
+}
+	
+if (!$error) {
+	if (!empty($input['filter_id'])) {
+		$query="UPDATE IGNORE `{$dbtable_prefix}message_filters` SET ";
+		$i=0;
+		foreach ($message_filters_default['defaults'] as $k=>$v) {
+			if (isset($input[$k])) {
+				if ($i==0) {
+					$query.="`$k`='".$input[$k]."'";
+				} else {
+					$query.=",`$k`='".$input[$k]."'";
 				}
-				++$i;
 			}
-			$query.=" WHERE `filter_id`='".$input['filter_id']."'";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			if (!empty($affected_rows)) {
-				$topass['message']['type']=MESSAGE_INFO;
-				$topass['message']['text']='Filter changed successfully.';     // translate
-			} else {
-				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='Filter not changed. A similar filter already exists.';     // translate
-			}
+			++$i;
+		}
+		$query.=" WHERE `filter_id`='".$input['filter_id']."'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$affected_rows=mysql_affected_rows();
+		if (!empty($affected_rows)) {
+			$topass['message']['type']=MESSAGE_INFO;
+			$topass['message']['text']='Filter changed successfully.';     // translate
 		} else {
-			$query="INSERT IGNORE INTO `{$dbtable_prefix}message_filters` SET ";
-			$i=0;
-			foreach ($message_filters_default['defaults'] as $k=>$v) {
-				if (isset($input[$k])) {
-					if ($i==0) {
-						$query.="`$k`='".$input[$k]."'";
-					} else {
-						$query.=",`$k`='".$input[$k]."'";
-					}
-				}
-				++$i;
-			}
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$affected_rows=mysql_affected_rows();
-			if (!empty($affected_rows)) {
-				$topass['message']['type']=MESSAGE_INFO;
-				$topass['message']['text']='Filter added.';     // translate
-			} else {
-				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='Filter not added. A similar filter already exists.';     // translate
-			}
+			$topass['message']['type']=MESSAGE_ERROR;
+			$topass['message']['text']='Filter not changed. A similar filter already exists.';     // translate
 		}
 	} else {
-		$nextpage='filters_addedit.php';
-		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
-		$topass['input']=$input;
+		$query="INSERT IGNORE INTO `{$dbtable_prefix}message_filters` SET ";
+		$i=0;
+		foreach ($message_filters_default['defaults'] as $k=>$v) {
+			if (isset($input[$k])) {
+				if ($i==0) {
+					$query.="`$k`='".$input[$k]."'";
+				} else {
+					$query.=",`$k`='".$input[$k]."'";
+				}
+			}
+			++$i;
+		}
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$affected_rows=mysql_affected_rows();
+		if (!empty($affected_rows)) {
+			$topass['message']['type']=MESSAGE_INFO;
+			$topass['message']['text']='Filter added.';     // translate
+		} else {
+			$topass['message']['type']=MESSAGE_ERROR;
+			$topass['message']['text']='Filter not added. A similar filter already exists.';     // translate
+		}
 	}
-	if (isset($_POST['o'])) {
-		$qs.=$qs_sep.'o='.$_POST['o'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['r'])) {
-		$qs.=$qs_sep.'r='.$_POST['r'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['ob'])) {
-		$qs.=$qs_sep.'ob='.$_POST['ob'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['od'])) {
-		$qs.=$qs_sep.'od='.$_POST['od'];
-		$qs_sep='&';
-	}
+} else {
+	$nextpage='filters_addedit.php';
+	$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
+	$topass['input']=$input;
+}
+if (isset($_GET['mail_id'])) {
+	$qs.=$qs_sep.'mail_id='.$_GET['mail_id'];
+	$qs_sep='&';
+}
+if (isset($_GET['fid'])) {
+	$qs.=$qs_sep.'fid='.$_GET['fid'];
+	$qs_sep='&';
+}
+if (isset($_POST['o'])) {
+	$qs.=$qs_sep.'o='.$_POST['o'];
+	$qs_sep='&';
+}
+if (isset($_POST['r'])) {
+	$qs.=$qs_sep.'r='.$_POST['r'];
+	$qs_sep='&';
+}
+if (isset($_POST['ob'])) {
+	$qs.=$qs_sep.'ob='.$_POST['ob'];
+	$qs_sep='&';
+}
+if (isset($_POST['od'])) {
+	$qs.=$qs_sep.'od='.$_POST['od'];
+	$qs_sep='&';
 }
 redirect2page($nextpage,$topass,$qs);
 ?>
