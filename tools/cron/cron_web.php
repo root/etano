@@ -21,6 +21,8 @@ set_time_limit(0);
 if (isset($_SERVER['REMOTE_ADDR'])) {
 	$lk=sanitize_and_format_gpc($_GET,'lk',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
 	if ($lk==md5(_LICENSE_KEY_)) {
+		$day=(int)date('d');
+		$weekday=(int)date('w');	//0 for sunday
 		$hour=(int)date('H');
 		$minute=(int)date('i');
 		$minute=$minute-$minute%5;	// allow 4 minutes and 59 seconds run delay
@@ -110,14 +112,42 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 			}
 		}
 
+		if ($weekday==0 && $hour==23 && $minute==55) {	// once per week: sunday 11:55 PM
+			if ($dh=opendir(dirname(__FILE__).'/jobs/w')) {
+				while (($file=readdir($dh))!==false) {
+					if ($file{0}!='.' && substr($file,-3)=='php') {
+						include_once(dirname(__FILE__).'/jobs/w/'.$file);
+					}
+				}
+				closedir($dh);
+			}
+		}
+
+		if ($day==1 && $hour==0 && $minute==5) {	// once per month: 1st at 12:05 AM
+			if ($dh=opendir(dirname(__FILE__).'/jobs/m')) {
+				while (($file=readdir($dh))!==false) {
+					if ($file{0}!='.' && substr($file,-3)=='php') {
+						include_once(dirname(__FILE__).'/jobs/m/'.$file);
+					}
+				}
+				closedir($dh);
+			}
+		}
+
+		// execute all functions from $jobs, whatever they may be
 		if (!empty($jobs)) {
 			$tpl=new phemplate(_BASEPATH_.'/skins/','remove_nonjs');
 			for ($i=0;isset($jobs[$i]);++$i) {
 				if (function_exists($jobs[$i])) {
+					$start_time=time();
 					$jobs[$i]();
+					echo $jobs[$i].': '.(time()-$start_time).' seconds<br>';
+					ob_flush();
+					flush();
 				}
 			}
 		}
+		echo count($jobs).' jobs run.';
 	}
 }
 ?>

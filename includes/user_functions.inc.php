@@ -19,7 +19,7 @@ function get_userid_by_user($user) {
 	$myreturn=0;
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	if (!empty($user)) {
-		$query="SELECT `user_id` FROM `{$dbtable_prefix}user_accounts` WHERE `user`='$user'";
+		$query="SELECT `user_id` FROM ".USER_ACCOUNTS_TABLE." WHERE `user`='$user'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$myreturn=mysql_result($res,0,0);
@@ -33,7 +33,7 @@ function get_user_by_userid($user_id) {
 	$myreturn='';
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	if (!empty($user_id)) {
-		$query="SELECT `user` FROM `{$dbtable_prefix}user_accounts` WHERE `user_id`='$user_id'";
+		$query="SELECT `user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='$user_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$myreturn=mysql_result($res,0,0);
@@ -94,6 +94,10 @@ function check_login_member($level_id) {
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']=$GLOBALS['_lang'][3];
 		redirect2page('info.php',$topass);
+	}
+	if (isset($_SESSION['user']['user_id'])) {
+		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`=now() WHERE `user_id`='".$_SESSION['user']['user_id']."'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 }
 

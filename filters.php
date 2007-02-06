@@ -67,8 +67,8 @@ if (!empty($totalrows)) {
 		$field_values[]=$rsrow['field_value'];
 		$filters[]=$rsrow;
 	}
-	
-	$query="SELECT `user_id`,`user` FROM `{$dbtable_prefix}user_accounts` WHERE `user_id` IN ('".join("','",$field_values)."')";
+
+	$query="SELECT `user_id`,`user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id` IN ('".join("','",$field_values)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$field_values[$rsrow['user_id']]=$rsrow['user'];

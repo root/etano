@@ -110,7 +110,7 @@ if (mysql_num_rows($res)) {
 		$profile['approved']=true;
 	}
 
-	$query="SELECT * FROM `{$dbtable_prefix}user_accounts` WHERE `user_id`='$uid'";
+	$query="SELECT * FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='$uid'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$account=mysql_fetch_assoc($res);
 	$account['status']=vector2options($accepted_astats,$account['status']);

@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$query="SELECT `email` FROM `{$dbtable_prefix}user_accounts` WHERE `user_id` IN ('".join("','",$input['uids'])."')";
+		$query="SELECT `email` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id` IN ('".join("','",$input['uids'])."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$insert="INSERT INTO `{$dbtable_prefix}queue_email` (`to`,`subject`,`message_body`) VALUES ";
 		$query=$insert;

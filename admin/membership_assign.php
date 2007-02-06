@@ -37,7 +37,7 @@ $output['return2']=rawurldecode($output['return']);
 
 if (!empty($output['uids'])) {
 	$output['m_value']=dbtable2options("`{$dbtable_prefix}memberships`",'`m_value`','`m_name`','`m_value`',4,'`m_value`<>1');
-	$query="SELECT `user_id`,`user` FROM `{$dbtable_prefix}user_accounts` WHERE `user_id` IN ('".join("','",$output['uids'])."')";
+	$query="SELECT `user_id`,`user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id` IN ('".join("','",$output['uids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$output['users']='';
 	while ($rsrow=mysql_fetch_assoc($res)) {

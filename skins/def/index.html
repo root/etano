@@ -21,8 +21,7 @@
 				<ul id="primary-nav">
 					<li><a class="home" href="home.php" title="Home"><i>Home</i></a></li>
 					<li><a class="search" href="search_more.php" title="Search"><i>Search</i></a></li>
-					<li><a class="link" href="#" title="This is a link"><i>This is a link</i></a></li>
-					<li><a class="other-link" href="#" title="This is a longer link"><i>This is a longer</i></a></li>
+					<li><a class="blogs" href="blogs.php" title="Member Blogs"><i>Blogs</i></a></li>
 				</ul>
 				<div id="logo-box">
 					<img src="images/logo.gif" alt="Logotype" width="42" height="42" />
@@ -32,56 +31,35 @@
 			</div>
 		</div>
 		<div id="content-container">
+
 			<div id="description" class="rounded-box large">
-				<div class="starting-box">&nbsp;</div>
 				<h1>It's that easy</h1>
-				<div id="description-search" class="description-box">
-					<h3>Search</h3>
-					<p>our thousands of members.</p>
+				<div class="box-content">
+					<ul>
+						<li id="description-search" class="description-box">
+							<h3>Search</h3>
+							<p>our thousands of members.</p>
+						</li>
+						<li id="description-meet" class="description-box">
+							<h3>Meet</h3>
+							<p>new people for friendship and more.</p>
+						</li>
+						<li id="description-have-fun" class="description-box">
+							<h3>Have fun</h3>
+							<p>there's nothing like a real date.</p>
+						</li>
+						<li id="description-more" class="description-box">
+							<a href="join.php" id="sign-up-now" title="Sign up now!"><i>Sign up now!</i></a>
+							<h4>and a lot more</h4>
+							<p>Flirts, messages, photos, blogs, alerts...</p>
+						</li>
+					</ul>
+					&nbsp;
 				</div>
-				<div id="description-meet" class="description-box">
-					<h3>Meet</h3>
-					<p>new people for friendship or more.</p>
-				</div>
-				<div id="description-have-fun" class="description-box">
-					<h3>Have fun</h3>
-					<p>there's nothing like a real date.</p>
-				</div>
-				<a href="join.php" id="sign-up-now" title="Sign up now!"><i>Sign up now!</i></a>
-				<h4>and a lot more</h4>
-				<p>Flirts, messages, photos, blogs, alerts...</p>
-				<div class="closing-box">&nbsp;</div>
 			</div>
-			<div id="latest-members">
-				<h2>Latest Members</h2>
-				<a class="content-link more-new-members" href="#" title="">More new members</a>
-				<ul id="latest-members-listing">
-					<li class="first">
-						<a href="#" title="Member"><img src="{tplvars.tplrelpath}/images/generic-man.gif" alt="No picture" /></a>
-						<a class="content-link member-online" href="#" title="Member">Member 01</a>
-					</li>
-					<li>
-						<a href="#" title="Member"><img src="{tplvars.tplrelpath}/images/generic-woman.gif" alt="No picture" /></a>
-						<a class="content-link member-online" href="#" title="Member">Member 02</a>
-					</li>
-					<li>
-						<a href="#" title="Member"><img src="{tplvars.tplrelpath}/images/generic-man.gif" alt="No picture" /></a>
-						<a class="content-link member-offline" href="#" title="Member">Member 03</a>
-					</li>
-					<li>
-						<a href="#" title="Member"><img src="{tplvars.tplrelpath}/images/generic-undefined.gif" alt="No picture" /></a>
-						<a class="content-link member-online" href="#" title="Member">Member 04</a>
-					</li>
-					<li>
-						<a href="#" title="Member"><img src="{tplvars.tplrelpath}/images/question-mark.gif" alt="No picture" /></a>
-						<a class="content-link member-online" href="#" title="Member">Member 05</a>
-					</li>
-					<li>
-						<a href="#" title="Member"><img src="{tplvars.tplrelpath}/images/generic-man.gif" alt="No picture" /></a>
-						<a class="content-link member-offline" href="#" title="Member">Member 06</a>
-					</li>
-				</ul>
-			</div>
+			<!--widget="latest_members"-->
+
+<!--
 			<div id="latest-blogs">
 				<h2>Latest Blogs</h2>
 				<ul id="latest-blogs-listing">
@@ -123,22 +101,24 @@
 					</li>
 				</ul>
 			</div>
+-->
 			<div id="search" class="rounded-box small">
-				<div class="starting-box">&nbsp;</div>
 				<h2>Find</h2>
-				<form action="search.php" method="get" id="search-form">
-					<input type="hidden" name="st" value="basic" />
-					<loop name="search">
-					<fieldset id="row_{search.dbfield}" class="{search.class}">
-						<label class="field_label">{search.label}:</label>
-						{search.field}
-					</fieldset>
-					</loop name="search">
-					<fieldset class="controls">
-						<input id="search-button" type="image" src="{tplvars.tplrelpath}/images/btn-search-out.gif" alt="Search" />
-					</fieldset>
-				</form>
-				<div class="closing-box">&nbsp;</div>
+				<div class="box-content">
+					<form action="search.php" method="get" id="search-form">
+						<input type="hidden" name="st" value="basic" />
+						<loop name="search">
+						<fieldset id="row_{search.dbfield}" class="{search.class}">
+							<label class="field_label">{search.label}:</label>
+							{search.field}
+						</fieldset>
+						</loop name="search">
+						<fieldset class="controls">
+							<input id="search-button" type="image" src="{tplvars.tplrelpath}/images/btn-search-out.gif" alt="Search" />
+						</fieldset>
+					</form>
+					&nbsp;
+				</div>
 			</div>
 		</div>
 		<div id="footer-cleaner">&nbsp;</div>

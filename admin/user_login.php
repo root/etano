@@ -28,7 +28,7 @@ if (isset($_GET['top'])) {
 } else {
 	$content_file='user_login.html';
 	$output['return']=rawurlencode($output['return']);
-	$query="SELECT a.`user_id`,a.`user`,a.`status`,a.`membership` FROM `{$dbtable_prefix}user_accounts` a WHERE a.`user_id`='".$output['uid']."'";
+	$query="SELECT a.`user_id`,a.`user`,a.`status`,a.`membership` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`user_id`='".$output['uid']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$user=mysql_fetch_assoc($res);
