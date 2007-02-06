@@ -1,65 +1,74 @@
-/* Rounded box related */
+/* Rounded boxes */
 
 .rounded-box {
 	position: relative;
 	padding: 15px 18px;
+	overflow: hidden;
 }
-.starting-box {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 1;
-	height: 15px;
-	background-position: top;
-	background-repeat: no-repeat;
+
+.rounded-box .link-more {
+	float: right;
+	margin: 0px -5px 0px 0px;
+	background: url('../images/link-more-out.gif') no-repeat top right;
+	padding: 0 25px 6px 3px;
 }
-.closing-box {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	z-index: 1;
-	height: 15px;
-	background-position: bottom;
-	background-repeat: no-repeat;
+.link-more:hover {
+	background-image: url('../images/link-more-over.gif');
 }
 
 .large {
-	background-image: url('../images/box-large-middle.gif');
-	background-repeat: repeat-y;
+	width: 706px;
+	background: url('../images/lbox-middle.gif') repeat-y;
 }
-	.large .starting-box {
+	.large h1, .large h2 {
 		width: 742px;
-		background-image: url('../images/box-large-top.gif');
+		background: url('../images/lbox-top.gif') no-repeat left top;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		padding: 15px 0px 15px 18px;
+		z-index:-1;
 	}
-	.large .closing-box {
-		width: 742px;
-		background-image: url('../images/box-large-bottom.gif');
+	.large .box-content {
+		background: url('../images/lbox-bottom.gif') no-repeat left bottom;
+		margin: -15px -18px;
+		padding: 41px 18px 2px 18px;
 	}
 
 .medium {
-	background-image: url('../images/box-medium-middle.gif');
-	background-repeat: repeat-y;
+	width: 670px;
+	background: url('../images/mbox-middle.gif') repeat-y;
 }
-	.medium .starting-box {
+	.medium h2 {
 		width: 706px;
-		background-image: url('../images/box-medium-top.gif');
+		background-image: url('../images/mbox-top.gif');
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		padding: 15px 18px;
 	}
-	.medium .closing-box {
-		width: 706px;
-		background-image: url('../images/box-medium-bottom.gif');
+	.medium .box-content {
+		background: url('../images/mbox-bottom.gif') no-repeat left bottom;
+		margin: -15px -18px;
+		padding: 41px 18px 2px 18px;
 	}
 
 .small {
-	background-image: url('../images/box-small-middle.gif');
-	background-repeat: repeat-y;
+	width: 170px;
+	background: url('../images/sbox-middle.gif') repeat-y;
 }
-	.small .starting-box {
+	.small h2 {
 		width: 206px;
-		background-image: url('../images/box-small-top.gif');
+		background: url('../images/sbox-top.gif') no-repeat left top;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		padding: 15px 18px;
 	}
-	.small .closing-box {
-		width: 206px;
-		background-image: url('../images/box-small-bottom.gif');
+	.small .box-content {
+		background: url('../images/sbox-bottom.gif') no-repeat left bottom;
+		margin: -15px -18px;
+		padding: 41px 18px 2px 18px;
 	}
 
 

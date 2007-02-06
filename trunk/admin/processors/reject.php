@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `status`='".PSTAT_EDIT."',`last_changed`=now(),`reject_reason`='".$input['reject_reason']."' WHERE `fk_user_id`='".$input['id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (!empty($input['send_email'])) {
-				$query="SELECT `email` FROM `{$dbtable_prefix}user_accounts` WHERE `user_id`='".$input['id']."'";
+				$query="SELECT `email` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='".$input['id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
 					$ok=queue_or_send_email(array(mysql_result($res,0,0)),array('subject'=>$input['reason_title2'],'message_body'=>$input['reject_reason2']));
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `status`='".PSTAT_EDIT."',`last_changed`=now(),`reject_reason`='".$input['reject_reason']."' WHERE `photo_id`='".$input['id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (!empty($input['send_email'])) {
-				$query="SELECT b.`email` FROM `{$dbtable_prefix}user_photos` a,`{$dbtable_prefix}user_accounts` b WHERE a.`fk_user_id`=b.`user_id` AND a.`photo_id`='".$input['id']."'";
+				$query="SELECT b.`email` FROM `{$dbtable_prefix}user_photos` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`user_id` AND a.`photo_id`='".$input['id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
 					$ok=queue_or_send_email(array(mysql_result($res,0,0)),array('subject'=>$input['reason_title2'],'message_body'=>$input['reject_reason2']));
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="UPDATE `{$dbtable_prefix}blog_posts` SET `status`='".PSTAT_EDIT."',`last_changed`=now(),`reject_reason`='".$input['reject_reason']."' WHERE `post_id`='".$input['id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (!empty($input['send_email'])) {
-				$query="SELECT b.`email` FROM `{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_accounts` b WHERE a.`fk_user_id`=b.`user_id` AND a.`post_id`='".$input['id']."'";
+				$query="SELECT b.`email` FROM `{$dbtable_prefix}blog_posts` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`user_id` AND a.`post_id`='".$input['id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
 					$ok=queue_or_send_email(array(mysql_result($res,0,0)),array('subject'=>$input['reason_title2'],'message_body'=>$input['reject_reason2']));

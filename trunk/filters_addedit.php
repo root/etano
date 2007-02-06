@@ -35,13 +35,13 @@ if (isset($_SESSION['topass']['input'])) {
 	}
 } elseif (isset($_GET['filter_id']) && !empty($_GET['filter_id'])) {
 	$filter_id=(int)$_GET['filter_id'];
-	$query="SELECT a.*, b.`user` as `rule_value` FROM `{$dbtable_prefix}message_filters` a, `{$dbtable_prefix}user_accounts` b WHERE a.`filter_id`='$filter_id' AND a.`field_value`=b.`user_id` AND a.`fk_user_id`='".$_SESSION['user']['user_id']."'";
+	$query="SELECT a.*, b.`user` as `rule_value` FROM `{$dbtable_prefix}message_filters` a, ".USER_ACCOUNTS_TABLE." b WHERE a.`filter_id`='$filter_id' AND a.`field_value`=b.`user_id` AND a.`fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$filters=mysql_fetch_assoc($res);
 		$filters=sanitize_and_format($filters,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
 		$tpl->set_var('addedit_filter',true);
-	} 
+	}
 } else {
 	$tpl->set_var('addedit_filter',true);
 }

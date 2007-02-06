@@ -162,7 +162,7 @@ class payment_paypal extends ipayment {
 			$reply=trim($reply);
 			if (strcasecmp($reply,'VERIFIED')==0 || strcasecmp($reply,'VERIFIED')!=0) {
 				if (strcasecmp($input['business'],$this->config['paypal_email'])==0 || strcasecmp($input['receiver_email'],$this->config['paypal_email'])==0) {
-					$query="SELECT `user_id` FROM `{$dbtable_prefix}user_accounts` WHERE `user_id`='".$input['custom']."'";
+					$query="SELECT `user_id` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='".$input['custom']."'";
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					if (mysql_num_rows($res)) {
 						$real_user=mysql_fetch_assoc($res);
@@ -196,7 +196,7 @@ class payment_paypal extends ipayment {
 											}
 											if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 											if (!$this->is_fraud) {
-												$query="UPDATE `{$dbtable_prefix}user_accounts` SET `membership`='".$real_subscr['m_value_to']."' WHERE `user_id`='".$real_user['user_id']."'";
+												$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$real_subscr['m_value_to']."' WHERE `user_id`='".$real_user['user_id']."'";
 												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 												$myreturn=true;
 											}
