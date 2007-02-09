@@ -15,5 +15,5 @@ $user_friends=array();
 
 $tpl->set_file('left_content','profile_left.html');
 $tpl->set_loop('user_friends',$user_friends);
-$tpl->process('left_content','left_content',TPL_LOOP | TPL_NOLOOP);
+$tpl->process('left_content','left_content',TPL_LOOP | TPL_NOLOOP | TPL_OPTIONAL);
 ?>

@@ -5,7 +5,10 @@
 		<li><a href="bookmark.php?uid={uid}">Bookmark</a></li>
 		<li><a href="message_send.php?to_id={uid}">Send message</a></li>
 		<li><a href="flirt_send.php?to_id={uid}">Send a flirt</a></li>
-		<li><a href="block.php?uid={uid}">Block</a></li>
+		<li>
+			<opt name="unblock_user"><a class="link_back" href="processors/filters_delete.php?uid={uid}">Unblock user</a></opt name="unblock_user">
+			<opt name="!unblock_user"><a class="link_back" href="processors/filters_addedit.php?uid={uid}">Block user</a></opt name="!unblock_user">
+		</li>
 		</ul>
 	</div>
 </div>

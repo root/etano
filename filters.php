@@ -78,8 +78,12 @@ if (!empty($totalrows)) {
 		foreach ($v as $key=>$value) {
 			if ($key=='filter_type' && $value==_FILTER_USER_){
 				$user_id=$filters[$k]['field_value'];
-				$filters[$k]['rule_value']=$field_values[$user_id];
-				$filters[$k]['rule_type']='User';
+				if (isset($field_values[$user_id])){
+					$filters[$k]['rule_value']=$field_values[$user_id];
+					$filters[$k]['rule_type']='User';
+				} else {
+					unset($filters[$k]);
+				}
 			}
 		}
 	}
