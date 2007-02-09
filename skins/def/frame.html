@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{tplvars.title}</title>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	<meta name="description" content="{tplvars.meta_diz}" />
+	<meta name="keywords" content="{tplvars.meta_keywords}" />
+	<meta name="distribution" content="global" />
+	<meta name="robots" content="index,follow" />
+	<link href="{tplvars.tplrelpath}/styles/common.css" rel="stylesheet" type="text/css" />
+	<opt name="tplvars.css"><link href="{tplvars.tplrelpath}/styles/{tplvars.css}" rel="stylesheet" type="text/css" /></opt name="tplvars.css">
+	<script type="text/javascript" src="{tplvars.baseurl}/js/jquery.js"></script>
+	<script type="text/javascript" src="{tplvars.baseurl}/js/general.js"></script>
+	<script type="text/javascript" src="{tplvars.baseurl}/js/index.js"></script>
+</head>
+<body>
+<div id="expandable-container">
+	<div id="header-container">
+		<div id="header-body">
+			<ul id="primary-nav">
+				<li><a class="menu1" href="home.php" title="Home"><span>Home</span></a></li>
+				<li><a class="menu1" href="search_more.php" title="Search"><span>Search</span></a></li>
+				<li><a class="menu1" href="photos.php" title="Member Photos"><span>Photos</span></a></li>
+				<li><a class="menu1" href="blogs.php" title="Member Blogs"><span>Blogs</span></a></li>
+			</ul>
+			<div id="logo-box">
+				<a href="{tplvars.relative_path}index.php">{tplvars.sitename}</a>
+			</div>
+			<!--widget="login"-->
+		</div>	<!-- end of header -->
+	</div>
+
+	<div id="content-container">
+		<div id="{tplvars.page}" class="content_column1 rounded-box large">
+			<h2>{tplvars.page_title}</h2>
+<opt name="message.text">
+			<div id="message_wrapper" class="{message.type}">{message.text}</div>
+</opt name="message.text">
+			<div class="box-content">
+				{content}
+				&nbsp;
+			</div>
+		</div>	<!-- end of middle column -->
+
+		<div id="content_column2">
+			{left_content}
+		</div>	<!-- end of left column -->
+
+	</div>	<!-- end of content -->
+	<div id="footer-cleaner">&nbsp;</div>
+</div>
+
+<div id="footer-container">
+	<div id="footer-body">
+		<p id="copyright">&copy; Copyright 2006 XYZ.com. All Rights Reserved.</p>
+		<ul id="secondary-nav">
+			<li class="first"><a href="tos.php" title="Terms &amp; Conditions">Terms &amp; Conditions</a></li>
+			<li><a href="privacy.php" title="Privacy Statement">Privacy Statement</a></li>
+			<li><a href="#" title="Contact">Contact</a></li>
+		</ul>
+	</div>
+</div>
+</body>
+</html>

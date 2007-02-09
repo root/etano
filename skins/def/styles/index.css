@@ -1,5 +1,36 @@
 /* CSS Document */
 
+.front-widget {
+	position: relative;
+	padding: 15px 18px;
+	overflow: hidden;
+	width: 706px;
+}
+
+	.front-widget .link-more {
+		float: right;
+		margin: -15px -5px 0px 0px;
+		background: url('../images/link-more-out.gif') no-repeat top right;
+		padding: 0 25px 6px 3px;
+	}
+
+	.front-widget .link-more:hover {
+		background-image: url('../images/link-more-over.gif');
+	}
+
+	.front-widget h1, .front-widget h2 {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		padding: 0px 18px;
+		z-index:-1;
+	}
+	.front-widget .box-content {
+		margin: -15px -18px;
+		padding: 18px 18px 2px 18px;
+	}
+
+
 /* Sidebar - Search box */
 
 * html #search {
@@ -9,46 +40,44 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	margin: 0 0 18px;
-	width: 170px;
 	font-size: 14px;
 }
 
-#search fieldset {
-	margin: 7px 0;
-}
+	#search fieldset {
+		margin: 7px 0;
+	}
 
-#search select.big_select {
-	width: 100%;
-}
+	#search select.big_select {
+		width: 100%;
+	}
 
-* html #search fieldset.distance input {
-	width: 43px;
-}
-#search fieldset.distance input {
-	width: 40px;
-}
-#search label.field_label {
-	display: block;
-	font-size: 14px;
-}
+	* html #search fieldset.distance input {
+		width: 43px;
+	}
+	#search fieldset.distance input {
+		width: 40px;
+	}
+	#search label.field_label {
+		display: block;
+		font-size: 14px;
+	}
 
-#search fieldset.controls {
-	background-image: url('../images/search-bg.gif');
-	background-position: top left;
-	background-repeat: no-repeat;
-	padding-top: 15px;
-	margin: 10px 0 0;
-	text-align: right;
-}
+	#search fieldset.controls {
+		background-image: url('../images/search-bg.gif');
+		background-position: top left;
+		background-repeat: no-repeat;
+		padding-top: 15px;
+		margin: 10px 0 0;
+		text-align: right;
+	}
 
-#search fieldset.controls #search-btn {
-	margin-right: -5px;
-}
+	#search fieldset.controls #search-btn {
+		margin-right: -5px;
+	}
 
-#search label, #search select, #search input {
-	font: 12px "Trebuchet MS", Arial, sans-serif;
-}
+	#search label, #search select, #search input {
+		font: 12px "Trebuchet MS", Arial, sans-serif;
+	}
 
 
 /* Content - Description box */
@@ -59,9 +88,9 @@
 	font-size: 14px;
 }
 
-* html #description .description-box {
-	height: 78px;
-}
+	* html #description .description-box {
+		height: 78px;
+	}
 	#description .description-box {
 		min-height: 78px;
 		float: left;
@@ -89,7 +118,13 @@
 	}
 
 	#description #description-more {
-		margin: 0px 0px -42px 0px;
+		min-height: 40px;
+		clear: both;
+		float: none;
+	}
+
+	* html #description #description-more {
+		height: 40px;
 	}
 
 	#sign-up-now {
@@ -98,7 +133,7 @@
 		width: 126px;
 		height: 41px;
 		margin-right: -5px;
-		background-image: url('../images/btn-sign-up.gif');
+		background-image: url('../images/link-sign-up.gif');
 		background-position: top;
 	}
 
@@ -120,22 +155,22 @@
 }
 .list_small {
 	width: 720px;
-	margin: 15px 0 10px -6px;
+	margin-left: -6px;
 	padding: 0 0 5px;
 	list-style-type: none;
 	overflow: hidden;
 }
 
-.list_small li {
-	float: left;
-	width: 110px;
-	margin-left: 10px;
-	text-align: center;
-}
+	.list_small li {
+		float: left;
+		width: 110px;
+		margin-left: 10px;
+		text-align: center;
+	}
 
-.list_small li.first {
-	margin: 0;
-}
+	.list_small li.first {
+		margin: 0;
+	}
 
 /* Content - Latest blogs section */
 

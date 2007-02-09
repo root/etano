@@ -15,8 +15,6 @@ require_once 'includes/sessions.inc.php';
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/vars.inc.php';
-require_once 'includes/fields.inc.php';
-require_once 'includes/classes/user_cache.class.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
@@ -208,6 +206,7 @@ $totalrows=count($user_ids);
 $results=array();
 if (!empty($totalrows)) {
 	$user_ids=array_slice($user_ids,$o,$r);
+	require_once 'includes/classes/user_cache.class.php';
 	$user_cache=new user_cache(get_my_skin());
 	if (isset($_GET['v']) && $_GET['v']=='g') {
 		$results=$user_cache->get_cache_array($user_ids,'details_gallery');

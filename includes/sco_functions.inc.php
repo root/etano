@@ -2,7 +2,7 @@
 /******************************************************************************
 File:                       includes/sco_functions.inc.php
 Info:   					general purpose functions library
-File version:				1.2007020201
+File version:				1.2007020901
 Created by:                 Dan Caragea (http://www.sco.ro - dan@rdsct.ro)
 ******************************************************************************/
 
@@ -246,23 +246,17 @@ function htmlspecialchars_uni($value) {
 function smart_table($array,$table_cols=1,$table_params='') {
 	$myreturn='';
 	if (!empty($array)) {
-		$myreturn="<table $table_params>\n";
-		$total_vals=count($array);
+		$myreturn="<ul $table_params>\n";
 		$i=1;
 		foreach ($array as $v) {
-			if ((($i-1)%$table_cols)==0) {
-				$myreturn.="<tr>\n";
+			$myreturn.="\t<li";
+			if ($i%$table_cols==0) {
+				$myreturn.=' class="break"';
 			}
-			$myreturn.="\t<td>$v</td>\n";
-			if ($i%$table_cols==0) {$myreturn.="</tr>\n";}
+			$myreturn.=">$v</li>\n";
 			++$i;
 		}
-		$rest=($i-1)%$table_cols;
-		if ($rest!=0) {
-			$colspan=$table_cols-$rest;
-			$myreturn.="\t<td".(($colspan==1) ? '' : " colspan=\"$colspan\"")."></td>\n</tr>\n";
-		}
-		$myreturn.="</table>\n";
+		$myreturn.="</ul>\n";
 	}
 	return $myreturn;
 }
@@ -296,7 +290,7 @@ function db_connect($dbhost,$dbuser,$dbpass,$dbname='') {
 
 
 function interval2options($low_value,$high_value,$selected_value='',$exclusion_vector=array(),$increment=1,$direction=1) {
-	$myreturn="";
+	$myreturn='';
 	if ($direction==1) {
 		for ($i=$low_value;$i<=$high_value;$i+=$increment) {
 			if (!in_array($i,$exclusion_vector)) {
@@ -369,15 +363,20 @@ function vector2options($show_vector,$selected_map_val='',$exclusion_vector=arra
 
 
 function vector2checkboxes($show_vector,$excluded_keys_vector,$checkname,$binvalue,$table_cols=1,$showlabel=true,$pass2check='') {
-	$myreturn='<table class="smart_table" id="table_'.$checkname.'">';
-	$i=0;
+	$myreturn='<ul class="smart_table" id="table_'.$checkname.'">';
 	$myvector=array_flip(array_diff(array_flip($show_vector),$excluded_keys_vector));
-	$total_vals=count($myvector);
 	$i=1;
+	$next_break=false;
 	while (list($k,$v)=each($myvector)) {
-		if ((($i-1)%$table_cols)==0) {$myreturn.="<tr>\n";}
-		$myreturn.="\t<td>\n";
-		$myreturn.="\t\t<input type=\"checkbox\" id=\"{$checkname}_$k\" name=\"".$checkname."[$k]\"";
+		$myreturn.="\t<li";
+		if ($next_break) {
+			$myreturn.=' class="break"';
+			$next_break=false;
+		}
+		if ($i%$table_cols==0) {
+			$next_break=true;
+		}
+		$myreturn.='><input type="checkbox" id="'.$checkname.'_'.$k.'" name="'.$checkname.'['.$k.']"';
 		if (isset($binvalue) && ($binvalue>0) && (($binvalue>>$k)%2)) {
 			$myreturn.=' checked';
 		}
@@ -385,17 +384,45 @@ function vector2checkboxes($show_vector,$excluded_keys_vector,$checkname,$binval
 		if ($showlabel) {
 			$myreturn.='<label for="'.$checkname.'_'.$k.'">'.$v.'</label>';
 		}
-		$myreturn.="\n";
-		$myreturn.="\t</td>\n";
-		if ($i%$table_cols==0) {$myreturn.="</tr>\n";}
+		$myreturn.="</li>\n";
 		++$i;
 	}
-	$rest=($i-1)%$table_cols;
-	if ($rest!=0) {
-		$colspan=$table_cols-$rest;
-		$myreturn.="\t<td".(($colspan==1) ? '' : " colspan=\"$colspan\"")."></td>\n</tr>\n";
+	$myreturn.="</ul>\n";
+	return $myreturn;
+}
+
+
+function vector2checkboxes_str($show_vector,$excluded_keys_vector,$checkname,$binvalue,$table_cols=1,$showlabel=true,$pass2check='') {
+	if (is_string($binvalue)) {
+		$binvalue=binvalue2index_str($binvalue);	// now it is an array of indexes in $show_vector
 	}
-	$myreturn.="</table>\n";
+	for ($i=0;isset($excluded_keys_vector[$i]);++$i) {
+		unset($show_vector[$excluded_keys_vector[$i]]);
+	}
+	$myreturn='<ul class="smart_table" id="table_'.$checkname.'">';
+	$i=1;
+	$next_break=false;
+	while (list($k,$v)=each($show_vector)) {
+		$myreturn.="\t<li";
+		if ($next_break) {
+			$myreturn.=' class="break"';
+			$next_break=false;
+		}
+		if ($i%$table_cols==0) {
+			$next_break=true;
+		}
+		$myreturn.='><input type="checkbox" id="'.$checkname.'_'.$k.'" name="'.$checkname.'[]"';
+		if (in_array($k,$binvalue)) {
+			$myreturn.=' checked';
+		}
+		$myreturn.=' value="'.$k.'" '.$pass2check.' />';
+		if ($showlabel) {
+			$myreturn.='<label for="'.$checkname.'_'.$k.'">'.$v.'</label>';
+		}
+		$myreturn.="</li>\n";
+		++$i;
+	}
+	$myreturn.="</ul>\n";
 	return $myreturn;
 }
 
@@ -447,43 +474,6 @@ function vector2string($myarray,$binvalue) {
 		}
 	}
 	$myreturn=substr($myreturn,0,-2);
-	return $myreturn;
-}
-
-
-function vector2checkboxes_str($show_vector,$excluded_keys_vector,$checkname,$binvalue,$table_cols=1,$showlabel=true,$pass2check='') {
-	$myreturn='<table class="smart_table" id="table_'.$checkname.'">';
-	$i=0;
-	if (is_string($binvalue)) {
-		$binvalue=binvalue2index_str($binvalue);	// now it is an array of indexes in $show_vector
-	}
-	for ($i=0;isset($excluded_keys_vector[$i]);++$i) {
-		unset($show_vector[$excluded_keys_vector[$i]]);
-	}
-	$total_vals=count($show_vector);
-	$i=1;
-	while (list($k,$v)=each($show_vector)) {
-		if ((($i-1)%$table_cols)==0) {$myreturn.="<tr>\n";}
-		$myreturn.="\t<td>\n";
-		$myreturn.="\t\t".'<input type="checkbox" id="'.$checkname.'_'.$k.'" name="'.$checkname.'[]"';
-		if (in_array($k,$binvalue)) {
-			$myreturn.=' checked';
-		}
-		$myreturn.=' value="'.$k.'" '.$pass2check.' />';
-		if ($showlabel) {
-			$myreturn.='<label for="'.$checkname.'_'.$k.'">'.$v.'</label>';
-		}
-		$myreturn.="\n";
-		$myreturn.="\t</td>\n";
-		if ($i%$table_cols==0) {$myreturn.="</tr>\n";}
-		++$i;
-	}
-	$rest=($i-1)%$table_cols;
-	if ($rest!=0) {
-		$colspan=$table_cols-$rest;
-		$myreturn.="\t<td".(($colspan==1) ? '' : ' colspan="'.$colspan.'"')."></td>\n</tr>\n";
-	}
-	$myreturn.="</table>\n";
 	return $myreturn;
 }
 

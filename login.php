@@ -23,5 +23,8 @@ $tpl->set_file('content','login.html');
 $tpl->process('content','content');
 
 $tplvars['title']='Login';
+$tplvars['page_title']='Login to continue...';
+$tplvars['page']='login';
+$tplvars['css']='login.css';
 include 'frame.php';
 ?>

@@ -75,7 +75,7 @@ class user_cache {
 	*	$destination='' default
 	*	$destination='tpl' to return in tpl format
 	*/
-	function get_cache_beta($user_ids,$parts,$destination='') {
+	function get_cache_beta($user_ids,$onlines,$parts,$destination='') {
 		$myreturn='';
 		if (!is_array($user_ids)) {
 			$user_ids=array($user_ids);
@@ -87,13 +87,19 @@ class user_cache {
 			for ($u=0;isset($user_ids[$u]);++$u) {
 				$user_ids[$u]=(string)$user_ids[$u];
 				for ($p=0;isset($parts[$p]);++$p) {
-					$file=$this->disk_path.$user_id[$u]{0}.'/'.$user_ids[$u].'/'.$parts[$p].'.html';
+					$file=$this->disk_path.$user_ids[$u]{0}.'/'.$user_ids[$u].'/'.$parts[$p].'.html';
 					if (is_file($file)) {
 						$fp=fopen($file,'rb');
 						if ($destination=='tpl') {
-							$myreturn[$u][$part]=fread($fp,filesize($file));
+							$myreturn[$u][$parts[$p]]=fread($fp,filesize($file));
+							$myreturn[$u]['uid']=$user_ids[$u];
+							if (isset($onlines[$user_ids[$u]])) {
+								$myreturn[$u]['is_online']='is_online';
+							} else {
+								$myreturn[$u]['is_online']='is_offline';
+							}
 						} else {
-							$myreturn[$part]=fread($fp,filesize($file));
+							$myreturn[$parts[$p]]=fread($fp,filesize($file));
 						}
 						fclose($fp);
 					}
