@@ -10,6 +10,7 @@
 	<input type="hidden" name="ob" value="{ob}" />
 	<input type="hidden" name="od" value="{od}" />
 	<input type="hidden" name="mailbox_id" value="{mailbox_id}" />
+	<input type="hidden" name="folder_id" value="" />
 	<table id="mailbox_rows">
 	<tr>
 		<th></th>
@@ -40,7 +41,8 @@
 	</noloop name="mails">
 	</loop name="mails">
 	</table>
-{pager2}
+	</form>
+	{pager2}
 	<opt name="inbox_options">
 	<div id="hint">
 		<ul>
@@ -52,14 +54,12 @@
 
 	<div id="action">
 		<input type="checkbox" name="check_all" id="check_all" onclick="check_uncheck(0,this,this.form,'mail_id')" /> <a href="javascript:;" onclick="check_uncheck(1,document.getElementById('check_all'),document.getElementById('mailbox_form'),'mail_id')">Select all</a>
-		<input type="submit" value="Delete" onclick="send_form('del')" />
+		<input type="button" value="Delete" onclick="send_form('del')" />
 		<opt name="folder_options">
 		Move to
-		<select name="folder_id">
-		<option value="0">Inbox</option>
+		<select name="folder_id" id="folder_id">
 		{folder_options}
-		</select> <input type="button" value="Move" onclick="send_form('move')" />
+		</select> <input type="button" value="Move" onclick="$('#mailbox_form')[0].folder_id.value=$('#folder_id').val();send_form('move')" />
 		</opt name="folder_options">
 	</div>
-	</form>
 </div>

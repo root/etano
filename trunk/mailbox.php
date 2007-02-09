@@ -46,13 +46,17 @@ if (isset($_GET['fid']) && !empty($_GET['fid'])) {
 }
 
 $folders=array();
+$folders2=array();
+$folders2[_FOLDER_INBOX_]='Inbox';     // translate
 $query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
 	$folders[$rsrow[0]]=$rsrow[1];
+	$folders2[$rsrow[0]]=$rsrow[1];
 }
-if (!empty($folders) && $fk_folder_id!=_FOLDER_OUTBOX_ && $fk_folder_id!=_FOLDER_SPAMBOX_) {
-	$tpl->set_var('folder_options',vector2options($folders));
+if (!empty($folders2) && $fk_folder_id!=_FOLDER_OUTBOX_ && $fk_folder_id!=_FOLDER_SPAMBOX_) {
+	unset($folders2[$fk_folder_id]);
+	$tpl->set_var('folder_options',vector2options($folders2));
 }
 
 switch ($fk_folder_id) {

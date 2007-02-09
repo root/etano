@@ -82,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$qs.=$qs_sep.'fid='.$folder_id;
 		$qs_sep='&';
 	} elseif ($_POST['act']=='spam') {
-		$folder_id=sanitize_and_format($_POST['mailbox_id'],TYPE_INT,0,0);
 		$query="SELECT * FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id`='$mail_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
