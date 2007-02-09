@@ -89,11 +89,10 @@ function regenerate_acclevels_array() {
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	$query="SELECT `level_id`,`level` FROM `{$dbtable_prefix}access_levels`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$towrite="<?php\n\$_access_level=array(";
+	$towrite="<?php\n\$_access_level=array(-1=>65534,0=>65535";
 	while ($rsrow=mysql_fetch_row($res)) {
-		$towrite.=$rsrow[0].'=>'.$rsrow[1].',';
+		$towrite.=','.$rsrow[0].'=>'.$rsrow[1];
 	}
-	$towrite=substr($towrite,0,-1);
 	$towrite.=");\n";
 	$modman=new modman();
 	$modman->fileop->file_put_contents(_BASEPATH_.'/includes/access_levels.inc.php',$towrite);

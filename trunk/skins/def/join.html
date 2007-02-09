@@ -1,0 +1,65 @@
+<script type="text/javascript" src="js/join.js.php?p={page}"></script>
+
+<form action="processors/join.php" method="post" id="join_form" onsubmit="return(check_form(this))">
+<input type="hidden" name="page" value="{page}" />
+<opt name="page1">
+<fieldset>
+	<dl class="required {my_values.error_user}">
+		<dt><label for="user">Choose a Username:</label></dt>
+		<dd><input class="text" type="text" name="user" id="user" value="{my_values.user}" tabindex="1" /></dd>
+		<dd class="field-help">
+			<input type="button" value="Check" onclick="req_check_username()" />
+		</dd>
+	</dl>
+	<dl class="required {my_values.error_pass}">
+		<dt><label for="pass">Choose a Password:</label></dt>
+		<dd><input type="password" name="pass" id="pass" class="text" tabindex="2" /></dd>
+		<dd class="field-help"></dd>
+	</dl>
+	<dl class="required {my_values.error_email}">
+		<dt><label for="email">Email:</label></dt>
+		<dd><input type="text" name="email" id="email" value="{my_values.email}" class="text" tabindex="3" /></dd>
+		<dd class="field-help">We won't share this email address with other members or third parties. You may receive newsletters from us or other important account information.</dd>
+	</dl>
+	<dl class="required {my_values.error_email}">
+		<dt><label for="email2">Re-enter Email:</label></dt>
+		<dd><input type="text" name="email2" id="email2" value="{my_values.email2}" class="text" tabindex="4" /></dd>
+		<dd class="field-help">This is needed to make sure you receive the activation email.</dd>
+	</dl>
+</fieldset>
+	</opt name="page1">
+
+<fieldset>
+	<loop name="my_rows">
+	<dl class="{my_rows.class}" id="row_{my_rows.dbfield}">
+		<dt>{my_rows.label}:</dt>
+		<dd>{my_rows.field}</dd>
+		<dd class="field-help">{my_rows.help_text}</dd>
+	</dl>
+	</loop name="my_rows">
+</fieldset>
+
+<opt name="page1">
+<fieldset>
+	<dl>
+		<dt>Verify registration:</dt>
+		<dd><img src="show_captcha.php?{rand}" /></dd>
+		<dd class="field-help"></dd>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><input type="text" name="captcha" id="captcha" size="4" tabindex="50" /> Enter the characters from above.</dd>
+	</dl>
+</fieldset>
+<fieldset id="agree_fs">
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd class="full-width"><input type="checkbox" name="agree" id="agree" value="1" {my_values.agree} tabindex="51" /> I agree to {tplvars.sitename}'s <a target="_blank" href="tos.php">terms of services</a>.</dd>
+	</dl>
+</fieldset>
+</opt name="page1">
+<fieldset class="controls">
+	<p class="mandatory"><span>* Blue fields</span> are mandatory.</p>
+	<input type="image" alt="Save" src="{tplvars.tplrelpath}/images/btn-sign-up-out.gif" />
+</fieldset>
+</form>

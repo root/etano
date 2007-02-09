@@ -79,6 +79,11 @@ function set_site_option($option,$module_code,$value) {
 
 function check_login_member($level_id) {
 	$topass=array();
+	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	if (!isset($GLOBALS['_access_level'][$level_id])) {
+		$GLOBALS['_access_level'][$level_id]=0;	// no access allowed if level not defined
+	}
+	// ask visitors to login if they land on a page that doesn't allow guests
 	if (!($GLOBALS['_access_level'][$level_id]&1) && (!isset($_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id']))) {
 		$mysession=session_id();
 		if (empty($mysession)) {
@@ -87,18 +92,21 @@ function check_login_member($level_id) {
 		$_SESSION['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
 		redirect2page('login.php');
 	}
-	if (!isset($GLOBALS['_access_level'][$level_id])) {
-		$GLOBALS['_access_level'][$level_id]=0;
-	}
+//	unset($_SESSION['timedout']);
+	// members from here on
 	if (($GLOBALS['_access_level'][$level_id]&$_SESSION['user']['membership'])!=$_SESSION['user']['membership']) {
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']=$GLOBALS['_lang'][3];
 		redirect2page('info.php',$topass);
 	}
+	$user_id=0;
 	if (isset($_SESSION['user']['user_id'])) {
 		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`=now() WHERE `user_id`='".$_SESSION['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$user_id=$_SESSION['user']['user_id'];
 	}
+	$query="REPLACE INTO `{$dbtable_prefix}online` SET `fk_user_id`='$user_id',`sess`='".session_id()."'";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 
 function get_module_stats($module_code,$user_id=0,$stat='') {
@@ -188,4 +196,15 @@ function bbcode2html($str) {
 	$str=preg_replace('/\[url=(http:\/\/.*?)\]/','<a target="_blank" href="$1">',$str);
 //	$str=preg_replace('/\[img=(http:\/\/.*?)\]/','<img src="$1" />',$str);
 	return $str;
+}
+
+
+function add_member_score($user_id,$act,$points=0) {
+	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	$scores=array('force'=>0,'login'=>5,'logout'=>-4,'approved'=>10,'rejected'=>-10,'add_main_photo'=>10,'del_main_photo'=>-10,'add_photo'=>2,'del_photo'=>-2,'add_blog'=>5,'payment'=>50,'unpayment'=>-50,);
+	$scores['force']+=$points;
+	if (isset($scores[$act])) {
+		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `score`=`score`+".$scores[$act]." WHERE `fk_user_id`='$user_id'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
 }

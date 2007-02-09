@@ -1,0 +1,58 @@
+#login.content_column1 {
+	float: none;
+}
+
+#login_tease {
+	padding-left: 250px;
+	font-size: 14px;
+}
+
+#login_tease li {
+	list-style-type: square;
+	margin-left: 25px;
+}
+
+#relogin {
+	position: absolute;
+	left:10px;
+	top: 55px;
+	width: 300px;
+}
+
+* html #relogin dl {
+	height: 1%;
+}
+
+#relogin dl {
+	width: 300px;
+	overflow: hidden;
+	background-image: url('../images/profile-field-bg.gif');
+	background-position: bottom;
+	background-repeat: no-repeat;
+}
+
+#relogin dt {
+	float: left;
+	width: 80px;
+	font-size: 13px;
+	padding: 5px 0 5px 10px;
+}
+
+#relogin dd {
+	float: left;
+	width: 200px;
+	padding: 5px 0 5px;
+}
+
+#relogin dd input, #relogin dd select {
+	font: 12px "Trebuchet MS", Arial, sans-serif;
+	margin: -2px 0 0;
+}
+
+.controls a {
+	padding-left: 10px;
+}
+
+.controls .button {
+	float: left;
+}

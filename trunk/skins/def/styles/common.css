@@ -1,10 +1,5 @@
-/* First of all */
 @import url('browser-reset.css');
-/* Main structure */
 @import url('layout.css');
-/* Section - Header */
 @import url('header.css');
-/* Section - Content */
 @import url('content.css');
-/* Section - Footer */
 @import url('footer.css');
