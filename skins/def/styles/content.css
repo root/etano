@@ -3,13 +3,14 @@
 .rounded-box {
 	position: relative;
 	overflow: hidden;
+	margin-bottom: 12px;
 }
 	.rounded-box h1, .rounded-box h2, .rounded-box h3 {
-		padding: 15px 18px;
+		padding: 15px 18px 0px 18px;
 	}
 
 	.rounded-box .box-content {
-		padding: 0px 18px;
+		padding: 15px 18px;
 	}
 
 	.rounded-box .link-more {
@@ -51,20 +52,31 @@
 	width: 206px;
 	background: url('../images/sbox-middle.gif') repeat-y;
 }
-	.small h2 {
+	.small h2, .small h3 {
 		background: url('../images/sbox-top.gif') no-repeat left top;
 	}
+
+	.small h3 {
+		padding: 15px 18px 0px 18px;
+	}
+
 	.small .box-content {
 		background: url('../images/sbox-bottom.gif') no-repeat left bottom;
 	}
 
 
 /* Content columns */
-.content_column1 {
+#content_column1 {
 	float: right;
 	margin: 18px 0;
 }
 
+#content_column2 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 18px 0;
+}
 
 /* Type */
 
@@ -109,7 +121,8 @@ strong {
 	text-decoration: underline;
 }
 
-/* online/offline icon next to every user name
+/* online/offline icon next to every user name */
+
 .is_online .online_stat {
 	background-image: url('../images/member-online-small-out.gif');
 	padding: 0 3px 0 15px;

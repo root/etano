@@ -67,7 +67,6 @@ class widget_latest_members extends icontent_widget {
 		$widget['action']='<a class="content-link link-more" href="search.php?act=latest" title="More New Members">More New Members</a>';	// translate this
 		if (isset($this->config['area']) && $this->config['area']==1) {
 			$this->tpl->set_file('temp','static/front_widget.html');
-			$this->tpl->set_file('temp','static/content_widget.html');
 		} else {
 			$this->tpl->set_file('temp','static/content_widget.html');
 		}

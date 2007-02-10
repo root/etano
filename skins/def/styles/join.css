@@ -1,9 +1,5 @@
 /* Profile form */
 
-#join_form {
-	margin: 10px 0 0;
-}
-
 #join_form fieldset {
 	border-bottom: 1px dashed #ccc;
 	margin-bottom: 20px;
@@ -12,13 +8,6 @@
 
 * html #join_form dl {
 	height: 1%;
-}
-#join_form .invisible {
-	display: none;
-	visibility: hidden;
-}
-#join_form .visible {
-	visibility: visible;
 }
 
 #join_form dl {
@@ -56,7 +45,6 @@
 	margin-bottom: -3px;
 }
 
-
 * html #join_form dd .check, * html #join_form dd .radio {
 	margin-left: -4px;
 }
@@ -71,7 +59,7 @@
 
 #join_form dd.field-help {
 	float: left;
-	width: 296px;
+	width: 290px;
 	font-size: 12px;
 	color: #878787;
 	padding-left: 10px;
@@ -85,6 +73,8 @@
 
 #join_form .controls {
 	border: none;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
 }
 
 #join_form .controls p {
@@ -102,4 +92,12 @@
 
 .text {
 	width: 100%;
+}
+
+#join-tease ul {
+	padding-left: 20px;
+}
+
+#join-tease li {
+	list-style-type: disc;
 }

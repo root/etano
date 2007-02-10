@@ -1,15 +1,23 @@
-/* CSS Document */
+/* general front-widget style */
 
 .front-widget {
 	position: relative;
-	padding: 15px 18px;
 	overflow: hidden;
-	width: 706px;
+	width: 742px;
 }
+	.front-widget h1, .front-widget h2 {
+		padding: 0px 18px;
+	}
+
+	.front-widget .box-content {
+		padding: 15px 18px 0px 18px;
+	}
 
 	.front-widget .link-more {
-		float: right;
-		margin: -15px -5px 0px 0px;
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin: 0px 18px;
 		background: url('../images/link-more-out.gif') no-repeat top right;
 		padding: 0 25px 6px 3px;
 	}
@@ -18,69 +26,7 @@
 		background-image: url('../images/link-more-over.gif');
 	}
 
-	.front-widget h1, .front-widget h2 {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		padding: 0px 18px;
-		z-index:-1;
-	}
-	.front-widget .box-content {
-		margin: -15px -18px;
-		padding: 18px 18px 2px 18px;
-	}
-
-
-/* Sidebar - Search box */
-
-* html #search {
-	margin-top: 18px;
-}
-#search {
-	position: absolute;
-	top: 0;
-	right: 0;
-	font-size: 14px;
-}
-
-	#search fieldset {
-		margin: 7px 0;
-	}
-
-	#search select.big_select {
-		width: 100%;
-	}
-
-	* html #search fieldset.distance input {
-		width: 43px;
-	}
-	#search fieldset.distance input {
-		width: 40px;
-	}
-	#search label.field_label {
-		display: block;
-		font-size: 14px;
-	}
-
-	#search fieldset.controls {
-		background-image: url('../images/search-bg.gif');
-		background-position: top left;
-		background-repeat: no-repeat;
-		padding-top: 15px;
-		margin: 10px 0 0;
-		text-align: right;
-	}
-
-	#search fieldset.controls #search-btn {
-		margin-right: -5px;
-	}
-
-	#search label, #search select, #search input {
-		font: 12px "Trebuchet MS", Arial, sans-serif;
-	}
-
-
-/* Content - Description box */
+/* Description box */
 
 #description {
 	margin: 18px 0;
@@ -94,9 +40,13 @@
 	#description .description-box {
 		min-height: 78px;
 		float: left;
-		margin-top: 6px;
 		background-position: top right;
 		background-repeat: no-repeat;
+	}
+
+	#description .description-box h3 {
+		margin: 0px;
+		padding: 0px;
 	}
 
 	#description-search {
@@ -143,6 +93,79 @@
 
 	#sign-up-now i {
 		display: none;
+	}
+
+/* Search box */
+
+* html #search {
+	margin-top: 18px;
+}
+#search {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 14px;
+}
+
+	#search dl {
+		overflow: hidden;
+		padding-bottom: 5px;
+	}
+
+	#search dt {
+		font-size: 14px;
+	}
+
+	#search dd {
+		padding: 0px;
+	}
+
+		#search dd input, #search dd select, #search dd label {
+			font: 12px "Trebuchet MS", Arial, sans-serif;
+		}
+
+		#search dd label {
+			margin: 0 3px 0 3px;
+		}
+
+		#search .smart_table li {
+			width: 37%;
+		}
+
+	#search fieldset {
+		margin: 7px 0;
+	}
+
+	#search select.big_select {
+		width: 100%;
+	}
+
+	* html #search fieldset.distance input {
+		width: 43px;
+	}
+
+	/*zip code*/
+	#row_field_50_zip select {
+		width: 35px;
+	}
+
+	#row_field_50_zip input {
+		width: 35px;
+	}
+
+	#search .controls {
+		border-top: 1px dashed #ccc;
+		padding-top: 15px;
+		margin: 10px 0 0;
+		text-align: right;
+	}
+
+	#search fieldset.controls #search-btn {
+		margin-right: -5px;
+	}
+
+	#search label, #search select, #search input {
+		font: 12px "Trebuchet MS", Arial, sans-serif;
 	}
 
 

@@ -1,14 +1,14 @@
-#login.content_column1 {
+#content_column1.login {
 	float: none;
 }
 
 #login_tease {
-	padding-left: 250px;
+	padding: 13px 0px 0px 250px;
 	font-size: 14px;
 }
 
 #login_tease li {
-	list-style-type: square;
+	list-style-type: disc;
 	margin-left: 25px;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .controls a {
-	padding-left: 10px;
+	margin-left: 10px;
 }
 
 .controls .button {
