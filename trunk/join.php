@@ -142,6 +142,9 @@ if ($page==1) {
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('my_rows');
 
+if (is_file('join_left.php')) {
+	include 'join_left.php';
+}
 $tplvars['title']='Registration';
 $tplvars['page_title']='Registration';
 $tplvars['page']='join';

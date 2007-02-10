@@ -3,7 +3,7 @@ define('_DBHOSTNAME_','localhost');// mysql server host name
 define('_DBUSERNAME_','root');// mysql database username
 define('_DBPASSWORD_','rootpass');// mysql database password
 define('_DBNAME_','newdsb');// mysql database name
-define('_SITENAME_','Web Application');// Your site name
+define('_SITENAME_','Good Beyond Words Dating Application');// Your site name
 define('_BASEURL_','http://dating.sco.ro/newdsb');// protocol required (http:// )
 define('_BASEPATH_','/www/htdocs/newdsb');// path on server to your site
 define('_RESULTS_',6);// default search results per page

@@ -68,7 +68,7 @@ for ($i=0;isset($search_fields[$i]);++$i) {
 				++$s;
 				$search[$s]['label']='Distance';	// translate this
 				$search[$s]['dbfield']=$field['dbfield'].'_zip';
-				$search[$s]['field']='<select name="dist" id="dist">'.interval2options(1,10).'</select> <label>miles from zip</label> <input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" tabindex="'.($i+4).'" size="4" />';
+				$search[$s]['field']='<select name="'.$field['dbfield'].'_dist" id="'.$field['dbfield'].'_dist">'.interval2options(1,10).'</select> <label>miles from zip</label> <input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" tabindex="'.($i+4).'" size="4" />';
 				$search[$s]['class']=(isset($field['default_value'][0]) && $prefered_input=='z') ? 'visible' : 'invisible';
 				break;
 

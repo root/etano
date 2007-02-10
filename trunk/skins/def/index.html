@@ -54,7 +54,6 @@
 						<p>Flirts, messages, photos, blogs, alerts...</p>
 					</li>
 				</ul>
-				&nbsp;
 			</div>
 		</div>
 
@@ -109,17 +108,18 @@
 			<div class="box-content">
 				<form action="search.php" method="get" id="search-form">
 					<input type="hidden" name="st" value="basic" />
+					<fieldset>
 					<loop name="search">
-					<fieldset id="row_{search.dbfield}" class="{search.class}">
-						<label class="field_label">{search.label}:</label>
-						{search.field}
-					</fieldset>
+					<dl id="row_{search.dbfield}" class="{search.class}">
+						<dt>{search.label}:</dt>
+						<dd>{search.field}</dd>
+					</dl>
 					</loop name="search">
+					</fieldset>
 					<fieldset class="controls">
 						<input id="search-button" type="image" src="{tplvars.tplrelpath}/images/btn-search-out.gif" alt="Search" />
 					</fieldset>
 				</form>
-				&nbsp;
 			</div>
 		</div>
 	</div>
