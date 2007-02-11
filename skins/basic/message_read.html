@@ -16,7 +16,7 @@
 	<p id="date"><label>Sent on:</label> <span>{mail.date_sent}</span></p>
 	<p id="subject"><label>Subject:</label> <span>{mail.subject}</span></p>
 	<ul id="actions">
-		<opt name="inbox_options"><li><input type="button" value="Reply" onclick="send_form('reply')" /></li></opt name="inbox_options">
+		<opt name="inbox_options"><opt name="mail.other_id"><li><input type="button" value="Reply" onclick="send_form('reply')" /></li></opt name="mail.other_id"></opt name="inbox_options">
 		<li><input type="button" value="Delete" onclick="send_form('del')" /></li>
 		<opt name="spambox_options"><li><input type="button" value="Spam" onclick="send_form('spam')" /></li></opt name="spambox_options"></li>
 		<opt name="folder_options">
