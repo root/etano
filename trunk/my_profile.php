@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       profile.php
+File:                       my_profile.php
 $Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -17,7 +17,7 @@ require_once 'includes/user_functions.inc.php';
 require_once 'includes/vars.inc.php';
 require_once 'includes/classes/user_cache.class.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
-check_login_member(2);
+check_login_member(-1);
 
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 

@@ -35,6 +35,10 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	redirect2page('index.php');
 }
 
+if (isset($_SESSION['user']['user_id']) && !empty($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']==$uid) {
+	redirect2page('my_photos.php');
+}
+
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
 

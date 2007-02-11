@@ -167,7 +167,7 @@ function get_user_folder_name($folder_id,$user_id=null) {
 function get_cache_user_mini($user_ids,$skin) {
 	$myreturn=array();
 	for ($i=0;isset($user_ids[$i]);++$i) {
-		$file=_BASEPATH_.'/skins/'.$skin.'/cache/users/'.$user_ids[$i]{0}.'/'.$user_ids[$i].'/details_gallery.html';
+		$file=_BASEPATH_.'/skins/'.$skin.'/cache/users/'.$user_ids[$i]{0}.'/'.$user_ids[$i].'/user_gallery.html';
 		if (is_file($file)) {
 			$myreturn[$i]['user']=fread($fp=fopen($file,'rb'),filesize($file));
 		}
@@ -199,12 +199,16 @@ function bbcode2html($str) {
 }
 
 
-function add_member_score($user_id,$act,$points=0) {
+function add_member_score($user_ids,$act,$times=1,$points=0) {
+	if (!is_array($user_ids)) {
+		$user_ids=array($user_ids);
+	}
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	$scores=array('force'=>0,'login'=>5,'logout'=>-4,'approved'=>10,'rejected'=>-10,'add_main_photo'=>10,'del_main_photo'=>-10,'add_photo'=>2,'del_photo'=>-2,'add_blog'=>5,'payment'=>50,'unpayment'=>-50,);
 	$scores['force']+=$points;
-	if (isset($scores[$act])) {
-		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `score`=`score`+".$scores[$act]." WHERE `fk_user_id`='$user_id'";
+	if (isset($scores[$act]) && !empty($user_ids)) {
+		$scores[$act]*=$times;
+		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `score`=`score`+".$scores[$act]." WHERE `fk_user_id` IN ('".join("','",$user_ids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 }

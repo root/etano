@@ -209,11 +209,11 @@ if (!empty($totalrows)) {
 	require_once 'includes/classes/user_cache.class.php';
 	$user_cache=new user_cache(get_my_skin());
 	if (isset($_GET['v']) && $_GET['v']=='g') {
-		$results=$user_cache->get_cache_array($user_ids,'details_gallery');
+		$results=$user_cache->get_cache_array($user_ids,'user_gallery');
 		$tpl->set_var('results',smart_table($results,3,'id="gallery_view"'));
 	} else {
 		for ($i=0;isset($user_ids[$i]);++$i) {
-			$results[$i]['details_list']=$user_cache->get_cache($user_ids[$i],'details_list');
+			$results[$i]['user_list']=$user_cache->get_cache($user_ids[$i],'user_list');
 		}
 		$tpl->set_loop('results',$results);
 		$tpl->set_var('use_loop',true);

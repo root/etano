@@ -96,7 +96,7 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 		case _HTML_LOCATION_:
 			$my_rows[$j]['label']='Country';	// translate this
 			$my_rows[$j]['dbfield']=$_pfields[$my_fields[$i]]['dbfield'].'_country';
-			$my_rows[$j]['field']='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_country" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country']).'</select>';
+			$my_rows[$j]['field']='<select class="text" name="'.$_pfields[$my_fields[$i]]['dbfield'].'_country" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country']).'</select>';
 			$prefered_input='s';
 			$num_states=0;
 			if (!empty($my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country'])) {
@@ -107,12 +107,12 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 			++$j;
 			$my_rows[$j]['label']='State';	// translate this
 			$my_rows[$j]['dbfield']=$_pfields[$my_fields[$i]]['dbfield'].'_state';
-			$my_rows[$j]['field']='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_state" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option></select>';	// translate this
+			$my_rows[$j]['field']='<select class="text" name="'.$_pfields[$my_fields[$i]]['dbfield'].'_state" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option></select>';	// translate this
 			$my_rows[$j]['class']=(!empty($my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country']) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
 			++$j;
 			$my_rows[$j]['label']='City';	// translate this
 			$my_rows[$j]['dbfield']=$_pfields[$my_fields[$i]]['dbfield'].'_city';
-			$my_rows[$j]['field']='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_city" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option></select>';	// translate this
+			$my_rows[$j]['field']='<select class="text" name="'.$_pfields[$my_fields[$i]]['dbfield'].'_city" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option></select>';	// translate this
 			$my_rows[$j]['class']='invisible';
 			++$j;
 			$my_rows[$j]['label']='Zip';	// translate this

@@ -17,4 +17,3 @@ function get_digg_stories() {
 	}
 	return true;
 }
-?>

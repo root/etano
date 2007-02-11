@@ -10,7 +10,7 @@
 	}
 
 	.rounded-box .box-content {
-		padding: 15px 18px;
+		padding: 10px 18px;
 	}
 
 	.rounded-box .link-more {
@@ -23,7 +23,7 @@
 	}
 
 	.rounded-box .link-more:hover {
-		background-image: url('../images/link-more-over.gif');
+		background-position: bottom right;
 	}
 
 .large {
@@ -156,5 +156,5 @@ strong {
 }
 
 .smart_table li.break {
-	clear: left;
+	clear: both;
 }
