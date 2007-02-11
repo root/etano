@@ -2,7 +2,7 @@
 /******************************************************************************
 File:                       includes/sco_functions.inc.php
 Info:   					general purpose functions library
-File version:				1.2007020901
+File version:				1.2007021002
 Created by:                 Dan Caragea (http://www.sco.ro - dan@rdsct.ro)
 ******************************************************************************/
 
@@ -246,12 +246,17 @@ function htmlspecialchars_uni($value) {
 function smart_table($array,$table_cols=1,$table_params='') {
 	$myreturn='';
 	if (!empty($array)) {
-		$myreturn="<ul $table_params>\n";
+		$myreturn="<ul class=\"smart_table\" $table_params>\n";
 		$i=1;
+		$next_break=true;
 		foreach ($array as $v) {
 			$myreturn.="\t<li";
-			if ($i%$table_cols==0) {
+			if ($next_break) {
 				$myreturn.=' class="break"';
+				$next_break=false;
+			}
+			if ($i%$table_cols==0) {
+				$next_break=true;
 			}
 			$myreturn.=">$v</li>\n";
 			++$i;
@@ -789,7 +794,7 @@ function create_pager2($totalrows,$offset,$results) {
 	$qs=array2qs($params,array('PHPSESSID'));
 	$myrand=mt_rand(1000,2000);
 	$total_pages=ceil($totalrows/$results);
-	$myreturn="<form id=\"pagerform$myrand\" name=\"pagerform$myrand\" action=\"$phpself\" method=\"get\">\n";
+	$myreturn="<form id=\"pagerform$myrand\" action=\"$phpself\" method=\"get\">\n";
 	$myreturn.="<ul class=\"pager\">\n";
 	$myreturn.='<li class="pager_goto_first">';
 	$myreturn.='<a href="'.$phpself.'?o=0&amp;r='.$results;

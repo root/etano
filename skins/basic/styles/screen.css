@@ -239,13 +239,13 @@ ul.pager li {
 	position: relative;
 }
 
-.member_details_list {
+.member_user_list {
 	border-bottom: 1px dotted #CCC;
 	padding-bottom: 5px;
 	margin-bottom: 10px;
 }
 
-.member_details_list img {
+.member_user_list img {
 	float: left;
 	margin-right: 3px;
 }

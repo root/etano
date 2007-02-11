@@ -1,0 +1,13 @@
+<p class="text">
+	<a href="{tplvars.relative_path}photo_view.php?photo_id={photo.photo_id}&amp;o={}&amp;r={}" title=""><img class="user_photo" src="{tplvars.relative_path}media/pics/t1/{photo.photo}" alt="" /></a>
+	{photo.caption}
+</p>
+<div class="details">
+	<span>Uploaded on <strong>{photo.date_posted}</strong>.</span>
+	<span>Photo is <strong>{photo.is_private}</strong>.</span>
+	<p>{photo.stat_views} views | <a class="content-link plain" href="#" title="Review">{photo.stat_comments} comments</a></p>
+	<ul>
+		<li><a class="content-link change" href="{tplvars.relative_path}photo_settings.php?photo_ids={photo.photo_id}&amp;o={}&amp;r={}" title="Change">Change</a></li>
+		<li><a class="content-link delete" href="processors/photo_delete.php?photo_id={photo.photo_id}&amp;o={}&amp;r={}" title="Delete">Delete</a></li>
+	</ul>
+</div>

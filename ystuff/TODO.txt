@@ -86,9 +86,18 @@ TODO
 - cautare membri cu poze (poza din profil probabil...)
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
 - de adaugat in style.css clasele care se folosesc la bbcode
-- cand se adauga o poza in album, daca nu exista poza in profil, sa se faca automat is_main
+- cand se adauga o poza NE-privata in album, daca nu exista poza in profil, sa se faca automat is_main
 - join: buton pt "check"
 - rounded-box redenumit in box or something
+- functie fields_edit_tpl($field_ids)
+- functie fields_search_tpl($field_ids)
+- scor la blog add doar daca blogul este mai mare de x caractere.
+- scor in functie de rating.
+- scor pe vizualizare pe bloguri/profil/poze/etc (0.1)
+- scor negativ la banned words, cand este blocat
+- scorul la plata corelat cu suma platita?
+- scor cand primeste un mesaj/flirt si poate si cand trimite? (mai mare la primit - inseamna ca e interesant)
+- scor la conturi platitoare pentru vechimea contului (lunar?)
 
 - niste functii din user_functions.inc.php ar trebui scoase intr-un fisier separat...
 - includes/site_options.inc.php cu setarile din site_options3 ?

@@ -1,0 +1,90 @@
+.my_photos .upload-photos {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 15px 18px;
+	background: url('../images/link-upload.gif') no-repeat top right;
+	padding: 3px 35px 9px 3px;
+	font-size: 13px;
+}
+.upload-photos:hover {
+	background-position: bottom right;
+}
+
+
+#gallery li {
+	width: 220px;
+	padding-left: 10px;
+	border-left: 1px dashed #ccc;
+	margin-bottom: 15px;
+}
+
+#gallery li.break {
+	border: none;
+}
+
+	#gallery li img {
+		float: left;
+		margin: 0 10px 10px 0;
+		display: block;
+	}
+
+	* html #gallery li .caption {
+		height: 1%;
+	}
+	#gallery li .caption {
+		clear: left;
+		padding: 0 5px 10px 0;
+		overflow: hidden;
+	}
+
+* html #gallery li .details {
+	height: 1%;
+	margin: 5px 0 -5px;
+}
+#gallery li .details {
+	clear: left;
+	overflow: hidden;
+	margin-top: 5px;
+	border-top: 1px dashed #ccc;
+}
+
+#gallery li .details ul {
+	list-style-type: none;
+	margin: 5px 0;
+	padding: 0;
+}
+
+#gallery li .details p {
+	margin: 3px 0;
+}
+
+#gallery li .details ul li {
+	padding: 0;
+	margin: 0;
+	width: 80px;
+	height: 22px;
+	border: none;
+}
+
+.details a.plain {
+	padding: 2px;
+}
+
+.details a.change {
+	background-image: url('../images/link-change.gif');
+}
+.details a.change:hover {
+	background-position: left bottom;
+}
+
+.details a.delete {
+	background-image: url('../images/link-delete.gif');
+}
+.details a.delete:hover {
+	background-position: left bottom;
+}
+
+.gallery-controls {
+	clear: both;
+}

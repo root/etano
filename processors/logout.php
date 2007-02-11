@@ -12,7 +12,15 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 require_once '../includes/sessions.inc.php';
+require_once '../includes/user_functions.inc.php';
 require_once '../includes/vars.inc.php';
+db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
+
+if (isset($_SESSION['user']['user_id'])) {
+	$query="DELETE FROM `{$dbtable_prefix}online` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+	@mysql_query($query);
+	add_member_score($_SESSION['user']['user_id'],'logout');
+}
 
 $_SESSION['user']=array();
 session_destroy();
@@ -21,5 +29,5 @@ header('Last-Modified: '. gmdate('D,d M Y H:i:s').' GMT');
 header('Cache-Control: no-store,no-cache,must-revalidate',false);
 header('Cache-Control: post-check=0,pre-check=0',false);
 header('Pragma: no-cache',false);
-header('Location: '._BASEURL_.'/index.php');
+header('Location: '._BASEURL_);
 ?>

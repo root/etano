@@ -17,6 +17,7 @@ require_once '../includes/user_functions.inc.php';
 require_once '../includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
+$score_threshold=600;	// seconds
 $error=false;
 $topass=array();
 $nextpage='login.php';
@@ -38,13 +39,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']=$_lang[2];
 			redirect2page('info.php',$topass);
 		}
-		$query="SELECT a.`user_id`,a.`user`,a.`status`,a.`membership` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`user`='$user' AND a.`pass`=md5('$pass')";
+		$query="SELECT a.`user_id`,a.`user`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`user`='$user' AND a.`pass`=md5('$pass')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$user=mysql_fetch_assoc($res);
 			$user['membership']=(int)$user['membership'];
 // need to check status & rate_limiter.
 			$user['prefs']=get_user_settings($user['user_id'],1);
+			if ($user['last_activity']<time()-$score_threshold) {
+				add_member_score($user['user_id'],'login');
+			}
+			unset($user['last_activity']);
 			$_SESSION['user']=$user;
 			if (isset($_SESSION['timedout']['url'])) {
 				$page=$_SESSION['timedout']['url'];

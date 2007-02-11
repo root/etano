@@ -86,4 +86,3 @@ function delete_members() {
 	}
 	return true;
 }
-?>

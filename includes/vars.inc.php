@@ -102,7 +102,9 @@ $accepted_months=array($_lang[4],$_lang[7],$_lang[8],$_lang[9],$_lang[10],$_lang
 $accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
 $tplvars['sitename']=_SITENAME_;
 $tplvars['baseurl']=_BASEURL_;
-$tplvars['relative_path']=@str_repeat('../',substr_count($_SERVER['PHP_SELF'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
+if (isset($_SERVER['PHP_SELF'])) {
+	$tplvars['relative_path']=@str_repeat('../',substr_count($_SERVER['PHP_SELF'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
+}
 $tplvars['tplurl']=_BASEURL_.'/skins/'.get_my_skin();
 $tplvars['tplrelpath']=$tplvars['relative_path'].'skins/'.get_my_skin();
 

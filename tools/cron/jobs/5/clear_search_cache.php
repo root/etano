@@ -16,4 +16,3 @@ function clear_search_cache() {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	return true;
 }
-?>
