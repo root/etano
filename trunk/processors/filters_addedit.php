@@ -74,7 +74,7 @@ if (!$error) {
 			}
 			++$i;
 		}
-		$query.=" WHERE `filter_id`='".$input['filter_id']."'";
+		$query.=" WHERE `filter_id`='".$input['filter_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$affected_rows=mysql_affected_rows();
 		if (!empty($affected_rows)) {
