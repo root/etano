@@ -31,10 +31,10 @@
 	background: url('../images/lbox-middle.gif') repeat-y;
 }
 	.large h1, .large h2 {
-		background: url('../images/lbox-top.gif') no-repeat left top;
+		background: url('../images/lbox-top.gif') no-repeat top left;
 	}
 	.large .box-content {
-		background: url('../images/lbox-bottom.gif') no-repeat left bottom;
+		background: url('../images/lbox-bottom.gif') no-repeat bottom left;
 	}
 
 .medium {
@@ -45,7 +45,7 @@
 		background-image: url('../images/mbox-top.gif');
 	}
 	.medium .box-content {
-		background: url('../images/mbox-bottom.gif') no-repeat left bottom;
+		background: url('../images/mbox-bottom.gif') no-repeat bottom left;
 	}
 
 .small {
@@ -53,7 +53,7 @@
 	background: url('../images/sbox-middle.gif') repeat-y;
 }
 	.small h2, .small h3 {
-		background: url('../images/sbox-top.gif') no-repeat left top;
+		background: url('../images/sbox-top.gif') no-repeat top left;
 	}
 
 	.small h3 {
@@ -61,7 +61,7 @@
 	}
 
 	.small .box-content {
-		background: url('../images/sbox-bottom.gif') no-repeat left bottom;
+		background: url('../images/sbox-bottom.gif') no-repeat bottom left;
 	}
 
 
@@ -124,21 +124,19 @@ strong {
 /* online/offline icon next to every user name */
 
 .is_online .online_stat {
-	background-image: url('../images/member-online-small-out.gif');
+	background: url('../images/member-online-small.gif') no-repeat top left;
 	padding: 0 3px 0 15px;
-	background-position: top left;
 }
 .is_online .online_stat:hover {
-	background-image: url('../images/member-online-small-over.gif');
+	background-position: bottom left;
 }
 
 .is_offline .online_stat {
-	background-image: url('../images/member-offline-small-out.gif');
+	background: url('../images/member-offline-small.gif') no-repeat top left;
 	padding: 0 3px 0 15px;
-	background-position: top left;
 }
 .is_offline .online_stat:hover {
-	background-image: url('../images/member-offline-small-over.gif');
+	background-position: bottom left;
 }
 
 .visible {
@@ -150,11 +148,107 @@ strong {
 	visibility: hidden;
 }
 
-.smart_table li {
+/* smart table default rules */
+* html .table_row {
+	height: 1%;
+}
+.table_row {
+	overflow: hidden;
+}
+
+.table_row li {
 	float: left;
 	width: 100px;
 }
 
-.smart_table li.break {
-	clear: both;
+
+/* pager */
+
+ul.pager {
+	list-style-type: none;
+}
+
+ul.pager li {
+	float: left;
+	border-left: 1px solid #DEDEDE;
+}
+
+ul.pager li a {
+	font-size: 11px;
+	color: #c57794;
+	text-decoration: none;
+	font-weight: bold;
+	padding: 2px 10px;
+}
+ul.pager li a:hover {
+	text-decoration: underline;
+}
+
+ul.pager li.previous a {
+	display: block;
+	width: 22px;
+	height: 22px;
+	padding: 0;
+	background-image: url('../images/link-previous.gif');
+	border: none;
+}
+ul.pager li.previous a:hover {
+	background-position: left bottom;
+}
+
+ul.pager li.next a {
+	display: block;
+	width: 22px;
+	height: 22px;
+	padding: 0;
+	background-image: url('../images/link-next.gif');
+}
+ul.pager li.next a:hover {
+	background-position: left bottom;
+}
+
+ul.pager li.previous, ul.pager li.next, ul.pager li.rpp, ul.pager li.first {
+	border: none;
+	padding-left: 0;
+}
+
+ul.pager li.current_page, ul.pager li.dots {
+	color: #000;
+	font-weight: bold;
+	padding: 0 10px;
+}
+
+ul.pager i {
+	display: none;
+}
+
+ul.pager li.rpp {
+	float: right;
+}
+
+.rpp select {
+	font: 11px "Trebuchet MS", Arial, sans-serif;
+}
+
+/* menus */
+
+ul.menu {
+	list-style-type: none;
+}
+
+ul.menu li {
+	border-top: 1px dashed #ccc;
+	height: 22px;
+	width: 100%;
+}
+
+ul.menu li.first {
+	border: none;
+}
+
+.menu a.upload {
+	background: url('../images/menu_upload.gif') no-repeat top left;
+}
+.menu a.upload:hover {
+	background-position: bottom left;
 }

@@ -2,7 +2,7 @@
 /******************************************************************************
 File:                       includes/sco_functions.inc.php
 Info:   					general purpose functions library
-File version:				1.2007021002
+File version:				1.2007021302
 Created by:                 Dan Caragea (http://www.sco.ro - dan@rdsct.ro)
 ******************************************************************************/
 
@@ -243,22 +243,33 @@ function htmlspecialchars_uni($value) {
 }
 
 
-function smart_table($array,$table_cols=1,$table_params='') {
+function smart_table($array,$table_cols=1,$css_class='') {
 	$myreturn='';
-	if (!empty($array)) {
-		$myreturn="<ul class=\"smart_table\" $table_params>\n";
+	$num_elem=count($array);
+	if (!empty($num_elem)) {
+		$myreturn='<ul class="table_row '.$css_class.' first';
+		if ($table_cols>=$num_elem) {
+			$myreturn.=' last';
+		}
+		$myreturn.="\">\n";
 		$i=1;
-		$next_break=true;
 		foreach ($array as $v) {
-			$myreturn.="\t<li";
-			if ($next_break) {
-				$myreturn.=' class="break"';
-				$next_break=false;
+			if ($i%$table_cols==1 && $i!=1) {
+				$myreturn.="\n</ul>\n";
+				$myreturn.='<ul class="table_row '.$css_class;
+				if ($i+$table_cols>$num_elem) {
+					$myreturn.=' last';
+				}
+				$myreturn.="\">\n";
 			}
-			if ($i%$table_cols==0) {
-				$next_break=true;
+			$myreturn.="\t<li class=\"";
+			if ($i%$table_cols==1) {
+				$myreturn.='first';
 			}
-			$myreturn.=">$v</li>\n";
+			if ($i%$table_cols==0 || $i==$num_elem) {
+				$myreturn.=' last';
+			}
+			$myreturn.="\">$v</li>\n";
 			++$i;
 		}
 		$myreturn.="</ul>\n";
@@ -368,66 +379,96 @@ function vector2options($show_vector,$selected_map_val='',$exclusion_vector=arra
 
 
 function vector2checkboxes($show_vector,$excluded_keys_vector,$checkname,$binvalue,$table_cols=1,$showlabel=true,$pass2check='') {
-	$myreturn='<ul class="smart_table" id="table_'.$checkname.'">';
-	$myvector=array_flip(array_diff(array_flip($show_vector),$excluded_keys_vector));
-	$i=1;
-	$next_break=false;
-	while (list($k,$v)=each($myvector)) {
-		$myreturn.="\t<li";
-		if ($next_break) {
-			$myreturn.=' class="break"';
-			$next_break=false;
-		}
-		if ($i%$table_cols==0) {
-			$next_break=true;
-		}
-		$myreturn.='><input type="checkbox" id="'.$checkname.'_'.$k.'" name="'.$checkname.'['.$k.']"';
-		if (isset($binvalue) && ($binvalue>0) && (($binvalue>>$k)%2)) {
-			$myreturn.=' checked';
-		}
-		$myreturn.=' value="1" '.$pass2check.' />';
-		if ($showlabel) {
-			$myreturn.='<label for="'.$checkname.'_'.$k.'">'.$v.'</label>';
-		}
-		$myreturn.="</li>\n";
-		++$i;
+	$myreturn='';
+	for ($i=0;isset($excluded_keys_vector[$i]);++$i) {
+		unset($show_vector[$excluded_keys_vector[$i]]);
 	}
-	$myreturn.="</ul>\n";
+	$num_elem=count($show_vector);
+	if (!empty($num_elem)) {
+		$myreturn.='<ul class="table_row row_'.$checkname.' first';
+		if ($table_cols>=$num_elem) {
+			$myreturn.=' last';
+		}
+		$myreturn.="\">\n";
+		$i=1;
+		while (list($k,$v)=each($show_vector)) {
+			if ($i%$table_cols==1 && $i!=1) {
+				$myreturn.="\n</ul>\n";
+				$myreturn.='<ul class="table_row row_'.$checkname;
+				if ($i+$table_cols>$num_elem) {
+					$myreturn.=' last';
+				}
+				$myreturn.="\">\n";
+			}
+			$myreturn.="\t<li class=\"";
+			if ($i%$table_cols==1) {
+				$myreturn.='first';
+			}
+			if ($i%$table_cols==0 || $i==$num_elem) {
+				$myreturn.=' last';
+			}
+			$myreturn.='"><input type="checkbox" id="'.$checkname.'_'.$k.'" name="'.$checkname.'['.$k.']"';
+			if (isset($binvalue) && ($binvalue>0) && (($binvalue>>$k)%2)) {
+				$myreturn.=' checked';
+			}
+			$myreturn.=' value="1" '.$pass2check.' />';
+			if ($showlabel) {
+				$myreturn.='<label for="'.$checkname.'_'.$k.'">'.$v.'</label>';
+			}
+			$myreturn.="</li>\n";
+			++$i;
+		}
+		$myreturn.="</ul>\n";
+	}
 	return $myreturn;
 }
 
 
 function vector2checkboxes_str($show_vector,$excluded_keys_vector,$checkname,$binvalue,$table_cols=1,$showlabel=true,$pass2check='') {
+	$myreturn='';
 	if (is_string($binvalue)) {
 		$binvalue=binvalue2index_str($binvalue);	// now it is an array of indexes in $show_vector
 	}
 	for ($i=0;isset($excluded_keys_vector[$i]);++$i) {
 		unset($show_vector[$excluded_keys_vector[$i]]);
 	}
-	$myreturn='<ul class="smart_table" id="table_'.$checkname.'">';
-	$i=1;
-	$next_break=false;
-	while (list($k,$v)=each($show_vector)) {
-		$myreturn.="\t<li";
-		if ($next_break) {
-			$myreturn.=' class="break"';
-			$next_break=false;
+	$num_elem=count($show_vector);
+	if (!empty($num_elem)) {
+		$myreturn.='<ul class="table_row row_'.$checkname.' first';
+		if ($table_cols>=$num_elem) {
+			$myreturn.=' last';
 		}
-		if ($i%$table_cols==0) {
-			$next_break=true;
+		$myreturn.="\">\n";
+		$i=1;
+		while (list($k,$v)=each($show_vector)) {
+			if ($i%$table_cols==1 && $i!=1) {
+				$myreturn.="\n</ul>\n";
+				$myreturn.='<ul class="table_row row_'.$checkname;
+				if ($i+$table_cols>count($show_vector)) {
+					$myreturn.=' last';
+				}
+				$myreturn.="\">\n";
+			}
+			$myreturn.="\t<li class=\"";
+			if ($i%$table_cols==1) {
+				$myreturn.='first';
+			}
+			if ($i%$table_cols==0 || $i==$num_elem) {
+				$myreturn.=' last';
+			}
+			$myreturn.='"><input type="checkbox" id="'.$checkname.'_'.$k.'" name="'.$checkname.'[]"';
+			if (in_array($k,$binvalue)) {
+				$myreturn.=' checked';
+			}
+			$myreturn.=' value="'.$k.'" '.$pass2check.' />';
+			if ($showlabel) {
+				$myreturn.='<label for="'.$checkname.'_'.$k.'">'.$v.'</label>';
+			}
+			$myreturn.="</li>\n";
+			++$i;
 		}
-		$myreturn.='><input type="checkbox" id="'.$checkname.'_'.$k.'" name="'.$checkname.'[]"';
-		if (in_array($k,$binvalue)) {
-			$myreturn.=' checked';
-		}
-		$myreturn.=' value="'.$k.'" '.$pass2check.' />';
-		if ($showlabel) {
-			$myreturn.='<label for="'.$checkname.'_'.$k.'">'.$v.'</label>';
-		}
-		$myreturn.="</li>\n";
-		++$i;
+		$myreturn.="</ul>\n";
 	}
-	$myreturn.="</ul>\n";
 	return $myreturn;
 }
 
@@ -538,6 +579,7 @@ function vector_del_empty_vals($myarray) {
 }
 
 
+// strip slashes only if mq added them
 function stripslashes_mq($value) {
 	if (is_array($value)) {
 		$myreturn=array();
@@ -555,6 +597,7 @@ function stripslashes_mq($value) {
 }
 
 
+// just strip slashes, we don't care about mq here
 function stripslashes_smart($value) {
 	if (is_array($value)) {
 		$myreturn=array();
@@ -568,6 +611,7 @@ function stripslashes_smart($value) {
 }
 
 
+// add slashes only if mq didn't already add them
 function addslashes_mq($value) {
 	if (is_array($value)) {
 		$myreturn=array();
@@ -585,6 +629,7 @@ function addslashes_mq($value) {
 }
 
 
+// just add slashes, we don't care about mq here
 function addslashes_smart($value) {
 	if (is_array($value)) {
 		$myreturn=array();
@@ -796,41 +841,57 @@ function create_pager2($totalrows,$offset,$results) {
 	$total_pages=ceil($totalrows/$results);
 	$myreturn="<form id=\"pagerform$myrand\" action=\"$phpself\" method=\"get\">\n";
 	$myreturn.="<ul class=\"pager\">\n";
-	$myreturn.='<li class="pager_goto_first">';
-	$myreturn.='<a href="'.$phpself.'?o=0&amp;r='.$results;
-	if (!empty($qs)) {
-		$myreturn.='&amp;'.$qs;
+	if ($offset>0) {
+		$myreturn.='<li class="previous">';
+		$myreturn.='<a href="'.$phpself.'?o='.(($offset-$results>0) ? $offset-$results : 0).'&amp;r='.$results;
+		if (!empty($qs)) {
+			$myreturn.='&amp;'.$qs;
+		}
+		$myreturn.='"><i>&lt;</i></a></li>';
 	}
-	$myreturn.='">&lt;&lt;</a></li>';
 	$dotsbefore=false;
 	$dotsafter=false;
 	for ($i=1;$i<=$total_pages;++$i) {
 		if (((($i-1)*$results)<=$offset) && ($offset<$i*$results)) {
-			$myreturn.='<li class="current_page">'.$i.'</li>';
+			$myreturn.='<li class="current_page';
+			if ($i==1) {
+				$myreturn.=' first';
+			}
+			$myreturn.='">'.$i.'</li>';
 		} elseif (($i-1+$radius)*$results<$offset) {
 			if (!$dotsbefore) {
-				$myreturn.="<li class=\"pager_dots\">...</li>\n";
+				$myreturn.='<li class="dots';
+				if ($i==1) {
+					$myreturn.=' first';
+				}
+				$myreturn.="\">...</li>\n";
 				$dotsbefore=true;
 			}
 		} elseif (($i-1-$radius)*$results>$offset) {
 			if (!$dotsafter) {
-				$myreturn.="<li class=\"pager_dots\">...</li>\n";
+				$myreturn.="<li class=\"dots\">...</li>\n";
 				$dotsafter=true;
 			}
 		} else {
-			$myreturn.='<li class="pager_page"><a href="'.$phpself.'?o='.(($i-1)*$results).'&amp;r='.$results;
+			$myreturn.='<li';
+			if ($i==1) {
+				$myreturn.=' class="first"';
+			}
+			$myreturn.='><a href="'.$phpself.'?o='.(($i-1)*$results).'&amp;r='.$results;
 			if (!empty($qs)) {
 				$myreturn.='&amp;'.$qs;
 			}
 			$myreturn.='">'.$i."</a></li>\n";
 		}
 	}
-	$myreturn.='<li class="pager_goto_last"><a href="'.$phpself.'?o='.(($total_pages-1)*$results).'&amp;r='.$results;
-	if (!empty($qs)) {
-		$myreturn.='&amp;'.$qs;
+	if ($offset+$results<$totalrows) {
+		$myreturn.='<li class="next"><a href="'.$phpself.'?o='.($offset+$results).'&amp;r='.$results;
+		if (!empty($qs)) {
+			$myreturn.='&amp;'.$qs;
+		}
+		$myreturn.="\"><i>&gt;</i></a></li>\n";
 	}
-	$myreturn.="\">&gt;&gt;</a></li>\n";
-	$myreturn.="<li class=\"pager_rpp_select\">\n";
+	$myreturn.="<li class=\"rpp\">\n";
 	$myreturn.="\t<input type=\"hidden\" name=\"o\" value=\"$offset\" />\n";
 	while (list($k,$v)=each($params)) {
 		if (is_array($v)) {

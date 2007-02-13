@@ -26,9 +26,7 @@
 #relogin dl {
 	width: 300px;
 	overflow: hidden;
-	background-image: url('../images/profile-field-bg.gif');
-	background-position: bottom;
-	background-repeat: no-repeat;
+	background-image: url('../images/profile-field-bg.gif') no-repeat bottom;
 }
 
 #relogin dt {
