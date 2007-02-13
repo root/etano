@@ -49,9 +49,7 @@ body {
 	margin-top: -65px;
 	height: 65px;
 	position: relative;
-	background-image: url('../images/footer-bg.gif');
-	background-position: top;
-	background-repeat: repeat-x;
+	background: url('../images/footer-bg.gif') repeat-x top;
 }
 
 #footer-body {

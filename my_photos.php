@@ -44,7 +44,7 @@ if (!empty($totalrows)) {
 		$loop[]=$tpl->process('','temp',TPL_OPTIONAL);
 	}
 	$tpl->drop_var('temp');
-	$loop=smart_table($loop,3,'id="gallery"');
+	$loop=smart_table($loop,3,'gallery_row');
 	$tpl->set_var('pager2',create_pager2($totalrows,$output['o'],$output['r']));
 }
 

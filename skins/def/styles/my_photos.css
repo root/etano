@@ -1,4 +1,4 @@
-.my_photos .upload-photos {
+a.upload-photos {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -7,84 +7,101 @@
 	padding: 3px 35px 9px 3px;
 	font-size: 13px;
 }
-.upload-photos:hover {
+a.upload-photos:hover {
 	background-position: bottom right;
 }
 
-
-#gallery li {
-	width: 220px;
-	padding-left: 10px;
-	border-left: 1px dashed #ccc;
-	margin-bottom: 15px;
+ul.gallery_row {
+	margin: 10px 0px;
+	padding-bottom: 15px;
+	border-bottom: 1px dashed #ccc;
 }
 
-#gallery li.break {
-	border: none;
-}
-
-	#gallery li img {
-		float: left;
-		margin: 0 10px 10px 0;
-		display: block;
+	ul.gallery_row li {
+		margin-left: 10px;
+		width: 225px;
+		border-right: 1px dashed #ccc;
 	}
 
-	* html #gallery li .caption {
-		height: 1%;
-	}
-	#gallery li .caption {
-		clear: left;
-		padding: 0 5px 10px 0;
-		overflow: hidden;
+	ul.gallery_row li.first {
+		margin-top: 0;
+		margin-left: 0;
 	}
 
-* html #gallery li .details {
+	ul.gallery_row li.last {
+		border: none;
+	}
+
+	ul.gallery_row.last {
+		border: none;
+		margin-bottom: 0;
+	}
+
+* html .gallery_row li .caption {
 	height: 1%;
-	margin: 5px 0 -5px;
 }
-#gallery li .details {
+.gallery_row li .caption {
+	clear: left;
+	padding: 0 5px 10px 0;
+	overflow: hidden;
+}
+
+.gallery_row li img {
+	float: left;
+	margin: 0 10px 10px 0;
+	display: block;
+}
+
+* html .gallery_row li .photo_details {
+	height: 1%;
+}
+.gallery_row li .photo_details {
 	clear: left;
 	overflow: hidden;
-	margin-top: 5px;
+	margin-right: 10px;
 	border-top: 1px dashed #ccc;
+	padding-top: 5px;
 }
 
-#gallery li .details ul {
+.gallery_row li .photo_details ul {
 	list-style-type: none;
 	margin: 5px 0;
 	padding: 0;
 }
 
-#gallery li .details p {
+.gallery_row li .photo_details p {
 	margin: 3px 0;
 }
 
-#gallery li .details ul li {
-	padding: 0;
+.gallery_row li .photo_details ul li {
 	margin: 0;
 	width: 80px;
 	height: 22px;
 	border: none;
 }
 
-.details a.plain {
+.gallery_row .plain {
 	padding: 2px;
 }
 
-.details a.change {
+.gallery_row .change {
 	background-image: url('../images/link-change.gif');
 }
-.details a.change:hover {
+.gallery_row .change:hover {
 	background-position: left bottom;
 }
 
-.details a.delete {
+.gallery_row .delete {
 	background-image: url('../images/link-delete.gif');
 }
-.details a.delete:hover {
+.gallery_row .delete:hover {
 	background-position: left bottom;
 }
 
+/*pager*/
+
 .gallery-controls {
-	clear: both;
+	border-top: 1px dashed #ccc;
+	padding: 10px 0;
 }
+
