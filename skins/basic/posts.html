@@ -1,0 +1,36 @@
+<opt name="editable">
+<div id="blogs_my">
+	<h3>Manage your posts</h3>
+	<div id="blogs_my_content">
+		<opt name="blog_posts_stats.totalposts"><p>{blog_posts_stats.totalposts} post(s), last published on {blog_posts_stats.date_last}</p></opt name="blog_posts_stats.totalposts">
+		<a class="link_add" href="posts_addedit.php">New Post</a>
+		<a href="posts_list.php">All Posts</a>
+	</div>
+</div>
+</opt name="editable">
+
+<h2>Latest posts</h2>
+
+<div id="blogs_latest">
+<loop name="latest_blog_posts">
+	<h3>{latest_blog_posts.title}</h3>
+	<p>{latest_blog_posts.post_content}</p>
+	<span class="posted_info">By <opt name="latest_blog_posts.fk_user_id"><a href="profile.php?uid={latest_blog_posts.fk_user_id}"></opt name="latest_blog_posts.fk_user_id"><strong>{latest_blog_posts.user}</strong><opt name="latest_blog_posts.fk_user_id"></a></opt name="latest_blog_posts.fk_user_id"> [{latest_blog_posts.date_posted}]</span>
+	<noloop name="latest_blog_posts">
+	<p>Sorry, no posts yet. Check back later or be the first to <a href="posts_addedit.php">add a post</a>.</p>
+	</noloop name="latest_blog_posts">
+</loop name="latest_blog_posts">
+</div>
+
+<h2>Featured posts</h2>
+
+<div id="blogs_featured">
+<loop name="featured_blog_posts">
+	<h3>{featured_blog_posts.title}</h3>
+	<p>{featured_blog_posts.content}</p>
+	<span class="posted_info"><strong>{featured_blog_posts.user}</strong> [{featured_blog_posts.date_posted}]</span>
+	<noloop name="featured_blog_posts">
+	<p>Sorry, no posts yet. Check back later or be the first to <a href="posts_addedit.php">add a post</a>.</p>
+	</noloop name="featured_blog_posts">
+</loop name="featured_blog_posts">
+</div>

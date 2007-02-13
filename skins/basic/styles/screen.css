@@ -463,34 +463,34 @@ ul.pager li {
 	color: #f00;
 }
 
-/* blogs_addedit.php styles */
+/* posts_addedit.php styles */
 
 
 
-/* blogs_list.php styles */
+/* posts_list.php styles */
 
-.blog_list {
+.post_list {
 	width: 99%;
 }
 
-.blog_list th {
+.post_list th {
 	padding-left: 1em;
 	text-align: left;
 }
 
-.blog_list td {
+.post_list td {
 	padding: 2px;
 }
 
-.blog_list .links_edit {
+.post_list .links_edit {
 	width: 5%;
 }
 
-.blog_list .links_other {
+.post_list .links_other {
 	width: 20%;
 }
 
-.blog_list .date {
+.post_list .date {
 	width: 20%;
 }
 
