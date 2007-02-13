@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       processors/blogs_addedit.php
-$Revision$
+File:                       processors/posts_addedit.php
+$Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -23,7 +23,7 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='blogs.php';
+$nextpage='posts.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Post saved.';
 		}
 	} else {
-		$nextpage='blogs_addedit.php';
+		$nextpage='posts_addedit.php';
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}

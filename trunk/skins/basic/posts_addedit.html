@@ -1,14 +1,14 @@
-<script type="text/javascript" src="js/blogs_addedit.js"></script>
+<script type="text/javascript" src="js/posts_addedit.js"></script>
 
-<div id="blogs_addedit">
-	<form action="processors/blogs_addedit.php" method="post" id="blog_form">
+<div id="posts_addedit">
+	<form action="processors/posts_addedit.php" method="post" id="post_form">
 	<input type="hidden" name="post_id" value="{blog_posts.post_id}" />
 	<input type="hidden" name="item_type" value="1" />
 	<input type="hidden" name="o" value="{o}" />
 	<input type="hidden" name="r" value="{r}" />
 	<input type="hidden" name="ob" value="{ob}" />
 	<input type="hidden" name="od" value="{od}" />
-	<div class="rich_ta_wrapper" id="blog_content">
+	<div class="rich_ta_wrapper" id="post_content">
 		<label for="title">Title:</label>
 		<input class="text" type="text" name="title" id="title" value="{blog_posts.title}" tabindex="1" />
 		<p class="bb_tools">
@@ -28,5 +28,5 @@
 </div>
 
 <script type="text/javascript">
-	document.getElementById('blog_form').elements[6].focus();
+	document.getElementById('post_form').elements[6].focus();
 </script>

@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       blogs_addedit.php
-$Revision$
+File:                       posts_addedit.php
+$Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -38,7 +38,7 @@ if (!empty($blog_posts['allow_comments'])) {
 	$blog_posts['allow_comments']='checked';
 }
 
-$tpl->set_file('content','blogs_addedit.html');
+$tpl->set_file('content','posts_addedit.html');
 $tpl->set_var('blog_posts',$blog_posts);
 if (isset($_GET['o'])) {
 	$tpl->set_var('o',$_GET['o']);
@@ -48,6 +48,6 @@ if (isset($_GET['r'])) {
 }
 $tpl->process('content','content');
 
-$tplvars['title']='Post your blog';
+$tplvars['title']='Add your post';
 include 'frame.php';
 ?>
