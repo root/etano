@@ -1,0 +1,43 @@
+<script type="text/javascript" src="js/photo_view.js"></script>
+<opt name="tplvars.bbcode_comments">
+<script type="text/javascript" src="js/bbcode.js"></script>
+<link href="{tplvars.tplrelpath}/styles/bbcode.css" rel="stylesheet" type="text/css" />
+</opt name="tplvars.bbcode_comments">
+
+<a href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={photo.photo_id}','photo',{tplvars.pic_width},{tplvars.pic_width},1)" title="Click to enlarge"><img class="user_photo" src="{tplvars.relative_path}media/pics/t2/{photo.photo}" alt="{photo.user}" /></a>
+<p id="photo_caption">{photo.caption}</p>
+
+<p>Return to this user's <a href="user_photos.php?uid={user_id}">photo page</a>.</p>
+
+<opt name="allow_comments">
+<loop name="comments">
+<div class="photo_comment_show">
+	<img class="user_photo" src="{tplvars.relative_path}media/pics/t1/{comments.photo}" />
+	<p class="who"><opt name="comments.fk_user_id"><a href="profile.php?uid={comments.fk_user_id}"></opt name="comments.fk_user_id">{comments.user}<opt name="comments.fk_user_id"></a></opt name="comments.fk_user_id">:</p>
+	<p class="what">{comments.comment}</p>
+	<div class="clear"></div>
+</div>
+</loop name="comments">
+
+<h3>Add your comment</h3>
+
+<opt name="tplvars.bbcode_comments">
+<div id="bb_tools">
+	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',document.getElementById('comment'))"><i>Bold</i></a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',document.getElementById('comment'))"><i>Underline</i></a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',document.getElementById('comment'))"><i>Hyperlink</i></a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',document.getElementById('comment'))"><i>Quote</i></a>
+</div>
+</opt name="tplvars.bbcode_comments">
+<form id="photocomment_form" action="processors/photo_comment.php" method="post">
+<input type="hidden" name="fk_photo_id" value="{photo.photo_id}" />
+<input type="hidden" name="o" value="{o}" />
+<input type="hidden" name="r" value="{r}" />
+<fieldset>
+	<textarea rows="" cols="" id="comment" name="comment" tabindex="1"></textarea>
+</fieldset>
+<fieldset class="controls">
+	<input id="post-button" type="image" alt="Post comment" src="{tplvars.tplrelpath}/images/btn-post-comment-out.gif" />
+</fieldset>
+</form>
+</opt name="allow_comments">

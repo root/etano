@@ -9,6 +9,15 @@
 		padding: 15px 18px 0px 18px;
 	}
 
+		.rounded-box h2 a {
+			font-weight: bold;
+			text-decoration: none;
+			color: #c57794;
+		}
+		.rounded-box h2 a:hover {
+			text-decoration: underline;
+		}
+
 	.rounded-box .box-content {
 		padding: 10px 18px;
 	}
@@ -106,7 +115,7 @@ strong {
 	font-weight: bold;
 }
 
-/* Links */
+/* lINKS */
 
 .content-link {
 	font-size: 11px;
@@ -121,7 +130,7 @@ strong {
 	text-decoration: underline;
 }
 
-/* online/offline icon next to every user name */
+/* ONLINE/OFFLINE ICON NEXT TO EVERY USER NAME */
 
 .is_online .online_stat {
 	background: url('../images/member-online-small.gif') no-repeat top left;
@@ -148,7 +157,7 @@ strong {
 	visibility: hidden;
 }
 
-/* smart table default rules */
+/* SMART TABLE DEFAULT RULES */
 * html .table_row {
 	height: 1%;
 }
@@ -162,7 +171,7 @@ strong {
 }
 
 
-/* pager */
+/* PAGER */
 
 ul.pager {
 	list-style-type: none;
@@ -230,7 +239,12 @@ ul.pager li.rpp {
 	font: 11px "Trebuchet MS", Arial, sans-serif;
 }
 
-/* menus */
+ul.pager li.last {
+	float:none;
+	clear:both;
+}
+
+/* MENUS */
 
 ul.menu {
 	list-style-type: none;
@@ -240,15 +254,145 @@ ul.menu li {
 	border-top: 1px dashed #ccc;
 	height: 22px;
 	width: 100%;
+	padding: 6px 0 4px 0;
 }
 
 ul.menu li.first {
 	border: none;
+	padding-top: 0px;
+}
+
+.menu a {
+	background-position: top left;
+	background-repeat: no-repeat;
+}
+
+.menu a:hover {
+	background-position: bottom left;
 }
 
 .menu a.upload {
-	background: url('../images/menu_upload.gif') no-repeat top left;
+	background-image: url('../images/menu_upload.gif');
 }
-.menu a.upload:hover {
-	background-position: bottom left;
+
+.menu a.profile {
+	background-image: url('../images/menu_profile.gif');
+}
+
+.menu a.bookmark {
+	background-image: url('../images/menu_bookmark.gif');
+}
+
+.menu a.message {
+	background-image: url('../images/menu_message.gif');
+}
+
+.menu a.flirt {
+	background-image: url('../images/menu_flirt.gif');
+}
+
+.menu a.block {
+	background-image: url('../images/menu_block.gif');
+}
+
+.menu a.report {
+	background-image: url('../images/menu_report.gif');
+}
+
+.menu a.photos {
+	background-image: url('../images/menu_photos.gif');
+}
+
+.menu a.inbox {
+	background-image: url('../images/menu_inbox.gif');
+}
+
+.menu a.add {
+	background-image: url('../images/menu_add.gif');
+}
+
+
+/* EDIT&SEARCH FORMS */
+
+form.edit_form fieldset {
+	border-bottom: 1px dashed #ccc;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+}
+
+form.edit_form fieldset legend {
+	padding-bottom: 15px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+* html form.edit_form dl {
+	height: 1%;
+}
+
+form.edit_form dl {
+	overflow: hidden;
+	padding: 0 0 10px 0;
+}
+
+	form.edit_form dt {
+		float: left;
+		width: 140px;
+		font-size: 13px;
+		padding: 0px 10px;
+	}
+
+	form.edit_form dl.required dt {
+		font-size: 14px;
+		color: #4383D3;
+	}
+
+	form.edit_form dd {
+		float: left;
+		width: 240px;
+		padding: 0px;
+	}
+
+form.edit_form dd input, form.edit_form dd select, form.edit_form dd label {
+	font: 12px "Trebuchet MS", Arial, sans-serif;
+}
+
+form.edit_form dd > .check {
+	margin-bottom: 2px;
+}
+
+form.edit_form dd > .radio {
+	margin-bottom: -3px;
+}
+
+* html form.edit_form dd .check, * html form.edit_form dd .radio {
+	margin-left: -4px;
+}
+
+form.edit_form dd select {
+	margin-right: 2px;
+}
+
+form.edit_form dd label {
+	margin: 0 3px 0 1px;
+}
+
+form.edit_form dd.field-help {
+	float: left;
+	width: 290px;
+	font-size: 12px;
+	color: #878787;
+	padding-left: 10px;
+}
+
+form.edit_form dd.full-width {
+	float: left;
+	width: 546px;
+}
+
+
+form.edit_form .controls {
+	border: none;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
 }

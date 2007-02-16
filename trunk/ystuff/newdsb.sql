@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Feb 14, 2007 at 12:03 AM
+-- Generation Time: Feb 16, 2007 at 07:46 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 -- 
@@ -1159,7 +1159,11 @@ INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (0, '200
 (0, '20070210163727', 0x3065353664643737663933366336656633623836353834643332323030343238),
 (0, '20070211145023', 0x3935306633343539613630366330373163663165616334326430653234363636),
 (0, '20070211211841', 0x3063393835646463613862663636383538356331373632326166323639356139),
-(0, '20070214000125', 0x3136636265376162373733633364363066313934306561663433373332333532);
+(2, '20070216190820', 0x3934646366666161623335666565346164333939623831303761313164643663),
+(2, '20070216194522', 0x6538336636663930646238336264353131396535356632303636613230313266),
+(0, '20070216133009', 0x6436626235663136373630616135623261386566333539383832326666343037),
+(0, '20070215145245', 0x6330663535333435383264353166386536326437653232316362383931366231),
+(0, '20070213153315', 0x3464343933376133303837376338616263346535633031323366303438626565);
 
 -- --------------------------------------------------------
 
@@ -1380,8 +1384,6 @@ CREATE TABLE `dsb_rate_limiter` (
 -- Dumping data for table `dsb_rate_limiter`
 -- 
 
-INSERT INTO `dsb_rate_limiter` (`rate_id`, `fk_level_id`, `m_value`, `limit`, `interval`, `punishment`) VALUES (1, 1, 1, 3, 1, 1),
-(2, 1, 1, 10, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -1631,7 +1633,7 @@ CREATE TABLE `dsb_user_accounts` (
 -- 
 
 INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x64616e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@sco.ro', '', '', '20070211144000'),
-(2, 0x74657374, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@rdsct.ro', 'basic', '', '20070214000122'),
+(2, 0x74657374, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@rdsct.ro', 'basic', '', '20070216194522'),
 (209, 0x7465737432, 0x3662343238383630323064303630386435646138373431633464353564303563, 15, 4, 'dan@rdsct.ro', '', '', '20070207155756');
 
 -- --------------------------------------------------------
@@ -1745,9 +1747,9 @@ CREATE TABLE `dsb_user_inbox` (
 -- Dumping data for table `dsb_user_inbox`
 -- 
 
-INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES (4, 0, 1, 0, 'Admin', 'crcr', 'mrmr [b]ala bala[/b] [u]portocala[/u]', '2007-01-24 14:26:46', 3, 0, 0),
-(5, 1, 2, 0, 'Admin', 'crcr', 'mrmr [b]ala bala[/b] [u]portocala[/u]', '2007-01-24 14:26:46', 3, 0, 0),
-(6, 0, 209, 0, 'Admin', 'crcr', 'mrmr [b]ala bala[/b] [u]portocala[/u]', '2007-01-24 14:26:46', 3, 0, 0);
+INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES (4, 0, 1, 0, 'Admin', 'crcr', 'mrmr [b]ala bala[/b] [u]portocala[/u]', '2007-01-24 14:26:46', 2, 0, 0),
+(5, 1, 2, 0, 'Admin', 'crcr', 'mrmr [b]ala bala[/b] [u]portocala[/u]', '2007-01-24 14:26:46', 2, 0, 0),
+(6, 0, 209, 0, 'Admin', 'crcr', 'mrmr [b]ala bala[/b] [u]portocala[/u]', '2007-01-24 14:26:46', 2, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1806,6 +1808,7 @@ INSERT INTO `dsb_user_networks` (`nconn_id`, `fk_user_id`, `fk_net_id`, `fk_user
 DROP TABLE IF EXISTS `dsb_user_outbox`;
 CREATE TABLE `dsb_user_outbox` (
   `mail_id` int(10) unsigned NOT NULL auto_increment,
+  `is_read` tinyint(1) unsigned NOT NULL default '0',
   `fk_user_id` int(10) unsigned NOT NULL default '0',
   `fk_user_id_other` int(10) unsigned NOT NULL default '0',
   `_user_other` varchar(32) NOT NULL default '',
@@ -1822,13 +1825,13 @@ CREATE TABLE `dsb_user_outbox` (
 -- Dumping data for table `dsb_user_outbox`
 -- 
 
-INSERT INTO `dsb_user_outbox` (`mail_id`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (1, 2, 2, 'test', 'Outbox test message', 'This is an outbox test message.', '2007-01-12 17:00:00', 0),
-(4, 2, 2, 'test', 'test subj', 'mamma mia\r\n\r\n[quote]test body\r\n[/quote]', '2007-01-15 19:48:40', 0),
-(5, 2, 2, 'test', 'Re: sdsd', '\r\n[quote]asdasd[/quote]', '2007-01-15 19:51:25', 0),
-(6, 2, 1, 'dan', 'You have received a flirt from test', 'Aye aye, mate!', '2007-02-11 18:40:25', 2),
-(7, 2, 1, 'dan', 'You have received a flirt from test', 'Let''s rock and roll!', '2007-02-11 18:44:11', 2),
-(8, 2, 1, 'dan', 'hello again', 'this is a hello message\r\n', '2007-02-11 18:48:49', 0),
-(9, 2, 1, 'dan', 'You have received a flirt from test', 'Let''s rock and roll!', '2007-02-11 18:56:11', 2);
+INSERT INTO `dsb_user_outbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (1, 0, 2, 2, 'test', 'Outbox test message', 'This is an outbox test message.', '2007-01-12 17:00:00', 0),
+(4, 0, 2, 2, 'test', 'test subj', 'mamma mia\r\n\r\n[quote]test body\r\n[/quote]', '2007-01-15 19:48:40', 0),
+(5, 0, 2, 2, 'test', 'Re: sdsd', '\r\n[quote]asdasd[/quote]', '2007-01-15 19:51:25', 0),
+(6, 0, 2, 1, 'dan', 'You have received a flirt from test', 'Aye aye, mate!', '2007-02-11 18:40:25', 1),
+(7, 1, 2, 1, 'dan', 'You have received a flirt from test', 'Let''s rock and roll!', '2007-02-11 18:44:11', 2),
+(8, 1, 2, 1, 'dan', 'hello again', 'this is a hello message\r\n', '2007-02-11 18:48:49', 0),
+(9, 1, 2, 1, 'dan', 'You have received a flirt from test', 'Let''s rock and roll!', '2007-02-11 18:56:11', 1);
 
 -- --------------------------------------------------------
 
@@ -1864,14 +1867,14 @@ CREATE TABLE `dsb_user_photos` (
 -- Dumping data for table `dsb_user_photos`
 -- 
 
-INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `caption`, `status`, `reject_reason`, `stat_views`, `stat_comments`, `date_posted`, `last_changed`, `del`) VALUES (63, 2, 'test', '7/2_11170336112.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-01 13:21:52', '2007-02-01 13:24:09', 0),
-(62, 2, 'test', '6/2_11170336020.jpg', 1, 1, 0, '', 15, '', 0, 0, '2007-02-01 13:20:26', '2007-02-01 15:56:19', 0),
+INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `caption`, `status`, `reject_reason`, `stat_views`, `stat_comments`, `date_posted`, `last_changed`, `del`) VALUES (63, 2, 'test', '7/2_11170336112.jpg', 0, 0, 0, 'just some abstract image', 15, '', 0, 0, '2007-02-01 13:21:52', '2007-02-14 11:56:10', 0),
+(62, 2, 'test', '6/2_11170336020.jpg', 1, 1, 0, 'this was taken when I was river rafting during my last vacation out of country', 15, '', 0, 0, '2007-02-01 13:20:26', '2007-02-14 11:55:22', 0),
 (67, 1, 'dan', '9/1_21171197584.jpg', 1, 0, 0, '', 15, '', 0, 0, '2007-02-11 12:39:49', '2007-02-11 12:40:00', 0),
 (66, 1, 'dan', '1/1_11171197584.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 12:39:49', '2007-02-11 12:40:00', 0),
-(68, 2, 'test', '4/2_11171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
+(68, 2, 'test', '4/2_11171208327.jpg', 0, 1, 1, 'road to infinity', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-14 11:56:45', 0),
 (69, 2, 'test', '6/2_21171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
 (70, 2, 'test', '8/2_31171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
-(71, 2, 'test', '5/2_41171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
+(71, 2, 'test', '5/2_41171208327.jpg', 0, 0, 1, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-15 11:27:49', 0),
 (72, 2, 'test', '8/2_51171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
 (73, 2, 'test', '3/2_61171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0);
 
@@ -1920,7 +1923,7 @@ CREATE TABLE `dsb_user_profiles` (
 -- 
 
 INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `del`, `field_46`, `field_47`, `field_48`, `field_50_country`, `field_50_state`, `field_50_city`, `field_50_zip`, `f51`, `f52`, `f53`, `f54`, `f55`, `f56`) VALUES (1, 1, 15, '2007-02-11 12:40:00', '2007-02-11 14:40:00', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'dan', '9/1_21171197584.jpg', 0.0000000000, 0.0000000000, 1, 0, 0, '', NULL, 0, 0, 0, '', 0, 0, 0, 0, '', ''),
-(3, 2, 15, '2007-02-07 15:58:01', '2007-02-11 14:37:59', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test', '6/2_11170336020.jpg', -93.6367034912, 42.0276985168, 7, 0, 2, '|1|', '1986-01-03', 218, 16, 7089, '50010', 1, 1, 1, 1, '', 'asd1'),
+(3, 2, 15, '2007-02-07 15:58:01', '2007-02-11 14:37:59', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test', '6/2_11170336020.jpg', -93.6367034912, 42.0276985168, 31, 0, 2, '|1|', '1986-01-03', 218, 16, 7089, '50010', 1, 1, 1, 1, '', 'asd1'),
 (620, 209, 15, '2007-02-07 15:57:51', '2007-02-07 15:57:51', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test2', '', 0.0000000000, 0.0000000000, 0, 0, 2, '|1|', '1981-04-05', 206, 0, 0, '', 0, 0, 0, 0, '', '');
 
 -- --------------------------------------------------------

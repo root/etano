@@ -53,11 +53,11 @@ class sco_captcha {
 
 
 	function gen_rnd_string() {
-		$alphabet='ABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
+		$alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';	// 1 and I removed
 		$myreturn='';
 		mt_srand(make_seed());
 		for ($i=0;$i<$this->chars;++$i) {
-			$myreturn.=$alphabet{mt_rand(0,33)};
+			$myreturn.=$alphabet{mt_rand(0,31)};
 		}
 		return $myreturn;
 	}

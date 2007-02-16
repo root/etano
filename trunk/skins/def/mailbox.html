@@ -1,0 +1,47 @@
+<script type="text/javascript" src="js/mailbox.js"></script>
+
+<form action="processors/message_proxy.php" method="post" id="mailbox_form">
+<input type="hidden" name="act" value="" />
+<input type="hidden" name="o" value="{o}" />
+<input type="hidden" name="r" value="{r}" />
+<input type="hidden" name="ob" value="{ob}" />
+<input type="hidden" name="od" value="{od}" />
+<input type="hidden" name="mailbox_id" value="{mailbox_id}" />
+<input type="hidden" name="folder_id" value="" />
+
+<div class="row header">
+	<div class="control"><input type="checkbox" name="check_all" id="check_all" onclick="check_uncheck(0,this,this.form,'mail_id')" /> <span>All</span></div>
+	<div class="sender">
+		<opt name="!is_outbox">Sender</opt name="!is_outbox">
+		<opt name="is_outbox">Receiver</opt name="is_outbox">
+	</div>
+	<div class="subject">Subject</div>
+	<div class="date">Date</div>
+</div>
+
+<loop name="mails">
+<div class="row {mails.is_read}">
+	<div class="control {mails.message_type}"><input type="checkbox" class="check" id="mail_id_{mails.mail_id}" name="mail_id[{mails.mail_id}]" value="1" /></div>
+	<div class="sender"><a class="content-link member-online" href="profile.php?uid={mails.fk_user_id_other}" title="{mails.other}">{mails.user_other}</a></div>
+	<div class="subject"><a class="content-link plain" href="message_read.php?mail_id={mails.mail_id}&amp;fid={mailbox_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" title="Subject">{mails.subject}</a></div>
+	<div class="date">{mails.date_sent}</div>
+</div>
+<noloop name="mails">
+no messages!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+</noloop name="mails">
+</loop name="mails">
+</form>
+
+{pager2}
+
+<div id="controls">
+	<input type="image" alt="Delete selected" src="{tplvars.tplrelpath}/images/btn-delete-selected-out.gif" onclick="send_form('del')" />
+	<opt name="!is_outbox">
+	<span>|</span>
+	<input type="image" alt="Move selected" src="{tplvars.tplrelpath}/images/btn-move-selected-out.gif" onclick="$('#mailbox_form')[0].folder_id.value=$('#folder_id').val();send_form('move')" />
+	 to
+	<select name="folder_id" id="folder_id">
+	{folder_options}
+	</select>
+	</opt name="!is_outbox">
+</div>

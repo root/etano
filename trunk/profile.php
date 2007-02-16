@@ -32,9 +32,10 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	redirect2page('index.php');
 }
 
-if (isset($_SESSION['user']['user_id']) && !empty($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']==$uid) {
-	redirect2page('my_profile.php');
-} else {
+if (isset($_SESSION['user']['user_id']) && !empty($_SESSION['user']['user_id'])) {
+	if ($_SESSION['user']['user_id']==$uid) {
+		redirect2page('my_profile.php');
+	}
 	$query="SELECT * FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `filter_type`='"._FILTER_USER_."' AND `field_value`='".$uid."' AND `fk_folder_id`='"._FOLDER_SPAMBOX_."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {

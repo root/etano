@@ -1,3 +1,7 @@
+$(function() {
+	$('#search_form')[0].elements[1].focus();
+});
+
 function req_update_location(str_field,val) {
 	$.post('ajax/location.php',
 			{'field':str_field,'val':val},
@@ -29,46 +33,4 @@ function req_update_location(str_field,val) {
 function check_form(theform) {
 	return true;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

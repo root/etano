@@ -11,6 +11,8 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
+set_error_handler('admin_error');
+
 define('DEPT_MODERATOR',2);
 define('DEPT_ADMIN',4);
 

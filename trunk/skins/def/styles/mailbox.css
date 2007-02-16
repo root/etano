@@ -1,0 +1,163 @@
+#mailbox_form {
+	margin: 5px 0;
+}
+
+* html #mailbox_form .row {
+	height: 1%;
+}
+#mailbox_form .row {
+	overflow: hidden;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px dashed #ccc;
+}
+
+#mailbox_form .row div {
+	border-left: 1px solid #DEDEDE;
+	float: left;
+	margin: 3px 0;
+	padding: 0 2px 0 8px;
+	overflow: hidden;
+}
+
+#mailbox_form .header {
+	font-weight: bold;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+#mailbox_form .header .control {
+	padding: 0 2px 0 8px;
+}
+
+* html #mailbox_form .header .control input {
+	float: left;
+	margin-top: -4px;
+}
+#mailbox_form .header .control input {
+	margin-bottom: 2px;
+}
+
+#mailbox_form .read .mail {
+	background-image: url('../images/item-mail-read.gif');
+}
+
+#mailbox_form .not_read .mail {
+	background-image: url('../images/item-mail-unread.gif');
+}
+
+#mailbox_form .read .flirt {
+	background-image: url('../images/item-flirt-read.gif');
+}
+
+#mailbox_form .not_read .flirt {
+	background-image: url('../images/item-flirt-unread.gif');
+}
+
+#mailbox_form .read .system {
+	background-image: url('../images/item-system-read.gif');
+}
+
+#mailbox_form .not_read .system {
+	background-image: url('../images/item-system-unread.gif');
+}
+
+#mailbox_form .row .control {
+	width: 40px;
+	border-left: 0;
+	background-position: top right;
+	background-repeat: no-repeat;
+}
+
+#mailbox_form .row .control.read0 {
+}
+#mailbox_form .row .control.not_read0 {
+	background-image: url('../images/item-mail-unread.gif');
+}
+#mailbox_form .row .control.read1 {
+	background-image: url('../images/item-flirt-read.gif');
+}
+#mailbox_form .row .control.not_read1 {
+	background-image: url('../images/item-flirt-unread.gif');
+}
+
+
+* html #mailbox_form .control input {
+	margin: -3px 0 0 -4px;
+}
+#mailbox_form .control input {
+	margin: 0 2px 2px 0;
+}
+
+#mailbox_form .sender {
+	width: 130px;
+}
+
+#mailbox_form .subject {
+	width: 415px;
+	overflow: hidden;
+}
+
+#mailbox_form .plain {
+	padding: 0;
+}
+
+#mailbox_form .read * {
+	font-weight: normal;
+}
+
+#mailbox_form .not_read * {
+	font-weight: bold;
+}
+
+#mailbox_form .date {
+	width: 70px;
+}
+
+/* PAGER */
+
+.pager {
+	margin-top: 10px;
+}
+
+/* CONTROLS */
+
+#controls {
+	margin: 5px 0;
+	padding-top: 10px;
+	font-size: 14px;
+	border-top: 1px dashed #ccc;
+	clear: both;
+}
+
+#controls input  {
+	margin-bottom: -10px;
+}
+
+#controls span  {
+	color: #DEDEDE;
+	padding: 0 3px 0 0;
+}
+
+* html #controls select {
+	margin: 0 0 -3px 3px;
+}
+#controls select {
+	font: 12px "Trebuchet MS", Arial, sans-serif;
+}
+
+
+
+/* LEFT MENU */
+
+ul.menu li {
+	border: none;
+	padding: 0;
+}
+
+ul.menu li.controls {
+	border-top: 1px dashed #ccc;
+	padding-top: 10px;
+	margin-top: 5px;
+}
+

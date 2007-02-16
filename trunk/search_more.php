@@ -40,7 +40,7 @@ for ($i=0;isset($search_fields[$i]);++$i) {
 				break;
 
 			case _HTML_CHECKBOX_LARGE_:
-				$search[$s]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],$field['default_search'],1,true,'tabindex="'.($i+4).'"');
+				$search[$s]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],$field['default_search'],2,true,'tabindex="'.($i+4).'"');
 				break;
 
 			case _HTML_DATE_:
@@ -49,7 +49,7 @@ for ($i=0;isset($search_fields[$i]);++$i) {
 				break;
 
 			case _HTML_LOCATION_:
-				$search[$s]['label']='Country:';	// translate this
+				$search[$s]['label']='Country';	// translate this
 				$search[$s]['dbfield']=$field['dbfield'].'_country';
 				$search[$s]['field']='<select name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$field['default_value'][0]).'</select>';
 				$prefered_input='s';
@@ -60,17 +60,17 @@ for ($i=0;isset($search_fields[$i]);++$i) {
 					list($prefered_input,$num_states)=mysql_fetch_row($res);
 				}
 				++$s;
-				$search[$s]['label']='State:';	// translate this
+				$search[$s]['label']='State';	// translate this
 				$search[$s]['dbfield']=$field['dbfield'].'_state';
 				$search[$s]['field']='<select name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option></select>';	// translate this
 				$search[$s]['class']=(isset($field['default_value'][0]) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
 				++$s;
-				$search[$s]['label']='City:';	// translate this
+				$search[$s]['label']='City';	// translate this
 				$search[$s]['dbfield']=$field['dbfield'].'_city';
 				$search[$s]['field']='<select name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option></select>';	// translate this
 				$search[$s]['class']='invisible';
 				++$s;
-				$search[$s]['label']='Distance:';	// translate this
+				$search[$s]['label']='Distance';	// translate this
 				$search[$s]['dbfield']=$field['dbfield'].'_zip';
 				$search[$s]['field']='<select name="'.$field['dbfield'].'_dist" id="'.$field['dbfield'].'_dist" tabindex="'.($i+4).'">'.interval2options(1,10).'</select> miles from zip: <input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" tabindex="'.($i+4).'" size="5" />';
 				$search[$s]['class']=(isset($field['default_value'][0]) && $prefered_input=='z') ? 'visible' : 'invisible';
@@ -87,5 +87,8 @@ $tpl->process('content','content',TPL_LOOP);
 $tpl->drop_loop('search');
 
 $tplvars['title']='Advanced Search';
+$tplvars['page_title']='Advanced search';
+$tplvars['page']='search_more';
+$tplvars['css']='search_more.css';
 include 'frame.php';
 ?>

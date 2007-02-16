@@ -23,6 +23,12 @@ $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 $tpl->set_file('content','photos_upload.html');
 $tpl->process('content','content');
 
+if (is_file('photos_upload_left.php')) {
+	include 'photos_upload_left.php';
+}
 $tplvars['title']='Upload photos';
+$tplvars['page_title']='Upload photos';
+$tplvars['page']='photos_upload';
+$tplvars['css']='photos_upload.css';
 include 'frame.php';
 ?>
