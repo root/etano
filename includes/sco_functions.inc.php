@@ -906,6 +906,7 @@ function create_pager2($totalrows,$offset,$results) {
 	$myreturn.=vector2options($accepted_results_per_page,$results);
 	$myreturn.="\t</select>\n";
 	$myreturn.="</li>\n";
+	$myreturn.="<li class=\"last\"></li>\n";
 	$myreturn.="</ul>\n";
 	$myreturn.="</form>\n";
 	return $myreturn;

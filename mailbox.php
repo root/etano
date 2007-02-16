@@ -19,6 +19,8 @@ require_once 'includes/tables/user_inbox.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(4);
 
+$message_types=array(_MESS_MESS_=>'mail',_MESS_FLIRT_=>'flirt',_MESS_SYSTEM_=>'system');
+
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
@@ -35,61 +37,46 @@ if ($ob>=0) {
 		$orderby.=' DESC';
 	}
 }
-$mailbox_name='Inbox';     // translate
-$fk_folder_id=_FOLDER_INBOX_;
-$del=0;
 $from="`{$dbtable_prefix}user_inbox`";
 $where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
-$is_read='`is_read`,';
-if (isset($_GET['fid']) && !empty($_GET['fid'])) {
-	$fk_folder_id=(int)$_GET['fid'];
-}
 
-$folders=array();
-$folders2=array();
-$folders2[_FOLDER_INBOX_]='Inbox';     // translate
+$my_folders=array(_FOLDER_INBOX_=>'INBOX',_FOLDER_OUTBOX_=>'OUTBOX',_FOLDER_SPAMBOX_=>'SPAMBOX'); // translate this
 $query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
-	$folders[$rsrow[0]]=$rsrow[1];
-	$folders2[$rsrow[0]]=$rsrow[1];
+	$my_folders[$rsrow[0]]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
 }
-if (!empty($folders2) && $fk_folder_id!=_FOLDER_OUTBOX_ && $fk_folder_id!=_FOLDER_SPAMBOX_) {
-	unset($folders2[$fk_folder_id]);
-	$tpl->set_var('folder_options',vector2options($folders2));
+
+$fk_folder_id=_FOLDER_INBOX_;
+if (isset($_GET['fid']) && !empty($_GET['fid']) && isset($my_folders[$_GET['fid']])) {
+	$fk_folder_id=(int)$_GET['fid'];
 }
+$moveto_folders=$my_folders;
+unset($moveto_folders[_FOLDER_SPAMBOX_]);
+unset($moveto_folders[_FOLDER_OUTBOX_]);
+unset($moveto_folders[$fk_folder_id]);
 
 switch ($fk_folder_id) {
 
 	case _FOLDER_INBOX_:
-		$where.=" AND `del`='$del'";
-		$tpl->set_var('inbox_options',true);
+		$where.=" AND `del`=0";
 		break;
 
 	case _FOLDER_TRASH_:
-		$mailbox_name='Trash';
-		$del=1;
-		$where.=" AND `del`='$del'";
-		$tpl->set_var('inbox_options',true);
+		$where.=" AND `del`=1";
 		break;
 
 	case _FOLDER_OUTBOX_:
-		$mailbox_name='Outbox';
 		$from="`{$dbtable_prefix}user_outbox`";
-		$is_read='';
-		$tpl->set_var('outbox_options',true);
+		$tpl->set_var('is_outbox',true);
 		break;
 
 	case _FOLDER_SPAMBOX_:
-		$mailbox_name='Spambox';
 		$from="`{$dbtable_prefix}user_spambox`";
-		$tpl->set_var('inbox_options',true);
 		break;
 
 	default:
-		$mailbox_name=$folders[$fk_folder_id];
-		$where.=" AND `del`='$del'";
-		$tpl->set_var('inbox_options',true);
+		$where.=" AND `del`=0";
 		break;
 
 }
@@ -104,14 +91,15 @@ $totalrows=mysql_result($res,0,0);
 
 $mails=array();
 if (!empty($totalrows)) {
-	$query="SELECT `mail_id`,".$is_read."`_user_other` as `other`,`subject`,UNIX_TIMESTAMP(`date_sent`) as `date_sent`,`message_type` FROM $from WHERE $where $orderby LIMIT $o,$r";
+	$query="SELECT `mail_id`,`is_read`,`_user_other` as `user_other`,`subject`,UNIX_TIMESTAMP(`date_sent`) as `date_sent`,`message_type` FROM $from WHERE $where $orderby LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['date_sent']=strftime($_user_settings['datetime_format'],$rsrow['date_sent']+$_user_settings['time_offset']);
+		$rsrow['date_sent']=strftime($_user_settings['date_format'],$rsrow['date_sent']+$_user_settings['time_offset']);
 		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		$rsrow['is_read']=(empty($rsrow['is_read'])) ? 'mail_not_read'.$rsrow['message_type'] : 'mail_read'.$rsrow['message_type'];
+		$rsrow['is_read']=(!empty($rsrow['is_read'])) ? 'read' : 'not_read';
+		$rsrow['message_type']=$message_types[$rsrow['message_type']];
 		if ($rsrow['message_type']==_MESS_SYSTEM_) {
-			$rsrow['other']='SYSTEM';     // translate
+			$rsrow['user_other']='SYSTEM';     // translate
 		}
 		$mails[]=$rsrow;
 	}
@@ -120,8 +108,9 @@ if (!empty($totalrows)) {
 
 $tpl->set_file('content','mailbox.html');
 $tpl->set_loop('mails',$mails);
-$tpl->set_var('mailbox_name',$mailbox_name);
+$tpl->set_var('mailbox_name',$my_folders[$fk_folder_id]);
 $tpl->set_var('mailbox_id',$fk_folder_id);
+$tpl->set_var('folder_options',vector2options($moveto_folders));
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->set_var('ob',$ob);
@@ -133,5 +122,8 @@ if (is_file('mailbox_left.php')) {
 	include 'mailbox_left.php';
 }
 $tplvars['title']='Read your messages';     // translate
+$tplvars['page_title']=$my_folders[$fk_folder_id];
+$tplvars['page']='mailbox';
+$tplvars['css']='mailbox.css';
 include 'frame.php';
 ?>

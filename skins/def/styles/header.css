@@ -80,6 +80,10 @@
 	width: 299px;
 }
 
+#login-box fieldset {
+	border: none;
+}
+
 * html #login-box input {
 	padding: 2px 5px;
 }

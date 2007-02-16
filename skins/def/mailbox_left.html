@@ -1,0 +1,12 @@
+<div class="rounded-box small">
+	<h3>My Folders</h3>
+	<div class="box-content">
+		<ul class="menu">
+			<loop name="loopfolders">
+			<li><a class="content-link inbox" href="mailbox.php?fid={loopfolders.folder_id}">{loopfolders.folder}</a></li>
+			</loop name="loopfolders">
+			<li class="controls"><a class="content-link add" href="folders.php">Add new folder</a></li>
+			<li><a class="content-link " href="filters.php">Manage filters</a></li>
+		</ul>
+	</div>
+</div>

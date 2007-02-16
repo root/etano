@@ -1,0 +1,17 @@
+<script type="text/javascript" src="js/search_more.js"></script>
+
+<form action="search.php" method="get" id="search_form" class="edit_form">
+<input type="hidden" name="st" value="adv" />
+<fieldset>
+<loop name="search">
+<dl class="{search.class}" id="row_{search.dbfield}">
+	<dt>{search.label}:</dt>
+	<dd>{search.field}</dd>
+</dl>
+</loop name="search">
+</fieldset>
+
+<fieldset class="controls">
+	<input type="image" src="{tplvars.tplrelpath}/images/btn-search-out.gif" />
+</fieldset>
+</form>

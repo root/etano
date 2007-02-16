@@ -36,9 +36,9 @@ define('_CHOOSE_',-2);
 define('_NDISCLOSED_',0);
 
 // message types
-define('_MESS_MESS_',1);	// regular messages
-define('_MESS_FLIRT_',2);	// flirts
-define('_MESS_SYSTEM_',3);	// admin messages
+define('_MESS_MESS_',0);	// regular messages
+define('_MESS_FLIRT_',1);	// flirts
+define('_MESS_SYSTEM_',2);	// admin messages
 
 // search types
 define('_SEARCH_USER_',1);
