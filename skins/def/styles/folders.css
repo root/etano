@@ -1,0 +1,68 @@
+* html .folders .row {
+	height: 1%;
+}
+
+.folders .row {
+	overflow: hidden;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px dashed #ccc;
+	font-size: 14px;
+}
+
+.folders .row div {
+	border-left: 1px solid #DEDEDE;
+	float: left;
+	margin: 3px 0;
+	padding: 0 2px 0 8px;
+	overflow: hidden;
+}
+
+.folders .header {
+	font-weight: bold;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.folders .row .control {
+	width: 60px;
+	border-left: 0;
+	background-position: top right;
+	background-repeat: no-repeat;
+}
+
+	a.item_edit {
+		float: right;
+		padding: 0 3px 0 5px;
+		background: url('../images/link_edit.gif') no-repeat top center;
+		width: 22px;
+		height: 22px;
+		display: block;
+	}
+
+	a.item_delete {
+		float: left;
+		background: url('../images/link_minus.gif') no-repeat top center;
+		width: 22px;
+		height: 22px;
+		display: block;
+	}
+
+	a.item_edit:hover, a.item_delete:hover {
+		background-position: bottom center;
+	}
+
+	a.item_edit i, a.item_delete i {
+		display: none;
+	}
+
+.folders .row .folder_name {
+	width: 200px;
+	overflow: hidden;
+}
+
+.folders .row .total_messages {
+	width: 120px;
+	overflow: hidden;
+}
+

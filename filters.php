@@ -21,6 +21,8 @@ check_login_member(4);
 
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 
+$filter_types=array(_FILTER_USER_=>'User');
+
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
 $ob=isset($_GET['ob']) ? (int)$_GET['ob'] : 1;
@@ -36,14 +38,11 @@ if ($ob>=0) {
 	}
 }
 
-$folders=array();
+$my_folders=array(_FOLDER_INBOX_=>'INBOX',_FOLDER_OUTBOX_=>'OUTBOX',_FOLDER_TRASH_=>'Trash',_FOLDER_SPAMBOX_=>'SPAMBOX'); // translate this
 $query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
-	$folders[$rsrow[0]]=$rsrow[1];
-}
-if (!empty($folders)) {
-	$tpl->set_var('folder_options',vector2options($folders));
+	$my_folders[$rsrow[0]]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
 }
 
 $from="`{$dbtable_prefix}message_filters`";
@@ -53,56 +52,59 @@ $query="SELECT count(*) FROM $from WHERE $where";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $totalrows=mysql_result($res,0,0);
 
-$filters=array();
+$loop=array();
 if (!empty($totalrows)) {
 	$field_values=array();
 	$query="SELECT * FROM $from WHERE $where $orderby LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		if (isset($folders[$rsrow['fk_folder_id']]) && ($rsrow['fk_folder_id']>0)) {
-			$rsrow['folder_name']=$folders[$rsrow['fk_folder_id']];
-		} else {
-			$rsrow['folder_name']='SPAMBOX';
+		$rsrow['fk_folder_id']=isset($my_folders[$rsrow['fk_folder_id']]) ? $my_folders[$rsrow['fk_folder_id']] : '?';
+		$field_values[$rsrow['filter_type']][]=$rsrow['field_value'];
+		$loop[]=$rsrow;
+	}
+
+	$user_names=array();
+	if (isset($field_values[_FILTER_USER_]) && !empty($field_values[_FILTER_USER_])) {
+		$query="SELECT `fk_user_id`,`user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id` IN ('".join("','",$field_values[_FILTER_USER_])."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		while ($rsrow=mysql_fetch_row($res)) {
+			$user_names[$rsrow[0]]=$rsrow[1];
 		}
-		$field_values[]=$rsrow['field_value'];
-		$filters[]=$rsrow;
 	}
 
-	$query="SELECT `user_id`,`user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id` IN ('".join("','",$field_values)."')";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	while ($rsrow=mysql_fetch_assoc($res)) {
-		$field_values[$rsrow['user_id']]=$rsrow['user'];
-	}
+	for ($i=0;isset($loop[$i]);++$i) {
+		switch ($loop[$i]['filter_type']) {
 
-	foreach ($filters as $k=>$v) {
-		foreach ($v as $key=>$value) {
-			if ($key=='filter_type' && $value==_FILTER_USER_){
-				$user_id=$filters[$k]['field_value'];
-				if (isset($field_values[$user_id])){
-					$filters[$k]['rule_value']=$field_values[$user_id];
-					$filters[$k]['rule_type']='User';
+			case _FILTER_USER_:
+				if (isset($field_values[_FILTER_USER_][$loop[$i]['field_value']])){
+					$loop[$i]['field_value']=$field_valuesfield_values[_FILTER_USER_][$loop[$i]['field_value']];
+					$loop[$i]['filter_type']=$filter_types[$loop[$i]['filter_type']];
 				} else {
-					unset($filters[$k]);
+					unset($loop[$i]);
 				}
-			}
+				break;
+
 		}
 	}
 	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
 }
 
+
 $tpl->set_file('content','filters.html');
-$tpl->set_loop('filters',$filters);
+$tpl->set_loop('loop',$loop);
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->set_var('ob',$ob);
 $tpl->set_var('od',$od);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
-$tpl->drop_loop('filters');
+$tpl->drop_loop('loop');
 
 if (is_file('filters_left.php')) {
 	include 'filters_left.php';
 }
 $tplvars['title']='Manage your filters';     // translate
+$tplvars['page_title']='Message filters';
+$tplvars['page']='filters';
+$tplvars['css']='filters.css';
 include 'frame.php';
-
 ?>

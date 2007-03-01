@@ -64,5 +64,8 @@ if (isset($_GET['od'])) {
 $tpl->process('content','content');
 
 $tplvars['title']='Contact a member';     // translate
+$tplvars['page_title']=sprintf('Write to %s',$mail['to_name']);	// translate
+$tplvars['page']='message_send';
+$tplvars['css']='message_send.css';
 include 'frame.php';
 ?>

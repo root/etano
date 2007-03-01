@@ -34,17 +34,3 @@
 #bb_tools a i {
 	display: none;
 }
-
-textarea#comment {
-	width: 100%;
-	height: 240px;
-}
-
-#photocomment_form .controls {
-	padding-top: 15px;
-}
-
-#post-button {
-	margin: 0 auto 5px;
-	display: block;
-}

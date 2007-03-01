@@ -128,23 +128,25 @@ strong {
 }
 .content-link:hover {
 	text-decoration: underline;
+	background-position: bottom left;
 }
 
 /* ONLINE/OFFLINE ICON NEXT TO EVERY USER NAME */
 
-.is_online .online_stat {
-	background: url('../images/member-online-small.gif') no-repeat top left;
-	padding: 0 3px 0 15px;
-}
-.is_online .online_stat:hover {
-	background-position: bottom left;
-}
 
-.is_offline .online_stat {
+.online_stat, .online_stat {
 	background: url('../images/member-offline-small.gif') no-repeat top left;
 	padding: 0 3px 0 15px;
 }
-.is_offline .online_stat:hover {
+.online_stat:hover, .online_stat:hover {
+	background-position: bottom left;
+}
+
+.is_online .online_stat, .is_online.online_stat {
+	background: url('../images/member-online-small.gif') no-repeat top left;
+	padding: 0 3px 0 15px;
+}
+.is_online .online_stat:hover, .is_online.online_stat:hover {
 	background-position: bottom left;
 }
 
@@ -395,4 +397,17 @@ form.edit_form .controls {
 	border: none;
 	margin-bottom: 0px;
 	padding-bottom: 0px;
+}
+
+/* BBCODE CLASSES */
+
+.underline {
+	text-decoration: underline;
+}
+
+blockquote {
+	border: 1px solid #ccc;
+	background: #f5f5f5;
+	margin: 5px 0px 5px 30px;
+	padding: 5px;
 }

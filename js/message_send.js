@@ -1,3 +1,10 @@
+$(function() {
+	$('#subject')[0].focus();
+	$('#save_tpl').bind('click',function() {
+		save_as_template();
+	});
+});
+
 function add_bbcode(tagStart,tagEnd,ta) {
 	if (typeof(ta.caretPos)!='undefined' && ta.createTextRange) {
 		caretPos=ta.caretPos;
@@ -27,7 +34,7 @@ function add_bbcode(tagStart,tagEnd,ta) {
 }
 
 function save_as_template() {
-	theform=document.getElementById('msend_form');
+	theform=$('#msend_form')[0];
 	if (check_form(theform)) {
 		qs='subject='+escape(theform.subject.value)+'&message_body='+escape(theform.message_body.value);
 		r=new Scoax();

@@ -62,6 +62,9 @@ $tpl->set_var('ob',$ob);
 $tpl->set_var('od',$od);
 $tpl->process('content','content',TPL_OPTIONAL);
 
-$tplvars['title']='Add/Edit your filters';     // translate
+$tplvars['title']='Add/Edit a filter';     // translate
+$tplvars['page_title']='Add/Edit a filter';
+$tplvars['page']='filters_addedit';
+$tplvars['css']='filters_addedit.css';
 include 'frame.php';
 ?>

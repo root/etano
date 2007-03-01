@@ -1,0 +1,21 @@
+<opt name="addedit_filter">
+<form action="processors/filters_addedit.php" method="post" id="filters_form">
+<input type="hidden" name="o" value="{o}" />
+<input type="hidden" name="r" value="{r}" />
+<input type="hidden" name="ob" value="{ob}" />
+<input type="hidden" name="od" value="{od}" />
+<input type="hidden" name="filter_id" value="{filters.filter_id}" />
+
+Move messages from user <input type="text" name="rule_value" value="{filters.rule_value}" /> into
+<select name="fk_folder_id">
+{filters.fk_folder_id}
+</select>
+<input type="submit" value="Save filter" />
+</form>
+</opt name="addedit_filter">
+<opt name="!addedit_filter">
+The filter is no longer needed. You may delete it!
+</opt name="!addedit_filter">
+<div class="controls">
+	<a href="filters.php?filter_id={filters.filter_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Back to filters</a>
+</div>

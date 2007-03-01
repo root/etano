@@ -1,0 +1,58 @@
+#user_photo {
+	float: left;
+	margin: 0 10px 10px 0;
+	display: block;
+}
+
+ul#message_details li {
+	font-size: 13px;
+	line-height: 1.2em;
+	padding: 3px 0;
+}
+
+#message_details strong span, #controls span {
+	color: #dedede;
+	font-size:14px;
+}
+
+#message_body {
+	clear: both;
+	padding-bottom: 10px;
+	font-size: 14px;
+}
+
+.block_user {
+	background-image: url('../images/menu_block.gif');
+}
+
+#controls {
+	border-top: 1px dashed #ccc;
+	padding: 15px 0;
+}
+
+#bottom_links {
+	border-top: 1px dashed #ccc;
+	padding-top: 15px;
+}
+
+#controls input {
+	margin-bottom: -10px;
+}
+
+.link_previous {
+	background-image: url('../images/link-previous.gif');
+}
+
+/* LEFT MENU */
+
+ul.menu li {
+	border: none;
+	padding: 0;
+}
+
+ul.menu li.controls {
+	border-top: 1px dashed #ccc;
+	padding-top: 10px;
+	margin-top: 5px;
+}
+

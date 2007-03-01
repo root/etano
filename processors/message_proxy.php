@@ -16,7 +16,6 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/vars.inc.php';
 require_once '../includes/tables/user_spambox.inc.php';
-
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(5);
 
@@ -26,87 +25,82 @@ $topass=array();
 $nextpage='mailbox.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$mail_id=sanitize_and_format_gpc($_POST,'mail_id',TYPE_INT,0,0);
-	$num_messages=0;
-	if (!empty($mail_id)) {
-		$num_messages=1;
-	}
 
 	if ($_POST['act']=='del') {
-		$folder_id=sanitize_and_format($_POST['mailbox_id'],TYPE_INT,0,0);
+		$fid=sanitize_and_format($_POST['fid'],TYPE_INT,0,0);
+		$num_messages=1;
 		if (is_array($mail_id)) {
 			$num_messages=count($mail_id);
 			$mail_id=join("','",array_keys($mail_id));
 		}
-		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']=sprintf('%1s message(s) permanently deleted.',$num_messages);     // translate
-		
-		switch ($folder_id) {
-			
-			case _FOLDER_TRASH_:    
+
+		switch ($fid) {
+
+			case _FOLDER_TRASH_:
 				$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('$mail_id') AND `del`=1 AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				break;
-			
-			case _FOLDER_OUTBOX_:	 // Outbox
+
+			case _FOLDER_OUTBOX_:
 				$query="DELETE FROM `{$dbtable_prefix}user_outbox` WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				break;
-			
-			case _FOLDER_SPAMBOX_:	 // Spambox
+
+			case _FOLDER_SPAMBOX_:
 				$query="DELETE FROM `{$dbtable_prefix}user_spambox` WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				break;
-			
+
 			default:
 				$query="UPDATE `{$dbtable_prefix}user_inbox` SET `fk_folder_id`=0,`del`=1 WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				$topass['message']['text']=sprintf('%1s message(s) deleted.',$num_messages);     // translate
-				break;		
-		
+				break;
+
 		}
-		
-		$nextpage='mailbox.php';		
-		$qs.=$qs_sep.'fid='.$folder_id;
+
+		$topass['message']['type']=MESSAGE_INFO;
+		$topass['message']['text']=sprintf('%1s message(s) deleted.',$num_messages);     // translate
+		$qs.=$qs_sep.'fid='.$fid;
 		$qs_sep='&';
 	} elseif ($_POST['act']=='move') {
-		$folder_id=sanitize_and_format_gpc($_POST,'folder_id',TYPE_INT,0,0);
+		$fid=sanitize_and_format_gpc($_POST,'fid',TYPE_INT,0,0);
+		$moveto_fid=sanitize_and_format_gpc($_POST,'moveto_fid',TYPE_INT,0,0);
+		$num_messages=0;
+		if (!empty($mail_id)) {
+			$num_messages=1;
+		}
 		if (is_array($mail_id)) {
 			$num_messages=count($mail_id);
 			$mail_id=join("','",array_keys($mail_id));
 		}
-		$query="UPDATE `{$dbtable_prefix}user_inbox` SET `fk_folder_id`='$folder_id', `del`=0 WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']=sprintf('%1s message(s) moved.',$num_messages);     // translate
-		$nextpage='mailbox.php';
-		$qs.=$qs_sep.'fid='.$folder_id;
-		$qs_sep='&';
-	} elseif ($_POST['act']=='spam') {
-		$query="SELECT * FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id`='$mail_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		if (mysql_num_rows($res)) {
-			$mail=mysql_fetch_assoc($res);
-			if ($mail['message_type']!=_MESS_SYSTEM_) {
-				foreach ($user_spambox_default['types'] as $k=>$v) {
-					$mail[$k]=sanitize_and_format_gpc($mail,$k,$__html2type[$v],$__html2format[$v],$user_spambox_default['defaults'][$k]);
-				}
-				$query="INSERT INTO `{$dbtable_prefix}user_spambox` SET `fk_user_id`='".$_SESSION['user']['user_id']."'";
-				foreach ($user_spambox_default['defaults'] as $k=>$v) {
-					if (isset($mail[$k]) && $k!='fk_user_id') {
-						$query.=",`$k`='".$mail[$k]."'";
-					}
-				}
+		if ($fid>0 || $fid==_FOLDER_INBOX_ || $fid==_FOLDER_TRASH_) {
+			if ($moveto_fid>0 || $moveto_fid==_FOLDER_INBOX_) {	// user_inbox to user_inbox
+				$query="UPDATE `{$dbtable_prefix}user_inbox` SET `fk_folder_id`='$moveto_fid', `del`=0 WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id`='$mail_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			}
+		} elseif ($fid==_FOLDER_SPAMBOX_) {
+			if ($moveto_fid>0 || $moveto_fid==_FOLDER_INBOX_) {	// user_spambox to user_inbox
+				$query="INSERT INTO `{$dbtable_prefix}user_inbox` (`is_read`,`fk_user_id`,`fk_user_id_other`,`_user_other`,`subject`,`message_body`,`date_sent`,`message_type`,`fk_folder_id`,`del`) SELECT `is_read`,`fk_user_id`,`fk_user_id_other`,`_user_other`,`subject`,`message_body`,`date_sent`,`message_type`,'$moveto_fid',0 FROM `{$dbtable_prefix}user_spambox` WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				$nextpage='mailbox.php';
-				$qs.=$qs_sep.'fid='.$folder_id;
-				$qs_sep='&';
+				$query="DELETE FROM `{$dbtable_prefix}user_spambox` WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}
 		}
+		$topass['message']['type']=MESSAGE_INFO;
+		$topass['message']['text']=sprintf('%1s message(s) moved',$num_messages);     // translate
+		$qs.=$qs_sep.'fid='.$fid;
+		$qs_sep='&';
+	} elseif ($_POST['act']=='spam') {	// user_inbox to user_spambox
+		$query="INSERT INTO `{$dbtable_prefix}user_spambox` (`is_read`,`fk_user_id`,`fk_user_id_other`,`_user_other`,`subject`,`message_body`,`date_sent`,`message_type`) SELECT `is_read`,`fk_user_id`,`fk_user_id_other`,`_user_other`,`subject`,`message_body`,`date_sent`,`message_type` FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('$mail_id') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$qs.=$qs_sep.'fid='.$fid;
+		$qs_sep='&';
 	} elseif ($_POST['act']=='reply') {
-		$qs='mail_id='.$mail_id;
-		redirect2page('message_send.php',array(),$qs);
+		$nextpage='message_send.php';
+		$qs.=$qs_sep.'mail_id='.$mail_id;
+		$qs_sep='&';
 	}
 	if (isset($_POST['o'])) {
 		$qs.=$qs_sep.'o='.$_POST['o'];
