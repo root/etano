@@ -14,8 +14,8 @@ Support at:                 http://forum.datemill.com
 $tpl->set_file('left_content','message_read_left.html');
 $loopfolders=array();
 $i=0;
-foreach ($folders as $k=>$v) {
-	$loopfolders[$i]['folder_id']=$k;
+foreach ($my_folders as $k=>$v) {
+	$loopfolders[$i]['fid']=$k;
 	$loopfolders[$i]['folder']=$v;
 	++$i;
 }

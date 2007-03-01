@@ -22,24 +22,24 @@
 		<th>Subject</th>
 		<th>Date</th>
 	</tr>
-	<loop name="mails">
+	<loop name="loop">
 	<tr class="mailbox_row">
-		<td class="selector"><input type="checkbox" name="mail_id[{mails.mail_id}]" id="mail_id_{mails.mail_id}" value="1" /></td>
+		<td class="selector"><input type="checkbox" name="mail_id[{loop.mail_id}]" id="mail_id_{loop.mail_id}" value="1" /></td>
 		<td class="read_status">
 			<opt name="inbox_options">
-				<div class="{mails.is_read}"></div>
+				<div class="{loop.is_read}"></div>
 			</opt name="inbox_options">
 		</td>
-		<td class="from">{mails.other}</td>
-		<td class="subject"><a href="message_read.php?mail_id={mails.mail_id}&amp;fid={mailbox_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">{mails.subject}</a></td>
-		<td class="date">{mails.date_sent}</td>
+		<td class="from">{loop.other}</td>
+		<td class="subject"><a href="message_read.php?mail_id={loop.mail_id}&amp;fid={mailbox_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">{loop.subject}</a></td>
+		<td class="date">{loop.date_sent}</td>
 	</tr>
-	<noloop name="mails">
+	<noloop name="loop">
 	<tr class="mailbox_row">
 		<td colspan="5" class="no_result_item">No messages found!</td>
 	</tr>
-	</noloop name="mails">
-	</loop name="mails">
+	</noloop name="loop">
+	</loop name="loop">
 	</table>
 	</form>
 	{pager2}

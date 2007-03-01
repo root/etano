@@ -24,17 +24,20 @@ $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 $query="SELECT a.`folder_id`,a.`folder`,count(DISTINCT b.`mail_id`) as `total`,count(DISTINCT c.`mail_id`) as `not_read` FROM `{$dbtable_prefix}user_folders` a LEFT JOIN `{$dbtable_prefix}user_inbox` b ON a.`fk_user_id`=b.`fk_user_id` AND a.`folder_id`=b.`fk_folder_id` LEFT JOIN `{$dbtable_prefix}user_inbox` c ON a.`fk_user_id`=c.`fk_user_id` AND a.`folder_id`=c.`fk_folder_id` AND c.`is_read`=0 WHERE a.`fk_user_id`='".$_SESSION['user']['user_id']."' GROUP BY a.`folder_id`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-$folders=array();
+$loop=array();
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['folder']=sanitize_and_format($rsrow['folder'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-	$folders[]=$rsrow;
+	$loop[]=$rsrow;
 }
 
 $tpl->set_file('content','folders.html');
-$tpl->set_loop('folders',$folders);
+$tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
-$tpl->drop_loop('folders');
+$tpl->drop_loop('loop');
 
 $tplvars['title']='Manage folders';     // translate
+$tplvars['page_title']='Your personal folders';
+$tplvars['page']='folders';
+$tplvars['css']='folders.css';
 include 'frame.php';
 ?>

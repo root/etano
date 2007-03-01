@@ -1,0 +1,23 @@
+<div class="row header">
+	<div class="control">Action</div>
+	<div class="rule">Messages From</div>
+	<div class="moveto">Move to</div>
+</div>
+
+<loop name="loop">
+<div class="row">
+	<div class="control">
+		<a class="item_delete" href="processors/filters_delete.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" title="Delete item" onclick="return(confirm('Are you sure you want to delete this filter?'))"><i>Delete</i></a>
+		<a class="item_edit" href="filters_addedit.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" title="Edit item"><i>Edit</i></a>
+	</div>
+	<div class="rule">{loop.filter_type}: {loop.field_value}</div>
+	<div class="moveto">{loop.fk_folder_id}</div>
+</div>
+<noloop name="loop">
+	<p class="no_result_item">You have no filters yet!</p>
+</noloop name="loop">
+</loop name="loop">
+
+<div id="controls">
+	<a href="filters_addedit.php?o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Add new filter</a>
+</div>

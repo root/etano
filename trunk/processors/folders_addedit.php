@@ -43,15 +43,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query=substr($query,0,-1);
 			$query.=" WHERE `folder_id`='".$input['folder_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			if (!empty($affected_rows)) {
+			if (mysql_affected_rows()) {
 				$topass['message']['type']=MESSAGE_INFO;
 				$topass['message']['text']='Folder renamed.';     // translate
 			} else {
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='Folder not changed. This foder name already exists.';     // translate
+				$topass['message']['text']='Folder not changed. This folder name already exists.';     // translate
 			}
 		} else {
 			$query="INSERT IGNORE INTO `{$dbtable_prefix}user_folders` SET ";
+			unset($input['folder_id']);
 			foreach ($user_folders_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.="`$k`='".$input[$k]."',";
@@ -59,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			$query=substr($query,0,-1);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			if (!empty($affected_rows)) {
+			if (mysql_affected_rows()) {
 				$topass['message']['type']=MESSAGE_INFO;
 				$topass['message']['text']='Folder added.';     // translate
 			} else {

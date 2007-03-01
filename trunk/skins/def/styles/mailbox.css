@@ -69,19 +69,6 @@
 	background-repeat: no-repeat;
 }
 
-#mailbox_form .row .control.read0 {
-}
-#mailbox_form .row .control.not_read0 {
-	background-image: url('../images/item-mail-unread.gif');
-}
-#mailbox_form .row .control.read1 {
-	background-image: url('../images/item-flirt-read.gif');
-}
-#mailbox_form .row .control.not_read1 {
-	background-image: url('../images/item-flirt-unread.gif');
-}
-
-
 * html #mailbox_form .control input {
 	margin: -3px 0 0 -4px;
 }
