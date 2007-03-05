@@ -55,8 +55,8 @@ if (!empty($totalrows)) {
 		$profile_fields[$i]['myclass']=($i%2) ? 'odd_item' : 'even_item';
 		++$i;
 	}
-	$tpl->set_var('pager1',create_pager2($totalrows,$o,$r));
-	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
+	$tpl->set_var('pager1',pager($totalrows,$o,$r));
+	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 }
 $tpl->set_loop('profile_fields',$profile_fields);
 $tpl->set_var('html_type',vector2options($accepted_htmltype));

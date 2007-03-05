@@ -60,6 +60,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$_SESSION['topass']['message']['type']=MESSAGE_INFO;
 		$_SESSION['topass']['message']['text']='String translated';
 	} else {
+// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
+//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 		redirect2page('admin/popup_lang_string.php',$topass);

@@ -71,12 +71,12 @@ $tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('comments');
 
-if (is_file('photo_view_left.php')) {
-	include 'photo_view_left.php';
-}
 $tplvars['title']='View photos';
 $tplvars['page_title']='<a href="profile.php?uid='.$photo['fk_user_id'].'">'.$photo['user'].'</a> photos';	// translate this
 $tplvars['page']='photo_view';
 $tplvars['css']='photo_view.css';
+if (is_file('photo_view_left.php')) {
+	include 'photo_view_left.php';
+}
 include 'frame.php';
 ?>

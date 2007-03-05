@@ -42,8 +42,8 @@ if (!empty($totalrows)) {
 		$admin_accounts[]=$rsrow;
 		++$i;
 	}
-	$tpl->set_var('pager1',create_pager2($totalrows,$o,$r));
-	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
+	$tpl->set_var('pager1',pager($totalrows,$o,$r));
+	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 }
 
 $tpl->set_file('content','admin_accounts.html');

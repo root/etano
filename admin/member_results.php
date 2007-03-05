@@ -361,7 +361,7 @@ if (!empty($totalrows)) {
 	}
 
 	$_GET=array('search'=>$search_md5);
-	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
+	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 	$tpl->set_var('totalrows',$totalrows);
 }
 

@@ -123,6 +123,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['text']='Member profile has been changed.';
 	} else {
 		$nextpage=_BASEURL_.'/admin/profile_edit.php';
+// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
+//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}

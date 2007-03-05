@@ -45,7 +45,7 @@ if (!empty($totalrows)) {
 	}
 	$tpl->drop_var('temp');
 	$loop=smart_table($loop,3,'gallery_row');
-	$tpl->set_var('pager2',create_pager2($totalrows,$output['o'],$output['r']));
+	$tpl->set_var('pager2',pager($totalrows,$output['o'],$output['r']));
 }
 
 $tpl->set_file('content','my_photos.html');
@@ -55,12 +55,12 @@ $tpl->process('content','content',TPL_OPTIONAL);
 $tpl->drop_var('loop');
 $tpl->drop_var('output');
 
-if (is_file('my_photos_left.php')) {
-	include 'my_photos_left.php';
-}
 $tplvars['title']='My Photos';
 $tplvars['page_title']='My Photos';
 $tplvars['page']='my_photos';
 $tplvars['css']='my_photos.css';
+if (is_file('my_photos_left.php')) {
+	include 'my_photos_left.php';
+}
 include 'frame.php';
 ?>

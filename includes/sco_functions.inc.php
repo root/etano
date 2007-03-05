@@ -2,7 +2,7 @@
 /******************************************************************************
 File:                       includes/sco_functions.inc.php
 Info:   					general purpose functions library
-File version:				1.2007021302
+File version:				1.2007030501
 Created by:                 Dan Caragea (http://www.sco.ro - dan@rdsct.ro)
 ******************************************************************************/
 
@@ -827,7 +827,7 @@ function make_seed() {
 }
 
 
-function create_pager2($totalrows,$offset,$results) {
+function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	mt_srand(make_seed());
 	$radius=5;
 	$phpself=explode('?',$_SERVER['PHP_SELF']);
@@ -841,6 +841,7 @@ function create_pager2($totalrows,$offset,$results) {
 	$total_pages=ceil($totalrows/$results);
 	$myreturn="<form id=\"pagerform$myrand\" action=\"$phpself\" method=\"get\">\n";
 	$myreturn.="<ul class=\"pager\">\n";
+	$myreturn.='<li>'.(isset($lang_strings['page']) ? $lang_strings['page'] : '').'</li>';
 	if ($offset>0) {
 		$myreturn.='<li class="previous">';
 		$myreturn.='<a href="'.$phpself.'?o='.(($offset-$results>0) ? $offset-$results : 0).'&amp;r='.$results;
@@ -902,7 +903,7 @@ function create_pager2($totalrows,$offset,$results) {
 			$myreturn.="\t<input type=\"hidden\" name=\"$k\" value=\"$v\" />\n";
 		}
 	}
-	$myreturn.="\t<select name=\"r\" onchange=\"document.getElementById('pagerform$myrand').submit()\">\n";
+	$myreturn.="\t".(isset($lang_strings['rpp']) ? $lang_strings['rpp'] : '')."<select name=\"r\" onchange=\"document.getElementById('pagerform$myrand').submit()\">\n";
 	$myreturn.=vector2options($accepted_results_per_page,$results);
 	$myreturn.="\t</select>\n";
 	$myreturn.="</li>\n";

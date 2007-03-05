@@ -51,7 +51,7 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 			$loop[]=$rsrow;
 			++$i;
 		}
-		$output['pager2']=create_pager2($totalrows,$output['o'],$output['r']);
+		$output['pager2']=pager($totalrows,$output['o'],$output['r']);
 	}
 
 	$tpl->set_file('content','user_inbox.html');

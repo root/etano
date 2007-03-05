@@ -83,7 +83,7 @@ if (!empty($totalrows)) {
 		$user_album[$i].='</p><p class="activity">'.$temp[$i]['stat_views'].' | <a href="photo_view.php?photo_id='.$temp[$i]['photo_id'].'&amp;o='.$o.'&amp;r='.$r.'">'.$temp[$i]['stat_comments'].'</a></p>';
 	}
 	$user_album=smart_table($user_album,3,'id="table_album"');
-	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
+	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 }
 
 $tpl->set_file('content','user_photos.html');
@@ -95,9 +95,9 @@ $tpl->set_var('r',$r);
 $tpl->process('content','content',TPL_OPTIONAL);
 $tpl->drop_var('user_album');
 
+$tplvars['title']=sprintf('Photos from %1s',$user);
 if (is_file('user_photos_left.php')) {
 	include 'user_photos_left.php';
 }
-$tplvars['title']=sprintf('Photos from %1s',$user);
 include 'frame.php';
 ?>

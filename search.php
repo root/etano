@@ -219,7 +219,7 @@ if (!empty($totalrows)) {
 		$tpl->set_var('use_loop',true);
 	}
 	$_GET=array('search'=>$search_md5,'v'=>(isset($_GET['v']) && !empty($_GET['v'])) ? $_GET['v'] : 'l');
-	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
+	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 	$tpl->set_var('totalrows',$totalrows);
 }
 
@@ -227,9 +227,9 @@ $tpl->set_file('content','search.html');
 $tpl->process('content','content',TPL_LOOP | TPL_OPTIONAL);
 $tpl->drop_loop('results');
 
+$tplvars['title']='Search Results';
 if (is_file('search_left.php')) {
 	include 'search_left.php';
 }
-$tplvars['title']='Search Results';
 include 'frame.php';
 ?>
