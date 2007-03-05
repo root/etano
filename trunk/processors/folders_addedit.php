@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `folder_id`='".$input['folder_id']."'";
+			$query.=" WHERE `folder_id`='".$input['folder_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_affected_rows()) {
 				$topass['message']['type']=MESSAGE_INFO;
@@ -68,6 +68,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text']='Folder not added. This folder name already exists.';     // translate
 			}
 		}
+	} else {
+		$nextpage='folders_addedit.php';
+// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
+//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
+		$topass['input']=$input;
 	}
 }
 redirect2page($nextpage,$topass,$qs);

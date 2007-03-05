@@ -56,6 +56,7 @@ define('_MODULE_SKIN_',4);
 // filter types
 define('_FILTER_SENDER_',1);
 define('_FILTER_SENDER_PROFILE_',2);
+define('_FILTER_MESSAGE_',3);
 
 // fixed folders types
 define('_FOLDER_INBOX_',0);

@@ -377,3 +377,10 @@ function bbcode2html($str) {
 	$str=preg_replace('/\[img=(http:\/\/.*?)\]/','<img src="$1" />',$str);
 	return $str;
 }
+
+
+function pager($totalrows,$offset,$results) {
+	$lang_strings['page']='Pages:';					// translate this
+	$lang_strings['rpp']='Results to show:';		// translate this
+	return create_pager2($totalrows,$offset,$results,$lang_strings);
+}

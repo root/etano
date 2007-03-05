@@ -399,6 +399,15 @@ form.edit_form .controls {
 	padding-bottom: 0px;
 }
 
+.link_add {
+	background-image: url('../images/menu_add.gif');
+}
+
+.link_previous {
+	background-image: url('../images/link-previous.gif');
+}
+
+
 /* BBCODE CLASSES */
 
 .underline {

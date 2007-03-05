@@ -103,7 +103,7 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 			if (!empty($mail['last_activity'])) {
 				$mail['is_online']='is_online';
 			}
-			$query="SELECT `filter_id` FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `filter_type`='"._FILTER_USER_."' AND `field_value`='".$mail['other_id']."' AND `fk_folder_id`='"._FOLDER_SPAMBOX_."'";
+			$query="SELECT `filter_id` FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `filter_type`='"._FILTER_SENDER_."' AND `field_value`='".$mail['other_id']."' AND `fk_folder_id`='"._FOLDER_SPAMBOX_."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$tpl->set_var('is_blocked',true);
@@ -132,10 +132,6 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 			$query="UPDATE `{$dbtable_prefix}user_".$mailbox_table."` SET `is_read`=1 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `mail_id`='".$mail['mail_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
-
-		if (is_file('message_read_left.php')) {
-			include 'message_read_left.php';
-		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='No such message.';      // translate
@@ -151,5 +147,8 @@ $tplvars['title']='Read a message';     // translate
 $tplvars['page_title']='Read a message';
 $tplvars['page']='message_read';
 $tplvars['css']='message_read.css';
+if (is_file('message_read_left.php')) {
+	include 'message_read_left.php';
+}
 include 'frame.php';
 ?>

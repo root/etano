@@ -20,51 +20,69 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(11);
 
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
-
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
-$ob=isset($_GET['ob']) ? (int)$_GET['ob'] : 7;
-$od=isset($_GET['od']) ? (int)$_GET['od'] : 1;
 
-$filters=$message_filters_default['defaults'];
-
+$output=$message_filters_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$tpl->set_var('addedit_filter',true);
 	if (isset($_SESSION['topass']['input'])) {
-		$filters=$_SESSION['topass']['input'];
+		$output=$_SESSION['topass']['input'];
 	}
 } elseif (isset($_GET['filter_id']) && !empty($_GET['filter_id'])) {
 	$filter_id=(int)$_GET['filter_id'];
-	$query="SELECT a.*, b.`user` as `rule_value` FROM `{$dbtable_prefix}message_filters` a, ".USER_ACCOUNTS_TABLE." b WHERE a.`filter_id`='$filter_id' AND a.`field_value`=b.`user_id` AND a.`fk_user_id`='".$_SESSION['user']['user_id']."'";
+	$query="SELECT * FROM `{$dbtable_prefix}message_filters` WHERE `filter_id`='$filter_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$filters=mysql_fetch_assoc($res);
-		$filters=sanitize_and_format($filters,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
-		$tpl->set_var('addedit_filter',true);
+		$output=mysql_fetch_assoc($res);
 	}
-} else {
-	$tpl->set_var('addedit_filter',true);
 }
 
-$folders=array(_FOLDER_SPAMBOX_=>'Spambox');
-$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+switch ($output['filter_type']) {
+
+	case _FILTER_SENDER_:
+		$output['field_label']='user';	// translate this
+		$output['field_value']='<input type="text" name="field_value" id="field_value" value="'.get_user_by_userid($output['field_value']).'" />';
+		break;
+
+	case _FILTER_SENDER_PROFILE_:
+		foreach ($_pfields as $k=>$field) {
+			if ($field['dbfield']==$output['field']) {
+				$output['field_label']=sprintf('users with %s',$field['label']);	// translate this
+				$output['field_value']='<select name="field_value" id="field_value">'.vector2options($field['accepted_values'],$output['field_value'],array(0)).'</select>';
+				break;
+			}
+		}
+		break;
+
+	case _FILTER_MESSAGE_:
+	default:
+		break;
+
+}
+
+$my_folders=array(_FOLDER_INBOX_=>'INBOX',_FOLDER_OUTBOX_=>'OUTBOX',_FOLDER_TRASH_=>'Trash',_FOLDER_SPAMBOX_=>'SPAMBOX'); // translate this
+$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' ORDER BY `folder` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
-	$folders[$rsrow[0]]=$rsrow[1];
+	$my_folders[$rsrow[0]]=$rsrow[1];
 }
-$filters['fk_folder_id']=vector2options($folders,$filters['fk_folder_id']);
+$moveto_folders=$my_folders;
+unset($moveto_folders[_FOLDER_INBOX_],$moveto_folders[_FOLDER_OUTBOX_],$moveto_folders[_FOLDER_TRASH_]);
+$output['fk_folder_id']=vector2options($moveto_folders,$output['fk_folder_id']);
 
 $tpl->set_file('content','filters_addedit.html');
-$tpl->set_var('filters',$filters);
+$tpl->set_var('output',$output);
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
-$tpl->set_var('ob',$ob);
-$tpl->set_var('od',$od);
 $tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']='Add/Edit a filter';     // translate
 $tplvars['page_title']='Add/Edit a filter';
 $tplvars['page']='filters_addedit';
 $tplvars['css']='filters_addedit.css';
+if (is_file('filters_addedit_left.php')) {
+	include 'filters_addedit_left.php';
+}
 include 'frame.php';
 ?>

@@ -52,7 +52,7 @@ if (!empty($totalrows)) {
 		$my_blog_posts[]=$rsrow;
 	}
 	$my_blog_posts=sanitize_and_format($my_blog_posts,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
+	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 }
 
 $tpl->set_file('content','posts_list.html');

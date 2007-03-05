@@ -30,17 +30,13 @@ ul#message_details li {
 	padding: 15px 0;
 }
 
-#bottom_links {
-	border-top: 1px dashed #ccc;
-	padding-top: 15px;
-}
-
 #controls input {
 	margin-bottom: -10px;
 }
 
-.link_previous {
-	background-image: url('../images/link-previous.gif');
+#bottom_links {
+	border-top: 1px dashed #ccc;
+	padding-top: 15px;
 }
 
 /* LEFT MENU */

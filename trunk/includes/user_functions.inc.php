@@ -212,3 +212,9 @@ function add_member_score($user_ids,$act,$times=1,$points=0) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 }
+
+function pager($totalrows,$offset,$results) {
+	$lang_strings['page']='Pages:';					// translate this
+	$lang_strings['rpp']='Results to show:';		// translate this
+	return create_pager2($totalrows,$offset,$results,$lang_strings);
+}

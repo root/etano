@@ -34,16 +34,16 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	if (!empty($flirts)) {
 		$tpl->set_var('flirts_options',vector2radios($flirts,'flirt'));
 	}
-} 
+}
 
 $tpl->set_file('content','flirt_send.html');
 $tpl->set_var('uid',$uid);
 $tpl->set_var('_user_other',$_user_other);
 $tpl->process('content','content');
 
+$tplvars['title']='Send a flirt';     // translate
 if (is_file('flirt_send_left.php')) {
 	include 'flirt_send_left.php';
 }
-$tplvars['title']='Send a flirt';     // translate
 include 'frame.php';
 ?>

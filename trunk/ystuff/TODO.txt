@@ -98,9 +98,15 @@ TODO
 - scorul la plata corelat cu suma platita?
 - scor cand primeste un mesaj/flirt si poate si cand trimite? (mai mare la primit - inseamna ca e interesant)
 - scor la conturi platitoare pentru vechimea contului (lunar?)
+- in message_read.php linia 106 - ar trebui sa verific lista de blocati, nu filtrul.
 
 - niste functii din user_functions.inc.php ar trebui scoase intr-un fisier separat...
 - includes/site_options.inc.php cu setarile din site_options3 ?
+
+- in toate procesoarele tb sa verific cazul de eroare:
+// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
+//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+
 
 - admin: adaugat search_type: range pt field_type: select
 - admin: default_value la field_type: date ar trebui sa fie search_value?

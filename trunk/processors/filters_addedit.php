@@ -31,26 +31,25 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$message_filters_default['defaults'][$k]);
 	}
 	$input['fk_user_id']=$_SESSION['user']['user_id'];
-	$input['rule_value']=isset($_POST['rule_value']) ? $_POST['rule_value'] : '';
-	
-	switch ($input['filter_type']) {
 
-	case _FILTER_USER_:
-		if ($input['field_value']=get_userid_by_user($input['rule_value'])){
-			$input['field']='fk_user_id';
-		} else {
-			$error=true;
-			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='User \''.$input['rule_value'].'\' doesn\'t exist. Filter not saved.';     // translate
-		}
-		break;
-	
-	default:
-		break;
-	
+	switch ($input['filter_type']) {
+		case _FILTER_SENDER_:
+			if (!($input['field_value']=get_userid_by_user($input['field_value']))) {
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']=sprintf('User %s doesn\'t exist. Filter not saved.',$input['field_value']);     // translate
+			}
+			break;
+
+		case _FILTER_SENDER_PROFILE_:
+		case _FILTER_MESSAGE_:
+		default:
+			break;
+
 	}
 
 } else {
+// not working
 	$input['filter_id']=$message_filters_default['defaults']['filter_id'];
 	$input['filter_type']=_FILTER_USER_;
 	$input['fk_user_id']=$_SESSION['user']['user_id'];
@@ -59,25 +58,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['fk_folder_id']=_FOLDER_SPAMBOX_;
 	$nextpage='message_read.php';
 }
-	
+
 if (!$error) {
 	if (!empty($input['filter_id'])) {
 		$query="UPDATE IGNORE `{$dbtable_prefix}message_filters` SET ";
-		$i=0;
 		foreach ($message_filters_default['defaults'] as $k=>$v) {
 			if (isset($input[$k])) {
-				if ($i==0) {
-					$query.="`$k`='".$input[$k]."'";
-				} else {
-					$query.=",`$k`='".$input[$k]."'";
-				}
+				$query.="`$k`='".$input[$k]."',";
 			}
-			++$i;
 		}
+		$query=substr($query,0,-1);
 		$query.=" WHERE `filter_id`='".$input['filter_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$affected_rows=mysql_affected_rows();
-		if (!empty($affected_rows)) {
+		if (mysql_affected_rows()) {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Filter changed successfully.';     // translate
 		} else {
@@ -85,21 +78,16 @@ if (!$error) {
 			$topass['message']['text']='Filter not changed. A similar filter already exists.';     // translate
 		}
 	} else {
+		unset($input['filter_id']);
 		$query="INSERT IGNORE INTO `{$dbtable_prefix}message_filters` SET ";
-		$i=0;
 		foreach ($message_filters_default['defaults'] as $k=>$v) {
 			if (isset($input[$k])) {
-				if ($i==0) {
-					$query.="`$k`='".$input[$k]."'";
-				} else {
-					$query.=",`$k`='".$input[$k]."'";
-				}
+				$query.="`$k`='".$input[$k]."',";
 			}
-			++$i;
 		}
+		$query=substr($query,0,-1);
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$affected_rows=mysql_affected_rows();
-		if (!empty($affected_rows)) {
+		if (mysql_affected_rows()) {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Filter added.';     // translate
 		} else {
@@ -109,9 +97,12 @@ if (!$error) {
 	}
 } else {
 	$nextpage='filters_addedit.php';
+// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
+//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
 	$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 	$topass['input']=$input;
 }
+
 if (isset($_GET['mail_id'])) {
 	$qs.=$qs_sep.'mail_id='.$_GET['mail_id'];
 	$qs_sep='&';

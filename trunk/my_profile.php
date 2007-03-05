@@ -76,9 +76,9 @@ $tpl->set_var('uid',$uid);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 
+$tplvars['title']='Your Profile';
 if (is_file('my_profile_left.php')) {
 	include 'my_profile_left.php';
 }
-$tplvars['title']='Your Profile';
 include 'frame.php';
 ?>

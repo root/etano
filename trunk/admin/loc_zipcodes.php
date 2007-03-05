@@ -58,8 +58,8 @@ if (!empty($state_id) && !empty($country_id)) {
 			$zipcodes[]=$rsrow;
 			++$i;
 		}
-		$tpl->set_var('pager1',create_pager2($totalrows,$o,$r));
-		$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
+		$tpl->set_var('pager1',pager($totalrows,$o,$r));
+		$tpl->set_var('pager2',pager($totalrows,$o,$r));
 	}
 }
 

@@ -39,7 +39,7 @@ if ($ob>=0) {
 }
 
 $my_folders=array(_FOLDER_INBOX_=>'INBOX',_FOLDER_OUTBOX_=>'OUTBOX',_FOLDER_TRASH_=>'Trash',_FOLDER_SPAMBOX_=>'SPAMBOX'); // translate this
-$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' ORDER BY `folder` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
 	$my_folders[$rsrow[0]]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
@@ -69,10 +69,13 @@ switch ($fid) {
 		$from="`{$dbtable_prefix}user_spambox`";
 		break;
 
-	case _FOLDER_INBOX_:
 	case _FOLDER_TRASH_:
+		$where.=" AND `fk_folder_id`="._FOLDER_INBOX_." AND `del`=1";
+		break;
+
+	case _FOLDER_INBOX_:
 	default:
-		$where.=" AND `fk_folder_id`='$fid'";
+		$where.=" AND `fk_folder_id`='$fid' AND `del`=0";
 		break;
 
 }
@@ -95,7 +98,7 @@ if (!empty($totalrows)) {
 		}
 		$loop[]=$rsrow;
 	}
-	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
+	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 }
 
 $tpl->set_file('content','mailbox.html');
@@ -110,12 +113,12 @@ $tpl->set_var('od',$od);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
 
-if (is_file('mailbox_left.php')) {
-	include 'mailbox_left.php';
-}
 $tplvars['title']='Read your messages';     // translate
 $tplvars['page_title']=$my_folders[$fid];
 $tplvars['page']='mailbox';
 $tplvars['css']='mailbox.css';
+if (is_file('mailbox_left.php')) {
+	include 'mailbox_left.php';
+}
 include 'frame.php';
 ?>

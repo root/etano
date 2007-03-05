@@ -64,6 +64,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 	} else {
 		$nextpage='admin/site_skins_addedit.php';
+// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
+//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}

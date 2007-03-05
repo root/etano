@@ -3,7 +3,7 @@
 newdsb
 ===============================================================================
 File:                       filters.php
-$Revision: 0 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -21,22 +21,8 @@ check_login_member(4);
 
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 
-$filter_types=array(_FILTER_USER_=>'User');
-
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
-$ob=isset($_GET['ob']) ? (int)$_GET['ob'] : 1;
-$od=isset($_GET['od']) ? (int)$_GET['od'] : 1;
-$orderkeys=array_keys($message_filters_default['defaults']);
-$orderby='';
-if ($ob>=0) {
-	$orderby='ORDER BY `'.$orderkeys[$ob].'`';
-	if ($od==0) {
-		$orderby.=' ASC';
-	} else {
-		$orderby.=' DESC';
-	}
-}
 
 $my_folders=array(_FOLDER_INBOX_=>'INBOX',_FOLDER_OUTBOX_=>'OUTBOX',_FOLDER_TRASH_=>'Trash',_FOLDER_SPAMBOX_=>'SPAMBOX'); // translate this
 $query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
@@ -55,56 +41,78 @@ $totalrows=mysql_result($res,0,0);
 $loop=array();
 if (!empty($totalrows)) {
 	$field_values=array();
-	$query="SELECT * FROM $from WHERE $where $orderby LIMIT $o,$r";
+	$query="SELECT * FROM $from WHERE $where ORDER BY `fk_folder_id` LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['fk_folder_id']=isset($my_folders[$rsrow['fk_folder_id']]) ? $my_folders[$rsrow['fk_folder_id']] : '?';
-		$field_values[$rsrow['filter_type']][]=$rsrow['field_value'];
+		$field_values[$rsrow['filter_type']]['field'][]=$rsrow['field'];
+		$field_values[$rsrow['filter_type']]['value'][]=$rsrow['field_value'];
 		$loop[]=$rsrow;
 	}
 
-	$user_names=array();
-	if (isset($field_values[_FILTER_USER_]) && !empty($field_values[_FILTER_USER_])) {
-		$query="SELECT `fk_user_id`,`user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id` IN ('".join("','",$field_values[_FILTER_USER_])."')";
+	$filtered_senders=array();
+	if (isset($field_values[_FILTER_SENDER_]['value']) && !empty($field_values[_FILTER_SENDER_]['value'])) {
+		$query="SELECT `user_id`,`user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id` IN ('".join("','",$field_values[_FILTER_SENDER_]['value'])."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_row($res)) {
-			$user_names[$rsrow[0]]=$rsrow[1];
+			$filtered_senders[$rsrow[0]]=$rsrow[1];
+		}
+	}
+
+	$filtered_sender_profiles=array();
+	if (isset($field_values[_FILTER_SENDER_PROFILE_]['value']) && !empty($field_values[_FILTER_SENDER_PROFILE_]['value'])) {
+		for ($i=0;isset($field_values[_FILTER_SENDER_PROFILE_]['value'][$i]);++$i) {
+			foreach ($_pfields as $k=>$field) {
+				if ($field['dbfield']==$field_values[_FILTER_SENDER_PROFILE_]['field'][$i]) {
+					$filtered_sender_profiles[$field_values[_FILTER_SENDER_PROFILE_]['field'][$i].'_'.$field_values[_FILTER_SENDER_PROFILE_]['value'][$i]]=$field['label'].': '.$field['accepted_values'][$field_values[_FILTER_SENDER_PROFILE_]['value'][$i]];
+					break;
+				}
+			}
 		}
 	}
 
 	for ($i=0;isset($loop[$i]);++$i) {
 		switch ($loop[$i]['filter_type']) {
 
-			case _FILTER_USER_:
-				if (isset($field_values[_FILTER_USER_][$loop[$i]['field_value']])){
-					$loop[$i]['field_value']=$field_valuesfield_values[_FILTER_USER_][$loop[$i]['field_value']];
-					$loop[$i]['filter_type']=$filter_types[$loop[$i]['filter_type']];
+			case _FILTER_SENDER_:
+				if (isset($filtered_senders[$loop[$i]['field_value']])) {
+					$loop[$i]['field_value']=sprintf('User: %s',$filtered_senders[$loop[$i]['field_value']]);	// translate this
 				} else {
 					unset($loop[$i]);
 				}
 				break;
 
+			case _FILTER_SENDER_PROFILE_:
+				if (isset($filtered_sender_profiles[$loop[$i]['field'].'_'.$loop[$i]['field_value']])) {
+					$loop[$i]['field_value']=$filtered_sender_profiles[$loop[$i]['field'].'_'.$loop[$i]['field_value']];
+				} else {
+					unset($loop[$i]);
+				}
+				break;
+
+			case _FILTER_MESSAGE_:
+			default:
+				unset($loop[$i]);
+				break;
+
 		}
 	}
-	$tpl->set_var('pager2',create_pager2($totalrows,$o,$r));
+	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 }
-
 
 $tpl->set_file('content','filters.html');
 $tpl->set_loop('loop',$loop);
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
-$tpl->set_var('ob',$ob);
-$tpl->set_var('od',$od);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
 
-if (is_file('filters_left.php')) {
-	include 'filters_left.php';
-}
 $tplvars['title']='Manage your filters';     // translate
 $tplvars['page_title']='Message filters';
 $tplvars['page']='filters';
 $tplvars['css']='filters.css';
+if (is_file('filters_left.php')) {
+	include 'filters_left.php';
+}
 include 'frame.php';
 ?>

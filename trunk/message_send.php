@@ -47,6 +47,13 @@ if (isset($_SESSION['topass']['input'])) {
 	trigger_error('No receiver specified',E_USER_ERROR);     // translate
 }
 
+$my_folders=array(_FOLDER_INBOX_=>'INBOX',_FOLDER_OUTBOX_=>'OUTBOX',_FOLDER_TRASH_=>'Trash',_FOLDER_SPAMBOX_=>'SPAMBOX'); // translate this
+$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+while ($rsrow=mysql_fetch_row($res)) {
+	$my_folders[$rsrow[0]]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
+}
+
 $tpl->set_file('content','message_send.html');
 $tpl->set_var('mail',$mail);
 if (isset($_GET['o'])) {
@@ -67,5 +74,8 @@ $tplvars['title']='Contact a member';     // translate
 $tplvars['page_title']=sprintf('Write to %s',$mail['to_name']);	// translate
 $tplvars['page']='message_send';
 $tplvars['css']='message_send.css';
+if (is_file('message_send_left.php')) {
+	include 'message_send_left.php';
+}
 include 'frame.php';
 ?>

@@ -80,9 +80,9 @@ $tpl->set_var('uid',$uid);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 
+$tplvars['title']='Member Profile';
 if (is_file('profile_left.php')) {
 	include 'profile_left.php';
 }
-$tplvars['title']='Member Profile';
 include 'frame.php';
 ?>

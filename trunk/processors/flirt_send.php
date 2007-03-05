@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='This flirt message does not exist.';
 		}
 	}
-	
+
 	if (!$error) {
 		$input['fk_user_id_other']=$_SESSION['user']['user_id'];
 		$input['_user_other']=$_SESSION['user']['user'];
@@ -83,6 +83,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Flirt sent.';
 	} else {
+// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
+//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}
