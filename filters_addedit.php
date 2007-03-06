@@ -40,12 +40,12 @@ if (isset($_SESSION['topass']['input'])) {
 
 switch ($output['filter_type']) {
 
-	case _FILTER_SENDER_:
+	case FILTER_SENDER:
 		$output['field_label']='user';	// translate this
 		$output['field_value']='<input type="text" name="field_value" id="field_value" value="'.get_user_by_userid($output['field_value']).'" />';
 		break;
 
-	case _FILTER_SENDER_PROFILE_:
+	case FILTER_SENDER_PROFILE:
 		foreach ($_pfields as $k=>$field) {
 			if ($field['dbfield']==$output['field']) {
 				$output['field_label']=sprintf('users with %s',$field['label']);	// translate this
@@ -55,20 +55,20 @@ switch ($output['filter_type']) {
 		}
 		break;
 
-	case _FILTER_MESSAGE_:
+	case FILTER_MESSAGE:
 	default:
 		break;
 
 }
 
-$my_folders=array(_FOLDER_INBOX_=>'INBOX',_FOLDER_OUTBOX_=>'OUTBOX',_FOLDER_TRASH_=>'Trash',_FOLDER_SPAMBOX_=>'SPAMBOX'); // translate this
+$my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'OUTBOX',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
 $query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' ORDER BY `folder` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
 	$my_folders[$rsrow[0]]=$rsrow[1];
 }
 $moveto_folders=$my_folders;
-unset($moveto_folders[_FOLDER_INBOX_],$moveto_folders[_FOLDER_OUTBOX_],$moveto_folders[_FOLDER_TRASH_]);
+unset($moveto_folders[FOLDER_INBOX],$moveto_folders[FOLDER_OUTBOX],$moveto_folders[FOLDER_TRASH]);
 $output['fk_folder_id']=vector2options($moveto_folders,$output['fk_folder_id']);
 
 $tpl->set_file('content','filters_addedit.html');

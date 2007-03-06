@@ -25,13 +25,13 @@ $topass=array();
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$query="SELECT `module_code` FROM `{$dbtable_prefix}modules` WHERE `module_type`='"._MODULE_SKIN_."'";
+	$query="SELECT `module_code` FROM `{$dbtable_prefix}modules` WHERE `module_type`='".MODULE_SKIN."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$skins=array();
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
 		$skins[]=mysql_result($res,$i,0);
 	}
-	$input['lang_strings']=sanitize_and_format_gpc($_POST,'lang_strings',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+	$input['lang_strings']=sanitize_and_format_gpc($_POST,'lang_strings',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 	$input['lk_id']=(int)$_POST['lk_id'];
 
 	for ($i=0;isset($skins[$i]);++$i) {
@@ -60,8 +60,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$_SESSION['topass']['message']['type']=MESSAGE_INFO;
 		$_SESSION['topass']['message']['text']='String translated';
 	} else {
-// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+// 		you must re-read all textareas from $_POST like this:
+//		$input['x']=addslashes_mq($_POST['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 		redirect2page('admin/popup_lang_string.php',$topass);

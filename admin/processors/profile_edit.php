@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	$input['uid']=sanitize_and_format_gpc($_POST,'uid',TYPE_INT,0,0);
-	$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],''));
+	$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
 
 	$on_changes=array();
 	$ch=0;
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if ($field['editable']) {
 			switch ($field['html_type']) {
 
-				case _HTML_DATE_:
+				case HTML_DATE:
 					$input[$field['dbfield'].'_month']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_month',TYPE_INT,0,0);
 					$input[$field['dbfield'].'_day']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_day',TYPE_INT,0,0);
 					$input[$field['dbfield'].'_year']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_year',TYPE_INT,0,0);
@@ -52,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					}
 					break;
 
-				case _HTML_LOCATION_:
+				case HTML_LOCATION:
 					$input[$field['dbfield'].'_country']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_country',TYPE_INT,0,0);
 					$input[$field['dbfield'].'_state']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_state',TYPE_INT,0,0);
 					$input[$field['dbfield'].'_city']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_city',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_zip',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+					$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_zip',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 					if (isset($field['fn_on_change'])) {
 						$on_changes[$ch]['fn']=$field['fn_on_change'];
 						$on_changes[$ch]['param2']=array('country'=>$input[$field['dbfield'].'_country'],'state'=>$input[$field['dbfield'].'_state'],'city'=>$input[$field['dbfield'].'_city'],'zip'=>$input[$field['dbfield'].'_zip']);
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 			}
 			// check for input errors
-			if (isset($field['required']) && ((empty($input[$field['dbfield']]) && $field['html_type']!=_HTML_LOCATION_) || ($field['html_type']==_HTML_LOCATION_ && empty($input[$field['dbfield'].'_country'])))) {
+			if (isset($field['required']) && ((empty($input[$field['dbfield']]) && $field['html_type']!=HTML_LOCATION) || ($field['html_type']==HTML_LOCATION && empty($input[$field['dbfield'].'_country'])))) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
 				$topass['message']['text']='The fields outlined below are required and must not be empty';
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		foreach ($_pfields as $field_id=>$field) {
 			if ($field['editable']) {
-				if ($field['html_type']==_HTML_LOCATION_) {
+				if ($field['html_type']==HTML_LOCATION) {
 					$query.=",`".$field['dbfield']."_country`='".$input[$field['dbfield'].'_country']."',`".$field['dbfield']."_state`='".$input[$field['dbfield'].'_state']."',`".$field['dbfield']."_city`='".$input[$field['dbfield'].'_city']."',`".$field['dbfield']."_zip`='".$input[$field['dbfield'].'_zip']."'";
 				} else {
 					if (isset($input[$field['dbfield']])) {
@@ -123,8 +123,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['text']='Member profile has been changed.';
 	} else {
 		$nextpage=_BASEURL_.'/admin/profile_edit.php';
-// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+// 		you must re-read all textareas from $_POST like this:
+//		$input['x']=addslashes_mq($_POST['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}

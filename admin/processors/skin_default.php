@@ -21,9 +21,9 @@ allow_dept(DEPT_ADMIN);
 $qs='';
 $qs_sep='';
 $topass=array();
-$module_code=sanitize_and_format_gpc($_GET,'module_code',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+$module_code=sanitize_and_format_gpc($_GET,'module_code',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
-$query="SELECT `module_code` FROM `{$dbtable_prefix}modules` WHERE `module_type`='"._MODULE_SKIN_."'";
+$query="SELECT `module_code` FROM `{$dbtable_prefix}modules` WHERE `module_type`='".MODULE_SKIN."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $skin_modules=array();
 for ($i=0;$i<mysql_num_rows($res);++$i) {

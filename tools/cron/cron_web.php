@@ -19,7 +19,7 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 set_time_limit(0);
 
 if (isset($_SERVER['REMOTE_ADDR'])) {
-	$lk=sanitize_and_format_gpc($_GET,'lk',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+	$lk=sanitize_and_format_gpc($_GET,'lk',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 	if ($lk==md5(_LICENSE_KEY_)) {
 		$day=(int)date('d');
 		$weekday=(int)date('w');	//0 for sunday

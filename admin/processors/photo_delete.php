@@ -23,7 +23,7 @@ $qs_sep='';
 $topass=array();
 $photo_id=isset($_GET['photo_id']) ? (int)$_GET['photo_id'] : 0;
 // no need to urldecode because of the GET
-$return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+$return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 $query="SELECT `fk_user_id`,`photo`,`is_main` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$photo_id'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

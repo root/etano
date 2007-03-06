@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $cities_default['defaults']=array('city_id'=>0,'city'=>'','latitude'=>0,'longitude'=>0,'fk_country_id'=>0,'fk_state_id'=>0);
-$cities_default['types']=array('city_id'=>_HTML_INT_,'city'=>_HTML_TEXTFIELD_,'latitude'=>_HTML_FLOAT_,'longitude'=>_HTML_FLOAT_,'fk_country_id'=>_HTML_INT_,'fk_state_id'=>_HTML_INT_);
+$cities_default['types']=array('city_id'=>HTML_INT,'city'=>HTML_TEXTFIELD,'latitude'=>HTML_FLOAT,'longitude'=>HTML_FLOAT,'fk_country_id'=>HTML_INT,'fk_state_id'=>HTML_INT);

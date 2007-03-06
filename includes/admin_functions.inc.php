@@ -32,10 +32,10 @@ define('LK_SITE',0);
 define('LK_FIELD',1);
 define('LK_MESSAGE',2);
 
-$accepted_htmltype=array(_HTML_TEXTFIELD_=>'Textfield',_HTML_TEXTAREA_=>'Textarea',_HTML_SELECT_=>'Drop-down box',_HTML_CHECKBOX_LARGE_=>'Multiple checkboxes',_HTML_DATE_=>'Date',_HTML_LOCATION_=>'Location');
-$field_dbtypes=array(_HTML_TEXTFIELD_=>"varchar(100) not null default ''",_HTML_SELECT_=>'int(5) not null default 0',_HTML_FK_SELECT_=>'int(10) not null default 0',_HTML_TEXTAREA_=>"text not null default ''",_HTML_CHECKBOX_LARGE_=>"text not null default ''",_HTML_FILE_=>"varchar(64) not null default ''",_HTML_DATE_=>'date',_HTML_INT_=>'int(5) not null default 0',_HTML_FLOAT_=>'double not null default 0');
+$accepted_htmltype=array(HTML_TEXTFIELD=>'Textfield',HTML_TEXTAREA=>'Textarea',HTML_SELECT=>'Drop-down box',HTML_CHECKBOX_LARGE=>'Multiple checkboxes',HTML_DATE=>'Date',HTML_LOCATION=>'Location');
+$field_dbtypes=array(HTML_TEXTFIELD=>"varchar(100) not null default ''",HTML_SELECT=>'int(5) not null default 0',HTML_FK_SELECT=>'int(10) not null default 0',HTML_TEXTAREA=>"text not null default ''",HTML_CHECKBOX_LARGE=>"text not null default ''",HTML_FILE=>"varchar(64) not null default ''",HTML_DATE=>'date',HTML_INT=>'int(5) not null default 0',HTML_FLOAT=>'double not null default 0');
 $accepted_admin_depts=array(DEPT_ADMIN=>'Administrator',DEPT_MODERATOR=>'Moderator');
-$accepted_astats=array(_ASTAT_SUSPENDED_=>'Suspended',_ASTAT_UNVERIFIED_=>'Unactivated',_ASTAT_ACTIVE_=>'Active');
+$accepted_astats=array(ASTAT_SUSPENDED=>'Suspended',ASTAT_UNVERIFIED=>'Unactivated',ASTAT_ACTIVE=>'Active');
 $accepted_pstats=array(PSTAT_PENDING=>'Awaiting approval',PSTAT_EDIT=>'Requires edit',PSTAT_APPROVED=>'Approved');
 $accepted_yesno=array(0=>'No',1=>'Yes');
 $country_prefered_input=array('s'=>'state/city selection','z'=>'zip/postal code');
@@ -135,8 +135,8 @@ function regenerate_fields_array() {
 
 		switch ($rsrow['html_type']) {
 
-			case _HTML_SELECT_:
-			case _HTML_CHECKBOX_LARGE_:
+			case HTML_SELECT:
+			case HTML_CHECKBOX_LARGE:
 				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
 					$towrite.="\$_pfields[$id]['accepted_values']=array('-',\$_lang[".str_replace('|',"],\$_lang[",substr($rsrow['accepted_values'],1,-1))."]);\n";
 				} else {
@@ -166,7 +166,7 @@ function regenerate_fields_array() {
 				}
 				break;
 
-			case _HTML_DATE_:
+			case HTML_DATE:
 				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
 					$towrite.="\$_pfields[$id]['accepted_values']=array('-','".str_replace('|',"','",substr($rsrow['accepted_values'],1,-1))."');\n";
 				} else {
@@ -186,7 +186,7 @@ function regenerate_fields_array() {
 				}
 				break;
 
-			case _HTML_LOCATION_:
+			case HTML_LOCATION:
 				if (!empty($rsrow['default_value']) && $rsrow['default_value']!='||') {
 					$rsrow['default_value']=explode('|',substr($rsrow['default_value'],1,-1));
 					$towrite.="\$_pfields[$id]['default_value']=array('".join("','",$rsrow['default_value'])."');\n";
@@ -201,8 +201,8 @@ function regenerate_fields_array() {
 				}
 				break;
 
-			case _HTML_TEXTFIELD_:
-			case _HTML_TEXTAREA_:
+			case HTML_TEXTFIELD:
+			case HTML_TEXTAREA:
 				break;
 
 		}
@@ -230,7 +230,7 @@ function regenerate_langstrings_array() {
 	require_once _BASEPATH_.'/includes/classes/modman.class.php';
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	$modman=new modman();
-	$query="SELECT a.`module_code`,b.`config_value` as `skin_dir` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='"._MODULE_SKIN_."' AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_dir'";
+	$query="SELECT a.`module_code`,b.`config_value` as `skin_dir` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='".MODULE_SKIN."' AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_dir'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$skins[]=$rsrow;

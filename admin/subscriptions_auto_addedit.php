@@ -42,7 +42,7 @@ if (empty($subscriptions_auto['dbfield'])) {
 }
 $dbfields=array();
 foreach ($_pfields as $pfield_id=>$pfield) {
-	if ($pfield['html_type']==_HTML_SELECT_) {
+	if ($pfield['html_type']==HTML_SELECT) {
 		$dbfields[$pfield['dbfield']]=$pfield['label'].' ('.$pfield['dbfield'].')';
 	}
 }

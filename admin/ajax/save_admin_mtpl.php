@@ -21,9 +21,9 @@ $output='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$amtpl_type=sanitize_and_format_gpc($_POST,'amtpl_type',TYPE_INT,0,0);
 	$amtpl_id=sanitize_and_format_gpc($_POST,'amtpl_id',TYPE_INT,0,0);
-	$amtpl_name=sanitize_and_format_gpc($_POST,'amtpl_name',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-	$subject=sanitize_and_format_gpc($_POST,'subject',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-	$message_body=sanitize_and_format_gpc($_POST,'message_body',TYPE_STRING,$__html2format[_HTML_TEXTAREA_],'');
+	$amtpl_name=sanitize_and_format_gpc($_POST,'amtpl_name',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$subject=sanitize_and_format_gpc($_POST,'subject',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$message_body=sanitize_and_format_gpc($_POST,'message_body',TYPE_STRING,$__html2format[HTML_TEXTAREA],'');
 	if (!empty($subject) && !empty($message_body)) {
 		if (!empty($amtpl_id)) {
 			$query="UPDATE `{$dbtable_prefix}admin_mtpls` SET `subject`='$subject',`message_body`='$message_body' WHERE `amtpl_id`='$amtpl_id'";

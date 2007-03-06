@@ -20,7 +20,7 @@ allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 $uid=0;
 if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	$uid=(int)$_GET['uid'];
@@ -37,7 +37,7 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 		}
 	}
 } elseif (isset($_GET['user'])) {
-	$user=sanitize_and_format($_GET['user'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
+	$user=sanitize_and_format($_GET['user'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
 	$uid=get_userid_by_user($user);
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
@@ -64,27 +64,27 @@ if (mysql_num_rows($res)) {
 			$cat_content[$i]['label']=$field['label'];
 			switch ($field['html_type']) {
 
-				case _HTML_TEXTFIELD_:
+				case HTML_TEXTFIELD:
 					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case _HTML_TEXTAREA_:
+				case HTML_TEXTAREA:
 					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case _HTML_SELECT_:
+				case HTML_SELECT:
 					$cat_content[$i]['field']=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case _HTML_CHECKBOX_LARGE_:
+				case HTML_CHECKBOX_LARGE:
 					$cat_content[$i]['field']=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case _HTML_DATE_:
+				case HTML_DATE:
 					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case _HTML_LOCATION_:
+				case HTML_LOCATION:
 					$cat_content[$i]['field']=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$profile[$field['dbfield'].'_country'],'-');
 					if (!empty($profile[$field['dbfield'].'_state'])) {
 						$cat_content[$i]['field'].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$profile[$field['dbfield'].'_state'],'-');
@@ -114,7 +114,7 @@ if (mysql_num_rows($res)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$account=mysql_fetch_assoc($res);
 	$account['status']=vector2options($accepted_astats,$account['status']);
-	$account['skin']=dbtable2options("`{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b",'a.`module_code`','b.`config_value`','b.`config_value`',$account['skin'],"a.`module_code`=b.`fk_module_code` AND a.`module_type`='"._MODULE_SKIN_."' AND b.`config_option`='skin_name'");
+	$account['skin']=dbtable2options("`{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b",'a.`module_code`','b.`config_value`','b.`config_value`',$account['skin'],"a.`module_code`=b.`fk_module_code` AND a.`module_type`='".MODULE_SKIN."' AND b.`config_option`='skin_name'");
 }
 
 $tplvars['pic_width']=get_site_option('pic_width','core_photo');

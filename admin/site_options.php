@@ -22,7 +22,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 
 $active_module_code='core';
 if (isset($_GET['module_code']) && !empty($_GET['module_code'])) {
-	$active_module_code=sanitize_and_format($_GET['module_code'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
+	$active_module_code=sanitize_and_format($_GET['module_code'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
 }
 
 $query="SELECT a.*,b.`module_name`,b.`module_type` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b WHERE b.`module_code`=a.`fk_module_code` AND a.`option_type`<>'".OPTION_NA."' ORDER BY b.`module_type` ASC, a.`fk_module_code` ASC";
@@ -37,19 +37,19 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 		$site_options[$i]['module_name']='';
 		switch ($rsrow['module_type']) {
 
-			case _MODULE_PAYMENT_:
+			case MODULE_PAYMENT:
 				$site_options[$i]['module_name']='Payment: ';
 				break;
 
-			case _MODULE_FRAUD_:
+			case MODULE_FRAUD:
 				$site_options[$i]['module_name']='Fraud Manager: ';
 				break;
 
-			case _MODULE_WIDGET_:
+			case MODULE_WIDGET:
 				$site_options[$i]['module_name']='Widget: ';
 				break;
 
-			case _MODULE_SKIN_:
+			case MODULE_SKIN:
 				$site_options[$i]['module_name']='Skin: ';
 				break;
 

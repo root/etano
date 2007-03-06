@@ -24,8 +24,8 @@ $nextpage='login.php';
 $qs='';
 $qssep='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-	$user=sanitize_and_format_gpc($_POST,'user',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-	$pass=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+	$user=sanitize_and_format_gpc($_POST,'user',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$pass=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 	if (!empty($user) && !empty($pass)) {
 		$log['level']=1;
 		$log['user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
@@ -52,9 +52,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			unset($user['last_activity']);
 			$_SESSION['user']=$user;
 			if (isset($_SESSION['timedout']['url'])) {
-				$page=$_SESSION['timedout']['url'];
-				unset($_SESSION['timedout']['url']);
-				redirect2page($page,array(),'',true);
+				$next=$_SESSION['timedout'];
+				unset($_SESSION['timedout']);
+				if ($next['method']=='GET') {
+					redirect2page($next['url'].'?'.array2qs($next['qs']),array(),'',true);
+				} else {
+					post2page($next['url'],$next['qs'],true);
+				}
 			} else {
 				$nextpage='home.php';
 			}

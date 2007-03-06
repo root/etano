@@ -49,6 +49,7 @@
 .medium {
 	width: 706px;
 	background: url('../images/mbox-middle.gif') repeat-y;
+	margin-left: 18px;
 }
 	.medium h2 {
 		background-image: url('../images/mbox-top.gif');
@@ -73,8 +74,40 @@
 		background: url('../images/sbox-bottom.gif') no-repeat bottom left;
 	}
 
+/* INFO+ERROR MESSAGES */
+
+.message_info {
+	color: #4383d3;
+	font-size: 13px;
+	font-weight: bold;
+	overflow: hidden;
+}
+
+.message_error {
+	color: #fd617b;
+	font-size: 13px;
+	font-weight: bold;
+	overflow: hidden;
+}
+
+	.message_info .box-content, .message_error .box-content {
+		padding: 0 0 10px 20px;
+	}
+
+	.message_info .box-content .message_text {
+		background: url('../images/symbol-success.gif') no-repeat top left;
+		height: 30px;
+		padding: 4px 0 0 40px;
+	}
+
+	.message_error .box-content .message_text {
+		background: url('../images/symbol-error.gif') no-repeat top left;
+		height: 30px;
+		padding: 4px 0 0 40px;
+	}
 
 /* Content columns */
+
 #content_column1 {
 	float: right;
 	margin: 18px 0;

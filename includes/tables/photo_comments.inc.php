@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $photo_comments_default['defaults']=array('comment_id'=>0,'fk_photo_id'=>0,'fk_user_id'=>0,'comment'=>'');
-$photo_comments_default['types']=array('comment_id'=>_HTML_INT_,'fk_photo_id'=>_HTML_INT_,'fk_user_id'=>_HTML_INT_,'comment'=>_HTML_TEXTAREA_);
+$photo_comments_default['types']=array('comment_id'=>HTML_INT,'fk_photo_id'=>HTML_INT,'fk_user_id'=>HTML_INT,'comment'=>HTML_TEXTAREA);

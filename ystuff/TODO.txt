@@ -44,7 +44,7 @@ depind de $tplvars vor fi sterse pt ca tplvars se proceseaza abea in frame.
 - cand se sterge un user as putea sa fac fk_user_id=0 peste tot pe unde era setat (in special in inbox). In felul
 asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a trimis emailul mai exista sau nu...
 
-- welcome message in inbox cand se inregistreaza un membru de tipul _MESS_SYSTEM_
+- welcome message in inbox cand se inregistreaza un membru de tipul MESS_SYSTEM
 
 - blocked users pot fi membri in network-ul 'Blocked Users'
 
@@ -53,7 +53,7 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 TODO
 				ADI
 - spambox, block member, queue send/verif de spam
-- clar nu se mai face join pt ID-ul senderului! Ce se intampla daca sender-ul este un admin? (_MESS_SYSTEM_)
+- clar nu se mai face join pt ID-ul senderului! Ce se intampla daca sender-ul este un admin? (MESS_SYSTEM)
 - flirts
 
 - user_settings2

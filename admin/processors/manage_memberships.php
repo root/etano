@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // get the input we need and sanitize it
 	if (isset($_POST['act'])) {
 		if ($_POST['act']=='add') {
-			$input['m_name']=sanitize_and_format_gpc($_POST,'m_name',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+			$input['m_name']=sanitize_and_format_gpc($_POST,'m_name',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 		// check for input errors
 			if (empty($input['m_name'])) {

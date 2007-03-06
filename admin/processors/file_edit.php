@@ -24,7 +24,7 @@ $qs_sep='';
 $topass=array();
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
-	$input['file']=str_replace('..','',preg_replace('~[^a-zA-Z0-9\._/-]~','',sanitize_and_format_gpc($_POST,'file',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'')));
+	$input['file']=str_replace('..','',preg_replace('~[^a-zA-Z0-9\._/-]~','',sanitize_and_format_gpc($_POST,'file',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'')));
 	$input['file_content']=preg_replace('/\r/m','',sanitize_and_format_gpc($_POST,'file_content',TYPE_STRING,FORMAT_STRIP_MQ));
 	if (strtolower(substr(strrchr($input['file'],'.'),1))=='html') {
 		$input['file_content']=preg_replace('/\n/m',"\r\n",$input['file_content']);

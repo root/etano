@@ -27,8 +27,8 @@ $nextpage='admin/site_skins.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$input['skin']=sanitize_and_format_gpc($_POST,'skin',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-	$input['lang_strings']=sanitize_and_format_gpc($_POST,'lang_strings',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+	$input['skin']=sanitize_and_format_gpc($_POST,'skin',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$input['lang_strings']=sanitize_and_format_gpc($_POST,'lang_strings',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 
 // check for input errors

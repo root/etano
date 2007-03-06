@@ -23,42 +23,45 @@ $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 
 $content='';
 if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) {
-	$mail=$user_inbox_default['defaults'];
-	$mail['mail_id']=(int)$_GET['mail_id'];
+	$output=$user_inbox_default['defaults'];
+	$output['mail_id']=(int)$_GET['mail_id'];
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
 
-	$my_folders=array(_FOLDER_INBOX_=>'INBOX',_FOLDER_OUTBOX_=>'OUTBOX',_FOLDER_TRASH_=>'Trash',_FOLDER_SPAMBOX_=>'SPAMBOX'); // translate this
+	$my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'OUTBOX',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
 	$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_row($res)) {
-		$my_folders[$rsrow[0]]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
+		$my_folders[$rsrow[0]]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
 	}
 
-	$fid=_FOLDER_INBOX_;
-	if (isset($_GET['fid']) && !empty($_GET['fid']) && isset($my_folders[$_GET['fid']])) {
-		$fid=(int)$_GET['fid'];
+	$output['fid']=FOLDER_INBOX;
+	if (!empty($_GET['fid']) && isset($my_folders[$_GET['fid']])) {
+		$output['fid']=(int)$_GET['fid'];
 	}
 	$moveto_folders=$my_folders;
-	unset($moveto_folders[_FOLDER_SPAMBOX_]);
-	unset($moveto_folders[_FOLDER_OUTBOX_]);
-	unset($moveto_folders[$fid]);
+	unset($moveto_folders[FOLDER_SPAMBOX]);
+	unset($moveto_folders[FOLDER_OUTBOX]);
+	unset($moveto_folders[$output['fid']]);
+	$output['moveto_folders']=vector2options($moveto_folders);
 
 	$mailbox_table='inbox';
-	$where="a.`fk_user_id`='".$_SESSION['user']['user_id']."' AND a.`mail_id`='".$mail['mail_id']."'";
-	switch ($fid) {
+	$where="a.`fk_user_id`='".$_SESSION['user']['user_id']."' AND a.`mail_id`='".$output['mail_id']."'";
 
-		case _FOLDER_INBOX_:
+	switch ($output['fid']) {
+		case FOLDER_INBOX:
 			$tpl->set_var('spam_controls',true);
 			break;
 
-		case _FOLDER_TRASH_:
+		case FOLDER_TRASH:
 			break;
 
-		case _FOLDER_OUTBOX_:
+		case FOLDER_OUTBOX:
 			$mailbox_table='outbox';
 			$tpl->set_var('is_outbox',true);
 			break;
 
-		case _FOLDER_SPAMBOX_:
+		case FOLDER_SPAMBOX:
 			$mailbox_table='spambox';
 			break;
 
@@ -71,39 +74,39 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 	$query="SELECT a.*,UNIX_TIMESTAMP(a.`date_sent`) as `date_sent`,b.`fk_user_id` as `other_id`,b.`_photo` as `photo`,c.`last_activity` FROM `{$dbtable_prefix}user_{$mailbox_table}` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id_other`=b.`fk_user_id` LEFT JOIN `{$dbtable_prefix}online` c ON a.`fk_user_id_other`=c.`fk_user_id` WHERE $where LIMIT 1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$mail=mysql_fetch_assoc($res);
-		$mail['date_sent']=strftime($_user_settings['datetime_format'],$mail['date_sent']+$_user_settings['time_offset']);
-		$mail['subject']=sanitize_and_format($mail['subject'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$output=array_merge($output,mysql_fetch_assoc($res));
+		$output['date_sent']=strftime($_user_settings['datetime_format'],$output['date_sent']+$_user_settings['time_offset']);
+		$output['subject']=sanitize_and_format($output['subject'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 
-		switch ($mail['message_type']) {
+		switch ($output['message_type']) {
 
-			case _MESS_MESS_:
-				$mail['message_body']=sanitize_and_format($mail['message_body'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			case MESS_MESS:
+				$output['message_body']=sanitize_and_format($output['message_body'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 				check_login_member(4);
 				break;
 
-			case _MESS_FLIRT_:
+			case MESS_FLIRT:
 				check_login_member(6);
 				break;
 
-			case _MESS_SYSTEM_:
+			case MESS_SYSTEM:
 				check_login_member(-1);
-				$mail['_user_other']='SYSTEM';     // translate
+				$output['_user_other']='SYSTEM';     // translate
 				$tpl->set_var('spam_controls',false);
 				break;
 
 		}
-		$mail['message_body']=bbcode2html($mail['message_body']);
-		if (empty($mail['photo'])) {
-			$mail['photo']='no_photo.gif';
+		$output['message_body']=bbcode2html($output['message_body']);
+		if (empty($output['photo'])) {
+			$output['photo']='no_photo.gif';
 		}
-		if (empty($mail['other_id'])) {
-			unset($mail['other_id']);
+		if (empty($output['other_id'])) {
+			unset($output['other_id']);
 		} else {
-			if (!empty($mail['last_activity'])) {
-				$mail['is_online']='is_online';
+			if (!empty($output['last_activity'])) {
+				$output['is_online']='is_online';
 			}
-			$query="SELECT `filter_id` FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `filter_type`='"._FILTER_SENDER_."' AND `field_value`='".$mail['other_id']."' AND `fk_folder_id`='"._FOLDER_SPAMBOX_."'";
+			$query="SELECT `filter_id` FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `filter_type`='".FILTER_SENDER."' AND `field_value`='".$output['other_id']."' AND `fk_folder_id`='".FOLDER_SPAMBOX."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$tpl->set_var('is_blocked',true);
@@ -111,25 +114,11 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 		}
 
 		$tpl->set_file('content','message_read.html');
-		$tpl->set_var('mail',$mail);
-		$tpl->set_var('fid',$fid);
-		$tpl->set_var('mailbox_name',$my_folders[$fid]);
-		$tpl->set_var('folder_options',vector2options($moveto_folders));
-		if (isset($_GET['o'])) {
-			$tpl->set_var('o',$_GET['o']);
-		}
-		if (isset($_GET['r'])) {
-			$tpl->set_var('r',$_GET['r']);
-		}
-		if (isset($_GET['ob'])) {
-			$tpl->set_var('ob',$_GET['ob']);
-		}
-		if (isset($_GET['od'])) {
-			$tpl->set_var('od',$_GET['od']);
-		}
+		$tpl->set_var('output',$output);
+		$tpl->set_var('mailbox_name',$my_folders[$output['fid']]);
 		$tpl->process('content','content',TPL_OPTIONAL);
-		if ($mail['is_read']==0) {
-			$query="UPDATE `{$dbtable_prefix}user_".$mailbox_table."` SET `is_read`=1 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `mail_id`='".$mail['mail_id']."'";
+		if ($output['is_read']==0) {
+			$query="UPDATE `{$dbtable_prefix}user_".$mailbox_table."` SET `is_read`=1 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `mail_id`='".$output['mail_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	} else {

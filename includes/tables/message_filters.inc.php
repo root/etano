@@ -11,5 +11,5 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-$message_filters_default['defaults']=array('filter_id'=>0,'filter_type'=>_FILTER_SENDER_,'fk_user_id'=>0,'field'=>'','field_value'=>'','fk_folder_id'=>0);
-$message_filters_default['types']=array('filter_id'=>_HTML_INT_,'filter_type'=>_HTML_INT_,'fk_user_id'=>_HTML_INT_,'field'=>_HTML_TEXTFIELD_,'field_value'=>_HTML_TEXTFIELD_,'fk_folder_id'=>_HTML_INT_);
+$message_filters_default['defaults']=array('filter_id'=>0,'filter_type'=>FILTER_SENDER,'fk_user_id'=>0,'field'=>'','field_value'=>'','fk_folder_id'=>0);
+$message_filters_default['types']=array('filter_id'=>HTML_INT,'filter_type'=>HTML_INT,'fk_user_id'=>HTML_INT,'field'=>HTML_TEXTFIELD,'field_value'=>HTML_TEXTFIELD,'fk_folder_id'=>HTML_INT);

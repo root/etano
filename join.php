@@ -41,15 +41,15 @@ foreach ($_pfields as $field_id=>$field) {
 }
 if (empty($my_values)) {
 	for ($i=0;isset($my_fields[$i]);++$i) {
-		if ($_pfields[$my_fields[$i]]['html_type']==_HTML_SELECT_) {
+		if ($_pfields[$my_fields[$i]]['html_type']==HTML_SELECT) {
 			$my_values[$_pfields[$my_fields[$i]]['dbfield']]=isset($_pfields[$my_fields[$i]]['default_value'][0]) ? $_pfields[$my_fields[$i]]['default_value'][0] : '';
-		} elseif ($_pfields[$my_fields[$i]]['html_type']==_HTML_CHECKBOX_LARGE_) {
+		} elseif ($_pfields[$my_fields[$i]]['html_type']==HTML_CHECKBOX_LARGE) {
 			$my_values[$_pfields[$my_fields[$i]]['dbfield']]=$_pfields[$my_fields[$i]]['default_value'];
-		} elseif ($_pfields[$my_fields[$i]]['html_type']==_HTML_DATE_) {
+		} elseif ($_pfields[$my_fields[$i]]['html_type']==HTML_DATE) {
 			$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_month']='';
 			$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_day']='';
 			$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_year']='';
-		} elseif ($_pfields[$my_fields[$i]]['html_type']==_HTML_LOCATION_ && isset($_pfields[$my_fields[$i]]['default_value'][0])) {
+		} elseif ($_pfields[$my_fields[$i]]['html_type']==HTML_LOCATION && isset($_pfields[$my_fields[$i]]['default_value'][0])) {
 			$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country']=$_pfields[$my_fields[$i]]['default_value'][0];
 		} else {
 			$my_values[$_pfields[$my_fields[$i]]['dbfield']]='';
@@ -71,29 +71,29 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 	}
 	switch ($_pfields[$my_fields[$i]]['html_type']) {
 
-		case _HTML_TEXTFIELD_:
+		case HTML_TEXTFIELD:
 			$my_rows[$j]['field']='<input type="text" name="'.$_pfields[$my_fields[$i]]['dbfield'].'" id="'.$_pfields[$my_fields[$i]]['dbfield'].'" value="'.$my_values[$_pfields[$my_fields[$i]]['dbfield']].'" tabindex="'.($i+4).'" />';
 			break;
 
-		case _HTML_TEXTAREA_:
+		case HTML_TEXTAREA:
 			$my_rows[$j]['field']='<textarea name="'.$_pfields[$my_fields[$i]]['dbfield'].'" id="'.$_pfields[$my_fields[$i]]['dbfield'].'" tabindex="'.($i+4).'">'.$my_values[$_pfields[$my_fields[$i]]['dbfield']].'</textarea>';
 			break;
 
-		case _HTML_SELECT_:
+		case HTML_SELECT:
 			$my_rows[$j]['field']='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'" id="'.$_pfields[$my_fields[$i]]['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($_pfields[$my_fields[$i]]['accepted_values'],$my_values[$_pfields[$my_fields[$i]]['dbfield']],array(0)).'</select>';
 			break;
 
-		case _HTML_CHECKBOX_LARGE_:
+		case HTML_CHECKBOX_LARGE:
 			$my_rows[$j]['field']=vector2checkboxes_str($_pfields[$my_fields[$i]]['accepted_values'],array(0),$_pfields[$my_fields[$i]]['dbfield'],$my_values[$_pfields[$my_fields[$i]]['dbfield']],2,true,'tabindex="'.($i+4).'"');
 			break;
 
-		case _HTML_DATE_:
+		case HTML_DATE:
 			$my_rows[$j]['field']='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_month" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_month']).'</select>';
 			$my_rows[$j]['field'].='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_day" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">'.$_lang[5].'</option>'.interval2options(1,31,$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_day']).'</select>';
 			$my_rows[$j]['field'].='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_year" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">'.$_lang[6].'</option>'.interval2options($_pfields[$my_fields[$i]]['accepted_values'][1],$_pfields[$my_fields[$i]]['accepted_values'][2],$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_year'],array(),1,2).'</select>';
 			break;
 
-		case _HTML_LOCATION_:
+		case HTML_LOCATION:
 			$my_rows[$j]['label']='Country';	// translate this
 			$my_rows[$j]['dbfield']=$_pfields[$my_fields[$i]]['dbfield'].'_country';
 			$my_rows[$j]['field']='<select class="text" name="'.$_pfields[$my_fields[$i]]['dbfield'].'_country" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country']).'</select>';

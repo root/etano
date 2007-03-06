@@ -33,20 +33,20 @@ for ($i=1;$i<=RELEVANT_FIELDS;++$i) {
 		$search[$s]['dbfield']=$_pfields[$i]['dbfield'];
 		switch ($_pfields[$i]['search_type']) {
 
-			case _HTML_SELECT_:
+			case HTML_SELECT:
 				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'" id="'.$_pfields[$i]['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($_pfields[$i]['accepted_values']).'</select>';
 				break;
 
-			case _HTML_CHECKBOX_LARGE_:
+			case HTML_CHECKBOX_LARGE:
 				$search[$s]['field']=vector2checkboxes_str($_pfields[$i]['accepted_values'],array(0),$_pfields[$i]['dbfield'],array(0),2,true,'tabindex="'.($i+4).'"');
 				break;
 
-			case _HTML_DATE_:
+			case HTML_DATE:
 				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'_min" id="'.$_pfields[$i]['dbfield'].'_min" tabindex="'.($i+4).'"><option value="0">-</option>'.interval2options(date('Y')-$_pfields[$i]['accepted_values'][2],date('Y')-$_pfields[$i]['accepted_values'][1]).'</select> - ';
 				$search[$s]['field'].='<select name="'.$_pfields[$i]['dbfield'].'_max" id="'.$_pfields[$i]['dbfield'].'_max" tabindex="'.($i+4).'"><option value="0">-</option>'.interval2options(date('Y')-$_pfields[$i]['accepted_values'][2],date('Y')-$_pfields[$i]['accepted_values'][1]).'</select>';
 				break;
 
-			case _HTML_LOCATION_:
+			case HTML_LOCATION:
 				$search[$s]['label']='Country';	// translate this
 				$search[$s]['dbfield']=$_pfields[$i]['dbfield'].'_country';
 				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'_country" id="'.$_pfields[$i]['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`').'</select>';

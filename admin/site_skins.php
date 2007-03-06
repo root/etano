@@ -22,7 +22,7 @@ allow_dept(DEPT_ADMIN);
 $tpl=new phemplate('skin/','remove_nonjs');
 
 $site_skins=array();
-$query="SELECT a.`module_code`,a.`module_name`,a.`version`,b.`config_option`,b.`config_value` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_code`=b.`fk_module_code` AND a.`module_type`='"._MODULE_SKIN_."'";
+$query="SELECT a.`module_code`,a.`module_name`,a.`version`,b.`config_option`,b.`config_value` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_code`=b.`fk_module_code` AND a.`module_type`='".MODULE_SKIN."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $i=-1;
 $last_code='';

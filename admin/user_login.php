@@ -19,7 +19,7 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 allow_dept(DEPT_ADMIN | DEPT_MODERATOR);
 
 $output['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
-$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 $tpl=new phemplate('skin/','remove_nonjs');
 
 if (isset($_GET['top'])) {

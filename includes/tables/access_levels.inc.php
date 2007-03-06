@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $access_levels_default['defaults']=array('level_id'=>0,'level_code'=>'','level_diz'=>'','level'=>0);
-$access_levels_default['types']=array('level_id'=>_HTML_INT_,'level_code'=>_HTML_TEXTFIELD_,'level_diz'=>_HTML_TEXTFIELD_,'level'=>_HTML_INT_);
+$access_levels_default['types']=array('level_id'=>HTML_INT,'level_code'=>HTML_TEXTFIELD,'level_diz'=>HTML_TEXTFIELD,'level'=>HTML_INT);

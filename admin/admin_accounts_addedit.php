@@ -38,7 +38,7 @@ if (isset($_SESSION['topass']['input'])) {
 }
 
 $admin_accounts['dept_id']=vector2options($accepted_admin_depts,$admin_accounts['dept_id']);
-$admin_accounts['status']=vector2options($accepted_astats,$admin_accounts['status'],array(_ASTAT_UNVERIFIED_));
+$admin_accounts['status']=vector2options($accepted_astats,$admin_accounts['status'],array(ASTAT_UNVERIFIED));
 if (empty($admin_accounts['admin_id'])) {
 	$admin_accounts['change_pass']='checked="checked"';
 }

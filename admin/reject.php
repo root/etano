@@ -23,7 +23,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $output=array();
 $output['t']=sanitize_and_format_gpc($_GET,'t',TYPE_INT,0,0);
 $output['id']=sanitize_and_format_gpc($_GET,'id',TYPE_INT,0,0);
-$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 $output['return']=rawurlencode($output['return2']);
 
 $query="SELECT `amtpl_id`,`amtpl_name`,`subject`,`message_body` FROM `{$dbtable_prefix}admin_mtpls` WHERE `amtpl_type`='".$output['t']."'";

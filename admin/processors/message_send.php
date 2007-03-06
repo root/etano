@@ -29,9 +29,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['uids']=isset($_POST['uids']) ? $_POST['uids'] : '';
 	$input['uids']=explode('|',$input['uids']);
 	$input['uids']=sanitize_and_format($input['uids'],TYPE_INT,0,array());
-	$input['subject']=sanitize_and_format_gpc($_POST,'subject',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-	$input['message_body']=sanitize_and_format_gpc($_POST,'message_body',TYPE_STRING,$__html2format[_HTML_TEXTAREA_],'');
-	$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],''));
+	$input['subject']=sanitize_and_format_gpc($_POST,'subject',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$input['message_body']=sanitize_and_format_gpc($_POST,'message_body',TYPE_STRING,$__html2format[HTML_TEXTAREA],'');
+	$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
 
 	if (empty($input['uids'])) {
 		$error=true;
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$query=$insert;
 			}
-			$query.="('".$input['uids'][$i]."','".$input['subject']."','".$input['message_body']."',now(),"._MESS_SYSTEM_."),";
+			$query.="('".$input['uids'][$i]."','".$input['subject']."','".$input['message_body']."',now(),".MESS_SYSTEM."),";
 		}
 		if ($query!=$insert) {
 			$query=substr($query,0,-1);
@@ -68,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['text']=sprintf('Message sent to %s members',count($input['uids']));
 	} else {
 		$nextpage=_BASEURL_.'/admin/message_send.php';
-// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
-		$input['message_body']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['message_body']);
+// 		you must re-read all textareas from $_POST like this:
+//		$input['x']=addslashes_mq($_POST['x']);
+		$input['message_body']=addslashes_mq($_POST['message_body']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}

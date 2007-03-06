@@ -22,9 +22,9 @@ if (_DEBUG_!=0) {
 }
 
 // account status
-define('_ASTAT_SUSPENDED_',5);
-define('_ASTAT_UNVERIFIED_',10);
-define('_ASTAT_ACTIVE_',15);
+define('ASTAT_SUSPENDED',5);
+define('ASTAT_UNVERIFIED',10);
+define('ASTAT_ACTIVE',15);
 
 // profile status
 define('PSTAT_PENDING',5);
@@ -36,33 +36,33 @@ define('_CHOOSE_',-2);
 define('_NDISCLOSED_',0);
 
 // message types
-define('_MESS_MESS_',0);	// regular messages
-define('_MESS_FLIRT_',1);	// flirts
-define('_MESS_SYSTEM_',2);	// admin messages
+define('MESS_MESS',0);	// regular messages
+define('MESS_FLIRT',1);	// flirts
+define('MESS_SYSTEM',2);	// admin messages
 
 // search types
-define('_SEARCH_USER_',1);
-define('_SEARCH_PHOTO_',2);
-define('_SEARCH_BLOG_',3);
-define('_SEARCH_TAG_',4);
+define('SEARCH_USER',1);
+define('SEARCH_PHOTO',2);
+define('SEARCH_BLOG',3);
+define('SEARCH_TAG',4);
 
 // module types
-define('_MODULE_REGULAR_',0);
-define('_MODULE_PAYMENT_',1);
-define('_MODULE_FRAUD_',2);
-define('_MODULE_WIDGET_',3);
-define('_MODULE_SKIN_',4);
+define('MODULE_REGULAR',0);
+define('MODULE_PAYMENT',1);
+define('MODULE_FRAUD',2);
+define('MODULE_WIDGET',3);
+define('MODULE_SKIN',4);
 
 // filter types
-define('_FILTER_SENDER_',1);
-define('_FILTER_SENDER_PROFILE_',2);
-define('_FILTER_MESSAGE_',3);
+define('FILTER_SENDER',1);
+define('FILTER_SENDER_PROFILE',2);
+define('FILTER_MESSAGE',3);
 
 // fixed folders types
-define('_FOLDER_INBOX_',0);
-define('_FOLDER_TRASH_',-1);
-define('_FOLDER_OUTBOX_',-2);
-define('_FOLDER_SPAMBOX_',-3);
+define('FOLDER_INBOX',0);
+define('FOLDER_TRASH',-1);
+define('FOLDER_OUTBOX',-2);
+define('FOLDER_SPAMBOX',-3);
 
 // Unset globally registered vars
 function _unset_vars(&$var) {
@@ -91,9 +91,9 @@ if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=
 
 require_once 'defines.inc.php';
 require_once 'sco_functions.inc.php';
-define('_HTML_LOCATION_',107);
-$__html2type[_HTML_LOCATION_]=TYPE_INT;
-$__html2format[_HTML_LOCATION_]=0;
+define('HTML_LOCATION',107);
+$__html2type[HTML_LOCATION]=TYPE_INT;
+$__html2format[HTML_LOCATION]=0;
 $_lang=array();
 require_once _BASEPATH_.'/skins/'.get_my_skin().'/lang/strings.inc.php';
 $_pfields=array();

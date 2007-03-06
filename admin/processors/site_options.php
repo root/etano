@@ -31,15 +31,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		switch ($rsrow['option_type']) {
 
 			case OPTION_CHECKBOX:
-				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],0);
+				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[HTML_TEXTFIELD],0);
 				break;
 
 			case OPTION_TEXTFIELD:
-				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 				break;
 
 			case OPTION_CHECKBOX:
-				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[_HTML_TEXTAREA_],'');
+				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[HTML_TEXTAREA],'');
 				break;
 
 		}

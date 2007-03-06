@@ -1,30 +1,27 @@
 <script type="text/javascript" src="js/message_send.js"></script>
-<opt name="tplvars.bbcode_comments">
+<opt name="tplvars.bbcode_message">
 <script type="text/javascript" src="js/bbcode.js"></script>
 <link href="{tplvars.tplrelpath}/styles/bbcode.css" rel="stylesheet" type="text/css" />
-</opt name="tplvars.bbcode_comments">
+</opt name="tplvars.bbcode_message">
 
-<p><a href="javascript:;" onclick="popWin('popup_use_tpl.php','template',100,200,1)">Use a saved template</a></p>
-
-<label for="subject">Subject:</label><input class="text" type="text" name="subject" id="subject" value="{mail.subject}" tabindex="1" />
-<opt name="tplvars.bbcode_comments">
-<div id="bb_tools">
-	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',document.getElementById('comment'))"><i>Bold</i></a>
-	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',document.getElementById('comment'))"><i>Underline</i></a>
-	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',document.getElementById('comment'))"><i>Hyperlink</i></a>
-	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',document.getElementById('comment'))"><i>Quote</i></a>
-</div>
-</opt name="tplvars.bbcode_comments">
 <form action="processors/message_send.php" method="post" id="msend_form" onsubmit="return(check_form(this))">
-<input type="hidden" name="fk_user_id" value="{mail.fk_user_id}" />
-<input type="hidden" name="o" value="{o}" />
-<input type="hidden" name="r" value="{r}" />
-<input type="hidden" name="ob" value="{ob}" />
-<input type="hidden" name="od" value="{od}" />
+<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
+<input type="hidden" name="return" value="{output.return}" />
+<label for="subject">Subject: </label><input class="text" type="text" name="subject" id="subject" value="{output.subject}" tabindex="1" />
+<opt name="tplvars.bbcode_message">
+<div id="bb_tools">
+	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#message_body')[0])"><i>Bold</i></a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#message_body')[0])"><i>Underline</i></a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#message_body')[0])"><i>Hyperlink</i></a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#message_body')[0])"><i>Quote</i></a>
+</div>
+</opt name="tplvars.bbcode_message">
 <fieldset>
-	<textarea name="message_body" id="message_body" cols="" rows="" tabindex="2">{mail.message_body}</textarea>
+	<textarea name="message_body" id="message_body" cols="" rows="" tabindex="2">{output.message_body}</textarea>
 </fieldset>
 <fieldset class="controls">
-	<input type="submit" value="Send" id="btn_send" /> <input type="button" id="save_tpl" class="btn-blank-big" value="Save as template" /></p>
+	<input type="image" alt="Send" id="btn_send" tabindex="3" src="{tplvars.tplrelpath}/images/btn-send-out.gif" />
+	<input type="image" alt="Save as template" id="btn_savetpl" tabindex="4" src="{tplvars.tplrelpath}/images/btn-savetpl-out.gif" />
+	<a class="content-link" href="javascript:;" onclick="popWin('popup_use_tpl.php','template',100,200,1)">Use a saved template</a>
 </fieldset>
 </form>
