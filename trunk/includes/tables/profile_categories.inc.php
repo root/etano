@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $profile_categories_default['defaults']=array('pcat_id'=>0,'fk_lk_id_pcat'=>0,'access_level'=>0);
-$profile_categories_default['types']=array('pcat_id'=>_HTML_INT_,'fk_lk_id_pcat'=>_HTML_INT_,'access_level'=>_HTML_INT_);
+$profile_categories_default['types']=array('pcat_id'=>HTML_INT,'fk_lk_id_pcat'=>HTML_INT,'access_level'=>HTML_INT);

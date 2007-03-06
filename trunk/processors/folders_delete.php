@@ -23,7 +23,7 @@ $qs_sep='';
 $topass=array();
 $folder_id=isset($_GET['fid']) ? (int)$_GET['fid'] : 0;
 
-$query="UPDATE `{$dbtable_prefix}user_inbox` SET `fk_folder_id`='"._FOLDER_INBOX_."', `del`=1 WHERE `fk_folder_id`='$folder_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="UPDATE `{$dbtable_prefix}user_inbox` SET `fk_folder_id`='".FOLDER_INBOX."', `del`=1 WHERE `fk_folder_id`='$folder_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $query="DELETE FROM `{$dbtable_prefix}message_filters` WHERE `fk_folder_id`='$folder_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";

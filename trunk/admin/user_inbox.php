@@ -25,7 +25,7 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 	$output['r']=isset($_GET['r']) ? (int)$_GET['r'] : _RESULTS_;
 	$output['user']=get_user_by_userid($output['uid']);
-	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 	$where="`fk_user_id`='".$output['uid']."' AND `del`=0";
 	$from="`{$dbtable_prefix}user_inbox`";
@@ -45,7 +45,7 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 			$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 			$rsrow['date_sent']=strftime($config['date_format'],$rsrow['date_sent']);
 			$rsrow['myclass']=($i%2) ? 'odd_item' : 'even_item';
-			if ($rsrow['message_type']==_MESS_SYSTEM_ || empty($rsrow['fk_user_id_other'])) {
+			if ($rsrow['message_type']==MESS_SYSTEM || empty($rsrow['fk_user_id_other'])) {
 				unset($rsrow['fk_user_id_other']);
 			}
 			$loop[]=$rsrow;

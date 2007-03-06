@@ -26,8 +26,8 @@ $nextpage='popup_save_search.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$input['search']=sanitize_and_format_gpc($_POST,'search',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-	$input['title']=sanitize_and_format_gpc($_POST,'title',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+	$input['search']=sanitize_and_format_gpc($_POST,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$input['title']=sanitize_and_format_gpc($_POST,'title',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 	if (empty($input['search'])) {
 		$error=true;
@@ -52,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Search saved.';
 		}
 	} else {
-// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+// 		you must re-read all textareas from $_POST like this:
+//		$input['x']=addslashes_mq($_POST['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}

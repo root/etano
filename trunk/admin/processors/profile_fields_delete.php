@@ -33,7 +33,7 @@ if (mysql_num_rows($res)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$query="DELETE FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`='$pfield_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if ($rsrow['html_type']==_HTML_LOCATION_) {
+	if ($rsrow['html_type']==HTML_LOCATION) {
 		$query="ALTER TABLE `{$dbtable_prefix}user_profiles` DROP `".$rsrow['dbfield']."_country`,DROP `".$rsrow['dbfield']."_state`,DROP `".$rsrow['dbfield']."_city`,DROP `".$rsrow['dbfield']."_zip`";
 	} else {
 		$query="ALTER TABLE `{$dbtable_prefix}user_profiles` DROP `".$rsrow['dbfield']."`";

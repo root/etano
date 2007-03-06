@@ -20,7 +20,7 @@ check_login_member(2);
 
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 
-$module_code=preg_replace('[^a-zA-Z0-9_]','',sanitize_and_format_gpc($_REQUEST,'p',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],''));
+$module_code=preg_replace('[^a-zA-Z0-9_]','',sanitize_and_format_gpc($_REQUEST,'p',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
 if (!empty($module_code)) {
 	if (is_file(_BASEPATH_.'/plugins/payment/'.$module_code.'/'.$module_code.'.class.php')) {
 		include_once _BASEPATH_.'/plugins/payment/'.$module_code.'/'.$module_code.'.class.php';

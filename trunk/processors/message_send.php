@@ -21,8 +21,6 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(5);
 
 $error=false;
-$qs='';
-$qs_sep='';
 $topass=array();
 $nextpage='mailbox.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
@@ -30,6 +28,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // get the input we need and sanitize it
 	foreach ($queue_message_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$queue_message_default['defaults'][$k]);
+	}
+	if (isset($_POST['return'])) {
+		$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+		$nextpage=$input['return'];
 	}
 
 // check for input errors
@@ -50,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
+		// sender of the message: me
 		$input['fk_user_id_other']=$_SESSION['user']['user_id'];
 		$input['_user_other']=$_SESSION['user']['user'];
 		$query="INSERT INTO `{$dbtable_prefix}queue_message` SET `date_sent`='".gmdate('YmdHis')."'";
@@ -58,6 +61,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query.=",`$k`='".$input[$k]."'";
 			}
 		}
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+
+		// save the message in my outbox
 		$input['fk_user_id_other']=$input['fk_user_id'];
 		$input['fk_user_id']=$_SESSION['user']['user_id'];
 		$input['_user_other']=get_user_by_userid($input['fk_user_id_other']);
@@ -72,27 +78,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['text']='Message sent.';
 	} else {
 		$nextpage='message_send.php';
-// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+// 		you must re-read all textareas from $_POST like this:
+//		$input['x']=addslashes_mq($_POST['x']);
+		$input['message_body']=addslashes_mq($_POST['message_body']);
+		$input['return']=rawurlencode($input['return']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}
-	if (isset($_POST['o'])) {
-		$qs.=$qs_sep.'o='.$_POST['o'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['r'])) {
-		$qs.=$qs_sep.'r='.$_POST['r'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['ob'])) {
-		$qs.=$qs_sep.'ob='.$_POST['ob'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['od'])) {
-		$qs.=$qs_sep.'od='.$_POST['od'];
-		$qs_sep='&';
-	}
 }
-redirect2page($nextpage,$topass,$qs);
+$nextpage=_BASEURL_.'/'.$nextpage;
+redirect2page($nextpage,$topass,'',true);
 ?>

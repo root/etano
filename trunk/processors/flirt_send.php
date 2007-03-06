@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['fk_user_id_other']=$_SESSION['user']['user_id'];
 		$input['_user_other']=$_SESSION['user']['user'];
 		$input['subject']='You have received a flirt from '.$_SESSION['user']['user'];
-		$input['message_type']=_MESS_FLIRT_;
+		$input['message_type']=MESS_FLIRT;
 		$query="INSERT INTO `{$dbtable_prefix}queue_message` SET `date_sent`='".gmdate('YmdHis')."'";
 		foreach ($queue_message_default['defaults'] as $k=>$v) {
 			if (isset($input[$k])) {
@@ -83,8 +83,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Flirt sent.';
 	} else {
-// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+// 		you must re-read all textareas from $_POST like this:
+//		$input['x']=addslashes_mq($_POST['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}

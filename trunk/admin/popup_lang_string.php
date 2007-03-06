@@ -25,7 +25,7 @@ $lk_id=0;
 if (isset($_SESSION['topass']['input'])) {
 	$input=$_SESSION['topass']['input'];
 	$lk_id=$input['lk_id'];
-	$query="SELECT a.`module_code` as `skin`,b.`config_value` as `skin_name` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='"._MODULE_SKIN_."' AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_name'";
+	$query="SELECT a.`module_code` as `skin`,b.`config_value` as `skin_name` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='".MODULE_SKIN."' AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_name'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$i=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
@@ -46,7 +46,7 @@ if (isset($_SESSION['topass']['input'])) {
 		$skins[]=$rsrow['skin'];
 	}
 	// for the rest of skins having no translation for this lk, just set the translation to ''
-	$query="SELECT a.`module_code` as `skin`,b.`config_value` as `skin_name` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='"._MODULE_SKIN_."' AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_name'";
+	$query="SELECT a.`module_code` as `skin`,b.`config_value` as `skin_name` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='".MODULE_SKIN."' AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_name'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		if (!in_array($rsrow['skin'],$skins)) {

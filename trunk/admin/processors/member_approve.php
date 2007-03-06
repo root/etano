@@ -24,8 +24,8 @@ $qs_sep='';
 $topass=array();
 $input=array();
 if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
-	$input['search']=sanitize_and_format_gpc($_REQUEST,'search',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='"._SEARCH_USER_."'";
+	$input['search']=sanitize_and_format_gpc($_REQUEST,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='".SEARCH_USER."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$results=mysql_result($res,0,0);
@@ -34,7 +34,7 @@ if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
 } elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
 	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 }
-$input['return']=rawurldecode(sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],''));
+$input['return']=rawurldecode(sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
 
 if (!empty($input['uids'])) {
 	$query="UPDATE `{$dbtable_prefix}user_profiles` SET `status`='".PSTAT_APPROVED."',`last_changed`=now() WHERE `fk_user_id` IN ('".join("','",$input['uids'])."')";

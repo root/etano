@@ -27,7 +27,7 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	$uid=(int)$_GET['uid'];
 	$user=get_user_by_userid($uid);
 } elseif (isset($_GET['user']) && !isset($_GET['uid'])) {
-	$user=sanitize_and_format($_GET['user'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
+	$user=sanitize_and_format($_GET['user'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
 	$uid=get_userid_by_user($user);
 } elseif (isset($_SESSION['user']['user_id']) && !empty($_SESSION['user']['user_id'])) {
 	$uid=$_SESSION['user']['user_id'];

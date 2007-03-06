@@ -42,7 +42,7 @@ if (!empty($totalrows)) {
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$profile_fields[$i]=$rsrow;
 		$profile_fields[$i]=sanitize_and_format($profile_fields[$i],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		if ($profile_fields[$i]['html_type']==_HTML_SELECT_ || $profile_fields[$i]['html_type']==_HTML_CHECKBOX_LARGE_) {
+		if ($profile_fields[$i]['html_type']==HTML_SELECT || $profile_fields[$i]['html_type']==HTML_CHECKBOX_LARGE) {
 			$profile_fields[$i]['accepted_values']=lkids2lks(explode('|',substr($profile_fields[$i]['accepted_values'],1,-1)));
 		} else {
 			$profile_fields[$i]['accepted_values']=str_replace('|',', ',substr($profile_fields[$i]['accepted_values'],1,-1));

@@ -17,7 +17,7 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
 $output='';
 if (isset($_POST['user']) && !empty($_POST['user'])) {
-	$user=sanitize_and_format($_POST['user'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
+	$user=sanitize_and_format($_POST['user'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
 	if (get_userid_by_user($user)) {
 		$output=1;
 	}

@@ -31,7 +31,7 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id'])) {
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
 		$output['date_sent']=strftime($config['datetime_format'],$output['date_sent']);
-		if ($output['message_type']==_MESS_SYSTEM_ || empty($output['fk_user_id_other'])) {
+		if ($output['message_type']==MESS_SYSTEM || empty($output['fk_user_id_other'])) {
 			unset($output['fk_user_id_other']);
 		}
 		$output=sanitize_and_format($output,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);

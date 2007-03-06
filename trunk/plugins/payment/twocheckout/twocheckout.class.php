@@ -33,24 +33,24 @@ class payment_twocheckout extends ipayment {
 											'x_response_reason_text'=>'',
 											'subscr_id'=>0,
 											'user_id'=>0),
-						'types'=>	array(	'x_2checked'=>_HTML_TEXTFIELD_,
-											'x_MD5_Hash'=>_HTML_TEXTFIELD_,
-											'x_trans_id'=>_HTML_TEXTFIELD_,
-											'x_amount'=>_HTML_FLOAT_,
-											'card_holder_name'=>_HTML_TEXTFIELD_,
-											'x_Country'=>_HTML_TEXTFIELD_,
-											'x_City'=>_HTML_TEXTFIELD_,
-											'x_State'=>_HTML_TEXTFIELD_,
-											'x_Zip'=>_HTML_TEXTFIELD_,
-											'x_Address'=>_HTML_TEXTFIELD_,
-											'x_Email'=>_HTML_TEXTFIELD_,
-											'x_Phone'=>_HTML_TEXTFIELD_,
-											'demo'=>_HTML_TEXTFIELD_,
-											'x_response_code'=>_HTML_INT_,
-											'x_response_reason_code'=>_HTML_TEXTFIELD_,
-											'x_response_reason_text'=>_HTML_TEXTFIELD_,
-											'subscr_id'=>_HTML_INT_,
-											'user_id'=>_HTML_INT_));
+						'types'=>	array(	'x_2checked'=>HTML_TEXTFIELD,
+											'x_MD5_Hash'=>HTML_TEXTFIELD,
+											'x_trans_id'=>HTML_TEXTFIELD,
+											'x_amount'=>HTML_FLOAT,
+											'card_holder_name'=>HTML_TEXTFIELD,
+											'x_Country'=>HTML_TEXTFIELD,
+											'x_City'=>HTML_TEXTFIELD,
+											'x_State'=>HTML_TEXTFIELD,
+											'x_Zip'=>HTML_TEXTFIELD,
+											'x_Address'=>HTML_TEXTFIELD,
+											'x_Email'=>HTML_TEXTFIELD,
+											'x_Phone'=>HTML_TEXTFIELD,
+											'demo'=>HTML_TEXTFIELD,
+											'x_response_code'=>HTML_INT,
+											'x_response_reason_code'=>HTML_TEXTFIELD,
+											'x_response_reason_text'=>HTML_TEXTFIELD,
+											'subscr_id'=>HTML_INT,
+											'user_id'=>HTML_INT));
 
 	function payment_twocheckout() {
 		$this->ipayment();
@@ -194,7 +194,7 @@ class payment_twocheckout extends ipayment {
 
 
 	function check_fraud($pay_result) {
-		$fraud_managers=get_module_codes_by_type(_MODULE_FRAUD_);
+		$fraud_managers=get_module_codes_by_type(MODULE_FRAUD);
 		for ($i=0;isset($fraud_managers[$i]);++$i) {
 			require_once(_BASEPATH_.'/plugins/fraud/'.$fraud_managers[$i].'/'.$fraud_managers[$i].'.class.php');
 			$class='fraud_'.$fraud_managers[$i];

@@ -19,13 +19,13 @@ allow_dept(DEPT_ADMIN);
 
 $output='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-	$optype=sanitize_and_format_gpc($_POST,'optype',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-	$val=sanitize_and_format_gpc($_POST,'val',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+	$optype=sanitize_and_format_gpc($_POST,'optype',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$val=sanitize_and_format_gpc($_POST,'val',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 	$lk_id=sanitize_and_format_gpc($_POST,'lk_id',TYPE_INT,0,0);
 	switch ($optype) {
 
 		case 'add':
-			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`="._HTML_TEXTFIELD_.",`lk_diz`='Field value',`lk_use`='".LK_FIELD."'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".HTML_TEXTFIELD.",`lk_diz`='Field value',`lk_use`='".LK_FIELD."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$lk_id=mysql_insert_id();
 			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='$val',`fk_lk_id`='$lk_id',`skin`='"._DEFAULT_SKIN_."'";

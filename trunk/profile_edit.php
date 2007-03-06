@@ -40,11 +40,11 @@ if (isset($_SESSION['topass']['input'])) {
 		if ($_pfields[$field_id]['editable']) {
 			switch ($_pfields[$field_id]['html_type']) {
 
-				case _HTML_DATE_:
+				case HTML_DATE:
 					$query.="YEAR(`".$_pfields[$field_id]['dbfield']."`) as `".$_pfields[$field_id]['dbfield']."_year`,MONTH(`".$_pfields[$field_id]['dbfield']."`) as `".$_pfields[$field_id]['dbfield']."_month`,DAYOFMONTH(`".$_pfields[$field_id]['dbfield']."`) as `".$_pfields[$field_id]['dbfield']."_day`,";
 					break;
 
-				case _HTML_LOCATION_:
+				case HTML_LOCATION:
 					$query.="`".$_pfields[$field_id]['dbfield']."_country`,`".$_pfields[$field_id]['dbfield']."_state`,`".$_pfields[$field_id]['dbfield']."_city`,`".$_pfields[$field_id]['dbfield']."_zip`,";
 					break;
 
@@ -65,13 +65,13 @@ if (isset($_SESSION['topass']['input'])) {
 	foreach ($_pcats[$cid]['fields'] as $field_id) {
 		switch ($_pfields[$field_id]['html_type']) {
 
-			case _HTML_DATE_:
+			case HTML_DATE:
 				$user_details[$_pfields[$field_id]['dbfield'].'_month']=0;
 				$user_details[$_pfields[$field_id]['dbfield'].'_day']=0;
 				$user_details[$_pfields[$field_id]['dbfield'].'_year']=0;
 				break;
 
-			case _HTML_LOCATION_:
+			case HTML_LOCATION:
 				$user_details[$_pfields[$field_id]['dbfield'].'_country']=$_pfields[$field_id]['default_value'][0];
 				$user_details[$_pfields[$field_id]['dbfield'].'_state']=0;
 				$user_details[$_pfields[$field_id]['dbfield'].'_city']=0;
@@ -99,29 +99,29 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 	}
 	switch ($_pfields[$field_id]['html_type']) {
 
-		case _HTML_TEXTFIELD_:
+		case HTML_TEXTFIELD:
 			$profile[$i]['field']='<input type="text" name="'.$_pfields[$field_id]['dbfield'].'" id="'.$_pfields[$field_id]['dbfield'].'" value="'.(isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : '').'" tabindex="'.($i+4).'" />';
 			break;
 
-		case _HTML_TEXTAREA_:
+		case HTML_TEXTAREA:
 			$profile[$i]['field']='<textarea name="'.$_pfields[$field_id]['dbfield'].'" id="'.$_pfields[$field_id]['dbfield'].'" tabindex="'.($i+4).'">'.(isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : '').'</textarea>';
 			break;
 
-		case _HTML_SELECT_:
+		case HTML_SELECT:
 			$profile[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'" id="'.$_pfields[$field_id]['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($_pfields[$field_id]['accepted_values'],isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : 0,array(0)).'</select>';
 			break;
 
-		case _HTML_CHECKBOX_LARGE_:
+		case HTML_CHECKBOX_LARGE:
 			$profile[$i]['field']=vector2checkboxes_str($_pfields[$field_id]['accepted_values'],array(0),$_pfields[$field_id]['dbfield'],isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : '',1,true,'tabindex="'.($i+4).'"');
 			break;
 
-		case _HTML_DATE_:
+		case HTML_DATE:
 			$profile[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'_month" id="'.$_pfields[$field_id]['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$user_details[$_pfields[$field_id]['dbfield'].'_month']).'</select>';
 			$profile[$i]['field'].='<select name="'.$_pfields[$field_id]['dbfield'].'_day" id="'.$_pfields[$field_id]['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">'.$_lang[5].'</option>'.interval2options(1,31,$user_details[$_pfields[$field_id]['dbfield'].'_day']).'</select>';
 			$profile[$i]['field'].='<select name="'.$_pfields[$field_id]['dbfield'].'_year" id="'.$_pfields[$field_id]['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">'.$_lang[6].'</option>'.interval2options($_pfields[$field_id]['accepted_values'][1],$_pfields[$field_id]['accepted_values'][2],$user_details[$_pfields[$field_id]['dbfield'].'_year'],array(),1,2).'</select>';
 			break;
 
-		case _HTML_LOCATION_:
+		case HTML_LOCATION:
 			$country_id=$user_details[$_pfields[$field_id]['dbfield'].'_country'];
 			$state_id=$user_details[$_pfields[$field_id]['dbfield'].'_state'];
 			$profile[$i]['label']='Country:';	//translate this

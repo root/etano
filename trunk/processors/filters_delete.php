@@ -23,7 +23,7 @@ $qs_sep='';
 $topass=array();
 $nextpage='filters.php';
 $filter_id=isset($_GET['filter_id']) ? (int)$_GET['filter_id'] : 0;
-$where=isset($_GET['uid']) ? "`filter_type`='"._FILTER_USER_."' AND `field_value`='".(int)$_GET['uid']."' AND `fk_folder_id`='"._FOLDER_SPAMBOX_."'" : "`filter_id`='".$filter_id."'";
+$where=isset($_GET['uid']) ? "`filter_type`='"._FILTER_USER_."' AND `field_value`='".(int)$_GET['uid']."' AND `fk_folder_id`='".FOLDER_SPAMBOX."'" : "`filter_id`='".$filter_id."'";
 
 $query="DELETE FROM `{$dbtable_prefix}message_filters` WHERE $where AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

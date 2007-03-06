@@ -22,14 +22,14 @@ $tpl=new phemplate('skin/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
-$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 $input=array();
 $photo_ids=array();
 $do_query=true;
 if (!empty($search_md5)) {
 	// if we have a query cache, retrieve all from cache
-	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='$search_md5' AND `search_type`="._SEARCH_PHOTO_;
+	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='$search_md5' AND `search_type`=".SEARCH_PHOTO;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$photo_ids=mysql_result($res,0,0);
@@ -93,7 +93,7 @@ if ($do_query) {
 	}
 	$serialized_input=serialize($input);
 	$search_md5=md5($serialized_input);
-	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='$search_md5',`search_type`="._SEARCH_PHOTO_.",`search`='$serialized_input',`results`='".join(',',$photo_ids)."'";
+	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='$search_md5',`search_type`=".SEARCH_PHOTO.",`search`='$serialized_input',`results`='".join(',',$photo_ids)."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 $totalrows=count($photo_ids);

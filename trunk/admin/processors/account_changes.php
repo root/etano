@@ -24,8 +24,8 @@ $qs_sep='';
 $topass=array();
 $input=array();
 if (isset($_POST['search']) && !empty($_POST['search'])) {
-	$input['search']=sanitize_and_format($_POST['search'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
-	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='"._SEARCH_USER_."'";
+	$input['search']=sanitize_and_format($_POST['search'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
+	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='".SEARCH_USER."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$results=mysql_result($res,0,0);
@@ -34,8 +34,8 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
 } elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
 	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 }
-$input['act']=sanitize_and_format_gpc($_POST,'act',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
-$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],''));
+$input['act']=sanitize_and_format_gpc($_POST,'act',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
 
 if (!empty($input['uids'])) {
 	switch ($input['act']) {
@@ -49,7 +49,7 @@ if (!empty($input['uids'])) {
 			break;
 
 		case 'skin':
-			$input['skin']=sanitize_and_format_gpc($_POST,'skin',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+			$input['skin']=sanitize_and_format_gpc($_POST,'skin',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `skin`='".$input['skin']."' WHERE `user_id` IN ('".join("','",$input['uids'])."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
@@ -57,7 +57,7 @@ if (!empty($input['uids'])) {
 			break;
 
 		case 'pass':
-			$input['pass']=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+			$input['pass']=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `pass`=md5('".$input['pass']."') WHERE `user_id`='".$input['uids'][0]."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;

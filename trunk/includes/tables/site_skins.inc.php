@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $site_skins_default['defaults']=array('fk_module_code'=>'','skin_dir'=>'','skin_name'=>'','fk_locale_id'=>0,'is_default'=>0);
-$site_skins_default['types']=array('fk_module_code'=>_HTML_TEXTFIELD_,'skin_dir'=>_HTML_TEXTFIELD_,'skin_name'=>_HTML_TEXTFIELD_,'fk_locale_id'=>_HTML_INT_,'is_default'=>_HTML_INT_);
+$site_skins_default['types']=array('fk_module_code'=>HTML_TEXTFIELD,'skin_dir'=>HTML_TEXTFIELD,'skin_name'=>HTML_TEXTFIELD,'fk_locale_id'=>HTML_INT,'is_default'=>HTML_INT);

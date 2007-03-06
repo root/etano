@@ -28,9 +28,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // get the input we need and sanitize it
 	$input['t']=sanitize_and_format_gpc($_POST,'t',TYPE_INT,0,0);
 	$input['id']=sanitize_and_format_gpc($_POST,'id',TYPE_INT,0,0);
-	$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],''));
+	$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
 	$input['send_email']=sanitize_and_format_gpc($_POST,'send_email',TYPE_INT,0,0);
-	$input['reject_reason']=sanitize_and_format_gpc($_POST,'reject_reason',TYPE_STRING,$__html2format[_HTML_TEXTAREA_],'');
+	$input['reject_reason']=sanitize_and_format_gpc($_POST,'reject_reason',TYPE_STRING,$__html2format[HTML_TEXTAREA],'');
 // NO addslashes here!!! Used for queue_or_send_email()
 	$input['reason_title2']=sanitize_and_format_gpc($_POST,'reason_title',TYPE_STRING,FORMAT_STRIP_MQ | FORMAT_ONELINE,'');
 	$input['reject_reason2']=sanitize_and_format_gpc($_POST,'reject_reason',TYPE_STRING,FORMAT_STRIP_MQ,'');

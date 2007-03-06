@@ -20,12 +20,12 @@ function handle_mass_member() {
 		$('#mass_member_form').attr('action','membership_assign.php');
 
 	} else if ($('#act').val()=='astat_active') {
-//_ASTAT_ACTIVE_
+//ASTAT_ACTIVE
 		$('#mass_member_form').attr('action','processors/account_changes.php');
 		$('#mass_member_form').append('<input type="hidden" name="act" value="status" /><input type="hidden" name="status" value="15" />');
 
 	} else if ($('#act').val()=='astat_suspend') {
-//_ASTAT_SUSPENDED_
+//ASTAT_SUSPENDED
 		$('#mass_member_form').attr('action','processors/account_changes.php');
 		$('#mass_member_form').append('<input type="hidden" name="act" value="status" /><input type="hidden" name="status" value="5" />');
 

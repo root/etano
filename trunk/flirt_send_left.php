@@ -13,7 +13,7 @@ Support at:                 http://forum.datemill.com
 
 $user_friends=array();
 
-$query="SELECT * FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `filter_type`='"._FILTER_USER_."' AND `field_value`='".$uid."' AND `fk_folder_id`='"._FOLDER_SPAMBOX_."'";
+$query="SELECT * FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `filter_type`='"._FILTER_USER_."' AND `field_value`='".$uid."' AND `fk_folder_id`='".FOLDER_SPAMBOX."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$tpl->set_var('unblock_user',true);

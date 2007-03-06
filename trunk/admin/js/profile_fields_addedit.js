@@ -130,7 +130,7 @@ function delete_accval(position) {
 }
 
 function adddel_defval(type,position) {
-	if (html_type==3) {	//_HTML_SELECT_
+	if (html_type==3) {	//HTML_SELECT
 		if (type) {		// add here
 			for (i=0;i<accvals.length;i++) {
 				if (i!=position) {
@@ -141,7 +141,7 @@ function adddel_defval(type,position) {
 		} else {		// del here
 			default_value=new Array();
 		}
-	} else if (html_type==10) { 	//_HTML_CHECKBOX_LARGE_
+	} else if (html_type==10) { 	//HTML_CHECKBOX_LARGE
 		if (type) {	// add here
 			doadd=true;
 			for (i=0;i<default_value.length;i++) {
@@ -165,7 +165,7 @@ function adddel_defval(type,position) {
 }
 
 function adddel_defsearch(type,position) {
-	if ($('#search_type').val()==3) {	//_HTML_SELECT_
+	if ($('#search_type').val()==3) {	//HTML_SELECT
 		if (type) {		// add here
 			for (i=0;i<accvals.length;i++) {
 				if (i!=position) {
@@ -176,7 +176,7 @@ function adddel_defsearch(type,position) {
 		} else {		// del here
 			default_search=new Array();
 		}
-	} else if ($('search_type').val()==10) { 	//_HTML_CHECKBOX_LARGE_
+	} else if ($('search_type').val()==10) { 	//HTML_CHECKBOX_LARGE
 		if (type) {	// add here
 			doadd=true;
 			for (i=0;i<default_search.length;i++) {

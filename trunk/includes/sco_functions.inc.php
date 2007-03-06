@@ -1,8 +1,9 @@
 <?
 /******************************************************************************
 File:                       includes/sco_functions.inc.php
+$Revision$
 Info:   					general purpose functions library
-File version:				1.2007030501
+File version:				1.2007030601
 Created by:                 Dan Caragea (http://www.sco.ro - dan@rdsct.ro)
 ******************************************************************************/
 
@@ -25,33 +26,34 @@ define('TYPE_EMAIL',7);
 define('TYPE_BOOLEAN',8);
 
 define('FORMAT_ADDSLASH',1);
-define('FORMAT_HTML2TEXT',2);
-define('FORMAT_TEXT2HTML',4);
-define('FORMAT_ONELINE',8);
-define('FORMAT_DATE',16);
-define('FORMAT_TIME',32);
-define('FORMAT_DATETIME',64);
-//define('FORMAT_EMAIL',128);
-define('FORMAT_FLOAT',256);
-define('FORMAT_TRIM',512);
-define('FORMAT_NL2BR',1024);
-define('FORMAT_STRIPSLASH',2048);
-define('FORMAT_STRIP_MQ',4096);
-define('FORMAT_HTML2TEXT_FULL',8192);
-define('FORMAT_UTF_ENCODE',16384);
-define('FORMAT_UTF_DECODE',32768);
+define('FORMAT_OLD_ADDSLASH',2);
+define('FORMAT_STRIPSLASH',4);
+define('FORMAT_STRIP_MQ',8);
+define('FORMAT_HTML2TEXT',16);
+define('FORMAT_TEXT2HTML',32);
+define('FORMAT_ONELINE',64);
+define('FORMAT_DATE',128);
+define('FORMAT_TIME',256);
+define('FORMAT_DATETIME',512);
+//define('FORMAT_EMAIL',1024);
+define('FORMAT_FLOAT',2048);
+define('FORMAT_TRIM',4096);
+define('FORMAT_NL2BR',8192);
+define('FORMAT_HTML2TEXT_FULL',16384);
+define('FORMAT_UTF_ENCODE',32768);
+define('FORMAT_UTF_DECODE',65536);
 
-define('_HTML_TEXTFIELD_',2);
-define('_HTML_SELECT_',3);
-define('_HTML_TEXTAREA_',4);
-define('_HTML_CHECKBOX_',9);
-define('_HTML_CHECKBOX_LARGE_',10);
-define('_HTML_FILE_',101);						//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define('_HTML_FK_SELECT_',102);
-define('_HTML_DATE_',103);
-define('_HTML_INT_',104);
-define('_HTML_FLOAT_',105);
-define('_HTML_PIC_',106);						//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define('HTML_TEXTFIELD',2);
+define('HTML_SELECT',3);
+define('HTML_TEXTAREA',4);
+define('HTML_CHECKBOX',9);
+define('HTML_CHECKBOX_LARGE',10);
+define('HTML_FILE',101);						//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define('HTML_FK_SELECT',102);
+define('HTML_DATE',103);
+define('HTML_INT',104);
+define('HTML_FLOAT',105);
+define('HTML_PIC',106);						//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // 107 is reserved
 
 // text sources and destinations: from db or gpc for db or gpc (edit or display)
@@ -61,8 +63,8 @@ define('TEXT_GPC2EDIT',202);
 define('TEXT_GPC2DISPLAY',203);
 define('TEXT_DB2DB',204);
 
-$__html2type=array(_HTML_TEXTFIELD_=>TYPE_STRING,_HTML_TEXTAREA_=>TYPE_STRING,_HTML_SELECT_=>TYPE_INT,_HTML_CHECKBOX_=>TYPE_ARRAY_SMALL,_HTML_CHECKBOX_LARGE_=>TYPE_ARRAY_LARGE,_HTML_DATE_=>TYPE_STRING,_HTML_INT_=>TYPE_INT,_HTML_FLOAT_=>TYPE_FLOAT);
-$__html2format=array(_HTML_INT_=>0,_HTML_FLOAT_=>0,_HTML_TEXTFIELD_=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE | FORMAT_TRIM),_HTML_TEXTAREA_=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_TRIM),_HTML_SELECT_=>0,_HTML_CHECKBOX_=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH),_HTML_CHECKBOX_LARGE_=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE),_HTML_DATE_=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE | FORMAT_TRIM), TEXT_DB2EDIT=>(FORMAT_HTML2TEXT_FULL), TEXT_DB2DISPLAY=>(FORMAT_HTML2TEXT_FULL | FORMAT_NL2BR), TEXT_DB2DB=>(FORMAT_ADDSLASH), TEXT_GPC2EDIT=>(FORMAT_STRIP_MQ | FORMAT_HTML2TEXT_FULL), TEXT_GPC2DISPLAY=>(FORMAT_STRIP_MQ | FORMAT_HTML2TEXT_FULL | FORMAT_NL2BR));
+$__html2type=array(HTML_TEXTFIELD=>TYPE_STRING,HTML_TEXTAREA=>TYPE_STRING,HTML_SELECT=>TYPE_INT,HTML_CHECKBOX=>TYPE_ARRAY_SMALL,HTML_CHECKBOX_LARGE=>TYPE_ARRAY_LARGE,HTML_DATE=>TYPE_STRING,HTML_INT=>TYPE_INT,HTML_FLOAT=>TYPE_FLOAT);
+$__html2format=array(HTML_INT=>0,HTML_FLOAT=>0,HTML_TEXTFIELD=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE | FORMAT_TRIM),HTML_TEXTAREA=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_TRIM),HTML_SELECT=>0,HTML_CHECKBOX=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH),HTML_CHECKBOX_LARGE=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE),HTML_DATE=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE | FORMAT_TRIM), TEXT_DB2EDIT=>(FORMAT_HTML2TEXT_FULL), TEXT_DB2DISPLAY=>(FORMAT_HTML2TEXT_FULL | FORMAT_NL2BR), TEXT_DB2DB=>(FORMAT_ADDSLASH), TEXT_GPC2EDIT=>(FORMAT_STRIP_MQ | FORMAT_HTML2TEXT_FULL), TEXT_GPC2DISPLAY=>(FORMAT_STRIP_MQ | FORMAT_HTML2TEXT_FULL | FORMAT_NL2BR));
 
 
 function sanitize_and_format_gpc(&$array,$key,$input_type,$format=0,$empty_value='') {
@@ -156,6 +158,9 @@ function sanitize_and_format($input,$input_type,$format=0,$empty_value=null) {
 		}
 		if ($format&FORMAT_ADDSLASH) {	// must come after text2html
 			$input=mysql_real_escape_string($input);	// due to this function there must always be a db_connect() before calling sanitize_and_format
+		}
+		if ($format&FORMAT_OLD_ADDSLASH) {	// must come after text2html
+			$input=addslashes($input);	// due to this function there must always be a db_connect() before calling sanitize_and_format
 		}
 		if ($format&FORMAT_UTF_ENCODE) {
 			$input=utf8_encode($input);

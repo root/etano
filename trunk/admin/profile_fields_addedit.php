@@ -59,7 +59,7 @@ if (isset($_SESSION['topass']['input'])) {
 
 switch ($profile_fields['html_type']) {
 
-	case _HTML_TEXTFIELD_:
+	case HTML_TEXTFIELD:
 		$profile_fields['row_searchable']=true;
 		$profile_fields['row_st']='invisible';
 		$profile_fields['search_type']='';
@@ -67,7 +67,7 @@ switch ($profile_fields['html_type']) {
 		$profile_fields['row_accval_checkbox']=false;
 		break;
 
-	case _HTML_TEXTAREA_:
+	case HTML_TEXTAREA:
 		$profile_fields['row_searchable']=true;
 		$profile_fields['row_st']='invisible';
 		$profile_fields['search_type']='';
@@ -75,9 +75,9 @@ switch ($profile_fields['html_type']) {
 		$profile_fields['row_accval_checkbox']=false;
 		break;
 
-	case _HTML_SELECT_:
+	case HTML_SELECT:
 
-	case _HTML_CHECKBOX_LARGE_:
+	case HTML_CHECKBOX_LARGE:
 		if (!empty($accepted_values)) {
 			$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='"._DEFAULT_SKIN_."' AND `fk_lk_id` IN ('".join("','",$accepted_values)."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -88,7 +88,7 @@ switch ($profile_fields['html_type']) {
 		}
 		$profile_fields['row_searchable']=true;
 		$profile_fields['row_st']='visible';
-		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(_HTML_TEXTFIELD_,_HTML_TEXTAREA_,_HTML_DATE_,_HTML_LOCATION_));
+		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION));
 		$profile_fields['row_accval_selcheck']=true;
 		// revert $accepted_values values to db original and add slashes
 		$profile_fields['acc_vals_jsarrays']=vector2jsarrays(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
@@ -100,10 +100,10 @@ switch ($profile_fields['html_type']) {
 		}
 		break;
 
-	case _HTML_DATE_:
+	case HTML_DATE:
 		$profile_fields['row_searchable']=true;
 		$profile_fields['row_st']='visible';
-		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(_HTML_TEXTFIELD_,_HTML_TEXTAREA_,_HTML_SELECT_,_HTML_CHECKBOX_LARGE_,_HTML_LOCATION_));
+		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_LOCATION));
 		$profile_fields['row_accval_date']=true;
 		$profile_fields['year_start']=(isset($accepted_values[0]) && !empty($accepted_values[0])) ? $accepted_values[0] : 0;
 		$profile_fields['year_end']=isset($accepted_values[1]) ? $accepted_values[1] : 0;
@@ -112,11 +112,11 @@ switch ($profile_fields['html_type']) {
 		$profile_fields['def_end']=isset($default_value[1]) ? $default_value[1] : 0;
 		break;
 
-	case _HTML_LOCATION_:
+	case HTML_LOCATION:
 		$profile_fields['default_value']=substr($profile_fields['default_value'],1,-1);
 		$profile_fields['row_searchable']=true;
 		$profile_fields['row_st']='visible';
-		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(_HTML_TEXTFIELD_,_HTML_TEXTAREA_,_HTML_SELECT_,_HTML_CHECKBOX_LARGE_,_HTML_DATE_));
+		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_DATE));
 		$profile_fields['row_accval_location']=true;
 		$profile_fields['default_value']=dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$profile_fields['default_value']);
 		break;

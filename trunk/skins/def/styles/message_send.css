@@ -22,6 +22,10 @@ textarea#message_body {
 	font: bold 12px "Trebuchet MS", Arial, sans-serif;
 }
 
+#subject {
+	width: 80%;
+}
+
 /* LEFT MENU */
 
 ul.menu li {

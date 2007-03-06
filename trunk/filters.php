@@ -24,11 +24,11 @@ $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
 
-$my_folders=array(_FOLDER_INBOX_=>'INBOX',_FOLDER_OUTBOX_=>'OUTBOX',_FOLDER_TRASH_=>'Trash',_FOLDER_SPAMBOX_=>'SPAMBOX'); // translate this
+$my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'OUTBOX',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
 $query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
-	$my_folders[$rsrow[0]]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
+	$my_folders[$rsrow[0]]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
 }
 
 $from="`{$dbtable_prefix}message_filters`";
@@ -51,8 +51,8 @@ if (!empty($totalrows)) {
 	}
 
 	$filtered_senders=array();
-	if (isset($field_values[_FILTER_SENDER_]['value']) && !empty($field_values[_FILTER_SENDER_]['value'])) {
-		$query="SELECT `user_id`,`user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id` IN ('".join("','",$field_values[_FILTER_SENDER_]['value'])."')";
+	if (isset($field_values[FILTER_SENDER]['value']) && !empty($field_values[FILTER_SENDER]['value'])) {
+		$query="SELECT `user_id`,`user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id` IN ('".join("','",$field_values[FILTER_SENDER]['value'])."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_row($res)) {
 			$filtered_senders[$rsrow[0]]=$rsrow[1];
@@ -60,11 +60,11 @@ if (!empty($totalrows)) {
 	}
 
 	$filtered_sender_profiles=array();
-	if (isset($field_values[_FILTER_SENDER_PROFILE_]['value']) && !empty($field_values[_FILTER_SENDER_PROFILE_]['value'])) {
-		for ($i=0;isset($field_values[_FILTER_SENDER_PROFILE_]['value'][$i]);++$i) {
+	if (isset($field_values[FILTER_SENDER_PROFILE]['value']) && !empty($field_values[FILTER_SENDER_PROFILE]['value'])) {
+		for ($i=0;isset($field_values[FILTER_SENDER_PROFILE]['value'][$i]);++$i) {
 			foreach ($_pfields as $k=>$field) {
-				if ($field['dbfield']==$field_values[_FILTER_SENDER_PROFILE_]['field'][$i]) {
-					$filtered_sender_profiles[$field_values[_FILTER_SENDER_PROFILE_]['field'][$i].'_'.$field_values[_FILTER_SENDER_PROFILE_]['value'][$i]]=$field['label'].': '.$field['accepted_values'][$field_values[_FILTER_SENDER_PROFILE_]['value'][$i]];
+				if ($field['dbfield']==$field_values[FILTER_SENDER_PROFILE]['field'][$i]) {
+					$filtered_sender_profiles[$field_values[FILTER_SENDER_PROFILE]['field'][$i].'_'.$field_values[FILTER_SENDER_PROFILE]['value'][$i]]=$field['label'].': '.$field['accepted_values'][$field_values[FILTER_SENDER_PROFILE]['value'][$i]];
 					break;
 				}
 			}
@@ -74,7 +74,7 @@ if (!empty($totalrows)) {
 	for ($i=0;isset($loop[$i]);++$i) {
 		switch ($loop[$i]['filter_type']) {
 
-			case _FILTER_SENDER_:
+			case FILTER_SENDER:
 				if (isset($filtered_senders[$loop[$i]['field_value']])) {
 					$loop[$i]['field_value']=sprintf('User: %s',$filtered_senders[$loop[$i]['field_value']]);	// translate this
 				} else {
@@ -82,7 +82,7 @@ if (!empty($totalrows)) {
 				}
 				break;
 
-			case _FILTER_SENDER_PROFILE_:
+			case FILTER_SENDER_PROFILE:
 				if (isset($filtered_sender_profiles[$loop[$i]['field'].'_'.$loop[$i]['field_value']])) {
 					$loop[$i]['field_value']=$filtered_sender_profiles[$loop[$i]['field'].'_'.$loop[$i]['field_value']];
 				} else {
@@ -90,7 +90,7 @@ if (!empty($totalrows)) {
 				}
 				break;
 
-			case _FILTER_MESSAGE_:
+			case FILTER_MESSAGE:
 			default:
 				unset($loop[$i]);
 				break;

@@ -21,13 +21,13 @@ $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
-$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 $input=array();
 $user_ids=array();
 if (!empty($search_md5)) {
 	// if we have a query cache, retrieve all from cache
-	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='$search_md5' AND `search_type`="._SEARCH_USER_;
+	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='$search_md5' AND `search_type`=".SEARCH_USER;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$user_ids=mysql_result($res,0,0);
@@ -74,12 +74,12 @@ if (!empty($search_md5)) {
 		$field=$_pfields[$search_fields[$i]];
 		switch ($field['search_type']) {
 
-			case _HTML_SELECT_:
+			case HTML_SELECT:
 				$input[$field['dbfield']]=sanitize_and_format_gpc($_GET,$field['dbfield'],TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield']])) {
-					if ($field['html_type']==_HTML_SELECT_) {
+					if ($field['html_type']==HTML_SELECT) {
 						$where.=" AND `".$field['dbfield']."`='".$input[$field['dbfield']]."'";
-					} elseif ($field['html_type']==_HTML_CHECKBOX_LARGE_) {
+					} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
 						$where.=" AND `".$field['dbfield']."` LIKE '|%".$input[$field['dbfield']]."%|'";
 					}
 				} else {
@@ -87,10 +87,10 @@ if (!empty($search_md5)) {
 				}
 				break;
 
-			case _HTML_CHECKBOX_LARGE_:
+			case HTML_CHECKBOX_LARGE:
 				$input[$field['dbfield']]=sanitize_and_format_gpc($_GET,$field['dbfield'],TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield']])) {
-					if ($field['html_type']==_HTML_SELECT_) {
+					if ($field['html_type']==HTML_SELECT) {
 						if (count($input[$field['dbfield']])) {
 							$where.=" AND (";
 							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
@@ -99,7 +99,7 @@ if (!empty($search_md5)) {
 							$where=substr($where,0,-4);	// substract the last ' OR '
 							$where.=')';
 						}
-					} elseif ($field['html_type']==_HTML_CHECKBOX_LARGE_) {
+					} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
 						if (count($input[$field['dbfield']])) {
 							$where.=" AND (";
 							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
@@ -114,7 +114,7 @@ if (!empty($search_md5)) {
 				}
 				break;
 
-			case _HTML_DATE_:
+			case HTML_DATE:
 				$input[$field['dbfield'].'_min']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_min',TYPE_INT,0,0);
 				$input[$field['dbfield'].'_max']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_max',TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield'].'_max'])) {
@@ -129,7 +129,7 @@ if (!empty($search_md5)) {
 				}
 				break;
 
-			case _HTML_LOCATION_:
+			case HTML_LOCATION:
 				$input[$field['dbfield'].'_country']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_country',TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield'].'_country'])) {
 					$where.=" AND `".$field['dbfield']."_country`='".$input[$field['dbfield'].'_country']."'";
@@ -155,7 +155,7 @@ if (!empty($search_md5)) {
 								unset($input[$field['dbfield'].'_state']);
 							}
 						} elseif ($prefered_input=='z') {
-							$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_zip',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+							$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_zip',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 							$input[$field['dbfield'].'_dist']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_dist',TYPE_INT,0,0);
 							if (!empty($input[$field['dbfield'].'_zip']) && !empty($input[$field['dbfield'].'_dist'])) {
 								$query="SELECT RADIANS(`latitude`),RADIANS(`longitude`) FROM `{$dbtable_prefix}loc_zips` WHERE `zipcode`='".$input[$field['dbfield'].'_zip']."'";
@@ -194,7 +194,7 @@ if (!empty($search_md5)) {
 	}
 	$serialized_input=serialize($input);
 	$search_md5=md5($serialized_input);
-	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='$search_md5',`search_type`="._SEARCH_USER_.",`search`='$serialized_input',`results`='".join(',',$user_ids)."'";
+	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='$search_md5',`search_type`=".SEARCH_USER.",`search`='$serialized_input',`results`='".join(',',$user_ids)."'";
 	if (isset($_SESSION['user']['user_id'])) {
 		$query.=",`fk_user_id`='".$_SESSION['user']['user_id']."'";
 	}

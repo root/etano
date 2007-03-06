@@ -18,7 +18,7 @@ require_once dirname(__FILE__).'/../../includes/admin_functions.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 allow_dept(DEPT_ADMIN);
 
-$path=str_replace('..','',preg_replace('~[^a-zA-Z0-9\._/-]~','',sanitize_and_format_gpc($_POST,'path',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'')));
+$path=str_replace('..','',preg_replace('~[^a-zA-Z0-9\._/-]~','',sanitize_and_format_gpc($_POST,'path',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'')));
 if (!empty($path) && $path{0}=='/') {
 	$path=substr($path,1);
 }

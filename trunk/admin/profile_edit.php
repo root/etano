@@ -34,11 +34,11 @@ if (isset($_SESSION['topass']['input'])) {
 		if ($field['editable']) {
 			switch ($field['html_type']) {
 
-				case _HTML_DATE_:
+				case HTML_DATE:
 					$query.=",YEAR(`".$field['dbfield']."`) as `".$field['dbfield']."_year`,MONTH(`".$field['dbfield']."`) as `".$field['dbfield']."_month`,DAYOFMONTH(`".$field['dbfield']."`) as `".$field['dbfield']."_day`";
 					break;
 
-				case _HTML_LOCATION_:
+				case HTML_LOCATION:
 					$query.=",`".$field['dbfield']."_country`,`".$field['dbfield']."_state`,`".$field['dbfield']."_city`,`".$field['dbfield']."_zip`";
 					break;
 
@@ -54,7 +54,7 @@ if (isset($_SESSION['topass']['input'])) {
 		$output=mysql_fetch_assoc($res);
 		$output=sanitize_and_format($output,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
 	}
-	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 	$output['return2']=rawurldecode($output['return']);
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
@@ -71,29 +71,29 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 		$cat_content[$i]['label']=$field['label'];
 		switch ($field['html_type']) {
 
-			case _HTML_TEXTFIELD_:
+			case HTML_TEXTFIELD:
 				$cat_content[$i]['field']='<input type="text" name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" value="'.(isset($output[$field['dbfield']]) ? $output[$field['dbfield']] : '').'" tabindex="'.($i+4).'" />';
 				break;
 
-			case _HTML_TEXTAREA_:
+			case HTML_TEXTAREA:
 				$cat_content[$i]['field']='<textarea name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.(isset($output[$field['dbfield']]) ? $output[$field['dbfield']] : '').'</textarea>';
 				break;
 
-			case _HTML_SELECT_:
+			case HTML_SELECT:
 				$cat_content[$i]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],isset($output[$field['dbfield']]) ? $output[$field['dbfield']] : 0,array(0)).'</select>';
 				break;
 
-			case _HTML_CHECKBOX_LARGE_:
+			case HTML_CHECKBOX_LARGE:
 				$cat_content[$i]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],isset($output[$field['dbfield']]) ? $output[$field['dbfield']] : '',1,true,'tabindex="'.($i+4).'"');
 				break;
 
-			case _HTML_DATE_:
+			case HTML_DATE:
 				$cat_content[$i]['field']='<select name="'.$field['dbfield'].'_month" id="'.$field['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$output[$field['dbfield'].'_month']).'</select>';
 				$cat_content[$i]['field'].='<select name="'.$field['dbfield'].'_day" id="'.$field['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">'.$_lang[5].'</option>'.interval2options(1,31,$output[$field['dbfield'].'_day']).'</select>';
 				$cat_content[$i]['field'].='<select name="'.$field['dbfield'].'_year" id="'.$field['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">'.$_lang[6].'</option>'.interval2options($field['accepted_values'][1],$field['accepted_values'][2],$output[$field['dbfield'].'_year'],array(),1,2).'</select>';
 				break;
 
-			case _HTML_LOCATION_:
+			case HTML_LOCATION:
 				$country_id=$output[$field['dbfield'].'_country'];
 				$state_id=$output[$field['dbfield'].'_state'];
 				$cat_content[$i]['label']='Country';	//translate this

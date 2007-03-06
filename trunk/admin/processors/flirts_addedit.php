@@ -66,9 +66,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 	} else {
 		$nextpage='admin/flirts_addedit.php';
-// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
-		$input['flirt_text']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['flirt_text']);
+// 		you must re-read all textareas from $_POST like this:
+//		$input['x']=addslashes_mq($_POST['x']);
+		$input['flirt_text']=addslashes_mq($_POST['flirt_text']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}

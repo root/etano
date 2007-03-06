@@ -22,7 +22,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 
 $content='';
 if (isset($_GET['s'])) {
-	$skin=sanitize_and_format($_GET['s'],TYPE_STRING,$__html2format[_HTML_TEXTFIELD_]);
+	$skin=sanitize_and_format($_GET['s'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
 	$query="SELECT * FROM `{$dbtable_prefix}lang_keys` ORDER BY `lk_id` ASC";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$i=0;
@@ -31,7 +31,7 @@ if (isset($_GET['s'])) {
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$lang_strings[$i]=$rsrow;
 		$lang_strings[$i]['lang_value']='';
-		if ($rsrow['lk_type']==_HTML_TEXTFIELD_) {
+		if ($rsrow['lk_type']==HTML_TEXTFIELD) {
 			$lang_strings[$i]['tf']=true;
 		}
 		$temp[$rsrow['lk_id']]=$i;

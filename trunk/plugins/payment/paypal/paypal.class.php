@@ -33,22 +33,22 @@ class payment_paypal extends ipayment {
 												'item_number'=>0,
 												'custom'=>0
 											),
-							'types'=>	array(	'residence_country'=>_HTML_TEXTFIELD_,
-												'first_name'=>_HTML_TEXTFIELD_,
-												'last_name'=>_HTML_TEXTFIELD_,
-												'business'=>_HTML_TEXTFIELD_,
-												'receiver_email'=>_HTML_TEXTFIELD_,
-												'payer_email'=>_HTML_TEXTFIELD_,
-												'txn_id'=>_HTML_TEXTFIELD_,
-												'txn_type'=>_HTML_TEXTFIELD_,
-												'payment_status'=>_HTML_TEXTFIELD_,
-												'mc_gross'=>_HTML_FLOAT_,
-												'mc_currency'=>_HTML_TEXTFIELD_,
-												'verify_sign'=>_HTML_TEXTFIELD_,
-												'test_ipn'=>_HTML_INT_,
-												'recurring'=>_HTML_INT_,
-												'item_number'=>_HTML_INT_,
-												'custom'=>_HTML_INT_
+							'types'=>	array(	'residence_country'=>HTML_TEXTFIELD,
+												'first_name'=>HTML_TEXTFIELD,
+												'last_name'=>HTML_TEXTFIELD,
+												'business'=>HTML_TEXTFIELD,
+												'receiver_email'=>HTML_TEXTFIELD,
+												'payer_email'=>HTML_TEXTFIELD,
+												'txn_id'=>HTML_TEXTFIELD,
+												'txn_type'=>HTML_TEXTFIELD,
+												'payment_status'=>HTML_TEXTFIELD,
+												'mc_gross'=>HTML_FLOAT,
+												'mc_currency'=>HTML_TEXTFIELD,
+												'verify_sign'=>HTML_TEXTFIELD,
+												'test_ipn'=>HTML_INT,
+												'recurring'=>HTML_INT,
+												'item_number'=>HTML_INT,
+												'custom'=>HTML_INT
 											));
 
 	function payment_paypal() {

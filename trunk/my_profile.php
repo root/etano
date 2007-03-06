@@ -29,17 +29,17 @@ $profile=mysql_fetch_assoc($res);
 // set all the fields to their real (readable) values
 foreach ($_pfields as $field_id=>$field) {
 	if ($field['visible']) {
-		if ($field['html_type']==_HTML_TEXTFIELD_ || $field['html_type']==_HTML_TEXTAREA_) {
+		if ($field['html_type']==HTML_TEXTFIELD || $field['html_type']==HTML_TEXTAREA) {
 			$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		} elseif ($field['html_type']==_HTML_SELECT_) {
+		} elseif ($field['html_type']==HTML_SELECT) {
 			$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		} elseif ($field['html_type']==_HTML_CHECKBOX_LARGE_) {
+		} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
 			$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		} elseif ($field['html_type']==_HTML_INT_ || $field['html_type']==_HTML_FLOAT_) {
+		} elseif ($field['html_type']==HTML_INT || $field['html_type']==HTML_FLOAT) {
 //			$profile[$field['dbfield']]=$profile[$field['dbfield']];
-		} elseif ($field['html_type']==_HTML_DATE_) {
+		} elseif ($field['html_type']==HTML_DATE) {
 //			$profile[$field['dbfield']]=$profile[$field['dbfield']];
-		} elseif ($field['html_type']==_HTML_LOCATION_) {
+		} elseif ($field['html_type']==HTML_LOCATION) {
 			$profile[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$profile[$field['dbfield'].'_country'],'-');
 			if (!empty($profile[$field['dbfield'].'_state'])) {
 				$profile[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$profile[$field['dbfield'].'_state'],'-');

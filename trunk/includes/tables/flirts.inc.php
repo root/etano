@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $flirts_default['defaults']=array('flirt_id'=>0,'flirt_text'=>'');
-$flirts_default['types']=array('flirt_id'=>_HTML_INT_,'flirt_text'=>_HTML_TEXTAREA_);
+$flirts_default['types']=array('flirt_id'=>HTML_INT,'flirt_text'=>HTML_TEXTAREA);

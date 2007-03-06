@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 	$input['access_level']=!empty($input['access_level']) ? array_sum(array_keys($input['access_level'])) : 0;
 
-	$input['pcat_name']=sanitize_and_format_gpc($_POST,'pcat_name',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+	$input['pcat_name']=sanitize_and_format_gpc($_POST,'pcat_name',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 	// other formatting
 	$input['pcat_name']=ucwords(strtolower($input['pcat_name']));
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Category changed.';
 		} else {
-			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`="._HTML_TEXTFIELD_.",`lk_diz`='Category name'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".HTML_TEXTFIELD.",`lk_diz`='Category name'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_lk_id_pcat']=mysql_insert_id();
 			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['pcat_name']."',`fk_lk_id`='".$input['fk_lk_id_pcat']."',`skin`='"._DEFAULT_SKIN_."'";
@@ -93,8 +93,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 	} else {
 		$nextpage='admin/profile_categories_addedit.php';
-// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+// 		you must re-read all textareas from $_POST like this:
+//		$input['x']=addslashes_mq($_POST['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}

@@ -38,7 +38,7 @@ if (isset($_SESSION['topass']['input'])) {
 		$output['date_posted']=strftime($config['date_format'],$output['date_posted']);
 	}
 	// because of the GET, our 'return' is urldecoded
-	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[_HTML_TEXTFIELD_],'');
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 	$output['return']=rawurlencode($output['return2']);
 }
 

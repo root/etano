@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['fk_user_id']=$_SESSION['user']['user_id'];
 
 	switch ($input['filter_type']) {
-		case _FILTER_SENDER_:
+		case FILTER_SENDER:
 			if (!($input['field_value']=get_userid_by_user($input['field_value']))) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			break;
 
-		case _FILTER_SENDER_PROFILE_:
-		case _FILTER_MESSAGE_:
+		case FILTER_SENDER_PROFILE:
+		case FILTER_MESSAGE:
 		default:
 			break;
 
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['fk_user_id']=$_SESSION['user']['user_id'];
 	$input['field']='fk_user_id';
 	$input['field_value']=isset($_GET['uid']) ? (int)$_GET['uid'] : 0;
-	$input['fk_folder_id']=_FOLDER_SPAMBOX_;
+	$input['fk_folder_id']=FOLDER_SPAMBOX;
 	$nextpage='message_read.php';
 }
 
@@ -97,8 +97,8 @@ if (!$error) {
 	}
 } else {
 	$nextpage='filters_addedit.php';
-// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+// 		you must re-read all textareas from $_POST like this:
+//		$input['x']=addslashes_mq($_POST['x']);
 	$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 	$topass['input']=$input;
 }

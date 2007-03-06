@@ -35,7 +35,12 @@
 		<div id="content_column1" class="{tplvars.page} rounded-box large">
 			<h2>{tplvars.page_title}</h2>
 <opt name="message.text">
-			<div id="message_wrapper" class="{message.type}">{message.text}</div>
+			<div id="message_wrapper" class="rounded-box medium {message.type}">
+				<h2></h2>
+				<div class="box-content">
+					<div class="message_text">{message.text}</div>
+				</div>
+			</div>
 </opt name="message.text">
 			<div class="box-content">
 				{content}
