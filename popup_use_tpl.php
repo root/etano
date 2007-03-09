@@ -21,15 +21,22 @@ check_login_member(15);
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 
 $templates=array();
+$jsarrays=array();
 $query="SELECT `mtpl_id`,`subject`,`message_body` FROM `{$dbtable_prefix}user_mtpls` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_assoc($res)) {
+	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+	$jsrsrow=$rsrow;
+	$jsrsrow['subject']=rawurlencode($rsrow['subject']);
+	$jsrsrow['message_body']=rawurlencode($rsrow['message_body']);
+	$jsarrays[]=$jsrsrow;
+	$rsrow['message_body']=bbcode2html($rsrow['message_body']);
 	$templates[]=$rsrow;
 }
-$templates=sanitize_and_format($templates,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
 
 $tpl->set_file('content','popup_use_tpl.html');
+$tpl->set_loop('jsarrays',$jsarrays);
 $tpl->set_loop('templates',$templates);
 $tpl->set_var('tplvars',$tplvars);
-echo $tpl->process('','content',TPL_FINISH | TPL_LOOP);
+echo $tpl->process('','content',TPL_FINISH | TPL_LOOP | TPL_NOLOOP);
 ?>

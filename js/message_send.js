@@ -9,25 +9,29 @@ $(function() {
 		ta.focus(0);
 	}
 	$('#subject')[0].focus();
-	$('#save_tpl').bind('click',function() {
+	$('#btn_savetpl').bind('click',function() {
+alert('asd');
 		save_as_template();
+		return false;	// important! do not bubble
+	});
+	$('#popup_use_tpl').bind('click',function() {
+		popWin('popup_use_tpl.php','template',760,350,1,1);
 	});
 });
 
 function save_as_template() {
 	theform=$('#msend_form')[0];
 	if (check_form(theform)) {
-		qs='subject='+escape(theform.subject.value)+'&message_body='+escape(theform.message_body.value);
-		r=new Scoax();
-		r.sendRequest('POST','ajax/save_user_tpl.php',qs,finish_save);
-	}
-}
-
-function finish_save(data) {
-	if (data==1) {
-		alert('Message saved as template');
-	} else if (data==2) {
-		alert('You are not allowed to save message templates');
+		$.post('ajax/save_user_tpl.php',
+				{'subject':escape(theform.subject.value),'message_body':escape(theform.message_body.value)},
+				function(data) {
+					if (data==1) {
+						alert('Message saved as template');
+					} else if (data==2) {
+						alert('You are not allowed to save message templates');
+					}
+				}
+		);
 	}
 }
 

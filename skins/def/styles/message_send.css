@@ -5,21 +5,20 @@ textarea#message_body {
 
 #msend_form .controls {
 	padding-top: 15px;
+	margin-top: 15px;
+	border-top: 1px dashed #ccc;
+}
+
+#msend_form .controls p {
+	float: right;
+	width: 200px;
+	margin: 0;
+	text-align: right;
 }
 
 #post-button {
 	margin: 0 auto 5px;
 	display: block;
-}
-
-.btn-blank-big {
-	border: none;
-	background: url('../images/btn-blank-big-out.gif') no-repeat;
-	width: 103px;
-	height: 25px;
-	color: #fff;
-	padding-bottom: 7px;
-	font: bold 12px "Trebuchet MS", Arial, sans-serif;
 }
 
 #subject {
@@ -28,12 +27,12 @@ textarea#message_body {
 
 /* LEFT MENU */
 
-ul.menu li {
+#menu_folders ul.menu li {
 	border: none;
 	padding: 0;
 }
 
-ul.menu li.controls {
+#menu_folders ul.menu li.controls {
 	border-top: 1px dashed #ccc;
 	padding-top: 10px;
 	margin-top: 5px;

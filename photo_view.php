@@ -35,13 +35,18 @@ if (!empty($photo_id)) {
 		$user_id=$photo['fk_user_id'];
 
 		if (!empty($photo['allow_comments'])) {
-			$query="SELECT a.`comment`,a.`fk_user_id`,a.`_user` as `user`,b.`_photo` as `photo` FROM `{$dbtable_prefix}photo_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_photo_id`='$photo_id' AND a.`status`=".PSTAT_APPROVED." ORDER BY a.date_posted ASC";
+			$query="SELECT a.`comment`,a.`fk_user_id`,a.`_user` as `user`,b.`_photo` as `photo`,c.`last_activity` as `is_online` FROM `{$dbtable_prefix}photo_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` LEFT JOIN `{$dbtable_prefix}online` c ON a.`fk_user_id`=c.`fk_user_id` WHERE a.`fk_photo_id`='".$photo['photo_id']."' AND a.`status`=".PSTAT_APPROVED." GROUP BY a.`comment_id`,a.`fk_user_id` ORDER BY a.date_posted ASC";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-				$rsrow['user']=sanitize_and_format($rsrow['user'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 				if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
 					unset($rsrow['fk_user_id']);
+				}
+				if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
+					$rsrow['photo']='no_photo.gif';
+				}
+				if (!empty($rsrow['is_online'])) {	// for the link to member profile
+					$rsrow['is_online']='is_online';
 				}
 				$comments[]=$rsrow;
 			}

@@ -1,11 +1,21 @@
-<div class="rounded-box small">
+<div id="menu_folders" class="rounded-box small">
 	<h3>My Folders</h3>
 	<div class="box-content">
 		<ul class="menu">
 			<loop name="loopfolders">
 			<li><a class="content-link inbox" href="mailbox.php?fid={loopfolders.fid}">{loopfolders.folder}</a></li>
 			</loop name="loopfolders">
-			<li class="controls"><a class="content-link " href="filters.php">Manage filters</a></li>
+			<li class="controls"><a class="content-link add" href="folders.php">Add new folder</a></li>
+		</ul>
+	</div>
+</div>
+
+<div class="rounded-box small">
+	<h3>Messages</h3>
+	<div class="box-content">
+		<ul class="menu">
+			<li class="first"><a class="content-link " href="filters.php">Manage filters</a></li>
+			<li><a class="content-link " href="filters.php">Message templates</a></li>
 		</ul>
 	</div>
 </div>
