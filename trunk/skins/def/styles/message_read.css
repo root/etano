@@ -41,12 +41,12 @@ ul#message_details li {
 
 /* LEFT MENU */
 
-ul.menu li {
+#menu_folders ul.menu li {
 	border: none;
 	padding: 0;
 }
 
-ul.menu li.controls {
+#menu_folders ul.menu li.controls {
 	border-top: 1px dashed #ccc;
 	padding-top: 10px;
 	margin-top: 5px;

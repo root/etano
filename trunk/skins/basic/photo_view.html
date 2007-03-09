@@ -10,10 +10,9 @@
 	<p id="photo_caption">{photo.caption}</p>
 	<loop name="comments">
 	<div class="photo_comment_show">
-		<img class="user_photo" src="{tplvars.relative_path}media/pics/t1/{comments.photo}" />
-		<p class="who"><opt name="comments.fk_user_id"><a href="profile.php?uid={comments.fk_user_id}"></opt name="comments.fk_user_id">{comments.user}<opt name="comments.fk_user_id"></a></opt name="comments.fk_user_id">:</p>
-		<p class="what">{comments.comment}</p>
-		<div class="clear"></div>
+		<opt name="comments.fk_user_id"><a href="profile.php?uid={comments.fk_user_id}" title="{comments.user}"></opt name="comments.fk_user_id"><img class="user_photo " src="{tplvars.photourl}/t1/{comments.photo}" /><opt name="comments.fk_user_id"></a></opt name="comments.fk_user_id">
+		<opt name="comments.fk_user_id"><a href="profile.php?uid={comments.fk_user_id}" title="{comments.user}"></opt name="comments.fk_user_id">{comments.user}<opt name="comments.fk_user_id"></a></opt name="comments.fk_user_id">
+		<p>{comments.comment}</p>
 	</div>
 	</loop name="comments">
 
