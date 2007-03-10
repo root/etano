@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       posts.php
+File:                       blogs.php
 $Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -36,7 +36,7 @@ $latest_blog_posts=sanitize_and_format($latest_blog_posts,TYPE_STRING,$__html2fo
 
 $featured_blog_posts=array();
 
-$tpl->set_file('content','posts.html');
+$tpl->set_file('content','blogs.html');
 if (!empty($blog_posts_stats)) {
 	$tpl->set_var('blog_posts_stats',$blog_posts_stats);
 }

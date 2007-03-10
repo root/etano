@@ -20,28 +20,38 @@ check_login_member(2);
 
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 
-$uid=0;
-$_user_other='';
-if (isset($_GET['uid']) && !empty($_GET['uid'])) {
-	$uid=(string)((int)$_GET['uid']);
-	$flirts=array();
-	$_user_other=get_user_by_userid($uid);
-	$query="SELECT `flirt_id`,`flirt_text` FROM `{$dbtable_prefix}flirts`";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	while ($rsrow=mysql_fetch_row($res)) {
-		$flirts[$rsrow[0]]=$rsrow[1];
-	}
-	if (!empty($flirts)) {
-		$tpl->set_var('flirts_options',vector2radios($flirts,'flirt'));
-	}
+$output=array();
+if (isset($_SESSION['topass']['input'])) {
+	$output=$_SESSION['topass']['input'];
+	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
+} elseif (isset($_GET['to_id']) && !empty($_GET['to_id'])) {
+	$output['fk_user_id']=(int)$_GET['to_id'];
+	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
+} else {
+	trigger_error('No receiver specified',E_USER_ERROR);     // translate
+}
+
+if (!isset($output['return']) && isset($_GET['return'])) {
+	$output['return']=rawurlencode(sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+}
+$flirt_type=sanitize_and_format_gpc($_GET,'ft',TYPE_INT,0,0);
+
+$flirts=array();
+$query="SELECT `flirt_id`,`flirt_text` FROM `{$dbtable_prefix}flirts` WHERE `flirt_type`='$flirt_type'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+while ($rsrow=mysql_fetch_row($res)) {
+	$flirts[$rsrow[0]]=$rsrow[1];
 }
 
 $tpl->set_file('content','flirt_send.html');
-$tpl->set_var('uid',$uid);
-$tpl->set_var('_user_other',$_user_other);
+$tpl->set_var('flirts',vector2radios($flirts,'flirt_id',0,array(),'class="flirts_list"'));
+$tpl->set_var('output',$output);
 $tpl->process('content','content');
 
 $tplvars['title']='Send a flirt';     // translate
+$tplvars['page_title']='Send a flirt';
+$tplvars['page']='flirt_send';
+$tplvars['css']='flirt_send.css';
 if (is_file('flirt_send_left.php')) {
 	include 'flirt_send_left.php';
 }

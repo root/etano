@@ -16,7 +16,6 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/vars.inc.php';
 require_once '../includes/tables/queue_message.inc.php';
-require_once '../includes/tables/user_outbox.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(5);
 
@@ -24,44 +23,45 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='flirt_send.php';
+$nextpage='mailbox.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
-	$input['flirt']=(isset($_POST['flirt']) && !empty($_POST['flirt'])) ? (int)$_POST['flirt'] : 0;
 // get the input we need and sanitize it
-	foreach ($queue_message_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$queue_message_default['defaults'][$k]);
+	$input['flirt_id']=sanitize_and_format_gpc($_POST,'flirt_id',TYPE_INT,0,0);
+	$input['fk_user_id']=sanitize_and_format_gpc($_POST,'fk_user_id',TYPE_INT,0,0);
+	if (isset($_POST['return'])) {
+		$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+		$nextpage=$input['return'];
 	}
 
 // check for input errors
 	if (empty($input['fk_user_id'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Flirt not sent because there was no recipient specified';
-	} else {
-		$qs.=$qs_sep.'uid='.$input['fk_user_id'];
-		$qs_sep='&';
+		$topass['message']['text']='Flirt not sent because there was no receiver specified';
 	}
-	if (empty($input['flirt'])) {
+	if (empty($input['flirt_id'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Please choose a flirt message to send';
-	} else {
-		$query="SELECT `flirt_text` FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`='".$input['flirt']."'";
+		$topass['message']['text']='Please select a flirt to send';
+	}
+
+	if (!$error) {
+		$query="SELECT `flirt_text` FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`='".$input['flirt_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
-			$input['message_body']=addslashes_mq(mysql_result($res,0,0));
+			$input['message_body']=sanitize_and_format(mysql_result($res,0,0),TYPE_STRING,$__html2format[TEXT_DB2DB]);
 		} else {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='This flirt message does not exist.';
+			$topass['message']['text']='Could not find flirt in database. Please select another flirt';
 		}
 	}
 
 	if (!$error) {
 		$input['fk_user_id_other']=$_SESSION['user']['user_id'];
 		$input['_user_other']=$_SESSION['user']['user'];
-		$input['subject']='You have received a flirt from '.$_SESSION['user']['user'];
+		$input['subject']=sprintf('%s sent you a flirt',$_SESSION['user']['user']);	// translate
 		$input['message_type']=MESS_FLIRT;
 		$query="INSERT INTO `{$dbtable_prefix}queue_message` SET `date_sent`='".gmdate('YmdHis')."'";
 		foreach ($queue_message_default['defaults'] as $k=>$v) {
@@ -70,24 +70,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$input['fk_user_id_other']=$input['fk_user_id'];
-		$input['fk_user_id']=$_SESSION['user']['user_id'];
-		$input['_user_other']=get_user_by_userid($input['fk_user_id_other']);
-		$query="INSERT INTO `{$dbtable_prefix}user_outbox` SET `date_sent`='".gmdate('YmdHis')."'";
-		foreach ($user_outbox_default['defaults'] as $k=>$v) {
-			if (isset($input[$k])) {
-				$query.=",`$k`='".$input[$k]."'";
-			}
-		}
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Flirt sent.';
 	} else {
+		$nextpage='flirt_send.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
+		$input['return']=rawurlencode($input['return']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}
 }
-redirect2page($nextpage,$topass,$qs);
+$nextpage=_BASEURL_.'/'.$nextpage;
+redirect2page($nextpage,$topass,'',true);
 ?>

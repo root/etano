@@ -5,9 +5,9 @@
 </opt name="tplvars.bbcode_message">
 
 <form action="processors/message_send.php" method="post" id="msend_form" onsubmit="return(check_form(this))">
-<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
-<input type="hidden" name="return" value="{output.return}" />
-<label for="subject">Subject: </label><input class="text" type="text" name="subject" id="subject" value="{output.subject}" tabindex="1" />
+<fieldset>
+	<label for="subject">Subject: </label><input class="text" type="text" name="subject" id="subject" value="{output.subject}" tabindex="1" />
+</fieldset>
 <opt name="tplvars.bbcode_message">
 <div id="bb_tools">
 	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#message_body')[0])"><i>Bold</i></a>
@@ -17,6 +17,8 @@
 </div>
 </opt name="tplvars.bbcode_message">
 <fieldset>
+	<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
+	<input type="hidden" name="return" value="{output.return}" />
 	<textarea name="message_body" id="message_body" cols="" rows="" tabindex="2">{output.message_body}</textarea>
 </fieldset>
 <fieldset class="controls">
