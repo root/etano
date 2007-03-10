@@ -31,11 +31,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$photo_comments_default['defaults'][$k]);
 	}
 	$input['fk_user_id']=$_SESSION['user']['user_id'];
+	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 	if (!$error) {
+		$config['manual_com_approval']=get_site_option('manual_com_approval','core');
 		if (!empty($input['comment_id'])) {
 			$query="UPDATE `{$dbtable_prefix}photo_comments` SET `last_changed`='".gmdate('YmdHis')."'";
-			if (get_site_option('manual_com_approval','core')==1) {
+			if ($config['manual_com_approval']==1) {
 				$query.=",`status`='".PSTAT_PENDING."'";
 			} else {
 				$query.=",`status`='".PSTAT_APPROVED."'";
@@ -50,9 +52,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Comment changed successfully.';
 		} else {
+			unset($input['comment_id']);
 			$now=gmdate('YmdHis');
 			$query="INSERT INTO `{$dbtable_prefix}photo_comments` SET `_user`='".$_SESSION['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
-			if (get_site_option('manual_com_approval','core')==1) {
+			if ($config['manual_com_approval']==1) {
 				$query.=",`status`='".PSTAT_PENDING."'";
 			} else {
 				$query.=",`status`='".PSTAT_APPROVED."'";
@@ -64,17 +67,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Comment added.';
+			if (empty($config['manual_com_approval'])) {
+				$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_comments`=`stat_comments`+1 WHERE `photo_id`='".$input['fk_photo_id']."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$topass['message']['text']='Comment added.';	// translate this
+			} else {
+				$topass['message']['text']='Comment added but needs to be approved first.';	// translate this
+			}
 		}
-		$qs=$qs_sep.'photo_id='.$input['fk_photo_id'];
-	}
-	if (isset($_POST['o'])) {
-		$qs.=$qs_sep.'o='.$_POST['o'];
+		$qs.=$qs_sep.'photo_id='.$input['fk_photo_id'];
 		$qs_sep='&';
-	}
-	if (isset($_POST['r'])) {
-		$qs.=$qs_sep.'r='.$_POST['r'];
-		$qs_sep='&';
+		$qs.=$qs_sep.'return='.$input['return'];
 	}
 }
 redirect2page($nextpage,$topass,$qs);

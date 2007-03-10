@@ -4,18 +4,18 @@
 <link href="{tplvars.tplrelpath}/styles/bbcode.css" rel="stylesheet" type="text/css" />
 </opt name="tplvars.bbcode_comments">
 
-<a href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={photo.photo_id}','photo',{tplvars.pic_width},{tplvars.pic_width},1)" title="Click to enlarge"><img class="user_photo" src="{tplvars.relative_path}media/pics/t2/{photo.photo}" alt="{photo.user}" /></a>
-<p id="photo_caption">{photo.caption}</p>
+<a href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={output.photo_id}','photo',{tplvars.pic_width},{tplvars.pic_width},1)" title="Click to enlarge"><img class="user_photo" src="{tplvars.photourl}/t2/{output.photo}" alt="{output.user}" /></a>
+<p id="photo_caption">{output.caption}</p>
 
 <opt name="allow_comments">
-<loop name="comments">
-<div class="comment {comments.is_online}">
-	<opt name="comments.fk_user_id"><a href="profile.php?uid={comments.fk_user_id}" title="{comments.user}"></opt name="comments.fk_user_id"><img class="user_photo" src="{tplvars.photourl}/t1/{comments.photo}" /><opt name="comments.fk_user_id"></a></opt name="comments.fk_user_id">
-	<opt name="comments.fk_user_id"><a class="content-link online_stat" href="profile.php?uid={comments.fk_user_id}" title="{comments.user}"></opt name="comments.fk_user_id">{comments.user}<opt name="comments.fk_user_id"></a></opt name="comments.fk_user_id">
-	<p>{comments.comment}</p>
+<loop name="loop">
+<div class="comment {loop.is_online}">
+	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
+	<opt name="loop.fk_user_id"><a class="content-link online_stat" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
+	<p>{loop.comment}</p>
 	<div class="clear"></div>
 </div>
-</loop name="comments">
+</loop name="loop">
 
 <h3>Add your comment</h3>
 
@@ -28,10 +28,9 @@
 </div>
 </opt name="tplvars.bbcode_comments">
 <form id="photocomment_form" action="processors/photo_comment.php" method="post">
-<input type="hidden" name="fk_photo_id" value="{photo.photo_id}" />
-<input type="hidden" name="o" value="{o}" />
-<input type="hidden" name="r" value="{r}" />
 <fieldset>
+	<input type="hidden" name="fk_photo_id" value="{output.photo_id}" />
+	<input type="hidden" name="return" value="{output.return}" />
 	<textarea rows="" cols="" id="comment" name="comment" tabindex="1"></textarea>
 </fieldset>
 <fieldset class="controls">
@@ -41,5 +40,5 @@
 </opt name="allow_comments">
 
 <div id="bottom_links">
-	<a class="content-link link_previous" href="user_photos.php?uid={user_id}" title="Back to photos">Back to photos</a>
+	<a class="content-link link_previous" href="{output.return2}" title="Back to photos">Back to photos</a>
 </div>

@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (empty($input['fk_user_id'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Message not sent because there was no recipient specified';
+		$topass['message']['text']='Message not sent because there was no receiver specified';
 	}
 	if (empty($input['subject'])) {
 		$error=true;

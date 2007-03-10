@@ -1,0 +1,30 @@
+<script type="text/javascript" src="js/my_blogs.js"></script>
+
+<div class="row header">
+	<div class="control">Action</div>
+	<div class="blog_name">Blog</div>
+	<div class="num_posts">Total Posts</div>
+	<div class="control2">&nbsp;</div>
+</div>
+
+<loop name="loop">
+<div class="row">
+	<div class="control">
+		<a class="item_delete" href="processors/blog_delete.php?bid={loop.blog_id}" title="Delete blog" onclick="return(confirm('Are you sure you want to permanently delete this blog? All posts in this blog will also be deleted!'))"><i>Delete</i></a>
+		<a class="item_edit" href="blog_addedit.php?bid={loop.blog_id}" title="Edit blog details"><i>Edit details</i></a>
+	</div>
+	<div class="blog_name">
+		<a href="blog_posts.php?bid={loop.blog_id}">{loop.blog_name}</a>
+		<p class="blog_diz">{loop.blog_diz}</p>
+	</div>
+	<div class="num_posts">{loop.num_posts}</div>
+	<div class="control2"><a href="post_addedit.php?bid={loop.blog_id}">New post</a></div>
+</div>
+<noloop name="loop">
+	<p class="no_result_item">You have no blogs defined yet. <a id="link_add_blog" href="blog_addedit.php" />Create one now!</a></p>
+</noloop name="loop">
+</loop name="loop">
+
+<div class="controls">
+	<a id="link_add_blog" href="blog_addedit.php" />Create new blog</a>
+</div>

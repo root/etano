@@ -64,6 +64,10 @@ define('FOLDER_TRASH',-1);
 define('FOLDER_OUTBOX',-2);
 define('FOLDER_SPAMBOX',-3);
 
+// flirt types
+define('FLIRT_INIT',0);
+define('FLIRT_REPLY',1);
+
 // Unset globally registered vars
 function _unset_vars(&$var) {
 	$temp=array_keys($var);

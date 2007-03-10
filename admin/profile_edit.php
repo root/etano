@@ -152,9 +152,9 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 $tpl->set_file('content','profile_edit.html');
 $tpl->set_loop('loop',$loop);
 $tpl->set_var('output',$output);
-$tpl->process('content','content',TPL_MULTILOOP | TPL_OPTIONAL);
+$tpl->process('content','content',TPL_LOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 
-$tplvars['title']=sprintf('%1s Member Profile',isset($output['_user']) ? $output['_user'] : '');
+$tplvars['title']=sprintf('%1s Member Profile',isset($output['_user']) ? $output['_user'] : '');	// translate
 include 'frame.php';
 ?>

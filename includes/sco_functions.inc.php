@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007030601
+File version:				1.2007030901
 Created by:                 Dan Caragea (http://www.sco.ro - dan@rdsct.ro)
 ******************************************************************************/
 
@@ -414,7 +414,7 @@ function vector2checkboxes($show_vector,$excluded_keys_vector,$checkname,$binval
 			}
 			$myreturn.='"><input type="checkbox" id="'.$checkname.'_'.$k.'" name="'.$checkname.'['.$k.']"';
 			if (isset($binvalue) && ($binvalue>0) && (($binvalue>>$k)%2)) {
-				$myreturn.=' checked';
+				$myreturn.=' checked="checked"';
 			}
 			$myreturn.=' value="1" '.$pass2check.' />';
 			if ($showlabel) {
@@ -463,7 +463,7 @@ function vector2checkboxes_str($show_vector,$excluded_keys_vector,$checkname,$bi
 			}
 			$myreturn.='"><input type="checkbox" id="'.$checkname.'_'.$k.'" name="'.$checkname.'[]"';
 			if (in_array($k,$binvalue)) {
-				$myreturn.=' checked';
+				$myreturn.=' checked="checked"';
 			}
 			$myreturn.=' value="'.$k.'" '.$pass2check.' />';
 			if ($showlabel) {

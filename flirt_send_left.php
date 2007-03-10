@@ -11,15 +11,33 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-$user_friends=array();
+$tpl->set_file('left_content','flirt_send_left.html');
 
-$query="SELECT * FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `filter_type`='"._FILTER_USER_."' AND `field_value`='".$uid."' AND `fk_folder_id`='".FOLDER_SPAMBOX."'";
+$my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'OUTBOX',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
+$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-if (mysql_num_rows($res)) {
-	$tpl->set_var('unblock_user',true);
+while ($rsrow=mysql_fetch_row($res)) {
+	$my_folders[$rsrow[0]]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
 }
 
-$tpl->set_file('left_content','flirt_send_left.html');
-$tpl->set_loop('user_friends',$user_friends);
-$tpl->process('left_content','left_content',TPL_LOOP | TPL_NOLOOP | TPL_OPTIONAL);
+$query="SELECT `fk_folder_id` FROM `{$dbtable_prefix}user_inbox` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `is_read`=0 GROUP BY `fk_folder_id`";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$num_messages=array();
+while ($rsrow=mysql_fetch_row($res)) {
+	$num_messages[$rsrow[0]]=$rsrow[1];
+}
+
+$loopfolders=array();
+$i=0;
+foreach ($my_folders as $k=>$v) {
+	$loopfolders[$i]['fid']=$k;
+	$loopfolders[$i]['folder']=$v;
+	if (isset($num_messages[$k]) && !empty($num_messages[$k])) {
+		$loopfolders[$i]['folder'].=' ('.$num_messages[$k].')';
+	}
+	++$i;
+}
+$tpl->set_loop('loopfolders',$loopfolders);
+$tpl->process('left_content','left_content',TPL_LOOP | TPL_OPTIONAL);
+$tpl->drop_loop('loopfolders');
 ?>

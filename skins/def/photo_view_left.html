@@ -2,8 +2,8 @@
 	<h3>Actions</h3>
 	<div class="box-content">
 		<ul class="menu">
-			<li><a class="content-link bookmark" href="bookmark.php?t=2&id={photo.photo_id}">Bookmark photo</a></li>
-			<li><a class="content-link report" href="report.php?t=2&id={photo.photo_id}">Report as inappropriate</a></li>
+			<li><a class="content-link bookmark" href="bookmark.php?t=2&amp;id={output.photo_id}">Bookmark photo</a></li>
+			<li><a class="content-link report" href="report.php?t=2&amp;id={output.photo_id}">Report as inappropriate</a></li>
 		</ul>
 	</div>
 </div>
@@ -12,11 +12,11 @@
 	<h3>Connect</h3>
 	<div class="box-content">
 		<ul class="menu">
-			<li><a class="content-link profile" href="profile.php?uid={uid}">View profile</a></li>
-			<li><a class="content-link bookmark" href="bookmark.php?t=1&id={uid}">Bookmark member</a></li>
-			<li><a class="content-link message" href="message_send.php?to_id={uid}">Send message</a></li>
-			<li><a class="content-link flirt" href="flirt_send.php?to_id={uid}">Send a flirt</a></li>
-			<li><a class="content-link block" href="block.php?uid={uid}">Block</a></li>
+			<li><a class="content-link profile" href="profile.php?uid={output.fk_user_id}">View profile</a></li>
+			<li><a class="content-link bookmark" href="bookmark.php?t=1&amp;id={output.fk_user_id}">Bookmark member</a></li>
+			<li><a class="content-link message" href="message_send.php?to_id={output.fk_user_id}">Send message</a></li>
+			<li><a class="content-link flirt" href="flirt_send.php?to_id={output.fk_user_id}&amp;return={output.return}">Send a flirt</a></li>
+			<li><a class="content-link block" href="block.php?uid={output.fk_user_id}">Block</a></li>
 		</ul>
 	</div>
 </div>
