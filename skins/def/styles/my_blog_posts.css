@@ -1,16 +1,27 @@
-* html .my_blogs .row {
+a.view_blog {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 15px 18px;
+	background: url('../images/link-upload.gif') no-repeat top right;
+	padding: 3px 35px 9px 3px;
+	font-size: 13px;
+}
+a.view_blog:hover {
+	background-position: bottom right;
+}
+
+* html .my_blog_posts .row {
 	height: 1%;
 }
 
-.my_blogs .row {
+.my_blog_posts .row {
 	overflow: hidden;
-	padding-bottom: 5px;
 	margin-bottom: 5px;
 	border-bottom: 1px dashed #ccc;
-	font-size: 14px;
 }
 
-.my_blogs .row div {
+.my_blog_posts .row div {
 	border-left: 1px solid #DEDEDE;
 	float: left;
 	margin: 3px 0;
@@ -18,13 +29,13 @@
 	overflow: hidden;
 }
 
-.my_blogs .header {
+.my_blog_posts .header {
 	font-weight: bold;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #ccc;
 }
 
-.my_blogs .row .control {
+.my_blog_posts .row .control {
 	width: 60px;
 	border-left: 0;
 	background-position: top right;
@@ -56,25 +67,18 @@
 		display: none;
 	}
 
-.my_blogs .row .blog_name {
+.my_blog_posts .row .title {
 	width: 300px;
 	overflow: hidden;
 }
 
-.my_blogs .row .blog_name .content-link {
-	font-size: 14px;
-}
-
-.my_blogs .row .blog_name .blog_diz {
-	font-size: 11px;
-}
-
-.my_blogs .row .num_posts {
+.my_blog_posts .row .date_posted {
 	width: 120px;
 	overflow: hidden;
 }
 
 div.controls {
 	padding-top: 15px;
-	margin-top: 15px;
+	margin-top: 5px;
+	border-top: 1px dashed #ccc;
 }

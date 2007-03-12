@@ -1,10 +1,12 @@
 <script type="text/javascript" src="js/mailbox.js"></script>
 
 <form action="processors/message_proxy.php" method="post" id="mailbox_form">
+<fieldset class="invisible">
 <input type="hidden" name="act" value="" />
 <input type="hidden" name="return" value="{return}" />
 <input type="hidden" name="fid" value="{fid}" />
 <input type="hidden" name="moveto_fid" value="" />
+</fieldset>
 
 <div class="row header">
 	<div class="control"><input type="checkbox" name="check_all" id="check_all" /><span>All</span></div>

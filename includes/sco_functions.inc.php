@@ -3,8 +3,8 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007030901
-Created by:                 Dan Caragea (http://www.sco.ro - dan@rdsct.ro)
+File version:				1.2007031001
+Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
 /*
@@ -846,7 +846,7 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	$total_pages=ceil($totalrows/$results);
 	$myreturn="<form id=\"pagerform$myrand\" action=\"$phpself\" method=\"get\">\n";
 	$myreturn.="<ul class=\"pager\">\n";
-	$myreturn.='<li>'.(isset($lang_strings['page']) ? $lang_strings['page'] : '').'</li>';
+	$myreturn.='<li class="text">'.(isset($lang_strings['page']) ? $lang_strings['page'] : '').'</li>';
 	if ($offset>0) {
 		$myreturn.='<li class="previous">';
 		$myreturn.='<a href="'.$phpself.'?o='.(($offset-$results>0) ? $offset-$results : 0).'&amp;r='.$results;

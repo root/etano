@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       processors/posts_addedit.php
+File:                       processors/blog_posts_addedit.php
 $Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -23,7 +23,7 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='posts.php';
+$nextpage='my_blog_posts.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
@@ -31,11 +31,28 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$blog_posts_default['defaults'][$k]);
 	}
 	$input['fk_user_id']=$_SESSION['user']['user_id'];
+	if (isset($_POST['return']) && !empty($_POST['return'])) {
+		$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+		$nextpage=$input['return'];
+	}
+
+// check for input errors
+	if (empty($input['title'])) {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Please add a title for this post';
+	}
+	if (empty($input['post_content'])) {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Please write something in the post';
+	}
 
 	if (!$error) {
+		$config=get_site_option(array('manual_blog_approval'),'core_blog');
 		if (!empty($input['post_id'])) {
 			$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='".gmdate('YmdHis')."'";
-			if (get_site_option('manual_blog_approval','core_blog')==1) {
+			if ($config['manual_blog_approval']==1) {
 				$query.=",`status`='".PSTAT_PENDING."'";
 			} else {
 				$query.=",`status`='".PSTAT_APPROVED."'";
@@ -51,8 +68,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Post changed successfully.';
 		} else {
 			$now=gmdate('YmdHis');
+			unset($input['post_id']);
 			$query="INSERT INTO `{$dbtable_prefix}blog_posts` SET `_user`='".$_SESSION['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
-			if (get_site_option('manual_blog_approval','core_blog')==1) {
+			if ($config['manual_blog_approval']==1) {
 				$query.=",`status`='".PSTAT_PENDING."'";
 			} else {
 				$query.=",`status`='".PSTAT_APPROVED."'";
@@ -64,31 +82,29 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Post saved.';
+			if (empty($config['manual_com_approval'])) {
+				$query="UPDATE `{$dbtable_prefix}user_blogs` SET `stat_posts`=`stat_posts`+1 WHERE `blog_id`='".$input['fk_blog_id']."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$topass['message']['text']='Post added.';	// translate this
+			} else {
+				$topass['message']['text']='Post added but needs to be approved first.';	// translate this
+			}
+		}
+		if (!isset($input['return']) || empty($input['return'])) {
+			$qs.=$qs_sep.'bid='.$input['fk_blog_id'];
+			$qs_sep='&';
+			$nextpage.='?'.$qs;
 		}
 	} else {
-		$nextpage='posts_addedit.php';
+		$nextpage='blog_posts_addedit.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
+		$input['post_content']=addslashes_mq($_POST['post_content']);
+		$input['return']=rawurlencode($input['return']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}
-	if (isset($_POST['o'])) {
-		$qs.=$qs_sep.'o='.$_POST['o'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['r'])) {
-		$qs.=$qs_sep.'r='.$_POST['r'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['ob'])) {
-		$qs.=$qs_sep.'ob='.$_POST['ob'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['od'])) {
-		$qs.=$qs_sep.'od='.$_POST['od'];
-		$qs_sep='&';
-	}
 }
-redirect2page($nextpage,$topass,$qs);
+$nextpage=_BASEURL_.'/'.$nextpage;
+redirect2page($nextpage,$topass,'',true);
 ?>

@@ -1,11 +1,13 @@
 <script type="text/javascript" src="js/message_read.js"></script>
 
 <form action="processors/message_proxy.php" method="post" id="mread_form">
+<fieldset class="invisible">
 <input type="hidden" name="act" value="" />
 <input type="hidden" name="mail_id" value="{output.mail_id}" />
 <input type="hidden" name="fid" value="{output.fid}" />
 <input type="hidden" name="return" value="{output.return}" />
 <input type="hidden" name="moveto_fid" value="" />
+</fieldset>
 </form>
 
 <opt name="output.other_id"><a href="profile.php?uid={output.other_id}" title="{output._user_other}"></opt name="output.other_id"><img class="user_photo" id="user_photo" src="{tplvars.relative_path}media/pics/t1/{output.photo}" alt="{output._user_other}" /><opt name="output.other_id"></a></opt name="output.other_id">

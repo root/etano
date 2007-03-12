@@ -19,31 +19,27 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(10);
 
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
-
-$o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
+$output=array();
 
 $from="`{$dbtable_prefix}user_blogs`";
 $where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
 
-$query="SELECT count(*) FROM $from WHERE $where";
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-$totalrows=mysql_result($res,0,0);
-
 $loop=array();
-if (!empty($totalrows)) {
-	$query="SELECT `blog_id`,`blog_name`,`blog_diz`,`num_posts` FROM $from WHERE $where LIMIT $o,$r";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$loop=array();
-	while ($rsrow=mysql_fetch_assoc($res)) {
-		$loop[]=$rsrow;
-	}
-	$loop=sanitize_and_format($loop,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-	$tpl->set_var('pager2',pager($totalrows,$o,$r));
+$query="SELECT `blog_id`,`blog_name`,`blog_diz`,`stat_posts` FROM $from WHERE $where ORDER BY `blog_name`";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+while ($rsrow=mysql_fetch_assoc($res)) {
+	$loop[]=$rsrow;
 }
+$loop=sanitize_and_format($loop,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 
+$output['return']='my_blogs.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$output['return'].='?'.$_SERVER['QUERY_STRING'];
+}
+$output['return']=rawurlencode($output['return']);
 $tpl->set_file('content','my_blogs.html');
 $tpl->set_loop('loop',$loop);
+$tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
 

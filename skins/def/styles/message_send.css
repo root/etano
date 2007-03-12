@@ -1,3 +1,5 @@
+@import url('bbcode.css');
+
 textarea#message_body {
 	width: 100%;
 	height: 240px;
@@ -6,7 +8,6 @@ textarea#message_body {
 #msend_form .controls {
 	padding-top: 15px;
 	margin-top: 15px;
-	border-top: 1px dashed #ccc;
 }
 
 #msend_form .controls p {

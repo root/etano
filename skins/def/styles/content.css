@@ -35,44 +35,43 @@
 		background-position: bottom right;
 	}
 
-.large {
+.rounded-box.large {
 	width: 742px;
 	background: url('../images/lbox-middle.gif') repeat-y;
 }
-	.large h1, .large h2 {
+	.rounded-box.large h1, .rounded-box.large h2 {
 		background: url('../images/lbox-top.gif') no-repeat top left;
 	}
-	.large .box-content {
+	.rounded-box.large .box-content {
 		background: url('../images/lbox-bottom.gif') no-repeat bottom left;
 	}
 
-.medium {
+.rounded-box.medium {
 	width: 706px;
 	background: url('../images/mbox-middle.gif') repeat-y;
 	margin-left: 18px;
 }
-	.medium h2 {
+	.rounded-box.medium h2 {
 		background-image: url('../images/mbox-top.gif');
 	}
-	.medium .box-content {
+	.rounded-box.medium .box-content {
 		background: url('../images/mbox-bottom.gif') no-repeat bottom left;
 	}
 
-.small {
+.rounded-box.small {
 	width: 206px;
 	background: url('../images/sbox-middle.gif') repeat-y;
 }
-	.small h2, .small h3 {
+	.rounded-box.small h2, .small h3 {
 		background: url('../images/sbox-top.gif') no-repeat top left;
 	}
-
-	.small h3 {
+	.rounded-box.small h3 {
 		padding: 15px 18px 0px 18px;
 	}
-
-	.small .box-content {
+	.rounded-box.small .box-content {
 		background: url('../images/sbox-bottom.gif') no-repeat bottom left;
 	}
+
 
 /* INFO+ERROR MESSAGES */
 
@@ -106,7 +105,7 @@
 		padding: 4px 0 0 40px;
 	}
 
-/* Content columns */
+/* CONTENT COLUMNS */
 
 #content_column1 {
 	float: right;
@@ -120,7 +119,8 @@
 	margin: 18px 0;
 }
 
-/* Type */
+
+/* TYPE */
 
 h1 {
 	font-size: 20px;
@@ -148,7 +148,8 @@ strong {
 	font-weight: bold;
 }
 
-/* lINKS */
+
+/* LINKS */
 
 .content-link {
 	font-size: 11px;
@@ -162,6 +163,11 @@ strong {
 .content-link:hover {
 	text-decoration: underline;
 	background-position: bottom left;
+}
+
+.content-link.simple {
+	padding-left: 0px;
+	background: none;
 }
 
 
@@ -251,7 +257,7 @@ ul.pager li.next a:hover {
 	background-position: left bottom;
 }
 
-ul.pager li.previous, ul.pager li.next, ul.pager li.rpp, ul.pager li.first {
+ul.pager li.previous, ul.pager li.next, ul.pager li.rpp, ul.pager li.first, ul.pager li.text {
 	border: none;
 	padding-left: 0;
 }
@@ -278,6 +284,7 @@ ul.pager li.last {
 	float:none;
 	clear:both;
 }
+
 
 /* MENUS */
 
@@ -306,43 +313,43 @@ ul.menu li.first {
 	background-position: bottom left;
 }
 
-.menu a.upload {
+.content-link.upload {
 	background-image: url('../images/menu_upload.gif');
 }
 
-.menu a.profile {
+.content-link.profile {
 	background-image: url('../images/menu_profile.gif');
 }
 
-.menu a.bookmark {
+.content-link.bookmark {
 	background-image: url('../images/menu_bookmark.gif');
 }
 
-.menu a.message {
+.content-link.message {
 	background-image: url('../images/menu_message.gif');
 }
 
-.menu a.flirt {
+.content-link.flirt {
 	background-image: url('../images/menu_flirt.gif');
 }
 
-.menu a.block {
+.content-link.block {
 	background-image: url('../images/menu_block.gif');
 }
 
-.menu a.report {
+.content-link.report {
 	background-image: url('../images/menu_report.gif');
 }
 
-.menu a.photos {
+.content-link.photos {
 	background-image: url('../images/menu_photos.gif');
 }
 
-.menu a.inbox {
+.content-link.inbox {
 	background-image: url('../images/menu_inbox.gif');
 }
 
-.menu a.add {
+.content-link.add {
 	background-image: url('../images/menu_add.gif');
 }
 
@@ -440,6 +447,10 @@ form.edit_form .controls {
 	background-image: url('../images/link-previous.gif');
 }
 
+.link_next {
+	background-image: url('../images/link-next.gif');
+}
+
 
 /* BBCODE CLASSES */
 
@@ -458,4 +469,27 @@ blockquote {
 	height: 1%; /*IE*/
 	clear: both;
 	line-height:1px;
+}
+
+/* BUTTONS */
+.button {
+	background: no-repeat top left;
+	height: 25px;
+	color: #fff;
+	font-weight: bold;
+	border: 0px;
+	text-align: center;
+	padding-right: 10px;
+	padding-bottom: 7px;
+}
+
+* html .button {
+	padding-right: 4px;
+	padding-bottom: 5px;
+	margin:0px;
+}
+
+.button.medium {
+	background-image: url('../images/btn-blank-medium-out.gif');
+	width: 75px;
 }
