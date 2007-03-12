@@ -19,7 +19,7 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(1);
 
 $my_skin=get_my_skin();
-$tpl=new phemplate(_BASEPATH_.'/skins/'.$my_skin.'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$my_skin.'/','remove_nonjs');
 
 $cid=1;
 $profile=array();

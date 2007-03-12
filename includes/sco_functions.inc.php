@@ -813,11 +813,11 @@ function array2qs($myarray,$excluded_keys=array()) {
 
 
 function get_my_skin() {
-	if (isset($_SESSION['user']['skin']) && !empty($_SESSION['user']['skin']) && is_dir(_BASEPATH_.'/skins/'.$_SESSION['user']['skin'])) {
+	if (isset($_SESSION['user']['skin']) && !empty($_SESSION['user']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_SESSION['user']['skin'])) {
 		$myreturn=$_SESSION['user']['skin'];
-	} elseif (isset($_COOKIE['sco_app']['skin']) && preg_match('/^\w+$/',$_COOKIE['sco_app']['skin']) && !empty($_COOKIE['sco_app']['skin']) && is_dir(_BASEPATH_.'/skins/'.$_COOKIE['sco_app']['skin'])) {
+	} elseif (isset($_COOKIE['sco_app']['skin']) && preg_match('/^\w+$/',$_COOKIE['sco_app']['skin']) && !empty($_COOKIE['sco_app']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_COOKIE['sco_app']['skin'])) {
 		$myreturn=$_COOKIE['sco_app']['skin'];
-	} elseif (defined('_DEFAULT_SKIN_') && is_dir(_BASEPATH_.'/skins/'._DEFAULT_SKIN_)) {
+	} elseif (defined('_DEFAULT_SKIN_') && is_dir(_BASEPATH_.'/skins_site/'._DEFAULT_SKIN_)) {
 		$myreturn=_DEFAULT_SKIN_;
 	} else {
 		$myreturn='basic';

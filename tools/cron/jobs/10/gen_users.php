@@ -12,7 +12,7 @@ function gen_user_cache() {
 	}
 	$interval=(int)$temp[count($temp)-1];	// that's how often we're executed ;)
 
-	$tpl=new phemplate(_BASEPATH_.'/skins/','remove_nonjs');
+	$tpl=new phemplate(_BASEPATH_.'/skins_site/','remove_nonjs');
 
 	$query="SELECT a.`config_value` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b WHERE a.`config_option`='skin_dir' AND a.`fk_module_code`=b.`module_code` AND b.`module_type`='".MODULE_SKIN."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -71,24 +71,24 @@ function gen_user_cache() {
 		// create the cache in every skin
 		for ($s=0;isset($skins[$s]);++$s) {
 			// create the user cache folder if it doesn't exist
-			if (!is_dir(_BASEPATH_.'/skins/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'])) {
-				$modman->fileop->mkdir(_BASEPATH_.'/skins/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id']);
+			if (!is_dir(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'])) {
+				$modman->fileop->mkdir(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id']);
 			}
 
 			// generate the profile.html page (without the categories loop)
 			$tpl->set_file('temp',$skins[$s].'/static/profile.html');
 			$towrite=$tpl->process('','temp',TPL_OPTIONAL);
-			$modman->fileop->file_put_contents(_BASEPATH_.'/skins/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/profile.html',$towrite);
+			$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/profile.html',$towrite);
 
 			// generate the user details for gallery view
 			$tpl->set_file('temp',$skins[$s].'/static/user_gallery.html');
 			$towrite=$tpl->process('','temp');
-			$modman->fileop->file_put_contents(_BASEPATH_.'/skins/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/user_gallery.html',$towrite);
+			$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/user_gallery.html',$towrite);
 
 			// generate the user details for list view
 			$tpl->set_file('temp',$skins[$s].'/static/user_list.html');
 			$towrite=$tpl->process('','temp');
-			$modman->fileop->file_put_contents(_BASEPATH_.'/skins/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/user_list.html',$towrite);
+			$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/user_list.html',$towrite);
 
 			// generate the categories to be used on profile.php page
 			$categs=array();
@@ -105,7 +105,7 @@ function gen_user_cache() {
 				$tpl->set_loop('fields',$fields);
 				$tpl->set_var('categs',$categs);
 				$towrite=$tpl->process('','temp',TPL_LOOP);
-				$modman->fileop->file_put_contents(_BASEPATH_.'/skins/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/categ_'.$pcat_id.'.html',$towrite);
+				$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/categ_'.$pcat_id.'.html',$towrite);
 				$tpl->drop_loop('fields');
 				$tpl->drop_var('categs');
 			}

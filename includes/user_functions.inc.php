@@ -167,7 +167,7 @@ function get_user_folder_name($folder_id,$user_id=null) {
 function get_cache_user_mini($user_ids,$skin) {
 	$myreturn=array();
 	for ($i=0;isset($user_ids[$i]);++$i) {
-		$file=_BASEPATH_.'/skins/'.$skin.'/cache/users/'.$user_ids[$i]{0}.'/'.$user_ids[$i].'/user_gallery.html';
+		$file=_BASEPATH_.'/skins_site/'.$skin.'/cache/users/'.$user_ids[$i]{0}.'/'.$user_ids[$i].'/user_gallery.html';
 		if (is_file($file)) {
 			$myreturn[$i]['user']=fread($fp=fopen($file,'rb'),filesize($file));
 		}

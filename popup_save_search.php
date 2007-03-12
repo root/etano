@@ -25,7 +25,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$search['search']=$_GET['search'];
 }
 
-$tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 $tpl->set_file('content','popup_save_search.html');
 $tpl->set_var('tplvars',$tplvars);
 $tpl->set_var('search',$search);

@@ -249,7 +249,7 @@ function regenerate_langstrings_array() {
 			$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT] | FORMAT_ADDSLASH,'');
 			$towrite.="\$_lang[".$rsrow['lk_id']."]='".$rsrow['lang_value']."';\n";
 		}
-		$modman->fileop->file_put_contents(_BASEPATH_.'/skins/'.$skins[$i]['skin_dir'].'/lang/strings.inc.php',$towrite);
+		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/strings.inc.php',$towrite);
 	}
 }
 

@@ -99,7 +99,7 @@ define('HTML_LOCATION',107);
 $__html2type[HTML_LOCATION]=TYPE_INT;
 $__html2format[HTML_LOCATION]=0;
 $_lang=array();
-require_once _BASEPATH_.'/skins/'.get_my_skin().'/lang/strings.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/strings.inc.php';
 $_pfields=array();
 $_pcats=array();
 require_once 'fields.inc.php';
@@ -112,7 +112,7 @@ $tplvars['photourl']=_PHOTOURL_;
 if (isset($_SERVER['PHP_SELF'])) {
 	$tplvars['relative_path']=@str_repeat('../',substr_count($_SERVER['PHP_SELF'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
 }
-$tplvars['tplurl']=_BASEURL_.'/skins/'.get_my_skin();
+$tplvars['tplurl']=_BASEURL_.'/skins_site/'.get_my_skin();
 $tplvars['tplrelpath']=$tplvars['relative_path'].'skins/'.get_my_skin();
 
 $default_search_fields=array(1,2,3,4);
