@@ -18,7 +18,7 @@ require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(13);
 
-$tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $main=sanitize_and_format_gpc($_GET,'main',TYPE_INT,0,0);
 $photo_id=sanitize_and_format_gpc($_GET,'photo_id',TYPE_INT,0,0);

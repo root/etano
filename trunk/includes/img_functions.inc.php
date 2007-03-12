@@ -73,13 +73,13 @@ function save_thumbnail($image,$size,$save_path,$save_name,$config=array()) {
 			$skin=get_my_skin();
 			imagealphablending($mynewimg,true);
 			// put the corners
-			$corner=@imagecreatefrompng(_BASEPATH_.'/skins/'.$skin.'/images/corner_tl.png');
+			$corner=@imagecreatefrompng(_BASEPATH_.'/skins_site/'.$skin.'/images/corner_tl.png');
 			imagecopy($mynewimg,$corner,0,0,0,0,7,7);
-			$corner=@imagecreatefrompng(_BASEPATH_.'/skins/'.$skin.'/images/corner_tr.png');
+			$corner=@imagecreatefrompng(_BASEPATH_.'/skins_site/'.$skin.'/images/corner_tr.png');
 			imagecopy($mynewimg,$corner,$size-7,0,0,0,7,7);
-			$corner=@imagecreatefrompng(_BASEPATH_.'/skins/'.$skin.'/images/corner_bl.png');
+			$corner=@imagecreatefrompng(_BASEPATH_.'/skins_site/'.$skin.'/images/corner_bl.png');
 			imagecopy($mynewimg,$corner,0,$size-7,0,0,7,7);
-			$corner=@imagecreatefrompng(_BASEPATH_.'/skins/'.$skin.'/images/corner_br.png');
+			$corner=@imagecreatefrompng(_BASEPATH_.'/skins_site/'.$skin.'/images/corner_br.png');
 			imagecopy($mynewimg,$corner,$size-7,$size-7,0,0,7,7);
 			// draw the border lines
 			$border_color=imagecolorallocate($mynewimg,0xCC,0xCC,0xCC);

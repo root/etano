@@ -136,7 +136,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 
 		// execute all functions from $jobs, whatever they may be
 		if (!empty($jobs)) {
-			$tpl=new phemplate(_BASEPATH_.'/skins/','remove_nonjs');
+			$tpl=new phemplate(_BASEPATH_.'/skins_site/','remove_nonjs');
 			for ($i=0;isset($jobs[$i]);++$i) {
 				if (function_exists($jobs[$i])) {
 					$start_time=time();

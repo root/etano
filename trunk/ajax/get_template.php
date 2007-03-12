@@ -25,8 +25,8 @@ if (isset($_GET['type']) && !empty($_GET['type']) && isset($type2file[$_GET['typ
 	if (isset($_GET['skin']) && !empty($_GET['skin'])) {
 		$skin=preg_replace("/[^\w]+/",'',$_GET['skin']);
 	}
-	if (is_file(_BASEPATH_.'/skins/'.get_my_template().'/emails/'.$type2file[$type])) {
-		$output.=file_get_contents(_BASEPATH_.'/skins/'.get_my_template().'/emails/'.$type2file[$type]);
+	if (is_file(_BASEPATH_.'/skins_site/'.get_my_template().'/emails/'.$type2file[$type])) {
+		$output.=file_get_contents(_BASEPATH_.'/skins_site/'.get_my_template().'/emails/'.$type2file[$type]);
 	}
 }
 echo $output;

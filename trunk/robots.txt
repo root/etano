@@ -9,6 +9,6 @@ Disallow: /includes
 Disallow: /js
 Disallow: /media
 Disallow: /processors
-Disallow: /skins
+Disallow: /skins_site
 Disallow: /tmp
 Disallow: /tools

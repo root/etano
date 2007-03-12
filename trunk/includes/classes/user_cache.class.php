@@ -21,7 +21,7 @@ class user_cache {
 			$this->cache_mode=_CACHE_MODE_;
 		}
 		$this->skin=$skin;
-		$this->disk_path=_BASEPATH_.'/skins/'.$skin.'/cache/users/';
+		$this->disk_path=_BASEPATH_.'/skins_site/'.$skin.'/cache/users/';
 	}
 
 	function get_cache($user_id,$part) {
