@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       posts_addedit.php
+File:                       blog_addedit.php
 $Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -13,41 +13,39 @@ Support at:                 http://forum.datemill.com
 
 require_once 'includes/sessions.inc.php';
 require_once 'includes/classes/phemplate.class.php';
-require_once 'includes/user_functions.inc.php';
 require_once 'includes/vars.inc.php';
-require_once 'includes/tables/blog_posts.inc.php';
+require_once 'includes/user_functions.inc.php';
+require_once 'includes/tables/user_blogs.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(11);
 
 $tpl=new phemplate(_BASEPATH_.'/skins/'.get_my_skin().'/','remove_nonjs');
 
-$blog_posts=$blog_posts_default['defaults'];
+$output=$user_blogs_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
-	$blog_posts=$_SESSION['topass']['input'];
-} elseif (isset($_GET['post_id']) && !empty($_GET['post_id'])) {
-	$post_id=(int)$_GET['post_id'];
-	$query="SELECT * FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+	$output=$_SESSION['topass']['input'];
+} elseif (isset($_GET['bid']) && !empty($_GET['bid'])) {
+	$blog_id=(int)$_GET['bid'];
+	$query="SELECT `blog_id`,`blog_name`,`blog_diz` FROM `{$dbtable_prefix}user_blogs` WHERE `blog_id`='$blog_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$blog_posts=mysql_fetch_assoc($res);
-		$blog_posts=sanitize_and_format($blog_posts,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+		$output=mysql_fetch_assoc($res);
+		$output=sanitize_and_format($output,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
 	}
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
 }
 
-if (!empty($blog_posts['allow_comments'])) {
-	$blog_posts['allow_comments']='checked';
-}
-
-$tpl->set_file('content','posts_addedit.html');
-$tpl->set_var('blog_posts',$blog_posts);
-if (isset($_GET['o'])) {
-	$tpl->set_var('o',$_GET['o']);
-}
-if (isset($_GET['r'])) {
-	$tpl->set_var('r',$_GET['r']);
-}
+$tpl->set_file('content','blog_addedit.html');
+$tpl->set_var('output',$output);
 $tpl->process('content','content');
 
-$tplvars['title']='Add your post';
+$tplvars['title']='Manage my blogs';
+$tplvars['page_title']='Add/Edit a Blog';
+$tplvars['page']='blog_addedit';
+$tplvars['css']='blog_addedit.css';
+if (is_file('blog_addedit_left.php')) {
+	include 'blog_addedit_left.php';
+}
 include 'frame.php';
 ?>

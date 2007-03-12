@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 	if (!$error) {
-		$config['manual_com_approval']=get_site_option('manual_com_approval','core');
+		$config=get_site_option(array('manual_com_approval'),'core');
 		if (!empty($input['comment_id'])) {
 			$query="UPDATE `{$dbtable_prefix}photo_comments` SET `last_changed`='".gmdate('YmdHis')."'";
 			if ($config['manual_com_approval']==1) {

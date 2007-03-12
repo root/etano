@@ -1,0 +1,38 @@
+form.edit_form fieldset.controls {
+	margin-bottom: 15px;
+}
+
+form.edit_form dt {
+	width: 100px;
+}
+
+form.edit_form dd {
+	width: 400px;
+}
+
+#bottom_links {
+	border-top: 1px dashed #ccc;
+	padding-top: 15px;
+}
+
+input#blog_name {
+	width: 200px;
+}
+
+input#blog_diz {
+	width: 100%;
+}
+
+/* LEFT MENU */
+
+#menu_folders ul.menu li {
+	border: none;
+	padding: 0;
+}
+
+#menu_folders ul.menu li.controls {
+	border-top: 1px dashed #ccc;
+	padding-top: 10px;
+	margin-top: 5px;
+}
+

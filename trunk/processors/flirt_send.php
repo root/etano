@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // get the input we need and sanitize it
 	$input['flirt_id']=sanitize_and_format_gpc($_POST,'flirt_id',TYPE_INT,0,0);
 	$input['fk_user_id']=sanitize_and_format_gpc($_POST,'fk_user_id',TYPE_INT,0,0);
-	if (isset($_POST['return'])) {
+	if (isset($_POST['return']) && !empty($_POST['return'])) {
 		$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
 		$nextpage=$input['return'];
 	}

@@ -1,16 +1,3 @@
-a.upload-photos {
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 15px 18px;
-	background: url('../images/link-upload.gif') no-repeat top right;
-	padding: 3px 35px 9px 3px;
-	font-size: 13px;
-}
-a.upload-photos:hover {
-	background-position: bottom right;
-}
-
 ul.gallery_row {
 	margin: 10px 0px;
 	padding-bottom: 15px;

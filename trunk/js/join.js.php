@@ -1,3 +1,9 @@
+$(function() {
+	$('#join_form').bind('submit',function() {
+		return check_form(this);
+	});
+});
+
 function req_update_location(str_field,val) {
 	$.post('ajax/location.php',
 			{'field':str_field,'val':val},
@@ -33,9 +39,9 @@ function req_check_username() {
 				{'user':user},
 				function(data) {
 					if (data!=null && data!='') {
-						alert('You cannot use "'+$('#user').val()+'" as your username because it is already taken.');
+						alert('You cannot use "'+user+'" as your username because it is already taken.');
 					} else {
-						alert('You can use "'+$('#user').val()+'" as your username.');
+						alert('You can use "'+user+'" as your username.');
 					}
 				}
 		);

@@ -1,11 +1,12 @@
 <script type="text/javascript" src="js/message_send.js"></script>
 <opt name="tplvars.bbcode_message">
 <script type="text/javascript" src="js/bbcode.js"></script>
-<link href="{tplvars.tplrelpath}/styles/bbcode.css" rel="stylesheet" type="text/css" />
 </opt name="tplvars.bbcode_message">
 
-<form action="processors/message_send.php" method="post" id="msend_form" onsubmit="return(check_form(this))">
+<form action="processors/message_send.php" method="post" id="msend_form">
 <fieldset>
+	<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
+	<input type="hidden" name="return" value="{output.return}" />
 	<label for="subject">Subject: </label><input class="text" type="text" name="subject" id="subject" value="{output.subject}" tabindex="1" />
 </fieldset>
 <opt name="tplvars.bbcode_message">
@@ -17,8 +18,6 @@
 </div>
 </opt name="tplvars.bbcode_message">
 <fieldset>
-	<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
-	<input type="hidden" name="return" value="{output.return}" />
 	<textarea name="message_body" id="message_body" cols="" rows="" tabindex="2">{output.message_body}</textarea>
 </fieldset>
 <fieldset class="controls">

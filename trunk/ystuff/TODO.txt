@@ -109,6 +109,7 @@ TODO
 
 - de facut flirt_reply
 - `stat_comments`=`stat_comments`+1 in admin cand se aproba un photo comment
+- `stat_posts`=`stat_posts`+1 in admin cand se aproba un blog
 - blog/poze: nivel acces: public/private/only people in my XXX network are allowed to see it.
 
 - admin: adaugat search_type: range pt field_type: select
