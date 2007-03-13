@@ -21,7 +21,7 @@ check_login_member(4);
 
 $message_types=array(MESS_MESS=>'mail',MESS_FLIRT=>'flirt',MESS_SYSTEM=>'system');
 
-$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
+$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;

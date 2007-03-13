@@ -18,7 +18,7 @@ require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(8);
 
-$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
+$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $tpl->set_file('content','photos_upload.html');
 $tpl->process('content','content');

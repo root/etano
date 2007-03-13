@@ -42,7 +42,7 @@ if (!empty($config['is_default'])) {
 
 require_once '../../includes/classes/modman.class.php';
 $modman=new modman();
-$modman->fileop->delete(_BASEPATH_.'/skins/'.$config['skin_dir']);
+$modman->fileop->delete(_BASEPATH_.'/skins_site/'.$config['skin_dir']);
 
 $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Skin deleted.';
