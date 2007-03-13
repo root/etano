@@ -98,14 +98,8 @@ require_once 'sco_functions.inc.php';
 define('HTML_LOCATION',107);
 $__html2type[HTML_LOCATION]=TYPE_INT;
 $__html2format[HTML_LOCATION]=0;
-$_lang=array();
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/strings.inc.php';
-$_pfields=array();
-$_pcats=array();
-require_once 'fields.inc.php';
 
-$accepted_months=array($_lang[4],$_lang[7],$_lang[8],$_lang[9],$_lang[10],$_lang[11],$_lang[12],$_lang[13],$_lang[14],$_lang[15],$_lang[16],$_lang[17],$_lang[18]);
-$accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
+// often used vars in skins
 $tplvars['sitename']=_SITENAME_;
 $tplvars['baseurl']=_BASEURL_;
 $tplvars['photourl']=_PHOTOURL_;
@@ -113,7 +107,16 @@ if (isset($_SERVER['PHP_SELF'])) {
 	$tplvars['relative_path']=@str_repeat('../',substr_count($_SERVER['PHP_SELF'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
 }
 $tplvars['tplurl']=_BASEURL_.'/skins_site/'.get_my_skin();
-$tplvars['tplrelpath']=$tplvars['relative_path'].'skins/'.get_my_skin();
+$tplvars['tplrelpath']=$tplvars['relative_path'].'skins_site/'.get_my_skin();
+
+$_lang=array();
+require_once $tplvars['tplrelpath'].'/lang/strings.inc.php';
+$_pfields=array();
+$_pcats=array();
+require_once 'fields.inc.php';
+
+$accepted_months=array($_lang[4],$_lang[7],$_lang[8],$_lang[9],$_lang[10],$_lang[11],$_lang[12],$_lang[13],$_lang[14],$_lang[15],$_lang[16],$_lang[17],$_lang[18]);
+$accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
 
 $default_search_fields=array(1,2,3,4);
 

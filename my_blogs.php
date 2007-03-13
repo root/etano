@@ -16,9 +16,9 @@ require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
-check_login_member(10);
+check_login_member(11);
 
-$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
+$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $output=array();
 
 $from="`{$dbtable_prefix}user_blogs`";
