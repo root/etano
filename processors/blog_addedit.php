@@ -44,11 +44,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
+		require_once '../includes/classes/modman.class.php';
+		$modman=new modman();
+		$towrite=array();	// what to write in the cache file
 		if (!empty($input['blog_id'])) {
 			$query="UPDATE IGNORE `{$dbtable_prefix}user_blogs` SET ";
 			foreach ($user_blogs_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.="`$k`='".$input[$k]."',";
+					$towrite[$k]=$input[$k];
 				}
 			}
 			$query=substr($query,0,-1);
@@ -62,13 +66,23 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			foreach ($user_blogs_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.="`$k`='".$input[$k]."',";
+					$towrite[$k]=$input[$k];
 				}
 			}
 			$query=substr($query,0,-1);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$input['blog_id']=mysql_insert_id();
+			$towrite['blog_id']=$input['blog_id'];
+
+			// create the blog cache folder if it doesn't exist
+			if (!is_dir(_CACHEPATH_.'/blogs/'.$input['blog_id'])) {
+				$modman->fileop->mkdir(_CACHEPATH_.'/blogs/'.$input['blog_id']);
+			}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Blog created.';     // translate
 		}
+		$towrite='<?php $blog='.var_export($towrite,true).';?>';
+		$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id'].'/blog.inc.php',$towrite);
 	} else {
 		$nextpage='blog_addedit.php';
 // 		you must re-read all textareas from $_POST like this:

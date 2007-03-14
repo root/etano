@@ -489,7 +489,12 @@ blockquote {
 	margin:0px;
 }
 
-.button.medium {
+.button.bmedium {
 	background-image: url('../images/btn-blank-medium-out.gif');
 	width: 75px;
+}
+
+.button.blarge {
+	background-image: url('../images/btn-blank-large-out.gif');
+	width: 119px;
 }

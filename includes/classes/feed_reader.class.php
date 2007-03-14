@@ -67,7 +67,7 @@ class feedReader {
 		$header='GET '.$url['path']." HTTP/1.0\r\n";
 		$header.='Host: '.$url['host']."\r\n";
 		$header.="Connection: close\r\n\r\n";
-		$socket=fsockopen($url['host'],80,$errno,$errstr,10);
+		$socket=@fsockopen($url['host'],80,$errno,$errstr,10);
 		if ($socket) {
 			fputs($socket,$header);
 			$this->raw_xml='';
