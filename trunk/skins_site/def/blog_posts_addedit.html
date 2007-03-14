@@ -1,0 +1,31 @@
+<script type="text/javascript" src="js/blog_posts_addedit.js"></script>
+<opt name="tplvars.bbcode_blogs">
+<script type="text/javascript" src="js/bbcode.js"></script>
+</opt name="tplvars.bbcode_blogs">
+
+<form action="processors/blog_posts_addedit.php" method="post" id="post_form">
+<fieldset>
+	<input type="hidden" name="post_id" value="{output.post_id}" />
+	<input type="hidden" name="fk_blog_id" value="{output.fk_blog_id}" />
+	<input type="hidden" name="return" value="{output.return}" />
+	<label for="title">Title: </label><input type="text" name="title" id="title" value="{output.title}" tabindex="1" />
+</fieldset>
+<opt name="tplvars.bbcode_blogs">
+<div id="bb_tools">
+	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#post_content')[0])"><i>Bold</i></a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#post_content')[0])"><i>Underline</i></a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#post_content')[0])"><i>Hyperlink</i></a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#post_content')[0])"><i>Quote</i></a>
+</div>
+</opt name="tplvars.bbcode_blogs">
+<fieldset>
+	<textarea name="post_content" id="post_content" cols="" rows="" tabindex="2">{output.post_content}</textarea>
+</fieldset>
+<fieldset class="controls">
+	<p class="post_options">
+		<input type="checkbox" name="allow_comments" id="allow_comments" value="1" {output.allow_comments} />
+		<label for="allow_comments">Allow reader comments?</label>
+	</p>
+	<input class="button bmedium" type="submit" value="Post" />
+</fieldset>
+</form>

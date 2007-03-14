@@ -15,6 +15,7 @@ require_once '../../includes/sessions.inc.php';
 require_once '../../includes/classes/phemplate.class.php';
 require_once '../../includes/vars.inc.php';
 require_once '../../includes/admin_functions.inc.php';
+set_error_handler('general_error');
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 set_time_limit(0);
 
@@ -133,6 +134,8 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 				closedir($dh);
 			}
 		}
+
+//print_r($jobs);
 
 		// execute all functions from $jobs, whatever they may be
 		if (!empty($jobs)) {

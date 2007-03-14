@@ -1,0 +1,24 @@
+<script type="text/javascript" src="js/blog_addedit.js"></script>
+
+<form action="processors/blog_addedit.php" method="post" id="blog_addedit_form" class="edit_form">
+<fieldset>
+<input type="hidden" name="return" value="{output.return}" />
+<input type="hidden" name="blog_id" value="{output.blog_id}" />
+<dl>
+	<dt><label for="blog_name">Title:</label></dt>
+	<dd><input type="text" name="blog_name" id="blog_name" value="{output.blog_name}" /></dd>
+</dl>
+<dl>
+	<dt><label for="blog_diz">Description:</label></dt>
+	<dd><input type="text" name="blog_diz" id="blog_diz" value="{output.blog_diz}" maxlength="255" /></dd>
+</dl>
+</fieldset>
+
+<fieldset class="controls">
+	<input class="button bmedium" type="submit" value="Save" />
+</fieldset>
+</form>
+
+<div id="bottom_links">
+	<a class="content-link link_previous" href="{output.return2}">Back to blogs list</a>
+</div>
