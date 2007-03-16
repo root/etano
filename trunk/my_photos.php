@@ -79,8 +79,7 @@ $tpl->set_file('content','my_photos.html');
 $tpl->set_loop('loop_rows',$loop_rows);
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTLOOP | TPL_OPTIONAL);
-$tpl->drop_loop('loop');
-$tpl->drop_var('output');
+$tpl->drop_loop('loop_rows');
 $tpl->drop_var('pager2');
 
 $tplvars['title']='My Photos';

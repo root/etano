@@ -1,0 +1,19 @@
+<script type="text/javascript" src="js/blog_view.js"></script>
+
+<div id="archive" class="rounded-box small">
+	<h3>Archive</h3>
+	<div class="box-content">
+		<ul>
+			<loop name="blog_archive">
+			<li class="year {blog_archive.is_current}">
+				<a class="content-link simple group_name" id="year_{blog_archive.year}" href="blog_view.php?bid={blog.blog_id}&y={blog_archive.year}">{blog_archive.year}</a>
+				<ul class="months" id="months_{blog_archive.year}">
+					<loop name="months">
+					<li><a class="content-link simple" href="blog_view.php?bid={blog.blog_id}&y={blog_archive.year}&m={months.month}">{months.month_name} {blog_archive.year}</a></li>
+					</loop name="months">
+				</ul>
+			</li>
+			</loop name="blog_archive">
+		</ul>
+	</div>
+</div>
