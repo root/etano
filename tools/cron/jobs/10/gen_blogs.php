@@ -28,11 +28,11 @@ function gen_blogposts_cache() {
 
 		$yearmonth=date('Ym',$rsrow['date_posted']);
 		$posts=array();
-		if (is_file(_CACHEPATH_.'/blogs/'.$rsrow['fk_blog_id'].'/'.$yearmonth.'.inc.php')) {
-			include _CACHEPATH_.'/blogs/'.$rsrow['fk_blog_id'].'/'.$yearmonth.'.inc.php';
+		if (is_file(_CACHEPATH_.'/blogs/'.$rsrow['fk_blog_id'].'/month_'.$yearmonth.'.inc.php')) {
+			include _CACHEPATH_.'/blogs/'.$rsrow['fk_blog_id'].'/month_'.$yearmonth.'.inc.php';
 		}
 		$posts[]=$rsrow;
 		$towrite='<?php $posts='.var_export($posts,true).';';
-		$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$rsrow['fk_blog_id'].'/'.$yearmonth.'.inc.php',$towrite);
+		$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$rsrow['fk_blog_id'].'/month_'.$yearmonth.'.inc.php',$towrite);
 	}
 }

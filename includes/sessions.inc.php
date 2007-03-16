@@ -12,6 +12,7 @@ Support at:                 http://forum.datemill.com
 *******************************************************************************/
 
 $cookie_domain='';
+// set the cookie on the whole domain. If this is not desirable simply comment out the if below
 if (isset($_SERVER['HTTP_HOST'])) {
 	$cookie_domain=explode('.',$_SERVER['HTTP_HOST']);
 	$is_ip=true;
@@ -32,7 +33,12 @@ if (isset($_SERVER['HTTP_HOST'])) {
 		$cookie_domain='';
 	}
 }
-session_cache_limiter('nocache');
+
+if (defined('CACHE_LIMITER')) {
+	session_cache_limiter(CACHE_LIMITER);
+} else {
+	session_cache_limiter('nocache');
+}
 session_start();
 
 if (isset($_GET['skin'])) {

@@ -1,0 +1,31 @@
+h2 {
+	font-size: 20px;
+}
+
+.post_content {
+	font-size: 14px;
+}
+
+/* LEFT MENU */
+
+#archive li.year a.group_name {
+	background: url('../images/group_minimized.gif') no-repeat top left;
+	padding-left: 15px;
+}
+
+#archive li.current a.group_name {
+	background: url('../images/group_maximized.gif') no-repeat top left;
+}
+
+#archive ul.months {
+	margin-left: 20px;
+}
+
+#archive li.year ul.months {
+	display: none;
+}
+
+#archive li.current ul.months {
+	display: block;
+}
+

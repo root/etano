@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		$config=get_site_option(array('manual_blog_approval'),'core_blog');
+		$towrite=array();	// what to write in the cache file
 		if (!empty($input['post_id'])) {
 			$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='".gmdate('YmdHis')."'";
 			if ($config['manual_blog_approval']==1) {
@@ -60,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			foreach ($blog_posts_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.=",`$k`='".$input[$k]."'";
+					$towrite[$k]=$input[$k];
 				}
 			}
 			$query.=" WHERE `post_id`='".$input['post_id']."'";
@@ -78,22 +80,39 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			foreach ($blog_posts_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.=",`$k`='".$input[$k]."'";
+					$towrite[$k]=$input[$k];
 				}
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$input['post_id']=mysql_insert_id();
 			$topass['message']['type']=MESSAGE_INFO;
 			if (empty($config['manual_com_approval'])) {
 				$query="UPDATE `{$dbtable_prefix}user_blogs` SET `stat_posts`=`stat_posts`+1 WHERE `blog_id`='".$input['fk_blog_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['text']='Post added.';	// translate this
 			} else {
-				$topass['message']['text']='Post added but needs to be approved first.';	// translate this
+				$topass['message']['text']='Post added. It will be reviewed and published shortly.';	// translate this
 			}
 		}
 		if (!isset($input['return']) || empty($input['return'])) {
 			$qs.=$qs_sep.'bid='.$input['fk_blog_id'];
 			$qs_sep='&';
 			$nextpage.='?'.$qs;
+		}
+
+		// cache now if this is auto approved
+		if (empty($config['manual_blog_approval'])) {
+			$query="SELECT UNIX_TIMESTAMP(`date_posted`) as `date_posted`,`stat_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='".$input['post_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				$towrite=array_merge($towrite,mysql_fetch_assoc($res));
+			}
+			$towrite['post_id']=$input['post_id'];
+			$towrite['_user']=$_SESSION['user']['user'];
+			require_once '../includes/classes/modman.class.php';
+			$modman=new modman();
+			// individual post
+			$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['fk_blog_id'].'/post_'.$input['post_id'].'.inc.php','<?php $posts[]='.var_export($towrite,true).';');
 		}
 	} else {
 		$nextpage='blog_posts_addedit.php';

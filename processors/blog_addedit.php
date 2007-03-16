@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Blog created.';     // translate
 		}
-		$towrite='<?php $blog='.var_export($towrite,true).';?>';
+		$towrite='<?php $blog='.var_export($towrite,true).';';
 		$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id'].'/blog.inc.php',$towrite);
 	} else {
 		$nextpage='blog_addedit.php';

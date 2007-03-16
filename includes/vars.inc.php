@@ -11,6 +11,10 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 *******************************************************************************/
 
+if (@ini_get('zlib.output_compression')!='1' && strtolower(ini_get('zlib.output_compression'))!='on' && @ini_get('output_handler')!='ob_gzhandler') {
+	ob_start('ob_gzhandler');
+}
+
 ini_set('include_path','.');
 ini_set('session.use_cookies',1);
 define('_DEBUG_',2);// Set to 0 for production! 0-No,1-Yes,2-Verbose. Used for debug in case of errors.
