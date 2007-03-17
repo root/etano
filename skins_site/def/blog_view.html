@@ -4,8 +4,10 @@
 <a name="post_{loop.post_id}"><h3>{loop.title}</h3>
 <div class="post_content">{loop.post_content}</div>
 <div class="post_details">
-	<span>By <opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id"></span>
-	<span>[{loop.date_posted}]</span>
+	<span class="post_by">Posted by <opt name="loop.fk_user_id"><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id"></span>
+	<span class="date_posted"> on {loop.date_posted}</span>
+	<opt name="loop.editable"><span class="editable"><a class="content-link simple" href="blog_posts_addedit.php?post_id={loop.post_id}">Edit</a></span></opt name="loop.editable">
+	<span class="comments"><opt name="loop.allow_comments"><a class="content-link simple" href="blog_comments.php?bid={blog.blog_id}&pid={loop.post_id}">{loop.stat_comments} comments</a></opt name="loop.allow_comments"></span>
 </div>
 <noloop name="loop">
 <p>Sorry, no posts yet.</p>

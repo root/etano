@@ -30,10 +30,10 @@ define('ASTAT_SUSPENDED',5);
 define('ASTAT_UNVERIFIED',10);
 define('ASTAT_ACTIVE',15);
 
-// profile status
-define('PSTAT_PENDING',5);
-define('PSTAT_EDIT',10);
-define('PSTAT_APPROVED',15);
+// items status
+define('STAT_PENDING',5);
+define('STAT_EDIT',10);
+define('STAT_APPROVED',15);
 
 define('_ANY_',-1);
 define('_CHOOSE_',-2);

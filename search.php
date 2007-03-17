@@ -54,7 +54,7 @@ if (!empty($search_md5)) {
 	}
 	check_login_member($input['acclevel_id']);
 
-	$where='`status`='.PSTAT_APPROVED;
+	$where='`status`='.STAT_APPROVED;
 	$from="`{$dbtable_prefix}user_profiles`";
 
 	$search_fields=array();

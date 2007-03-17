@@ -134,9 +134,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!empty($input['file'.$i])) {
 				$query="INSERT INTO `{$dbtable_prefix}user_photos` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`_user`='".$_SESSION['user']['user']."',`photo`='".$input['file'.$i]."',`is_main`=0,`is_private`='".$input['is_private']."',`date_posted`='$now',`last_changed`='$now'";
 				if ($config['manual_photo_approval']==1) {
-					$query.=",`status`='".PSTAT_PENDING."'";
+					$query.=",`status`='".STAT_PENDING."'";
 				} else {
-					$query.=",`status`='".PSTAT_APPROVED."'";
+					$query.=",`status`='".STAT_APPROVED."'";
 				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$ids[]=mysql_insert_id();

@@ -16,7 +16,7 @@
 	margin: 0 10px 10px 0;
 }
 
-.comment .online_stat {
+.comment .member_link {
 	font-size: 15px;
 }
 
@@ -30,11 +30,6 @@ textarea#comment {
 }
 
 #photocomment_form .controls {
-	padding-top: 15px;
-}
-
-#bottom_links {
-	border-top: 1px dashed #ccc;
 	padding-top: 15px;
 }
 

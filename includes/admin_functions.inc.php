@@ -36,7 +36,7 @@ $accepted_htmltype=array(HTML_TEXTFIELD=>'Textfield',HTML_TEXTAREA=>'Textarea',H
 $field_dbtypes=array(HTML_TEXTFIELD=>"varchar(100) not null default ''",HTML_SELECT=>'int(5) not null default 0',HTML_FK_SELECT=>'int(10) not null default 0',HTML_TEXTAREA=>"text not null default ''",HTML_CHECKBOX_LARGE=>"text not null default ''",HTML_FILE=>"varchar(64) not null default ''",HTML_DATE=>'date',HTML_INT=>'int(5) not null default 0',HTML_FLOAT=>'double not null default 0');
 $accepted_admin_depts=array(DEPT_ADMIN=>'Administrator',DEPT_MODERATOR=>'Moderator');
 $accepted_astats=array(ASTAT_SUSPENDED=>'Suspended',ASTAT_UNVERIFIED=>'Unactivated',ASTAT_ACTIVE=>'Active');
-$accepted_pstats=array(PSTAT_PENDING=>'Awaiting approval',PSTAT_EDIT=>'Requires edit',PSTAT_APPROVED=>'Approved');
+$accepted_pstats=array(STAT_PENDING=>'Awaiting approval',STAT_EDIT=>'Requires edit',STAT_APPROVED=>'Approved');
 $accepted_yesno=array(0=>'No',1=>'Yes');
 $country_prefered_input=array('s'=>'state/city selection','z'=>'zip/postal code');
 
@@ -368,13 +368,14 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 	return $myreturn;
 }
 
+
 // This function does NOT convert html to text.
 // Make sure that the string is clean before calling this function
 // duplicate of the same function in user_functions.inc.php
 function bbcode2html($str) {
-	$str=str_replace(array('[b]','[/b]','[u]','[/u]','[quote]','[/quote]','[/url]'),array('<strong>','</strong>','<span class="underline">','</span>','<blockquote>','</blockquote>','</a>'),$str);
-	$str=preg_replace('/\[url=(http:\/\/.*?)\]/','<a target="_blank" href="$1">',$str);
-	$str=preg_replace('/\[img=(http:\/\/.*?)\]/','<img src="$1" />',$str);
+	$from=array('~\[url=(http://[^<">\(\)\[\]]*?)\](.*?)\[/url\]~','~\[b\](.*?)\[/b\]~','~\[u\](.*?)\[/u\]~','~\[quote\](.*?)\[/quote\]~','~\[img=(http://[^<">\(\)\[\]]*?)\]~');
+	$to=array('<a target="_blank" rel="nofollow" href="$1">$2</a>','<strong>$1</strong>','<span class="underline">$1</span>','<blockquote>$1</blockquote>','<img src="$1" />');
+	$str=preg_replace($from,$to,$str);
 	return $str;
 }
 

@@ -174,9 +174,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if ($input['page']==1) {
 			$query.=",`_user`='".$input['user']."'";
 			if (get_site_option('manual_profile_approval','core')==1) {
-				$query.=",`status`='".PSTAT_PENDING."'";
+				$query.=",`status`='".STAT_PENDING."'";
 			} else {
-				$query.=",`status`='".PSTAT_APPROVED."'";
+				$query.=",`status`='".STAT_APPROVED."'";
 			}
 		}
 		for ($i=0;isset($my_fields[$i]);++$i) {

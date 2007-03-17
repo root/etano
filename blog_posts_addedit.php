@@ -47,17 +47,19 @@ $tplvars['bbcode_blogs']=get_site_option('bbcode_blogs','core_blog');
 if (empty($tplvars['bbcode_blogs'])) {
 	unset($tplvars['bbcode_blogs']);
 }
+
+include _CACHEPATH_.'/blogs/'.$output['fk_blog_id'].'/blog.inc.php';
 $tpl->set_file('content','blog_posts_addedit.html');
 $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']='Add your post';
-$tplvars['page_title']='Add/Edit a Blog Post';
+$tplvars['page_title']=sprintf('Add/Edit a Post in %s',$blog['blog_name']);
 $tplvars['page']='blog_posts_addedit';
 $tplvars['css']='blog_posts_addedit.css';
-if (is_file('posts_addedit_left.php')) {
-	include 'posts_addedit_left.php';
+if (is_file('blog_posts_addedit_left.php')) {
+	include 'blog_posts_addedit_left.php';
 }
 include 'frame.php';
 ?>

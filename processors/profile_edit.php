@@ -121,16 +121,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					}
 				}
 				if ($force_pending) {
-					$query.=",`status`='".PSTAT_PENDING."'";
+					$query.=",`status`='".STAT_PENDING."'";
 				} else {
-					$query.=",`status`='".PSTAT_APPROVED."'";
+					$query.=",`status`='".STAT_APPROVED."'";
 				}
 			} else {		// insert here
 				$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."'";
 				if (!empty($config['manual_profile_approval'])) {
-					$query.=",`status`='".PSTAT_PENDING."'";
+					$query.=",`status`='".STAT_PENDING."'";
 				} else {
-					$query.=",`status`='".PSTAT_APPROVED."'";
+					$query.=",`status`='".STAT_APPROVED."'";
 				}
 			}
 			foreach ($_pcats[$pcat_id]['fields'] as $v) {

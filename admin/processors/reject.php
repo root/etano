@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	switch ($input['t']) {
 
 		case AMTPL_REJECT_MEMBER:
-			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `status`='".PSTAT_EDIT."',`last_changed`=now(),`reject_reason`='".$input['reject_reason']."' WHERE `fk_user_id`='".$input['id']."'";
+			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `status`='".STAT_EDIT."',`last_changed`=now(),`reject_reason`='".$input['reject_reason']."' WHERE `fk_user_id`='".$input['id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (!empty($input['send_email'])) {
 				$query="SELECT `email` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='".$input['id']."'";
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			break;
 
 		case AMTPL_REJECT_PHOTO:
-			$query="UPDATE `{$dbtable_prefix}user_photos` SET `status`='".PSTAT_EDIT."',`last_changed`=now(),`reject_reason`='".$input['reject_reason']."' WHERE `photo_id`='".$input['id']."'";
+			$query="UPDATE `{$dbtable_prefix}user_photos` SET `status`='".STAT_EDIT."',`last_changed`=now(),`reject_reason`='".$input['reject_reason']."' WHERE `photo_id`='".$input['id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (!empty($input['send_email'])) {
 				$query="SELECT b.`email` FROM `{$dbtable_prefix}user_photos` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`user_id` AND a.`photo_id`='".$input['id']."'";
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			break;
 
 		case AMTPL_REJECT_BLOG:
-			$query="UPDATE `{$dbtable_prefix}blog_posts` SET `status`='".PSTAT_EDIT."',`last_changed`=now(),`reject_reason`='".$input['reject_reason']."' WHERE `post_id`='".$input['id']."'";
+			$query="UPDATE `{$dbtable_prefix}blog_posts` SET `status`='".STAT_EDIT."',`last_changed`=now(),`reject_reason`='".$input['reject_reason']."' WHERE `post_id`='".$input['id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (!empty($input['send_email'])) {
 				$query="SELECT b.`email` FROM `{$dbtable_prefix}blog_posts` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`user_id` AND a.`post_id`='".$input['id']."'";

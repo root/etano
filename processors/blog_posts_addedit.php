@@ -54,9 +54,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!empty($input['post_id'])) {
 			$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='".gmdate('YmdHis')."'";
 			if ($config['manual_blog_approval']==1) {
-				$query.=",`status`='".PSTAT_PENDING."'";
+				$query.=",`status`='".STAT_PENDING."'";
 			} else {
-				$query.=",`status`='".PSTAT_APPROVED."'";
+				$query.=",`status`='".STAT_APPROVED."'";
 			}
 			foreach ($blog_posts_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
@@ -73,9 +73,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			unset($input['post_id']);
 			$query="INSERT INTO `{$dbtable_prefix}blog_posts` SET `_user`='".$_SESSION['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
 			if ($config['manual_blog_approval']==1) {
-				$query.=",`status`='".PSTAT_PENDING."'";
+				$query.=",`status`='".STAT_PENDING."'";
 			} else {
-				$query.=",`status`='".PSTAT_APPROVED."'";
+				$query.=",`status`='".STAT_APPROVED."'";
 			}
 			foreach ($blog_posts_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
@@ -86,33 +86,36 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['post_id']=mysql_insert_id();
 			$topass['message']['type']=MESSAGE_INFO;
-			if (empty($config['manual_com_approval'])) {
+			if (empty($config['manual_blog_approval'])) {
 				$query="UPDATE `{$dbtable_prefix}user_blogs` SET `stat_posts`=`stat_posts`+1 WHERE `blog_id`='".$input['fk_blog_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['text']='Post added.';	// translate this
 			} else {
 				$topass['message']['text']='Post added. It will be reviewed and published shortly.';	// translate this
 			}
+
+			// update the blog_archive links now if this is auto approved
+			if (empty($config['manual_blog_approval'])) {
+				require_once '../includes/classes/modman.class.php';
+				$modman=new modman();
+
+				$blog_archive=array();
+				if (is_file(_CACHEPATH_.'/blogs/'.$input['fk_blog_id'].'/blog_archive.inc.php')) {
+					include _CACHEPATH_.'/blogs/'.$input['fk_blog_id'].'/blog_archive.inc.php';
+				}
+				if (isset($blog_archive[(int)date('Y')][(int)date('m')])) {
+					++$blog_archive[(int)date('Y')][(int)date('m')];
+				} else {
+					$blog_archive[(int)date('Y')][(int)date('m')]=1;
+				}
+				krsort($blog_archive,SORT_NUMERIC);
+				$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['fk_blog_id'].'/blog_archive.inc.php','<?php $blog_archive='.var_export($blog_archive,true).';');
+			}
 		}
 		if (!isset($input['return']) || empty($input['return'])) {
 			$qs.=$qs_sep.'bid='.$input['fk_blog_id'];
 			$qs_sep='&';
 			$nextpage.='?'.$qs;
-		}
-
-		// cache now if this is auto approved
-		if (empty($config['manual_blog_approval'])) {
-			$query="SELECT UNIX_TIMESTAMP(`date_posted`) as `date_posted`,`stat_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='".$input['post_id']."'";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			if (mysql_num_rows($res)) {
-				$towrite=array_merge($towrite,mysql_fetch_assoc($res));
-			}
-			$towrite['post_id']=$input['post_id'];
-			$towrite['_user']=$_SESSION['user']['user'];
-			require_once '../includes/classes/modman.class.php';
-			$modman=new modman();
-			// individual post
-			$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['fk_blog_id'].'/post_'.$input['post_id'].'.inc.php','<?php $posts[]='.var_export($towrite,true).';');
 		}
 	} else {
 		$nextpage='blog_posts_addedit.php';

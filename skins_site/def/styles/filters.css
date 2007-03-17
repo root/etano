@@ -32,7 +32,7 @@
 	a.item_edit {
 		float: right;
 		padding: 0 3px 0 5px;
-		background: url('../images/link_edit.gif') no-repeat top center;
+		background: url('../images/link-change.gif') no-repeat top center;
 		width: 22px;
 		height: 22px;
 		display: block;
@@ -90,7 +90,6 @@
 #controls select {
 	font: 12px "Trebuchet MS", Arial, sans-serif;
 }
-
 
 
 /* LEFT MENU */

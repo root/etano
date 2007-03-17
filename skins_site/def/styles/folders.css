@@ -27,14 +27,12 @@
 .folders .row .control {
 	width: 60px;
 	border-left: 0;
-	background-position: top right;
-	background-repeat: no-repeat;
 }
 
 	a.item_edit {
 		float: right;
 		padding: 0 3px 0 5px;
-		background: url('../images/link_edit.gif') no-repeat top center;
+		background: url('../images/link-change.gif') no-repeat top center;
 		width: 22px;
 		height: 22px;
 		display: block;
@@ -64,5 +62,19 @@
 .folders .row .total_messages {
 	width: 120px;
 	overflow: hidden;
+}
+
+
+/* LEFT MENU */
+
+#menu_folders ul.menu li {
+	border: none;
+	padding: 0;
+}
+
+#menu_folders ul.menu li.controls {
+	border-top: 1px dashed #ccc;
+	padding-top: 10px;
+	margin-top: 5px;
 }
 

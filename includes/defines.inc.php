@@ -3,7 +3,7 @@ define('_DBHOSTNAME_','localhost');// mysql server host name
 define('_DBUSERNAME_','root');// mysql database username
 define('_DBPASSWORD_','rootpass');// mysql database password
 define('_DBNAME_','newdsb');// mysql database name
-define('_SITENAME_','This is my site name');// Your site name
+define('_SITENAME_','F r e n d y');// Your site name
 define('_BASEURL_','http://dating.sco.ro/newdsb');// protocol required (http:// )
 define('_BASEPATH_','/www/htdocs/newdsb');// path on server to your site
 define('_PHOTOURL_',_BASEURL_.'/media/pics');// protocol required (http:// ). URL to your member photos

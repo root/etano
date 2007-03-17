@@ -173,19 +173,19 @@ strong {
 
 /* ONLINE/OFFLINE ICON NEXT TO EVERY USER NAME */
 
-.online_stat {
+.member_link {
 	background: url('../images/member-offline-small.gif') no-repeat top left;
 	padding: 0 3px 0 15px;
 }
-.online_stat:hover {
+.member_link:hover {
 	background-position: bottom left;
 }
 
-.is_online .online_stat, .is_online.online_stat {
+.is_online .member_link, .is_online.member_link {
 	background: url('../images/member-online-small.gif') no-repeat top left;
 	padding: 0 3px 0 15px;
 }
-.is_online .online_stat:hover, .is_online.online_stat:hover {
+.is_online .member_link:hover, .is_online.member_link:hover {
 	background-position: bottom left;
 }
 
@@ -325,7 +325,7 @@ ul.menu li.first {
 	background-image: url('../images/menu_bookmark.gif');
 }
 
-.content-link.message {
+.content-link.mailbox {
 	background-image: url('../images/menu_message.gif');
 }
 
@@ -432,7 +432,6 @@ form.edit_form dd.full-width {
 	width: 546px;
 }
 
-
 form.edit_form .controls {
 	border: none;
 	margin-bottom: 0px;
@@ -449,6 +448,12 @@ form.edit_form .controls {
 
 .link_next {
 	background-image: url('../images/link-next.gif');
+}
+
+#bottom_links {
+	border-top: 1px dashed #ccc;
+	padding-top: 15px;
+	margin-top: 15px;
 }
 
 
