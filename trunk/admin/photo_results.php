@@ -107,11 +107,11 @@ if (!empty($totalrows)) {
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['is_private']=empty($rsrow['is_private']) ? 'public' : 'private';
 		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		if ($rsrow['status']==PSTAT_PENDING) {
+		if ($rsrow['status']==STAT_PENDING) {
 			$rsrow['pending']=true;
-		} elseif ($rsrow['status']==PSTAT_EDIT) {
+		} elseif ($rsrow['status']==STAT_EDIT) {
 			$rsrow['need_edit']=true;
-		} elseif ($rsrow['status']==PSTAT_APPROVED) {
+		} elseif ($rsrow['status']==STAT_APPROVED) {
 			$rsrow['approved']=true;
 		}
 		$photos[]=$rsrow;

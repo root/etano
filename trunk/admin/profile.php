@@ -102,11 +102,11 @@ if (mysql_num_rows($res)) {
 	if (!empty($profile['_photo']) && is_file(_BASEPATH_.'/media/pics/t1/'.$profile['_photo']) && is_file(_BASEPATH_.'/media/pics/t2/'.$profile['_photo']) && is_file(_BASEPATH_.'/media/pics/'.$profile['_photo'])) {
 		$profile['has_photo']=true;
 	}
-	if ($profile['status']==PSTAT_PENDING) {
+	if ($profile['status']==STAT_PENDING) {
 		$profile['pending']=true;
-	} elseif ($profile['status']==PSTAT_EDIT) {
+	} elseif ($profile['status']==STAT_EDIT) {
 		$profile['need_edit']=true;
-	} elseif ($profile['status']==PSTAT_APPROVED) {
+	} elseif ($profile['status']==STAT_APPROVED) {
 		$profile['approved']=true;
 	}
 

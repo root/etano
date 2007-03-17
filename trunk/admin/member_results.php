@@ -347,11 +347,11 @@ if (!empty($totalrows)) {
 		if (empty($rsrow['_photo']) || !is_file(_BASEPATH_.'/media/pics/t1/'.$rsrow['_photo']) || !is_file(_BASEPATH_.'/media/pics/t2/'.$rsrow['_photo']) || !is_file(_BASEPATH_.'/media/pics/'.$rsrow['_photo'])) {
 			$rsrow['_photo']='no_photo.gif';
 		}
-		if ($rsrow['status']==PSTAT_PENDING) {
+		if ($rsrow['status']==STAT_PENDING) {
 			$rsrow['pending']=true;
-		} elseif ($rsrow['status']==PSTAT_EDIT) {
+		} elseif ($rsrow['status']==STAT_EDIT) {
 			$rsrow['need_edit']=true;
-		} elseif ($rsrow['status']==PSTAT_APPROVED) {
+		} elseif ($rsrow['status']==STAT_APPROVED) {
 			$rsrow['approved']=true;
 		}
 		if (empty($rsrow['del'])) {

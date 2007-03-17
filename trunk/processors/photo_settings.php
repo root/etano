@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_main`=0 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 // if photo approvals are automatic then we can make this photo the main photo now. Otherwise it will have to be done upon approval!!!
-			if (empty($config['manual_photo_approval']) || $statuses[$input['is_main']]==PSTAT_APPROVED) {
+			if (empty($config['manual_photo_approval']) || $statuses[$input['is_main']]==STAT_APPROVED) {
 				$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='".$photos[$input['is_main']]."',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}
@@ -73,10 +73,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (isset($captions_changed[$photo_id])) {
 				$query.=",`caption`='$caption'";
 				if (!empty($config['manual_photo_approval'])) {
-					$query.=",`status`='".PSTAT_PENDING."'";
+					$query.=",`status`='".STAT_PENDING."'";
 				} else {
 					// leave as it was - whatever it was.
-//					$query.=",`status`='".PSTAT_APPROVED."'";
+//					$query.=",`status`='".STAT_APPROVED."'";
 				}
 			}
 			$query.=" WHERE `photo_id`='$photo_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";

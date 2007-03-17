@@ -27,17 +27,13 @@ ul#message_details li {
 
 #controls {
 	border-top: 1px dashed #ccc;
-	padding: 15px 0;
+	padding-top: 15px;
 }
 
 #controls input {
 	margin-bottom: -10px;
 }
 
-#bottom_links {
-	border-top: 1px dashed #ccc;
-	padding-top: 15px;
-}
 
 /* LEFT MENU */
 

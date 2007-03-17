@@ -192,9 +192,9 @@ function get_module_codes_by_type($module_type) {
 // Make sure that the string is clean before calling this function
 // duplicate of the same function in admin_functions.inc.php
 function bbcode2html($str) {
-	$str=str_replace(array('[b]','[/b]','[u]','[/u]','[quote]','[/quote]','[/url]'),array('<strong>','</strong>','<span class="underline">','</span>','<blockquote>','</blockquote>','</a>'),$str);
-	$str=preg_replace('/\[url=(http:\/\/.*?)\]/','<a target="_blank" href="$1">',$str);
-//	$str=preg_replace('/\[img=(http:\/\/.*?)\]/','<img src="$1" />',$str);
+	$from=array('~\[url=(http://[^<">\(\)\[\]]*?)\](.*?)\[/url\]~','~\[b\](.*?)\[/b\]~','~\[u\](.*?)\[/u\]~','~\[quote\](.*?)\[/quote\]~','~\[img=(http://[^<">\(\)\[\]]*?)\]~');
+	$to=array('<a target="_blank" rel="nofollow" href="$1">$2</a>','<strong>$1</strong>','<span class="underline">$1</span>','<blockquote>$1</blockquote>','<img src="$1" />');
+	$str=preg_replace($from,$to,$str);
 	return $str;
 }
 

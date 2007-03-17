@@ -10,13 +10,13 @@
 <loop name="loop">
 <div class="comment {loop.is_online}">
 	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
-	<opt name="loop.fk_user_id"><a class="content-link online_stat" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
+	<opt name="loop.fk_user_id"><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id"> said...
 	<p>{loop.comment}</p>
 	<div class="clear"></div>
 </div>
 </loop name="loop">
 
-<h3>Add your comment</h3>
+<h3>Leave your comment</h3>
 
 <opt name="tplvars.bbcode_comments">
 <div id="bb_tools">
@@ -26,7 +26,7 @@
 	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',document.getElementById('comment'))"><i>Quote</i></a>
 </div>
 </opt name="tplvars.bbcode_comments">
-<form id="photocomment_form" action="processors/photo_comment.php" method="post">
+<form id="photocomment_form" action="processors/photo_comments.php" method="post">
 <fieldset>
 	<input type="hidden" name="fk_photo_id" value="{output.photo_id}" />
 	<input type="hidden" name="return" value="{output.return}" />

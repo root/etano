@@ -12,29 +12,34 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $blog_archive=array();
-//include _CACHEPATH_.'/blogs/'.$blog['blog_id'].'/blog_archive.inc.php';
+include _CACHEPATH_.'/blogs/'.$blog['blog_id'].'/blog_archive.inc.php';
 
+$year=sanitize_and_format_gpc($_GET,'y',TYPE_INT,0,0);
+$loop=array();
 $i=0;
-$blog_archive[$i]['is_current']='current';
-$blog_archive[$i]['year']=2007;
-$j=0;
-$blog_archive[$i]['months'][$j]['month']=2;
-$blog_archive[$i]['months'][$j]['month_name']='february';
-++$j;
-$blog_archive[$i]['months'][$j]['month']=1;
-$blog_archive[$i]['months'][$j]['month_name']='january';
-
-++$i;
-$blog_archive[$i]['year']=2006;
-$j=0;
-$blog_archive[$i]['months'][$j]['month']=12;
-$blog_archive[$i]['months'][$j]['month_name']='december';
-++$j;
-$blog_archive[$i]['months'][$j]['month']=11;
-$blog_archive[$i]['months'][$j]['month_name']='november';
+$current_passed=false;
+foreach ($blog_archive as $y=>$months) {
+	$loop[$i]['year']=$y;
+	if ($year==$y) {
+		$loop[$i]['is_current']='current';
+		$current_passed=true;
+	}
+	$loop[$i]['num_posts']=array_sum($months);
+	$j=0;
+	foreach ($months as $m=>$num_posts) {
+		$loop[$i]['months'][$j]['month']=$m;
+		$loop[$i]['months'][$j]['month_name']=$accepted_months[$m];
+		$loop[$i]['months'][$j]['num_posts']=$num_posts;
+		++$j;
+	}
+	++$i;
+}
+if (!$current_passed && isset($loop[0])) {
+	$loop[0]['is_current']='current';
+}
 
 $tpl->set_file('left_content','blog_view_left.html');
-$tpl->set_loop('blog_archive',$blog_archive);
+$tpl->set_loop('loop',$loop);
 $tpl->process('left_content','left_content',TPL_MULTILOOP);
-$tpl->drop_loop('blog_archive');
+$tpl->drop_loop('loop');
 ?>

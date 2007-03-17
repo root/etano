@@ -1,0 +1,44 @@
+<script type="text/javascript" src="js/blog_comments.js"></script>
+<opt name="tplvars.bbcode_comments">
+<script type="text/javascript" src="js/bbcode.js"></script>
+</opt name="tplvars.bbcode_comments">
+
+<div class="post_content">
+{output.post_content}
+</div>
+<div class="post_details">
+	<span class="post_by">Posted by <opt name="output.fk_user_id"><a class="content-link member_link" href="profile.php?uid={output.fk_user_id}"></opt name="output.fk_user_id">{output.user}<opt name="output.fk_user_id"></a></opt name="output.fk_user_id"></span>
+	<span class="date_posted"> on {output.date_posted}</span>
+</div>
+
+<opt name="allow_comments">
+<loop name="loop">
+<div class="comment {loop.is_online}">
+	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
+	<opt name="loop.fk_user_id"><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id"> said...
+	<p>{loop.comment}</p>
+	<div class="clear"></div>
+</div>
+</loop name="loop">
+
+<h3>Leave your comment</h3>
+
+<opt name="tplvars.bbcode_comments">
+<div id="bb_tools">
+	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',document.getElementById('comment'))"><i>Bold</i></a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',document.getElementById('comment'))"><i>Underline</i></a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',document.getElementById('comment'))"><i>Hyperlink</i></a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',document.getElementById('comment'))"><i>Quote</i></a>
+</div>
+</opt name="tplvars.bbcode_comments">
+<form id="blogcomment_form" action="processors/blog_comments.php" method="post">
+<fieldset>
+	<input type="hidden" name="fk_post_id" value="{output.post_id}" />
+	<input type="hidden" name="fk_blog_id" value="{output.fk_blog_id}" />
+	<textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea>
+</fieldset>
+<fieldset class="controls">
+	<input class="button blarge" id="post-button" type="submit" value="Post comment" />
+</fieldset>
+</form>
+</opt name="allow_comments">

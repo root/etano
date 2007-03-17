@@ -22,21 +22,55 @@ check_login_member(10);
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $blog=array();
+$loop=array();
 if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 	$blog_id=(int)$_GET['bid'];
 	include _CACHEPATH_.'/blogs/'.$blog_id.'/blog.inc.php';
-	$query="SELECT `post_id`,`title`,`post_content`,`_user` as `user`,`fk_user_id`,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' ORDER BY `date_posted` DESC LIMIT 5";
-}
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-$loop=array();
-while ($rsrow=mysql_fetch_assoc($res)) {
-	$rsrow['date_posted']=strftime($_user_settings['date_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
-	if (empty($rsrow['fk_user_id'])) {
-		unset($rsrow['fk_user_id']);
+
+	$is_auth_user=false;
+	if (isset($_SESSION['user']['user_id'])) {
+		$is_auth_user=true;
 	}
-	$loop[]=$rsrow;
+	$year=sanitize_and_format_gpc($_GET,'y',TYPE_INT,0,0);
+	$month=sanitize_and_format_gpc($_GET,'m',TYPE_INT,0,0);
+	if (empty($year)) {
+		$query="SELECT YEAR(`date_posted`),MONTH(`date_posted`) FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' ORDER BY `date_posted` DESC LIMIT 1";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (mysql_num_rows($res)) {
+			list($year,$month)=mysql_fetch_row($res);
+		}
+	} elseif (empty($month)) {
+		$query="SELECT YEAR(`date_posted`),MONTH(`date_posted`) FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' AND YEAR(`date_posted`)='$year' ORDER BY `date_posted` DESC LIMIT 1";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (mysql_num_rows($res)) {
+			list($year,$month)=mysql_fetch_row($res);
+		}
+	}
+	if (!empty($year) && !empty($month)) {
+		$config=get_site_option(array('bbcode_blogs'),'core_blog');
+		$month=str_pad($month,2,'0',STR_PAD_LEFT);
+		$query="SELECT `post_id`,`title`,`post_content`,`_user` as `user`,`fk_user_id`,UNIX_TIMESTAMP(`date_posted`) as `date_posted`,`stat_comments`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' AND `date_posted`>'{$year}{$month}00000000' AND `date_posted`<='{$year}{$month}31235959' AND `status`='".STAT_APPROVED."' ORDER BY `date_posted` DESC";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$rsrow['date_posted']=strftime($_user_settings['datetime_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
+			if (empty($rsrow['fk_user_id'])) {
+				unset($rsrow['fk_user_id']);
+			}
+			if (empty($rsrow['allow_comments'])) {
+				unset($rsrow['allow_comments']);
+			}
+			if ($is_auth_user && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
+				$rsrow['editable']=true;
+			}
+			$rsrow['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			$rsrow['post_content']=sanitize_and_format($rsrow['post_content'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			if (!empty($config['bbcode_blogs'])) {
+				$rsrow['post_content']=bbcode2html($rsrow['post_content']);
+			};
+			$loop[]=$rsrow;
+		}
+	}
 }
-$loop=sanitize_and_format($loop,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 
 $tpl->set_file('content','blog_view.html');
 $tpl->set_var('blog',$blog);

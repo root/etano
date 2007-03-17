@@ -44,7 +44,7 @@ $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
 
 $where="`fk_user_id`='$uid' AND `del`=0";
 if (!isset($_SESSION['user']['user_id']) || $uid!=$_SESSION['user']['user_id']) {
-	$where.=" AND `is_private`=0 AND `status`=".PSTAT_APPROVED;
+	$where.=" AND `is_private`=0 AND `status`=".STAT_APPROVED;
 }
 $from="`{$dbtable_prefix}user_photos`";
 

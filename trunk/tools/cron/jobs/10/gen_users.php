@@ -26,7 +26,7 @@ function gen_user_cache() {
 	require_once '../../includes/classes/modman.class.php';
 	$modman=new modman();
 
-	$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `status`='".PSTAT_APPROVED."' AND `last_changed`>=DATE_SUB(now(),INTERVAL ".($interval+2)." MINUTE)";
+	$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `status`='".STAT_APPROVED."' AND `last_changed`>=DATE_SUB(now(),INTERVAL ".($interval+2)." MINUTE)";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($profile=mysql_fetch_assoc($res)) {
 	// set all the fields to their real (readable) values

@@ -93,9 +93,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$is_update=true;
 		}
 		if ($is_update) {
-			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."',`status`='".PSTAT_APPROVED."'";
+			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."',`status`='".STAT_APPROVED."'";
 		} else {
-			$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."',`status`='".PSTAT_APPROVED."'";
+			$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."',`status`='".STAT_APPROVED."'";
 		}
 		foreach ($_pfields as $field_id=>$field) {
 			if ($field['editable']) {

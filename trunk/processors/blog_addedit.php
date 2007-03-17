@@ -78,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!is_dir(_CACHEPATH_.'/blogs/'.$input['blog_id'])) {
 				$modman->fileop->mkdir(_CACHEPATH_.'/blogs/'.$input['blog_id']);
 			}
+			$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id'].'/blog_archive.inc.php','<?php $blog_archive=array();');
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Blog created.';     // translate
 		}
