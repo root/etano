@@ -12,6 +12,7 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 set_error_handler('admin_error');
+require_once 'general_functions.inc.php';
 
 define('DEPT_MODERATOR',2);
 define('DEPT_ADMIN',4);
@@ -254,31 +255,6 @@ function regenerate_langstrings_array() {
 }
 
 
-function get_site_option($option,$module_code) {
-	$myreturn=0;
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
-	$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code`='$module_code'";
-	if (is_array($option)) {
-		if (!empty($option)) {
-			$query.=" AND `config_option` IN ('".join("','",$option)."')";
-		}
-	} else {
-		$query.=" AND `config_option`='$option'";
-	}
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_num_rows($res)) {
-		$myreturn=array();
-		while ($rsrow=mysql_fetch_row($res)) {
-			$myreturn[$rsrow[0]]=$rsrow[1];
-		}
-		if (is_string($option)) {
-			$myreturn=array_shift($myreturn);
-		}
-	}
-	return $myreturn;
-}
-
-
 function set_site_option($option,$module_code,$value) {
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	$query="UPDATE `{$dbtable_prefix}site_options3` SET `config_value`='$value' WHERE `config_option`='$option' AND `fk_module_code`='$module_code'";
@@ -366,22 +342,4 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 		}
 	}
 	return $myreturn;
-}
-
-
-// This function does NOT convert html to text.
-// Make sure that the string is clean before calling this function
-// duplicate of the same function in user_functions.inc.php
-function bbcode2html($str) {
-	$from=array('~\[url=(http://[^<">\(\)\[\]]*?)\](.*?)\[/url\]~','~\[b\](.*?)\[/b\]~','~\[u\](.*?)\[/u\]~','~\[quote\](.*?)\[/quote\]~','~\[img=(http://[^<">\(\)\[\]]*?)\]~');
-	$to=array('<a target="_blank" rel="nofollow" href="$1">$2</a>','<strong>$1</strong>','<span class="underline">$1</span>','<blockquote>$1</blockquote>','<img src="$1" />');
-	$str=preg_replace($from,$to,$str);
-	return $str;
-}
-
-
-function pager($totalrows,$offset,$results) {
-	$lang_strings['page']='Pages:';					// translate this
-	$lang_strings['rpp']='Results to show:';		// translate this
-	return create_pager2($totalrows,$offset,$results,$lang_strings);
 }

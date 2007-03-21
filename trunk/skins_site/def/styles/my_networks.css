@@ -1,0 +1,31 @@
+a.see_all {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 15px 18px 0 0;
+	background: url('../images/link-next.gif') no-repeat top right;
+	padding: 0 25px 6px 3px;
+}
+a.see_all:hover {
+	background-position: bottom right;
+}
+
+.list_small {
+	width: 720px;
+	margin-left: -6px;
+	padding: 0 0 5px;
+	list-style-type: none;
+	overflow: hidden;
+}
+
+	.list_small li {
+		float: left;
+		width: 110px;
+		margin-left: 10px;
+		text-align: center;
+	}
+
+	.list_small li.first {
+		margin: 0;
+	}
+

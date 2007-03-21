@@ -24,3 +24,9 @@ function get_network_members($user_id,$net_id,$limit=0) {
 	}
 	return $myreturn;
 }
+
+function add2network($user_id,$net_id,$friend_id,$link_stat=1) {
+	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	$query="INSERT IGNORE INTO `{$dbtable_prefix}user_networks` SET `fk_user_id`='$user_id',`fk_net_id`='$net_id',`fk_user_id_friend`='$friend_id',`nconn_status`='$link_stat'";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+}

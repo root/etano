@@ -1,0 +1,31 @@
+<div class="content_area small">
+	<h3>Search Options</h3>
+	<div class="box_content">
+		<ul class="menu">
+			<opt name="tplvars.user_logged">
+			<li class="first"><a class="content-link save" href="javascript:;" onclick="popWin('popup_save_search.php?search={search_md5}','savesearch',500,250,1)">Save this search</a></li>
+			</opt name="tplvars.user_logged">
+			<opt name="!is_gallery_view">
+			<li><a class="content-link gallery_view" href="search.php?search={search_md5}&v=g">Switch to gallery mode</a></li>
+			</opt name="!is_gallery_view">
+			<opt name="is_gallery_view">
+			<li><a class="content-link list_view" href="search.php?search={search_md5}">Switch to list mode</a></li>
+			</opt name="is_gallery_view">
+		</ul>
+	</div>
+</div>
+
+<div id="my_searches" class="content_area small">
+	<h3>My Searches</h3>
+	<div class="box_content">
+		<ul class="menu">
+			<loop name="my_searches">
+			<li><a class="content-link saved_search" href="search.php?{my_searches.search_qs}">{my_searches.title}</a></li>
+			<noloop name="my_searches">
+			<li>No saved searches yet</li>
+			</noloop name="my_searches">
+			</loop name="my_searches">
+			<li class="controls"><a class="content-link view" href="my_searches.php">View All</a></li>
+		</ul>
+	</div>
+</div>

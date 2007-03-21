@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       networks.php
-$Revision$
+File:                       my_networks.php
+$Revision: 72 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -21,20 +21,8 @@ check_login_member(18);
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
-$uid=0;
-$user='';
-if (isset($_GET['uid']) && !empty($_GET['uid'])) {
-	$uid=(int)$_GET['uid'];
-	$user=get_user_by_userid($uid);
-} elseif (isset($_GET['user']) && !isset($_GET['uid'])) {
-	$user=sanitize_and_format($_GET['user'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
-	$uid=get_userid_by_user($user);
-} elseif (isset($_SESSION['user']['user_id']) && !empty($_SESSION['user']['user_id'])) {
-	$uid=$_SESSION['user']['user_id'];
-	$user=$_SESSION['user']['user'];
-} else {
-	redirect2page('index.php');
-}
+require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
+$user_cache=new user_cache(get_my_skin());
 
 $query="SELECT `net_id`,`network` FROM `{$dbtable_prefix}networks`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -42,18 +30,27 @@ $networks=array();
 $i=0;
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['network']=sanitize_and_format($rsrow['network'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-	$rsrow['members']=get_cache_user_mini(get_network_members($uid,$rsrow['net_id'],4),get_my_skin(),true);
+	$net_members=get_network_members($_SESSION['user']['user_id'],$rsrow['net_id'],4);
+	if (!empty($net_members)) {
+		$rsrow['members']=$user_cache->get_cache_beta($net_members,array(),'user_gallery','tpl');
+	}
 	if (!empty($rsrow['members'])) {
 		$rsrow['see_all']=true;
 		$networks[]=$rsrow;
 	}
 }
 
-$tpl->set_file('content','networks.html');
+$tpl->set_file('content','my_networks.html');
 $tpl->set_loop('networks',$networks);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTLOOP | TPL_NOLOOP);
 $tpl->drop_loop('networks');
 
-$tplvars['title']=sprintf('%1s network members',$user);
+$tplvars['title']='My network members';
+$tplvars['page_title']='How I am connected';
+$tplvars['page']='my_networks';
+$tplvars['css']='my_networks.css';
+if (is_file('my_networks_left.php')) {
+	include 'my_networks_left.php';
+}
 include 'frame.php';
 ?>

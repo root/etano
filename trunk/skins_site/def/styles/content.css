@@ -1,28 +1,28 @@
-/* Rounded boxes */
+/* Content areas */
 
-.rounded-box {
+.content_area {
 	position: relative;
 	overflow: hidden;
 	margin-bottom: 12px;
 }
-	.rounded-box h1, .rounded-box h2, .rounded-box h3 {
+	.content_area h1, .content_area h2, .content_area h3 {
 		padding: 15px 18px 0px 18px;
 	}
 
-		.rounded-box h2 a {
+		.content_area h2 a {
 			font-weight: bold;
 			text-decoration: none;
 			color: #c57794;
 		}
-		.rounded-box h2 a:hover {
+		.content_area h2 a:hover {
 			text-decoration: underline;
 		}
 
-	.rounded-box .box-content {
+	.content_area .box_content {
 		padding: 10px 18px;
 	}
 
-	.rounded-box .link-more {
+	.content_area .link-more {
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -31,79 +31,80 @@
 		padding: 0 25px 6px 3px;
 	}
 
-	.rounded-box .link-more:hover {
+	.content_area .link-more:hover {
 		background-position: bottom right;
 	}
 
-.rounded-box.large {
+.content_area.large {
 	width: 742px;
 	background: url('../images/lbox-middle.gif') repeat-y;
 }
-	.rounded-box.large h1, .rounded-box.large h2 {
+	.content_area.large h1, .content_area.large h2 {
 		background: url('../images/lbox-top.gif') no-repeat top left;
 	}
-	.rounded-box.large .box-content {
+	.content_area.large .box_content {
 		background: url('../images/lbox-bottom.gif') no-repeat bottom left;
 	}
 
-.rounded-box.medium {
+.content_area.medium {
 	width: 706px;
 	background: url('../images/mbox-middle.gif') repeat-y;
-	margin-left: 18px;
 }
-	.rounded-box.medium h2 {
+	.content_area.medium h2 {
 		background-image: url('../images/mbox-top.gif');
 	}
-	.rounded-box.medium .box-content {
+	.content_area.medium .box_content {
 		background: url('../images/mbox-bottom.gif') no-repeat bottom left;
 	}
 
-.rounded-box.small {
+.content_area.small {
 	width: 206px;
 	background: url('../images/sbox-middle.gif') repeat-y;
 }
-	.rounded-box.small h2, .small h3 {
+	.content_area.small h2, .small h3 {
 		background: url('../images/sbox-top.gif') no-repeat top left;
 	}
-	.rounded-box.small h3 {
+	.content_area.small h3 {
 		padding: 15px 18px 0px 18px;
 	}
-	.rounded-box.small .box-content {
+	.content_area.small .box_content {
 		background: url('../images/sbox-bottom.gif') no-repeat bottom left;
 	}
 
 
 /* INFO+ERROR MESSAGES */
 
-.message_info {
-	color: #4383d3;
+#message_wrapper {
+	margin-left: 18px;
 	font-size: 13px;
 	font-weight: bold;
 	overflow: hidden;
+}
+
+.message_info {
+	color: #4383d3;
 }
 
 .message_error {
 	color: #fd617b;
-	font-size: 13px;
-	font-weight: bold;
-	overflow: hidden;
 }
 
-	.message_info .box-content, .message_error .box-content {
+	#message_wrapper .box_content {
 		padding: 0 0 10px 20px;
 	}
 
-	.message_info .box-content .message_text {
+	.message_info .box_content .message_text {
 		background: url('../images/symbol-success.gif') no-repeat top left;
 		height: 30px;
 		padding: 4px 0 0 40px;
 	}
 
-	.message_error .box-content .message_text {
+	.message_error .box_content .message_text {
 		background: url('../images/symbol-error.gif') no-repeat top left;
 		height: 30px;
 		padding: 4px 0 0 40px;
 	}
+
 
 /* CONTENT COLUMNS */
 
@@ -353,6 +354,13 @@ ul.menu li.first {
 	background-image: url('../images/menu_add.gif');
 }
 
+.content-link.save {
+	background-image: url('../images/menu_save.gif');
+}
+
+.content-link.view {
+	background-image: url('../images/menu_view.gif');
+}
 
 /* EDIT&SEARCH FORMS */
 
@@ -502,4 +510,13 @@ blockquote {
 .button.blarge {
 	background-image: url('../images/btn-blank-large-out.gif');
 	width: 119px;
+}
+
+.user_photo {
+
+}
+
+.user_photo.thumb1 {
+	width: 100px;
+	height: 100px;
 }

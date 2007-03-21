@@ -54,12 +54,11 @@ TODO
 				ADI
 - spambox, block member, queue send/verif de spam
 - clar nu se mai face join pt ID-ul senderului! Ce se intampla daca sender-ul este un admin? (MESS_SYSTEM)
-- flirts
 
 - user_settings2
 - user_alerts
 - saved searches list (cu delete search/make default/alerte search)
-- bbtags
+
 - blog cache + blogs.php + my_blogs.php
 - la profile.php: user friends, blogs
 - rss feeds
@@ -85,10 +84,10 @@ TODO
 - phpmailer
 - cautare membri cu poze (poza din profil probabil...)
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
-- de adaugat in style.css clasele care se folosesc la bbcode
+
 - cand se adauga o poza NE-privata in album, daca nu exista poza in profil, sa se faca automat is_main
 - join: buton pt "check"
-- rounded-box redenumit in box or something
+
 - functie fields_edit_tpl($field_ids)
 - functie fields_search_tpl($field_ids)
 - scor la blog add doar daca blogul este mai mare de x caractere.
@@ -100,7 +99,7 @@ TODO
 - scor la conturi platitoare pentru vechimea contului (lunar?)
 - in message_read.php linia 106 - ar trebui sa verific lista de blocati, nu filtrul.
 
-- niste functii din user_functions.inc.php ar trebui scoase intr-un fisier separat...
+
 - includes/site_options.inc.php cu setarile din site_options3 ?
 
 - in toate procesoarele tb sa verific cazul de eroare:

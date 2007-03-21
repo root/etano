@@ -13,6 +13,7 @@ Support at:                 http://forum.datemill.com
 
 include 'logs.inc.php';
 $_access_level=array();
+require_once 'general_functions.inc.php';
 require_once 'access_levels.inc.php';
 
 function get_userid_by_user($user) {
@@ -40,40 +41,6 @@ function get_user_by_userid($user_id) {
 		}
 	}
 	return $myreturn;
-}
-
-
-// copy of the admin_functions.inc.php: get_site_option()
-// make sure they're synchronized
-function get_site_option($option,$module_code) {
-	$myreturn=0;
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
-	$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code`='$module_code'";
-	if (is_array($option)) {
-		if (!empty($option)) {
-			$query.=" AND `config_option` IN ('".join("','",$option)."')";
-		}
-	} else {
-		$query.=" AND `config_option`='$option'";
-	}
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_num_rows($res)) {
-		$myreturn=array();
-		while ($rsrow=mysql_fetch_row($res)) {
-			$myreturn[$rsrow[0]]=$rsrow[1];
-		}
-		if (is_string($option)) {
-			$myreturn=array_shift($myreturn);
-		}
-	}
-	return $myreturn;
-}
-
-
-function set_site_option($option,$module_code,$value) {
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
-	$query="UPDATE `{$dbtable_prefix}site_options3` SET `config_value`='$value' WHERE `config_option`='$option' AND `fk_module_code`='$module_code'";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 
 
@@ -164,41 +131,6 @@ function get_user_folder_name($folder_id,$user_id=null) {
 }
 
 
-function get_cache_user_mini($user_ids,$skin) {
-	$myreturn=array();
-	for ($i=0;isset($user_ids[$i]);++$i) {
-		$file=_BASEPATH_.'/skins_site/'.$skin.'/cache/users/'.$user_ids[$i]{0}.'/'.$user_ids[$i].'/user_gallery.html';
-		if (is_file($file)) {
-			$myreturn[$i]['user']=fread($fp=fopen($file,'rb'),filesize($file));
-		}
-	}
-	return $myreturn;
-}
-
-
-function get_module_codes_by_type($module_type) {
-	$myreturn=array();
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
-	$query="SELECT `module_code` FROM `{$dbtable_prefix}modules` WHERE `module_type`='$module_type'";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	for ($i=0;$i<mysql_num_rows($res);++$i) {
-		$myreturn[]=mysql_result($res,$i,0);
-	}
-	return $myreturn;
-}
-
-
-// This function does NOT convert html to text.
-// Make sure that the string is clean before calling this function
-// duplicate of the same function in admin_functions.inc.php
-function bbcode2html($str) {
-	$from=array('~\[url=(http://[^<">\(\)\[\]]*?)\](.*?)\[/url\]~','~\[b\](.*?)\[/b\]~','~\[u\](.*?)\[/u\]~','~\[quote\](.*?)\[/quote\]~','~\[img=(http://[^<">\(\)\[\]]*?)\]~');
-	$to=array('<a target="_blank" rel="nofollow" href="$1">$2</a>','<strong>$1</strong>','<span class="underline">$1</span>','<blockquote>$1</blockquote>','<img src="$1" />');
-	$str=preg_replace($from,$to,$str);
-	return $str;
-}
-
-
 function add_member_score($user_ids,$act,$times=1,$points=0) {
 	if (!is_array($user_ids)) {
 		$user_ids=array($user_ids);
@@ -211,10 +143,4 @@ function add_member_score($user_ids,$act,$times=1,$points=0) {
 		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `score`=`score`+".$scores[$act]." WHERE `fk_user_id` IN ('".join("','",$user_ids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
-}
-
-function pager($totalrows,$offset,$results) {
-	$lang_strings['page']='Pages:';					// translate this
-	$lang_strings['rpp']='Results to show:';		// translate this
-	return create_pager2($totalrows,$offset,$results,$lang_strings);
 }

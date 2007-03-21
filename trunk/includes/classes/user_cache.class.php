@@ -72,7 +72,7 @@ class user_cache {
 
 
 	/* more than 1 user_id makes sense only when $destination=='tpl'
-	*	$destination='' default
+	*	$destination='' (default) to return in array('part1'=>file1,'part2'=>file2) format
 	*	$destination='tpl' to return in tpl format
 	*/
 	function get_cache_beta($user_ids,$onlines,$parts,$destination='') {
