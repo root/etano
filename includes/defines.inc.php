@@ -17,7 +17,7 @@ define('_FTP_USER_','newdsb');
 define('_FTP_PASS_','test132');
 $dbtable_prefix='dsb_';
 define('USER_ACCOUNTS_TABLE',"`{$dbtable_prefix}user_accounts`");
-$accepted_results_per_page=array('6'=>6,'12'=>12,'24'=>24,'48'=>48);
+$accepted_results_per_page=array(10=>10,5=>5,15=>15,20=>20);
 $accepted_images=array('jpg','jpeg','png');
 
 define('_LICENSE_KEY_','0917JJ8239HG8S623DFG45');

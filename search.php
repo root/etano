@@ -55,7 +55,7 @@ if (!empty($search_md5)) {
 	check_login_member($input['acclevel_id']);
 
 	$where='`status`='.STAT_APPROVED;
-	$from="`{$dbtable_prefix}user_profiles`";
+	$from="`{$dbtable_prefix}user_profiles` a";
 
 	$search_fields=array();
 	if ($input['acclevel_id']==17) {	// for advanced search we get all fields
@@ -80,7 +80,7 @@ if (!empty($search_md5)) {
 					if ($field['html_type']==HTML_SELECT) {
 						$where.=" AND `".$field['dbfield']."`='".$input[$field['dbfield']]."'";
 					} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
-						$where.=" AND `".$field['dbfield']."` LIKE '|%".$input[$field['dbfield']]."%|'";
+						$where.=" AND `".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']]."|%'";
 					}
 				} else {
 					unset($input[$field['dbfield']]);
@@ -103,7 +103,7 @@ if (!empty($search_md5)) {
 						if (count($input[$field['dbfield']])) {
 							$where.=" AND (";
 							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
-								$where.="`".$field['dbfield']."` LIKE '|%".$input[$field['dbfield']][$j]."%|' OR ";
+								$where.="`".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']][$j]."|%' OR ";
 							}
 							$where=substr($where,0,-4);	// substract the last ' OR '
 							$where.=')';
@@ -183,7 +183,7 @@ if (!empty($search_md5)) {
 		}	//switch ($field['search_type'])
 	} // the for() that constructs the where
 
-	$query="SELECT `fk_user_id` FROM $from WHERE $where";
+	$query="SELECT `fk_user_id` FROM $from WHERE $where ORDER BY a.`score` DESC";
 
 //print $query;
 //die;
@@ -206,11 +206,18 @@ $totalrows=count($user_ids);
 $results=array();
 if (!empty($totalrows)) {
 	$user_ids=array_slice($user_ids,$o,$r);
-	require_once 'includes/classes/user_cache.class.php';
+	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
 	$user_cache=new user_cache(get_my_skin());
+//	$results=$user_cache->get_cache_array($user_ids,'user_gallery');
+//	$tpl->set_var('results',smart_table($results,5,'gallery_view'));
+	$results=$user_cache->get_cache_array($user_ids,'user_list');
+	$tpl->set_var('results',smart_table($results,5,'list_view'));
+
+
+/*
 	if (isset($_GET['v']) && $_GET['v']=='g') {
 		$results=$user_cache->get_cache_array($user_ids,'user_gallery');
-		$tpl->set_var('results',smart_table($results,3,'id="gallery_view"'));
+		$tpl->set_var('results',smart_table($results,2,'gallery_view'));
 	} else {
 		for ($i=0;isset($user_ids[$i]);++$i) {
 			$results[$i]['user_list']=$user_cache->get_cache($user_ids[$i],'user_list');
@@ -218,6 +225,7 @@ if (!empty($totalrows)) {
 		$tpl->set_loop('results',$results);
 		$tpl->set_var('use_loop',true);
 	}
+*/
 	$_GET=array('search'=>$search_md5,'v'=>(isset($_GET['v']) && !empty($_GET['v'])) ? $_GET['v'] : 'l');
 	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 	$tpl->set_var('totalrows',$totalrows);
@@ -228,6 +236,9 @@ $tpl->process('content','content',TPL_LOOP | TPL_OPTIONAL);
 $tpl->drop_loop('results');
 
 $tplvars['title']='Search Results';
+$tplvars['page_title']='Search Results';
+$tplvars['page']='search';
+$tplvars['css']='search.css.php';
 if (is_file('search_left.php')) {
 	include 'search_left.php';
 }

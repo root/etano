@@ -48,4 +48,3 @@ function update_location($user_id,$field,$field_name='') {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 }
-?>
