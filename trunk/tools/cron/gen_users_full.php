@@ -73,15 +73,10 @@ while ($profile=mysql_fetch_assoc($res)) {
 		$towrite=$tpl->process('','temp',TPL_OPTIONAL);
 		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/profile.html',$towrite);
 
-		// generate the user details for gallery view
-		$tpl->set_file('temp',$skins[$s].'/static/user_gallery.html');
+		// generate the user details for result lists
+		$tpl->set_file('temp',$skins[$s].'/static/result_user.html');
 		$towrite=$tpl->process('','temp');
-		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/user_gallery.html',$towrite);
-
-		// generate the user details for list view
-		$tpl->set_file('temp',$skins[$s].'/static/user_list.html');
-		$towrite=$tpl->process('','temp');
-		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/user_list.html',$towrite);
+		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/result_user.html',$towrite);
 
 		// generate the categories to be used on profile.php page
 		$categs=array();

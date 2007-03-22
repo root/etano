@@ -23,7 +23,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 if (isset($_GET['mail_id']) && !empty($_GET['mail_id'])) {
 	$output['mail_id']=(int)$_GET['mail_id'];
 	$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-	$output['r']=isset($_GET['r']) ? (int)$_GET['r'] : _RESULTS_;
+	$output['r']=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
 	$config=get_site_option(array('datetime_format'),'core');
 	$query="SELECT *,UNIX_TIMESTAMP(`date_sent`) as `date_sent` FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id`='".$output['mail_id']."'";

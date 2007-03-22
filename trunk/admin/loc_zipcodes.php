@@ -21,13 +21,13 @@ allow_dept(DEPT_ADMIN);
 $tpl=new phemplate('skin/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=isset($_GET['r']) ? (int)$_GET['r'] : _RESULTS_;
+$r=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 $cio=isset($_GET['cio']) ? (int)$_GET['cio'] : 0;
-$cir=isset($_GET['cir']) ? (int)$_GET['cir'] : _RESULTS_;
+$cir=isset($_GET['cir']) ? (int)$_GET['cir'] : current($accepted_results_per_page);
 $so=isset($_GET['so']) ? (int)$_GET['so'] : 0;
-$sr=isset($_GET['sr']) ? (int)$_GET['sr'] : _RESULTS_;
+$sr=isset($_GET['sr']) ? (int)$_GET['sr'] : current($accepted_results_per_page);
 $co=isset($_GET['co']) ? (int)$_GET['co'] : 0;
-$cr=isset($_GET['cr']) ? (int)$_GET['cr'] : _RESULTS_;
+$cr=isset($_GET['cr']) ? (int)$_GET['cr'] : current($accepted_results_per_page);
 $city_id=isset($_GET['city_id']) ? (int)$_GET['city_id'] : 0;
 $state_id=isset($_GET['state_id']) ? (int)$_GET['state_id'] : 0;
 $country_id=isset($_GET['country_id']) ? (int)$_GET['country_id'] : 0;

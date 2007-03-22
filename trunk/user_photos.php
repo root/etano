@@ -40,7 +40,7 @@ if (isset($_SESSION['user']['user_id']) && !empty($_SESSION['user']['user_id']) 
 }
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
+$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
 $where="`fk_user_id`='$uid' AND `del`=0";
 if (!isset($_SESSION['user']['user_id']) || $uid!=$_SESSION['user']['user_id']) {

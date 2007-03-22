@@ -3,13 +3,12 @@ define('_DBHOSTNAME_','localhost');// mysql server host name
 define('_DBUSERNAME_','root');// mysql database username
 define('_DBPASSWORD_','rootpass');// mysql database password
 define('_DBNAME_','newdsb');// mysql database name
-define('_SITENAME_','F r e n d y');// Your site name
+define('_SITENAME_','F r i e n d y');// Your site name
 define('_BASEURL_','http://dating.sco.ro/newdsb');// protocol required (http:// )
 define('_BASEPATH_','/www/htdocs/newdsb');// path on server to your site
 define('_PHOTOURL_',_BASEURL_.'/media/pics');// protocol required (http:// ). URL to your member photos
 define('_PHOTOPATH_',_BASEPATH_.'/media/pics');// path on server to your member photos
 define('_CACHEPATH_',_BASEPATH_.'/cache');// path on server to the cache folder
-define('_RESULTS_',6);// default search results per page
 define('_DEFAULT_SKIN_','skin_basic');
 define('_FTP_SERVER_','localhost');
 define('_FTPPATH_','/newdsb');

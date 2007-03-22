@@ -23,7 +23,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $tpl->set_file('content','profile_fields.html');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=isset($_GET['r']) ? (int)$_GET['r'] : _RESULTS_;
+$r=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 //$ob=isset($_GET['ob']) ? (int)$_GET['ob'] : -1;
 //$od=isset($_GET['od']) ? (int)$_GET['od'] : 0;
 

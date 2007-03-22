@@ -21,7 +21,7 @@ allow_dept(DEPT_ADMIN);
 $tpl=new phemplate('skin/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=isset($_GET['r']) ? (int)$_GET['r'] : _RESULTS_;
+$r=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 $where='1';
 $from="`{$dbtable_prefix}loc_countries`";
 
