@@ -23,7 +23,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	$output['uid']=(int)$_GET['uid'];
 	$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-	$output['r']=isset($_GET['r']) ? (int)$_GET['r'] : _RESULTS_;
+	$output['r']=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 	$output['user']=get_user_by_userid($output['uid']);
 	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 

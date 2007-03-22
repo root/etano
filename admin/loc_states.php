@@ -21,9 +21,9 @@ allow_dept(DEPT_ADMIN);
 $tpl=new phemplate('skin/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=isset($_GET['r']) ? (int)$_GET['r'] : _RESULTS_;
+$r=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 $co=isset($_GET['co']) ? (int)$_GET['co'] : 0;
-$cr=isset($_GET['cr']) ? (int)$_GET['cr'] : _RESULTS_;
+$cr=isset($_GET['cr']) ? (int)$_GET['cr'] : current($accepted_results_per_page);
 $country_id=isset($_GET['country_id']) ? (int)$_GET['country_id'] : 0;
 $country='';
 

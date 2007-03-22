@@ -24,7 +24,7 @@ $message_types=array(MESS_MESS=>'mail',MESS_FLIRT=>'flirt',MESS_SYSTEM=>'system'
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
+$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
 $ob=isset($_GET['ob']) ? (int)$_GET['ob'] : 7;
 $od=isset($_GET['od']) ? (int)$_GET['od'] : 1;
 $orderkeys=array_keys($user_inbox_default['defaults']);

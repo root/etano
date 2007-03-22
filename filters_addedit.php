@@ -21,7 +21,7 @@ check_login_member(11);
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
+$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
 $output=$message_filters_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {

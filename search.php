@@ -19,15 +19,16 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
-$o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : _RESULTS_;
-$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$output=array();
+$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
+$output['r']=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 $input=array();
 $user_ids=array();
-if (!empty($search_md5)) {
+if (!empty($output['search_md5'])) {
 	// if we have a query cache, retrieve all from cache
-	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='$search_md5' AND `search_type`=".SEARCH_USER;
+	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."' AND `search_type`=".SEARCH_USER;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$user_ids=mysql_result($res,0,0);
@@ -193,8 +194,8 @@ if (!empty($search_md5)) {
 		$user_ids[]=mysql_result($res,$i,0);
 	}
 	$serialized_input=serialize($input);
-	$search_md5=md5($serialized_input);
-	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='$search_md5',`search_type`=".SEARCH_USER.",`search`='$serialized_input',`results`='".join(',',$user_ids)."'";
+	$output['search_md5']=md5($serialized_input);
+	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='".$output['search_md5']."',`search_type`=".SEARCH_USER.",`search`='$serialized_input',`results`='".join(',',$user_ids)."'";
 	if (isset($_SESSION['user']['user_id'])) {
 		$query.=",`fk_user_id`='".$_SESSION['user']['user_id']."'";
 	}
@@ -205,13 +206,13 @@ $totalrows=count($user_ids);
 // get the results from user cache for the found user_ids
 $results=array();
 if (!empty($totalrows)) {
-	$user_ids=array_slice($user_ids,$o,$r);
+	$user_ids=array_slice($user_ids,$output['o'],$output['r']);
 	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
 	$user_cache=new user_cache(get_my_skin());
 //	$results=$user_cache->get_cache_array($user_ids,'user_gallery');
-//	$tpl->set_var('results',smart_table($results,5,'gallery_view'));
 	$results=$user_cache->get_cache_array($user_ids,'user_list');
-	$tpl->set_var('results',smart_table($results,5,'list_view'));
+	$tpl->set_var('results',smart_table($results,5,'gallery_view'));
+//	$tpl->set_var('results',smart_table($results,5,'list_view'));
 
 
 /*
@@ -226,14 +227,16 @@ if (!empty($totalrows)) {
 		$tpl->set_var('use_loop',true);
 	}
 */
-	$_GET=array('search'=>$search_md5,'v'=>(isset($_GET['v']) && !empty($_GET['v'])) ? $_GET['v'] : 'l');
-	$tpl->set_var('pager2',pager($totalrows,$o,$r));
+	// set $_GET for the pager.
+	$_GET=array('search'=>$output['search_md5'],'v'=>(isset($_GET['v']) && !empty($_GET['v'])) ? $_GET['v'] : 'l');
+	$tpl->set_var('pager2',pager($totalrows,$output['o'],$output['r']));
 	$tpl->set_var('totalrows',$totalrows);
 }
 
 $tpl->set_file('content','search.html');
+$tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTIONAL);
-$tpl->drop_loop('results');
+$tpl->drop_var('results');
 
 $tplvars['title']='Search Results';
 $tplvars['page_title']='Search Results';

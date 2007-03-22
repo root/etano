@@ -27,7 +27,6 @@ if (isset($_GET['v']) && $_GET['v']=='g') {
 }
 
 $tpl->set_file('left_content','search_left.html');
-$tpl->set_var('search',$search_md5);
 $tpl->set_loop('my_searches',$my_searches);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('left_content','left_content',TPL_LOOP | TPL_NOLOOP | TPL_OPTIONAL);
