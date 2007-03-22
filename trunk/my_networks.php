@@ -40,7 +40,10 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	}
 }
 
+$output=array();
+$output['user_id']=$_SESSION['user']['user_id'];
 $tpl->set_file('content','my_networks.html');
+$tpl->set_var('output',$output);
 $tpl->set_loop('networks',$networks);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTLOOP | TPL_NOLOOP);
 $tpl->drop_loop('networks');

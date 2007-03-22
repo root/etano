@@ -39,9 +39,9 @@ function save_thumbnail($image,$size,$save_path,$save_name,$config=array()) {
 				$y=(int)(($size-$new_size[1])/2);
 				imagecopyresampled($mynewimg,$myimg,$x,$y,0,0,$new_size[0],$new_size[1],$orig_size[0],$orig_size[1]);
 			}
-		} else {									// just white padding here. picture is smaller than the needed size
+		} else {					// just white padding here. picture is smaller than the needed size
 			if (isset($myimg) && !empty($myimg)) {
-				$size=$orig_size[$relevant_length];
+//				$size=$orig_size[$relevant_length];
 				$new_size=$orig_size;
 				$mynewimg=@imagecreatetruecolor($size,$size);
 				imagefilledrectangle($mynewimg,0,0,$size,$size,0xFFFFFF);

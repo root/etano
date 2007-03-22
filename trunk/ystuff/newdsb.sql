@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Mar 17, 2007 at 05:39 PM
+-- Generation Time: Mar 22, 2007 at 09:00 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 -- 
@@ -1178,13 +1178,14 @@ CREATE TABLE `dsb_online` (
 -- Dumping data for table `dsb_online`
 -- 
 
-INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (2, '20070317173756', 0x6232396532313763363631656461323035626434306334643138303866623930),
-(2, '20070316123301', 0x3936653232633663376134326663323930376361393863303865303461646430),
-(2, '20070316002455', 0x6463346663653161376238346534333161393330376461333135333365663735),
+INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (2, '20070322205716', 0x3632363261343064363930646562386264323631356530383665393662383164),
+(0, '20070318120332', 0x3538353565346462653034396534633263313163636638366332616335343739),
+(2, '20070322125344', 0x6431373534653566656462313964663732656633343039633462643464316537),
+(2, '20070322160255', 0x6361616636323662346232373437333234626237373961373536313766633232),
 (0, '20070315223451', 0x3535383234663432323038323335366665386166323365623734613332353465),
 (0, '20070314234459', 0x3031323366363166326566653232336436343063633066326632313338323236),
-(2, '20070315143030', 0x3463333731323936333931323634646637356563396234356436633731393261),
-(2, '20070313212841', 0x3436313264623334643539653431376361663562623134393939613263653061);
+(2, '20070321225710', 0x6434626636363035653561356632396365363863303663393430326235616366),
+(0, '20070321224708', 0x6433336562643866643037613765366266376438623263363636386431623431);
 
 -- --------------------------------------------------------
 
@@ -1481,7 +1482,27 @@ INSERT INTO `dsb_site_log` (`log_id`, `fk_user_id`, `user`, `m_value`, `fk_level
 (12, 0, 'test', 1, 1, 2130706433, '20070315220425'),
 (13, 0, 'test', 1, 1, 2130706433, '20070316115241'),
 (14, 0, 'test', 1, 1, 2130706433, '20070316144202'),
-(15, 0, 'test', 1, 1, 2130706433, '20070317155348');
+(15, 0, 'test', 1, 1, 2130706433, '20070317155348'),
+(16, 0, 'test', 1, 1, 2130706433, '20070320124427'),
+(17, 0, 'test', 1, 1, 2130706433, '20070320152255'),
+(18, 0, 'test', 1, 1, 2130706433, '20070320193238'),
+(19, 0, 'test', 1, 1, 2130706433, '20070320222246'),
+(20, 0, 'test', 1, 1, 2130706433, '20070320222600'),
+(21, 0, 'test', 1, 1, 2130706433, '20070321115150'),
+(22, 0, 'test', 1, 1, 2130706433, '20070321120447'),
+(23, 0, 'test', 1, 1, 2130706433, '20070321204240'),
+(24, 0, 'test', 1, 1, 2130706433, '20070321204409'),
+(25, 0, 'test3', 1, 1, 2130706433, '20070321223715'),
+(26, 0, 'test4', 1, 1, 2130706433, '20070321224436'),
+(27, 0, 'test5', 1, 1, 2130706433, '20070321224526'),
+(28, 0, 'test5', 1, 1, 2130706433, '20070321224537'),
+(29, 0, 'test6', 1, 1, 2130706433, '20070321224620'),
+(30, 0, 'test6', 1, 1, 2130706433, '20070321224630'),
+(31, 0, 'test', 1, 1, 2130706433, '20070321224726'),
+(32, 0, 'test', 1, 1, 2130706433, '20070322112556'),
+(33, 0, 'test', 1, 1, 2130706433, '20070322125337'),
+(34, 0, 'test', 1, 1, 2130706433, '20070322153622'),
+(35, 0, 'test', 1, 1, 2130706433, '20070322190930');
 
 -- --------------------------------------------------------
 
@@ -1509,9 +1530,9 @@ INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `
 (2, 0x7573655f63617074636861, '1', 'Use the dynamic image text to keep spam bots out?', 1, 0x636f7265),
 (3, 0x6d616e75616c5f70726f66696c655f617070726f76616c, '1', 'New profiles or changes to existing profiles require manual approval from an administrator before being displayed on site?', 1, 0x636f7265),
 (4, 0x646174655f666f726d6174, '%m/%d/%Y', 'Default date format', 2, 0x636f7265),
-(5, 0x74315f7769647468, '100', 'The width of the smalest thumbnail generated for each user photo', 2, 0x636f72655f70686f746f),
-(6, 0x74325f7769647468, '500', 'The width of the larger thumbnail generated for each user photo', 2, 0x636f72655f70686f746f),
-(7, 0x7069635f7769647468, '800', 'The maximum width of any picture uploaded by a member', 2, 0x636f72655f70686f746f),
+(5, 0x74315f7769647468, '100', 'The width in pixels of the smalest thumbnail generated for each user photo', 2, 0x636f72655f70686f746f),
+(6, 0x74325f7769647468, '500', 'The width in pixels of the larger thumbnail generated for each user photo', 2, 0x636f72655f70686f746f),
+(7, 0x7069635f7769647468, '800', 'The maximum width in pixels of any picture uploaded by a member', 2, 0x636f72655f70686f746f),
 (8, 0x6d616e75616c5f70686f746f5f617070726f76616c, '0', 'New uploaded photos require manual approval before being displayed on the site?', 1, 0x636f72655f70686f746f),
 (9, 0x6d616e75616c5f626c6f675f617070726f76616c, '0', 'New blog posts or changes to existing posts require manual approval from an administrator before being displayed on site?', 1, 0x636f72655f626c6f67),
 (10, 0x6d616e75616c5f636f6d5f617070726f76616c, '0', 'Comments to profiles, photos, blogs need approval from admin?', 1, 0x636f7265),
@@ -1569,7 +1590,21 @@ CREATE TABLE `dsb_site_searches` (
 -- Dumping data for table `dsb_site_searches`
 -- 
 
-INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('98c401243f35f2828d504ef24ade5567', 1, 'a:9:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:8:"field_46";a:1:{i:0;s:1:"2";}s:8:"field_47";a:1:{i:0;s:1:"1";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";s:16:"field_50_country";s:3:"218";s:3:"f51";s:1:"1";s:3:"f52";s:1:"1";}', '2', 2, '20070317161512');
+INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('98c401243f35f2828d504ef24ade5567', 1, 'a:9:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:8:"field_46";a:1:{i:0;s:1:"2";}s:8:"field_47";a:1:{i:0;s:1:"1";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";s:16:"field_50_country";s:3:"218";s:3:"f51";s:1:"1";s:3:"f52";s:1:"1";}', '2', 2, '20070317161512'),
+('8be66aca9a1a9003f72585c258c916a5', 1, 'a:1:{s:11:"acclevel_id";i:17;}', '1,2,209', 2, '20070320174312'),
+('116e715ab88dedbb4506f1fa4462bdc2', 1, 'a:7:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:8:"field_46";a:1:{i:0;s:1:"2";}s:8:"field_47";a:1:{i:0;s:1:"1";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";s:16:"field_50_country";s:3:"218";}', '2', 0, '20070321115208'),
+('d027bb15d2e91eb9c221e6feeabc5ba4', 1, 'a:6:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:8:"field_46";a:1:{i:0;s:1:"2";}s:8:"field_47";a:1:{i:0;s:1:"1";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";}', '2,209', 0, '20070321115420'),
+('0737b04b4eca702e7d0ab22b1526269c', 1, 'a:8:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:8:"field_46";a:1:{i:0;s:1:"2";}s:8:"field_47";a:1:{i:0;s:1:"1";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";s:3:"f51";s:1:"1";s:3:"f52";s:1:"1";}', '2', 2, '20070321120722'),
+('5fec338e05a67bc77d31ab370dc02453', 1, 'a:6:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:8:"field_46";a:1:{i:0;s:1:"2";}s:8:"field_47";a:1:{i:0;s:1:"1";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"57";}', '2,209', 2, '20070321120751'),
+('04a51b8634d9c552baeb60eb5109b481', 2, 'a:1:{s:4:"stat";s:1:"5";}', '', 0, '20070321125629'),
+('40cd750bba9870f18aada2478b24840a', 1, 'a:0:{}', '1,2,209', 0, '20070321125631'),
+('435529d231ba67d0c3917ecf7fa0dbd0', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";}', '1,2,209', 2, '20070321130820'),
+('a58953208bfc1e285a9feb0acee320fe', 1, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";}', '1,2,209', 2, '20070321131118'),
+('a9ed76f7355b148cf3a870e8745aa764', 1, 'a:6:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:8:"field_47";a:1:{i:0;s:1:"2";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";s:16:"field_50_country";s:3:"218";}', '', 2, '20070321204732'),
+('', 1, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";}', '2,1,209', 2, '20070321225655'),
+('8816b2c8b45df99a22880b00513d7867', 1, 'a:1:{s:5:"pstat";s:1:"5";}', '210,211,212,213', 0, '20070322112801'),
+('7a05c5fb87b1158778adbc2a4867b009', 1, 'a:4:{s:11:"acclevel_id";i:16;s:2:"st";s:3:"net";s:10:"fk_user_id";s:1:"2";s:9:"fk_net_id";s:1:"2";}', '1', 2, '20070322205702'),
+('0143a1c3121c434d9acefa1a1f1f772d', 1, 'a:4:{s:11:"acclevel_id";i:16;s:2:"st";s:3:"net";s:10:"fk_user_id";s:1:"2";s:9:"fk_net_id";s:1:"1";}', '1,2', 2, '20070322205716');
 
 -- --------------------------------------------------------
 
@@ -1680,8 +1715,12 @@ CREATE TABLE `dsb_user_accounts` (
 -- 
 
 INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x64616e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@sco.ro', '', '', '20070211144000'),
-(2, 0x74657374, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@rdsct.ro', 'basic', '', '20070317173756'),
-(209, 0x7465737432, 0x3662343238383630323064303630386435646138373431633464353564303563, 15, 4, 'dan@rdsct.ro', '', '', '20070207155756');
+(2, 0x74657374, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@rdsct.ro', 'basic', '', '20070322205716'),
+(209, 0x7465737432, 0x3662343238383630323064303630386435646138373431633464353564303563, 15, 4, 'dan@rdsct.ro', '', '', '20070207155756'),
+(210, 0x7465737433, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070321224242'),
+(211, 0x7465737434, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070321224514'),
+(212, 0x7465737435, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070321224610'),
+(213, 0x7465737436, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070321224704');
 
 -- --------------------------------------------------------
 
@@ -1845,6 +1884,7 @@ CREATE TABLE `dsb_user_networks` (
   `fk_user_id_friend` int(10) unsigned NOT NULL default '0',
   `nconn_status` tinyint(2) unsigned NOT NULL default '0',
   PRIMARY KEY  (`nconn_id`),
+  UNIQUE KEY `unique1` (`fk_user_id`,`fk_net_id`,`fk_user_id_friend`),
   KEY `index1` (`fk_user_id`,`fk_net_id`,`nconn_status`)
 ) TYPE=MyISAM;
 
@@ -1853,7 +1893,8 @@ CREATE TABLE `dsb_user_networks` (
 -- 
 
 INSERT INTO `dsb_user_networks` (`nconn_id`, `fk_user_id`, `fk_net_id`, `fk_user_id_friend`, `nconn_status`) VALUES (1, 2, 1, 1, 1),
-(2, 2, 1, 2, 1);
+(2, 2, 1, 2, 1),
+(3, 2, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1923,7 +1964,8 @@ CREATE TABLE `dsb_user_photos` (
   KEY `fk_user_id` (`fk_user_id`),
   KEY `is_main` (`is_main`),
   KEY `is_private` (`is_private`),
-  KEY `del` (`del`)
+  KEY `del` (`del`),
+  KEY `date_posted` (`date_posted`)
 ) TYPE=MyISAM;
 
 -- 
@@ -1931,7 +1973,7 @@ CREATE TABLE `dsb_user_photos` (
 -- 
 
 INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `caption`, `status`, `reject_reason`, `stat_views`, `stat_comments`, `date_posted`, `last_changed`, `del`) VALUES (63, 2, 'test', '7/2_11170336112.jpg', 0, 0, 0, 'just some abstract image', 15, '', 0, 0, '2007-02-01 13:21:52', '2007-02-14 11:56:10', 0),
-(62, 2, 'test', '6/2_11170336020.jpg', 1, 1, 0, 'this was taken when I was river rafting during my last vacation out of country', 15, '', 0, 0, '2007-02-01 13:20:26', '2007-02-14 11:55:22', 0),
+(62, 2, 'test', '6/2_11170336020.jpg', 0, 1, 0, 'this was taken when I was river rafting during my last vacation out of country', 15, '', 0, 0, '2007-02-01 13:20:26', '2007-02-14 11:55:22', 0),
 (67, 1, 'dan', '9/1_21171197584.jpg', 1, 0, 0, '', 15, '', 0, 0, '2007-02-11 12:39:49', '2007-02-11 12:40:00', 0),
 (66, 1, 'dan', '1/1_11171197584.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 12:39:49', '2007-02-11 12:40:00', 0),
 (68, 2, 'test', '4/2_11171208327.jpg', 0, 1, 1, 'road to infinity', 15, '', 0, 1, '2007-02-11 15:38:55', '2007-02-14 11:56:45', 0),
@@ -1939,7 +1981,12 @@ INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_m
 (70, 2, 'test', '8/2_31171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
 (71, 2, 'test', '5/2_41171208327.jpg', 0, 0, 1, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-15 11:27:49', 0),
 (72, 2, 'test', '8/2_51171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
-(73, 2, 'test', '3/2_61171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0);
+(73, 2, 'test', '3/2_61171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
+(74, 210, 'test3', '4/210_11174509455.jpg', 1, 0, 0, 'nope, no description here', 15, '', 0, 0, '2007-03-21 20:37:35', '2007-03-21 20:38:05', 0),
+(75, 211, 'test4', '7/211_11174509897.jpg', 1, 0, 1, '', 15, '', 0, 0, '2007-03-21 20:44:58', '2007-03-21 20:45:14', 0),
+(76, 212, 'test5', '6/212_11174509951.jpg', 1, 0, 1, '', 15, '', 0, 0, '2007-03-21 20:45:53', '2007-03-21 20:46:05', 0),
+(77, 213, 'test6', '8/213_51174510004.jpg', 1, 0, 1, '', 15, '', 0, 0, '2007-03-21 20:46:47', '2007-03-21 20:47:02', 0),
+(78, 2, 'test', '0/2_11174572041.jpg', 1, 0, 1, '', 15, '', 0, 0, '2007-03-22 14:00:41', '2007-03-22 14:00:57', 0);
 
 -- --------------------------------------------------------
 
@@ -1978,7 +2025,8 @@ CREATE TABLE `dsb_user_profiles` (
   KEY `fk_user_id` (`fk_user_id`),
   KEY `_user` (`_user`),
   KEY `status` (`status`),
-  KEY `del` (`del`)
+  KEY `del` (`del`),
+  KEY `score` (`score`)
 ) TYPE=MyISAM;
 
 -- 
@@ -1986,8 +2034,12 @@ CREATE TABLE `dsb_user_profiles` (
 -- 
 
 INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `del`, `field_46`, `field_47`, `field_48`, `field_50_country`, `field_50_state`, `field_50_city`, `field_50_zip`, `f51`, `f52`, `f53`, `f54`, `f55`, `f56`) VALUES (1, 1, 15, '2007-02-11 12:40:00', '2007-02-11 14:40:00', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'dan', '9/1_21171197584.jpg', 0.0000000000, 0.0000000000, 1, 0, 0, '', NULL, 0, 0, 0, '', 0, 0, 0, 0, '', ''),
-(3, 2, 15, '2007-02-07 15:58:01', '2007-02-11 14:37:59', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test', '6/2_11170336020.jpg', -93.6367034912, 42.0276985168, 168, 0, 2, '|1|', '1986-01-03', 218, 16, 7089, '50010', 1, 1, 1, 1, '', 'asd1'),
-(620, 209, 15, '2007-02-07 15:57:51', '2007-02-07 15:57:51', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test2', '', 0.0000000000, 0.0000000000, 0, 0, 2, '|1|', '1981-04-05', 206, 0, 0, '', 0, 0, 0, 0, '', '');
+(3, 2, 15, '2007-03-22 14:00:57', '2007-02-11 14:37:59', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test', '0/2_11174572041.jpg', -93.6367034912, 42.0276985168, 205, 0, 2, '|1|', '1986-01-03', 218, 16, 7089, '50010', 1, 1, 1, 1, '', 'asd1'),
+(620, 209, 15, '2007-02-07 15:57:51', '2007-02-07 15:57:51', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test2', '', 0.0000000000, 0.0000000000, 0, 0, 2, '|1|', '1981-04-05', 206, 0, 0, '', 0, 0, 0, 0, '', ''),
+(621, 210, 15, '2007-03-22 11:28:23', '0000-00-00 00:00:00', '', 'test3', '4/210_11174509455.jpg', 0.0000000000, 0.0000000000, 0, 0, 2, '|1|', '1976-04-04', 214, 0, 0, '', 0, 0, 0, 0, '', ''),
+(622, 211, 15, '2007-03-22 11:28:35', '0000-00-00 00:00:00', '', 'test4', '7/211_11174509897.jpg', 0.0000000000, 0.0000000000, 0, 0, 1, '|2|', '1982-04-05', 205, 0, 0, '', 0, 0, 0, 0, '', ''),
+(623, 212, 15, '2007-03-22 11:28:25', '0000-00-00 00:00:00', '', 'test5', '6/212_11174509951.jpg', 0.0000000000, 0.0000000000, 0, 0, 2, '|1|2|', '1988-03-04', 218, 0, 0, '', 0, 0, 0, 0, '', ''),
+(624, 213, 15, '2007-03-22 11:28:28', '0000-00-00 00:00:00', '', 'test6', '8/213_51174510004.jpg', 0.0000000000, 0.0000000000, 0, 0, 2, '|1|2|', '1981-03-05', 218, 0, 0, '', 0, 0, 0, 0, '', '');
 
 -- --------------------------------------------------------
 

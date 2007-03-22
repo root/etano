@@ -78,7 +78,7 @@ TODO
 - formatare la date of birth
 - create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
 - help texts pentru campurile textarea
-- de convertit scoax la jquery
+- de convertit scoax la jquery ===>>>>>>>>>>>>>admin\skin\profile_fields_addedit.html. addEvent nu mai exista
 - member media must have a separate baseurl.
 - widget-ul feed ar trebui sa citeasca doar din db? insertul in db sa il faca un cron?
 - phpmailer

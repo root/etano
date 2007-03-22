@@ -35,7 +35,7 @@ $totalrows=mysql_result($res,0,0);
 
 $loop_rows=array();
 if (!empty($totalrows)) {
-	$query="SELECT *,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM $from WHERE $where LIMIT $o,$r";
+	$query="SELECT *,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM $from WHERE $where ORDER BY `date_posted` DESC LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$loop_items=array();
 	$i=1;
