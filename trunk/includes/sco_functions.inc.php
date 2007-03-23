@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007031001
+File version:				1.2007032301
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -42,6 +42,7 @@ define('FORMAT_NL2BR',8192);
 define('FORMAT_HTML2TEXT_FULL',16384);
 define('FORMAT_UTF_ENCODE',32768);
 define('FORMAT_UTF_DECODE',65536);
+define('FORMAT_RUDECODE',131072);
 
 define('HTML_TEXTFIELD',2);
 define('HTML_SELECT',3);
@@ -138,6 +139,9 @@ function sanitize_and_format($input,$input_type,$format=0,$empty_value=null) {
 
 		}
 		$format=(int)$format;				// just an extra precaution
+		if ($format&FORMAT_RUDECODE) {		// must come first
+			$input=rawurldecode($input);
+		}
 		if ($format&FORMAT_STRIPSLASH) {		// must come before html2text & html2text_full
 			$input=stripslashes($input);
 		}

@@ -54,6 +54,12 @@ if (isset($_GET['r'])) {
 $tpl->process('content','content',TPL_LOOP);
 $tpl->drop_loop('photos');
 
-$tplvars['title']='Add description to your photos';
+$tplvars['title']='Add description to my photos';
+$tplvars['page_title']='Photo Settings';
+$tplvars['page']='photo_settings';
+$tplvars['css']='photo_settings.css';
+if (is_file('photo_settings_left.php')) {
+	include 'photo_settings_left.php';
+}
 include 'frame.php';
 ?>

@@ -1,0 +1,36 @@
+<h3>Add a description and change various settings to your pictures below:</h3>
+
+<form action="processors/photo_settings.php" method="post" id="photosettings_form" class="edit_form">
+<fieldset class="invisible">
+	<input type="hidden" name="o" value="{output.o}" />
+	<input type="hidden" name="r" value="{output.r}" />
+</fieldset>
+<loop name="photos">
+<fieldset class="one_photo">
+	<img class="user_photo" src="{tplvars.photourl}/t2/{photos.photo}" alt="{photos.caption}" />
+	<dl>
+		<dt><label for="caption_{photos.photo_id}">Description:</label></dt>
+		<dd><input type="text" class="caption" name="caption[{photos.photo_id}]" id="caption_{photos.photo_id}" value="{photos.caption}" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="is_main_{photos.photo_id}">Main profile photo?</label></dt>
+		<dd><input type="radio" name="is_main" value="{photos.photo_id}" id="is_main_{photos.photo_id}" {photos.is_main} /></dd>
+	</dl>
+	<dl>
+		<dt><label for="is_private_{photos.photo_id}">Private photo?</label></dt>
+		<dd><input type="checkbox" name="is_private[{photos.photo_id}]" value="1" id="is_private_{photos.photo_id}" {photos.is_private} /></dd>
+	</dl>
+	<dl>
+		<dt><label for="allow_comments_{photos.photo_id}">Allow comments on this photo?</label></dt>
+		<dd><input type="checkbox" name="allow_comments[{photos.photo_id}]" value="1" id="allow_comments_{photos.photo_id}" {photos.allow_comments} /></dd>
+	</dl>
+</fieldset>
+</loop name="photos">
+<fieldset class="controls">
+	<input type="submit" class="button bmedium" value="Save" />
+</fieldset>
+</form>
+
+<div id="bottom_links">
+	<a class="content-link link_previous" href="user_photos.php">Return to your photos</a>
+</div>

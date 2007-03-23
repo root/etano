@@ -90,5 +90,8 @@ $tplvars['title']='Advanced Search';
 $tplvars['page_title']='Advanced search';
 $tplvars['page']='search_more';
 $tplvars['css']='search_more.css';
+if (is_file('search_more_left.php')) {
+	include 'search_more_left.php';
+}
 include 'frame.php';
 ?>
