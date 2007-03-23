@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       search_left.php
-$Revision$
+File:                       search_more_left.php
+$Revision: 77 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -22,7 +22,7 @@ if (isset($_SESSION['user']['user_id'])) {
 	}
 }
 
-$tpl->set_file('left_content','search_left.html');
+$tpl->set_file('left_content','search_more_left.html');
 $tpl->set_loop('my_searches',$my_searches);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('left_content','left_content',TPL_LOOP | TPL_NOLOOP | TPL_OPTIONAL);

@@ -53,11 +53,6 @@ ul.gallery_view {
 		border: none;
 	}
 
-	ul.gallery_view.last {
-		border: none;
-		margin-bottom: 0;
-	}
-
 ul.gallery_view p {
 	display: none;
 }

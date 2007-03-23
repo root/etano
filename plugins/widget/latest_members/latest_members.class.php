@@ -67,7 +67,7 @@ class widget_latest_members extends icontent_widget {
 	function _finish_display() {
 		$widget['title']='Latest Members';	// translate this
 		$widget['id']='latest-members';
-		$widget['action']='<a class="content-link link-more" href="'.$GLOBALS['tplvars']['relative_path'].'search.php?act=latest" title="More New Members">More New Members</a>';	// translate this
+		$widget['action']='<a class="content-link link-more" href="'.$GLOBALS['tplvars']['relative_path'].'search.php?st=latest" title="More New Members">More New Members</a>';	// translate this
 		if (isset($this->config['area']) && $this->config['area']==1) {
 			$this->tpl->set_file('temp','static/front_widget.html');
 		} else {

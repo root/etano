@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	$input['search']=sanitize_and_format_gpc($_POST,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
-	$input['title']=sanitize_and_format_gpc($_POST,'title',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$input['title']=sanitize_and_format_gpc($_POST,'title',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 	if (empty($input['search'])) {
 		$error=true;
@@ -59,18 +59,28 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 }
 if (!$error) {
-	$_SESSION['topass']=$topass;
-?>
-<html>
-<body>
-<script type="text/javascript">
-	opener.document.location=opener.document.location;
-	window.close();
-</script>
-</body>
-</html>
-<?php
+	if (!isset($_POST['silent'])) {
+		$_SESSION['topass']=$topass;
+		?>
+		<html>
+		<body>
+		<script type="text/javascript">
+			opener.document.location=opener.document.location;
+			window.close();
+		</script>
+		</body>
+		</html>
+		<?php
+	} else {
+		echo $topass['message']['text'];
+		die;
+	}
 } else {
-	redirect2page($nextpage,$topass,$qs);
+	if (!isset($_POST['silent'])) {
+		redirect2page($nextpage,$topass,$qs);
+	} else {
+		echo $topass['message']['text'];
+		die;
+	}
 }
 ?>
