@@ -1,15 +1,3 @@
-$(function() {
-	$('input[@type=submit]').mouseover(function() {
-		$(this).attr('src',function() {
-			return $(this).attr('src').replace(/out\.gif/g, 'over.gif');
-		})
-	}).mouseout(function() {
-		$(this).attr('src',function() {
-			return $(this).attr('src').replace(/over\.gif/g, 'out.gif');
-		})
-	});
-});
-
 /*
  * Allows only numbers to be entered into input boxes.
  *

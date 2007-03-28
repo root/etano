@@ -1,0 +1,43 @@
+<script type="text/javascript" src="js/my_searches.js"></script>
+
+<div class="row header">
+	<div class="control">&nbsp;</div>
+	<div class="title">Search Title</div>
+	<div class="is_default">Default Search</div>
+	<div class="alert">Send Alerts</div>
+</div>
+
+<form action="processors/my_searches_rename.php" method="post" id="renamesearch_form">
+<input type="hidden" name="search_id" value="" />
+<input type="hidden" name="title" value="" />
+</form>
+
+<form action="processors/my_searches.php" method="post" id="search_form">
+<loop name="loop">
+<div class="row">
+	<div class="control">
+		<a class="item_delete" href="processors/search_delete.php?sid={loop.search_id}&amp;return={output.return}" title="Delete this search" onclick="return(confirm('Are you sure you want to delete this search?'))"><i>Delete</i></a>
+		<a class="item_edit" id="edit_{loop.search_id}" href="#" title="Change search title" onclick="change_title('{loop.search_id}','{loop.encoded_title}')"><i>Change search title</i></a>
+	</div>
+	<div class="title">{loop.title}</div>
+	<div class="is_default">
+		<input type="radio" class="radio" name="is_default" id="default_{loop.search_id}" value="{loop.search_id}" {loop.is_default} />
+	</div>
+	<div class="alert">
+		<input type="checkbox" class="check" name="alert[]" id="alert_{loop.search_id}" value="{loop.search_id}" {loop.alert} />
+	</div>
+</div>
+<noloop name="loop">
+<div class="row">
+	<p class="no_result_item">You have no saved searches yet.</p>
+</div>
+</noloop name="loop">
+</loop name="loop">
+<div class="controls">
+	<input type="submit" class="button blarge" value="Save changes" />
+</div>
+<div id="bottom_links">
+<p class="comment"><strong>Default Search</strong> - Make this your default search</p>
+<p class="comment"><strong>Send Alerts</strong> - check this if you want to receive email alerts with new members found by this search</p>
+</div>
+</form>

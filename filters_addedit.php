@@ -70,6 +70,7 @@ while ($rsrow=mysql_fetch_row($res)) {
 $moveto_folders=$my_folders;
 unset($moveto_folders[FOLDER_INBOX],$moveto_folders[FOLDER_OUTBOX],$moveto_folders[FOLDER_TRASH]);
 $output['fk_folder_id']=vector2options($moveto_folders,$output['fk_folder_id']);
+$my_folders=sanitize_and_format($my_folders,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 
 $tpl->set_file('content','filters_addedit.html');
 $tpl->set_var('output',$output);
