@@ -28,7 +28,7 @@ $my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'OUTBOX',FOLDER_TRASH=>'T
 $query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
-	$my_folders[$rsrow[0]]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
+	$my_folders[$rsrow[0]]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 }
 
 $from="`{$dbtable_prefix}message_filters`";

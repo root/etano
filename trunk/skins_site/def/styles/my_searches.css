@@ -1,0 +1,81 @@
+* html .my_searches .row {
+	height: 1%;
+}
+
+.my_searches .row {
+	overflow: hidden;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px dashed #ccc;
+	font-size: 14px;
+}
+
+.my_searches .row div {
+	border-left: 1px solid #DEDEDE;
+	float: left;
+	margin: 3px 0;
+	padding: 0 2px 5px 8px;
+	overflow: hidden;
+}
+
+.my_searches .header {
+	font-weight: bold;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.my_searches .row .control {
+	width: 60px;
+	border-left: 0;
+	background-position: top right;
+	background-repeat: no-repeat;
+}
+
+	a.item_edit {
+		float: right;
+		padding: 0 3px 0 5px;
+		background: url('../images/link-change.gif') no-repeat top center;
+		width: 22px;
+		height: 22px;
+		display: block;
+	}
+
+	a.item_delete {
+		float: left;
+		background: url('../images/link_minus.gif') no-repeat top center;
+		width: 22px;
+		height: 22px;
+		display: block;
+	}
+
+	a.item_edit:hover, a.item_delete:hover {
+		background-position: bottom center;
+	}
+
+	a.item_edit i, a.item_delete i {
+		display: none;
+	}
+
+.my_searches .row .title {
+	width: 300px;
+	overflow: hidden;
+}
+
+.my_searches .row .is_default {
+	width: 100px;
+	overflow: hidden;
+	text-align: center;
+}
+
+.check {
+	margin-bottom: 2px;
+}
+
+.radio {
+	margin-bottom: -3px;
+}
+
+div.controls {
+	padding-top: 15px;
+	margin-top: 15px;
+}

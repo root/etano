@@ -326,7 +326,7 @@ ul.menu li.first {
 	background-image: url('../images/menu_bookmark.gif');
 }
 
-.content-link.mailbox {
+.content-link.mail {
 	background-image: url('../images/menu_message.gif');
 }
 
@@ -484,6 +484,7 @@ blockquote {
 	line-height:1px;
 }
 
+
 /* BUTTONS */
 .button {
 	background: no-repeat top left;
@@ -492,7 +493,7 @@ blockquote {
 	font-weight: bold;
 	border: 0px;
 	text-align: center;
-	padding-right: 10px;
+	padding-right: 5px;
 	padding-bottom: 7px;
 }
 
@@ -507,21 +508,35 @@ blockquote {
 	width: 75px;
 }
 
+.button.bmedium:hover {
+	background-image: url('../images/btn-blank-medium-over.gif');
+}
+
 .button.blarge {
 	background-image: url('../images/btn-blank-large-out.gif');
 	width: 119px;
 }
+.button.blarge:hover {
+	background-image: url('../images/btn-blank-large-over.gif');
+}
+
+
+/* USER PHOTOS */
 
 .user_photo {
 
 }
 
-.user_photo.thumb1 {
-	max-width: 100px;
-	max-height: 100px;
-}
+	.user_photo.thumb1 {
+		max-width: 100px;
+		max-height: 100px;
+	}
 
-* html .thumb1 {
-	width: 100px;
-	height: 100px;
+	* html .thumb1 {
+		width: 100px;
+		height: 100px;
+	}
+
+.comment {
+	color: #878787;
 }

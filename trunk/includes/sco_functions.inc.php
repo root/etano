@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007032301
+File version:				1.2007032801
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -43,6 +43,7 @@ define('FORMAT_HTML2TEXT_FULL',16384);
 define('FORMAT_UTF_ENCODE',32768);
 define('FORMAT_UTF_DECODE',65536);
 define('FORMAT_RUDECODE',131072);
+define('FORMAT_RUENCODE',262144);
 
 define('HTML_TEXTFIELD',2);
 define('HTML_SELECT',3);
@@ -193,6 +194,9 @@ function sanitize_and_format($input,$input_type,$format=0,$empty_value=null) {
 		}
 		if ($format&FORMAT_NL2BR) {
 			$input=nl2br($input);
+		}
+		if ($format&FORMAT_RUENCODE) {		// must come last
+			$input=rawurlencode($input);
 		}
 	} else {
 		if ($input_type==TYPE_ARRAY_SMALL) {
