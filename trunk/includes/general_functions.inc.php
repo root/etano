@@ -59,8 +59,13 @@ function bbcode2html($str) {
 }
 
 
+// wrapper for the create_pager2() function
 function pager($totalrows,$offset,$results) {
 	$lang_strings['page']='Pages:';					// translate this
 	$lang_strings['rpp']='Results to show:';		// translate this
+	$lang_strings['goto_first']='Go to first page';		// translate this
+	$lang_strings['goto_last']='Go to last page';		// translate this
+	$lang_strings['goto_next']='Go to next page';		// translate this
+	$lang_strings['goto_prev']='Go to previous page';		// translate this
 	return create_pager2($totalrows,$offset,$results,$lang_strings);
 }

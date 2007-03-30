@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       preferences.php
+File:                       my_settings.php
 $Revision: 72 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -67,17 +67,17 @@ foreach ($prefs as $module_code=>$v) {
 	}
 }
 
-$tpl->set_file('content','preferences.html');
+$tpl->set_file('content','my_settings.html');
 $tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP);
 $tpl->drop_loop('loop');
 
-$tplvars['title']='My Preferences';
-$tplvars['page_title']='My Preferences';
-$tplvars['page']='preferences';
-$tplvars['css']='preferences.css';
-if (is_file('preferences_left.php')) {
-	include 'preferences_left.php';
+$tplvars['title']='My Settings';
+$tplvars['page_title']='My Settings';
+$tplvars['page']='my_settings';
+$tplvars['css']='my_settings.css';
+if (is_file('my_settings_left.php')) {
+	include 'my_settings_left.php';
 }
 include 'frame.php';
 ?>
