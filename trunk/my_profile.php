@@ -76,7 +76,10 @@ $tpl->set_var('uid',$uid);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 
-$tplvars['title']='Your Profile';
+$tplvars['title']='My Profile';
+$tplvars['page_title']='My Profile';
+$tplvars['page']='my_profile';
+$tplvars['css']='my_profile.css';
 if (is_file('my_profile_left.php')) {
 	include 'my_profile_left.php';
 }

@@ -3,7 +3,7 @@ a.see_all {
 	top: 0;
 	right: 0;
 	margin: 15px 18px 0 0;
-	background: url('../images/link-next.gif') no-repeat top right;
+	background: url('../images/link_next.gif') no-repeat top right;
 	padding: 0 25px 6px 3px;
 }
 a.see_all:hover {
