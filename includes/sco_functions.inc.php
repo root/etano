@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007032801
+File version:				1.2007033001
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -860,14 +860,14 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	if (!empty($qs)) {
 		$myreturn.='&amp;'.$qs;
 	}
-	$myreturn.='"><i>&lt;&lt;</i></a></li>';
+	$myreturn.='" title="'.(isset($lang_strings['goto_first']) ? $lang_strings['goto_first'] : 'Go to first page').'"><i>&lt;&lt;</i></a></li>';
 	if ($offset>0) {
-		$myreturn.='<li class="previous">';
+		$myreturn.='<li class="goto_previous">';
 		$myreturn.='<a href="'.$phpself.'?o='.(($offset-$results>0) ? $offset-$results : 0).'&amp;r='.$results;
 		if (!empty($qs)) {
 			$myreturn.='&amp;'.$qs;
 		}
-		$myreturn.='"><i>&lt;</i></a></li>';
+		$myreturn.='" title="'.(isset($lang_strings['goto_prev']) ? $lang_strings['goto_prev'] : 'Go to previous page').'"><i>&lt;</i></a></li>';
 	}
 	$dotsbefore=false;
 	$dotsafter=false;
@@ -905,17 +905,17 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 		}
 	}
 	if ($offset+$results<$totalrows) {
-		$myreturn.='<li class="next"><a href="'.$phpself.'?o='.($offset+$results).'&amp;r='.$results;
+		$myreturn.='<li class="goto_next"><a href="'.$phpself.'?o='.($offset+$results).'&amp;r='.$results;
 		if (!empty($qs)) {
 			$myreturn.='&amp;'.$qs;
 		}
-		$myreturn.="\"><i>&gt;</i></a></li>\n";
+		$myreturn.='" title="'.(isset($lang_strings['goto_next']) ? $lang_strings['goto_next'] : 'Go to next page')."\"><i>&gt;</i></a></li>\n";
 	}
 	$myreturn.='<li class="goto_last"><a href="'.$phpself.'?o='.(($total_pages-1)*$results).'&amp;r='.$results;
 	if (!empty($qs)) {
 		$myreturn.='&amp;'.$qs;
 	}
-	$myreturn.="\"><i>&gt;&gt;</i></a></li>\n";
+	$myreturn.='" title="'.(isset($lang_strings['goto_last']) ? $lang_strings['goto_last'] : 'Go to last page')."\"><i>&gt;&gt;</i></a></li>\n";
 	$myreturn.="<li class=\"rpp\">\n";
 	$myreturn.="\t<input type=\"hidden\" name=\"o\" value=\"$offset\" />\n";
 	while (list($k,$v)=each($params)) {

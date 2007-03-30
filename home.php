@@ -20,6 +20,13 @@ check_login_member(3);
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
+$query="SELECT `_photo` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$tplvars['myself']['photo']=mysql_result($res,0,0);
+if (empty($tplvars['myself']['photo'])) {
+	$tplvars['myself']['photo']='no-photo.gif';
+}
+
 $user_stats=get_module_stats(1,$_SESSION['user']['user_id']);
 
 $tpl->set_file('content','home.html');
@@ -27,5 +34,11 @@ $tpl->set_var('user_stats',$user_stats);
 $tpl->process('content','content');
 
 $tplvars['title']='Member Home';
+$tplvars['page_title']='My Home';
+$tplvars['page']='home';
+$tplvars['css']='home.css';
+if (is_file('home_left.php')) {
+	include 'home_left.php';
+}
 include 'frame.php';
 ?>

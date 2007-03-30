@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       processors/preferences.php
+File:                       processors/my_settings.php
 $Revision: 67 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -64,5 +64,5 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Your preferences were saved.';
 }
-redirect2page('preferences.php',$topass,$qs);
+redirect2page('my_settings.php',$topass,$qs);
 ?>
