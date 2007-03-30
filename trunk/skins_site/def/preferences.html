@@ -1,0 +1,15 @@
+<script type="text/javascript" src="js/preferences.js"></script>
+
+<form action="processors/preferences.php" id="prefs_form" method="post" class="edit_form">
+<fieldset>
+<loop name="loop">
+<dl>
+	<dt>{loop.config_diz}</dt>
+	<dd>{loop.field}</dd>
+</dl>
+</loop name="loop">
+</fieldset>
+<fieldset class="controls">
+	<input type="submit" class="button bmedium" value="Save" />
+</fieldset>
+</form>

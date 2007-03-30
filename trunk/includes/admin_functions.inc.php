@@ -20,9 +20,6 @@ define('DEPT_ADMIN',4);
 define('RELEVANT_FIELDS',4); // use first RELEVANT_FIELDS fields to search/display
 
 define('OPTION_NA',0);
-define('OPTION_CHECKBOX',1);
-define('OPTION_TEXTFIELD',2);
-define('OPTION_TEXTAREA',3);
 
 define('AMTPL_REJECT_MEMBER',1);
 define('AMTPL_REJECT_PHOTO',2);

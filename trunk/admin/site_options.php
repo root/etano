@@ -69,17 +69,21 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['config_value']=sanitize_and_format($rsrow['config_value'],TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
 	switch ($rsrow['option_type']) {
 
-		case OPTION_CHECKBOX:
+		case HTML_CHECKBOX:
 			$rsrow['config_value']=($rsrow['config_value']==1) ? 'checked="checked"' : '';
 			$rsrow['field']='<input class="input_chk" type="checkbox" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" value="1" '.$rsrow['config_value'].' />';
 			break;
 
-		case OPTION_TEXTFIELD:
+		case HTML_TEXTFIELD:
 			$rsrow['field']='<input class="input_tf" type="text" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" value="'.$rsrow['config_value'].'" />';
 			break;
 
-		case OPTION_TEXTAREA:
-			$rsrow['field']='<textarea class="input_ta" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'">'.$rsrow['config_value'].'</textarea>';
+		case HTML_INT:
+			$rsrow['field']='<input class="number" type="text" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" value="'.$rsrow['config_value'].'" />';
+			break;
+
+		case HTML_TEXTAREA:
+			$rsrow['field']='<textarea class="input_ta" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" cols="" rows="">'.$rsrow['config_value'].'</textarea>';
 			break;
 
 	}

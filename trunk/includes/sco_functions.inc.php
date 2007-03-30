@@ -855,6 +855,12 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	$myreturn="<form id=\"pagerform$myrand\" action=\"$phpself\" method=\"get\">\n";
 	$myreturn.="<ul class=\"pager\">\n";
 	$myreturn.='<li class="text">'.(isset($lang_strings['page']) ? $lang_strings['page'] : '').'</li>';
+	$myreturn.='<li class="goto_first">';
+	$myreturn.='<a href="'.$phpself.'?o=0&amp;r='.$results;
+	if (!empty($qs)) {
+		$myreturn.='&amp;'.$qs;
+	}
+	$myreturn.='"><i>&lt;&lt;</i></a></li>';
 	if ($offset>0) {
 		$myreturn.='<li class="previous">';
 		$myreturn.='<a href="'.$phpself.'?o='.(($offset-$results>0) ? $offset-$results : 0).'&amp;r='.$results;
@@ -905,6 +911,11 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 		}
 		$myreturn.="\"><i>&gt;</i></a></li>\n";
 	}
+	$myreturn.='<li class="goto_last"><a href="'.$phpself.'?o='.(($total_pages-1)*$results).'&amp;r='.$results;
+	if (!empty($qs)) {
+		$myreturn.='&amp;'.$qs;
+	}
+	$myreturn.="\"><i>&gt;&gt;</i></a></li>\n";
 	$myreturn.="<li class=\"rpp\">\n";
 	$myreturn.="\t<input type=\"hidden\" name=\"o\" value=\"$offset\" />\n";
 	while (list($k,$v)=each($params)) {
