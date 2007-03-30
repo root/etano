@@ -21,10 +21,6 @@ ul#message_details li {
 	font-size: 14px;
 }
 
-.block_user {
-	background-image: url('../images/menu_block.gif');
-}
-
 #controls {
 	border-top: 1px dashed #ccc;
 	padding-top: 15px;
