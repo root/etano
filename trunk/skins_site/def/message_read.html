@@ -36,20 +36,20 @@
 
 <div id="controls">
 	<opt name="!is_outbox"><opt name="output.other_id">
-	<input type="image" id="btn_reply" alt="Reply" src="{tplvars.tplrelpath}/images/btn-reply-out.gif" />
+	<input type="submit" id="btn_reply" class="button bmedium" value="Reply" />
 	<span>|</span>
 	</opt name="output.other_id"></opt name="!is_outbox">
 
-	<input type="image" id="btn_delete" alt="Delete message" src="{tplvars.tplrelpath}/images/btn-delete-out.gif" />
+	<input type="submit" id="btn_delete" class="button bmedium" value="Delete" />
 
 	<opt name="spam_controls">
 	<span>|</span>
-	<input type="image" id="btn_spam" alt="Spam" src="{tplvars.tplrelpath}/images/btn-spam-out.gif" />
+	<input type="submit" id="btn_spam" class="button bmedium" value="Spam" />
 	</opt name="spam_controls">
 
 	<opt name="!is_outbox">
 	<span>|</span>
-	<input type="image" id="btn_move" alt="Move" src="{tplvars.tplrelpath}/images/btn-move-out.gif" />
+	<input type="submit" id="btn_move" class="button bmedium" value="Move" />
 	to
 	<select name="folder_id" id="folder_id">
 		{output.moveto_folders}

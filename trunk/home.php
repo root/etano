@@ -19,18 +19,21 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(3);
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$output=array();
 
-$query="SELECT `_photo` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="SELECT `_photo` as `photo`,UNIX_TIMESTAMP(`date_added`) as `date_added` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-$tplvars['myself']['photo']=mysql_result($res,0,0);
-if (empty($tplvars['myself']['photo'])) {
-	$tplvars['myself']['photo']='no-photo.gif';
+$output=mysql_fetch_assoc($res);
+if (empty($output['photo'])) {
+	$output['photo']='no-photo.gif';
 }
+$output['date_added']=strftime($_user_settings['date_format'],$output['date_added']+$_user_settings['time_offset']);
 
-$user_stats=get_module_stats(1,$_SESSION['user']['user_id']);
+$my_stats=get_module_stats(array('pviews','num_friends'),$_SESSION['user']['user_id']);
 
 $tpl->set_file('content','home.html');
-$tpl->set_var('user_stats',$user_stats);
+$tpl->set_var('output',$output);
+$tpl->set_var('my_stats',$my_stats);
 $tpl->process('content','content');
 
 $tplvars['title']='Member Home';

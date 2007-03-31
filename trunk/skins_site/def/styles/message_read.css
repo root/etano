@@ -18,16 +18,11 @@ ul#message_details li {
 #message_body {
 	clear: both;
 	padding-bottom: 10px;
-	font-size: 14px;
 }
 
 #controls {
 	border-top: 1px dashed #ccc;
 	padding-top: 15px;
-}
-
-#controls input {
-	margin-bottom: -10px;
 }
 
 
