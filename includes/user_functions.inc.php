@@ -13,8 +13,8 @@ Support at:                 http://forum.datemill.com
 
 include 'logs.inc.php';
 $_access_level=array();
-require_once 'general_functions.inc.php';
 require_once 'access_levels.inc.php';
+require_once 'general_functions.inc.php';
 
 function get_userid_by_user($user) {
 	$myreturn=0;
@@ -76,13 +76,18 @@ function check_login_member($level_id) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 
-function get_module_stats($module_code,$user_id=0,$stat='') {
+
+function get_module_stats($stat='',$user_id=0) {
 	$myreturn=array();
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	if (!empty($user_id)) {
-		$query="SELECT `stat`,`value` FROM `{$dbtable_prefix}user_stats` WHERE `fk_user_id`='$user_id' AND `fk_module_code`='$module_code'";
+		$query="SELECT `stat`,`value` FROM `{$dbtable_prefix}user_stats` WHERE `fk_user_id`='$user_id'";
 		if (!empty($stat)) {
-			$query.=" AND `stat`='$stat'";
+			if (is_array($stat)) {
+				$query.=" AND `stat` IN ('".join("','",$stat)."')";
+			} else {
+				$query.=" AND `stat`='$stat'";
+			}
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_row($res)) {
@@ -91,6 +96,7 @@ function get_module_stats($module_code,$user_id=0,$stat='') {
 	}
 	return $myreturn;
 }
+
 
 function get_user_settings($user_id,$module_code) {
 	$myreturn=array();

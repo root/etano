@@ -67,10 +67,6 @@ ul.gallery_view p {
 	background-image: url('../images/menu_list_view.gif');
 }
 
-.content-link.saved_search {
-	background-image: url('../images/menu_saved_search.gif');
-}
-
 #my_searches ul.menu li {
 	border: none;
 	padding: 0;

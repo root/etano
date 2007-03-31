@@ -34,10 +34,10 @@
 {pager2}
 
 <div id="controls">
-	<input type="image" id="btn_delete" alt="Delete selected" src="{tplvars.tplrelpath}/images/btn-delete-selected-out.gif" />
+	<input type="submit" id="btn_delete" class="button blarge" value="Delete selected" />
 	<opt name="!is_outbox">
 	<span>|</span>
-	<input type="image" id="btn_move" alt="Move selected" src="{tplvars.tplrelpath}/images/btn-move-selected-out.gif" />
+	<input type="submit" id="btn_move" class="button blarge" value="Move selected" />
 	 to
 	<select name="folder_id" id="folder_id">
 	{folder_options}

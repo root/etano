@@ -7,7 +7,7 @@
 </fieldset>
 <loop name="photos">
 <fieldset class="one_photo">
-	<img class="user_photo" src="{tplvars.photourl}/t2/{photos.photo}" alt="{photos.caption}" />
+	<img class="user_photo thumb2" src="{tplvars.photourl}/t2/{photos.photo}" alt="{photos.caption}" />
 	<dl>
 		<dt><label for="caption_{photos.photo_id}">Description:</label></dt>
 		<dd><input type="text" class="caption" name="caption[{photos.photo_id}]" id="caption_{photos.photo_id}" value="{photos.caption}" /></dd>

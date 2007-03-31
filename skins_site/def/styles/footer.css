@@ -5,6 +5,7 @@
 	width: 300px;
 	text-align: right;
 	color: #173459;
+	font-size: 12px;
 }
 
 #secondary-nav {
@@ -24,6 +25,7 @@
 #secondary-nav a {
 	color: #FFFFFF;
 	text-decoration: none;
+	font-size: 12px;
 }
 
 #secondary-nav a:hover, #secondary-nav a:active, #secondary-nav li.active a {

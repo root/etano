@@ -8,7 +8,7 @@
 		<dt><label for="user">Choose a Username:</label></dt>
 		<dd><input class="text" type="text" name="user" id="user" value="{my_values.user}" tabindex="1" /></dd>
 		<dd class="field-help">
-			<input type="button" value="Check" onclick="req_check_username()" />
+			<input type="button" class="button bmedium" value="Check" onclick="req_check_username()" />
 		</dd>
 	</dl>
 	<dl class="required {my_values.error_pass}">
@@ -60,6 +60,6 @@
 </opt name="page1">
 <fieldset class="controls">
 	<p class="mandatory"><span>* Blue fields</span> are mandatory.</p>
-	<input type="image" alt="Save" src="{tplvars.tplrelpath}/images/btn-sign-up-out.gif" />
+	<input type="submit" class="button bmedium" value="Save" />
 </fieldset>
 </form>

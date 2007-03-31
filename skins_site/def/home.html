@@ -1,10 +1,9 @@
-<img class="user_photo" src="{tplvars.photourl}/t1/{tplvars.myself.photo}" alt="{tplvars.myself.user}" />
-<p>Hi {tplvars.myself.user}</p>
+<img id="my_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/{output.photo}" alt="{tplvars.myself.user}" />
+<ul id="stats">
+	<li>Hi <strong>{tplvars.myself.user}</strong></li>
+	<li id="messages"><a href="mailbox.php">Messages</a>: {user_stats.total_messages} ({user_stats.new_messages} new)</li>
+	<li id="photos"><a href="user_photos.php">Photos</a>: {user_stats.total_photos}</li>
+	<li id="pviews">Your profile has been viewed {user_stats.pviews} times</li>
+</ul>
 
-<div id="stats_right">
-	Stats:
-	<span id="messages"><a href="mailbox.php">Messages</a>: {user_stats.total_messages} ({user_stats.new_messages} new)</span>
-	<span id="photos"><a href="user_photos.php">Photos</a>: {user_stats.total_photos}</span>
-	<span id="pviews">Your profile has been viewed {user_stats.total_views} times</span>
-</div>
 <a href="friendship_requests.php">Friendship Requests</a>
