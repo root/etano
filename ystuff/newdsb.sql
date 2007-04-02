@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Mar 22, 2007 at 09:00 PM
+-- Generation Time: Apr 02, 2007 at 04:57 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 -- 
@@ -1134,7 +1134,8 @@ INSERT INTO `dsb_modules` (`module_code`, `module_name`, `module_diz`, `module_t
 (0x6d61786d696e64, 'Maxmind', 'Fraud checking module. Compares credit card country with  buyer''s IP country.', 2, 1.00),
 (0x736b696e5f6261736963, 'Basic', 'The first skin of the site', 4, 1.00),
 (0x646967675f74656368, 'Digg Tech Feed', 'Retrieves the latest digg tech stories', 3, 1.00),
-(0x736b696e5f646566, 'Default Skin', 'Official default skin', 4, 0.01);
+(0x736b696e5f646566, 'Default Skin', 'Official default skin', 4, 0.01),
+(0x6465665f757365725f7072656673, 'Default User Preferences', 'The default user preferences', 0, 1.00);
 
 -- --------------------------------------------------------
 
@@ -1178,14 +1179,17 @@ CREATE TABLE `dsb_online` (
 -- Dumping data for table `dsb_online`
 -- 
 
-INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (2, '20070322205716', 0x3632363261343064363930646562386264323631356530383665393662383164),
-(0, '20070318120332', 0x3538353565346462653034396534633263313163636638366332616335343739),
-(2, '20070322125344', 0x6431373534653566656462313964663732656633343039633462643464316537),
-(2, '20070322160255', 0x6361616636323662346232373437333234626237373961373536313766633232),
+INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (0, '20070318120332', 0x3538353565346462653034396534633263313163636638366332616335343739),
 (0, '20070315223451', 0x3535383234663432323038323335366665386166323365623734613332353465),
 (0, '20070314234459', 0x3031323366363166326566653232336436343063633066326632313338323236),
-(2, '20070321225710', 0x6434626636363035653561356632396365363863303663393430326235616366),
-(0, '20070321224708', 0x6433336562643866643037613765366266376438623263363636386431623431);
+(0, '20070321224708', 0x6433336562643866643037613765366266376438623263363636386431623431),
+(0, '20070326164813', 0x3765623935386664313466323664366631613438346438376132393461666131),
+(0, '20070402155640', 0x3131616536373861616631313461383664666261323735393339303064623532),
+(0, '20070402155621', 0x3662643061363134363837636365643935336232306662623531316130613338),
+(210, '20070402164955', 0x3439373764353631363761653361356236623736613262653932306539323864),
+(0, '20070401233705', 0x3161343336663732363338396635656566633535373830326238353835666461),
+(0, '20070402154849', 0x6461303231626536363363623163313737303264666239386162663163626630),
+(0, '20070331130412', 0x6161373938363865356132336637373266653966346430346338613331356236);
 
 -- --------------------------------------------------------
 
@@ -1257,11 +1261,7 @@ CREATE TABLE `dsb_photo_comments` (
 -- Dumping data for table `dsb_photo_comments`
 -- 
 
-INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_photo_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (1, 68, 2, 'test', 'test', '2007-03-08 15:12:49', '2007-03-08 15:12:49', 15),
-(2, 68, 2, 'test', 'hai sa dam mana cu mana cei cu inimahai sa dam mana cu mana cei cu inima romana sa-nvartim hora fratiei pe pamantul romaniei.hai sa dam mana cu mana cei cu inima romana sa-nvartim hora fratiei pe pamantul romaniei.hai sa dam mana cu mana cei cu inima romana sa-nvartim hora fratiei pe pamantul romaniei.hai sa dam mana cu mana cei cu inima romana sa-nvartim hora fratiei pe pamantul romaniei. romana sa-nvartim hora fratiei pe pamantul romaniei.hai sa dam mana cu mana cei cu inima romana sa-nvartim hora fratiei pe pamantul romaniei.hai sa dam mana cu mana cei cu inima romana sa-nvartim hora fratiei pe pamantul romaniei.hai sa dam mana cu mana cei cu inima romana sa-nvartim hora fratiei pe pamantul romaniei.', '2007-03-08 15:13:21', '2007-03-08 15:13:21', 15),
-(3, 68, 2, 'test', 'inca [b]un [/b][u]test[/u]', '2007-03-09 12:34:40', '2007-03-09 12:34:40', 15),
-(4, 68, 2, 'test', 'si inca un test', '2007-03-09 13:28:37', '2007-03-09 13:28:37', 15),
-(5, 68, 2, 'test', 'gata, ultimu', '2007-03-09 13:30:00', '2007-03-09 13:30:00', 15);
+INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_photo_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (6, 79, 2, 'test', 'bleah\r\n[b]cahhhhhhhhhhh[/b]', '2007-03-22 21:00:15', '2007-03-22 21:00:15', 15);
 
 -- --------------------------------------------------------
 
@@ -1468,41 +1468,6 @@ CREATE TABLE `dsb_site_log` (
 -- Dumping data for table `dsb_site_log`
 -- 
 
-INSERT INTO `dsb_site_log` (`log_id`, `fk_user_id`, `user`, `m_value`, `fk_level_id`, `ip`, `time`) VALUES (1, 0, 'test', 1, 1, 2130706433, '20070310162716'),
-(2, 0, 'test', 1, 1, 2130706433, '20070311144412'),
-(3, 0, 'test', 1, 1, 2130706433, '20070311154347'),
-(4, 0, 'test', 1, 1, 2130706433, '20070311154421'),
-(5, 0, 'test', 1, 1, 2130706433, '20070312110906'),
-(6, 0, 'test', 1, 1, 2130706433, '20070312213705'),
-(7, 0, 'test', 1, 1, 2130706433, '20070313135729'),
-(8, 0, 'test', 1, 1, 2130706433, '20070313193002'),
-(9, 0, 'test', 1, 1, 2130706433, '20070313203136'),
-(10, 0, 'test', 1, 1, 2130706433, '20070313203610'),
-(11, 0, 'test', 1, 1, 2130706433, '20070314131539'),
-(12, 0, 'test', 1, 1, 2130706433, '20070315220425'),
-(13, 0, 'test', 1, 1, 2130706433, '20070316115241'),
-(14, 0, 'test', 1, 1, 2130706433, '20070316144202'),
-(15, 0, 'test', 1, 1, 2130706433, '20070317155348'),
-(16, 0, 'test', 1, 1, 2130706433, '20070320124427'),
-(17, 0, 'test', 1, 1, 2130706433, '20070320152255'),
-(18, 0, 'test', 1, 1, 2130706433, '20070320193238'),
-(19, 0, 'test', 1, 1, 2130706433, '20070320222246'),
-(20, 0, 'test', 1, 1, 2130706433, '20070320222600'),
-(21, 0, 'test', 1, 1, 2130706433, '20070321115150'),
-(22, 0, 'test', 1, 1, 2130706433, '20070321120447'),
-(23, 0, 'test', 1, 1, 2130706433, '20070321204240'),
-(24, 0, 'test', 1, 1, 2130706433, '20070321204409'),
-(25, 0, 'test3', 1, 1, 2130706433, '20070321223715'),
-(26, 0, 'test4', 1, 1, 2130706433, '20070321224436'),
-(27, 0, 'test5', 1, 1, 2130706433, '20070321224526'),
-(28, 0, 'test5', 1, 1, 2130706433, '20070321224537'),
-(29, 0, 'test6', 1, 1, 2130706433, '20070321224620'),
-(30, 0, 'test6', 1, 1, 2130706433, '20070321224630'),
-(31, 0, 'test', 1, 1, 2130706433, '20070321224726'),
-(32, 0, 'test', 1, 1, 2130706433, '20070322112556'),
-(33, 0, 'test', 1, 1, 2130706433, '20070322125337'),
-(34, 0, 'test', 1, 1, 2130706433, '20070322153622'),
-(35, 0, 'test', 1, 1, 2130706433, '20070322190930');
 
 -- --------------------------------------------------------
 
@@ -1516,57 +1481,63 @@ CREATE TABLE `dsb_site_options3` (
   `config_option` varchar(50) binary NOT NULL default '',
   `config_value` varchar(100) NOT NULL default '',
   `config_diz` text NOT NULL,
-  `option_type` tinyint(1) unsigned NOT NULL default '0',
+  `option_type` tinyint(3) unsigned NOT NULL default '0',
   `fk_module_code` varchar(32) binary NOT NULL default '',
+  `per_user` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`config_id`),
-  UNIQUE KEY `thekey` (`config_option`,`fk_module_code`)
-) TYPE=MyISAM COMMENT='0-n/a,1-chkbox,2-tf,3-ta';
+  UNIQUE KEY `thekey` (`config_option`,`fk_module_code`),
+  KEY `per_user` (`per_user`),
+  KEY `fk_module_code` (`fk_module_code`)
+) TYPE=MyISAM COMMENT='0-n/a,9-chkbox,2-tf,4-ta';
 
 -- 
 -- Dumping data for table `dsb_site_options3`
 -- 
 
-INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `config_diz`, `option_type`, `fk_module_code`) VALUES (1, 0x64626669656c645f696e646578, '57', 'The last index of the custom profile fields (field_xx)', 0, 0x636f7265),
-(2, 0x7573655f63617074636861, '1', 'Use the dynamic image text to keep spam bots out?', 1, 0x636f7265),
-(3, 0x6d616e75616c5f70726f66696c655f617070726f76616c, '1', 'New profiles or changes to existing profiles require manual approval from an administrator before being displayed on site?', 1, 0x636f7265),
-(4, 0x646174655f666f726d6174, '%m/%d/%Y', 'Default date format', 2, 0x636f7265),
-(5, 0x74315f7769647468, '100', 'The width in pixels of the smalest thumbnail generated for each user photo', 2, 0x636f72655f70686f746f),
-(6, 0x74325f7769647468, '500', 'The width in pixels of the larger thumbnail generated for each user photo', 2, 0x636f72655f70686f746f),
-(7, 0x7069635f7769647468, '800', 'The maximum width in pixels of any picture uploaded by a member', 2, 0x636f72655f70686f746f),
-(8, 0x6d616e75616c5f70686f746f5f617070726f76616c, '0', 'New uploaded photos require manual approval before being displayed on the site?', 1, 0x636f72655f70686f746f),
-(9, 0x6d616e75616c5f626c6f675f617070726f76616c, '0', 'New blog posts or changes to existing posts require manual approval from an administrator before being displayed on site?', 1, 0x636f72655f626c6f67),
-(10, 0x6d616e75616c5f636f6d5f617070726f76616c, '0', 'Comments to profiles, photos, blogs need approval from admin?', 1, 0x636f7265),
-(11, 0x77617465726d61726b5f74657874, 'watermark text', 'The text to stamp the user photos with', 2, 0x636f72655f70686f746f),
-(12, 0x77617465726d61726b5f746578745f636f6c6f72, 'FFFFFF', 'Color of the text watermark', 2, 0x636f72655f70686f746f),
-(13, 0x6d6f64756c655f616374697665, '1', 'Module active?', 1, 0x70617970616c),
-(14, 0x70617970616c5f656d61696c, 'dan@sco.ro', 'Your paypal email address', 2, 0x70617970616c),
-(15, 0x6d6f64756c655f616374697665, '1', 'Is this module active?', 1, 0x74776f636865636b6f7574),
-(16, 0x736964, '117760', 'Your 2co seller ID', 2, 0x74776f636865636b6f7574),
-(17, 0x64656d6f5f6d6f6465, '1', 'Enable test mode? Don''t enable this on a live site!', 1, 0x74776f636865636b6f7574),
-(18, 0x64656d6f5f6d6f6465, '1', 'Enable test mode? Don''t enable this on a live site!', 1, 0x70617970616c),
-(19, 0x736563726574, 'terebentina', 'The secret word you set in your 2co account', 2, 0x74776f636865636b6f7574),
-(20, 0x6c6963656e73655f6b6579, '1234', 'Your Maxmind license key', 2, 0x6d61786d696e64),
-(21, 0x7573655f7175657565, '1', 'Use the message queue (recommended) or send the messages directly?', 1, 0x636f7265),
-(22, 0x6d61696c5f66726f6d, 'dan@rdsct.ro', 'Email address to send emails from', 2, 0x636f7265),
-(23, 0x6262636f64655f70726f66696c65, '1', 'Use BBcode in profile fields? (like about me, about you)', 1, 0x636f7265),
-(24, 0x6262636f64655f636f6d6d656e7473, '1', 'Use BBcode in comments?', 1, 0x636f7265),
-(25, 0x736b696e5f646972, 'basic', 'Skin folder name in the skins folder.', 0, 0x736b696e5f6261736963),
-(26, 0x736b696e5f6e616d65, 'Basic', '', 0, 0x736b696e5f6261736963),
-(27, 0x666b5f6c6f63616c655f6964, '11', '', 0, 0x736b696e5f6261736963),
-(28, 0x69735f64656661756c74, '0', 'Is this skin the default site skin?', 0, 0x736b696e5f6261736963),
-(32, 0x6d696e5f73697a65, '', 'Minimum photo file size in bytes (use 0 for not limited).', 2, 0x636f72655f70686f746f),
-(33, 0x6d61785f73697a65, '', 'Maximum photo file size in bytes (use 0 for server default).', 2, 0x636f72655f70686f746f),
-(34, 0x6262636f64655f6d657373616765, '1', 'Allow BBCode in member to member messages?', 1, 0x636f7265),
-(35, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 'Date and time format', 2, 0x636f7265),
-(36, 0x726f756e645f636f726e657273, '1', 'Use round corners for user photos?', 1, 0x636f72655f70686f746f),
-(37, 0x656e61626c6564, '1', 'Enable this widget?', 1, 0x646967675f74656368),
-(38, 0x666565645f75726c, 'http://digg.com/rss/containertechnology.xml', 'The url of the feed', 2, 0x646967675f74656368),
-(39, 0x736b696e5f646972, 'def', '', 0, 0x736b696e5f646566),
-(40, 0x736b696e5f6e616d65, 'Default', '', 0, 0x736b696e5f646566),
-(41, 0x666b5f6c6f63616c655f6964, '11', '', 0, 0x736b696e5f646566),
-(42, 0x69735f64656661756c74, '1', '', 0, 0x736b696e5f646566),
-(43, 0x696e6163746976655f74696d65, '5', 'Time of inactivity in minutes after a member is considered offline', 2, 0x636f7265),
-(44, 0x6262636f64655f626c6f6773, '1', 'Allow bbcode in blog posts?', 1, 0x636f72655f626c6f67);
+INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `config_diz`, `option_type`, `fk_module_code`, `per_user`) VALUES (1, 0x64626669656c645f696e646578, '57', 'The last index of the custom profile fields (field_xx)', 0, 0x636f7265, 0),
+(2, 0x7573655f63617074636861, '1', 'Use the dynamic image text to keep spam bots out?', 9, 0x636f7265, 0),
+(3, 0x6d616e75616c5f70726f66696c655f617070726f76616c, '1', 'New profiles or changes to existing profiles require manual approval from an administrator before being displayed on site?', 9, 0x636f7265, 0),
+(4, 0x646174655f666f726d6174, '%m/%d/%Y', 'Default date format', 2, 0x636f7265, 1),
+(5, 0x74315f7769647468, '100', 'The width in pixels of the smalest thumbnail generated for each user photo', 104, 0x636f72655f70686f746f, 0),
+(6, 0x74325f7769647468, '500', 'The width in pixels of the larger thumbnail generated for each user photo', 104, 0x636f72655f70686f746f, 0),
+(7, 0x7069635f7769647468, '800', 'The maximum width in pixels of any picture uploaded by a member', 104, 0x636f72655f70686f746f, 0),
+(8, 0x6d616e75616c5f70686f746f5f617070726f76616c, '0', 'New uploaded photos require manual approval before being displayed on the site?', 9, 0x636f72655f70686f746f, 0),
+(9, 0x6d616e75616c5f626c6f675f617070726f76616c, '0', 'New blog posts or changes to existing posts require manual approval from an administrator before being displayed on site?', 9, 0x636f72655f626c6f67, 0),
+(10, 0x6d616e75616c5f636f6d5f617070726f76616c, '0', 'Comments to profiles, photos, blogs need approval from admin?', 9, 0x636f7265, 0),
+(11, 0x77617465726d61726b5f74657874, 'watermark text', 'The text to stamp the user photos with', 2, 0x636f72655f70686f746f, 0),
+(12, 0x77617465726d61726b5f746578745f636f6c6f72, 'FFFFFF', 'Color of the text watermark', 2, 0x636f72655f70686f746f, 0),
+(13, 0x6d6f64756c655f616374697665, '1', 'Module active?', 9, 0x70617970616c, 0),
+(14, 0x70617970616c5f656d61696c, 'dan@sco.ro', 'Your paypal email address', 2, 0x70617970616c, 0),
+(15, 0x6d6f64756c655f616374697665, '1', 'Is this module active?', 9, 0x74776f636865636b6f7574, 0),
+(16, 0x736964, '117760', 'Your 2co seller ID', 2, 0x74776f636865636b6f7574, 0),
+(17, 0x64656d6f5f6d6f6465, '1', 'Enable test mode? Don''t enable this on a live site!', 9, 0x74776f636865636b6f7574, 0),
+(18, 0x64656d6f5f6d6f6465, '1', 'Enable test mode? Don''t enable this on a live site!', 9, 0x70617970616c, 0),
+(19, 0x736563726574, 'terebentina', 'The secret word you set in your 2co account', 2, 0x74776f636865636b6f7574, 0),
+(20, 0x6c6963656e73655f6b6579, '1234', 'Your Maxmind license key', 2, 0x6d61786d696e64, 0),
+(21, 0x7573655f7175657565, '1', 'Use the message queue (recommended) or send the messages directly?', 9, 0x636f7265, 0),
+(22, 0x6d61696c5f66726f6d, 'dan@rdsct.ro', 'Email address to send emails from', 2, 0x636f7265, 0),
+(23, 0x6262636f64655f70726f66696c65, '1', 'Use BBcode in profile fields? (like about me, about you)', 9, 0x636f7265, 0),
+(24, 0x6262636f64655f636f6d6d656e7473, '1', 'Use BBcode in comments?', 9, 0x636f7265, 0),
+(25, 0x736b696e5f646972, 'basic', 'Skin folder name in the skins folder.', 0, 0x736b696e5f6261736963, 0),
+(26, 0x736b696e5f6e616d65, 'Basic', '', 0, 0x736b696e5f6261736963, 0),
+(27, 0x666b5f6c6f63616c655f6964, '11', '', 0, 0x736b696e5f6261736963, 0),
+(28, 0x69735f64656661756c74, '0', 'Is this skin the default site skin?', 0, 0x736b696e5f6261736963, 0),
+(32, 0x6d696e5f73697a65, '', 'Minimum photo file size in bytes (use 0 for not limited).', 104, 0x636f72655f70686f746f, 0),
+(33, 0x6d61785f73697a65, '', 'Maximum photo file size in bytes (use 0 for server default).', 104, 0x636f72655f70686f746f, 0),
+(34, 0x6262636f64655f6d657373616765, '1', 'Allow BBCode in member to member messages?', 9, 0x636f7265, 0),
+(35, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 'Date and time format', 2, 0x636f7265, 1),
+(36, 0x726f756e645f636f726e657273, '1', 'Use round corners for user photos?', 9, 0x636f72655f70686f746f, 0),
+(37, 0x656e61626c6564, '1', 'Enable this widget?', 9, 0x646967675f74656368, 0),
+(38, 0x666565645f75726c, 'http://digg.com/rss/containertechnology.xml', 'The url of the feed', 2, 0x646967675f74656368, 0),
+(39, 0x736b696e5f646972, 'def', '', 0, 0x736b696e5f646566, 0),
+(40, 0x736b696e5f6e616d65, 'Default', '', 0, 0x736b696e5f646566, 0),
+(41, 0x666b5f6c6f63616c655f6964, '11', '', 0, 0x736b696e5f646566, 0),
+(42, 0x69735f64656661756c74, '1', '', 0, 0x736b696e5f646566, 0),
+(43, 0x696e6163746976655f74696d65, '5', 'Time of inactivity in minutes after a member is considered offline', 104, 0x636f7265, 0),
+(44, 0x6262636f64655f626c6f6773, '1', 'Allow bbcode in blog posts?', 9, 0x636f72655f626c6f67, 0),
+(45, 0x73656e645f616c6572745f696e74657276616c, '2', 'How often do you want to receive your search matches? (days)', 104, 0x6465665f757365725f7072656673, 1),
+(46, 0x726174655f6d795f70726f66696c65, '1', 'Allow your profile to be rated?', 9, 0x6465665f757365725f7072656673, 1),
+(47, 0x726174655f6d795f70686f746f73, '1', 'Allow your photos to be rated?', 9, 0x6465665f757365725f7072656673, 1);
 
 -- --------------------------------------------------------
 
@@ -1604,7 +1575,8 @@ INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results
 ('', 1, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";}', '2,1,209', 2, '20070321225655'),
 ('8816b2c8b45df99a22880b00513d7867', 1, 'a:1:{s:5:"pstat";s:1:"5";}', '210,211,212,213', 0, '20070322112801'),
 ('7a05c5fb87b1158778adbc2a4867b009', 1, 'a:4:{s:11:"acclevel_id";i:16;s:2:"st";s:3:"net";s:10:"fk_user_id";s:1:"2";s:9:"fk_net_id";s:1:"2";}', '1', 2, '20070322205702'),
-('0143a1c3121c434d9acefa1a1f1f772d', 1, 'a:4:{s:11:"acclevel_id";i:16;s:2:"st";s:3:"net";s:10:"fk_user_id";s:1:"2";s:9:"fk_net_id";s:1:"1";}', '1,2', 2, '20070322205716');
+('0143a1c3121c434d9acefa1a1f1f772d', 1, 'a:4:{s:11:"acclevel_id";i:16;s:2:"st";s:3:"net";s:10:"fk_user_id";s:1:"2";s:9:"fk_net_id";s:1:"1";}', '1,2', 2, '20070322205716'),
+('0449abf79c5a3f2f76d5f0ec03a8dd25', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:6:"latest";}', '1,2,209,210,211,212,213', 0, '20070323154544');
 
 -- --------------------------------------------------------
 
@@ -1714,13 +1686,13 @@ CREATE TABLE `dsb_user_accounts` (
 -- Dumping data for table `dsb_user_accounts`
 -- 
 
-INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x64616e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@sco.ro', '', '', '20070211144000'),
-(2, 0x74657374, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@rdsct.ro', 'basic', '', '20070322205716'),
-(209, 0x7465737432, 0x3662343238383630323064303630386435646138373431633464353564303563, 15, 4, 'dan@rdsct.ro', '', '', '20070207155756'),
-(210, 0x7465737433, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070321224242'),
-(211, 0x7465737434, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070321224514'),
-(212, 0x7465737435, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070321224610'),
-(213, 0x7465737436, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070321224704');
+INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x64616e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@sco.ro', '', '', '20070402155030'),
+(2, 0x74657374, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@rdsct.ro', 'basic', '', '20070402155030'),
+(209, 0x7465737432, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@rdsct.ro', '', '', '20070402155030'),
+(210, 0x7465737433, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070402164955'),
+(211, 0x7465737434, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070402155030'),
+(212, 0x7465737435, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070402155030'),
+(213, 0x7465737436, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070402155030');
 
 -- --------------------------------------------------------
 
@@ -1809,7 +1781,7 @@ CREATE TABLE `dsb_user_folders` (
 -- Dumping data for table `dsb_user_folders`
 -- 
 
-INSERT INTO `dsb_user_folders` (`folder_id`, `fk_user_id`, `folder`) VALUES (2, 2, 'Saved');
+INSERT INTO `dsb_user_folders` (`folder_id`, `fk_user_id`, `folder`) VALUES (2, 2, ''' "');
 
 -- --------------------------------------------------------
 
@@ -1972,21 +1944,18 @@ CREATE TABLE `dsb_user_photos` (
 -- Dumping data for table `dsb_user_photos`
 -- 
 
-INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `caption`, `status`, `reject_reason`, `stat_views`, `stat_comments`, `date_posted`, `last_changed`, `del`) VALUES (63, 2, 'test', '7/2_11170336112.jpg', 0, 0, 0, 'just some abstract image', 15, '', 0, 0, '2007-02-01 13:21:52', '2007-02-14 11:56:10', 0),
-(62, 2, 'test', '6/2_11170336020.jpg', 0, 1, 0, 'this was taken when I was river rafting during my last vacation out of country', 15, '', 0, 0, '2007-02-01 13:20:26', '2007-02-14 11:55:22', 0),
+INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `caption`, `status`, `reject_reason`, `stat_views`, `stat_comments`, `date_posted`, `last_changed`, `del`) VALUES (82, 210, 'test3', '9/210_31175518453.jpg', 1, 0, 1, 'screen captures of a nice arkanoid clone', 15, '', 0, 0, '2007-04-02 12:54:25', '2007-04-02 12:55:05', 0),
 (67, 1, 'dan', '9/1_21171197584.jpg', 1, 0, 0, '', 15, '', 0, 0, '2007-02-11 12:39:49', '2007-02-11 12:40:00', 0),
 (66, 1, 'dan', '1/1_11171197584.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 12:39:49', '2007-02-11 12:40:00', 0),
-(68, 2, 'test', '4/2_11171208327.jpg', 0, 1, 1, 'road to infinity', 15, '', 0, 1, '2007-02-11 15:38:55', '2007-02-14 11:56:45', 0),
-(69, 2, 'test', '6/2_21171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
+(69, 2, 'test', '6/2_21171208327.jpg', 1, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-04-02 12:34:12', 0),
 (70, 2, 'test', '8/2_31171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
-(71, 2, 'test', '5/2_41171208327.jpg', 0, 0, 1, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-15 11:27:49', 0),
-(72, 2, 'test', '8/2_51171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
+(81, 210, 'test3', '6/210_21175518453.jpg', 0, 0, 1, 'screen captures of a nice arkanoid clone', 15, '', 0, 0, '2007-04-02 12:54:25', '2007-04-02 12:55:05', 0),
 (73, 2, 'test', '3/2_61171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
-(74, 210, 'test3', '4/210_11174509455.jpg', 1, 0, 0, 'nope, no description here', 15, '', 0, 0, '2007-03-21 20:37:35', '2007-03-21 20:38:05', 0),
+(80, 210, 'test3', '8/210_11175518453.jpg', 0, 0, 1, 'screen captures of a nice arkanoid clone', 15, '', 0, 0, '2007-04-02 12:54:25', '2007-04-02 12:55:05', 0),
 (75, 211, 'test4', '7/211_11174509897.jpg', 1, 0, 1, '', 15, '', 0, 0, '2007-03-21 20:44:58', '2007-03-21 20:45:14', 0),
 (76, 212, 'test5', '6/212_11174509951.jpg', 1, 0, 1, '', 15, '', 0, 0, '2007-03-21 20:45:53', '2007-03-21 20:46:05', 0),
 (77, 213, 'test6', '8/213_51174510004.jpg', 1, 0, 1, '', 15, '', 0, 0, '2007-03-21 20:46:47', '2007-03-21 20:47:02', 0),
-(78, 2, 'test', '0/2_11174572041.jpg', 1, 0, 1, '', 15, '', 0, 0, '2007-03-22 14:00:41', '2007-03-22 14:00:57', 0);
+(79, 2, 'test', '8/2_11174596557.jpg', 0, 0, 1, 'babe', 15, '', 0, 1, '2007-03-22 20:49:18', '2007-04-02 12:16:49', 0);
 
 -- --------------------------------------------------------
 
@@ -2026,7 +1995,8 @@ CREATE TABLE `dsb_user_profiles` (
   KEY `_user` (`_user`),
   KEY `status` (`status`),
   KEY `del` (`del`),
-  KEY `score` (`score`)
+  KEY `score` (`score`),
+  KEY `longitude` (`longitude`,`latitude`)
 ) TYPE=MyISAM;
 
 -- 
@@ -2034,9 +2004,9 @@ CREATE TABLE `dsb_user_profiles` (
 -- 
 
 INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `del`, `field_46`, `field_47`, `field_48`, `field_50_country`, `field_50_state`, `field_50_city`, `field_50_zip`, `f51`, `f52`, `f53`, `f54`, `f55`, `f56`) VALUES (1, 1, 15, '2007-02-11 12:40:00', '2007-02-11 14:40:00', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'dan', '9/1_21171197584.jpg', 0.0000000000, 0.0000000000, 1, 0, 0, '', NULL, 0, 0, 0, '', 0, 0, 0, 0, '', ''),
-(3, 2, 15, '2007-03-22 14:00:57', '2007-02-11 14:37:59', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test', '0/2_11174572041.jpg', -93.6367034912, 42.0276985168, 205, 0, 2, '|1|', '1986-01-03', 218, 16, 7089, '50010', 1, 1, 1, 1, '', 'asd1'),
+(3, 2, 15, '2007-04-02 12:34:12', '2007-02-11 14:37:59', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test', '6/2_21171208327.jpg', -93.6367034912, 42.0276985168, 228, 0, 2, '|1|', '1986-01-03', 218, 16, 7089, '50010', 1, 1, 1, 1, '', 'asd1'),
 (620, 209, 15, '2007-02-07 15:57:51', '2007-02-07 15:57:51', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test2', '', 0.0000000000, 0.0000000000, 0, 0, 2, '|1|', '1981-04-05', 206, 0, 0, '', 0, 0, 0, 0, '', ''),
-(621, 210, 15, '2007-03-22 11:28:23', '0000-00-00 00:00:00', '', 'test3', '4/210_11174509455.jpg', 0.0000000000, 0.0000000000, 0, 0, 2, '|1|', '1976-04-04', 214, 0, 0, '', 0, 0, 0, 0, '', ''),
+(621, 210, 15, '2007-04-02 12:55:05', '0000-00-00 00:00:00', '', 'test3', '9/210_31175518453.jpg', 0.0000000000, 0.0000000000, 5, 0, 2, '|1|', '1976-04-04', 214, 0, 0, '', 0, 0, 0, 0, '', ''),
 (622, 211, 15, '2007-03-22 11:28:35', '0000-00-00 00:00:00', '', 'test4', '7/211_11174509897.jpg', 0.0000000000, 0.0000000000, 0, 0, 1, '|2|', '1982-04-05', 205, 0, 0, '', 0, 0, 0, 0, '', ''),
 (623, 212, 15, '2007-03-22 11:28:25', '0000-00-00 00:00:00', '', 'test5', '6/212_11174509951.jpg', 0.0000000000, 0.0000000000, 0, 0, 2, '|1|2|', '1988-03-04', 218, 0, 0, '', 0, 0, 0, 0, '', ''),
 (624, 213, 15, '2007-03-22 11:28:28', '0000-00-00 00:00:00', '', 'test6', '8/213_51174510004.jpg', 0.0000000000, 0.0000000000, 0, 0, 2, '|1|2|', '1981-03-05', 218, 0, 0, '', 0, 0, 0, 0, '', '');
@@ -2065,36 +2035,8 @@ CREATE TABLE `dsb_user_searches` (
 -- Dumping data for table `dsb_user_searches`
 -- 
 
-INSERT INTO `dsb_user_searches` (`search_id`, `fk_user_id`, `title`, `is_default`, `search_qs`, `alert`, `alert_last_id`) VALUES (2, 2, 'rrr', 0, 'acclevel_id=17&field_46=0&field_47%5B0%5D=2&field_48_min=18&field_48_max=35&field_50_country=218&field_50_zip=&field_50_dist=1', 1, 0),
-(3, 2, '3', 0, 'field_46=0&field_47=0&field_48_min=0&field_48_max=0&field_50_country=0', 1, 0),
-(4, 2, '4', 0, 'st=adv&field_46=0&field_47%5B0%5D=2&field_48_min=18&field_48_max=35&field_50_country=218&field_50_zip=&field_50_dist=1', 1, 0);
-
--- --------------------------------------------------------
-
--- 
--- Table structure for table `dsb_user_settings`
--- 
-
-DROP TABLE IF EXISTS `dsb_user_settings`;
-CREATE TABLE `dsb_user_settings` (
-  `fk_user_id` int(10) unsigned NOT NULL default '0',
-  `email_send_news` tinyint(1) unsigned NOT NULL default '0',
-  `email_send_alerts` tinyint(1) unsigned NOT NULL default '0',
-  `email_send_matches` tinyint(1) unsigned NOT NULL default '0',
-  `send_matches_interval` int(3) unsigned NOT NULL default '0',
-  `album_private` tinyint(1) unsigned NOT NULL default '0',
-  `feature_me` tinyint(1) unsigned NOT NULL default '0',
-  `outside_offers` tinyint(1) unsigned NOT NULL default '0',
-  `rate_me` tinyint(1) unsigned NOT NULL default '0',
-  `_last_matches_sent` date NOT NULL default '0000-00-00',
-  `photo_pass` varchar(32) NOT NULL default '',
-  KEY `fk_user_id` (`fk_user_id`)
-) TYPE=MyISAM;
-
--- 
--- Dumping data for table `dsb_user_settings`
--- 
-
+INSERT INTO `dsb_user_searches` (`search_id`, `fk_user_id`, `title`, `is_default`, `search_qs`, `alert`, `alert_last_id`) VALUES (5, 2, 'latest', 0, 'st=latest', 0, 0),
+(9, 2, 'default adv search', 1, 'st=adv&field_46%5B0%5D=2&field_47%5B0%5D=1&field_48_min=18&field_48_max=35&field_50_country=218&f51=1&f52=1', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -2108,17 +2050,19 @@ CREATE TABLE `dsb_user_settings2` (
   `fk_user_id` int(10) unsigned NOT NULL default '0',
   `config_option` varchar(50) binary NOT NULL default '',
   `config_value` varchar(100) NOT NULL default '',
-  `config_diz` text NOT NULL,
-  `option_type` tinyint(1) unsigned NOT NULL default '0',
   `fk_module_code` varchar(32) binary NOT NULL default '',
   PRIMARY KEY  (`config_id`),
-  UNIQUE KEY `thekey` (`config_option`,`fk_module_code`,`fk_user_id`)
-) TYPE=MyISAM COMMENT='0-checkbox, 1-text';
+  UNIQUE KEY `thekey` (`fk_user_id`,`config_option`,`fk_module_code`),
+  KEY `fk_module_code` (`fk_module_code`)
+) TYPE=MyISAM COMMENT='0-n/a,1-chkbox,2-tf,3-ta';
 
 -- 
 -- Dumping data for table `dsb_user_settings2`
 -- 
 
+INSERT INTO `dsb_user_settings2` (`config_id`, `fk_user_id`, `config_option`, `config_value`, `fk_module_code`) VALUES (9, 2, 0x646174655f666f726d6174, '%m/%d/%Y', 0x636f7265),
+(10, 2, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x636f7265),
+(11, 2, 0x73656e645f616c6572745f696e74657276616c, '5', 0x6465665f757365725f7072656673);
 
 -- --------------------------------------------------------
 
@@ -2157,12 +2101,16 @@ DROP TABLE IF EXISTS `dsb_user_stats`;
 CREATE TABLE `dsb_user_stats` (
   `fk_user_id` int(10) unsigned NOT NULL default '0',
   `stat` varchar(50) NOT NULL default '',
-  `value` float(10,2) unsigned NOT NULL default '0.00',
-  `fk_module_code` varchar(32) binary NOT NULL default '',
-  UNIQUE KEY `thekey` (`fk_user_id`,`stat`,`fk_module_code`)
+  `value` int(10) NOT NULL default '0',
+  UNIQUE KEY `thekey` (`fk_user_id`,`stat`)
 ) TYPE=MyISAM;
 
 -- 
 -- Dumping data for table `dsb_user_stats`
 -- 
 
+INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (2, 'pviews', 20),
+(2, 'total_messages', 2),
+(2, 'new_messages', 0),
+(2, 'total_photos', 7),
+(210, 'total_photos', 2);

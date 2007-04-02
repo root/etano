@@ -166,10 +166,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (mysql_num_rows($res)) {
 			$is_update=true;
 		}
+		$now=gmdate('YmdHis');
 		if ($is_update) {
-			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."'";
+			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='$now'";
 		} else {
-			$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION['user']['reg_id']."',`last_changed`='".gmdate('YmdHis')."'";
+			$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION['user']['reg_id']."',`last_changed`='$now',`date_added`='$now'";
 		}
 		if ($input['page']==1) {
 			$query.=",`_user`='".$input['user']."'";

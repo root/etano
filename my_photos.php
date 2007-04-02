@@ -79,7 +79,7 @@ $output['return']=rawurlencode($return);
 $tpl->set_file('content','my_photos.html');
 $tpl->set_loop('loop_rows',$loop_rows);
 $tpl->set_var('output',$output);
-$tpl->process('content','content',TPL_MULTILOOP | TPL_OPTLOOP | TPL_OPTIONAL);
+$tpl->process('content','content',TPL_MULTILOOP | TPL_OPTLOOP | TPL_OPTIONAL | TPL_NOLOOP);
 $tpl->drop_loop('loop_rows');
 $tpl->drop_var('pager2');
 
