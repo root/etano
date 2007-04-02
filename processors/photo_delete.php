@@ -46,6 +46,7 @@ if (mysql_num_rows($res)) {
 			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
+		update_stats($_SESSION['user']['user_id'],'total_photos',-1);
 	}
 
 	$topass['message']['type']=MESSAGE_INFO;

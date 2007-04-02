@@ -29,7 +29,7 @@ if (empty($output['photo'])) {
 }
 $output['date_added']=strftime($_user_settings['date_format'],$output['date_added']+$_user_settings['time_offset']);
 
-$my_stats=get_module_stats(array('pviews','num_friends'),$_SESSION['user']['user_id']);
+$my_stats=get_user_stats($_SESSION['user']['user_id'],array('total_messages','new_messages','total_photos','pviews','num_friends'));
 
 $tpl->set_file('content','home.html');
 $tpl->set_var('output',$output);

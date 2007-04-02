@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		update_stats($_SESSION['user']['user_id'],'mess_sent',1);
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Message sent.';
 	} else {

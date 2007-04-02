@@ -22,7 +22,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $blog_posts_stats=array();
 if (isset($_SESSION['user']['user_id'])) {
-	$block_posts_stats=get_module_stats(2,$_SESSION['user']['user_id']);
+//	$blog_posts_stats=get_user_stats($_SESSION['user']['user_id']);
 }
 
 $query="SELECT `post_id`,`title`,`post_content`,`_user` as `user`,`fk_user_id`,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM `{$dbtable_prefix}blog_posts` ORDER BY `date_posted` DESC LIMIT 3";
