@@ -582,3 +582,34 @@ blockquote {
 .comment {
 	color: #878787;
 }
+
+
+/* Small user list used in widgets */
+
+* html .list_small {
+	margin-left: -6px;
+	width: 720px;
+	height: 1%;
+}
+.list_small {
+	width: 720px;
+	margin-left: -6px;
+	padding: 0 0 5px;
+	list-style-type: none;
+	overflow: hidden;
+}
+
+	.list_small li {
+		float: left;
+		width: 110px;
+		margin-left: 10px;
+		text-align: center;
+	}
+
+	.list_small li.first {
+		margin: 0;
+	}
+
+	.list_small li p {
+		display: none;
+	}

@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       plugins/widget/latest_members/latest_members.class.php
+File:                       plugins/widget/latest_photos/latest_photos.class.php
 $Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -13,11 +13,11 @@ Support at:                 http://forum.datemill.com
 
 require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 
-class widget_latest_members extends icontent_widget {
-	var $module_code='latest_members';
+class widget_latest_photos extends icontent_widget {
+	var $module_code='latest_photos';
 	var $widget=array();
 
-	function widget_latest_members() {
+	function widget_latest_photos() {
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -35,24 +35,18 @@ class widget_latest_members extends icontent_widget {
 
 	function _content() {
 		$dbtable_prefix=$GLOBALS['dbtable_prefix'];
-		$query="SELECT a.`fk_user_id` FROM `{$dbtable_prefix}user_profiles` a WHERE a.`_photo`<>'' AND a.`del`=0 AND a.`status`='".STAT_APPROVED."' ORDER BY a.`date_added` DESC LIMIT 15";
+		$query="SELECT `photo_id`,`photo`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `del`=0 AND `status`='".STAT_APPROVED."' ORDER BY `date_posted` DESC LIMIT ".$this->config['num_photos'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$user_ids=array();
+		$loop=array();
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$user_ids[]=$rsrow['fk_user_id'];
+			$loop[]=$rsrow;
 		}
-		if (!empty($user_ids)) {
-			require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
-			$user_cache=new user_cache(get_my_skin());
-			$loop=$user_cache->get_cache_beta($user_ids,array(),'result_user','tpl');
-			if (!empty($loop)) {
-				$loop[0]['class']='first';
-				$loop=array_slice($loop,0,$this->config['num_members']);
-				$this->tpl->set_file('widget.content','widgets/latest_members/display.html');
-				$this->tpl->set_loop('loop',$loop);
-				$this->tpl->process('widget.content','widget.content',TPL_LOOP | TPL_OPTLOOP);
-				$this->tpl->drop_loop('loop');
-			}
+		if (!empty($loop)) {
+			$loop[0]['class']='first';
+			$this->tpl->set_file('widget.content','widgets/latest_photos/display.html');
+			$this->tpl->set_loop('loop',$loop);
+			$this->tpl->process('widget.content','widget.content',TPL_LOOP | TPL_OPTLOOP);
+			$this->tpl->drop_loop('loop');
 		}
 	}
 
@@ -61,9 +55,9 @@ class widget_latest_members extends icontent_widget {
 	*	Used to wrap the content in the widget html code
 	*/
 	function _finish_display() {
-		$widget['title']='Newest Members';	// translate this
-		$widget['id']='newest-members';
-		$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_path'].'search.php?st=latest" title="More New Members">More New Members</a>';	// translate this
+		$widget['title']='Newest Photos';	// translate this
+		$widget['id']='newest-photos';
+		$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_path'].'search.php?st=latest" title="More New Photos">More New Photos</a>';	// translate this
 		if (isset($this->config['area']) && $this->config['area']=='front') {
 			$this->tpl->set_file('temp','static/front_widget.html');
 		} else {
@@ -77,6 +71,6 @@ class widget_latest_members extends icontent_widget {
 
 
 	function _init() {
-		$this->config['num_members']=6;
+		$this->config['num_photos']=6;
 	}
 }
