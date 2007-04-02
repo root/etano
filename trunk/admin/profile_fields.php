@@ -34,32 +34,32 @@ $query="SELECT count(*) FROM $from WHERE $where";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $totalrows=mysql_result($res,0,0);
 
-$profile_fields=array();
+$loop=array();
 if (!empty($totalrows)) {
 	$query="SELECT a.*,b.`lang_value` as `label`,c.`fk_lk_id_pcat` FROM $from WHERE $where ORDER BY a.`order_num` LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$i=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$profile_fields[$i]=$rsrow;
-		$profile_fields[$i]=sanitize_and_format($profile_fields[$i],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		if ($profile_fields[$i]['html_type']==HTML_SELECT || $profile_fields[$i]['html_type']==HTML_CHECKBOX_LARGE) {
-			$profile_fields[$i]['accepted_values']=lkids2lks(explode('|',substr($profile_fields[$i]['accepted_values'],1,-1)));
+		$loop[$i]=$rsrow;
+		$loop[$i]=sanitize_and_format($loop[$i],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		if ($loop[$i]['html_type']==HTML_SELECT || $loop[$i]['html_type']==HTML_CHECKBOX_LARGE) {
+			$loop[$i]['accepted_values']=lkids2lks(explode('|',substr($loop[$i]['accepted_values'],1,-1)),_DEFAULT_SKIN_);
 		} else {
-			$profile_fields[$i]['accepted_values']=str_replace('|',', ',substr($profile_fields[$i]['accepted_values'],1,-1));
+			$loop[$i]['accepted_values']=str_replace('|',', ',substr($loop[$i]['accepted_values'],1,-1));
 		}
-		$profile_fields[$i]['html_type']=$accepted_htmltype[$profile_fields[$i]['html_type']];
-		$profile_fields[$i]['searchable']=!empty($profile_fields[$i]['searchable']) ? '<img src="skin/images/check.gif" alt="" />' : '';
-		$profile_fields[$i]['at_registration']=!empty($profile_fields[$i]['at_registration']) ? '<img src="skin/images/check.gif" alt="" />' : '';
-		$profile_fields[$i]['required']=!empty($profile_fields[$i]['required']) ? '<img src="skin/images/check.gif" alt="" />' : '';
-		$profile_fields[$i]['fk_pcat_id']=db_key2value("`{$dbtable_prefix}lang_strings`",'`fk_lk_id`','`lang_value`',$profile_fields[$i]['fk_lk_id_pcat']);
-		$profile_fields[$i]['myclass']=($i%2) ? 'odd_item' : 'even_item';
+		$loop[$i]['html_type']=$accepted_htmltype[$loop[$i]['html_type']];
+		$loop[$i]['searchable']=!empty($loop[$i]['searchable']) ? '<img src="skin/images/check.gif" alt="" />' : '';
+		$loop[$i]['at_registration']=!empty($loop[$i]['at_registration']) ? '<img src="skin/images/check.gif" alt="" />' : '';
+		$loop[$i]['required']=!empty($loop[$i]['required']) ? '<img src="skin/images/check.gif" alt="" />' : '';
+		$loop[$i]['fk_pcat_id']=db_key2value("`{$dbtable_prefix}lang_strings`",'`fk_lk_id`','`lang_value`',$loop[$i]['fk_lk_id_pcat']);
+		$loop[$i]['myclass']=($i%2) ? 'odd_item' : 'even_item';
 		++$i;
 	}
 	$tpl->set_var('pager1',pager($totalrows,$o,$r));
 	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 }
-$tpl->set_loop('profile_fields',$profile_fields);
-$tpl->set_var('html_type',vector2options($accepted_htmltype));
+$tpl->set_loop('loop',$loop);
+$tpl->set_var('html_type',vector2options($accepted_htmltype,'',array(HTML_INTERVAL)));
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
@@ -69,10 +69,10 @@ $tplvars['title']='Profile Fields Management';
 include 'frame.php';
 
 
-function lkids2lks($lk_ids) {
+function lkids2lks($lk_ids,$skin) {
 	$myreturn='';
 	global $dbtable_prefix;
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id` IN ('".join("','",$lk_ids)."')";
+	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id` IN ('".join("','",$lk_ids)."') AND `skin`='$skin'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
 		$myreturn.=mysql_result($res,$i,0).', ';

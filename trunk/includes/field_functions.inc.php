@@ -12,7 +12,7 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 function update_location($user_id,$field,$field_name='') {
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$latitude=0;
 	$longitude=0;
 	$state_id=0;

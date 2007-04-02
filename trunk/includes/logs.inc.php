@@ -17,7 +17,7 @@ define('_PUNISH_BANIP_',3);
 $accepted_punishments=array(_PUNISH_ERROR_=>'Sorry page',_PUNISH_BANUSER_=>'Ban user',_PUNISH_BANIP_=>'Ban IP');
 
 function log_user_action(&$log) {
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$query="INSERT INTO `{$dbtable_prefix}site_log` SET `fk_user_id`='".$log['user_id']."',`user`='".$log['user']."',`m_value`='".$log['membership']."',`fk_level_id`='".$log['level']."',`ip`='".sprintf('%u',ip2long($log['ip']))."'";
 	@mysql_query($query);
 }
@@ -25,7 +25,7 @@ function log_user_action(&$log) {
 
 function rate_limiter(&$log) {
 	$myreturn=false;
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$log['ip']=sprintf('%u',ip2long($log['ip']));
 	$where='';
 	if (!empty($log['user_id'])) {
@@ -63,7 +63,7 @@ function rate_limiter(&$log) {
 
 
 function rate_limiter_ban($ban_type,$str) {
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$query="INSERT INTO `{$dbtable_prefix}site_bans` SET `ban_type`=".$ban_type.",`what`='".$str."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	regenerate_ban_array();
@@ -72,7 +72,7 @@ function rate_limiter_ban($ban_type,$str) {
 
 function regenerate_ban_array() {
 	require_once _BASEPATH_.'/includes/classes/modman.class.php';
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$query="SELECT `ban_type`,`what` FROM `{$dbtable_prefix}site_bans` GROUP BY `what`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$_bans=array();

@@ -18,7 +18,6 @@ require_once 'general_functions.inc.php';
 
 function get_userid_by_user($user) {
 	$myreturn=0;
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	if (!empty($user)) {
 		$query="SELECT `user_id` FROM ".USER_ACCOUNTS_TABLE." WHERE `user`='$user'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -32,7 +31,6 @@ function get_userid_by_user($user) {
 
 function get_user_by_userid($user_id) {
 	$myreturn='';
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	if (!empty($user_id)) {
 		$query="SELECT `user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='$user_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -46,7 +44,7 @@ function get_user_by_userid($user_id) {
 
 function check_login_member($level_id) {
 	$topass=array();
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	if (!isset($GLOBALS['_access_level'][$level_id])) {
 		$GLOBALS['_access_level'][$level_id]=0;	// no access allowed if level not defined
 	}
@@ -86,7 +84,7 @@ function get_user_stats($user_id,$stat='') {
 	} else {
 		$myreturn[$stat]=0;
 	}
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	if (!empty($user_id)) {
 		$query="SELECT `stat`,`value` FROM `{$dbtable_prefix}user_stats` WHERE `fk_user_id`='$user_id'";
 		if (!empty($stat)) {
@@ -106,7 +104,7 @@ function get_user_stats($user_id,$stat='') {
 
 
 function update_stats($user_id,$stat,$add_val) {
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`='$user_id' AND `stat`='$stat' LIMIT 1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (!mysql_affected_rows()) {
@@ -118,7 +116,7 @@ function update_stats($user_id,$stat,$add_val) {
 
 function get_user_settings($user_id,$module_code) {
 	$myreturn=array();
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	if (!empty($user_id)) {
 		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`='$user_id' AND `fk_module_code`='$module_code'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -142,7 +140,7 @@ function allow_at_level($level_id,$membership=1) {
 
 function get_user_folder_name($folder_id,$user_id=null) {
 	$myreturn='';
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$query="SELECT `folder` FROM `{$dbtable_prefix}user_folders` WHERE `folder_id`='$folder_id'";
 	if (isset($user_id)) {
 		$query.=" AND `fk_user_id`='$user_id'";
@@ -159,7 +157,7 @@ function add_member_score($user_ids,$act,$times=1,$points=0) {
 	if (!is_array($user_ids)) {
 		$user_ids=array($user_ids);
 	}
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$scores=array('force'=>0,'login'=>5,'logout'=>-4,'approved'=>10,'rejected'=>-10,'add_main_photo'=>10,'del_main_photo'=>-10,'add_photo'=>2,'del_photo'=>-2,'add_blog'=>5,'payment'=>50,'unpayment'=>-50,);
 	$scores['force']+=$points;
 	if (isset($scores[$act]) && !empty($user_ids)) {

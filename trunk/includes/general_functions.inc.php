@@ -15,7 +15,7 @@ Support at:                 http://forum.datemill.com
 // make sure they're synchronized
 function get_site_option($option,$module_code) {
 	$myreturn=0;
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code`='$module_code'";
 	if (is_array($option)) {
 		if (!empty($option)) {
@@ -40,7 +40,7 @@ function get_site_option($option,$module_code) {
 
 function get_module_codes_by_type($module_type) {
 	$myreturn=array();
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$query="SELECT `module_code` FROM `{$dbtable_prefix}modules` WHERE `module_type`='$module_type'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	for ($i=0;$i<mysql_num_rows($res);++$i) {

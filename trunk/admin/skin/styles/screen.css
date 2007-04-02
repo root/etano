@@ -159,9 +159,7 @@ li {
 	border: 0px;
 	border-left: 190px solid #FFFFFF;
 	margin: 0px;
-	padding-top: 10px;
-	padding-left: 41px;
-	padding-right: 38px;
+	padding: 10px 20px 0 10px;
 	height: 1%; /*IE*/
 }
 

@@ -30,7 +30,7 @@ define('LK_SITE',0);
 define('LK_FIELD',1);
 define('LK_MESSAGE',2);
 
-$accepted_htmltype=array(HTML_TEXTFIELD=>'Textfield',HTML_TEXTAREA=>'Textarea',HTML_SELECT=>'Drop-down box',HTML_CHECKBOX_LARGE=>'Multiple checkboxes',HTML_DATE=>'Date',HTML_LOCATION=>'Location');
+$accepted_htmltype=array(HTML_TEXTFIELD=>'Textfield',HTML_TEXTAREA=>'Textarea',HTML_SELECT=>'Drop-down box',HTML_CHECKBOX_LARGE=>'Multiple checkboxes',HTML_DATE=>'Date',HTML_LOCATION=>'Location',HTML_INTERVAL=>'Interval');
 $field_dbtypes=array(HTML_TEXTFIELD=>"varchar(100) not null default ''",HTML_SELECT=>'int(5) not null default 0',HTML_FK_SELECT=>'int(10) not null default 0',HTML_TEXTAREA=>"text not null default ''",HTML_CHECKBOX_LARGE=>"text not null default ''",HTML_FILE=>"varchar(64) not null default ''",HTML_DATE=>'date',HTML_INT=>'int(5) not null default 0',HTML_FLOAT=>'double not null default 0');
 $accepted_admin_depts=array(DEPT_ADMIN=>'Administrator',DEPT_MODERATOR=>'Moderator');
 $accepted_astats=array(ASTAT_SUSPENDED=>'Suspended',ASTAT_UNVERIFIED=>'Unactivated',ASTAT_ACTIVE=>'Active');
@@ -86,7 +86,7 @@ function allow_dept($levels=DEPT_ADMIN) {
 
 function regenerate_acclevels_array() {
 	require_once _BASEPATH_.'/includes/classes/modman.class.php';
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$query="SELECT `level_id`,`level` FROM `{$dbtable_prefix}access_levels`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$towrite="<?php\n\$_access_level=array(-1=>65534,0=>65535";
@@ -101,7 +101,7 @@ function regenerate_acclevels_array() {
 
 function regenerate_fields_array() {
 	require_once _BASEPATH_.'/includes/classes/modman.class.php';
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$query="SELECT * FROM `{$dbtable_prefix}profile_fields` ORDER BY `order_num` ASC";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$towrite="<?php\n";
@@ -226,7 +226,7 @@ function regenerate_fields_array() {
 
 function regenerate_langstrings_array() {
 	require_once _BASEPATH_.'/includes/classes/modman.class.php';
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$modman=new modman();
 	$query="SELECT a.`module_code`,b.`config_value` as `skin_dir` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='".MODULE_SKIN."' AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_dir'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -253,7 +253,7 @@ function regenerate_langstrings_array() {
 
 
 function set_site_option($option,$module_code,$value) {
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$query="UPDATE `{$dbtable_prefix}site_options3` SET `config_value`='$value' WHERE `config_option`='$option' AND `fk_module_code`='$module_code'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
@@ -261,7 +261,7 @@ function set_site_option($option,$module_code,$value) {
 
 function get_user_by_userid($user_id) {
 	$myreturn='';
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	if (!empty($user_id)) {
 		$query="SELECT `user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='$user_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -275,7 +275,7 @@ function get_user_by_userid($user_id) {
 
 function get_userid_by_user($user) {
 	$myreturn=0;
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	if (!empty($user)) {
 		$query="SELECT `user_id` FROM ".USER_ACCOUNTS_TABLE." WHERE `user`='$user'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -298,7 +298,7 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 	$query_len=10000;
 	if (!$force_send && !empty($config['use_queue'])) {
 		$email=sanitize_and_format($email,TYPE_STRING,FORMAT_ADDSLASH);
-		$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+		global $dbtable_prefix;
 		$base="INSERT INTO `{$dbtable_prefix}queue_email` (`to`,`subject`,`message_body`) VALUES ";
 		$query=$base;
 		for ($i=0;isset($email_addrs[$i]);++$i) {
