@@ -1,12 +1,60 @@
 $(function() {
+// for selects or checkboxes display the list of values
 	if (html_type==3 || html_type==10) {
 		update_list();
 	}
+
+// show or hide dependant options and bind their display to the triggering fields.
+	if ($('#search_type')[0] && $('#search_type')[0].length>0) {
+		showhide('searchable','row_st');
+	} else if ($('#row_st')[0]) {
+		$('#row_st').hide();
+	}
+	showhide('searchable','row_sl');
+	showhide('at_registration','row_reg_page');
+	$('#label').focus();
+	$('#at_registration').bind('change',function() {
+		showhide('at_registration','row_reg_page');
+	});
+	$('#searchable').bind('change',function() {
+		if ($('#search_type')[0].length>0) {
+			showhide('searchable','row_st');
+		}
+		showhide('searchable','row_sl');
+		update_list();
+	});
+
+	$('#search_type').bind('change',function() {
+		update_list();
+	});
+
+// only numbers allowed in this field
+	$('#reg_page').numeric();
+
+// tab management
+	$('#label').bind('keydown',function(e) {
+		if (e.shiftKey && e.keyCode==9) {
+			$('#btn_save').focus();
+			return false;
+		}
+	});
+	$('#btn_save').bind('keydown',function(e) {
+		if (!e.shiftKey && e.keyCode==9) {
+			$('#label').focus();
+			return false;
+		}
+	});
+
+	$("#profile_fields_addedit").bind('submit',function() {
+		return(check_form());
+	});
 });
+
 
 function check_form() {
 	return confirm('Are you sure you want to save your changes?');
 }
+
 
 function update_list() {
 	towrite='';
@@ -20,16 +68,20 @@ function update_list() {
 			}
 		}
 		towrite+=' />';
-		towrite+=' <input type="checkbox" name="default_search['+i+']" id="default_search_'+i+'" value="1" title="Default search value" onclick="adddel_defsearch(this.checked,'+i+')"';
-		for (j=0;j<default_search.length;j++) {
-			if (parseInt(default_search[j])==i) {
-				towrite+=' checked="checked"';
-				break;
+		if ($('#search_type').val()==3) {	// HTML_SELECT
+		} else if ($('#search_type').val()==10) {	// HTML_CHECKBOX_LARGE
+			towrite+=' <input type="checkbox" name="default_search['+i+']" id="default_search_'+i+'" value="1" title="Default search value" onclick="adddel_defsearch(this.checked,'+i+')"';
+			for (j=0;j<default_search.length;j++) {
+				if (parseInt(default_search[j])==i) {
+					towrite+=' checked="checked"';
+					break;
+				}
 			}
+			towrite+=' />';
 		}
 		towrite+='</span></li>'+"\n";
 	}
-	document.getElementById('litems').innerHTML=towrite;
+	$('#litems').html(towrite);
 }
 
 
@@ -169,7 +221,7 @@ function adddel_defsearch(type,position) {
 		if (type) {		// add here
 			for (i=0;i<accvals.length;i++) {
 				if (i!=position) {
-					document.getElementById('default_search_'+i).checked=false;
+					$('#default_search_'+i)[0].checked=false;
 				}
 			}
 			default_search[0]=position;
@@ -199,6 +251,7 @@ function adddel_defsearch(type,position) {
 	}
 }
 
+
 function vector2psv(myarray) {
 	myreturn='|';
 	myreturn+=myarray.join('|');
@@ -206,52 +259,12 @@ function vector2psv(myarray) {
 	return myreturn;
 }
 
-function manage_keydown(e) {
-	var e = (e) ? e : ((event) ? event : null);
-	if (!e.originalTarget && e.srcElement) e.originalTarget=e.srcElement;
-	mykey=(e.which) ? e.which : ((e.keyCode) ? e.keyCode : null);
-	if (e.originalTarget.id=='reg_page') {	// only numbers allowed
-		if (e.keyCode==null || e.keyCode==0 || e.keyCode==8 || e.keyCode==9 || e.keyCode==27 || e.keyCode==35 || e.keyCode==36 || e.keyCode==37 || e.keyCode==39 || e.keyCode==46) {
-			return true;
-		} else if (mykey>=48 && mykey<=57) { // numbers
-			return true;
-		} else {
-			return false;
-		}
-	} else if (e.originalTarget.id=='label') {
-		if (e.shiftKey && e.keyCode==9) {
-			document.getElementById('btn_save').focus();
-			return false;
-		}
-	} else if (e.originalTarget.id=='btn_save') {
-		if (!e.shiftKey && e.keyCode==9) {
-			document.getElementById('label').focus();
-			return false;
-		}
-	}
-	return true;
-}
-
-function manage_change(e) {
-	var e = (e) ? e : ((event) ? event : null);
-	if (!e.originalTarget && e.srcElement) e.originalTarget=e.srcElement;
-	formchanged=true;
-
-	if (e.originalTarget.id=='at_registration') {
-		showhide('at_registration','row_reg_page');
-	} else if (e.originalTarget.id=='searchable') {
-		if (document.getElementById('search_type').length>0) {
-			showhide('searchable','row_st');
-		}
-		showhide('searchable','row_sl');
-	}
-}
 
 function showhide(strCheck,strHide) {
-	if (document.getElementById(strCheck).checked==true) {
-		$("#"+strHide).show();
+	if ($('#'+strCheck)[0].checked==true) {
+		$('#'+strHide).show();
 	} else {
-		$("#"+strHide).hide();
+		$('#'+strHide).hide();
 	}
 }
 

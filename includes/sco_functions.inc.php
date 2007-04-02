@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007033001
+File version:				1.2007040201
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -56,7 +56,7 @@ define('HTML_DATE',103);
 define('HTML_INT',104);
 define('HTML_FLOAT',105);
 define('HTML_PIC',106);						//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// 107 is reserved
+// 107,108 are reserved
 
 // text sources and destinations: from db or gpc for db or gpc (edit or display)
 define('TEXT_DB2EDIT',200);

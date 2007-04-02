@@ -102,6 +102,7 @@ require_once 'sco_functions.inc.php';
 define('HTML_LOCATION',107);
 $__html2type[HTML_LOCATION]=TYPE_INT;
 $__html2format[HTML_LOCATION]=0;
+define('HTML_INTERVAL',108);
 
 // often used vars in skins
 $tplvars['sitename']=_SITENAME_;

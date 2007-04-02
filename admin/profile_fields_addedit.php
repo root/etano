@@ -76,6 +76,28 @@ switch ($profile_fields['html_type']) {
 		break;
 
 	case HTML_SELECT:
+		if (!empty($accepted_values)) {
+			$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='"._DEFAULT_SKIN_."' AND `fk_lk_id` IN ('".join("','",$accepted_values)."')";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$accepted_values=array();
+			while ($rsrow=mysql_fetch_assoc($res)) {
+				$accepted_values[$rsrow['fk_lk_id']]=$rsrow['lang_value'];
+			}
+		}
+		$profile_fields['row_searchable']=true;
+		$profile_fields['row_st']='visible';
+		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION));
+		// show the accepted values for selects and checkboxes fields
+		$profile_fields['row_accval_selcheck']=true;
+		// revert $accepted_values values to db original and add slashes
+		$profile_fields['acc_vals_jsarrays']=vector2jsarrays(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
+		if (!empty($profile_fields['default_value']) && $profile_fields['default_value']!='||') {
+			$profile_fields['default_value_jsarr']=str_replace('|',"','",substr($profile_fields['default_value'],1,-1));
+		}
+		if (!empty($profile_fields['default_search']) && $profile_fields['default_search']!='||') {
+			$profile_fields['default_search_jsarr']=str_replace('|',"','",substr($profile_fields['default_search'],1,-1));
+		}
+		break;
 
 	case HTML_CHECKBOX_LARGE:
 		if (!empty($accepted_values)) {
@@ -88,7 +110,7 @@ switch ($profile_fields['html_type']) {
 		}
 		$profile_fields['row_searchable']=true;
 		$profile_fields['row_st']='visible';
-		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION));
+		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION,HTML_INTERVAL));
 		$profile_fields['row_accval_selcheck']=true;
 		// revert $accepted_values values to db original and add slashes
 		$profile_fields['acc_vals_jsarrays']=vector2jsarrays(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));

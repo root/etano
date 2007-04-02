@@ -536,30 +536,42 @@ blockquote {
 	margin:0px;
 }
 
-.button.bsmall {
+.bsmall {
 	background-image: url('../images/btn-blank-small-out.gif');
 	width: 43px;
 }
-
-.button.bsmall:hover {
+.bsmall:hover {
 	background-image: url('../images/btn-blank-small-over.gif');
 }
 
-.button.bmedium {
+.bmedium {
 	background-image: url('../images/btn-blank-medium-out.gif');
 	width: 75px;
 }
-
-.button.bmedium:hover {
+.bmedium:hover {
 	background-image: url('../images/btn-blank-medium-over.gif');
 }
 
-.button.blarge {
+.blarge {
 	background-image: url('../images/btn-blank-large-out.gif');
 	width: 119px;
 }
-.button.blarge:hover {
+.blarge:hover {
 	background-image: url('../images/btn-blank-large-over.gif');
+}
+
+/* IE hack: button hover */
+.bsmall_hover {
+	background-image: url('../images/btn-blank-small-over.gif');
+	width: 43px;
+}
+.bmedium_hover {
+	background-image: url('../images/btn-blank-medium-over.gif');
+	width: 75px;
+}
+.blarge_hover {
+	background-image: url('../images/btn-blank-large-over.gif');
+	width: 119px;
 }
 
 
