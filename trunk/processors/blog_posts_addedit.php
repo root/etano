@@ -96,6 +96,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 			// update the blog_archive links now if this is auto approved
 			if (empty($config['manual_blog_approval'])) {
+				update_stats($_SESSION['user']['user_id'],'blog_posts',1);
+
 				require_once '../includes/classes/modman.class.php';
 				$modman=new modman();
 

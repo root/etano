@@ -77,8 +77,15 @@ function check_login_member($level_id) {
 }
 
 
-function get_module_stats($stat='',$user_id=0) {
+function get_user_stats($user_id,$stat='') {
 	$myreturn=array();
+	if (is_array($stat)) {
+		for ($i=0;isset($stat[$i]);++$i) {
+			$myreturn[$stat[$i]]=0;
+		}
+	} else {
+		$myreturn[$stat]=0;
+	}
 	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 	if (!empty($user_id)) {
 		$query="SELECT `stat`,`value` FROM `{$dbtable_prefix}user_stats` WHERE `fk_user_id`='$user_id'";
@@ -95,6 +102,17 @@ function get_module_stats($stat='',$user_id=0) {
 		}
 	}
 	return $myreturn;
+}
+
+
+function update_stats($user_id,$stat,$add_val) {
+	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`='$user_id' AND `stat`='$stat' LIMIT 1";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (!mysql_affected_rows()) {
+		$query="INSERT INTO `{$dbtable_prefix}user_stats` SET `fk_user_id`='$user_id',`stat`='$stat',`value`='$add_val'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
 }
 
 

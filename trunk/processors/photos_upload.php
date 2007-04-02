@@ -143,6 +143,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 		if (!empty($ids)) {
+			if (empty($config['manual_photo_approval'])) {
+				update_stats($_SESSION['user']['user_id'],'total_photos',count($ids));
+			}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']=sprintf('%1u photos uploaded.',count($ids));
 			$qs=$qs_sep.array2qs(array('photo_ids'=>$ids));

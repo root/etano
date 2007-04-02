@@ -55,11 +55,9 @@ TODO
 - spambox, block member, queue send/verif de spam
 - clar nu se mai face join pt ID-ul senderului! Ce se intampla daca sender-ul este un admin? (MESS_SYSTEM)
 
-- user_settings2
 - user_alerts
-- saved searches list (cu delete search/make default/alerte search)
 
-- blog cache + blogs.php + my_blogs.php
+- blog cache + blogs.php
 - la profile.php: user friends, blogs
 - rss feeds
 - auto subscriptions in join.php
@@ -79,7 +77,7 @@ TODO
 - create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
 - help texts pentru campurile textarea
 - de convertit scoax la jquery ===>>>>>>>>>>>>>admin\skin\profile_fields_addedit.html. addEvent nu mai exista
-- member media must have a separate baseurl.
+
 - widget-ul feed ar trebui sa citeasca doar din db? insertul in db sa il faca un cron?
 - phpmailer
 - cautare membri cu poze (poza din profil probabil...)
