@@ -21,141 +21,146 @@ allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$profile_fields=$profile_fields_default['defaults'];
+$output=$profile_fields_default['defaults'];
+// we force here 'editable' and 'visible' regardless of the default values
+$output['editable']=1;
+$output['visible']=1;
 $accepted_values=array();
+$default_skin_code=get_default_skin_code();
 if (isset($_SESSION['topass']['input'])) {
-	$profile_fields=$_SESSION['topass']['input'];
-	$accepted_values=explode('|',substr($profile_fields['accepted_values'],1,-1));
+	$output=$_SESSION['topass']['input'];
+	$accepted_values=explode('|',substr($output['accepted_values'],1,-1));
 } elseif (isset($_GET['pfield_id']) && !empty($_GET['pfield_id'])) {
 	$pfield_id=(int)$_GET['pfield_id'];
 	$query="SELECT * FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`='$pfield_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$profile_fields=mysql_fetch_assoc($res);
+		$output=mysql_fetch_assoc($res);
 	}
-	$profile_fields['label']='';
-	$profile_fields['search_label']='';
-	$profile_fields['help_text']='';
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='"._DEFAULT_SKIN_."' AND `fk_lk_id`='".$profile_fields['fk_lk_id_label']."'";
+	$output['label']='';
+	$output['search_label']='';
+	$output['help_text']='';
+	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`='".$output['fk_lk_id_label']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$profile_fields['label']=mysql_result($res,0,0);
+		$output['label']=mysql_result($res,0,0);
 	}
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='"._DEFAULT_SKIN_."' AND `fk_lk_id`='".$profile_fields['fk_lk_id_search']."'";
+	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`='".$output['fk_lk_id_search']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$profile_fields['search_label']=mysql_result($res,0,0);
+		$output['search_label']=mysql_result($res,0,0);
 	}
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='"._DEFAULT_SKIN_."' AND `fk_lk_id`='".$profile_fields['fk_lk_id_help']."'";
+	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`='".$output['fk_lk_id_help']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$profile_fields['help_text']=mysql_result($res,0,0);
+		$output['help_text']=mysql_result($res,0,0);
 	}
-	$profile_fields=sanitize_and_format($profile_fields,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-	$accepted_values=explode('|',substr($profile_fields['accepted_values'],1,-1));
+	$output=sanitize_and_format($output,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$accepted_values=explode('|',substr($output['accepted_values'],1,-1));
 } elseif (isset($_GET['html_type']) && !empty($_GET['html_type'])) {
-	$profile_fields['html_type']=(int)$_GET['html_type'];
+	$output['html_type']=(int)$_GET['html_type'];
 }
 
-switch ($profile_fields['html_type']) {
+switch ($output['html_type']) {
 
 	case HTML_TEXTFIELD:
-		$profile_fields['row_searchable']=true;
-		$profile_fields['row_st']='invisible';
-		$profile_fields['search_type']='';
-		$profile_fields['row_accval_select']=false;
-		$profile_fields['row_accval_checkbox']=false;
+		$output['row_searchable']=true;
+		$output['row_st']='invisible';
+		$output['search_type']='';
+		$output['row_accval_select']=false;
+		$output['row_accval_checkbox']=false;
 		break;
 
 	case HTML_TEXTAREA:
-		$profile_fields['row_searchable']=true;
-		$profile_fields['row_st']='invisible';
-		$profile_fields['search_type']='';
-		$profile_fields['row_accval_select']=false;
-		$profile_fields['row_accval_checkbox']=false;
+		$output['row_searchable']=true;
+		$output['row_st']='invisible';
+		$output['search_type']='';
+		$output['row_accval_select']=false;
+		$output['row_accval_checkbox']=false;
 		break;
 
 	case HTML_SELECT:
 		if (!empty($accepted_values)) {
-			$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='"._DEFAULT_SKIN_."' AND `fk_lk_id` IN ('".join("','",$accepted_values)."')";
+			$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id` IN ('".join("','",$accepted_values)."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$accepted_values=array();
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				$accepted_values[$rsrow['fk_lk_id']]=$rsrow['lang_value'];
 			}
 		}
-		$profile_fields['row_searchable']=true;
-		$profile_fields['row_st']='visible';
-		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION));
+		$output['row_searchable']=true;
+		$output['row_st']='visible';
+		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION));
 		// show the accepted values for selects and checkboxes fields
-		$profile_fields['row_accval_selcheck']=true;
+		$output['row_accval_selcheck']=true;
 		// revert $accepted_values values to db original and add slashes
-		$profile_fields['acc_vals_jsarrays']=vector2jsarrays(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
-		if (!empty($profile_fields['default_value']) && $profile_fields['default_value']!='||') {
-			$profile_fields['default_value_jsarr']=str_replace('|',"','",substr($profile_fields['default_value'],1,-1));
+		$output['acc_vals_jsarrays']=vector2jsarrays(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
+		if (!empty($output['default_value']) && $output['default_value']!='||') {
+			$output['default_value_jsarr']="'".str_replace('|',"','",substr($output['default_value'],1,-1))."'";
 		}
-		if (!empty($profile_fields['default_search']) && $profile_fields['default_search']!='||') {
-			$profile_fields['default_search_jsarr']=str_replace('|',"','",substr($profile_fields['default_search'],1,-1));
+		if (!empty($output['default_search']) && $output['default_search']!='||') {
+			$output['default_search_jsarr']="'".str_replace('|',"','",substr($output['default_search'],1,-1))."'";
 		}
 		break;
 
 	case HTML_CHECKBOX_LARGE:
 		if (!empty($accepted_values)) {
-			$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='"._DEFAULT_SKIN_."' AND `fk_lk_id` IN ('".join("','",$accepted_values)."')";
+			$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id` IN ('".join("','",$accepted_values)."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$accepted_values=array();
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				$accepted_values[$rsrow['fk_lk_id']]=$rsrow['lang_value'];
 			}
 		}
-		$profile_fields['row_searchable']=true;
-		$profile_fields['row_st']='visible';
-		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION,HTML_INTERVAL));
-		$profile_fields['row_accval_selcheck']=true;
+		$output['row_searchable']=true;
+		$output['row_st']='visible';
+		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION,HTML_INTERVAL));
+		$output['row_accval_selcheck']=true;
 		// revert $accepted_values values to db original and add slashes
-		$profile_fields['acc_vals_jsarrays']=vector2jsarrays(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
-		if (!empty($profile_fields['default_value']) && $profile_fields['default_value']!='||') {
-			$profile_fields['default_value_jsarr']=str_replace('|',"','",substr($profile_fields['default_value'],1,-1));
+		$output['acc_vals_jsarrays']=vector2jsarrays(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
+		if (!empty($output['default_value']) && $output['default_value']!='||') {
+			$output['default_value_jsarr']="'".str_replace('|',"','",substr($output['default_value'],1,-1))."'";
 		}
-		if (!empty($profile_fields['default_search']) && $profile_fields['default_search']!='||') {
-			$profile_fields['default_search_jsarr']=str_replace('|',"','",substr($profile_fields['default_search'],1,-1));
+		if (!empty($output['default_search']) && $output['default_search']!='||') {
+			$output['default_search_jsarr']="'".str_replace('|',"','",substr($output['default_search'],1,-1))."'";
 		}
 		break;
 
 	case HTML_DATE:
-		$profile_fields['row_searchable']=true;
-		$profile_fields['row_st']='visible';
-		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_LOCATION));
-		$profile_fields['row_accval_date']=true;
-		$profile_fields['year_start']=(isset($accepted_values[0]) && !empty($accepted_values[0])) ? $accepted_values[0] : 0;
-		$profile_fields['year_end']=isset($accepted_values[1]) ? $accepted_values[1] : 0;
-		$default_value=explode('|',substr($profile_fields['default_value'],1,-1));
-		$profile_fields['def_start']=(isset($default_value[0]) && !empty($default_value[0])) ? $default_value[0] : 0;
-		$profile_fields['def_end']=isset($default_value[1]) ? $default_value[1] : 0;
+		$output['row_searchable']=true;
+		$output['row_st']='visible';
+		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_LOCATION));
+		$output['row_accval_date']=true;
+		$output['year_start']=(isset($accepted_values[0]) && !empty($accepted_values[0])) ? $accepted_values[0] : 0;
+		$output['year_end']=isset($accepted_values[1]) ? $accepted_values[1] : 0;
+		$default_value=explode('|',substr($output['default_value'],1,-1));
+		$output['def_start']=(isset($default_value[0]) && !empty($default_value[0])) ? $default_value[0] : 0;
+		$output['def_end']=isset($default_value[1]) ? $default_value[1] : 0;
 		break;
 
 	case HTML_LOCATION:
-		$profile_fields['default_value']=substr($profile_fields['default_value'],1,-1);
-		$profile_fields['row_searchable']=true;
-		$profile_fields['row_st']='visible';
-		$profile_fields['search_type']=vector2options($accepted_htmltype,$profile_fields['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_DATE));
-		$profile_fields['row_accval_location']=true;
-		$profile_fields['default_value']=dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$profile_fields['default_value']);
+		$output['default_value']=substr($output['default_value'],1,-1);
+		$output['row_searchable']=true;
+		$output['row_st']='visible';
+		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_DATE));
+		$output['row_accval_location']=true;
+		$output['default_value']=dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output['default_value']);
 		break;
 
 }
 
-$profile_fields['htmltype_text']=$accepted_htmltype[$profile_fields['html_type']];
-$profile_fields['searchable']=!empty($profile_fields['searchable']) ? 'checked="checked"' : '';
-$profile_fields['at_registration']=!empty($profile_fields['at_registration']) ? 'checked="checked"' : '';
-$profile_fields['required']=!empty($profile_fields['required']) ? 'checked="checked"' : '';
-$profile_fields['fk_pcat_id']=dbtable2options("`{$dbtable_prefix}profile_categories` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`fk_lk_id_pcat`=b.`fk_lk_id` AND b.`skin`='"._DEFAULT_SKIN_."')",'a.`pcat_id`','b.`lang_value`','a.`pcat_id`',$profile_fields['fk_pcat_id']);
-$profile_fields['editable']=!empty($profile_fields['editable']) ? 'checked="checked"' : '';
-$profile_fields['visible']=!empty($profile_fields['visible']) ? 'checked="checked"' : '';
-//$profile_fields['access_level']=vector2options($accepted_memberships,$profile_fields['access_level']);
+$output['htmltype_text']=$accepted_htmltype[$output['html_type']];
+$output['searchable']=!empty($output['searchable']) ? 'checked="checked"' : '';
+$output['at_registration']=!empty($output['at_registration']) ? 'checked="checked"' : '';
+$output['required']=!empty($output['required']) ? 'checked="checked"' : '';
+$output['fk_pcat_id']=dbtable2options("`{$dbtable_prefix}profile_categories` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`fk_lk_id_pcat`=b.`fk_lk_id` AND b.`skin`='$default_skin_code')",'a.`pcat_id`','b.`lang_value`','a.`pcat_id`',$output['fk_pcat_id']);
+$output['editable']=!empty($output['editable']) ? 'checked="checked"' : '';
+$output['visible']=!empty($output['visible']) ? 'checked="checked"' : '';
+//$output['access_level']=vector2options($accepted_memberships,$output['access_level']);
+$output['default_skin']=get_default_skin_name();
 
 $tpl->set_file('content','profile_fields_addedit.html');
-$tpl->set_var('profile_fields',$profile_fields);
+$tpl->set_var('output',$output);
 if (isset($_GET['o'])) {
 	$tpl->set_var('o',$_GET['o']);
 }
@@ -171,6 +176,7 @@ if (isset($_GET['od'])) {
 $tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']='Profile Fields Management';
+$tplvars['css']='profile_fields_addedit.css';
 include 'frame.php';
 
 

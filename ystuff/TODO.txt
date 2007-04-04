@@ -12,8 +12,6 @@ not checked. In felul asta userul poate sa isi aleaga ce se afiseaza
 
 - in check_login_member tb verificate ban-urile
 
-- de setat skin-ul default in get_my_skin() (_DEFAULT_SKIN_) based on 'make default' din site_skins_list.php
-
 - ar trebui creat un regenerate_langstrings_array_diff(action,lk,lang_val,skin) (si restul de functii regenerate)
 	care sa faca un include() (nu include_once()) la fisierul lor, sa modifice diferenta si sa il rescrie.
 	action ar tb sa fie add|del|mod
@@ -54,8 +52,6 @@ TODO
 				ADI
 - spambox, block member, queue send/verif de spam
 - clar nu se mai face join pt ID-ul senderului! Ce se intampla daca sender-ul este un admin? (MESS_SYSTEM)
-
-- user_alerts
 
 - blog cache + blogs.php
 - la profile.php: user friends, blogs

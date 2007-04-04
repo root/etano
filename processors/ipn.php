@@ -13,8 +13,8 @@ Support at:                 http://forum.datemill.com
 
 require_once '../includes/sessions.inc.php';
 require_once '../includes/classes/phemplate.class.php';
-require_once '../includes/user_functions.inc.php';
 require_once '../includes/vars.inc.php';
+require_once '../includes/user_functions.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
 $module_code=preg_replace('[^a-zA-Z0-9_]','',sanitize_and_format_gpc($_REQUEST,'p',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));

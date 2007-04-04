@@ -32,7 +32,7 @@ if (isset($_SESSION['topass']['input'])) {
 		$profile_categories=mysql_fetch_assoc($res);
 	}
 	$profile_categories['pcat_name']='';
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='"._DEFAULT_SKIN_."' AND `fk_lk_id`='".$profile_categories['fk_lk_id_pcat']."'";
+	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='".get_default_skin_code()."' AND `fk_lk_id`='".$profile_categories['fk_lk_id_pcat']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$profile_categories['pcat_name']=mysql_result($res,0,0);

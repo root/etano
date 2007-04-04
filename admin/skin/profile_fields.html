@@ -1,49 +1,50 @@
-<h1>Manage the profile fields</h1>
+<h2>Manage the profile fields</h2>
 
-<div class="content_submenu">
-	<span>Go to:</span>
-	<ul>
-		<li><a href="profile_fields.php">Profile Fields</a></li>
-		<li><a href="profile_categories.php">Profile Categories</a></li>
-	</ul>
+<ul class="content_submenu">
+	<li class="active">Profile Fields</li>
+	<li><a href="profile_categories.php">Profile Categories</a></li>
+</ul>
+<div class="hint"><strong>Add, edit, remove the fields available in member profiles:</strong></div>
+
+<div class="row header">
+	<div class="control">&nbsp;</div>
+	<div class="plabel">Label</div>
+	<div class="html_type">Html Type</div>
+	<div class="searchable">Searchable</div>
+	<div class="at_reg">On Join?</div>
+	<div class="required">Required</div>
+	<div class="pcat">Category</div>
+	<div class="accvals">Values</div>
+	<div class="order">Order</div>
 </div>
 
-<div class="hint"><strong>Add, edit, remove the fields available in member profiles:</strong></div>
-<div id="pager_holder_top">{pager1}</div>
-<table cellspacing="0" id="pfields_list" class="results_table">
-<tr>
-	<th width="38"></th>
-	<th>Label</th>
-	<th>Html Type</th>
-	<th>Searchable?</th>
-	<th>At Registration?</th>
-	<th>Required?</th>
-	<th>Category</th>
-	<th>Accepted<br />Values</th>
-	<th>Order</th>
-</tr>
 <loop name="loop">
-<tr class="result_item {loop.myclass}" align="center">
-	<td><a href="processors/profile_fields_delete.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" onclick="return(confirm('Are you sure you want to remove this field?'))" title="Delete field"><img src="skin/images/del.gif" alt="delete" /></a> |
-		<a href="profile_fields_addedit.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" title="Change field"><img src="skin/images/edit.gif" alt="edit" /></a>
-	</td>
-	<td>{loop.label}</td>
-	<td>{loop.html_type}</td>
-	<td>{loop.searchable}</td>
-	<td>{loop.at_registration}</td>
-	<td>{loop.required}</td>
-	<td>{loop.fk_pcat_id}</td>
-	<td>{loop.accepted_values}</td>
-	<td><a href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=d&amp;o={o}&amp;r={r}" title="move down"><img src="skin/images/down.gif" alt="move down" /></a> <a href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=u&amp;o={o}&amp;r={r}" title="move up"><img src="skin/images/up.gif" alt="move up" /></a></td>
-</tr>
+<div class="row">
+	<div class="control">
+		<a class="item_del" href="processors/profile_fields_delete.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" onclick="return(confirm('Are you sure you want to remove this field?'))" title="Delete field"><i>Delete field</i></a>
+		<a class="item_edit" href="profile_fields_addedit.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" title="Change field"><i>Change field</i></a>
+	</div>
+	<div class="plabel">{loop.label}</div>
+	<div class="html_type">{loop.html_type}</div>
+	<div class="searchable">{loop.searchable}&nbsp;</div>
+	<div class="at_reg">{loop.at_registration}&nbsp;</div>
+	<div class="required">{loop.required}&nbsp;</div>
+	<div class="pcat">{loop.fk_pcat_id}</div>
+	<div class="accvals">{loop.accepted_values}&nbsp;</div>
+	<div class="order">
+		<a class="item_movedown" href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=d&amp;o={o}&amp;r={r}" title="move down"><i>Move down</i></a>
+		<a class="item_moveup" href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=u&amp;o={o}&amp;r={r}" title="move up"><i>Move up</i></a>
+	</div>
+</div>
 <noloop name="loop">
-<tr>
-	<td colspan="10" class="no_result_item">No fields found!</td>
-</tr>
+<div class="row">
+	<p class="no_results">No fields found!</p>
+</div>
 </noloop name="loop">
 </loop name="loop">
-</table>
-<div id="pager_holder_btm">{pager2}</div>
+
+{pager2}
+
 <div id="bottom_links">
 	Add new field
 	<form action="profile_fields_addedit.php" method="get">

@@ -1,0 +1,29 @@
+#profile {
+	width: 100%;
+}
+
+#profile_pic {
+	float: left;
+}
+
+#member_actions {
+	vertical-align: top;
+	width: 25%;
+}
+
+#member_profile {
+	vertical-align: top;
+}
+
+.edit_row {
+	clear: both;
+}
+
+.edit_row .mainlabel {
+	float: left;
+	display: block;
+	width: 10em;
+	text-align: right;
+	margin-right: 3px;
+}
+

@@ -27,8 +27,9 @@ $r=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 //$ob=isset($_GET['ob']) ? (int)$_GET['ob'] : -1;
 //$od=isset($_GET['od']) ? (int)$_GET['od'] : 0;
 
+$default_skin_code=get_default_skin_code();
 $where='1';
-$from="`{$dbtable_prefix}profile_fields` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`fk_lk_id_label`=b.`fk_lk_id` AND b.`skin`='"._DEFAULT_SKIN_."') LEFT JOIN `{$dbtable_prefix}profile_categories` c ON a.`fk_pcat_id`=c.`pcat_id`";
+$from="`{$dbtable_prefix}profile_fields` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`fk_lk_id_label`=b.`fk_lk_id` AND b.`skin`='$default_skin_code') LEFT JOIN `{$dbtable_prefix}profile_categories` c ON a.`fk_pcat_id`=c.`pcat_id`";
 
 $query="SELECT count(*) FROM $from WHERE $where";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -43,7 +44,7 @@ if (!empty($totalrows)) {
 		$loop[$i]=$rsrow;
 		$loop[$i]=sanitize_and_format($loop[$i],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 		if ($loop[$i]['html_type']==HTML_SELECT || $loop[$i]['html_type']==HTML_CHECKBOX_LARGE) {
-			$loop[$i]['accepted_values']=lkids2lks(explode('|',substr($loop[$i]['accepted_values'],1,-1)),_DEFAULT_SKIN_);
+			$loop[$i]['accepted_values']=lkids2lks(explode('|',substr($loop[$i]['accepted_values'],1,-1)),$default_skin_code);
 		} else {
 			$loop[$i]['accepted_values']=str_replace('|',', ',substr($loop[$i]['accepted_values'],1,-1));
 		}
@@ -66,6 +67,7 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('profile_fields');
 
 $tplvars['title']='Profile Fields Management';
+$tplvars['css']='profile_fields.css';
 include 'frame.php';
 
 

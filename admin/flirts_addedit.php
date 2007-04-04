@@ -45,5 +45,6 @@ if (isset($_GET['r'])) {
 $tpl->process('content','content');
 
 $tplvars['title']='Flirt Management';
+$tplvars['css']='flirts_addedit.css';
 include 'frame.php';
 ?>

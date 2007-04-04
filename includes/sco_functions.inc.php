@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007040201
+File version:				1.2007040401
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -820,20 +820,6 @@ function array2qs($myarray,$excluded_keys=array()) {
 }
 
 
-function get_my_skin() {
-	if (isset($_SESSION['user']['skin']) && !empty($_SESSION['user']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_SESSION['user']['skin'])) {
-		$myreturn=$_SESSION['user']['skin'];
-	} elseif (isset($_COOKIE['sco_app']['skin']) && preg_match('/^\w+$/',$_COOKIE['sco_app']['skin']) && !empty($_COOKIE['sco_app']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_COOKIE['sco_app']['skin'])) {
-		$myreturn=$_COOKIE['sco_app']['skin'];
-	} elseif (defined('_DEFAULT_SKIN_') && is_dir(_BASEPATH_.'/skins_site/'._DEFAULT_SKIN_)) {
-		$myreturn=_DEFAULT_SKIN_;
-	} else {
-		$myreturn='basic';
-	}
-	return $myreturn;
-}
-
-
 function make_seed() {
     list($usec, $sec) = explode(' ', microtime());
     return (int)$sec+(int)($usec*100000);
@@ -842,7 +828,7 @@ function make_seed() {
 
 function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	mt_srand(make_seed());
-	$radius=5;
+	$radius=4;
 	$phpself=explode('?',$_SERVER['PHP_SELF']);
 	$phpself=$phpself[0];
 	global $accepted_results_per_page;

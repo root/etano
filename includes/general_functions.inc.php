@@ -69,3 +69,44 @@ function pager($totalrows,$offset,$results) {
 	$lang_strings['goto_prev']='Go to previous page';		// translate this
 	return create_pager2($totalrows,$offset,$results,$lang_strings);
 }
+
+
+function get_my_skin() {
+	if (isset($_SESSION['user']['skin']) && !empty($_SESSION['user']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_SESSION['user']['skin'])) {
+		$myreturn=$_SESSION['user']['skin'];
+	} elseif (isset($_COOKIE['sco_app']['skin']) && preg_match('/^\w+$/',$_COOKIE['sco_app']['skin']) && !empty($_COOKIE['sco_app']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_COOKIE['sco_app']['skin'])) {
+		$myreturn=$_COOKIE['sco_app']['skin'];
+	} else {
+		$myreturn=get_default_skin_dir();
+	}
+	return $myreturn;
+}
+
+
+function get_default_skin_dir() {
+	$myreturn='';
+	global $dbtable_prefix;
+	$query="SELECT a.`config_value` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b,`{$dbtable_prefix}site_options3` c WHERE a.`config_option`='skin_dir' AND a.`fk_module_code`=b.`module_code` AND b.`module_code`=c.`fk_module_code` AND b.`module_type`='".MODULE_SKIN."' AND c.`config_option`='is_default' AND c.`config_value`=1";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		$myreturn=mysql_result($res,0,0);
+	}
+	if (empty($myreturn)) {
+		$myreturn='basic';
+	}
+	return $myreturn;
+}
+
+function get_default_skin_code() {
+	$myreturn='';
+	global $dbtable_prefix;
+	$query="SELECT a.`module_code` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_code`=b.`fk_module_code` AND a.`module_type`='".MODULE_SKIN."' AND b.`config_option`='is_default' AND b.`config_value`=1";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		$myreturn=mysql_result($res,0,0);
+	}
+	if (empty($myreturn)) {
+		$myreturn='basic';
+	}
+	return $myreturn;
+}

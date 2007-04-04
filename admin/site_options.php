@@ -100,5 +100,6 @@ $tpl->set_var('module_code',$active_module_code);
 $tpl->process('content','content',TPL_MULTILOOP);
 
 $tplvars['title']='Site Options';
+$tplvars['css']='site_options.css';
 include 'frame.php';
 ?>

@@ -1,114 +1,113 @@
 <script type="text/javascript">
-	{profile_fields.acc_vals_jsarrays};
-	var default_value=Array('{profile_fields.default_value_jsarr}');
-	var default_search=Array('{profile_fields.default_search_jsarr}');
+	{output.acc_vals_jsarrays};
+	var default_value=Array({output.default_value_jsarr});
+	var default_search=Array({output.default_search_jsarr});
 	var baseurl='{tplvars.baseurl}';
-	var html_type=parseInt('{profile_fields.html_type}');
-	var formchanged=false;
+	var html_type=parseInt('{output.html_type}');
 </script>
 <script type="text/javascript" src="js/profile_fields_addedit.js"></script>
 
 <h1>Add / Edit a Profile Field</h1>
-<div class="hint">Field type: <b>{profile_fields.htmltype_text}</b></div>
+<div class="hint">Field type: <b>{output.htmltype_text}</b></div>
 
 <form action="processors/profile_fields_addedit.php" method="post" id="profile_fields_addedit">
-<input type="hidden" name="pfield_id" value="{profile_fields.pfield_id}" />
-<input type="hidden" name="html_type" value="{profile_fields.html_type}" />
-<input type="hidden" name="fk_lk_id_label" value="{profile_fields.fk_lk_id_label}" />
-<input type="hidden" name="fk_lk_id_search" value="{profile_fields.fk_lk_id_search}" />
-<input type="hidden" name="fk_lk_id_help" value="{profile_fields.fk_lk_id_help}" />
+<input type="hidden" name="pfield_id" id="pfield_id" value="{output.pfield_id}" />
+<input type="hidden" name="html_type" value="{output.html_type}" />
+<input type="hidden" name="fk_lk_id_label" value="{output.fk_lk_id_label}" />
+<input type="hidden" name="fk_lk_id_search" value="{output.fk_lk_id_search}" />
+<input type="hidden" name="fk_lk_id_help" value="{output.fk_lk_id_help}" />
 <input type="hidden" name="o" value="{o}" />
 <input type="hidden" name="r" value="{r}" />
 <table id="pfield_addedit" class="form_table">
 <tr>
 	<td class="label"><label for="label">Label:</label></td>
-	<td class="field {profile_fields.error_label}"><input class="text fullwidth" type="text" name="label" id="label" value="{profile_fields.label}" tabindex="1" /></td>
-	<td class="comment">Note: the value you enter here is for the default skin ({tplvars.default_skin}) <a href="javascript:;" onclick="popWin('popup_lang_string.php?lk_id={profile_fields.fk_lk_id_label}','translate',450,300,1,1)">Translate!</a></td>
+	<td class="field {output.error_label}"><input class="text fullwidth" type="text" name="label" id="label" value="{output.label}" tabindex="1" /></td>
+	<td class="comment">Note: the value you enter here is for the default skin ({output.default_skin}) <a class="translate" href="javascript:;" onclick="popWin('popup_lang_string.php?lk_id={output.fk_lk_id_label}','translate',450,300,1,1)">Translate!</a></td>
 </tr>
 
 <opt name="profile_fields.row_searchable">
 <tr>
 	<td class="label"><label for="searchable">Searchable?</label></td>
-	<td class="field {profile_fields.error_searchable}"><input class="checkbox" type="checkbox" name="searchable" id="searchable" {profile_fields.searchable} value="1" tabindex="2" /></td>
+	<td class="field {output.error_searchable}"><input class="checkbox" type="checkbox" name="searchable" id="searchable" {output.searchable} value="1" tabindex="2" /></td>
 	<td class="comment"></td>
 </tr>
-<tr class="{profile_fields.row_st}" id="row_st">
+<tr class="{output.row_st}" id="row_st">
 	<td class="label"><label for="search_type">Search Type:</label></td>
-	<td class="field {profile_fields.error_search_type}">
+	<td class="field {output.error_search_type}">
 		<select name="search_type" id="search_type" tabindex="3">
-		{profile_fields.search_type}
+		{output.search_type}
 		</select>
 	</td>
 	<td class="comment"></td>
 </tr>
-<tr class="{profile_fields.row_sl}" id="row_sl">
+<tr class="{output.row_sl}" id="row_sl">
 	<td class="label"><label for="search_label">Search Label:</label></td>
-	<td class="field {profile_fields.error_search_label}"><input class="text fullwidth" type="text" name="search_label" id="search_label" value="{profile_fields.search_label}" tabindex="4" /></td>
-	<td class="comment">Note: the value you enter here is for the default skin ({tplvars.default_skin}) <a href="javascript:;" onclick="popWin('popup_lang_string.php?lk_id={profile_fields.fk_lk_id_search}','translate',450,300,1,1)">Translate!</a></td>
+	<td class="field {output.error_search_label}"><input class="text fullwidth" type="text" name="search_label" id="search_label" value="{output.search_label}" tabindex="4" /></td>
+	<td class="comment">Note: the value you enter here is for the default skin ({output.default_skin}) <a class="translate" href="javascript:;" onclick="popWin('popup_lang_string.php?lk_id={output.fk_lk_id_search}','translate',450,300,1,1)">Translate!</a></td>
 </tr>
 </opt name="profile_fields.row_searchable">
 
 <tr>
 	<td class="label"><label for="at_registration">At registration?</label></td>
-	<td class="field {profile_fields.error_at_registration}">
-		<input class="checkbox" type="checkbox" name="at_registration" id="at_registration" {profile_fields.at_registration} value="1" tabindex="5" />
-		<span class="{profile_fields.row_reg_page}" id="row_reg_page">
+	<td class="field {output.error_at_registration}">
+		<input class="checkbox" type="checkbox" name="at_registration" id="at_registration" {output.at_registration} value="1" tabindex="5" />
+		<span class="{output.row_reg_page}" id="row_reg_page">
 			<span class="label"><label for="reg_page">On Page:</label></span>
-			<span class="field {profile_fields.error_reg_page}"><input class="text" type="text" name="reg_page" id="reg_page" value="{profile_fields.reg_page}" size="2" maxlength="2" tabindex="6" /></span>
+			<span class="field {output.error_reg_page}"><input class="text" type="text" name="reg_page" id="reg_page" value="{output.reg_page}" size="2" maxlength="2" tabindex="6" /></span>
 		</span>
 	</td>
 	<td class="comment"></td>
 </tr>
 
-<tr class="{profile_fields.row_required}">
+<tr class="{output.row_required}">
 	<td class="label"><label for="required">Required?</label></td>
-	<td class="field {profile_fields.error_required}"><input class="checkbox" type="checkbox" name="required" id="required" {profile_fields.required} value="1" tabindex="7" /></td>
+	<td class="field {output.error_required}"><input class="checkbox" type="checkbox" name="required" id="required" {output.required} value="1" tabindex="7" /></td>
 	<td class="comment"></td>
 </tr>
 
-<tr class="{profile_fields.row_editable}">
+<tr class="{output.row_editable}">
 	<td class="label"><label for="editable">Editable?</label></td>
-	<td colspan="2" class="field {profile_fields.error_editable}"><input class="checkbox" type="checkbox" name="editable" id="editable" {profile_fields.editable} value="1" tabindex="7" />
+	<td colspan="2" class="field {output.error_editable}"><input class="checkbox" type="checkbox" name="editable" id="editable" {output.editable} value="1" tabindex="7" />
 		<span class="comment">Can the user edit this field? Some fields might just be calculated based on other fields and don't need direct editing.</span>
 	</td>
 </tr>
 
-<tr class="{profile_fields.row_visible}">
+<tr class="{output.row_visible}">
 	<td class="label"><label for="visible">Visible?</label></td>
-	<td colspan="2" class="field {profile_fields.error_visible}"><input class="checkbox" type="checkbox" name="visible" id="visible" {profile_fields.visible} value="1" tabindex="7" />
+	<td colspan="2" class="field {output.error_visible}"><input class="checkbox" type="checkbox" name="visible" id="visible" {output.visible} value="1" tabindex="7" />
 		<span class="comment">Is this field displayed in user's profile? Some fields (like the zip code) shouldn't be displayed.</span>
 	</td>
 </tr>
 
-<tr class="{profile_fields.row_category}">
+<tr class="{output.row_category}">
 	<td class="label"><label for="fk_pcat_id">Profile Category:</label></td>
-	<td class="field {profile_fields.error_fk_pcat_id}">
+	<td class="field {output.error_fk_pcat_id}">
 		<select name="fk_pcat_id" id="fk_pcat_id" tabindex="8">
-		{profile_fields.fk_pcat_id}
+		{output.fk_pcat_id}
 		</select>
 	</td>
 	<td class="comment"></td>
 </tr>
 
-<tr class="{profile_fields.row_help}">
+<tr class="{output.row_help}">
 	<td class="label"><label for="help_text">Help Text for User:</label></td>
-	<td class="field {profile_fields.error_help_text}"><textarea name="help_text" id="help_text" rows="3" tabindex="9" cols="5" class="fullwidth">{profile_fields.help_text}</textarea></td>
+	<td class="field {output.error_help_text}"><textarea name="help_text" id="help_text" rows="3" tabindex="9" cols="5" class="fullwidth">{output.help_text}</textarea></td>
 	<td class="comment">
 		The help text will be added to the right of the field just as this very comment.<br />
-		<a href="javascript:;" onclick="popWin('popup_lang_string.php?lk_id={profile_fields.fk_lk_id_help}','translate',450,300,1,1)">Translate!</a>
+		<a class="translate" href="javascript:;" onclick="popWin('popup_lang_string.php?lk_id={output.fk_lk_id_help}','translate',450,300,1,1)">Translate!</a>
 	</td>
 </tr>
 
 <opt name="profile_fields.row_accval_selcheck">
 <tr>
 	<td class="label">Accepted Values:</td>
-	<td class="field {profile_fields.error_accepted_values}">
+	<td class="field {output.error_accepted_values}">
 		<a href="javascript:;" onclick="addedit_accval('add',accvals.length)">Add new value</a> (at the end of the list)
 		<div id="accvals_div">
 			<ul id="litems">
 			</ul>
 		</div>
-		<input type="hidden" name="accepted_values" id="accepted_values" value="{profile_fields.accepted_values}" />
+		<input type="hidden" name="accepted_values" id="accepted_values" value="{output.accepted_values}" />
 	</td>
 	<td class="comment">Adding new values BETWEEN existing ones and deleting values from the middle of the list will break the indexes of the rest of the values.<br />
 		You must be very careful if you do one of these actions on a live site because it could break member choices for this field.
@@ -119,19 +118,19 @@
 <opt name="profile_fields.row_accval_date">
 <tr>
 	<td class="label">Year from:</td>
-	<td colspan="2" class="field {profile_fields.error_accepted_values}">
-		<input class="text" type="text" name="year_start" id="year_start" value="{profile_fields.year_start}" size="3" maxlength="4" tabindex="10" />
+	<td colspan="2" class="field {output.error_accepted_values}">
+		<input class="text" type="text" name="year_start" id="year_start" value="{output.year_start}" size="3" maxlength="4" tabindex="10" />
 		to
-		<input class="text" type="text" name="year_end" id="year_end" value="{profile_fields.year_end}" size="3" maxlength="4" tabindex="11" />
+		<input class="text" type="text" name="year_end" id="year_end" value="{output.year_end}" size="3" maxlength="4" tabindex="11" />
 		<span class="comment">Please enter the years with 4 digits.</span>
 	</td>
 </tr>
 <tr>
 	<td class="label">Default search range:</td>
-	<td colspan="2" class="field {profile_fields.error_default_value}">
-		<input class="text" type="text" name="def_start" id="def_start" value="{profile_fields.def_start}" size="2" maxlength="2" tabindex="12" />
+	<td colspan="2" class="field {output.error_default_value}">
+		<input class="text" type="text" name="def_start" id="def_start" value="{output.def_start}" size="2" maxlength="2" tabindex="12" />
 		to
-		<input class="text" type="text" name="def_end" id="def_end" value="{profile_fields.def_end}" size="2" maxlength="2" tabindex="13" />
+		<input class="text" type="text" name="def_end" id="def_end" value="{output.def_end}" size="2" maxlength="2" tabindex="13" />
 		<span class="comment">Enter here the ages you want preselected in the search box like Age: 18 to 30. Must match the years above.</span>
 	</td>
 </tr>
@@ -140,9 +139,9 @@
 <opt name="profile_fields.row_accval_location">
 <tr>
 	<td class="label">Default Country:</td>
-	<td colspan="2" class="field {profile_fields.error_accepted_values}">
+	<td colspan="2" class="field {output.error_accepted_values}">
 		<select name="default_value" id="default_value" tabindex="12">
-		{profile_fields.default_value}
+		{output.default_value}
 		</select>
 	</td>
 </tr>
@@ -151,7 +150,7 @@
 <tr>
 	<td class="label">OnChange Function:</td>
 	<td colspan="2">
-		<input class="text" type="text" name="fn_on_change" value="{profile_fields.fn_on_change}" id="fn_on_change" tabindex="14" />
+		<input class="text" type="text" name="fn_on_change" value="{output.fn_on_change}" id="fn_on_change" tabindex="14" />
 		<span class="comment">The name of the php function to be executed after this field is updated by a user. Leave empty if not sure.</span>
 	</td>
 </tr>

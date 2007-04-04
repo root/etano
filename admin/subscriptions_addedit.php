@@ -53,5 +53,6 @@ $tpl->set_var('subscriptions',$subscriptions);
 $tpl->process('content','content');
 
 $tplvars['title']='Subscriptions Management';
+$tplvars['css']='subscriptions_addedit.css';
 include 'frame.php';
 ?>

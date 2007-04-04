@@ -241,10 +241,6 @@ ul.pager li.goto_previous a {
 	height: 22px;
 	padding: 0;
 	background-image: url('../images/link_previous.gif');
-	border: none;
-}
-ul.pager li.goto_previous a:hover {
-	background-position: left bottom;
 }
 
 ul.pager li.goto_next a {
@@ -254,9 +250,6 @@ ul.pager li.goto_next a {
 	padding: 0;
 	background-image: url('../images/link_next.gif');
 }
-ul.pager li.goto_next a:hover {
-	background-position: left bottom;
-}
 
 ul.pager li.goto_first a {
 	display: block;
@@ -264,10 +257,6 @@ ul.pager li.goto_first a {
 	height: 22px;
 	padding: 0;
 	background-image: url('../images/link_first.gif');
-	border: none;
-}
-ul.pager li.goto_first a:hover {
-	background-position: left bottom;
 }
 
 ul.pager li.goto_last a {
@@ -276,11 +265,11 @@ ul.pager li.goto_last a {
 	height: 22px;
 	padding: 0;
 	background-image: url('../images/link_last.gif');
-	border: none;
 }
-ul.pager li.goto_last a:hover {
-	background-position: left bottom;
-}
+
+	ul.pager li.goto_previous a:hover, ul.pager li.goto_next a:hover, ul.pager li.goto_first a:hover, ul.pager li.goto_last a:hover {
+		background-position: left bottom;
+	}
 
 ul.pager li.goto_previous, ul.pager li.goto_next, ul.pager li.goto_first, ul.pager li.goto_last, ul.pager li.rpp, ul.pager li.first, ul.pager li.text {
 	border: none;

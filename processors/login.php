@@ -13,8 +13,8 @@ Support at:                 http://forum.datemill.com
 
 require_once '../includes/sessions.inc.php';
 require_once '../includes/classes/phemplate.class.php';
-require_once '../includes/user_functions.inc.php';
 require_once '../includes/vars.inc.php';
+require_once '../includes/user_functions.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
 $score_threshold=600;	// seconds
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$redirect=rate_limiter($log);
 		if ($redirect) {
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']=$_lang[2];
+			$topass['message']['text']="We're sorry but you tried to login too many times. Please wait for a while before trying that again.";
 			redirect2page('info.php',$topass);
 		}
 		$query="SELECT a.`user_id`,a.`user`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`user`='$user' AND a.`pass`=md5('$pass')";
@@ -64,11 +64,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		} else {
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']=$_lang[1];
+			$topass['message']['text']='Invalid user name or password. Please try again.';
 		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']=$_lang[1];
+		$topass['message']['text']='Invalid user name or password. Please try again.';
 	}
 }
 redirect2page($nextpage,$topass,$qs);

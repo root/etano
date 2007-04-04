@@ -4,6 +4,10 @@ $(function() {
 		update_list();
 	}
 
+	if ($('#pfield_id').val()=='' || $('#pfield_id').val()=='0') {
+		$('a.translate').hide();
+	}
+
 // show or hide dependant options and bind their display to the triggering fields.
 	if ($('#search_type')[0] && $('#search_type')[0].length>0) {
 		showhide('searchable','row_st');
@@ -28,8 +32,12 @@ $(function() {
 		update_list();
 	});
 
-// only numbers allowed in this field
+// only numbers allowed in these fields
 	$('#reg_page').numeric();
+	$('#year_start').numeric();
+	$('#year_end').numeric();
+	$('#def_start').numeric();
+	$('#def_end').numeric();
 
 // tab management
 	$('#label').bind('keydown',function(e) {
@@ -58,28 +66,64 @@ function check_form() {
 
 function update_list() {
 	towrite='';
+	stval=$('#searchable')[0].checked ? $('#search_type').val() : 0;
+	if (stval==3 && default_search.length>1) {	// HTML_SELECT
+		default_search=default_search.slice(0,1);
+	}
+	if (stval==108 && default_search.length>2) {	// HTML_INTERVAL
+		default_search=default_search.slice(0,2);
+	}
 	for (i=0;i<accvals.length;i++) {
-		towrite+='<li><span class="litem_text">'+accvals[i]+'</span> <span class="litem_tools"><a href="javascript:;" onclick="addedit_accval(\'edit\','+i+')" title="Edit value"><img src="skin/images/edit.gif" alt="Edit value" /></a>&nbsp; &nbsp;<a href="javascript:;" onclick="addedit_accval(\'add\','+(i+1)+')" title="Add new value after this one"><img src="skin/images/add.gif" alt="Add new value after this one" /></a>&nbsp; &nbsp;<a href="javascript:;" onclick="delete_accval('+i+')" title="Delete value"><img src="skin/images/del.gif" alt="Delete value" /></a>';
-		towrite+=' <input type="checkbox" name="default_value['+i+']" id="default_value_'+i+'" value="1" title="Default value" onclick="adddel_defval(this.checked,'+i+')"';
-		for (j=0;j<default_value.length;j++) {
-			if (parseInt(default_value[j])==i) {
-				towrite+=' checked="checked"';
-				break;
+		towrite+='<li><ul class="litem_tools"><li><a class="item_edit" href="javascript:;" onclick="addedit_accval(\'edit\','+i+')" title="Edit value"><i>Edit</i></a></li><li><a class="item_add" href="javascript:;" onclick="addedit_accval(\'add\','+(i+1)+')" title="Add new value after this one"><i>Add new value after this one</i></a></li><li><a class="item_del" href="javascript:;" onclick="delete_accval('+i+')" title="Delete value"><i>Delete value</i></a></li>';
+		if (html_type==3) {	// HTML_SELECT
+			towrite+='<li><input type="radio" name="default_value[]" id="default_value_'+i+'" value="'+i+'" title="Default value" onclick="adddel_defval(true,'+i+')"';
+			for (j=0;j<default_value.length;j++) {
+				if (parseInt(default_value[j])==i) {
+					towrite+=' checked="checked"';
+					break;
+				}
 			}
+			towrite+=' /></li>';
+		} else if (html_type==10 || html_type==108) {	// HTML_CHECKBOX_LARGE || HTML_INTERVAL
+			towrite+='<li><input type="checkbox" name="default_value[]" id="default_value_'+i+'" value="'+i+'" title="Default value" onclick="adddel_defval(this.checked,'+i+')"';
+			for (j=0;j<default_value.length;j++) {
+				if (parseInt(default_value[j])==i) {
+					towrite+=' checked="checked"';
+					break;
+				}
+			}
+			towrite+=' /></li>';
 		}
-		towrite+=' />';
-		if ($('#search_type').val()==3) {	// HTML_SELECT
-		} else if ($('#search_type').val()==10) {	// HTML_CHECKBOX_LARGE
-			towrite+=' <input type="checkbox" name="default_search['+i+']" id="default_search_'+i+'" value="1" title="Default search value" onclick="adddel_defsearch(this.checked,'+i+')"';
+// the search checkbox/radio depends on the search_type:
+		if (stval==3) {	// HTML_SELECT
+			towrite+='<li><input type="radio" name="default_search[]" id="default_search_'+i+'" value="'+i+'" title="Default search value" onclick="adddel_defsearch(true,'+i+')"';
 			for (j=0;j<default_search.length;j++) {
 				if (parseInt(default_search[j])==i) {
 					towrite+=' checked="checked"';
 					break;
 				}
 			}
-			towrite+=' />';
+			towrite+=' /></li>';
+		} else if (stval==10) {	// HTML_CHECKBOX_LARGE
+			towrite+='<li><input type="checkbox" name="default_search[]" id="default_search_'+i+'" value="'+i+'" title="Default search value" onclick="adddel_defsearch(this.checked,'+i+')"';
+			for (j=0;j<default_search.length;j++) {
+				if (parseInt(default_search[j])==i) {
+					towrite+=' checked="checked"';
+					break;
+				}
+			}
+			towrite+=' /></li>';
+		} else if (stval==108) {	// HTML_INTERVAL
+			towrite+='<li><input type="checkbox" name="default_search[]" id="default_search_'+i+'" value="'+i+'" title="Default search value" onclick="adddel_defsearch(this.checked,'+i+')"';
+			for (j=0;j<default_search.length;j++) {
+				if (parseInt(default_search[j])==i) {
+					towrite+=' checked="checked"';
+					break;
+				}
+			}
+			towrite+=' /></li>';
 		}
-		towrite+='</span></li>'+"\n";
+		towrite+='</ul><span class="litem_text">'+accvals[i]+'</span></li>'+"\n";
 	}
 	$('#litems').html(towrite);
 }
@@ -186,7 +230,7 @@ function adddel_defval(type,position) {
 		if (type) {		// add here
 			for (i=0;i<accvals.length;i++) {
 				if (i!=position) {
-					document.getElementById('default_value_'+i).checked=false;
+					$('#default_value_'+i)[0].checked=false;
 				}
 			}
 			default_value[0]=position;
@@ -217,18 +261,10 @@ function adddel_defval(type,position) {
 }
 
 function adddel_defsearch(type,position) {
-	if ($('#search_type').val()==3) {	//HTML_SELECT
-		if (type) {		// add here
-			for (i=0;i<accvals.length;i++) {
-				if (i!=position) {
-					$('#default_search_'+i)[0].checked=false;
-				}
-			}
-			default_search[0]=position;
-		} else {		// del here
-			default_search=new Array();
-		}
-	} else if ($('search_type').val()==10) { 	//HTML_CHECKBOX_LARGE
+	stval=$('#search_type').val();
+	if (stval==3) {	//HTML_SELECT
+		default_search[0]=position.toString();
+	} else if (stval==10) { 	//HTML_CHECKBOX_LARGE
 		if (type) {	// add here
 			doadd=true;
 			for (i=0;i<default_search.length;i++) {
@@ -239,6 +275,30 @@ function adddel_defsearch(type,position) {
 			}
 			if (doadd) {
 				default_search[default_search.length]=position.toString();
+			}
+		} else {	// del here
+			for (i=0;i<default_search.length;i++) {
+				if (parseInt(default_search[i])==position) {
+					default_search=default_search.slice(0,i).concat(default_search.slice(i+1));
+					break;
+				}
+			}
+		}
+	} else if (stval==108) { 	//HTML_INTERVAL
+		if (type) {	// add here
+			doadd=true;
+			for (i=0;i<default_search.length;i++) {
+				if (parseInt(default_search[i])==position) {
+					doadd=false;
+					break;
+				}
+			}
+			if (doadd) {
+				if (default_search.length<2) {
+					default_search[default_search.length]=position.toString();
+				} else {
+					$('#default_search_'+position)[0].checked=false;
+				}
 			}
 		} else {	// del here
 			for (i=0;i<default_search.length;i++) {

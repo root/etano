@@ -9,7 +9,6 @@ define('_BASEPATH_','/www/htdocs/newdsb');// path on server to your site
 define('_PHOTOURL_',_BASEURL_.'/media/pics');// protocol required (http:// ). URL to your member photos
 define('_PHOTOPATH_',_BASEPATH_.'/media/pics');// path on server to your member photos
 define('_CACHEPATH_',_BASEPATH_.'/cache');// path on server to the cache folder
-define('_DEFAULT_SKIN_','skin_basic');
 define('_FTP_SERVER_','localhost');
 define('_FTPPATH_','/newdsb');
 define('_FTP_USER_','newdsb');

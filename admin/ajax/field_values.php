@@ -28,13 +28,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".HTML_TEXTFIELD.",`lk_diz`='Field value',`lk_use`='".LK_FIELD."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$lk_id=mysql_insert_id();
-			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='$val',`fk_lk_id`='$lk_id',`skin`='"._DEFAULT_SKIN_."'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='$val',`fk_lk_id`='$lk_id',`skin`='".get_default_skin_code()."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$output=$lk_id;
 			break;
 
 		case 'edit':
-			$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='$val' WHERE `fk_lk_id`='$lk_id' AND `skin`='"._DEFAULT_SKIN_."'";
+			$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='$val' WHERE `fk_lk_id`='$lk_id' AND `skin`='".get_default_skin_code()."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$output=$lk_id;
 			break;

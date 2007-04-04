@@ -14,8 +14,8 @@ Support at:                 http://forum.datemill.com
 define('CACHE_LIMITER','private');
 require_once 'includes/sessions.inc.php';
 require_once 'includes/classes/phemplate.class.php';
-require_once 'includes/user_functions.inc.php';
 require_once 'includes/vars.inc.php';
+require_once 'includes/user_functions.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(10);
 

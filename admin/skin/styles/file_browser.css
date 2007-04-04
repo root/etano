@@ -1,0 +1,18 @@
+#loading_warning {
+	float: right;
+	display: none;
+	background: #a00;
+	color: #fff;
+	font-size: .8em;
+	padding: 5px;
+}
+
+/* file_edit.php */
+
+#file_content {
+	width: 100%;
+	white-space: nowrap;
+	overflow: scroll;
+}
+
+

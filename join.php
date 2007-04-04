@@ -13,8 +13,8 @@ Support at:                 http://forum.datemill.com
 
 require_once 'includes/sessions.inc.php';
 require_once 'includes/classes/phemplate.class.php';
-require_once 'includes/user_functions.inc.php';
 require_once 'includes/vars.inc.php';
+require_once 'includes/user_functions.inc.php';
 require_once 'includes/classes/sco_captcha.class.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
@@ -89,8 +89,8 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 
 		case HTML_DATE:
 			$my_rows[$j]['field']='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_month" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_month']).'</select>';
-			$my_rows[$j]['field'].='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_day" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">'.$_lang[5].'</option>'.interval2options(1,31,$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_day']).'</select>';
-			$my_rows[$j]['field'].='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_year" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">'.$_lang[6].'</option>'.interval2options($_pfields[$my_fields[$i]]['accepted_values'][1],$_pfields[$my_fields[$i]]['accepted_values'][2],$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_year'],array(),1,2).'</select>';
+			$my_rows[$j]['field'].='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_day" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">day</option>'.interval2options(1,31,$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_day']).'</select>';	// translate
+			$my_rows[$j]['field'].='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_year" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">year</option>'.interval2options($_pfields[$my_fields[$i]]['accepted_values'][1],$_pfields[$my_fields[$i]]['accepted_values'][2],$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_year'],array(),1,2).'</select>'; // translate
 			break;
 
 		case HTML_LOCATION:
