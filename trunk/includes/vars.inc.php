@@ -111,16 +111,9 @@ $tplvars['photourl']=_PHOTOURL_;
 if (isset($_SERVER['PHP_SELF'])) {
 	$tplvars['relative_path']=@str_repeat('../',substr_count($_SERVER['PHP_SELF'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
 }
-$tplvars['tplurl']=_BASEURL_.'/skins_site/'.get_my_skin();
-$tplvars['tplrelpath']=$tplvars['relative_path'].'skins_site/'.get_my_skin();
 
-$_lang=array();
-require_once $tplvars['tplrelpath'].'/lang/strings.inc.php';
-$_pfields=array();
-$_pcats=array();
-require_once 'fields.inc.php';
-
-$accepted_months=array($_lang[4],$_lang[7],$_lang[8],$_lang[9],$_lang[10],$_lang[11],$_lang[12],$_lang[13],$_lang[14],$_lang[15],$_lang[16],$_lang[17],$_lang[18]);
+//$accepted_months=array($_lang[4],$_lang[7],$_lang[8],$_lang[9],$_lang[10],$_lang[11],$_lang[12],$_lang[13],$_lang[14],$_lang[15],$_lang[16],$_lang[17],$_lang[18]);
+$accepted_months=array('month','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'); // translate
 $accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
 
 $default_search_fields=array(1,2,3,4);
@@ -138,10 +131,5 @@ if (isset($_SESSION['user'])) {
 	}
 }
 
-if (function_exists('error_handler')) {
-	set_error_handler('error_handler');
-} elseif (function_exists('general_error')) {
-	set_error_handler('general_error');
-}
 define('_CACHE_MODE_','disk');	// disk or db
 define('_INTERNAL_VERSION_',001);

@@ -25,7 +25,9 @@ $search_fields=$default_search_fields;
 $search=array();
 $s=0;
 for ($i=0;isset($search_fields[$i]);++$i) {
-	$field=$_pfields[$search_fields[$i]];
+	if (isset($_pfields[$search_fields[$i]])) {
+		$field=$_pfields[$search_fields[$i]];
+	}
 	if (isset($field['search_type'])) {
 		$search[$s]['label']=$field['search_label'];
 		$search[$s]['dbfield']=$field['dbfield'];

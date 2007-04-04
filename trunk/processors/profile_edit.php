@@ -13,8 +13,8 @@ Support at:                 http://forum.datemill.com
 
 require_once '../includes/sessions.inc.php';
 require_once '../includes/classes/phemplate.class.php';
-require_once '../includes/user_functions.inc.php';
 require_once '../includes/vars.inc.php';
+require_once '../includes/user_functions.inc.php';
 require_once '../includes/field_functions.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(1);
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (isset($field['required']) && ((empty($input[$field['dbfield']]) && $field['html_type']!=HTML_LOCATION) || ($field['html_type']==HTML_LOCATION && empty($input[$field['dbfield'].'_country'])))) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']=$_lang[25];
+				$topass['message']['text']='The fields outlined below are required and must not be empty.';
 				$input['error_'.$field['dbfield']]='red_border';
 			}
 		}
@@ -147,6 +147,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
+// execute the on_change triggers of every field
 			for ($i=0;isset($on_changes[$i]);++$i) {
 				if (function_exists($on_changes[$i]['fn'])) {
 					eval($on_changes[$i]['fn'].'($_SESSION[\'user\'][\'user_id\'],$on_changes[$i][\'param2\'],$on_changes[$i][\'param3\']);');

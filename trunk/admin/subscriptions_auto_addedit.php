@@ -62,5 +62,6 @@ $tpl->set_var('subscriptions_auto',$subscriptions_auto);
 $tpl->process('content','content');
 
 $tplvars['title']='Auto Subscriptions Management';
+$tplvars['css']='subscriptions_auto_addedit.css';
 include 'frame.php';
 ?>

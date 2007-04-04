@@ -381,5 +381,6 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP | TPL_OPTI
 $tpl->drop_loop('profile');
 
 $tplvars['title']='Search Results';
+$tplvars['css']='member_results.css';
 include 'frame.php';
 ?>

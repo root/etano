@@ -37,14 +37,15 @@ if ($ob>=0) {
 	}
 }
 
+$default_skin_code=get_default_skin_code();
 $where='1';
-$from="`{$dbtable_prefix}profile_categories` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`fk_lk_id_pcat`=b.`fk_lk_id` AND b.`skin`='"._DEFAULT_SKIN_."')";
+$from="`{$dbtable_prefix}profile_categories` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`fk_lk_id_pcat`=b.`fk_lk_id` AND b.`skin`='$default_skin_code')";
 
 $query="SELECT count(*) FROM $from WHERE $where";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $totalrows=mysql_result($res,0,0);
 
-$profile_categories=array();
+$loop=array();
 if (!empty($totalrows)) {
 	$query="SELECT `m_value`,`m_name` FROM `{$dbtable_prefix}memberships`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -57,22 +58,22 @@ if (!empty($totalrows)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$i=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$profile_categories[$i]=$rsrow;
-		$profile_categories[$i]=sanitize_and_format($profile_categories[$i],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		$profile_categories[$i]['access_level']=get_level_name($profile_categories[$i]['access_level'],$memberships);
+		$loop[$i]=$rsrow;
+		$loop[$i]=sanitize_and_format($loop[$i],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$loop[$i]['access_level']=get_level_name($loop[$i]['access_level'],$memberships);
 		++$i;
 	}
-	$tpl->set_var('pager1',pager($totalrows,$o,$r));
-	$tpl->set_var('pager2',pager($totalrows,$o,$r));
+	$output['pager2']=pager($totalrows,$o,$r);
 }
+$output['o']=$o;
+$output['r']=$r;
+$output['ob']=$ob;
+$output['od']=$od;
 
-$tpl->set_loop('profile_categories',$profile_categories);
-$tpl->set_var('o',$o);
-$tpl->set_var('r',$r);
-$tpl->set_var('ob',$ob);
-$tpl->set_var('od',$od);
+$tpl->set_loop('loop',$loop);
+$tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
-$tpl->drop_loop('profile_categories');
+$tpl->drop_loop('loop');
 
 $tplvars['title']='Profile Categories Management';
 include 'frame.php';

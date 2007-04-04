@@ -45,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	// other formatting
 	$input['label']=ucfirst(strtolower($input['label']));
 	$input['search_label']=ucfirst(strtolower($input['search_label']));
-	$input['help_text']=ucfirst(strtolower($input['help_text']));
 
 // check for input errors
 	if (empty($input['label'])) {
@@ -81,13 +80,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		case HTML_CHECKBOX_LARGE:
 			if (!empty($input['default_value'])) {
 				unset($input['default_value']['']);
-				$input['default_value']='|'.join('|',array_keys($input['default_value'])).'|';
+				$input['default_value']='|'.join('|',$input['default_value']).'|';
 			} else {
 				$input['default_value']='';
 			}
 			if (!empty($input['default_search'])) {
 				unset($input['default_search']['']);
-				$input['default_search']='|'.join('|',array_keys($input['default_search'])).'|';
+				$input['default_search']='|'.join('|',$input['default_search']).'|';
 			} else {
 				$input['default_search']='';
 			}
@@ -139,6 +138,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
+		$default_skin_code=get_default_skin_code();
 		if (!empty($input['pfield_id'])) {
 			unset($input['dbfield'],$profile_fields_default['defaults']['order_num']);
 			$query="UPDATE `{$dbtable_prefix}profile_fields` SET ";
@@ -150,28 +150,28 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query=substr($query,0,-1);
 			$query.=" WHERE `pfield_id`='".$input['pfield_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="SELECT `ls_id` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id`='".$input['fk_lk_id_label']."' AND `skin`='"._DEFAULT_SKIN_."'";
+			$query="SELECT `ls_id` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id`='".$input['fk_lk_id_label']."' AND `skin`='$default_skin_code'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
-				$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['label']."' WHERE `fk_lk_id`='".$input['fk_lk_id_label']."' AND `skin`='"._DEFAULT_SKIN_."'";
+				$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['label']."' WHERE `fk_lk_id`='".$input['fk_lk_id_label']."' AND `skin`='$default_skin_code'";
 			} else {
-				$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['label']."',`fk_lk_id`='".$input['fk_lk_id_label']."',`skin`='"._DEFAULT_SKIN_."'";
+				$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['label']."',`fk_lk_id`='".$input['fk_lk_id_label']."',`skin`='$default_skin_code'";
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="SELECT `ls_id` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id`='".$input['fk_lk_id_search']."' AND `skin`='"._DEFAULT_SKIN_."'";
+			$query="SELECT `ls_id` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id`='".$input['fk_lk_id_search']."' AND `skin`='$default_skin_code'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
-				$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['search_label']."' WHERE `fk_lk_id`='".$input['fk_lk_id_search']."' AND `skin`='"._DEFAULT_SKIN_."'";
+				$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['search_label']."' WHERE `fk_lk_id`='".$input['fk_lk_id_search']."' AND `skin`='$default_skin_code'";
 			} else {
-				$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['search_label']."',`fk_lk_id`='".$input['fk_lk_id_search']."',`skin`='"._DEFAULT_SKIN_."'";
+				$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['search_label']."',`fk_lk_id`='".$input['fk_lk_id_search']."',`skin`='$default_skin_code'";
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="SELECT `ls_id` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id`='".$input['fk_lk_id_help']."' AND `skin`='"._DEFAULT_SKIN_."'";
+			$query="SELECT `ls_id` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id`='".$input['fk_lk_id_help']."' AND `skin`='$default_skin_code'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
-				$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['help_text']."' WHERE `fk_lk_id`='".$input['fk_lk_id_help']."' AND `skin`='"._DEFAULT_SKIN_."'";
+				$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['help_text']."' WHERE `fk_lk_id`='".$input['fk_lk_id_help']."' AND `skin`='$default_skin_code'";
 			} else {
-				$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['help_text']."',`fk_lk_id`='".$input['fk_lk_id_help']."',`skin`='"._DEFAULT_SKIN_."'";
+				$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['help_text']."',`fk_lk_id`='".$input['fk_lk_id_help']."',`skin`='$default_skin_code'";
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
@@ -193,11 +193,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".HTML_TEXTAREA.",`lk_diz`='Help text for ".$input['dbfield']." field'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_lk_id_help']=mysql_insert_id();
-			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['label']."',`fk_lk_id`='".$input['fk_lk_id_label']."',`skin`='"._DEFAULT_SKIN_."'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['label']."',`fk_lk_id`='".$input['fk_lk_id_label']."',`skin`='$default_skin_code'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['search_label']."',`fk_lk_id`='".$input['fk_lk_id_search']."',`skin`='"._DEFAULT_SKIN_."'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['search_label']."',`fk_lk_id`='".$input['fk_lk_id_search']."',`skin`='$default_skin_code'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['help_text']."',`fk_lk_id`='".$input['fk_lk_id_help']."',`skin`='"._DEFAULT_SKIN_."'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['help_text']."',`fk_lk_id`='".$input['fk_lk_id_help']."',`skin`='$default_skin_code'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 			$query="SELECT max(`order_num`) FROM `{$dbtable_prefix}profile_fields`";

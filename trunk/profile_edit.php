@@ -13,8 +13,8 @@ Support at:                 http://forum.datemill.com
 
 require_once 'includes/sessions.inc.php';
 require_once 'includes/classes/phemplate.class.php';
-require_once 'includes/user_functions.inc.php';
 require_once 'includes/vars.inc.php';
+require_once 'includes/user_functions.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 check_login_member(1);
 
@@ -117,8 +117,8 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 
 		case HTML_DATE:
 			$profile[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'_month" id="'.$_pfields[$field_id]['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$user_details[$_pfields[$field_id]['dbfield'].'_month']).'</select>';
-			$profile[$i]['field'].='<select name="'.$_pfields[$field_id]['dbfield'].'_day" id="'.$_pfields[$field_id]['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">'.$_lang[5].'</option>'.interval2options(1,31,$user_details[$_pfields[$field_id]['dbfield'].'_day']).'</select>';
-			$profile[$i]['field'].='<select name="'.$_pfields[$field_id]['dbfield'].'_year" id="'.$_pfields[$field_id]['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">'.$_lang[6].'</option>'.interval2options($_pfields[$field_id]['accepted_values'][1],$_pfields[$field_id]['accepted_values'][2],$user_details[$_pfields[$field_id]['dbfield'].'_year'],array(),1,2).'</select>';
+			$profile[$i]['field'].='<select name="'.$_pfields[$field_id]['dbfield'].'_day" id="'.$_pfields[$field_id]['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">day</option>'.interval2options(1,31,$user_details[$_pfields[$field_id]['dbfield'].'_day']).'</select>'; // translate
+			$profile[$i]['field'].='<select name="'.$_pfields[$field_id]['dbfield'].'_year" id="'.$_pfields[$field_id]['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">year</option>'.interval2options($_pfields[$field_id]['accepted_values'][1],$_pfields[$field_id]['accepted_values'][2],$user_details[$_pfields[$field_id]['dbfield'].'_year'],array(),1,2).'</select>'; // translate
 			break;
 
 		case HTML_LOCATION:

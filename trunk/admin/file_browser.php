@@ -30,5 +30,6 @@ $tpl->set_var('path',$path);
 $tpl->process('content','content');
 
 $tplvars['title']='Browse your files';
+$tplvars['css']='file_browser.css';
 include 'frame.php';
 ?>

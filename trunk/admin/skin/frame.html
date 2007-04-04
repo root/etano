@@ -3,7 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{tplvars.title}</title>
-<link rel="stylesheet" type="text/css" media="screen" href="skin/styles/screen.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="skin/styles/common.css" />
+<opt name="tplvars.css"><link href="skin/styles/{tplvars.css}" rel="stylesheet" type="text/css" /></opt name="tplvars.css">
 <script type="text/javascript" src="{tplvars.baseurl}/admin/js/jquery.js"></script>
 <script type="text/javascript" src="{tplvars.baseurl}/js/general.js"></script>
 </head>
@@ -11,19 +12,17 @@
 <div id="trim">
 	<div id="container">
 		<div id="header">
-			<div id="logo">
-				<h1>{tplvars.sitename}</h1>
-			</div>
 			<div id="logout"><a href="processors/logout.php">logout</a></div>
+			<h1>{tplvars.sitename}</h1>
 		</div>	<!--header-->
 
 		<div id="bluebar">	</div> <!--bluebar-->
 
-		<div id="fpcontent">
+		<div id="content_holder">
 			<div id="menu">
-				<div id="m_members" class="menu_widget">
-					<h4>Member Management</h4>
-					<div class="box">
+				<div id="m_members" class="menu_box">
+					<h3>Member Management</h3>
+					<div class="box_content">
 						<ul>
 							<li><a href="member_search.php">Search Members</a></li>
 							<li><a href="photo_search.php">Search Photos</a></li>
@@ -33,9 +32,9 @@
 					</div>
 				</div>
 
-				<div id="m_setting" class="menu_widget">
-					<h4>General Settings</h4>
-					<div class="box">
+				<div id="m_setting" class="menu_box">
+					<h3>General Settings</h3>
+					<div class="box_content">
 						<ul>
 							<li><a href="site_skins.php">Skin Settings</a></li>
 							<li><a href="access_levels.php">Access Levels</a></li>
@@ -51,26 +50,21 @@
 			</div>
 
 			<div id="content">
-<opt name="message.text">
+				<opt name="message.text">
 				<div id="message_wrapper" class="{message.type}">{message.text}</div>
-</opt name="message.text">
+				</opt name="message.text">
 				{content}
-				<div id="c_bar-btm" class="bar">
-					&nbsp;
-				</div>
+				<div id="bar_btm" class="bar"> </div>
 
 				<div id="footer">
 					<div id="n_footer" class="nav">
 						<a href="http://forum.datemill.com">Datemill forum</a> | <a href="http://www.datemill.com/contact.php">contact us</a> | <a href="help.php">help topics</a>
 					</div>
-					<div id="c_disclaimer">
-						<span id="m_copyright">Powered by <a href="http://www.datemill.com">Datemill</a></span>
-					</div>
+					<span id="copyright">Powered by <a href="http://www.datemill.com">Datemill</a></span>
 				</div>	<!--footer-->
 			</div>	<!--content-->
-
-		</div><!--fpcontent-->
-	</div>
-</div>
+		</div><!--content_holder-->
+	</div><!--container-->
+</div><!--trim-->
 </body>
 </html>

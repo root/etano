@@ -13,8 +13,8 @@ Support at:                 http://forum.datemill.com
 
 require_once '../includes/sessions.inc.php';
 require_once '../includes/classes/phemplate.class.php';
-require_once '../includes/user_functions.inc.php';
 require_once '../includes/vars.inc.php';
+require_once '../includes/user_functions.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
 $error=false;
@@ -36,31 +36,31 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!preg_match('/^[a-z0-9_]+$/',$input['user'])) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]=$_lang[19];
+			$topass['message']['text'][]='Invalid user name. Please use only letters and digits.';//translate
 			$input['error_user']='red_border';
 		}
 		if (!$error && get_userid_by_user($input['user'])) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]=$_lang[20];
+			$topass['message']['text'][]='This account already exists. Please choose another one.';
 			$input['error_user']='red_border';
 		}
 		if (!$error && empty($input['pass'])) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]=$_lang[21];
+			$topass['message']['text'][]='Password cannot be empty. Please enter your password.';
 			$input['error_pass']='red_border';
 		}
 		if (!$error && $input['email']!=$input['email2']) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]=$_lang[22];
+			$topass['message']['text'][]='Emails do not match. Please check the emails.';
 			$input['error_email']='red_border';
 		}
 		if (!$error && !preg_match('/^[a-z0-9\-\._]+@[a-z0-9\-]+(\.[a-z0-9\-]+)+$/',$input['email'])) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]=$_lang[23];
+			$topass['message']['text'][]='Invalid email entered. Please check your email.';
 			$input['error_email']='red_border';
 		}
 		if (get_site_option('use_captcha','core')) {
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text'][]=$_lang[24];
+				$topass['message']['text'][]="The verification code doesn't match. Please enter the new code.";
 				$input['error_captcha']='red_border';
 			}
 		}
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!$error && empty($input['agree'])) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]=$_lang[26];
+			$topass['message']['text'][]="You must agree to the terms of services before joining the site.";
 			$input['error_agree']='red_border';
 		}
 	}
@@ -143,12 +143,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (empty($input[$field['dbfield']]) && $field['html_type']!=HTML_LOCATION) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text'][]=$_lang[25];
+				$topass['message']['text'][]="The fields outlined below are required and must not be empty.";
 				$input['error_'.$field['dbfield']]='red_border';
 			} elseif ($field['html_type']==HTML_LOCATION && empty($input[$field['dbfield'].'_country'])) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text'][]=$_lang[25];
+				$topass['message']['text'][]='The fields outlined below are required and must not be empty.';
 				$input['error_'.$field['dbfield'].'_country']='red_border';
 			}
 		}

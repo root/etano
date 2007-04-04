@@ -11,7 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-set_error_handler('admin_error');
+//set_error_handler('admin_error');
 require_once 'general_functions.inc.php';
 
 define('DEPT_MODERATOR',2);
@@ -30,15 +30,13 @@ define('LK_SITE',0);
 define('LK_FIELD',1);
 define('LK_MESSAGE',2);
 
-$accepted_htmltype=array(HTML_TEXTFIELD=>'Textfield',HTML_TEXTAREA=>'Textarea',HTML_SELECT=>'Drop-down box',HTML_CHECKBOX_LARGE=>'Multiple checkboxes',HTML_DATE=>'Date',HTML_LOCATION=>'Location',HTML_INTERVAL=>'Interval');
+$accepted_htmltype=array(HTML_SELECT=>'Select box',HTML_CHECKBOX_LARGE=>'Multi checks',HTML_TEXTFIELD=>'Textfield',HTML_TEXTAREA=>'Textarea',HTML_DATE=>'Date',HTML_LOCATION=>'Location',HTML_INTERVAL=>'Min-Max interval');
 $field_dbtypes=array(HTML_TEXTFIELD=>"varchar(100) not null default ''",HTML_SELECT=>'int(5) not null default 0',HTML_FK_SELECT=>'int(10) not null default 0',HTML_TEXTAREA=>"text not null default ''",HTML_CHECKBOX_LARGE=>"text not null default ''",HTML_FILE=>"varchar(64) not null default ''",HTML_DATE=>'date',HTML_INT=>'int(5) not null default 0',HTML_FLOAT=>'double not null default 0');
 $accepted_admin_depts=array(DEPT_ADMIN=>'Administrator',DEPT_MODERATOR=>'Moderator');
 $accepted_astats=array(ASTAT_SUSPENDED=>'Suspended',ASTAT_UNVERIFIED=>'Unactivated',ASTAT_ACTIVE=>'Active');
 $accepted_pstats=array(STAT_PENDING=>'Awaiting approval',STAT_EDIT=>'Requires edit',STAT_APPROVED=>'Approved');
 $accepted_yesno=array(0=>'No',1=>'Yes');
 $country_prefered_input=array('s'=>'state/city selection','z'=>'zip/postal code');
-
-$tplvars['default_skin']=_DEFAULT_SKIN_;
 
 // you shouldn't call this function directly. Instead set this to set_error_handler() and use the trigger_error method
 function admin_error($errlevel,$text,$file='unset',$line='unset') {
@@ -337,6 +335,21 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 				$GLOBALS['topass']['message']['text']=$mail->ErrorInfo;
 			}
 		}
+	}
+	return $myreturn;
+}
+
+
+function get_default_skin_name() {
+	$myreturn='';
+	global $dbtable_prefix;
+	$query="SELECT a.`module_name` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_code`=b.`fk_module_code` AND a.`module_type`='".MODULE_SKIN."' AND b.`config_option`='is_default' AND b.`config_value`=1";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		$myreturn=mysql_result($res,0,0);
+	}
+	if (empty($myreturn)) {
+		$myreturn='basic';
 	}
 	return $myreturn;
 }
