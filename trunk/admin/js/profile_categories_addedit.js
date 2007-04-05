@@ -1,5 +1,16 @@
+$(function() {
+	$('#pcat_name').focus();
+	$('#profile_categories_addedit').bind('submit',function() {
+		return(check_form());
+	});
+
+	if ($('#pcat_id').val()=='' || $('#pcat_id').val()=='0') {
+		$('a.translate').hide();
+	}
+});
+
 function check_form() {
-	the=document.getElementById('profile_categories_addedit');
+	the=$('#profile_categories_addedit')[0];
 	if (the.pcat_name.value=='') {
 		alert('Please enter the category!');
 		the.pcat_name.focus();

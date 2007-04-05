@@ -114,7 +114,7 @@ switch ($output['html_type']) {
 		}
 		$output['row_searchable']=true;
 		$output['row_st']='visible';
-		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION,HTML_INTERVAL));
+		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION,HTML_RANGE));
 		$output['row_accval_selcheck']=true;
 		// revert $accepted_values values to db original and add slashes
 		$output['acc_vals_jsarrays']=vector2jsarrays(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
@@ -129,13 +129,13 @@ switch ($output['html_type']) {
 	case HTML_DATE:
 		$output['row_searchable']=true;
 		$output['row_st']='visible';
-		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_LOCATION));
+		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_LOCATION,HTML_DATE));
 		$output['row_accval_date']=true;
 		$output['year_start']=(isset($accepted_values[0]) && !empty($accepted_values[0])) ? $accepted_values[0] : 0;
 		$output['year_end']=isset($accepted_values[1]) ? $accepted_values[1] : 0;
-		$default_value=explode('|',substr($output['default_value'],1,-1));
-		$output['def_start']=(isset($default_value[0]) && !empty($default_value[0])) ? $default_value[0] : 0;
-		$output['def_end']=isset($default_value[1]) ? $default_value[1] : 0;
+		$default_search=explode('|',substr($output['default_search'],1,-1));
+		$output['def_start']=(isset($default_search[0]) && !empty($default_search[0])) ? $default_search[0] : 0;
+		$output['def_end']=isset($default_search[1]) ? $default_search[1] : 0;
 		break;
 
 	case HTML_LOCATION:
@@ -151,6 +151,7 @@ switch ($output['html_type']) {
 
 $output['htmltype_text']=$accepted_htmltype[$output['html_type']];
 $output['searchable']=!empty($output['searchable']) ? 'checked="checked"' : '';
+$output['for_basic']=!empty($output['for_basic']) ? 'checked="checked"' : '';
 $output['at_registration']=!empty($output['at_registration']) ? 'checked="checked"' : '';
 $output['required']=!empty($output['required']) ? 'checked="checked"' : '';
 $output['fk_pcat_id']=dbtable2options("`{$dbtable_prefix}profile_categories` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`fk_lk_id_pcat`=b.`fk_lk_id` AND b.`skin`='$default_skin_code')",'a.`pcat_id`','b.`lang_value`','a.`pcat_id`',$output['fk_pcat_id']);

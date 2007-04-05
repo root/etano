@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input['def_end']=$max;
 
 			$input['accepted_values']='|'.$input['year_start'].'|'.$input['year_end'].'|';
-			$input['default_value']='|'.$input['def_start'].'|'.$input['def_end'].'|';
+			$input['default_search']='|'.$input['def_start'].'|'.$input['def_end'].'|';
 			$now=date('Y');
 			if (!$error && $input['def_start']<$now-$input['year_end'] || $input['def_start']>$now-$input['year_start']) {
 				$error=true;

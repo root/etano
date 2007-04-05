@@ -55,7 +55,7 @@ if (!empty($output['search_md5'])) {
 
 			case 'basic':
 				$input['acclevel_id']=16;
-				$search_fields=$default_search_fields;
+				$search_fields=$basic_search_fields;
 				break;
 
 			case 'adv':
@@ -135,16 +135,24 @@ if (!empty($output['search_md5'])) {
 				}
 				break;
 
-			case HTML_DATE:
+			case HTML_RANGE:
 				$input[$field['dbfield'].'_min']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_min',TYPE_INT,0,0);
 				$input[$field['dbfield'].'_max']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_max',TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield'].'_max'])) {
-					$where.=" AND `".$field['dbfield']."`>=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
+					if ($field['html_type']==HTML_DATE) {
+						$where.=" AND `".$field['dbfield']."`>=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
+					} elseif ($field['html_type']==HTML_SELECT) {
+						$where.=" AND `".$field['dbfield']."`<=".$input[$field['dbfield'].'_max'];
+					}
 				} else {
 					unset($input[$field['dbfield'].'_max']);
 				}
 				if (!empty($input[$field['dbfield'].'_min'])) {
-					$where.=" AND `".$field['dbfield']."`<=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
+					if ($field['html_type']==HTML_DATE) {
+						$where.=" AND `".$field['dbfield']."`<=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
+					} elseif ($field['html_type']==HTML_SELECT) {
+						$where.=" AND `".$field['dbfield']."`>=".$input[$field['dbfield'].'_min'];
+					}
 				} else {
 					unset($input[$field['dbfield'].'_min']);
 				}

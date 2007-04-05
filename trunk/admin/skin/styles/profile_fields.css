@@ -1,41 +1,39 @@
-.row .control {
+.control {
 	width: 40px;
-	padding-right: 5px;
-	border-left: none;
 }
 
-.row .plabel {
+.plabel {
 	width: 120px;
 }
 
-.row .html_type {
+.html_type {
 	width: 80px;
 }
 
-.row .searchable {
+.results_table .searchable {
+	width: 20px;
+	text-align: center;
+}
+
+.results_table .at_reg {
+	width: 20px;
+	text-align: center;
+}
+
+.results_table .required {
+	width: 20px;
+	text-align: center;
+}
+
+.pcat {
 	width: 84px;
-	text-align: center;
 }
 
-.row .at_reg {
-	width: 66px;
-	text-align: center;
-}
-
-.row .required {
-	width: 70px;
-	text-align: center;
-}
-
-.row .pcat {
-	width: 84px;
-}
-
-.row .accvals {
+.accvals {
 	width: 350px;
 }
 
-.row .order {
+.order {
 	width: 38px;
 }
 
@@ -43,5 +41,3 @@
 	display: inline;
 	margin: 0;
 }
-
-

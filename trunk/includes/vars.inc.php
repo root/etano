@@ -102,7 +102,7 @@ require_once 'sco_functions.inc.php';
 define('HTML_LOCATION',107);
 $__html2type[HTML_LOCATION]=TYPE_INT;
 $__html2format[HTML_LOCATION]=0;
-define('HTML_INTERVAL',108);
+define('HTML_RANGE',108);
 
 // often used vars in skins
 $tplvars['sitename']=_SITENAME_;
@@ -115,8 +115,6 @@ if (isset($_SERVER['PHP_SELF'])) {
 //$accepted_months=array($_lang[4],$_lang[7],$_lang[8],$_lang[9],$_lang[10],$_lang[11],$_lang[12],$_lang[13],$_lang[14],$_lang[15],$_lang[16],$_lang[17],$_lang[18]);
 $accepted_months=array('month','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'); // translate
 $accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
-
-$default_search_fields=array(1,2,3,4);
 
 if (!isset($_SESSION['user']['user_id'])) {
 	$_SESSION['user']['user']='guest';

@@ -76,6 +76,7 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
 
 $tplvars['title']='Profile Categories Management';
+$tplvars['css']='profile_categories.css';
 include 'frame.php';
 
 function get_level_name($binvalue,&$memberships) {

@@ -21,23 +21,23 @@ allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$profile_categories=$profile_categories_default['defaults'];
+$output=$profile_categories_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
-	$profile_categories=$_SESSION['topass']['input'];
+	$output=$_SESSION['topass']['input'];
 } elseif (isset($_GET['pcat_id']) && !empty($_GET['pcat_id'])) {
 	$pcat_id=(int)$_GET['pcat_id'];
 	$query="SELECT * FROM `{$dbtable_prefix}profile_categories` WHERE `pcat_id`='$pcat_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$profile_categories=mysql_fetch_assoc($res);
+		$output=mysql_fetch_assoc($res);
 	}
-	$profile_categories['pcat_name']='';
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='".get_default_skin_code()."' AND `fk_lk_id`='".$profile_categories['fk_lk_id_pcat']."'";
+	$output['pcat_name']='';
+	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='".get_default_skin_code()."' AND `fk_lk_id`='".$output['fk_lk_id_pcat']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$profile_categories['pcat_name']=mysql_result($res,0,0);
+		$output['pcat_name']=mysql_result($res,0,0);
 	}
-	$profile_categories=sanitize_and_format($profile_categories,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+	$output=sanitize_and_format($output,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
 }
 
 $query="SELECT `m_value`,`m_name` FROM `{$dbtable_prefix}memberships`";
@@ -47,10 +47,11 @@ while ($rsrow=mysql_fetch_row($res)) {
 	$memberships[$rsrow[0]]=$rsrow[1];
 }
 
-$profile_categories['access_level']=vector2checkboxes_new($memberships,array(),'access_level',$profile_categories['access_level'],3);
+$output['access_level']=vector2checkboxes_new($memberships,array(),'access_level',$output['access_level'],3);
+$output['default_skin']=get_default_skin_name();
 
 $tpl->set_file('content','profile_categories_addedit.html');
-$tpl->set_var('profile_categories',$profile_categories);
+$tpl->set_var('output',$output);
 if (isset($_GET['o'])) {
 	$tpl->set_var('o',$_GET['o']);
 }
@@ -66,6 +67,7 @@ if (isset($_GET['od'])) {
 $tpl->process('content','content');
 
 $tplvars['title']='Profile Categories Management';
+$tplvars['css']='profile_categories_addedit.css';
 include 'frame.php';
 
 

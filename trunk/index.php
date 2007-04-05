@@ -21,7 +21,7 @@ check_login_member(0);
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $tpl->set_file('content','index.html');
 
-$search_fields=$default_search_fields;
+$search_fields=$basic_search_fields;
 $search=array();
 $s=0;
 for ($i=0;isset($search_fields[$i]);++$i) {
@@ -41,9 +41,14 @@ for ($i=0;isset($search_fields[$i]);++$i) {
 				$search[$s]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],$field['default_search'],2,true,'tabindex="'.($i+4).'"');
 				break;
 
-			case HTML_DATE:
-				$search[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_value'][0]).'</select> - ';
-				$search[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_value'][1]).'</select>';
+			case HTML_RANGE:
+				if ($field['html_type']==HTML_DATE) {
+					$search[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][0]).'</select> - ';
+					$search[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][1]).'</select>';
+				} elseif ($field['html_type']==HTML_SELECT) {
+					$search[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0],array(0)).'</select> - ';
+					$search[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][1],array(0)).'</select>';
+				}
 				break;
 
 			case HTML_LOCATION:

@@ -30,8 +30,8 @@ define('LK_SITE',0);
 define('LK_FIELD',1);
 define('LK_MESSAGE',2);
 
-$accepted_htmltype=array(HTML_SELECT=>'Select box',HTML_CHECKBOX_LARGE=>'Multi checks',HTML_TEXTFIELD=>'Textfield',HTML_TEXTAREA=>'Textarea',HTML_DATE=>'Date',HTML_LOCATION=>'Location',HTML_INTERVAL=>'Min-Max interval');
-$field_dbtypes=array(HTML_TEXTFIELD=>"varchar(100) not null default ''",HTML_SELECT=>'int(5) not null default 0',HTML_FK_SELECT=>'int(10) not null default 0',HTML_TEXTAREA=>"text not null default ''",HTML_CHECKBOX_LARGE=>"text not null default ''",HTML_FILE=>"varchar(64) not null default ''",HTML_DATE=>'date',HTML_INT=>'int(5) not null default 0',HTML_FLOAT=>'double not null default 0');
+$accepted_htmltype=array(HTML_SELECT=>'Select box',HTML_CHECKBOX_LARGE=>'Multi checks',HTML_TEXTFIELD=>'Textfield',HTML_TEXTAREA=>'Textarea',HTML_DATE=>'Date',HTML_LOCATION=>'Location',HTML_RANGE=>'Range');
+$field_dbtypes=array(HTML_TEXTFIELD=>"varchar(100) not null default ''",HTML_SELECT=>'int(5) not null default 0',HTML_FK_SELECT=>'int(10) not null default 0',HTML_TEXTAREA=>"text not null default ''",HTML_CHECKBOX_LARGE=>"text not null default ''",HTML_FILE=>"varchar(64) not null default ''",HTML_DATE=>'date not null',HTML_INT=>'int(5) not null default 0',HTML_FLOAT=>'double not null default 0');
 $accepted_admin_depts=array(DEPT_ADMIN=>'Administrator',DEPT_MODERATOR=>'Moderator');
 $accepted_astats=array(ASTAT_SUSPENDED=>'Suspended',ASTAT_UNVERIFIED=>'Unactivated',ASTAT_ACTIVE=>'Active');
 $accepted_pstats=array(STAT_PENDING=>'Awaiting approval',STAT_EDIT=>'Requires edit',STAT_APPROVED=>'Approved');
@@ -104,9 +104,13 @@ function regenerate_fields_array() {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$towrite="<?php\n";
 	$profile_categs=array();
+	$basic_search_fields=array();
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
 		$id=$rsrow['order_num'];
+		if (!empty($rsrow['for_basic'])) {
+			$basic_search_fields[]=$id;
+		}
 		$profile_categs[$rsrow['fk_pcat_id']][]=$rsrow['order_num'];
 		$towrite.="\$_pfields[$id]['label']=\$_lang[".$rsrow['fk_lk_id_label']."];\n";
 		$towrite.="\$_pfields[$id]['html_type']=".$rsrow['html_type'].";\n";
@@ -145,7 +149,7 @@ function regenerate_fields_array() {
 					for ($i=0;isset($rsrow['default_value'][$i]);++$i) {
 						++$rsrow['default_value'][$i];
 					}
-					$towrite.="\$_pfields[$id]['default_value']=array('".join("','",$rsrow['default_value'])."');\n";
+					$towrite.="\$_pfields[$id]['default_value']=array(".join(",",$rsrow['default_value']).");\n";
 				} else {
 					$towrite.="\$_pfields[$id]['default_value']=array();\n";
 				}
@@ -156,7 +160,7 @@ function regenerate_fields_array() {
 					for ($i=0;isset($rsrow['default_search'][$i]);++$i) {
 						++$rsrow['default_search'][$i];
 					}
-					$towrite.="\$_pfields[$id]['default_search']=array('".join("','",$rsrow['default_search'])."');\n";
+					$towrite.="\$_pfields[$id]['default_search']=array(".join(",",$rsrow['default_search']).");\n";
 				} else {
 					$towrite.="\$_pfields[$id]['default_search']=array();\n";
 				}
@@ -168,15 +172,9 @@ function regenerate_fields_array() {
 				} else {
 					$towrite.="\$_pfields[$id]['accepted_values']=array('-');\n";
 				}
-				if (!empty($rsrow['default_value']) && $rsrow['default_value']!='||') {
-					$rsrow['default_value']=explode('|',substr($rsrow['default_value'],1,-1));
-					$towrite.="\$_pfields[$id]['default_value']=array('".join("','",$rsrow['default_value'])."');\n";
-				} else {
-					$towrite.="\$_pfields[$id]['default_value']=array();\n";
-				}
 				if (!empty($rsrow['default_search']) && $rsrow['default_search']!='||') {
 					$rsrow['default_search']=explode('|',substr($rsrow['default_search'],1,-1));
-					$towrite.="\$_pfields[$id]['default_search']=array('".join("','",$rsrow['default_search'])."');\n";
+					$towrite.="\$_pfields[$id]['default_search']=array(".join(",",$rsrow['default_search']).");\n";
 				} else {
 					$towrite.="\$_pfields[$id]['default_search']=array();\n";
 				}
@@ -217,6 +215,8 @@ function regenerate_fields_array() {
 			$towrite.='$_pcats['.$rsrow['pcat_id']."]['fields']=array(".join(',',$profile_categs[$rsrow['pcat_id']]).");\n";
 		}
 	}
+	$towrite.="\n";
+	$towrite.='$basic_search_fields=array('.join(',',$basic_search_fields).");\n";
 	$modman=new modman();
 	$modman->fileop->file_put_contents(_BASEPATH_.'/includes/fields.inc.php',$towrite);
 }

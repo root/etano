@@ -8,21 +8,22 @@
 
 <table id="pcats_list" class="results_table">
 <tr>
-	<th width="3%"></th>
-	<th width="15%">Category <a href="profile_categories.php?o={o}&amp;r={r}&amp;ob=1&amp;od=0" title="Order ascending"><img src="skin/images/up.gif" alt="up" /></a> <a href="profile_categories.php?o={o}&amp;r={r}&amp;ob=1&amp;od=1" title="Order descending"><img src="skin/images/down.gif" alt="down" /></a></th>
-	<th>Access Level <a href="profile_categories.php?o={o}&amp;r={r}&amp;ob=2&amp;od=0" title="Order ascending"><img src="skin/images/up.gif" alt="up" /></a> <a href="profile_categories.php?o={o}&amp;r={r}&amp;ob=2&amp;od=1" title="Order descending"><img src="skin/images/down.gif" alt="down" /></a></th>
-	<th width="40%"></th>
+	<th class="control"></th>
+	<th class="pcat_name">Category</th>
+	<th class="access_level">Access Level</th>
 </tr>
 <loop name="loop">
-<tr align="center" class="{loop.myclass}">
-	<td align="center"><a href="processors/profile_categories_delete.php?pcat_id={loop.pcat_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" onclick="return(confirm('Are you sure you want to delete this category?'))" title="Delete this category"><img alt="Delete this category" src="skin/images/del.gif" /></a></td>
-	<td><a href="profile_categories_addedit.php?pcat_id={loop.pcat_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" title="Edit this category">{loop.pcat_name}</a></td>
-	<td align="left">{loop.access_level}</td>
-	<td></td>
+<tr>
+	<td class="control">
+		<a class="item_del" href="processors/profile_categories_delete.php?pcat_id={loop.pcat_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" onclick="return(confirm('Are you sure you want to delete this category?'))" title="Delete this category"><i>Delete category</i></a>
+		<a class="item_edit" href="profile_categories_addedit.php?pcat_id={loop.pcat_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" title="Edit this category"><i>Edit category</i></a>
+	</td>
+	<td class="pcat_name">{loop.pcat_name}</td>
+	<td class="access_level">{loop.access_level}</td>
 </tr>
 <noloop name="loop">
 <tr>
-	<td colspan="4" class="no_result_item">No categories found!</td>
+	<td colspan="3" class="no_result_item">No categories found!</td>
 </tr>
 </noloop name="loop">
 </loop name="loop">
