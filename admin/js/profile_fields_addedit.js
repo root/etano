@@ -15,6 +15,7 @@ $(function() {
 		$('#row_st').hide();
 	}
 	showhide('searchable','row_sl');
+	showhide('searchable','row_bs');
 	showhide('at_registration','row_reg_page');
 	$('#label').focus();
 	$('#at_registration').bind('change',function() {
@@ -25,6 +26,7 @@ $(function() {
 			showhide('searchable','row_st');
 		}
 		showhide('searchable','row_sl');
+		showhide('searchable','row_bs');
 		update_list();
 	});
 
@@ -70,7 +72,7 @@ function update_list() {
 	if (stval==3 && default_search.length>1) {	// HTML_SELECT
 		default_search=default_search.slice(0,1);
 	}
-	if (stval==108 && default_search.length>2) {	// HTML_INTERVAL
+	if (stval==108 && default_search.length>2) {	// HTML_RANGE
 		default_search=default_search.slice(0,2);
 	}
 	for (i=0;i<accvals.length;i++) {
@@ -84,7 +86,7 @@ function update_list() {
 				}
 			}
 			towrite+=' /></li>';
-		} else if (html_type==10 || html_type==108) {	// HTML_CHECKBOX_LARGE || HTML_INTERVAL
+		} else if (html_type==10 || html_type==108) {	// HTML_CHECKBOX_LARGE || HTML_RANGE
 			towrite+='<li><input type="checkbox" name="default_value[]" id="default_value_'+i+'" value="'+i+'" title="Default value" onclick="adddel_defval(this.checked,'+i+')"';
 			for (j=0;j<default_value.length;j++) {
 				if (parseInt(default_value[j])==i) {
@@ -113,7 +115,7 @@ function update_list() {
 				}
 			}
 			towrite+=' /></li>';
-		} else if (stval==108) {	// HTML_INTERVAL
+		} else if (stval==108) {	// HTML_RANGE
 			towrite+='<li><input type="checkbox" name="default_search[]" id="default_search_'+i+'" value="'+i+'" title="Default search value" onclick="adddel_defsearch(this.checked,'+i+')"';
 			for (j=0;j<default_search.length;j++) {
 				if (parseInt(default_search[j])==i) {
@@ -284,7 +286,7 @@ function adddel_defsearch(type,position) {
 				}
 			}
 		}
-	} else if (stval==108) { 	//HTML_INTERVAL
+	} else if (stval==108) { 	//HTML_RANGE
 		if (type) {	// add here
 			doadd=true;
 			for (i=0;i<default_search.length;i++) {

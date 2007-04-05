@@ -24,3 +24,6 @@ $_lang[21]='Over 2m';
 $_lang[22]='Height';
 $_lang[23]='Height';
 $_lang[24]='';
+$_lang[25]='Birthdate';
+$_lang[26]='Age';
+$_lang[27]='';

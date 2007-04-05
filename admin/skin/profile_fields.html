@@ -6,42 +6,40 @@
 </ul>
 <div class="hint"><strong>Add, edit, remove the fields available in member profiles:</strong></div>
 
-<div class="row header">
-	<div class="control">&nbsp;</div>
-	<div class="plabel">Label</div>
-	<div class="html_type">Html Type</div>
-	<div class="searchable">Searchable</div>
-	<div class="at_reg">On Join?</div>
-	<div class="required">Required</div>
-	<div class="pcat">Category</div>
-	<div class="accvals">Values</div>
-	<div class="order">Order</div>
-</div>
-
+<table cellspacing="0" id="pfields_list" class="results_table">
+<tr>
+	<th class="control"></th>
+	<th class="plabel">Label</th>
+	<th class="html_type">Html Type</th>
+	<th colspan="3">Searchable |On Join |Required</th>
+	<th class="pcat">Category</th>
+	<th class="accvals">Accepted Values</th>
+	<th class="order">Order</th>
+</tr>
 <loop name="loop">
-<div class="row">
-	<div class="control">
-		<a class="item_del" href="processors/profile_fields_delete.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" onclick="return(confirm('Are you sure you want to remove this field?'))" title="Delete field"><i>Delete field</i></a>
-		<a class="item_edit" href="profile_fields_addedit.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" title="Change field"><i>Change field</i></a>
-	</div>
-	<div class="plabel">{loop.label}</div>
-	<div class="html_type">{loop.html_type}</div>
-	<div class="searchable">{loop.searchable}&nbsp;</div>
-	<div class="at_reg">{loop.at_registration}&nbsp;</div>
-	<div class="required">{loop.required}&nbsp;</div>
-	<div class="pcat">{loop.fk_pcat_id}</div>
-	<div class="accvals">{loop.accepted_values}&nbsp;</div>
-	<div class="order">
+<tr class="result_item {loop.myclass}" align="center">
+	<td class="control"><a href="processors/profile_fields_delete.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" onclick="return(confirm('Are you sure you want to remove this field?'))" title="Delete field"><img src="skin/images/del.gif" alt="delete" /></a>
+		<a href="profile_fields_addedit.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" title="Change field"><img src="skin/images/edit.gif" alt="edit" /></a>
+	</td>
+	<td class="plabel">{loop.label}</td>
+	<td class="html_type">{loop.html_type}</td>
+	<td class="searchable">{loop.searchable}
+	<td class="at_reg">{loop.at_registration}</td>
+	<td class="required">{loop.required}</td>
+	<td class="pcat">{loop.fk_pcat_id}</td>
+	<td class="accvals">{loop.accepted_values}</td>
+	<td class="order">
 		<a class="item_movedown" href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=d&amp;o={o}&amp;r={r}" title="move down"><i>Move down</i></a>
 		<a class="item_moveup" href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=u&amp;o={o}&amp;r={r}" title="move up"><i>Move up</i></a>
-	</div>
-</div>
+	</td>
+</tr>
 <noloop name="loop">
-<div class="row">
-	<p class="no_results">No fields found!</p>
-</div>
+<tr>
+	<td colspan="9" class="no_result_item">No fields found!</td>
+</tr>
 </noloop name="loop">
 </loop name="loop">
+</table>
 
 {pager2}
 

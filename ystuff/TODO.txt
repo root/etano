@@ -72,9 +72,9 @@ TODO
 - formatare la date of birth
 - create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
 - help texts pentru campurile textarea
-- de convertit scoax la jquery ===>>>>>>>>>>>>>admin\skin\profile_fields_addedit.html. addEvent nu mai exista
+- lungime maxima camp pt textareas
+- de convertit scoax la jquery
 
-- widget-ul feed ar trebui sa citeasca doar din db? insertul in db sa il faca un cron?
 - phpmailer
 - cautare membri cu poze (poza din profil probabil...)
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
@@ -105,24 +105,15 @@ TODO
 - `stat_posts`=`stat_posts`+1 in admin cand se aproba un blog
 - blog/poze: nivel acces: public/private/only people in my XXX network are allowed to see it.
 
-- admin: adaugat search_type: range pt field_type: select
-- admin: default_value la field_type: date ar trebui sa fie search_value?
 - admin: send newsletter
 - admin: blog edit
 - admin: stats
 - admin: payment stats. rapoarte pe perioade. procent paid/free/gender
 - admin: latest datemill news
 - admin: adaugat mail_from
-- admin: profile_fields.php - accepted values are 2 virgule.
 
 - cron: check for and remove orpahned lk_ids
 - affiliates
 
 - [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]
 - addon: lightbox (vezi http://beta.zooomr.com)
-
-- 		// replace '\r' and '\n' strings with <enter> in all textareas
-		$input['message_body']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['message_body']);
-in caz de eroare la procesoare. trebuie cautat mai bine si testat pentru ca unele procesoare nu au.
-
-- in admin (poate si la membri) rescris cu return in loc de o&r

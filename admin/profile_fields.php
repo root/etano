@@ -60,7 +60,7 @@ if (!empty($totalrows)) {
 	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 }
 $tpl->set_loop('loop',$loop);
-$tpl->set_var('html_type',vector2options($accepted_htmltype,'',array(HTML_INTERVAL)));
+$tpl->set_var('html_type',vector2options($accepted_htmltype,'',array(HTML_RANGE)));
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);

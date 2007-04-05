@@ -35,7 +35,7 @@ li {
 
 input.text, textarea {
 	margin: 1px 0px;
-	border: 1px solid #666;
+	border: 1px solid #555;
 }
 
 input.checkbox {
@@ -51,7 +51,7 @@ option {
 }
 
 label, .label {
-	color: #666;
+	color: #555;
 	font-weight: bold;
 	cursor: pointer;
 }
@@ -93,24 +93,13 @@ label.checkbox {
 }
 
 .bar span {
-	color: #666;
+	color: #555;
 }
-
 
 #bar_btm {
-	background-color: #ccc; /*border*/
+	background-color: #ccc;
 }
 
-.nav {
-	font-size: 80%;
-	line-height: 150%;
-	color: #ccc; /*border*/
-}
-
-.nav span, .nav a {
-	font-size: 85%;
-	font-weight: bold;
-}
 
 /* WIDGETS */
 
@@ -138,6 +127,7 @@ label.checkbox {
 	background: url('../images/bullet.gif') no-repeat center left;
 }
 
+
 /* OTHER STUFF */
 
 .content_submenu li {
@@ -163,30 +153,6 @@ label.checkbox {
 	background: #9EE4FE;
 }
 
-
-.results_table {
-	border: 1px solid #CCC;
-	font-size: 75%;
-	margin: auto;
-	margin-bottom: 10px;
-	width: 100%;
-}
-
-.results_table th {
-	background-color: #E5F8FE;
-	color: #666;
-	text-align: center;
-	padding: 0px 5px 0px 5px;
-}
-
-.results_table td {
-	padding-bottom: 5px;
-}
-
-.results_table tr:hover {
-	background-color: #E5F8FE;
-}
-
 .hint {
 	clear: both;
 	padding: 6px 12px;
@@ -196,20 +162,50 @@ label.checkbox {
 	line-height: 100%;
 }
 
+
+.hint strong,.hint_popup strong {
+	color: #555;
+}
+
 .hint_popup {
 	clear: both;
 	padding: 6px 12px;
 	background-color: #9EE4FE;
 	margin-bottom: 10px;
-	font-size: 80%;
 }
 
-.hint strong,.hint_popup strong {
-	color: #666;
+
+/* RESULTS TABLES */
+
+.results_table {
+	border: 1px solid #CCC;
+	font-size: 90%;
+	margin-bottom: 10px;
+	width: 100%;
 }
+
+.results_table th {
+	font-size: 110%;
+	background-color: #E5F8FE;
+	color: #555;
+	font-weight: bold;
+	padding: 5px 2px 5px 5px;
+}
+
+.results_table td {
+	padding: 5px 2px 5px 5px;
+	border-bottom: 1px dashed #ccc;
+	text-align: left;
+}
+
+.results_table tr:hover {
+	background-color: #E5F8FE;
+}
+
+
+/* ADD/EDIT FORM TABLES */
 
 .form_table {
-	font-size: 75%;
 	margin-bottom: 10px;
 }
 
@@ -222,6 +218,11 @@ label.checkbox {
 	text-align: right;
 	padding-right: 5px;
 	vertical-align: top;
+	font-weight: normal;
+}
+
+.form_table .label label, .form_table .field label {
+	font-weight: normal;
 }
 
 .form_table .field {
@@ -238,13 +239,13 @@ label.checkbox {
 }
 
 .form_table .field li:hover {
-	background: #EEEEEE;
+	background: #eee;
 }
 
 .form_table .comment {
 	color: #999;
 	padding-left: 5px;
-	font-size: 88%;
+	font-size: 90%;
 	vertical-align: top;
 	width: 35%;
 }
