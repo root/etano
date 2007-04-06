@@ -22,8 +22,6 @@ require_once 'fields.inc.php';
 define('DEPT_MODERATOR',2);
 define('DEPT_ADMIN',4);
 
-define('RELEVANT_FIELDS',4); // use first RELEVANT_FIELDS fields to search/display
-
 define('OPTION_NA',0);
 
 define('AMTPL_REJECT_MEMBER',1);
@@ -113,7 +111,7 @@ function regenerate_fields_array() {
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
 		$id=$rsrow['order_num'];
-		if (!empty($rsrow['for_basic'])) {
+		if (!empty($rsrow['for_basic']) && !empty($rsrow['searchable'])) {
 			$basic_search_fields[]=$id;
 		}
 		$profile_categs[$rsrow['fk_pcat_id']][]=$rsrow['order_num'];

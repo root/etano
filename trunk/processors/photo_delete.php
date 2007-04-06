@@ -33,9 +33,9 @@ if (mysql_num_rows($res)) {
 
 		require_once '../includes/classes/modman.class.php';
 		$modman=new modman();
-		$modman->fileop->delete(_BASEPATH_.'/media/pics/t1/'.$input['photo']);
-		$modman->fileop->delete(_BASEPATH_.'/media/pics/t2/'.$input['photo']);
-		$modman->fileop->delete(_BASEPATH_.'/media/pics/'.$input['photo']);
+		$modman->fileop->delete(_PHOTOPATH_.'/t1/'.$input['photo']);
+		$modman->fileop->delete(_PHOTOPATH_.'/t2/'.$input['photo']);
+		$modman->fileop->delete(_PHOTOPATH_.'/'.$input['photo']);
 
 		$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_photo_id`='$photo_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

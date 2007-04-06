@@ -12,7 +12,7 @@ $_pfields[1]['dbfield']='f2';
 $_pfields[1]['fk_pcat_id']=1;
 $_pfields[1]['accepted_values']=array('-',$_lang[6],$_lang[7]);
 $_pfields[1]['default_value']=array(1);
-$_pfields[1]['default_search']=array(2);
+$_pfields[1]['default_search']=array();
 $_pfields[1]['help_text']=$_lang[10];
 
 $_pfields[2]['label']=$_lang[13];

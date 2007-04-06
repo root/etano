@@ -60,8 +60,8 @@
 		<h2>{profile._user}</h2>
 		(<opt name="profile.pending"><span class="alert_ppending">Needs your approval</span></opt name="profile.pending"><opt name="profile.need_edit"><span class="alert_pedit">Needs editing</span></opt name="profile.need_edit"><opt name="profile.approved"><span class="alert_papproved">Approved</span></opt name="profile.approved">)
 		<div id="profile_pic">
-			<opt name="profile.has_photo"><a href="javascript:;" onclick="popWin('popup_photo_view.php?uid={profile.fk_user_id}&amp;main=1','photo',{tplvars.pic_width},{tplvars.pic_width},1)"><img class="user_photo" src="../media/pics/t1/{profile._photo}" /></a></opt name="profile.has_photo">
-			<opt name="!profile.has_photo"><img class="user_photo" src="../media/pics/t1/no_photo.gif" /></opt name="!profile.has_photo">
+			<opt name="profile.has_photo"><a href="javascript:;" onclick="popWin('popup_photo_view.php?uid={profile.fk_user_id}&amp;main=1','photo',{tplvars.pic_width},{tplvars.pic_width},1)"><img class="user_photo" src="{tplvars.photourl}/t1/{profile._photo}" /></a></opt name="profile.has_photo">
+			<opt name="!profile.has_photo"><img class="user_photo" src="{tplvars.photourl}/t1/no_photo.gif" /></opt name="!profile.has_photo">
 		</div>
 
 		<loop name="categs">

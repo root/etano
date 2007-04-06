@@ -25,12 +25,12 @@ class modman {
 		if (defined('_BASEURL_')) {
 			$this->template_vars['{$baseurl}']=_BASEURL_;
 			$this->template_vars['{$tplurl}']=_BASEURL_.'/skins_site';
-			$this->template_vars['{$imagesurl}']=_BASEURL_.'/media/pics';
+			$this->template_vars['{$imagesurl}']=_PHOTOURL_;
 		}
 		if (defined('_BASEPATH_')) {
 			$this->template_vars['{$basepath}']=_BASEPATH_;
 			$this->template_vars['{$tplpath}']=_BASEPATH_.'/skins_site/';
-			$this->template_vars['{$imagespath}']=_BASEPATH_.'/media/pics';
+			$this->template_vars['{$imagespath}']=_PHOTOPATH_;
 		}
 		if (defined('_SITENAME_')) {
 			$this->template_vars['{$sitename}']=_SITENAME_;

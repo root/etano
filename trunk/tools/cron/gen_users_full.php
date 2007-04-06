@@ -54,7 +54,7 @@ while ($profile=mysql_fetch_assoc($res)) {
 			unset($profile[$field['dbfield']]);
 		}
 	}
-	if (empty($profile['_photo']) || !is_file(_BASEPATH_.'/media/pics/t1/'.$profile['_photo']) || !is_file(_BASEPATH_.'/media/pics/t2/'.$profile['_photo']) || !is_file(_BASEPATH_.'/media/pics/'.$profile['_photo'])) {
+	if (empty($profile['_photo']) || !is_file(_PHOTOPATH_.'/t1/'.$profile['_photo']) || !is_file(_PHOTOPATH_.'/t2/'.$profile['_photo']) || !is_file(_PHOTOPATH_.'/'.$profile['_photo'])) {
 		$profile['_photo']='no_photo.gif';
 	} else {
 		$profile['has_photo']=true;

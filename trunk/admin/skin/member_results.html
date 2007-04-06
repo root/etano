@@ -6,30 +6,31 @@
 	<form action="" method="post" id="mass_member_form">
 	<input type="hidden" name="search" id="search" value="{search_md5}" />
 	<input type="hidden" name="return" value="{return}" />
-	<loop name="profile">
+	<loop name="loop">
 	<div class="member_details">
-		<input class="sel_user" type="checkbox" name="uids[]" value="{profile.fk_user_id}" id="uids_{profile.fk_user_id}" />
-		<a class="link_bare" href="profile.php?uid={profile.fk_user_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}"><img class="user_photo" src="{tplvars.relative_path}media/pics/t1/{profile._photo}" /></a>
-		<p><strong>{profile._user}</strong> (<opt name="profile.pending"><span class="alert_ppending">Needs your approval</span></opt name="profile.pending"><opt name="profile.need_edit"><span class="alert_pedit">Needs editing</span></opt name="profile.need_edit"><opt name="profile.approved"><span class="alert_papproved">Approved</span></opt name="profile.approved">)</p>
-		<p>{profile.field_46_label}: {profile.field_46}</p>
-		<p>{profile.field_47_label}: {profile.field_47}</p>
-		<p>{profile.field_48_label}: {profile.field_48}</p>
-		<p>{profile.field_50_label}: {profile.field_50}</p>
+		<input class="sel_user" type="checkbox" name="uids[]" value="{loop.fk_user_id}" id="uids_{loop.fk_user_id}" />
+		<a class="link_bare" href="profile.php?uid={loop.fk_user_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}"><img class="user_photo" src="{tplvars.photourl}/t1/{loop._photo}" /></a>
+		<p><strong>{loop._user}</strong> (<opt name="profile.pending"><span class="alert_ppending">Needs your approval</span></opt name="profile.pending"><opt name="profile.need_edit"><span class="alert_pedit">Needs editing</span></opt name="profile.need_edit"><opt name="profile.approved"><span class="alert_papproved">Approved</span></opt name="profile.approved">)</p>
+		<p>{loop.field_46_label}: {loop.field_46}</p>
+		<p>{loop.field_47_label}: {loop.field_47}</p>
+		<p>{loop.field_48_label}: {loop.field_48}</p>
+		<p>{loop.field_50_label}: {loop.field_50}</p>
 		<div class="actions">
 			<ul>
-			<li class="first"><a href="profile.php?uid={profile.fk_user_id}&search={search_md5}&amp;o={o}&amp;r={r}">View</a></li>
-			<opt name="profile.del"><li><a href="processors/member_delete.php?act=-1&amp;uids%5B%5D={profile.fk_user_id}&amp;return={return}">Undelete</a></li></opt name="profile.del">
+			<li class="first"><a href="profile.php?uid={loop.fk_user_id}&search={search_md5}&amp;o={o}&amp;r={r}">View</a></li>
+			<opt name="profile.del"><li><a href="processors/member_delete.php?act=-1&amp;uids%5B%5D={loop.fk_user_id}&amp;return={return}">Undelete</a></li></opt name="profile.del">
 			</ul>
 		</div>
 	</div>
-	<noloop name="profile">
+	<noloop name="loop">
 	<div class="member_details">
 	No members found meeting your search criteria.
 	</div>
-	</noloop name="profile">
-	</loop name="profile">
+	</noloop name="loop">
+	</loop name="loop">
 	</form>
 	<p><input type="checkbox" id="dummy" /><label for="dummy">Select all</a>
+
 	{pager2}
 
 	<div id="mass_members">

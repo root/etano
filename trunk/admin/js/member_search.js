@@ -1,14 +1,5 @@
 $(function() {
-	$('#wphoto').bind('click',function() {
-		if (this.checked) {
-			$('#wophoto')[0].checked=false;
-		}
-	});
-	$('#wophoto').bind('click',function() {
-		if (this.checked) {
-			$('#wphoto')[0].checked=false;
-		}
-	});
+	$('#member_search_form input:first:visible').focus();
 });
 
 function req_update_location(str_field,val) {
@@ -19,11 +10,11 @@ function req_update_location(str_field,val) {
 					allopts=data.split("\n");
 					str_field=allopts[0];
 					toshow=allopts[1].split('|');
-					$('#row_'+str_field+'state').removeClass('visible').addClass('invisible');
-					$('#row_'+str_field+'city').removeClass('visible').addClass('invisible');
-					$('#row_'+str_field+'zip').removeClass('visible').addClass('invisible');
+					$('#row_'+str_field+'state').addClass('invisible').removeClass('visible');
+					$('#row_'+str_field+'city').addClass('invisible').removeClass('visible');
+					$('#row_'+str_field+'zip').addClass('invisible').removeClass('visible');
 					for (i=0;i<toshow.length;i++) {
-						$('#row_'+toshow[i]).removeClass('invisible').addClass('visible');
+						$('#row_'+toshow[i]).addClass('visible').removeClass('invisible');
 					}
 					if (allopts.length>3) {
 						to_update=$('#'+str_field+allopts[2])[0];

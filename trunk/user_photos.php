@@ -72,7 +72,7 @@ if (!empty($totalrows)) {
 		$temp[]=$rsrow;
 	}
 	for ($i=0;isset($temp[$i]);++$i) {
-		$user_album[$i]='<a href="photo_view.php?photo_id='.$temp[$i]['photo_id'].'&amp;o='.$o.'&amp;r='.$r.'" title="View photo &amp; comments"><img src="'.$tplvars['relative_path'].'media/pics/t1/'.$temp[$i]['photo'].'" /></a><p class="caption">'.$temp[$i]['caption'].'</p>';
+		$user_album[$i]='<a href="photo_view.php?photo_id='.$temp[$i]['photo_id'].'&amp;o='.$o.'&amp;r='.$r.'" title="View photo &amp; comments"><img src="'._PHOTOURL_.'/t1/'.$temp[$i]['photo'].'" /></a><p class="caption">'.$temp[$i]['caption'].'</p>';
 		if ($editable) {
 			$user_album[$i].='<p class="privacy">'.$temp[$i]['is_private'].' <a href="photo_settings.php?photo_ids='.$temp[$i]['photo_id'].'&amp;o='.$o.'&amp;r='.$r.'">Change</a></p>';
 		}

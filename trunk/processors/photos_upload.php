@@ -41,9 +41,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!empty($input['file1'])) {
 		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file1'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file1'])<$config['max_size']) || empty($config['max_size']))) {
 			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t1_width'],_BASEPATH_.'/media/pics/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t2_width'],_BASEPATH_.'/media/pics/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['pic_width'],_BASEPATH_.'/media/pics/'.$rand,$filename,$config);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
 			@unlink(_BASEPATH_.'/tmp/'.$input['file1']);
 			$input['file1']=$rand.'/'.$filename.'.jpg';
 		} else {
@@ -56,9 +56,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!empty($input['file2'])) {
 		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file2'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file2'])<$config['max_size']) || empty($config['max_size']))) {
 			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t1_width'],_BASEPATH_.'/media/pics/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t2_width'],_BASEPATH_.'/media/pics/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['pic_width'],_BASEPATH_.'/media/pics/'.$rand,$filename,$config);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
 			@unlink(_BASEPATH_.'/tmp/'.$input['file2']);
 			$input['file2']=$rand.'/'.$filename.'.jpg';
 		} else {
@@ -72,9 +72,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file3'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file3'])<$config['max_size']) || empty($config['max_size']))) {
 			mt_srand(make_seed());
 			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t1_width'],_BASEPATH_.'/media/pics/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t2_width'],_BASEPATH_.'/media/pics/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['pic_width'],_BASEPATH_.'/media/pics/'.$rand,$filename,$config);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
 			@unlink(_BASEPATH_.'/tmp/'.$input['file3']);
 			$input['file3']=$rand.'/'.$filename.'.jpg';
 		} else {
@@ -87,9 +87,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!empty($input['file4'])) {
 		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file4'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file4'])<$config['max_size']) || empty($config['max_size']))) {
 			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t1_width'],_BASEPATH_.'/media/pics/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t2_width'],_BASEPATH_.'/media/pics/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['pic_width'],_BASEPATH_.'/media/pics/'.$rand,$filename,$config);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
 			@unlink(_BASEPATH_.'/tmp/'.$input['file4']);
 			$input['file4']=$rand.'/'.$filename.'.jpg';
 		} else {
@@ -102,9 +102,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!empty($input['file5'])) {
 		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file5'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file5'])<$config['max_size']) || empty($config['max_size']))) {
 			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t1_width'],_BASEPATH_.'/media/pics/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t2_width'],_BASEPATH_.'/media/pics/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['pic_width'],_BASEPATH_.'/media/pics/'.$rand,$filename,$config);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
 			@unlink(_BASEPATH_.'/tmp/'.$input['file5']);
 			$input['file5']=$rand.'/'.$filename.'.jpg';
 		} else {
@@ -117,9 +117,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!empty($input['file6'])) {
 		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file6'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file6'])<$config['max_size']) || empty($config['max_size']))) {
 			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t1_width'],_BASEPATH_.'/media/pics/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t2_width'],_BASEPATH_.'/media/pics/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['pic_width'],_BASEPATH_.'/media/pics/'.$rand,$filename,$config);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
+			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
 			@unlink(_BASEPATH_.'/tmp/'.$input['file6']);
 			$input['file6']=$rand.'/'.$filename.'.jpg';
 		} else {
