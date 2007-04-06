@@ -12,9 +12,9 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 require_once '../../includes/sessions.inc.php';
-require_once '../../includes/classes/phemplate.class.php';
 require_once '../../includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
+require_once '../../includes/classes/phemplate.class.php';
 
 $topass=array();
 $qs='';

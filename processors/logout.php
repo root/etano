@@ -13,8 +13,8 @@ Support at:                 http://forum.datemill.com
 
 require_once '../includes/sessions.inc.php';
 require_once '../includes/vars.inc.php';
-require_once '../includes/user_functions.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
+require_once '../includes/user_functions.inc.php';
 
 if (isset($_SESSION['user']['user_id'])) {
 	$query="DELETE FROM `{$dbtable_prefix}online` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
