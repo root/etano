@@ -76,8 +76,13 @@ function get_my_skin() {
 		$myreturn=$_SESSION['user']['skin'];
 	} elseif (isset($_COOKIE['sco_app']['skin']) && preg_match('/^\w+$/',$_COOKIE['sco_app']['skin']) && !empty($_COOKIE['sco_app']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_COOKIE['sco_app']['skin'])) {
 		$myreturn=$_COOKIE['sco_app']['skin'];
+		// save the option in less expensive places
+		$_SESSION['user']['skin']=$myreturn;
 	} else {
 		$myreturn=get_default_skin_dir();
+		// save the option in less expensive places
+		$_COOKIE['sco_app']['skin']=$myreturn;
+		$_SESSION['user']['skin']=$myreturn;
 	}
 	return $myreturn;
 }

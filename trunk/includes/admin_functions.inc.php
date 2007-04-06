@@ -13,6 +13,11 @@ Support at:                 http://forum.datemill.com
 
 //set_error_handler('admin_error');
 require_once 'general_functions.inc.php';
+$_lang=array();
+require_once _BASEPATH_.'/skins_site/'.get_default_skin_dir().'/lang/strings.inc.php';
+$_pfields=array();
+$_pcats=array();
+require_once 'fields.inc.php';
 
 define('DEPT_MODERATOR',2);
 define('DEPT_ADMIN',4);
@@ -287,7 +292,7 @@ function get_userid_by_user($user) {
 
 //	$email must have the keys: 'subject','message_body'
 //	Both the subject and the message_body are assumed to be NOT sanitized but STRIPSLASH_MQ'ed
-function queue_email($email_addrs,$email,$force_send=false) {
+function queue_or_send_email($email_addrs,$email,$force_send=false) {
 	$myreturn=true;
 	if (is_string($email_addrs)) {
 		$email_addrs=array($email_addrs);
@@ -295,7 +300,8 @@ function queue_email($email_addrs,$email,$force_send=false) {
 	$config=get_site_option(array('use_queue','mail_from'),'core');
 	$query_len=10000;
 	if (!$force_send && !empty($config['use_queue'])) {
-		$email=sanitize_and_format($email,TYPE_STRING,FORMAT_ADDSLASH);
+		$email['subject']=sanitize_and_format($email['subject'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
+		$email['message_body']=sanitize_and_format($email['message_body'],TYPE_STRING,$__html2format[HTML_TEXTAREA]);
 		global $dbtable_prefix;
 		$base="INSERT INTO `{$dbtable_prefix}queue_email` (`to`,`subject`,`message_body`) VALUES ";
 		$query=$base;
@@ -316,8 +322,10 @@ function queue_email($email_addrs,$email,$force_send=false) {
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	} else {
+		$email['subject']=sanitize_and_format($email['subject'],TYPE_STRING,FORMAT_STRIP_MQ | FORMAT_ONELINE | FORMAT_TRIM);
+		$email['message_body']=sanitize_and_format($email['message_body'],TYPE_STRING,FORMAT_STRIP_MQ);
 		require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
-		$mail=new PHPMailer;
+		$mail=new PHPMailer();
 		$mail->IsHTML(true);
 		$mail->From=$config['mail_from'];
 		$mail->Sender=$config['mail_from'];
