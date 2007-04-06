@@ -32,7 +32,7 @@ $topass['message']['text']='Blog and all posts deleted.';     // translate
 
 $nextpage='my_blogs.php';
 if (isset($_POST['return']) && !empty($_POST['return'])) {
-	$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
 	$nextpage=$input['return'];
 }
 $nextpage=_BASEURL_.'/'.$nextpage;

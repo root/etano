@@ -36,7 +36,7 @@ if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
 }
 
 $act=isset($_REQUEST['act']) ? (int)$_REQUEST['act'] : 1;
-$input['return']=rawurldecode(sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+$input['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 if (!empty($input['uids'])) {
 	if ($act==1) {

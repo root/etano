@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['uids']=sanitize_and_format($input['uids'],TYPE_INT,0,array());
 	$input['subject']=sanitize_and_format_gpc($_POST,'subject',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 	$input['message_body']=sanitize_and_format_gpc($_POST,'message_body',TYPE_STRING,$__html2format[HTML_TEXTAREA],'');
-	$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 	if (empty($input['uids'])) {
 		$error=true;

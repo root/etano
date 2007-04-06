@@ -40,7 +40,7 @@ if (!empty($output['allow_comments'])) {
 	$output['allow_comments']='checked="checked"';
 }
 if (!isset($output['return']) && isset($_GET['return'])) {
-	$output['return']=rawurlencode(sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUENCODE,'');
 }
 
 $tplvars['bbcode_blogs']=get_site_option('bbcode_blogs','core_blog');

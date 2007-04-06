@@ -35,7 +35,7 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
 	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 }
 $input['act']=sanitize_and_format_gpc($_POST,'act',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
-$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 if (!empty($input['uids'])) {
 	switch ($input['act']) {

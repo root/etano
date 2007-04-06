@@ -32,7 +32,7 @@ if (isset($_SESSION['topass']['input'])) {
 }
 
 if (!isset($output['return']) && isset($_GET['return'])) {
-	$output['return']=rawurlencode(sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUENCODE,'');
 }
 $flirt_type=sanitize_and_format_gpc($_GET,'ft',TYPE_INT,0,0);
 

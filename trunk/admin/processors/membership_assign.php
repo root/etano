@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['uids']=sanitize_and_format($input['uids'],TYPE_INT,0,array());
 	$input['m_value']=sanitize_and_format_gpc($_POST,'m_value',TYPE_INT,0,0);
 	$input['duration']=sanitize_and_format_gpc($_POST,'duration',TYPE_INT,0,0);
-	$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 	if (empty($input['duration'])) {
 		$error=true;

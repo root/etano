@@ -287,7 +287,7 @@ function get_userid_by_user($user) {
 
 //	$email must have the keys: 'subject','message_body'
 //	Both the subject and the message_body are assumed to be NOT sanitized but STRIPSLASH_MQ'ed
-function queue_or_send_email($email_addrs,$email,$force_send=false) {
+function queue_email($email_addrs,$email,$force_send=false) {
 	$myreturn=true;
 	if (is_string($email_addrs)) {
 		$email_addrs=array($email_addrs);
@@ -307,7 +307,7 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 				if ($query!=$base) {
 					$query=substr($query,0,-1);
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-					$query=$base.$temp;
+					$query=$base.$temp.',';
 				}
 			}
 		}
