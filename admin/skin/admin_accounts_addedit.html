@@ -1,10 +1,8 @@
-<script type="text/javascript" src="js/admin_accounts_addedit.js"></script>
-
-<h1>Admin Accounts</h1>
+<h2>Admin Accounts</h2>
 
 <div class="hint">Please enter the account info:</div>
 
-<form action="processors/admin_accounts_addedit.php" method="post" id="admin_accounts_addedit" onsubmit="return(check_form(this))">
+<form action="processors/admin_accounts_addedit.php" method="post" id="admin_accounts_addedit">
 <input type="hidden" name="admin_id" value="{admin_accounts.admin_id}" />
 <input type="hidden" name="o" value="{o}" />
 <input type="hidden" name="r" value="{r}" />
@@ -26,7 +24,7 @@
 <tr>
 	<td class="label"><label for="user">Change pass?</label></td>
 	<td class="field">
-		<input type="checkbox" name="change_pass" id="change_pass" value="1" {admin_accounts.change_pass} tabindex="3" onclick="showhide('change_pass','row_pass');showhide('change_pass','row_pass2');" />
+		<input type="checkbox" name="change_pass" id="change_pass" value="1" {admin_accounts.change_pass} tabindex="3" />
 	</td>
 	<td class="comment"></td>
 </tr>
@@ -77,6 +75,5 @@
 </table>
 </form>
 <div id="bottom_links"><a class="back" href="admin_accounts.php?o={o}&amp;r={r}">Back to list</a></div>
-<script type="text/javascript">
-	document.getElementById('name').focus();
-</script>
+
+<script type="text/javascript" src="js/admin_accounts_addedit.js"></script>

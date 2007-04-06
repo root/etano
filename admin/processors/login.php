@@ -15,6 +15,7 @@ require_once '../../includes/sessions.inc.php';
 require_once '../../includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../../includes/classes/phemplate.class.php';
+require_once '../../includes/admin_functions.inc.php';
 
 $topass=array();
 $qs='';
@@ -29,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$admin=mysql_fetch_assoc($res);
 			if ($admin['status']==ASTAT_ACTIVE) {
 				$_SESSION['admin']=$admin;
+				$_SESSION['admin']['def_skin']=get_default_skin_dir();
 				if (isset($_SESSION['admin']['timedout']['url'])) {
 					$next=$_SESSION['admin']['timedout'];
 					unset($_SESSION['admin']['timedout']);

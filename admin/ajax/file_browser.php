@@ -12,10 +12,10 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 require_once dirname(__FILE__).'/../../includes/sessions.inc.php';
-require_once dirname(__FILE__).'/../../includes/classes/phemplate.class.php';
 require_once dirname(__FILE__).'/../../includes/vars.inc.php';
-require_once dirname(__FILE__).'/../../includes/admin_functions.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
+require_once dirname(__FILE__).'/../../includes/classes/phemplate.class.php';
+require_once dirname(__FILE__).'/../../includes/admin_functions.inc.php';
 allow_dept(DEPT_ADMIN);
 
 $path=str_replace('..','',preg_replace('~[^a-zA-Z0-9\._/-]~','',sanitize_and_format_gpc($_POST,'path',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'')));
@@ -54,7 +54,7 @@ while (false!==($entry=$d->read())) {
 				case 'gif':
 				case 'jpg':
 				case 'png':
-					$files[$j]['file']='<a href="javascript:;" onclick="popWin()">'.$entry.'</a>';
+					$files[$j]['file']='<a href="javascript:;">'.$entry.'<img src="'._BASEURL_.'/'.$path.'/'.$entry.'" /></a>';
 					$files[$j]['class']='file_img';
 					++$j;
 					break;

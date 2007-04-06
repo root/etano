@@ -25,7 +25,7 @@ $qs_sep='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$input['page']=sanitize_and_format_gpc($_POST,'page',TYPE_INT,0,0);
+	$input['page']=sanitize_and_format_gpc($_POST,'page',TYPE_INT,0,1);
 	if ($input['page']==1) {
 		$input['user']=strtolower(sanitize_and_format_gpc($_POST,'user',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
 		$input['pass']=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
@@ -162,10 +162,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		if ($input['page']==1) {
-			$query="INSERT IGNORE INTO ".USER_ACCOUNTS_TABLE." SET `user`='".$input['user']."',`pass`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`='2',`status`='".ASTAT_UNVERIFIED."'";
+			$query="INSERT IGNORE INTO ".USER_ACCOUNTS_TABLE." SET `user`='".$input['user']."',`pass`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`='2',`status`='".ASTAT_UNVERIFIED."',`temp_pass`='".md5(gen_pass(6))."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$_SESSION['user']['reg_id']=mysql_insert_id();
-
+			send_template_email($input['email'],sprintf('Welcome to %s',_SITENAME_),'welcome.html',get_my_skin(),$input);
 		}
 		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['reg_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -207,9 +207,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 		ksort($next_join_pages,SORT_NUMERIC);
 		if (!empty($next_join_pages)) {
-			$page=array_shift($next_join_pages);
+			$page=array_shift(array_keys($next_join_pages));
 			$nextpage='join.php';
-			$qs.=$qs_sep.'p='.$nextpage;
+			$qs.=$qs_sep.'p='.$page;
 			$qs_sep='&';
 		}
 	} else {

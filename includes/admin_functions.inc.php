@@ -11,10 +11,16 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-//set_error_handler('admin_error');
+//if (function_exists('admin_error')) {
+//	set_error_handler('admin_error');
+//} elseif (function_exists('general_error')) {
+	set_error_handler('general_error');
+//}
+
 require_once 'general_functions.inc.php';
 $_lang=array();
-require_once _BASEPATH_.'/skins_site/'.get_default_skin_dir().'/lang/strings.inc.php';
+$def_skin=isset($_SESSION['admin']['def_skin']) ? $_SESSION['admin']['def_skin'] : get_default_skin_dir();
+require_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/strings.inc.php';
 $_pfields=array();
 $_pcats=array();
 require_once 'fields.inc.php';

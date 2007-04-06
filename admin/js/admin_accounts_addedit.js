@@ -1,6 +1,14 @@
 $(function() {
 	showhide('change_pass','row_pass');
 	showhide('change_pass','row_pass2');
+	$('#change_pass').bind('click',function() {
+		showhide('change_pass','row_pass');
+		showhide('change_pass','row_pass2');
+	});
+	$('#name').focus();
+	$('#admin_accounts_addedit').bind('submit',function() {
+		return(check_form($(this)[0]));
+	});
 });
 
 function check_form(the) {
@@ -35,10 +43,9 @@ function check_form(the) {
 }
 
 function showhide(strCheck,strHide) {
-	if (document.getElementById(strCheck).checked==true) {
+	if ($('#strCheck')[0].checked==true) {
 		$("#"+strHide).show();
 	} else {
 		$("#"+strHide).hide();
 	}
 }
-
