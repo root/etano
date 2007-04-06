@@ -7,12 +7,45 @@
 	padding: 5px;
 }
 
-/* file_edit.php */
-
-#file_content {
-	width: 100%;
-	white-space: nowrap;
-	overflow: scroll;
+.file_browser {
+	position: relative;
 }
 
+.folder {
+	background: url('../images/folder_closed.gif') no-repeat left center;
+	padding-left: 20px;
+}
+
+.file {
+	background: url('../images/file.gif') no-repeat left center;
+	padding-left: 20px;
+}
+
+.file_php {
+	background: url('../images/file.gif') no-repeat left center;
+	padding-left: 20px;
+}
+
+.file_html {
+	background: url('../images/file.gif') no-repeat left center;
+	padding-left: 20px;
+}
+
+.file_img {
+	background: url('../images/file.gif') no-repeat left center;
+	padding-left: 20px;
+}
+
+.file_img a img {
+	width: 0px;
+	position: fixed;
+	top: 100px;
+	right: 100px;
+	max-width: 200px;
+}
+
+.file_img a:hover img {
+	width: auto;
+	display: block;
+}
 

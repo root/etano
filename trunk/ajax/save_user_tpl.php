@@ -12,9 +12,9 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 require_once dirname(__FILE__).'/../includes/sessions.inc.php';
-require_once dirname(__FILE__).'/../includes/user_functions.inc.php';
 require_once dirname(__FILE__).'/../includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
+require_once dirname(__FILE__).'/../includes/user_functions.inc.php';
 
 $output='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {

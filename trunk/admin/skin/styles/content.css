@@ -433,18 +433,18 @@ ul.pager li.current_page, ul.pager li.dots {
 	visibility: hidden;
 }
 
-#member_search,#photo_search {
+#photo_search {
 	padding-bottom: 1em;
 	margin-bottom: 2em;
 	border-bottom: 1px dashed #CCC;
 	clear: both;
 }
 
-#member_search fieldset,#photo_search fieldset,#blog_search fieldset {
+#photo_search fieldset,#blog_search fieldset {
 	border: none;
 }
 
-#member_submenu,#photo_submenu,#blog_submenu {
+#photo_submenu,#blog_submenu {
 	float: left;
 	width: 200px;
 	clear: both;
@@ -459,15 +459,6 @@ h3 {
 	font-size: .8em;
 }
 
-li.folder {
-	background: url('../images/folder_closed.gif') no-repeat left center;
-	padding-left: 20px;
-}
-
-li.file, li.file_php, li.file_html {
-	background: url('../images/file.gif') no-repeat left center;
-	padding-left: 20px;
-}
 
 /* TABLELESS ITEM LISTS */
 

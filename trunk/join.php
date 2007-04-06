@@ -20,14 +20,13 @@ require_once 'includes/classes/sco_captcha.class.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
+$output=array();
 $page=1;
-$my_values=array();
 if (isset($_SESSION['topass']['input'])) {
-	$my_values=$_SESSION['topass']['input'];
-	$page=$my_values['page'];
+	$output=$_SESSION['topass']['input'];
 	unset($_SESSION['topass']['input']);
-	if ($page==1) {
-		$my_values['agree']='checked';
+	if ($page==1 && $output['agree']==1) {
+		$output['agree']='checked="checked"';
 	}
 } elseif (isset($_GET['p']) && !empty($_GET['p'])) {
 	$page=(int)$_GET['p'];
@@ -39,108 +38,125 @@ foreach ($_pfields as $field_id=>$field) {
 		$my_fields[]=$field_id;
 	}
 }
-if (empty($my_values)) {
+
+//get the default value for every displayed field
+if (empty($output)) {
 	for ($i=0;isset($my_fields[$i]);++$i) {
-		if ($_pfields[$my_fields[$i]]['html_type']==HTML_SELECT) {
-			$my_values[$_pfields[$my_fields[$i]]['dbfield']]=isset($_pfields[$my_fields[$i]]['default_value'][0]) ? $_pfields[$my_fields[$i]]['default_value'][0] : '';
-		} elseif ($_pfields[$my_fields[$i]]['html_type']==HTML_CHECKBOX_LARGE) {
-			$my_values[$_pfields[$my_fields[$i]]['dbfield']]=$_pfields[$my_fields[$i]]['default_value'];
-		} elseif ($_pfields[$my_fields[$i]]['html_type']==HTML_DATE) {
-			$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_month']='';
-			$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_day']='';
-			$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_year']='';
-		} elseif ($_pfields[$my_fields[$i]]['html_type']==HTML_LOCATION && isset($_pfields[$my_fields[$i]]['default_value'][0])) {
-			$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country']=$_pfields[$my_fields[$i]]['default_value'][0];
-		} else {
-			$my_values[$_pfields[$my_fields[$i]]['dbfield']]='';
-		}
-	}
+		$field=$_pfields[$my_fields[$i]];
+//print_r($field);
+		switch ($field['html_type']) {
+
+			case HTML_SELECT:
+				$output[$field['dbfield']]=isset($field['default_value'][0]) ? $field['default_value'][0] : '';
+				break;
+
+			case HTML_CHECKBOX_LARGE:
+				$output[$field['dbfield']]=$field['default_value'];
+				break;
+
+			case HTML_DATE:
+				$output[$field['dbfield'].'_month']='';
+				$output[$field['dbfield'].'_day']='';
+				$output[$field['dbfield'].'_year']='';
+				break;
+
+			case HTML_LOCATION:
+				if (isset($field['default_value'][0])) {
+					$output[$field['dbfield'].'_country']=$field['default_value'][0];
+				}
+				break;
+
+			default:
+				$output[$field['dbfield']]='';
+
+		}	// switch()
+	}	// for()
 }
 
-
-$my_rows=array();
+$loop=array();
 $j=0;
 for ($i=0;isset($my_fields[$i]);++$i) {
-	$my_rows[$j]['label']=$_pfields[$my_fields[$i]]['label'];
-	$my_rows[$j]['dbfield']=$_pfields[$my_fields[$i]]['dbfield'];
-	$my_rows[$j]['required']=isset($_pfields[$my_fields[$i]]['required']) ? true : false;
-	$my_rows[$j]['help_text']=$_pfields[$my_fields[$i]]['help_text'];
-	if (isset($my_values['error_'.$_pfields[$my_fields[$i]]['dbfield']])) {
-		$my_rows[$j]['class_error']=$my_values['error_'.$_pfields[$my_fields[$i]]['dbfield']];
-		unset($my_values['error_'.$_pfields[$my_fields[$i]]['dbfield']]);
+	$field=$_pfields[$my_fields[$i]];
+	$loop[$j]['label']=$field['label'];
+	$loop[$j]['dbfield']=$field['dbfield'];
+	$loop[$j]['required']=isset($field['required']) ? true : false;
+	$loop[$j]['help_text']=$field['help_text'];
+	if (isset($output['error_'.$field['dbfield']])) {
+		$loop[$j]['class_error']=$output['error_'.$field['dbfield']];
+		unset($output['error_'.$field['dbfield']]);
 	}
-	switch ($_pfields[$my_fields[$i]]['html_type']) {
+	switch ($field['html_type']) {
 
 		case HTML_TEXTFIELD:
-			$my_rows[$j]['field']='<input type="text" name="'.$_pfields[$my_fields[$i]]['dbfield'].'" id="'.$_pfields[$my_fields[$i]]['dbfield'].'" value="'.$my_values[$_pfields[$my_fields[$i]]['dbfield']].'" tabindex="'.($i+4).'" />';
+			$loop[$j]['field']='<input type="text" name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" value="'.$output[$field['dbfield']].'" tabindex="'.($i+4).'" />';
 			break;
 
 		case HTML_TEXTAREA:
-			$my_rows[$j]['field']='<textarea name="'.$_pfields[$my_fields[$i]]['dbfield'].'" id="'.$_pfields[$my_fields[$i]]['dbfield'].'" tabindex="'.($i+4).'">'.$my_values[$_pfields[$my_fields[$i]]['dbfield']].'</textarea>';
+			$loop[$j]['field']='<textarea name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.$output[$field['dbfield']].'</textarea>';
 			break;
 
 		case HTML_SELECT:
-			$my_rows[$j]['field']='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'" id="'.$_pfields[$my_fields[$i]]['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($_pfields[$my_fields[$i]]['accepted_values'],$my_values[$_pfields[$my_fields[$i]]['dbfield']],array(0)).'</select>';
+			$loop[$j]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$output[$field['dbfield']],array(0)).'</select>';
 			break;
 
 		case HTML_CHECKBOX_LARGE:
-			$my_rows[$j]['field']=vector2checkboxes_str($_pfields[$my_fields[$i]]['accepted_values'],array(0),$_pfields[$my_fields[$i]]['dbfield'],$my_values[$_pfields[$my_fields[$i]]['dbfield']],2,true,'tabindex="'.($i+4).'"');
+			$loop[$j]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],$output[$field['dbfield']],2,true,'tabindex="'.($i+4).'"');
 			break;
 
 		case HTML_DATE:
-			$my_rows[$j]['field']='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_month" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_month']).'</select>';
-			$my_rows[$j]['field'].='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_day" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">day</option>'.interval2options(1,31,$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_day']).'</select>';	// translate
-			$my_rows[$j]['field'].='<select name="'.$_pfields[$my_fields[$i]]['dbfield'].'_year" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">year</option>'.interval2options($_pfields[$my_fields[$i]]['accepted_values'][1],$_pfields[$my_fields[$i]]['accepted_values'][2],$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_year'],array(),1,2).'</select>'; // translate
+			$loop[$j]['field']='<select name="'.$field['dbfield'].'_month" id="'.$field['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$output[$field['dbfield'].'_month']).'</select>';
+			$loop[$j]['field'].='<select name="'.$field['dbfield'].'_day" id="'.$field['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">day</option>'.interval2options(1,31,$output[$field['dbfield'].'_day']).'</select>';	// translate
+			$loop[$j]['field'].='<select name="'.$field['dbfield'].'_year" id="'.$field['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">year</option>'.interval2options($field['accepted_values'][1],$field['accepted_values'][2],$output[$field['dbfield'].'_year'],array(),1,2).'</select>'; // translate
 			break;
 
 		case HTML_LOCATION:
-			$my_rows[$j]['label']='Country';	// translate this
-			$my_rows[$j]['dbfield']=$_pfields[$my_fields[$i]]['dbfield'].'_country';
-			$my_rows[$j]['field']='<select class="text" name="'.$_pfields[$my_fields[$i]]['dbfield'].'_country" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country']).'</select>';
+			$loop[$j]['label']='Country';	// translate this
+			$loop[$j]['dbfield']=$field['dbfield'].'_country';
+			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output[$field['dbfield'].'_country']).'</select>';
 			$prefered_input='s';
 			$num_states=0;
-			if (!empty($my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country'])) {
-				$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='".$my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country']."'";
+			if (!empty($output[$field['dbfield'].'_country'])) {
+				$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='".$output[$field['dbfield'].'_country']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				list($prefered_input,$num_states)=mysql_fetch_row($res);
 			}
 			++$j;
-			$my_rows[$j]['label']='State';	// translate this
-			$my_rows[$j]['dbfield']=$_pfields[$my_fields[$i]]['dbfield'].'_state';
-			$my_rows[$j]['field']='<select class="text" name="'.$_pfields[$my_fields[$i]]['dbfield'].'_state" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option></select>';	// translate this
-			$my_rows[$j]['class']=(!empty($my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country']) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
+			$loop[$j]['label']='State';	// translate this
+			$loop[$j]['dbfield']=$field['dbfield'].'_state';
+			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option></select>';	// translate this
+			$loop[$j]['class']=(!empty($output[$field['dbfield'].'_country']) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
 			++$j;
-			$my_rows[$j]['label']='City';	// translate this
-			$my_rows[$j]['dbfield']=$_pfields[$my_fields[$i]]['dbfield'].'_city';
-			$my_rows[$j]['field']='<select class="text" name="'.$_pfields[$my_fields[$i]]['dbfield'].'_city" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option></select>';	// translate this
-			$my_rows[$j]['class']='invisible';
+			$loop[$j]['label']='City';	// translate this
+			$loop[$j]['dbfield']=$field['dbfield'].'_city';
+			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option></select>';	// translate this
+			$loop[$j]['class']='invisible';
 			++$j;
-			$my_rows[$j]['label']='Zip';	// translate this
-			$my_rows[$j]['dbfield']=$_pfields[$my_fields[$i]]['dbfield'].'_zip';
-			$my_rows[$j]['field']='<input type="text" name="'.$_pfields[$my_fields[$i]]['dbfield'].'_zip" id="'.$_pfields[$my_fields[$i]]['dbfield'].'_zip" tabindex="'.($i+4).'" />';
-			$my_rows[$j]['class']=(!empty($my_values[$_pfields[$my_fields[$i]]['dbfield'].'_country']) && $prefered_input=='z') ? 'visible' : 'invisible';
+			$loop[$j]['label']='Zip';	// translate this
+			$loop[$j]['dbfield']=$field['dbfield'].'_zip';
+			$loop[$j]['field']='<input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" tabindex="'.($i+4).'" />';
+			$loop[$j]['class']=(!empty($output[$field['dbfield'].'_country']) && $prefered_input=='z') ? 'visible' : 'invisible';
 			break;
 
 	}
 	++$j;
-	unset($my_values[$_pfields[$my_fields[$i]]['dbfield']]);
+	unset($output[$field['dbfield']]);
 }
 
-$tpl->set_file('content','join.html');
-$tpl->set_loop('my_rows',$my_rows);
-$tpl->set_var('my_values',$my_values);
-$tpl->set_var('page',$page);
 if ($page==1) {
-	$tpl->set_var('page1',true);
+	$output['page1']=true;
 	if (get_site_option('use_captcha','core')) {
 		$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
-		$captcha_word=$c->gen_rnd_string(4);
-		$_SESSION['captcha_word']=$captcha_word;
-		$tpl->set_var('rand',make_seed());
+		$_SESSION['captcha_word']=$c->gen_rnd_string(4);
+		$output['rand']=make_seed();
 	}
 }
+$output['page']=$page;
+
+$tpl->set_file('content','join.html');
+$tpl->set_loop('loop',$loop);
+$tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
-$tpl->drop_loop('my_rows');
+$tpl->drop_loop('loop');
 
 $tplvars['title']='Registration';
 $tplvars['page_title']='Registration';
