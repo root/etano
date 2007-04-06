@@ -3,7 +3,7 @@
 
 	<loop name="photos">
 	<div class="photo_details">
-		<a class="link_bare" href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={photos.photo_id}','photo',{tplvars.pic_width},{tplvars.pic_width},1)"><img class="user_photo" src="../media/pics/t1/{photos.photo}" /></a>
+		<a class="link_bare" href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={photos.photo_id}','photo',{tplvars.pic_width},{tplvars.pic_width},1)"><img class="user_photo" src="{tplvars.photourl}/t1/{photos.photo}" /></a>
 		<p>Owner: <a href="profile.php?user={photos._user}">{photos._user}</a></p>
 		<p>Caption: {photos.caption}</p>
 		<p>Mode: {photos.is_private}</p>

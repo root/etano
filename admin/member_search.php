@@ -20,68 +20,69 @@ allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$profile=array();
-$profile['astat']=vector2options($accepted_astats);
-$profile['pstat']=vector2options($accepted_pstats);
-$profile['membership']=dbtable2options("`{$dbtable_prefix}memberships`",'`m_value`','`m_name`','`m_value`');
+$output=array();
+$output['astat']=vector2options($accepted_astats);
+$output['pstat']=vector2options($accepted_pstats);
+$output['membership']=dbtable2options("`{$dbtable_prefix}memberships`",'`m_value`','`m_name`','`m_value`');
 
-$search=array();
+$loop=array();
 $s=0;
-for ($i=1;$i<=RELEVANT_FIELDS;++$i) {
-	if (isset($_pfields[$i]['searchable'])) {
-		$search[$s]['label']=$_pfields[$i]['search_label'];
-		$search[$s]['dbfield']=$_pfields[$i]['dbfield'];
-		switch ($_pfields[$i]['search_type']) {
+for ($i=0;isset($basic_search_fields[$i]);++$i) {
+	$field=$_pfields[$basic_search_fields[$i]];
+	$loop[$s]['label']=$field['search_label'];
+	$loop[$s]['dbfield']=$field['dbfield'];
+	switch ($field['search_type']) {
 
-			case HTML_SELECT:
-				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'" id="'.$_pfields[$i]['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($_pfields[$i]['accepted_values']).'</select>';
-				break;
+		case HTML_SELECT:
+			$loop[$s]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values']).'</select>';
+			break;
 
-			case HTML_CHECKBOX_LARGE:
-				$search[$s]['field']=vector2checkboxes_str($_pfields[$i]['accepted_values'],array(0),$_pfields[$i]['dbfield'],array(0),2,true,'tabindex="'.($i+4).'"');
-				break;
+		case HTML_CHECKBOX_LARGE:
+			$loop[$s]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],array(0),2,true,'tabindex="'.($i+4).'"');
+			break;
 
-			case HTML_DATE:
-				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'_min" id="'.$_pfields[$i]['dbfield'].'_min" tabindex="'.($i+4).'"><option value="0">-</option>'.interval2options(date('Y')-$_pfields[$i]['accepted_values'][2],date('Y')-$_pfields[$i]['accepted_values'][1]).'</select> - ';
-				$search[$s]['field'].='<select name="'.$_pfields[$i]['dbfield'].'_max" id="'.$_pfields[$i]['dbfield'].'_max" tabindex="'.($i+4).'"><option value="0">-</option>'.interval2options(date('Y')-$_pfields[$i]['accepted_values'][2],date('Y')-$_pfields[$i]['accepted_values'][1]).'</select>';
-				break;
+		case HTML_RANGE:
+			if ($field['html_type']==HTML_DATE) {
+				$loop[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'"><option value="0">-</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1]).'</select> - ';
+				$loop[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'"><option value="0">-</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1]).'</select>';
+			} elseif ($field['html_type']==HTML_SELECT) {
+				$loop[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0],array(0)).'</select> - ';
+				$loop[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][1],array(0)).'</select>';
+			}
+			break;
 
-			case HTML_LOCATION:
-				$search[$s]['label']='Country';	// translate this
-				$search[$s]['dbfield']=$_pfields[$i]['dbfield'].'_country';
-				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'_country" id="'.$_pfields[$i]['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`').'</select>';
-				$prefered_input='s';
-				$num_states=0;
-				++$s;
-				$search[$s]['label']='State';	// translate this
-				$search[$s]['dbfield']=$_pfields[$i]['dbfield'].'_state';
-				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'_state" id="'.$_pfields[$i]['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option></select>';	// translate this
-				$search[$s]['class']='invisible';
-				++$s;
-				$search[$s]['label']='City';	// translate this
-				$search[$s]['dbfield']=$_pfields[$i]['dbfield'].'_city';
-				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'_city" id="'.$_pfields[$i]['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option></select>';	// translate this
-				$search[$s]['class']='invisible';
-				++$s;
-				$search[$s]['label']='Distance';	// translate this
-				$search[$s]['dbfield']=$_pfields[$i]['dbfield'].'_zip';
-				$search[$s]['field']='<select name="'.$_pfields[$i]['dbfield'].'_dist" id="'.$_pfields[$i]['dbfield'].'_dist" tabindex="'.($i+4).'">'.interval2options(1,10).'</select> miles from zip: <input type="text" name="'.$_pfields[$i]['dbfield'].'_zip" id="'.$_pfields[$i]['dbfield'].'_zip" tabindex="'.($i+4).'" size="5" />';
-				$search[$s]['class']='invisible';
-				break;
+		case HTML_LOCATION:
+			$loop[$s]['label']='Country';	// translate this
+			$loop[$s]['dbfield']=$field['dbfield'].'_country';
+			$loop[$s]['field']='<select name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`').'</select>';
+			$prefered_input='s';
+			$num_states=0;
+			++$s;
+			$loop[$s]['label']='State';	// translate this
+			$loop[$s]['dbfield']=$field['dbfield'].'_state';
+			$loop[$s]['field']='<select name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option></select>';	// translate this
+			$loop[$s]['class']='invisible';
+			++$s;
+			$loop[$s]['label']='City';	// translate this
+			$loop[$s]['dbfield']=$field['dbfield'].'_city';
+			$loop[$s]['field']='<select name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option></select>';	// translate this
+			$loop[$s]['class']='invisible';
+			++$s;
+			$loop[$s]['label']='Distance';	// translate this
+			$loop[$s]['dbfield']=$field['dbfield'].'_zip';
+			$loop[$s]['field']='<select name="'.$field['dbfield'].'_dist" id="'.$field['dbfield'].'_dist" tabindex="'.($i+4).'">'.interval2options(1,10).'</select> miles from zip: <input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" tabindex="'.($i+4).'" size="5" />';
+			$loop[$s]['class']='invisible';
+			break;
 
-		}
-		++$s;
-	} elseif (isset($_pfields[$i])) {
-		--$i;
 	}
+	++$s;
 }
 
 $tpl->set_file('content','member_search.html');
-$tpl->set_var('profile',$profile);
-$tpl->set_loop('search',$search);
-
+$tpl->set_var('output',$output);
+$tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP);
-$tpl->drop_loop('search');
+$tpl->drop_loop('loop');
 
 $tplvars['title']='Search';
 include 'frame.php';

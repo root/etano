@@ -66,19 +66,9 @@ if (!empty($search_md5)) {
 		unset($input['album']);
 	}
 
-	$search_fields=array();
-	foreach ($_pfields as $field_id=>$field) {
-		if (isset($field['searchable'])) {
-			$search_fields[]=$field_id;
-			if (count($search_fields)==RELEVANT_FIELDS) {
-				break;
-			}
-		}
-	}
-
-	// see what fields we received from the search
-	for ($i=0;isset($search_fields[$i]);++$i) {
-		$field=$_pfields[$search_fields[$i]];
+	// see what fields we received from the search and sanitize them
+	for ($i=0;isset($basic_search_fields[$i]);++$i) {
+		$field=$_pfields[$basic_search_fields[$i]];
 		switch ($field['search_type']) {
 
 			case HTML_SELECT:
@@ -95,7 +85,7 @@ if (!empty($search_md5)) {
 				}
 				break;
 
-			case HTML_DATE:
+			case HTML_RANGE:
 				$input[$field['dbfield'].'_min']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_min',TYPE_INT,0,0);
 				$input[$field['dbfield'].'_max']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_max',TYPE_INT,0,0);
 				if (empty($input[$field['dbfield'].'_max'])) {
@@ -129,7 +119,7 @@ if (!empty($search_md5)) {
 				break;
 
 		}	//switch ($field['search_type'])
-	} // the for() that constructs the where
+	} // for() each $basic_search_fields
 }
 
 if ($do_query) {
@@ -165,20 +155,9 @@ if ($do_query) {
 		$from.=",`{$dbtable_prefix}user_photos` c";
 	}
 
-	if (empty($search_fields)) {
-		foreach ($_pfields as $field_id=>$field) {
-			if (isset($field['searchable'])) {
-				$search_fields[]=$field_id;
-				if (count($search_fields)==RELEVANT_FIELDS) {
-					break;
-				}
-			}
-		}
-	}
-
 	// continue building the where clause of the query based on the input values we have.
-	for ($i=0;isset($search_fields[$i]);++$i) {
-		$field=$_pfields[$search_fields[$i]];
+	for ($i=0;isset($basic_search_fields[$i]);++$i) {
+		$field=$_pfields[$basic_search_fields[$i]];
 		switch ($field['search_type']) {
 
 			case HTML_SELECT:
@@ -186,7 +165,7 @@ if ($do_query) {
 					if ($field['html_type']==HTML_SELECT) {
 						$where.=" AND a.`".$field['dbfield']."`='".$input[$field['dbfield']]."'";
 					} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
-						$where.=" AND a.`".$field['dbfield']."` LIKE '|%".$input[$field['dbfield']]."%|'";
+						$where.=" AND a.`".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']]."|%'";
 					}
 				}
 				break;
@@ -206,7 +185,7 @@ if ($do_query) {
 						if (count($input[$field['dbfield']])) {
 							$where.=" AND (";
 							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
-								$where.="a.`".$field['dbfield']."` LIKE '|%".$input[$field['dbfield']][$j]."%|' OR ";
+								$where.="a.`".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']][$j]."|%' OR ";
 							}
 							$where=substr($where,0,-4);	// substract the last ' OR '
 							$where.=')';
@@ -215,12 +194,20 @@ if ($do_query) {
 				}
 				break;
 
-			case HTML_DATE:
+			case HTML_RANGE:
 				if (isset($input[$field['dbfield'].'_max'])) {
-					$where.=" AND a.`".$field['dbfield']."`>=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
+					if ($field['html_type']==HTML_DATE) {
+						$where.=" AND a.`".$field['dbfield']."`>=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
+					} elseif ($field['html_type']==HTML_SELECT) {
+						$where.=" AND `".$field['dbfield']."`<=".$input[$field['dbfield'].'_max'];
+					}
 				}
 				if (isset($input[$field['dbfield'].'_min'])) {
-					$where.=" AND a.`".$field['dbfield']."`<=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
+					if ($field['html_type']==HTML_DATE) {
+						$where.=" AND a.`".$field['dbfield']."`<=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
+					} elseif ($field['html_type']==HTML_SELECT) {
+						$where.=" AND `".$field['dbfield']."`>=".$input[$field['dbfield'].'_min'];
+					}
 				}
 				break;
 
@@ -281,7 +268,7 @@ if ($do_query) {
 $totalrows=count($user_ids);
 
 // get the details for the found user_ids...unfortunately that's another query
-$profile=array();
+$loop=array();
 if (!empty($totalrows)) {
 	// handle prev/next from profile.php
 	if (isset($_GET['uid']) && isset($_GET['go']) && ($_GET['go']==1 || $_GET['go']==-1)) {
@@ -294,52 +281,54 @@ if (!empty($totalrows)) {
 	}
 	$user_ids=array_slice($user_ids,$o,$r);
 	$query="SELECT `fk_user_id`,`_user`,`_photo`,`status`,`del`";
-	for ($i=1;$i<=RELEVANT_FIELDS;++$i) {
-		switch ($_pfields[$i]['html_type']) {
+	for ($i=0;isset($basic_search_fields[$i]);++$i) {
+		$field=$_pfields[$basic_search_fields[$i]];
+		switch ($field['html_type']) {
 
 			case HTML_LOCATION:
-				$query.=','.$_pfields[$i]['dbfield'].'_country,'.$_pfields[$i]['dbfield'].'_state,'.$_pfields[$i]['dbfield'].'_city,'.$_pfields[$i]['dbfield'].'_zip';
+				$query.=','.$field['dbfield'].'_country,'.$field['dbfield'].'_state,'.$field['dbfield'].'_city,'.$field['dbfield'].'_zip';
 				break;
 
 			default:
-				$query.=','.$_pfields[$i]['dbfield'];
+				$query.=','.$field['dbfield'];
 
 		}
 	}
 	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id` IN ('".join("','",$user_ids)."') ORDER BY `_user`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		for ($i=1;$i<=RELEVANT_FIELDS;++$i) {
-			$rsrow[$_pfields[$i]['dbfield'].'_label']=$_pfields[$i]['label'];
-			switch ($_pfields[$i]['html_type']) {
+		for ($i=0;isset($basic_search_fields[$i]);++$i) {
+			$field=$_pfields[$basic_search_fields[$i]];
+			$rsrow[$field['dbfield'].'_label']=$field['label'];
+			switch ($field['html_type']) {
 
 				case HTML_TEXTFIELD:
-					$rsrow[$_pfields[$i]['dbfield']]=sanitize_and_format($rsrow[$_pfields[$i]['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+					$rsrow[$field['dbfield']]=sanitize_and_format($rsrow[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 					break;
 
 				case HTML_TEXTAREA:
-					$rsrow[$_pfields[$i]['dbfield']]=sanitize_and_format($rsrow[$_pfields[$i]['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+					$rsrow[$field['dbfield']]=sanitize_and_format($rsrow[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 					break;
 
 				case HTML_SELECT:
-					$rsrow[$_pfields[$i]['dbfield']]=sanitize_and_format($_pfields[$i]['accepted_values'][$rsrow[$_pfields[$i]['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+					$rsrow[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$rsrow[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 					break;
 
 				case HTML_CHECKBOX_LARGE:
-					$rsrow[$_pfields[$i]['dbfield']]=sanitize_and_format(vector2string_str($_pfields[$i]['accepted_values'],$rsrow[$_pfields[$i]['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+					$rsrow[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$rsrow[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 					break;
 
 				case HTML_DATE:
-					$rsrow[$_pfields[$i]['dbfield']]=sanitize_and_format($rsrow[$_pfields[$i]['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+					$rsrow[$field['dbfield']]=sanitize_and_format($rsrow[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 					break;
 
 				case HTML_LOCATION:
-					$rsrow[$_pfields[$i]['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$rsrow[$_pfields[$i]['dbfield'].'_country'],'-');
-					if (!empty($rsrow[$_pfields[$i]['dbfield'].'_state'])) {
-						$rsrow[$_pfields[$i]['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$rsrow[$_pfields[$i]['dbfield'].'_state'],'-');
+					$rsrow[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$rsrow[$field['dbfield'].'_country'],'-');
+					if (!empty($rsrow[$field['dbfield'].'_state'])) {
+						$rsrow[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$rsrow[$field['dbfield'].'_state'],'-');
 					}
-					if (!empty($rsrow[$_pfields[$i]['dbfield'].'_city'])) {
-						$rsrow[$_pfields[$i]['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$rsrow[$_pfields[$i]['dbfield'].'_city'],'-');
+					if (!empty($rsrow[$field['dbfield'].'_city'])) {
+						$rsrow[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$rsrow[$field['dbfield'].'_city'],'-');
 					}
 					break;
 			}
@@ -357,7 +346,7 @@ if (!empty($totalrows)) {
 		if (empty($rsrow['del'])) {
 			unset($rsrow['del']);
 		}
-		$profile[]=$rsrow;
+		$loop[]=$rsrow;
 	}
 
 	$_GET=array('search'=>$search_md5);
@@ -366,7 +355,7 @@ if (!empty($totalrows)) {
 }
 
 $tpl->set_file('content','member_results.html');
-$tpl->set_loop('profile',$profile);
+$tpl->set_loop('loop',$loop);
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->set_var('search_md5',$search_md5);

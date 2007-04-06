@@ -69,9 +69,9 @@ function delete_members() {
 		for ($i=0;$i<mysql_num_rows($res);++$i) {
 			$photo=mysql_result($res,$i,1);
 			$photo_ids[]=mysql_result($res,$i,0);
-			$modman->fileop->delete(_BASEPATH_.'/media/pics/t1/'.$photo);
-			$modman->fileop->delete(_BASEPATH_.'/media/pics/t2/'.$photo);
-			$modman->fileop->delete(_BASEPATH_.'/media/pics/'.$photo);
+			$modman->fileop->delete(_PHOTOPATH_.'/t1/'.$photo);
+			$modman->fileop->delete(_PHOTOPATH_.'/t2/'.$photo);
+			$modman->fileop->delete(_PHOTOPATH_.'/'.$photo);
 		}
 		$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
