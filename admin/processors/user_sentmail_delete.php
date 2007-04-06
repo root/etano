@@ -22,7 +22,7 @@ $qs='';
 $qs_sep='';
 $topass=array();
 $uid=isset($_GET['uid']) ? (int)$_GET['uid'] : 0;
-$return=rawurldecode(sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+$return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 $query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `fk_user_id_other`='$uid'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

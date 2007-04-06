@@ -34,7 +34,7 @@ if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
 } elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
 	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 }
-$input['return']=rawurldecode(sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+$input['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 if (!empty($input['uids'])) {
 	$query="UPDATE `{$dbtable_prefix}user_profiles` SET `status`='".STAT_APPROVED."',`reject_reason`='',`last_changed`=now() WHERE `fk_user_id` IN ('".join("','",$input['uids'])."')";

@@ -28,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // get the input we need and sanitize it
 	$input['t']=sanitize_and_format_gpc($_POST,'t',TYPE_INT,0,0);
 	$input['id']=sanitize_and_format_gpc($_POST,'id',TYPE_INT,0,0);
-	$input['return']=rawurldecode(sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
 	$input['send_email']=sanitize_and_format_gpc($_POST,'send_email',TYPE_INT,0,0);
 	$input['reject_reason']=sanitize_and_format_gpc($_POST,'reject_reason',TYPE_STRING,$__html2format[HTML_TEXTAREA],'');
-// NO addslashes here!!! Used for queue_or_send_email()
-	$input['reason_title2']=sanitize_and_format_gpc($_POST,'reason_title',TYPE_STRING,FORMAT_STRIP_MQ | FORMAT_ONELINE,'');
+	$input['reason_title']=sanitize_and_format_gpc($_POST,'reason_title',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+// NO addslashes here!!! Used for queue_email()
 	$input['reject_reason2']=sanitize_and_format_gpc($_POST,'reject_reason',TYPE_STRING,FORMAT_STRIP_MQ,'');
 
 	switch ($input['t']) {
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="SELECT `email` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='".$input['id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
-					$ok=queue_or_send_email(array(mysql_result($res,0,0)),array('subject'=>$input['reason_title2'],'message_body'=>$input['reject_reason2']));
+					$ok=queue_email(array(mysql_result($res,0,0)),array('subject'=>$input['reason_title2'],'message_body'=>$input['reject_reason2']));
 				}
 			}
 			if ($ok) {
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="SELECT b.`email` FROM `{$dbtable_prefix}user_photos` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`user_id` AND a.`photo_id`='".$input['id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
-					$ok=queue_or_send_email(array(mysql_result($res,0,0)),array('subject'=>$input['reason_title2'],'message_body'=>$input['reject_reason2']));
+					$ok=queue_email(array(mysql_result($res,0,0)),array('subject'=>$input['reason_title2'],'message_body'=>$input['reject_reason2']));
 				}
 			}
 			if ($ok) {
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="SELECT b.`email` FROM `{$dbtable_prefix}blog_posts` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`user_id` AND a.`post_id`='".$input['id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
-					$ok=queue_or_send_email(array(mysql_result($res,0,0)),array('subject'=>$input['reason_title2'],'message_body'=>$input['reject_reason2']));
+					$ok=queue_email(array(mysql_result($res,0,0)),array('subject'=>$input['reason_title2'],'message_body'=>$input['reject_reason2']));
 				}
 			}
 			if ($ok) {

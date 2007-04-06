@@ -84,16 +84,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$next_join_pages=array();
 	$my_fields=array();
 	foreach ($_pfields as $field_id=>$field) {
+		// what fields should be processed on this page?
 		if (isset($field['reg_page'])) {
 			if ($field['reg_page']==$input['page']) {
 				$my_fields[]=$field_id;
 			}
+			// what pages are after us?
 			if ($field['reg_page']>$input['page']) {
 				$next_join_pages[$field['reg_page']]=1;
 			}
 		}
 	}
 
+	$textareas=array();
 	$on_changes=array();
 	$ch=0;
 	for ($i=0;isset($my_fields[$i]);++$i) {
@@ -128,6 +131,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 				break;
 
+			case HTML_TEXTAREA:
+				$textareas[]=$field['dbfield'];
+				// no break here, we still need the default behaviour
 			default:
 				$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__html2type[$field['html_type']],$__html2format[$field['html_type']],'');
 				if (isset($field['fn_on_change'])) {
@@ -159,6 +165,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="INSERT IGNORE INTO ".USER_ACCOUNTS_TABLE." SET `user`='".$input['user']."',`pass`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`='2',`status`='".ASTAT_UNVERIFIED."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$_SESSION['user']['reg_id']=mysql_insert_id();
+
 		}
 		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['reg_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -209,6 +216,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$nextpage='join.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
+		for ($i=0;isset($textareas[$i]);++$i) {
+			$input[$textareas[$i]]=addslashes_mq($_POST[$textareas[$i]]);
+		}
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}
