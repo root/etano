@@ -1,9 +1,10 @@
+$(function() {
+	$('input.number').numeric();
+});
+
 function toggle_module_visibility(module_code) {
-	mydiv=document.getElementById('mcontent_'+module_code);
-	if (mydiv.className=='module_content shown_options') {
-		mydiv.className='module_content hidden_options';
-	} else {
-		mydiv.className='module_content shown_options';
-		document.getElementById('module_code').value=module_code;
+	$('#mcontent_'+module_code).toggleClass('shown_options').toggleClass('hidden_options');
+	if ($('#mcontent_'+module_code).attr('class').indexOf('shown_options')!=-1) {
+		$('#module_code').val(module_code);
 	}
 }

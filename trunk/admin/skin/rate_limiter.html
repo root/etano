@@ -1,14 +1,11 @@
-<h1>Manage limits</h1>
+<h2>Manage limits</h2>
 
-<div class="content_submenu">
-	<span>Go to:</span>
-	<ul>
-		<li><a href="access_levels.php">Access Levels</a></li>
-		<li><a href="rate_limiter.php">Rate Limiter</a></li>
-	</ul>
-</div>
-
+<ul class="content_submenu">
+	<li><a href="access_levels.php">Access Levels</a></li>
+	<li class="active">Rate Limiter</li>
+</ul>
 <div class="hint"><strong>Manage limits for different memberships</strong></div>
+
 <table id="rates_list" class="results_table">
 <tr>
 	<th width="40"></th>
@@ -32,4 +29,5 @@
 </noloop name="rate_limiter">
 </loop name="rate_limiter">
 </table>
+
 <div id="bottom_links"><a class="add" href="rate_limiter_addedit.php" title="Add new limit">Add new</a></div>

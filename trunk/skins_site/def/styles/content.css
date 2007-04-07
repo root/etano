@@ -526,41 +526,27 @@ blockquote {
 }
 
 .bsmall {
-	background-image: url('../images/btn-blank-small-out.gif');
+	background-image: url('../images/btn-blank-small.gif');
 	width: 43px;
-}
-.bsmall:hover {
-	background-image: url('../images/btn-blank-small-over.gif');
 }
 
 .bmedium {
-	background-image: url('../images/btn-blank-medium-out.gif');
+	background-image: url('../images/btn-blank-medium.gif');
 	width: 75px;
-}
-.bmedium:hover {
-	background-image: url('../images/btn-blank-medium-over.gif');
 }
 
 .blarge {
-	background-image: url('../images/btn-blank-large-out.gif');
+	background-image: url('../images/btn-blank-large.gif');
 	width: 119px;
 }
-.blarge:hover {
-	background-image: url('../images/btn-blank-large-over.gif');
+
+.bsmall:hover, .bmedium:hover, .blarge:hover {
+	background-position: bottom;
 }
 
 /* IE hack: button hover */
-.bsmall_hover {
-	background-image: url('../images/btn-blank-small-over.gif');
-	width: 43px;
-}
-.bmedium_hover {
-	background-image: url('../images/btn-blank-medium-over.gif');
-	width: 75px;
-}
-.blarge_hover {
-	background-image: url('../images/btn-blank-large-over.gif');
-	width: 119px;
+.bsmall_hover, .bmedium_hover, .blarge_hover {
+	background-position: bottom;
 }
 
 

@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$log['level']=1;
 		$log['user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
 		$log['user']=$user;
-		$log['membership']=isset($_SESSION['user']['membership']) ? $_SESSION['user']['membership'] : 1;
+		$log['membership']=$_SESSION['user']['membership'];
 		$log['ip']=$_SERVER['REMOTE_ADDR'];
 		log_user_action($log);
 		$redirect=rate_limiter($log);
@@ -44,23 +44,28 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (mysql_num_rows($res)) {
 			$user=mysql_fetch_assoc($res);
 			$user['membership']=(int)$user['membership'];
-// need to check status & rate_limiter.
-			$user['prefs']=get_user_settings($user['user_id'],1);
-			if ($user['last_activity']<time()-$score_threshold) {
-				add_member_score($user['user_id'],'login');
-			}
-			unset($user['last_activity']);
-			$_SESSION['user']=$user;
-			if (isset($_SESSION['timedout']['url'])) {
-				$next=$_SESSION['timedout'];
-				unset($_SESSION['timedout']);
-				if ($next['method']=='GET') {
-					redirect2page($next['url'].'?'.array2qs($next['qs']),array(),'',true);
-				} else {
-					post2page($next['url'],$next['qs'],true);
+			if ($user['status']==ASTAT_ACTIVE) {
+				$user['prefs']=get_user_settings($user['user_id'],1);
+				if ($user['last_activity']<time()-$score_threshold) {
+					add_member_score($user['user_id'],'login');
 				}
-			} else {
-				$nextpage='home.php';
+				unset($user['last_activity']);
+				$_SESSION['user']=$user;
+				if (isset($_SESSION['timedout']['url'])) {
+					$next=$_SESSION['timedout'];
+					unset($_SESSION['timedout']);
+					if ($next['method']=='GET') {
+						redirect2page($next['url'].'?'.array2qs($next['qs']),array(),'',true);
+					} else {
+						post2page($next['url'],$next['qs'],true);
+					}
+				} else {
+					$nextpage='home.php';
+				}
+			} elseif ($user['status']==ASTAT_UNVERIFIED) {
+			} elseif ($user['status']==ASTAT_SUSPENDED) {
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']='Invalid user name or password. Please try again.';
 			}
 		} else {
 			$topass['message']['type']=MESSAGE_ERROR;

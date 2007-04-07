@@ -1,20 +1,10 @@
 $(function() {
 	// IE hack: hover for buttons
 	if($.browser.msie) {
-		$('input.blarge').hover(function() {
-			$(this).addClass('blarge_hover').removeClass('blarge');
+		$('input.blarge, input.bmedium, input.bsmall').hover(function() {
+			$(this).css('background-position','bottom');
 		},function() {
-			$(this).addClass('blarge').removeClass('blarge_hover');
-		});
-		$('input.bmedium').hover(function() {
-			$(this).addClass('bmedium_hover').removeClass('bmedium');
-		},function() {
-			$(this).addClass('bmedium').removeClass('bmedium_hover');
-		});
-		$('input.bsmall').hover(function() {
-			$(this).addClass('bsmall_hover').removeClass('bsmall');
-		},function() {
-			$(this).addClass('bsmall').removeClass('bsmall_hover');
+			$(this).css('background-position','top');
 		});
 	}
 });

@@ -1,15 +1,11 @@
-<script type="text/javascript" src="js/access_levels.js"></script>
+<h2>Access Levels</h2>
 
-<h1>Access Levels</h1>
-
-<div class="content_submenu">
-	<span>Go to:</span>
-	<ul>
-		<li><a href="access_levels.php">Access Levels</a></li>
-		<li><a href="rate_limiter.php">Rate Limiter</a></li>
-	</ul>
-</div>
+<ul class="content_submenu">
+	<li class="active">Access Levels</li>
+	<li><a href="rate_limiter.php">Rate Limiter</a></li>
+</ul>
 <div class="hint"><strong>Change access levels and add new membership types if needed:</strong></div>
+
 <form action="processors/access_levels.php" method="post" id="access_levels">
 <table cellspacing="0" id="acc_levels" class="results_table">
 <tr>
@@ -43,3 +39,5 @@
 <input type="hidden" name="m_id" value="" />
 <input type="hidden" name="m_name" value="" />
 </form>
+
+<script type="text/javascript" src="js/access_levels.js"></script>

@@ -121,6 +121,8 @@ function send_template_email($to,$subject,$template,$skin,$output=array()) {
 	$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$skin.'/emails/','remove_nonjs');
 	$tpl->set_file('temp',$template);
 	$tpl->set_var('output',$output);
+	global $tplvars;
+	$tpl->set_var('tplvars',$tplvars);
 	$message_body=$tpl->process('temp','temp',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL | TPL_FINISH);
 
 	$config=get_site_option(array('mail_from'),'core');

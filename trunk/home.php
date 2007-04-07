@@ -25,7 +25,7 @@ $query="SELECT `_photo` as `photo`,UNIX_TIMESTAMP(`date_added`) as `date_added` 
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $output=mysql_fetch_assoc($res);
 if (empty($output['photo'])) {
-	$output['photo']='no-photo.gif';
+	$output['photo']='no_photo.gif';
 }
 $output['date_added']=strftime($_user_settings['date_format'],$output['date_added']+$_user_settings['time_offset']);
 
