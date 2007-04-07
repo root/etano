@@ -122,9 +122,6 @@
 	padding: 0 3px 0 0;
 }
 
-* html #controls select {
-	margin: 0 0 -3px 3px;
-}
 #controls select {
 	font: 12px "Trebuchet MS", Arial, sans-serif;
 }

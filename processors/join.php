@@ -19,7 +19,7 @@ require_once '../includes/user_functions.inc.php';
 
 $error=false;
 $topass=array();
-$nextpage='login.php';
+$nextpage='info.php';
 $qs='';
 $qs_sep='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
@@ -109,6 +109,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$input[$field['dbfield'].'_year']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_year',TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield'].'_year']) && !empty($input[$field['dbfield'].'_month']) && !empty($input[$field['dbfield'].'_day'])) {
 					$input[$field['dbfield']]=$input[$field['dbfield'].'_year'].'-'.str_pad($input[$field['dbfield'].'_month'],2,'0',STR_PAD_LEFT).'-'.str_pad($input[$field['dbfield'].'_day'],2,'0',STR_PAD_LEFT);
+				} else {
+					$input[$field['dbfield']]='';
 				}
 				if (isset($field['fn_on_change'])) {
 					$on_changes[$ch]['fn']=$field['fn_on_change'];
@@ -162,10 +164,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		if ($input['page']==1) {
-			$query="INSERT IGNORE INTO ".USER_ACCOUNTS_TABLE." SET `user`='".$input['user']."',`pass`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`='2',`status`='".ASTAT_UNVERIFIED."',`temp_pass`='".md5(gen_pass(6))."'";
+			$input['temp_pass']=md5(gen_pass(6));
+			$query="INSERT IGNORE INTO ".USER_ACCOUNTS_TABLE." SET `user`='".$input['user']."',`pass`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`='2',`status`='".ASTAT_UNVERIFIED."',`temp_pass`='".$input['temp_pass']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$_SESSION['user']['reg_id']=mysql_insert_id();
-			send_template_email($input['email'],sprintf('Welcome to %s',_SITENAME_),'welcome.html',get_my_skin(),$input);
+			$_SESSION['user']['email']=$input['email'];	// for info_signup.html
+			$input['uid']=$_SESSION['user']['reg_id'];
+			send_template_email($input['email'],sprintf('%s user registration confirmation',_SITENAME_),'confirm_reg.html',get_my_skin(),$input);
 		}
 		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['reg_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -210,6 +215,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$page=array_shift(array_keys($next_join_pages));
 			$nextpage='join.php';
 			$qs.=$qs_sep.'p='.$page;
+			$qs_sep='&';
+		} else {
+			$nextpage='info.php';
+			$qs.=$qs_sep.'type=signup';
 			$qs_sep='&';
 		}
 	} else {

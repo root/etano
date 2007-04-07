@@ -1,8 +1,6 @@
 - de adaugat vector2checkboxes_alt in sco_functions pt TYPE_CHECKBOX (si in html2format)
 (admin\profile_categories_addedit.php are un vector2checkboxes_new)
 
-- poate ca ar trebui adaugat un DEFAULT_VALUE care sa fie afisat la toate campurile care nu au nimic introdus.
-
 - nu ar trebui sa generez lk pentru search label daca nu e searchable.
 - in caz de eroare la profile_edit
 
@@ -73,14 +71,11 @@ TODO
 - create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
 - help texts pentru campurile textarea
 - lungime maxima camp pt textareas
-- de convertit scoax la jquery
 
-- phpmailer
 - cautare membri cu poze (poza din profil probabil...)
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
 
 - cand se adauga o poza NE-privata in album, daca nu exista poza in profil, sa se faca automat is_main
-- join: buton pt "check"
 
 - functie fields_edit_tpl($field_ids)
 - functie fields_search_tpl($field_ids)

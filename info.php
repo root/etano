@@ -16,12 +16,37 @@ require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
-check_login_member(2);
 
+$type=isset($_GET['type']) ? $_GET['type'] : '';
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
-$tpl->set_file('content','info.html');
+
+$output=array();
+switch ($type) {
+	case 'signup':
+		$template='info_signup.html';
+		$output['email']=isset($_SESSION['user']['email']) ? $_SESSION['user']['email'] : '';
+		$tplvars['page_title']='Signup successful!';
+		$tplvars['page']='info_signup';
+		break;
+
+	case 'upgrade':
+		$template='info_upgrade.html';
+		$tplvars['page_title']='Upgrade';
+		$tplvars['page']='info_upgrade';
+		break;
+
+	default:
+		$template='info.html';
+
+}
+$tpl->set_file('content',$template);
+$tpl->set_var('output',$output);
 $tpl->process('content','content');
 
-$tplvars['title']='Member Home';
+$tplvars['title']='Info';
+$tplvars['css']='info.css';
+if (is_file('info_left.php')) {
+	include 'info_left.php';
+}
 include 'frame.php';
 ?>
