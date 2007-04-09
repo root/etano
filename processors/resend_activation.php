@@ -1,0 +1,34 @@
+<?php
+/******************************************************************************
+newdsb
+===============================================================================
+File:                       processors/resend_activation.php
+$Revision: 94 $
+Software by:                DateMill (http://www.datemill.com)
+Copyright by:               DateMill (http://www.datemill.com)
+Support at:                 http://forum.datemill.com
+*******************************************************************************
+* See the "softwarelicense.txt" file for license.                             *
+******************************************************************************/
+
+require_once '../includes/sessions.inc.php';
+require_once '../includes/vars.inc.php';
+db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
+require_once '../includes/classes/phemplate.class.php';
+require_once '../includes/user_functions.inc.php';
+
+$qs='type=signup';
+$qssep='&';
+
+$uid=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
+if (!empty($uid)) {
+	$query="SELECT `user_id` as `uid`,`email`,`temp_pass` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='$uid'";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		$input=mysql_fetch_assoc($res);
+		send_template_email($input['email'],sprintf('%s user registration confirmation',_SITENAME_),'confirm_reg.html',get_my_skin(),$input);
+		$qs.=$qssep.'email='.$input['email'];
+	}
+}
+redirect2page('info.php',array(),$qs);
+?>
