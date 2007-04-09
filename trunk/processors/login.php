@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']="We're sorry but you tried to login too many times. Please wait for a while before trying that again.";
 			redirect2page('info.php',$topass);
 		}
-		$query="SELECT a.`user_id`,a.`user`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`user`='$user' AND a.`pass`=md5('$pass')";
+		$query="SELECT a.`user_id`,a.`user`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity`,a.`email` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`user`='$user' AND a.`pass`=md5('$pass')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$user=mysql_fetch_assoc($res);
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if ($user['last_activity']<time()-$score_threshold) {
 					add_member_score($user['user_id'],'login');
 				}
-				unset($user['last_activity']);
+				unset($user['last_activity'],$user['email']);
 				$_SESSION['user']=$user;
 				if (isset($_SESSION['timedout']['url'])) {
 					$next=$_SESSION['timedout'];
@@ -63,6 +63,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$nextpage='home.php';
 				}
 			} elseif ($user['status']==ASTAT_UNVERIFIED) {
+				$nextpage='info.php';
+				$qs.=$qssep.'type=acctactiv&uid='.$user['user_id'].'&email='.$user['email'];
+				$qssep='&';
 			} elseif ($user['status']==ASTAT_SUSPENDED) {
 				$topass['message']['type']=MESSAGE_ERROR;
 				$topass['message']['text']='Invalid user name or password. Please try again.';

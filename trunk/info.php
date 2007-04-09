@@ -24,7 +24,7 @@ $output=array();
 switch ($type) {
 	case 'signup':
 		$template='info_signup.html';
-		$output['email']=isset($_SESSION['user']['email']) ? $_SESSION['user']['email'] : '';
+		$output['email']=isset($_SESSION['user']['email']) ? $_SESSION['user']['email'] : (isset($_GET['email']) ? $_GET['email'] : '');
 		$tplvars['page_title']='Signup successful!';
 		$tplvars['page']='info_signup';
 		break;
@@ -33,6 +33,26 @@ switch ($type) {
 		$template='info_upgrade.html';
 		$tplvars['page_title']='Upgrade';
 		$tplvars['page']='info_upgrade';
+		break;
+
+	case 'mailsent':
+		$template='info_mailsent.html';
+		$tplvars['page_title']='Email sent';
+		$tplvars['page']='info_mailsent';
+		break;
+
+	case 'acctactiv':	// activate account
+		$template='info_acctactiv.html';
+		$tplvars['page_title']='Activate your account';
+		$tplvars['page']='info_acctactiv';
+		$output['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
+		$output['email']=sanitize_and_format_gpc($_GET,'email',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+		break;
+
+	case 'acctok':	// account confirmed
+		$template='info_acctok.html';
+		$tplvars['page_title']='Account successfully confirmed!';
+		$tplvars['page']='info_acctok';
 		break;
 
 	default:
