@@ -499,6 +499,7 @@ a.item_add {
 	display: block;
 	width: 16px;
 	height: 16px;
+	text-indent: -9999px;
 }
 
 a.item_del {
@@ -507,6 +508,7 @@ a.item_del {
 	width: 16px;
 	height: 16px;
 	float: left;
+	text-indent: -9999px;
 }
 
 a.item_edit {
@@ -515,6 +517,7 @@ a.item_edit {
 	width: 16px;
 	height: 16px;
 	float: right;
+	text-indent: -9999px;
 }
 
 a.item_moveup {
@@ -523,6 +526,7 @@ a.item_moveup {
 	width: 16px;
 	height: 16px;
 	float: left;
+	text-indent: -9999px;
 }
 
 a.item_movedown {
@@ -531,10 +535,7 @@ a.item_movedown {
 	width: 16px;
 	height: 16px;
 	float: right;
-}
-
-a.item_edit i, a.item_del i, a.item_add i, a.item_moveup i, a.item_movedown i {
-	display: none;
+	text-indent: -9999px;
 }
 
 #bottom_links {

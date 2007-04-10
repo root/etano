@@ -133,14 +133,11 @@
 	background-image: url('../images/btn-logout.gif');
 	background-position: top;
 	margin: 4px 5px 0;
+	text-indent: -9999px;
 }
 
 #login-box #logout:hover {
 	background-position: bottom;
-}
-
-#login-box #logout i {
-	display: none;
 }
 
 #login-box span {

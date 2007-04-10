@@ -18,8 +18,9 @@
 </tr>
 <loop name="loop">
 <tr class="result_item {loop.myclass}" align="center">
-	<td class="control"><a href="processors/profile_fields_delete.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" onclick="return(confirm('Are you sure you want to remove this field?'))" title="Delete field"><img src="skin/images/del.gif" alt="delete" /></a>
-		<a href="profile_fields_addedit.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" title="Change field"><img src="skin/images/edit.gif" alt="edit" /></a>
+	<td class="control">
+		<a class="item_del" href="processors/profile_fields_delete.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" onclick="return(confirm('Are you sure you want to remove this field?'))" title="Delete field">Delete field</a>
+		<a class="item_edit" href="profile_fields_addedit.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" title="Change field">Change field</a>
 	</td>
 	<td class="plabel">{loop.label}</td>
 	<td class="html_type">{loop.html_type}</td>
@@ -29,8 +30,8 @@
 	<td class="pcat">{loop.fk_pcat_id}</td>
 	<td class="accvals">{loop.accepted_values}</td>
 	<td class="order">
-		<a class="item_movedown" href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=d&amp;o={o}&amp;r={r}" title="move down"><i>Move down</i></a>
-		<a class="item_moveup" href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=u&amp;o={o}&amp;r={r}" title="move up"><i>Move up</i></a>
+		<a class="item_movedown" href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=d&amp;o={o}&amp;r={r}" title="move down">Move down</a>
+		<a class="item_moveup" href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=u&amp;o={o}&amp;r={r}" title="move up">Move up</a>
 	</td>
 </tr>
 <noloop name="loop">

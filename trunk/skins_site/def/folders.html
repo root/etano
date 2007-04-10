@@ -1,5 +1,3 @@
-<script type="text/javascript" src="js/folders.js"></script>
-
 <div class="row header">
 	<div class="control">Action</div>
 	<div class="folder_name">Folder</div>
@@ -10,15 +8,17 @@
 <loop name="loop">
 <div class="row">
 	<div class="control">
-		<a class="item_delete" href="processors/folders_delete.php?fid={loop.folder_id}" title="Delete item" onclick="return(confirm('Are you sure you want to delete this folder? All messages inside this folder will be moved to Trash and all the filters associated with this folder will be deleted!'))"><i>Delete</i></a>
-		<a class="item_edit" href="javascript:;" title="Edit folder" onclick="rename_folder('{loop.folder_id}','{loop.encoded_folder}')"><i>Rename</i></a>
+		<a class="item_delete" href="processors/folders_delete.php?fid={loop.folder_id}" title="Delete item">Delete</a>
+		<a class="item_edit" href="javascript:;" title="Edit folder" onclick="rename_folder('{loop.folder_id}','{loop.encoded_folder}')">Rename</a>
 	</div>
 	<div class="folder_name"><a href="mailbox.php?fid={loop.folder_id}">{loop.folder}</a></div>
 	<div class="total_messages">{loop.total}</div>
 	<div class="new_messages">{loop.not_read}</div>
 </div>
 <noloop name="loop">
+<div class="row">
 	<p class="no_result_item">You have no folders yet.</p>
+</div>
 </noloop name="loop">
 </loop name="loop">
 
@@ -28,3 +28,5 @@
 	New folder: <input type="text" name="folder" /> <input class="button bmedium" type="submit" value="Add" />
 	</form>
 </div>
+
+<script type="text/javascript" src="js/folders.js"></script>

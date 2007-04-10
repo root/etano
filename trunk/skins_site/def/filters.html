@@ -7,14 +7,16 @@
 <loop name="loop">
 <div class="row">
 	<div class="control">
-		<a class="item_delete" href="processors/filters_delete.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Delete item" onclick="return(confirm('Are you sure you want to delete this filter?'))"><i>Delete</i></a>
-		<a class="item_edit" href="filters_addedit.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Edit filter"><i>Edit</i></a>
+		<a class="item_delete" href="processors/filters_delete.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Delete item">Delete</a>
+		<a class="item_edit" href="filters_addedit.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Edit filter">Edit</a>
 	</div>
 	<div class="rule">{loop.field_value}</div>
 	<div class="moveto">{loop.fk_folder_id}</div>
 </div>
 <noloop name="loop">
+<div class="row">
 	<p class="no_result_item">You have no filters yet!</p>
+</div>
 </noloop name="loop">
 </loop name="loop">
 
@@ -23,3 +25,5 @@
 <div id="controls">
 	<a class="content-link link_add" href="filters_addedit.php?o={o}&amp;r={r}">Add new filter</a>
 </div>
+
+<script type="text/javascript" src="js/filters.js"></script>

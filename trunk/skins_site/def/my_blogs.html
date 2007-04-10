@@ -1,5 +1,3 @@
-<script type="text/javascript" src="js/my_blogs.js"></script>
-
 <div class="row header">
 	<div class="control">Manage</div>
 	<div class="blog_name">Blog</div>
@@ -10,8 +8,8 @@
 <loop name="loop">
 <div class="row">
 	<div class="control">
-		<a class="content-link link_delete" href="processors/blog_delete.php?bid={loop.blog_id}&amp;return={output.return}" title="Delete blog" onclick="return(confirm('Are you sure you want to permanently delete this blog? All posts in this blog will also be deleted!'))"><i>Delete</i></a>
-		<a class="content-link link_change" href="blog_addedit.php?bid={loop.blog_id}&amp;return={output.return}" title="Change blog details"><i>Edit details</i></a>
+		<a class="content-link link_delete" href="processors/blog_delete.php?bid={loop.blog_id}&amp;return={output.return}" title="Delete blog">Delete</a>
+		<a class="content-link link_change" href="blog_addedit.php?bid={loop.blog_id}&amp;return={output.return}" title="Change blog details">Edit details</a>
 	</div>
 	<div class="blog_name">
 		<strong>{loop.blog_name}</strong>
@@ -30,3 +28,5 @@
 <div class="controls">
 	<a class="content-link link_add" id="link_add_blog" href="blog_addedit.php" />Create new blog</a>
 </div>
+
+<script type="text/javascript" src="js/my_blogs.js"></script>

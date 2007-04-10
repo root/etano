@@ -166,9 +166,17 @@ strong {
 	background-position: bottom left;
 }
 
-.content-link.simple {
+a.simple {
 	padding-left: 0px;
 	background: none;
+}
+
+a.big {
+	font-size: 15px;
+	text-decoration: underline;
+}
+a.big:hover {
+	color: #965C72;
 }
 
 
@@ -230,6 +238,7 @@ ul.pager li a {
 	text-decoration: none;
 	font-weight: bold;
 	padding: 2px 10px;
+	text-indent: -9999px;
 }
 ul.pager li a:hover {
 	text-decoration: underline;
@@ -280,10 +289,6 @@ ul.pager li.current_page, ul.pager li.dots {
 	color: #000;
 	font-weight: bold;
 	padding: 0 10px;
-}
-
-ul.pager i {
-	display: none;
 }
 
 ul.pager li.rpp {
