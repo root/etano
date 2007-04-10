@@ -36,6 +36,7 @@
 		width: 22px;
 		height: 22px;
 		display: block;
+		text-indent: -9999px;
 	}
 
 	a.item_delete {
@@ -44,14 +45,11 @@
 		width: 22px;
 		height: 22px;
 		display: block;
+		text-indent: -9999px;
 	}
 
 	a.item_edit:hover, a.item_delete:hover {
 		background-position: bottom center;
-	}
-
-	a.item_edit i, a.item_delete i {
-		display: none;
 	}
 
 .filters .row .rule {

@@ -10,7 +10,9 @@
 	width: 28px;
 	background-position: top left;
 	background-repeat: no-repeat;
+	text-indent: -9999px;
 }
+
 #bb_tools a:hover {
 	background-position: bottom center;
 }
@@ -29,8 +31,4 @@
 
 #bb_tools a#quote {
 	background-image: url('../images/link_quote.gif');
-}
-
-#bb_tools a i {
-	display: none;
 }

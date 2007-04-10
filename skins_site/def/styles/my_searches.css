@@ -37,6 +37,7 @@ a.link_delete {
 	height: 22px;
 	display: block;
 	padding: 0;
+	text-indent: -9999px;
 }
 
 a.link_change {
@@ -45,10 +46,7 @@ a.link_change {
 	height: 22px;
 	display: block;
 	padding: 0;
-}
-
-a.link_delete i, a.link_change i {
-	display: none;
+	text-indent: -9999px;
 }
 
 .my_searches .row .title {

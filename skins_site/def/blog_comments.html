@@ -1,8 +1,3 @@
-<script type="text/javascript" src="js/blog_comments.js"></script>
-<opt name="tplvars.bbcode_comments">
-<script type="text/javascript" src="js/bbcode.js"></script>
-</opt name="tplvars.bbcode_comments">
-
 <div class="post_content">
 {output.post_content}
 </div>
@@ -25,10 +20,10 @@
 
 <opt name="tplvars.bbcode_comments">
 <div id="bb_tools">
-	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',document.getElementById('comment'))"><i>Bold</i></a>
-	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',document.getElementById('comment'))"><i>Underline</i></a>
-	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',document.getElementById('comment'))"><i>Hyperlink</i></a>
-	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',document.getElementById('comment'))"><i>Quote</i></a>
+	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#comment')[0])">Bold</a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#comment')[0])">Underline</a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#comment')[0])">Hyperlink</a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#comment')[0])">Quote</a>
 </div>
 </opt name="tplvars.bbcode_comments">
 <form id="blogcomment_form" action="processors/blog_comments.php" method="post">
@@ -42,3 +37,8 @@
 </fieldset>
 </form>
 </opt name="allow_comments">
+
+<script type="text/javascript" src="js/blog_comments.js"></script>
+<opt name="tplvars.bbcode_comments">
+<script type="text/javascript" src="js/bbcode.js"></script>
+</opt name="tplvars.bbcode_comments">

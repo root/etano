@@ -1,8 +1,3 @@
-<script type="text/javascript" src="js/message_send.js"></script>
-<opt name="tplvars.bbcode_message">
-<script type="text/javascript" src="js/bbcode.js"></script>
-</opt name="tplvars.bbcode_message">
-
 <form action="processors/message_send.php" method="post" id="msend_form">
 <fieldset>
 	<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
@@ -11,10 +6,10 @@
 </fieldset>
 <opt name="tplvars.bbcode_message">
 <div id="bb_tools">
-	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#message_body')[0])"><i>Bold</i></a>
-	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#message_body')[0])"><i>Underline</i></a>
-	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#message_body')[0])"><i>Hyperlink</i></a>
-	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#message_body')[0])"><i>Quote</i></a>
+	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#message_body')[0])">Bold</a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#message_body')[0])">Underline</a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#message_body')[0])">Hyperlink</a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#message_body')[0])">Quote</a>
 </div>
 </opt name="tplvars.bbcode_message">
 <fieldset>
@@ -26,3 +21,8 @@
 	<input class="button blarge" type="submit" value="Save template" tabindex="4" />
 </fieldset>
 </form>
+
+<script type="text/javascript" src="js/message_send.js"></script>
+<opt name="tplvars.bbcode_message">
+<script type="text/javascript" src="js/bbcode.js"></script>
+</opt name="tplvars.bbcode_message">

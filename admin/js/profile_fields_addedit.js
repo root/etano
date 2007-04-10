@@ -76,7 +76,7 @@ function update_list() {
 		default_search=default_search.slice(0,2);
 	}
 	for (i=0;i<accvals.length;i++) {
-		towrite+='<li><ul class="litem_tools"><li><a class="item_edit" href="javascript:;" onclick="addedit_accval(\'edit\','+i+')" title="Edit value"><i>Edit</i></a></li><li><a class="item_add" href="javascript:;" onclick="addedit_accval(\'add\','+(i+1)+')" title="Add new value after this one"><i>Add new value after this one</i></a></li><li><a class="item_del" href="javascript:;" onclick="delete_accval('+i+')" title="Delete value"><i>Delete value</i></a></li>';
+		towrite+='<li><ul class="litem_tools"><li><a class="item_edit" href="javascript:;" onclick="addedit_accval(\'edit\','+i+')" title="Edit value">Edit</a></li><li><a class="item_add" href="javascript:;" onclick="addedit_accval(\'add\','+(i+1)+')" title="Add new value after this one">Add new value after this one</a></li><li><a class="item_del" href="javascript:;" onclick="delete_accval('+i+')" title="Delete value">Delete value</a></li>';
 		if (html_type==3) {	// HTML_SELECT
 			towrite+='<li><input type="radio" name="default_value[]" id="default_value_'+i+'" value="'+i+'" title="Default value" onclick="adddel_defval(true,'+i+')"';
 			for (j=0;j<default_value.length;j++) {

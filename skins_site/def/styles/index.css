@@ -85,14 +85,11 @@
 		margin-right: -5px;
 		background-image: url('../images/link-sign-up.gif');
 		background-position: top;
+		text-indent: -9999px;
 	}
 
 	#sign-up-now:hover {
 		background-position: bottom;
-	}
-
-	#sign-up-now i {
-		display: none;
 	}
 
 /* Search box */
