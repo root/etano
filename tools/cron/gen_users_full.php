@@ -1,9 +1,9 @@
 <?
-require_once '../../includes/classes/phemplate.class.php';
 require_once '../../includes/vars.inc.php';
+db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
+require_once '../../includes/classes/phemplate.class.php';
 require_once '../../includes/user_functions.inc.php';
 require_once '../../includes/classes/modman.class.php';
-db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/','remove_nonjs');
 
@@ -18,7 +18,16 @@ $config=get_site_option(array('bbcode_profile'),'core');
 
 $modman=new modman();
 
-$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `status`='".STAT_APPROVED."'";
+$select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`longitude`,`latitude`';
+foreach ($_pfields as $field_id=>$field) {
+	if ($field['html_type']!=HTML_DATE) {
+		$select.=',`'.$field['dbfield'].'`';
+	} else {
+		$select.=",DATE_FORMAT(NOW(),'%Y')-DATE_FORMAT(`".$field['dbfield']."`,'%Y')-(DATE_FORMAT(NOW(),'%m%d')<DATE_FORMAT(`".$field['dbfield']."`,'%m%d')) as `".$field['dbfield']."`";
+	}
+}
+
+$query="SELECT $select FROM `{$dbtable_prefix}user_profiles` WHERE `status`='".STAT_APPROVED."'";
 //$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `status`='".STAT_APPROVED."' AND `last_changed`>=DATE_SUB(now(),INTERVAL 12 MINUTE)";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($profile=mysql_fetch_assoc($res)) {
@@ -40,7 +49,10 @@ while ($profile=mysql_fetch_assoc($res)) {
 			} elseif ($field['html_type']==HTML_INT || $field['html_type']==HTML_FLOAT) {
 	//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
 			} elseif ($field['html_type']==HTML_DATE) {
-	//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
+				$profile[$field['dbfield'].'_label']=$field['search_label'];
+				if ($profile[$field['dbfield']]>110) {
+					$profile[$field['dbfield']]='?';
+				}
 			} elseif ($field['html_type']==HTML_LOCATION) {
 				$profile[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$profile[$field['dbfield'].'_country'],'-');
 				if (!empty($profile[$field['dbfield'].'_state'])) {

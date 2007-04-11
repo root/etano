@@ -63,6 +63,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text'][]='Invalid email entered. Please check your email.';
 			$input['error_email']='red_border';
 		}
+		if (!$error) {
+			$query="SELECT `user_id` FROM ".USER_ACCOUNTS_TABLE." WHERE `email`='".$input['email']."' LIMIT 1";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The email address %s is already in use.',$input['email']);
+				$input['error_email']='red_border';
+			}
+		}
 		if (get_site_option('use_captcha','core')) {
 			$captcha=sanitize_and_format_gpc($_POST,'captcha',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 			if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {

@@ -150,6 +150,17 @@
 		width: 35px;
 	}
 
+	#row_photo dt {
+		float: left;
+		padding-right: 10px;
+		padding-top: 2px;
+	}
+
+	*html #row_photo dt {
+		padding-right: 0px;
+		padding-top: 0px;
+	}
+
 	#search .controls {
 		border-top: 1px dashed #ccc;
 		padding-top: 15px;

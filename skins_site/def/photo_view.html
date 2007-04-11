@@ -1,3 +1,16 @@
+<opt name="output.allow_rating">
+<span>Rate this photo: </span>
+<ul class="rating">
+	<li class="current_rating" style="width: {output.rate_percent}%">{output.rate_num}/5</li>
+	<li><a href="ajax/rate_photo.php?photo_id={output.photo_id}&amp;vote=1" class="rate1">1</a></li>
+	<li><a href="ajax/rate_photo.php?photo_id={output.photo_id}&amp;vote=2" class="rate2">2</a></li>
+	<li><a href="ajax/rate_photo.php?photo_id={output.photo_id}&amp;vote=3" class="rate3">3</a></li>
+	<li><a href="ajax/rate_photo.php?photo_id={output.photo_id}&amp;vote=4" class="rate4">4</a></li>
+	<li><a href="ajax/rate_photo.php?photo_id={output.photo_id}&amp;vote=5" class="rate5">5</a></li>
+</ul>
+<p id="rating_stat">Current rating: <span id="rate_num">{output.rate_num}</span> / 5 (<span id="votes_num">{output.stat_votes}</span> votes)</p>
+</opt name="output.allow_rating">
+
 <a href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={output.photo_id}','photo',{tplvars.pic_width},{tplvars.pic_width},1)" title="Click to enlarge"><img class="user_photo thumb2" src="{tplvars.photourl}/t2/{output.photo}" alt="{output.user}" /></a>
 <p id="photo_caption">{output.caption}</p>
 
@@ -41,3 +54,9 @@
 <opt name="tplvars.bbcode_comments">
 <script type="text/javascript" src="js/bbcode.js"></script>
 </opt name="tplvars.bbcode_comments">
+<opt name="output.allow_rating">
+<script type="text/javascript">
+	photo_id={output.photo_id};
+</script>
+<script type="text/javascript" src="js/rating.js"></script>
+</opt name="output.allow_rating">

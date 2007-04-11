@@ -10,21 +10,21 @@
 	<div class="member_details">
 		<input class="sel_user" type="checkbox" name="uids[]" value="{loop.fk_user_id}" id="uids_{loop.fk_user_id}" />
 		<a class="link_bare" href="profile.php?uid={loop.fk_user_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}"><img class="user_photo" src="{tplvars.photourl}/t1/{loop._photo}" /></a>
-		<p><strong>{loop._user}</strong> (<opt name="profile.pending"><span class="alert_ppending">Needs your approval</span></opt name="profile.pending"><opt name="profile.need_edit"><span class="alert_pedit">Needs editing</span></opt name="profile.need_edit"><opt name="profile.approved"><span class="alert_papproved">Approved</span></opt name="profile.approved">)</p>
-		<p>{loop.field_46_label}: {loop.field_46}</p>
-		<p>{loop.field_47_label}: {loop.field_47}</p>
-		<p>{loop.field_48_label}: {loop.field_48}</p>
-		<p>{loop.field_50_label}: {loop.field_50}</p>
+		<p><strong>{loop._user}</strong> (<opt name="loop.pending"><span class="alert_ppending">Needs your approval</span></opt name="loop.pending"><opt name="loop.need_edit"><span class="alert_pedit">Needs editing</span></opt name="loop.need_edit"><opt name="loop.approved"><span class="alert_papproved">Approved</span></opt name="loop.approved">)</p>
+		<p>{loop.f2_label}: {loop.f2}</p>
+		<p>{loop.f3_label}: {loop.f3}</p>
+		<p>{loop.f4_label}: {loop.f4}</p>
+		<p>{loop.f5_label}: {loop.f5}</p>
 		<div class="actions">
 			<ul>
 			<li class="first"><a href="profile.php?uid={loop.fk_user_id}&search={search_md5}&amp;o={o}&amp;r={r}">View</a></li>
-			<opt name="profile.del"><li><a href="processors/member_delete.php?act=-1&amp;uids%5B%5D={loop.fk_user_id}&amp;return={return}">Undelete</a></li></opt name="profile.del">
+			<opt name="loop.del"><li><a href="processors/member_delete.php?act=-1&amp;uids%5B%5D={loop.fk_user_id}&amp;return={return}">Undelete</a></li></opt name="loop.del">
 			</ul>
 		</div>
 	</div>
 	<noloop name="loop">
 	<div class="member_details">
-	No members found meeting your search criteria.
+		No members found meeting your search criteria.
 	</div>
 	</noloop name="loop">
 	</loop name="loop">

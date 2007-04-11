@@ -1,0 +1,65 @@
+.rating, .rating a:hover, .rating a:active, .rating a:focus, .rating .current_rating {
+	background: transparent url('../images/star.png') repeat-x scroll left -1000px;
+}
+
+.rating {
+	position: relative;
+	background: url('../images/star.png') repeat-x top left;
+	width: 125px;
+	height: 25px;
+	padding:0;
+	margin:0;
+	overflow: hidden;
+	z-index: 7;
+}
+
+#rating_stat {
+	margin-bottom: 20px;
+}
+
+.rating li {
+	display: inline;
+}
+
+.rating .current_rating {
+	z-index: 1;
+	background-position: center left;
+}
+
+.rating li a, .rating .current_rating {
+	height: 25px;
+	text-indent: -9999px;
+	line-height: 25px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.rating li a:hover, .rating li a:active {
+	background-position: bottom left;
+}
+
+.rating li a.rate1 {
+	z-index: 6;
+	width: 20%;
+}
+
+.rating li a.rate2 {
+	width: 40%;
+	z-index: 5;
+}
+
+.rating li a.rate3 {
+	width: 60%;
+	z-index: 4;
+}
+
+.rating li a.rate4 {
+	width: 80%;
+	z-index: 3;
+}
+
+.rating li a.rate5 {
+	width: 100%;
+	z-index: 2;
+}

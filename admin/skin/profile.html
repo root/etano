@@ -1,3 +1,72 @@
+<div id="profile_menu" class="menu_box">
+	<h3>Actions</h3>
+	<div class="box_content">
+		<ul>
+		<opt name="!profile.approved"><li><a href="processors/member_approve.php?uids%5B%5D={profile.fk_user_id}&amp;return={return}">Approve profile</a></li></opt name="!profile.approved">
+		<opt name="!profile.need_edit"><li><a href="reject.php?t=1&id={profile.fk_user_id}&amp;return={return}">Reject profile</a></li></opt name="!profile.need_edit">
+		<li>Account status:
+			<form action="processors/account_changes.php" method="post">
+			<input type="hidden" name="act" value="status" />
+			<input type="hidden" name="uids[]" value="{profile.fk_user_id}" />
+			<input type="hidden" name="return" value="{return}" />
+			<select name="status">
+			<option value=""></option>
+			{account.status}
+			</select>
+			<input type="submit" value="Set" />
+			</form>
+		</li>
+		<li>Skin:
+			<form action="processors/account_changes.php" method="post">
+			<input type="hidden" name="act" value="skin" />
+			<input type="hidden" name="uids[]" value="{profile.fk_user_id}" />
+			<input type="hidden" name="return" value="{return}" />
+			<select name="skin">
+			<option value=""></option>
+			{account.skin}
+			</select>
+			<input type="submit" value="Set" />
+			</form>
+		</li>
+		<li><a href="profile_edit.php?uid={profile.fk_user_id}&amp;return={return}">Edit profile</a></li>
+		<li><a href="photo_results.php?uid={profile.fk_user_id}">View album</a></li>
+		<li><a href="user_inbox.php?uid={profile.fk_user_id}&amp;return={return}">Read mail</a></li>
+		<li><a href="javascript:;" onclick="change_password()">Change password</a></li>
+		<opt name="!profile.del"><li><a href="processors/member_delete.php?uids%5B%5D={profile.fk_user_id}&amp;return={return}" onclick="return(confirm('Are you sure you want to delete this member?'))">Delete member</a></li></opt name="!profile.del">
+		<opt name="profile.del"><li><a href="processors/member_delete.php?act=-1&amp;uids%5B%5D={profile.fk_user_id}&amp;return={return}">Undelete member</a></li></opt name="profile.del">
+		<li><a href="processors/user_sentmail_delete.php?uid={profile.fk_user_id}&amp;return={return}" onclick="return(confirm('Are you sure you want to delete all messages sent by this member from other member inboxes?'))">Delete sent mail</a></li>
+		<li><a href="javascript:;" onclick="popWin('user_payment_history.php?uid={profile.fk_user_id}','history',400,400,1)">Payment History</a></li>
+		<li><a href="user_login.php?uid={profile.fk_user_id}&amp;return={return}">Impersonate User</a></li>
+		<opt name="search_md5"><li class="controls"><a class="back" href="member_results.php?search={search_md5}&amp;o={o}&amp;r={r}">Back to search</a></li></opt name="search_md5">
+		</ul>
+	</div>
+</div>
+
+<opt name="search_md5">
+	<div id="search_nav">
+		<a class="back" href="member_results.php?search={search_md5}&amp;uid={profile.fk_user_id}&amp;go=-1&amp;refresh=1" title="Previous member in the search results">Previous</a> | <a class="next" href="member_results.php?search={search_md5}&amp;uid={profile.fk_user_id}&amp;go=1&amp;refresh=1" title="Next member in the search results">Next</a>
+	</div>
+</opt name="search_md5">
+
+<h2>{profile._user}</h2>
+(<opt name="profile.pending"><span class="alert_ppending">Needs your approval</span></opt name="profile.pending"><opt name="profile.need_edit"><span class="alert_pedit">Needs editing</span></opt name="profile.need_edit"><opt name="profile.approved"><span class="alert_papproved">Approved</span></opt name="profile.approved">)
+<div id="profile_pic">
+	<opt name="profile.has_photo"><a href="javascript:;" onclick="popWin('popup_photo_view.php?uid={profile.fk_user_id}&amp;main=1','photo',{tplvars.pic_width},{tplvars.pic_width},1)"><img class="user_photo thumb1" src="{tplvars.photourl}/t1/{profile._photo}" /></a></opt name="profile.has_photo">
+	<opt name="!profile.has_photo"><img class="user_photo thumb1" src="{tplvars.photourl}/t1/no_photo.gif" /></opt name="!profile.has_photo">
+</div>
+
+<loop name="categs">
+<div class="category">
+	<h3>{categs.pcat_name}</h3>
+	<loop name="cat_content">
+	<div class="new_row">
+		<label>{cat_content.label}:</label>
+		<span class="field">{cat_content.field}</span>
+	</div>
+	</loop name="cat_content">
+</div>
+</loop name="categs">
+
 <script type="text/javascript">
 	var uid='{profile.fk_user_id}';
 	var search='{search_md5}';
@@ -5,76 +74,3 @@
 	var r='{r}';
 </script>
 <script type="text/javascript" src="js/profile.js"></script>
-
-<table id="profile">
-<tr>
-	<td id="member_actions">
-		<div id="profile_menu" class="menu_box">
-			<h4>Actions</h4>
-			<div class="box_content">
-				<ul>
-				<opt name="!profile.approved"><li><a href="processors/member_approve.php?uids%5B%5D={profile.fk_user_id}&amp;return={return}">Approve profile</a></li></opt name="!profile.approved">
-				<opt name="!profile.need_edit"><li><a href="reject.php?t=1&id={profile.fk_user_id}&amp;return={return}">Reject profile</a></li></opt name="!profile.need_edit">
-				<li>Account status:
-					<form action="processors/account_changes.php" method="post">
-					<input type="hidden" name="act" value="status" />
-					<input type="hidden" name="uids[]" value="{profile.fk_user_id}" />
-					<input type="hidden" name="return" value="{return}" />
-					<select name="status">
-					<option value=""></option>
-					{account.status}
-					</select>
-					<input type="submit" value="Set" />
-					</form>
-				</li>
-				<li>Skin:
-					<form action="processors/account_changes.php" method="post">
-					<input type="hidden" name="act" value="skin" />
-					<input type="hidden" name="uids[]" value="{profile.fk_user_id}" />
-					<input type="hidden" name="return" value="{return}" />
-					<select name="skin">
-					<option value=""></option>
-					{account.skin}
-					</select>
-					<input type="submit" value="Set" />
-					</form>
-				</li>
-				<li><a href="profile_edit.php?uid={profile.fk_user_id}&amp;return={return}">Edit profile</a></li>
-				<li><a href="photo_results.php?uid={profile.fk_user_id}">View album</a></li>
-				<li><a href="user_inbox.php?uid={profile.fk_user_id}&amp;return={return}">Read mail</a></li>
-				<li><a href="javascript:;" onclick="change_password()">Change password</a></li>
-				<opt name="!profile.del"><li><a href="processors/member_delete.php?uids%5B%5D={profile.fk_user_id}&amp;return={return}" onclick="return(confirm('Are you sure you want to delete this member?'))">Delete member</a></li></opt name="!profile.del">
-				<opt name="profile.del"><li><a href="processors/member_delete.php?act=-1&amp;uids%5B%5D={profile.fk_user_id}&amp;return={return}">Undelete member</a></li></opt name="profile.del">
-				<li><a href="processors/user_sentmail_delete.php?uid={profile.fk_user_id}&amp;return={return}" onclick="return(confirm('Are you sure you want to delete all messages sent by this member from other member inboxes?'))">Delete sent mail</a></li>
-				<li><a href="javascript:;" onclick="popWin('user_payment_history.php?uid={profile.fk_user_id}','history',400,400,1)">Payment History</a></li>
-				<li><a href="user_login.php?uid={profile.fk_user_id}&amp;return={return}">Impersonate User</a></li>
-				<li>&nbsp;</li>
-				<opt name="search_md5"><li><a class="back" href="member_results.php?search={search_md5}&amp;o={o}&amp;r={r}">Back to search</a></li></opt name="search_md5">
-				</ul>
-			</div>
-		</div>
-	</td>
-
-	<td id="member_profile">
-		<opt name="search_md5"><div id="search_nav"><a class="back" href="member_results.php?search={search_md5}&amp;uid={profile.fk_user_id}&amp;go=-1&amp;refresh=1" title="Previous member in the search results">Previous</a> <a class="next" href="member_results.php?search={search_md5}&amp;uid={profile.fk_user_id}&amp;go=1&amp;refresh=1" title="Next member in the search results">Next</a></div></opt name="search_md5">
-		<h2>{profile._user}</h2>
-		(<opt name="profile.pending"><span class="alert_ppending">Needs your approval</span></opt name="profile.pending"><opt name="profile.need_edit"><span class="alert_pedit">Needs editing</span></opt name="profile.need_edit"><opt name="profile.approved"><span class="alert_papproved">Approved</span></opt name="profile.approved">)
-		<div id="profile_pic">
-			<opt name="profile.has_photo"><a href="javascript:;" onclick="popWin('popup_photo_view.php?uid={profile.fk_user_id}&amp;main=1','photo',{tplvars.pic_width},{tplvars.pic_width},1)"><img class="user_photo" src="{tplvars.photourl}/t1/{profile._photo}" /></a></opt name="profile.has_photo">
-			<opt name="!profile.has_photo"><img class="user_photo" src="{tplvars.photourl}/t1/no_photo.gif" /></opt name="!profile.has_photo">
-		</div>
-
-		<loop name="categs">
-		<div class="category">
-			<h3>{categs.pcat_name}</h3>
-			<loop name="cat_content">
-			<div class="new_row">
-				<label>{cat_content.label}</label>
-				<span class="field">{cat_content.field}</span>
-			</div>
-			</loop name="cat_content">
-		</div>
-		</loop name="categs">
-	</td>
-</tr>
-</table>
