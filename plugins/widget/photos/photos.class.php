@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       plugins/widget/latest_photos/latest_photos.class.php
+File:                       plugins/widget/photos/photos.class.php
 $Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -13,13 +13,13 @@ Support at:                 http://forum.datemill.com
 
 require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 
-// accepts 'num_photos' and 'cols' as parameters
+// accepts 'mode','total','cols','area' as parameters
 
-class widget_latest_photos extends icontent_widget {
-	var $module_code='latest_photos';
+class widget_photos extends icontent_widget {
+	var $module_code='photos';
 	var $widget=array();
 
-	function widget_latest_photos() {
+	function widget_photos() {
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -37,7 +37,26 @@ class widget_latest_photos extends icontent_widget {
 
 	function _content() {
 		global $dbtable_prefix;
-		$query="SELECT `photo_id`,`photo`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `is_private`=0 AND `status`='".STAT_APPROVED."' AND `del`=0 ORDER BY `date_posted` DESC LIMIT ".$this->config['num_photos'];
+		$query="SELECT `photo_id`,`photo`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `is_private`=0 AND `status`='".STAT_APPROVED."' AND `del`=0";
+		switch ($this->config['mode']) {
+			case 'vote':
+				$query.=" ORDER BY `stat_votes_total` DESC";
+				break;
+
+			case 'new':
+				$query.=" ORDER BY `date_posted` DESC";
+				break;
+
+			case 'views':
+				$query.=" ORDER BY `stat_views` DESC";
+				break;
+
+			case 'comm':
+				$query.=" ORDER BY `stat_comments` DESC";
+				break;
+
+		}
+		$query.=" LIMIT ".$this->config['total'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$loop=array();
 		while ($rsrow=mysql_fetch_assoc($res)) {
@@ -53,7 +72,7 @@ class widget_latest_photos extends icontent_widget {
 				}
 			}
 			$loop[0]['class']='first';
-			$this->tpl->set_file('widget.content','widgets/latest_photos/display.html');
+			$this->tpl->set_file('widget.content','widgets/photos/display.html');
 			$this->tpl->set_loop('loop',$loop);
 			$this->tpl->process('widget.content','widget.content',TPL_LOOP | TPL_OPTLOOP);
 			$this->tpl->drop_loop('loop');
@@ -67,9 +86,26 @@ class widget_latest_photos extends icontent_widget {
 	function _finish_display() {
 		$myreturn='';
 		if ($this->tpl->get_var_silent('widget.content')!='') {
-			$widget['title']='Newest Photos';	// translate this
-			$widget['id']='newest-photos';
-			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_path'].'photo_search.php?st=latest" title="More New Photos">More New Photos</a>';	// translate this
+			switch ($this->config['mode']) {
+				case 'new':
+					$widget['title']='Newest Photos';	// translate this
+					break;
+
+				case 'vote':
+					$widget['title']='Most Voted Photos';	// translate this
+					break;
+
+				case 'views':
+					$widget['title']='Most Popular Photos';	// translate this
+					break;
+
+				case 'comm':
+					$widget['title']='Most Discussed Photos';	// translate this
+					break;
+
+			}
+			$widget['id']='widget_photos';
+			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_path'].'photo_search.php?st='.$this->config['mode'].'" title="More Photos">More</a>';	// translate this
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
 			} else {
@@ -84,6 +120,7 @@ class widget_latest_photos extends icontent_widget {
 
 
 	function _init() {
-		$this->config['num_photos']=6;
+		$this->config['total']=6;
+		$this->config['mode']='new';
 	}
 }

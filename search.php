@@ -84,7 +84,7 @@ if (!empty($output['search_md5'])) {
 				$where="b.`fk_user_id`='".$input['fk_user_id']."' AND b.`fk_net_id`='".$input['fk_net_id']."' AND b.`nconn_status`=1 AND b.`fk_user_id`=a.`fk_user_id` AND ".$where;
 				break;
 
-			case 'latest':
+			case 'new':
 				$input['acclevel_id']=16;
 				$continue=true;
 				$orderby="a.`date_added` DESC";
@@ -95,6 +95,12 @@ if (!empty($output['search_md5'])) {
 				$continue=true;
 				$from="`{$dbtable_prefix}online` b,".$from;
 				$where="b.`fk_user_id`<>0 AND b.`fk_user_id`=a.`fk_user_id` AND ".$where;
+				break;
+
+			case 'vote':
+			case 'views':
+			case 'comm':
+// TODO
 				break;
 
 			default:

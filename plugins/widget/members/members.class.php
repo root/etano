@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       plugins/widget/latest_members/latest_members.class.php
+File:                       plugins/widget/members/members.class.php
 $Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -13,11 +13,13 @@ Support at:                 http://forum.datemill.com
 
 require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 
-class widget_latest_members extends icontent_widget {
-	var $module_code='latest_members';
+// accepts 'mode','total','cols','area' as parameters
+
+class widget_members extends icontent_widget {
+	var $module_code='members';
 	var $widget=array();
 
-	function widget_latest_members() {
+	function widget_members() {
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -35,7 +37,25 @@ class widget_latest_members extends icontent_widget {
 
 	function _content() {
 		global $dbtable_prefix;
-		$query="SELECT a.`fk_user_id` FROM `{$dbtable_prefix}user_profiles` a WHERE a.`_photo`<>'' AND a.`del`=0 AND a.`status`='".STAT_APPROVED."' ORDER BY a.`date_added` DESC LIMIT 15";
+		switch ($this->config['mode']) {
+			case 'new':
+				$query="SELECT a.`fk_user_id` FROM `{$dbtable_prefix}user_profiles` a WHERE a.`_photo`<>'' AND a.`del`=0 AND a.`status`='".STAT_APPROVED."' ORDER BY a.`date_added` DESC";
+				break;
+
+			case 'vote':
+				$query="SELECT a.`fk_user_id` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='vote_score' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
+				break;
+
+			case 'views':
+				$query="SELECT a.`fk_user_id` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='total_views' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
+				break;
+
+			case 'comm':
+				$query="SELECT a.`fk_user_id` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='total_comments' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
+				break;
+
+		}
+		$query.=" LIMIT 15";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$user_ids=array();
 		while ($rsrow=mysql_fetch_assoc($res)) {
@@ -47,8 +67,8 @@ class widget_latest_members extends icontent_widget {
 			$loop=$user_cache->get_cache_beta($user_ids,array(),'result_user','tpl');
 			if (!empty($loop)) {
 				$loop[0]['class']='first';
-				$loop=array_slice($loop,0,$this->config['num_members']);
-				$this->tpl->set_file('widget.content','widgets/latest_members/display.html');
+				$loop=array_slice($loop,0,$this->config['total']);
+				$this->tpl->set_file('widget.content','widgets/members/display.html');
 				$this->tpl->set_loop('loop',$loop);
 				$this->tpl->process('widget.content','widget.content',TPL_LOOP | TPL_OPTLOOP);
 				$this->tpl->drop_loop('loop');
@@ -63,9 +83,26 @@ class widget_latest_members extends icontent_widget {
 	function _finish_display() {
 		$myreturn='';
 		if ($this->tpl->get_var_silent('widget.content')!='') {
-			$widget['title']='Newest Members';	// translate this
-			$widget['id']='newest-members';
-			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_path'].'search.php?st=latest" title="More New Members">More New Members</a>';	// translate this
+			switch ($this->config['mode']) {
+				case 'new':
+					$widget['title']='Newest Members';	// translate this
+					break;
+
+				case 'vote':
+					$widget['title']='Most Voted Members';	// translate this
+					break;
+
+				case 'views':
+					$widget['title']='Most Popular Members';	// translate this
+					break;
+
+				case 'comm':
+					$widget['title']='Most Discussed Members';	// translate this
+					break;
+
+			}
+			$widget['id']='widget_members';
+			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_path'].'search.php?st='.$this->config['mode'].'" title="More Members">More</a>';	// translate this
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
 			} else {
@@ -80,6 +117,6 @@ class widget_latest_members extends icontent_widget {
 
 
 	function _init() {
-		$this->config['num_members']=6;
+		$this->config['total']=6;
 	}
 }
