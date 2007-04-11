@@ -113,3 +113,4 @@ TODO
 - addon: lightbox (vezi http://beta.zooomr.com)
 
 - news de la admin pt membri (site_news)
+- search membri case 'vote',case 'views',case 'comm'

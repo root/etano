@@ -23,8 +23,11 @@ $tpl->set_file('content','photos.html');
 $tpl->process('content','content');
 
 $tplvars['title']='Browse Photos';
-$tplvars['page_title']='Member Photos';
+$tplvars['page_title']='Browse Photos';
 $tplvars['page']='photos';
 $tplvars['css']='photos.css';
+if (is_file('photos_left.php')) {
+	include 'photos_left.php';
+}
 include 'frame.php';
 ?>
