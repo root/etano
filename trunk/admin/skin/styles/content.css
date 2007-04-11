@@ -270,6 +270,10 @@ label.checkbox {
 	border: 1px solid #CCC;
 }
 
+.thumb1 {
+	margin: 0 10px 10px 0;
+}
+
 .photo_details, .member_details {
  	border-bottom: 1px dashed #CCC;
  	margin-bottom: 1em;

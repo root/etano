@@ -44,7 +44,7 @@ if (!empty($output['search_md5'])) {
 	$continue=false;	// for searches not based on search_fields
 	$select="a.`fk_user_id`";
 	$from="`{$dbtable_prefix}user_profiles` a";
-	$where='a.`status`='.STAT_APPROVED;
+	$where='a.`status`='.STAT_APPROVED.' AND a.`del`=0';
 	$orderby="a.`score` DESC";
 
 	// define here all search types
@@ -56,6 +56,9 @@ if (!empty($output['search_md5'])) {
 			case 'basic':
 				$input['acclevel_id']=16;
 				$search_fields=$basic_search_fields;
+				if (isset($_GET['wphoto'])) {
+					$where="a.`_photo`<>'' AND ".$where;
+				}
 				break;
 
 			case 'adv':
@@ -65,6 +68,9 @@ if (!empty($output['search_md5'])) {
 					if (isset($field['searchable'])) {
 						$search_fields[]=$field_id;
 					}
+				}
+				if (isset($_GET['wphoto'])) {
+					$where="a.`_photo`<>'' AND ".$where;
 				}
 				break;
 
@@ -82,6 +88,13 @@ if (!empty($output['search_md5'])) {
 				$input['acclevel_id']=16;
 				$continue=true;
 				$orderby="a.`date_added` DESC";
+				break;
+
+			case 'online':
+				$input['acclevel_id']=16;
+				$continue=true;
+				$from="`{$dbtable_prefix}online` b,".$from;
+				$where="b.`fk_user_id`<>0 AND b.`fk_user_id`=a.`fk_user_id` AND ".$where;
 				break;
 
 			default:

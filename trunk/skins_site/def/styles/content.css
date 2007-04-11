@@ -465,12 +465,15 @@ form.edit_form dd label {
 	margin: 0 3px 0 1px;
 }
 
-form.edit_form dd.field-help {
-	float: left;
-	width: 290px;
+.field-help {
 	font-size: 12px;
 	color: #878787;
 	padding-left: 10px;
+}
+
+form.edit_form dd.field-help {
+	float: left;
+	width: 290px;
 }
 
 form.edit_form dd.full-width {
@@ -600,6 +603,7 @@ blockquote {
 
 	.list_small li.first {
 		margin: 0;
+		clear: both;
 	}
 
 	.list_small li p {

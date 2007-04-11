@@ -1,0 +1,31 @@
+<form action="processors/pass_lost.php" method="post" id="pass_lost" class="edit_form">
+<fieldset>
+	<dl>
+		<dt><label for="email">Email:</label></dt>
+		<dd><input type="text" id="email" name="email" value="{output.email}" tabindex="1" /></dd>
+		<dd class="field-help">Enter your email address to recover your password</dd>
+	</dl>
+</fieldset>
+
+<opt name="output.use_captcha">
+<script type="text/javascript">
+	use_captcha=true;
+</script>
+<fieldset>
+	<dl>
+		<dt>Security image:</dt>
+		<dd><img src="show_captcha.php?{output.rand}" /></dd>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><input type="text" name="captcha" id="captcha" size="4" tabindex="2" /> <span class="field-help">Enter the characters from above.</span></dd>
+	</dl>
+</fieldset>
+</opt name="output.use_captcha">
+
+<fieldset class="controls">
+	<input type="submit" class="button blarge" value="Get Password" />
+</fieldset>
+</form>
+
+<script type="text/javascript" src="js/pass_lost.js"></script>

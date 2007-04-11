@@ -63,7 +63,7 @@ $tpl->set_file('content',$template);
 $tpl->set_var('output',$output);
 $tpl->process('content','content');
 
-$tplvars['title']='Info';
+$tplvars['title']='Information';
 $tplvars['css']='info.css';
 if (is_file('info_left.php')) {
 	include 'info_left.php';

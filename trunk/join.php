@@ -148,6 +148,7 @@ if ($page==1) {
 		$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
 		$_SESSION['captcha_word']=$c->gen_rnd_string(4);
 		$output['rand']=make_seed();
+		$output['use_captcha']=true;
 	}
 }
 $output['page']=$page;

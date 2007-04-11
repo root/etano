@@ -76,6 +76,8 @@ TODO
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
 
 - cand se adauga o poza NE-privata in album, daca nu exista poza in profil, sa se faca automat is_main
+- rate this photo
+- profile views
 
 - functie fields_edit_tpl($field_ids)
 - functie fields_search_tpl($field_ids)
@@ -87,9 +89,6 @@ TODO
 - scor cand primeste un mesaj/flirt si poate si cand trimite? (mai mare la primit - inseamna ca e interesant)
 - scor la conturi platitoare pentru vechimea contului (lunar?)
 - in message_read.php linia 106 - ar trebui sa verific lista de blocati, nu filtrul.
-
-
-- includes/site_options.inc.php cu setarile din site_options3 ?
 
 - in toate procesoarele tb sa verific cazul de eroare:
 // 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
@@ -112,3 +111,5 @@ TODO
 
 - [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]
 - addon: lightbox (vezi http://beta.zooomr.com)
+
+- news de la admin pt membri (site_news)

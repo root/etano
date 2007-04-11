@@ -28,11 +28,21 @@ $tplvars['bbcode_comments']=get_site_option('bbcode_comments','core');
 $output=array();
 $loop=array();
 if (!empty($photo_id)) {
-	$query="SELECT `photo_id`,`photo`,`caption`,`fk_user_id`,`_user` as `user`,`allow_comments` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$photo_id' AND `status`='".STAT_APPROVED."'";
+	$query="SELECT `photo_id`,`photo`,`caption`,`fk_user_id`,`_user` as `user`,`allow_comments`,`allow_rating`,`stat_votes`,`stat_votes_total` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$photo_id' AND `status`='".STAT_APPROVED."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
 		$output['caption']=sanitize_and_format($output['caption'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		if (!empty($output['allow_rating'])) {
+			if ($output['stat_votes']>0) {
+				$output['rate_num']=number_format($output['stat_votes_total']/$output['stat_votes'],1);
+			} else {
+				$output['rate_num']=0;
+			}
+			$output['rate_percent']=(int)(($output['rate_num']*100)/5);
+		} else {
+			unset($output['allow_rating']);
+		}
 
 		if (!empty($output['allow_comments'])) {
 			$query="SELECT a.`comment`,a.`fk_user_id`,a.`_user` as `user`,b.`_photo` as `photo` FROM `{$dbtable_prefix}photo_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_photo_id`='".$output['photo_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`date_posted` ASC";
@@ -84,4 +94,8 @@ if (is_file('photo_view_left.php')) {
 	include 'photo_view_left.php';
 }
 include 'frame.php';
+if (!empty($photo_id) && isset($output['fk_user_id']) && ((isset($_SESSION['user']['user_id']) && $output['fk_user_id']!=$_SESSION['user']['user_id']) || !isset($_SESSION['user']['user_id']))) {
+	$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_views`=`stat_views`+1 WHERE `photo_id`='".$photo_id."'";
+	@mysql_query($query);
+}
 ?>

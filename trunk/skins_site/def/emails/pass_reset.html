@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+</head>
+<body>
+<table>
+<tr>
+	<td>
+		<p>Someone, hopefully you, requested that the password for the account associated with this email address ({output.email}) be reset.</p>
+		<p>The request originated from {output.ipaddr}.</p>
+		<p>If you did not do this ignore this email. Please do not reply.</p>
+		<p>Should you wish to confirm this request and change your password, please follow this link:</p>
+		<p>Your username is: {output.user}</p>
+
+		<p><a href="{tplvars.baseurl}/pass_change.php?uid={output.uid}&amp;secret={output.temp_pass}">{tplvars.baseurl}/pass_reset.php?uid={output.uid}&amp;secret={output.temp_pass}</a></p>
+
+		<p>--<br />
+		<a href="{tplvars.baseurl}">{tplvars.sitename}</a></p>
+	</td>
+</tr>
+</table>
+</body>
+</html>

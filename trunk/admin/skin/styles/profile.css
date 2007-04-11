@@ -1,5 +1,15 @@
+#profile_menu {
+	width: 200px;
+	float: left;
+	margin-right: 10px;
+}
+
 #profile {
 	width: 100%;
+}
+
+#search_nav {
+	margin-bottom: 20px;
 }
 
 #profile_pic {
@@ -27,3 +37,8 @@
 	margin-right: 3px;
 }
 
+#profile_menu li.controls {
+	background: none;
+	padding-left: 0;
+	margin-top: 20px;
+}
