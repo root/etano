@@ -743,8 +743,8 @@ function send_email($from,$to,$subject,$message,$html=false,$attachments=array()
 	$text_message=str_replace('&nbsp;',' ',$text_message);
 	$text_message=trim(strip_tags(stripslashes($text_message)));
 	// Bring down number of empty lines to 2 max
-	$text_message=preg_replace("/\n[\s]+\n/","\n",$text_message);
-	$text_message=preg_replace("/[\n]{3,}/", "\n\n",$text_message);
+	$text_message=preg_replace("/\n\s+\n/","\n",$text_message);
+	$text_message=preg_replace("/\n{3,}/", "\n\n",$text_message);
 	$text_message=wordwrap($text_message,72);
 	$message="\n\n--$separator\n".$text_header.$text_message;
 	if ($html) {

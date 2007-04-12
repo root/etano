@@ -23,7 +23,7 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='blog_comments.php';
+$nextpage='blog_post_view.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it

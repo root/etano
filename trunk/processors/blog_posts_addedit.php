@@ -30,6 +30,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	foreach ($blog_posts_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$blog_posts_default['defaults'][$k]);
 	}
+// max 2 empty lines
+	$input['post_content']=preg_replace(array('/\\\r\\\n/','/(\\\n\s+\\\n)+/','/(\\\n){3,}/'),array('\n','\n','\n\n'),$input['post_content']);
+
 	$input['fk_user_id']=$_SESSION['user']['user_id'];
 	if (isset($_POST['return']) && !empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');

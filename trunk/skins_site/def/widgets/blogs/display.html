@@ -1,0 +1,13 @@
+<ul class="blogs_small">
+<loop name="loop">
+	<li class="{loop.class}">
+		<opt name="loop.fk_user_id"><a href="{tplvars.relative_path}profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo thumb1" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
+		<a class="content-link blog-title" href="blog_post_view.php?pid={loop.post_id}" title="{loop.title}">{loop.title}</a>
+		<strong>Posted on {loop.date_posted} by <opt name="loop.fk_user_id"><a class="content-link member_link" href="{tplvars.relative_path}profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id"></strong>
+		<p>{loop.post_content}
+			...<a class="content-link read-more" href="blog_post_view.php?pid={loop.post_id}" title="Read more">Read more</a>
+		</p>
+		<div class="clear"></div>
+	</li>
+</loop name="loop">
+</ul>
