@@ -609,3 +609,49 @@ blockquote {
 	.list_small li p {
 		display: none;
 	}
+
+
+/* Small blogs list for widgets */
+
+* html .blogs_small {
+	margin-left: -6px;
+	width: 720px;
+	height: 1%;
+}
+.blogs_small {
+	width: 720px;
+	margin-left: -6px;
+	padding: 0 0 5px;
+	list-style-type: none;
+	overflow: hidden;
+}
+
+.blogs_small li {
+	border-bottom: 1px dashed #ccc;
+	margin-bottom: 30px;
+}
+
+.blogs_small li.last {
+	border-bottom: none;
+}
+
+.blogs_small .user_photo {
+	float: left;
+	margin: 0 10px 10px 0;
+}
+
+.blogs_small .blog-title {
+	font-size: 13px;
+	margin:0;
+	padding:0;
+}
+
+.blogs_small strong {
+	display: block;
+	font-size: 11px;
+}
+
+.blogs_small p {
+	margin: 10px 0;
+}
+

@@ -178,7 +178,7 @@
 	}
 
 
-/* Content - Latest members section */
+/* Content - latest members section */
 
 * html .list_small {
 	margin-left: -6px;
@@ -191,6 +191,7 @@
 	padding: 0 0 5px;
 	list-style-type: none;
 	overflow: hidden;
+	border-bottom: 1px dashed #ccc;
 }
 
 	.list_small li {
@@ -204,81 +205,52 @@
 		margin: 0;
 	}
 
+
 /* Content - Latest blogs section */
 
-#latest-blogs {
-	width: 704px;
-	margin: 5px 0;
-	padding: 15px 18px 0;
-	background-image: url('../images/blogs-box-bg.gif');
-	background-position: top center;
-	background-repeat: no-repeat;
+#widget_blogs {
+	margin-top: 10px;
 }
 
-#latest-blogs-listing {
-	width: 710px;
-	margin: 15px 0 10px -6px;
-	padding: 0;
-	list-style-type: none;
-}
-
-* html #latest-blogs-listing li {
+* html .blogs_small {
+	margin-left: -6px;
+	width: 720px;
 	height: 1%;
 }
-#latest-blogs-listing li {
+.blogs_small {
+	width: 720px;
+	margin-left: -6px;
+	padding: 0 0 5px;
+	list-style-type: none;
 	overflow: hidden;
-	margin-top: 15px;
-	background-image: url('../images/blogs-listing-bg.gif');
-	background-position: bottom right;
-	background-repeat: no-repeat;
 }
 
-#latest-blogs-listing li.first {
-	margin: 0;
+.blogs_small li {
+	border-bottom: 1px dashed #ccc;
+	margin-bottom: 20px;
 }
 
-#latest-blogs-listing li.last {
-	background-image: none;
+.blogs_small li.last {
+	border-bottom: none;
 }
 
-
-
-#latest-blogs-listing li .blog-photo {
+.blogs_small .user_photo {
 	float: left;
-	width: 110px;
-	text-align: center;
+	margin: 0 10px 10px 0;
 }
 
-#latest-blogs-listing li .blog-details {
-	width: 585px;
-	margin-left: 120px;
-}
-
-#latest-blogs-listing li .blog-title {
-	padding: 0;
-	margin: 0;
+.blogs_small .blog-title {
 	font-size: 13px;
-	display: inline;
+	margin:0;
+	padding:0;
 }
 
-#latest-blogs-listing li .blog-details p {
+.blogs_small strong {
+	display: block;
+	font-size: 11px;
+}
+
+.blogs_small p {
 	margin: 10px 0;
-	font-size: 13px;
 }
 
-#latest-blogs-listing li .blog-details strong {
-	display: block;
-}
-
-#latest-blogs-listing li .read-more {
-	display: block;
-	background-image: url('../images/link-read-more-out.gif');
-	background-position: top right;
-	margin: 5px 0;
-	padding: 0 25px 6px 0;
-	width: 60px;
-	height: 25px;
-}
-#latest-blogs-listing li .read-more:hover {
-	background-image: url('../images/link-read-more-over.gif');
-}

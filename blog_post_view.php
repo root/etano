@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       blog_comments.php
+File:                       blog_post_view.php
 $Revision: 72 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -26,10 +26,11 @@ $tplvars['bbcode_comments']=get_site_option('bbcode_comments','core');
 $output=array();
 $loop=array();
 if (!empty($post_id)) {
-	$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user` as `user`,a.`title`,a.`post_content`,a.`allow_comments`,a.`fk_blog_id`,b.`blog_name` FROM `{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_blogs` b WHERE a.`post_id`='$post_id' AND a.`status`='".STAT_APPROVED."' AND a.`fk_blog_id`=b.`blog_id`";
+	$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user` as `user`,a.`title`,a.`post_content`,a.`allow_comments`,a.`fk_blog_id`,b.`blog_name` FROM `{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_blogs` b WHERE a.`post_id`='$post_id' AND a.`fk_blog_id`=b.`blog_id` AND a.`is_public`=1 AND a.`status`='".STAT_APPROVED."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
+		$output['date_posted']=strftime($_user_settings['datetime_format'],$output['date_posted']+$_user_settings['time_offset']);
 		$output['title']=sanitize_and_format($output['title'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 		$output['post_content']=sanitize_and_format($output['post_content'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 
@@ -59,7 +60,7 @@ if (!empty($post_id)) {
 if (empty($tplvars['bbcode_comments'])) {
 	unset($tplvars['bbcode_comments']);
 }
-$tpl->set_file('content','blog_comments.html');
+$tpl->set_file('content','blog_post_view.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);
 $tpl->set_var('tplvars',$tplvars);
@@ -67,11 +68,11 @@ $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('comments');
 
 $tplvars['title']=sprintf('%1s - %2s - Comments',$output['blog_name'],$output['title']);
-$tplvars['page_title']=sprintf('Post a comment on: %1s','<a href="blog_view.php?bid='.$output['fk_blog_id'].'">'.$output['blog_name'].'</a>');	// translate this
+$tplvars['page_title']=sprintf('%1s : %2s','<a href="blog_view.php?bid='.$output['fk_blog_id'].'">'.$output['blog_name'].'</a>',$output['title']);	// translate this
 $tplvars['page']='blog_comments';
 $tplvars['css']='blog_comments.css';
-if (is_file('blog_comments_left.php')) {
-	include 'blog_comments_left.php';
+if (is_file('blog_post_view_left.php')) {
+	include 'blog_post_view_left.php';
 }
 include 'frame.php';
 ?>

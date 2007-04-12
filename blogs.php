@@ -46,6 +46,12 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTIONAL | TPL_OPT
 $tpl->drop_loop('latest_blog_posts');
 $tpl->drop_loop('featured_blog_posts');
 
-$tplvars['title']='Blog posts';
+$tplvars['title']='Browse Blogs';
+$tplvars['page_title']='Blogs';
+$tplvars['page']='blogs';
+$tplvars['css']='blogs.css';
+if (is_file('blogs_left.php')) {
+	include 'blogs_left.php';
+}
 include 'frame.php';
 ?>

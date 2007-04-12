@@ -53,7 +53,10 @@ function get_module_codes_by_type($module_type) {
 function bbcode2html($str) {
 	$from=array('~\[url=(http://[^<">\(\)\[\]]*?)\](.*?)\[/url\]~','~\[b\](.*?)\[/b\]~','~\[u\](.*?)\[/u\]~','~\[quote\](.*?)\[/quote\]~','~\[img=(http://[^<">\(\)\[\]]*?)\]~');
 	$to=array('<a target="_blank" rel="nofollow" href="$1">$2</a>','<strong>$1</strong>','<span class="underline">$1</span>','<blockquote>$1</blockquote>','<img src="$1" />');
-	return preg_replace($from,$to,$str);
+	$str=preg_replace($from,$to,$str);
+	// leftovers
+	$from=array('~\[url=(http://[^<">\(\)\[\]]*?)\]~','~\[/url\]~','~\[b\]~','~\[/b\]~','~\[u\]~','~\[/u\]~','~\[quote\]~','~\[/quote\]~','~\[img=(http://[^<">\(\)\[\]]*?)\]~');
+	return preg_replace($from,'',$str);
 }
 
 

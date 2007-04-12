@@ -89,22 +89,25 @@ class widget_photos extends icontent_widget {
 			switch ($this->config['mode']) {
 				case 'new':
 					$widget['title']='Newest Photos';	// translate this
+					$widget['id']='widg_new_photos';
 					break;
 
 				case 'vote':
 					$widget['title']='Most Voted Photos';	// translate this
+					$widget['id']='widg_vote_photos';
 					break;
 
 				case 'views':
 					$widget['title']='Most Popular Photos';	// translate this
+					$widget['id']='widg_views_photos';
 					break;
 
 				case 'comm':
 					$widget['title']='Most Discussed Photos';	// translate this
+					$widget['id']='widg_comm_photos';
 					break;
 
 			}
-			$widget['id']='widget_photos';
 			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_path'].'photo_search.php?st='.$this->config['mode'].'" title="More Photos">More</a>';	// translate this
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
