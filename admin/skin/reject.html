@@ -1,63 +1,52 @@
-<script type="text/javascript" src="js/reject.js"></script>
+<opt name="output.reject_member"><h2>Reject profile</h2></opt name="output.reject_member">
+<opt name="output.reject_photo"><h2>Reject photo</h2></opt name="output.reject_photo">
+<opt name="output.reject_blog"><h2>Reject blog post</h2></opt name="output.reject_blog">
+
+<h3>Member: <a href="profile.php?uid={output.user_id}">{output.user}</a></h3>
+<opt name="output.reject_photo"><img class="user_photo" src="{tplvars.photourl}/t1/{output.photo}" /></opt name="output.reject_photo">
+
+<form action="processors/reject.php" method="post" id="reject_form" onsubmit="return(check_form(this))">
+<input type="hidden" name="return" id="return" value="{output.return}" />
+<input type="hidden" name="t" id="t" value="{output.t}" />
+<input type="hidden" name="id" value="{output.id}" />
+<table id="reject_table" class="form_table">
+<tr>
+	<td class="label"><label for="reason">Predefined reasons:</label></td>
+	<td colspan="2" class="field {profile_fields.error_reason}">
+		<select id="amtpl_id" onchange="get_reason()">
+		{output.amtpl_id}
+		</select>
+		<span class="comment">Select one of these reasons or enter your own message</span>
+	</td>
+</tr>
+<tr>
+	<td class="label"><label for="no_email">Email notification?</label></td>
+	<td class="field"><input type="checkbox" name="send_email" id="send_email" value="1" checked="checked" /></td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="reason_title">Subject:</label></td>
+	<td class="field {profile_fields.error_reason_title}">
+		<input type="text" name="reason_title" id="reason_title" value="{output.reason_title}" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="reject_reason">Reason text:</label></td>
+	<td class="field {profile_fields.error_reject_reason}">
+		<textarea name="reject_reason" id="reject_reason" cols="60" rows="30" wrap="off">{output.reject_reason}</textarea>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"></td>
+	<td class="field"><input class="button" type="submit" value="Reject" /> <span id="save_tpl"><input class="button" type="button" value="Save as template" onclick="save_template()" /></span></td>
+	<td class="comment"></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links"><a class="back" href="{output.return2}">Back</a></div>
+
 <script type="text/javascript" src="fckeditor/fckeditor.js"></script>
-
-<opt name="input.reject_member"><h1>Reject profile</h1></opt name="input.reject_member">
-<opt name="input.reject_photo"><h1>Reject photo</h1></opt name="input.reject_photo">
-<opt name="input.reject_blog"><h1>Reject blog post</h1></opt name="input.reject_blog">
-
-<div id="member_reject">
-	<h3>Member: <a href="profile.php?uid={output.user_id}">{output.user}</a></h3>
-	<opt name="input.reject_photo"><img class="user_photo" src="{tplvars.photourl}/t1/{output.photo}" /></opt name="input.reject_photo">
-
-	<form action="processors/reject.php" method="post" id="reject_form" onsubmit="return(check_form(this))">
-	<input type="hidden" name="return" id="return" value="{output.return}" />
-	<input type="hidden" name="t" id="t" value="{output.t}" />
-	<input type="hidden" name="id" value="{output.id}" />
-	<table id="reject_table" class="form_table">
-	<tr>
-		<td class="label"><label for="reason">Predefined reasons:</label></td>
-		<td colspan="2" class="field {profile_fields.error_reason}">
-			<select id="amtpl_id" onchange="get_reason()">
-			{output.amtpl_id}
-			</select>
-			<span class="comment">Select one of these reasons or enter your own message</span>
-		</td>
-	</tr>
-	<tr>
-		<td class="label"><label for="no_email">Email notification?</label></td>
-		<td class="field"><input type="checkbox" name="send_email" id="send_email" value="1" checked="checked" /></td>
-		<td class="comment"></td>
-	</tr>
-	<tr>
-		<td class="label"><label for="reason_title">Subject:</label></td>
-		<td class="field {profile_fields.error_reason_title}">
-			<input type="text" name="reason_title" id="reason_title" value="{output.reason_title}" />
-		</td>
-		<td class="comment"></td>
-	</tr>
-	<tr>
-		<td class="label"><label for="reject_reason">Reason text:</label></td>
-		<td class="field {profile_fields.error_reject_reason}">
-			<textarea name="reject_reason" id="reject_reason" cols="60" rows="30" wrap="off">{output.reject_reason}</textarea>
-		</td>
-		<td class="comment"></td>
-	</tr>
-	<tr>
-		<td class="label"></td>
-		<td class="field"><input class="button" type="submit" value="Reject" /> <span id="save_tpl"><input class="button" type="button" value="Save as template" onclick="save_template()" /></span></td>
-		<td class="comment"></td>
-	</tr>
-	</table>
-	</form>
-	<div id="bottom_links"><a class="back" href="{output.return2}">Back</a></div>
-</div>
-<script type="text/javascript">
-	window.onload = function() {
-		oFCKeditor=new FCKeditor('reject_reason');
-		oFCKeditor.BasePath=document.location.pathname.substring(0,document.location.pathname.lastIndexOf('reject.php'))+'fckeditor/';
-		oFCKeditor.Height=500;
-		oFCKeditor.ToolbarSet='Basic';
-		oFCKeditor.Config['FullPage']=true ;
-		oFCKeditor.ReplaceTextarea();
-	}
-</script>
+<script type="text/javascript" src="js/reject.js"></script>

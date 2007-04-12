@@ -44,6 +44,7 @@ if (isset($_SESSION['topass']['input'])) {
 
 $output['is_main']=($output['is_main']==1) ? 'checked="checked"' : '';
 $output['is_private']=($output['is_private']==1) ? 'checked="checked"' : '';
+$output['allow_rating']=($output['allow_rating']==1) ? 'checked="checked"' : '';
 $output['allow_comments']=($output['allow_comments']==1) ? 'checked="checked"' : '';
 
 $tpl->set_file('content','photo_edit.html');

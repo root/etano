@@ -1,4 +1,13 @@
-//$(function() {get_reason();});
+$(function() {
+//	get_reason();
+	oFCKeditor=new FCKeditor('reject_reason');
+	oFCKeditor.BasePath=document.location.pathname.substring(0,document.location.pathname.lastIndexOf('reject.php'))+'fckeditor/';
+	oFCKeditor.Height=500;
+	oFCKeditor.ToolbarSet='Basic';
+	oFCKeditor.Config['FullPage']=true ;
+	oFCKeditor.ReplaceTextarea();
+
+});
 
 function get_reason() {
 	myval=$("#reason").val();

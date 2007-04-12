@@ -29,5 +29,6 @@ $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP);
 
 $tplvars['title']='Search';
+$tplvars['css']='photo_search.css';
 include 'frame.php';
 ?>

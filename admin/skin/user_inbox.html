@@ -1,4 +1,4 @@
-<h1>{output.user} Inbox</h1>
+<h2>{output.user} Inbox</h2>
 
 <form action="processors/message_process.php" method="post">
 <input type="hidden" name="uid" value="{output.uid}" />
@@ -27,5 +27,7 @@
 </table>
 <p><input type="submit" value="Delete" /> selected</p>
 </form>
-<div id="pager_holder_btm">{output.pager2}</div>
+
+{output.pager2}
+
 <div id="bottom_links"><a class="back" href="{output.return}">Back to profile</a></div>

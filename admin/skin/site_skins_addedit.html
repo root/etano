@@ -1,16 +1,8 @@
-<script type="text/javascript">
-	function check_form(the) {
-		if (the.skin_name.value=='') {
-			alert('Please enter the name of this skin!');
-			the.skin_name.focus();
-			return false;
-		}
-		return true;
-	}
-</script>
-<h1>Change Skin Settings</h1>
+<h2>Change Skin Settings</h2>
+
 <div class="hint">Please enter the required info below:</div>
-<form action="processors/site_skins_addedit.php" method="post" id="site_skins_addedit" onsubmit="return(check_form(this))">
+
+<form action="processors/site_skins_addedit.php" method="post" id="site_skins_addedit">
 <input type="hidden" name="fk_module_code" value="{site_skins.fk_module_code}" />
 <input type="hidden" name="is_default" value="{site_skins.is_default}" />
 <table id="skin_addedit" class="form_table">
@@ -41,7 +33,7 @@
 </tr>
 </table>
 </form>
+
 <div id="bottom_links"><a class="back" href="site_skins.php">Back to skins</a></div>
-<script type="text/javascript">
-	document.getElementById('skin_name').focus();
-</script>
+
+<script type="text/javascript" src="js/site_skins_addedit.js"></script>

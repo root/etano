@@ -57,6 +57,10 @@ if (!empty($search_md5)) {
 	if (empty($input['caption'])) {
 		unset($input['caption']);
 	}
+	$input['flagged']=sanitize_and_format_gpc($_GET,'flagged',TYPE_INT,0,0);
+	if (empty($input['flagged'])) {
+		unset($input['flagged']);
+	}
 	$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
 	if (empty($input['uid'])) {
 		unset($input['uid']);
@@ -79,11 +83,14 @@ if ($do_query) {
 	if (isset($input['caption'])) {
 		$where.=" AND a.`caption`<>''";
 	}
+	if (isset($input['flagged'])) {
+		$where.=" AND a.`flagged`=1";
+	}
 	if (isset($input['uid'])) {	// a user's photos
 		$where.=" AND a.`fk_user_id`=".$input['uid'];
 	}
 
-	$query="SELECT `photo_id` FROM $from WHERE $where";
+	$query="SELECT a.`photo_id` FROM $from WHERE $where";
 //print $query;
 //die;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

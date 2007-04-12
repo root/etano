@@ -11,5 +11,5 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-$user_photos_default['defaults']=array('photo_id'=>0,'fk_user_id'=>0,'photo'=>'','is_main'=>0,'is_private'=>0,'allow_comments'=>0,'caption'=>'','status'=>0,'date_posted'=>'','last_changed'=>'');
-$user_photos_default['types']=array('photo_id'=>HTML_INT,'fk_user_id'=>HTML_INT,'photo'=>HTML_TEXTFIELD,'is_main'=>HTML_INT,'is_private'=>HTML_INT,'allow_comments'=>HTML_INT,'caption'=>HTML_TEXTFIELD,'status'=>HTML_INT,'date_posted'=>HTML_TEXTFIELD,'last_changed'=>HTML_TEXTFIELD);
+$user_photos_default['defaults']=array('photo_id'=>0,'fk_user_id'=>0,'photo'=>'','is_main'=>0,'is_private'=>0,'allow_comments'=>0,'allow_rating'=>0,'caption'=>'','status'=>0,'date_posted'=>'','last_changed'=>'');
+$user_photos_default['types']=array('photo_id'=>HTML_INT,'fk_user_id'=>HTML_INT,'photo'=>HTML_TEXTFIELD,'is_main'=>HTML_INT,'is_private'=>HTML_INT,'allow_comments'=>HTML_INT,'allow_rating'=>HTML_INT,'caption'=>HTML_TEXTFIELD,'status'=>HTML_INT,'date_posted'=>HTML_TEXTFIELD,'last_changed'=>HTML_TEXTFIELD);
