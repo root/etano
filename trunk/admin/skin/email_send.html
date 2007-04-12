@@ -1,31 +1,30 @@
-<script type="text/javascript" src="js/email_send.js"></script>
+<h2>Send Email</h2>
+
+<form action="processors/email_send.php" method="post" id="email_send_form">
+<input type="hidden" name="return" id="return" value="{output.return}" />
+<input type="hidden" name="uids" id="uids" value="{output.uids}" />
+<table id="email_send_table" class="form_table">
+<tr>
+	<td class="label"><label for="subject">Subject:</label></td>
+	<td class="field {profile_fields.error_subject}"><input type="text" name="subject" id="subject" value="{output.subject}" size="50" tabindex="1" /></td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="message_body">Message:</label></td>
+	<td class="field {profile_fields.error_message_body}">
+		<textarea name="message_body" id="message_body" cols="70" rows="30" wrap="off" tabindex="2">{output.message_body}</textarea>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label">&nbsp;</td>
+	<td><input class="button" type="submit" value="Send" /></td>
+	<td class="comment"></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links"><a class="back" href="{output.return2}">Back</a></div>
+
 <script type="text/javascript" src="fckeditor/fckeditor.js"></script>
-
-<h1>Send Email</h1>
-
-<div id="email_send">
-	<form action="processors/email_send.php" method="post" id="email_send_form">
-	<input type="hidden" name="return" id="return" value="{output.return}" />
-	<input type="hidden" name="uids" id="uids" value="{output.uids}" />
-	<table id="email_send_table" class="form_table">
-	<tr>
-		<td class="label"><label for="subject">Subject:</label></td>
-		<td class="field {profile_fields.error_subject}"><input type="text" name="subject" id="subject" value="{output.subject}" size="50" tabindex="1" /></td>
-		<td class="comment"></td>
-	</tr>
-	<tr>
-		<td class="label"><label for="message_body">Message:</label></td>
-		<td class="field {profile_fields.error_message_body}">
-			<textarea name="message_body" id="message_body" cols="70" rows="30" wrap="off" tabindex="2">{output.message_body}</textarea>
-		</td>
-		<td class="comment"></td>
-	</tr>
-	<tr>
-		<td class="label">&nbsp;</td>
-		<td><input class="button" type="submit" value="Send" /></td>
-		<td class="comment"></td>
-	</tr>
-	</table>
-	</form>
-	<div id="bottom_links"><a class="back" href="{output.return2}">Back</a></div>
-</div>
+<script type="text/javascript" src="js/email_send.js"></script>

@@ -1,4 +1,4 @@
-<h1><a href="loc_countries.php?o={co}&amp;r={cr}">Countries</a> / <a href="loc_states.php?country_id={country_id}&amp;o={so}&amp;r={sr}&amp;co={co}&amp;cr={cr}">{country}</a> / {state} cities</h1>
+<h2><a href="loc_countries.php?o={co}&amp;r={cr}">Countries</a> / <a href="loc_states.php?country_id={country_id}&amp;o={so}&amp;r={sr}&amp;co={co}&amp;cr={cr}">{country}</a> / {state} cities</h2>
 
 <div class="hint"><strong>Add, edit, remove cities:</strong></div>
 
@@ -25,7 +25,8 @@
 </noloop name="cities">
 </loop name="cities">
 </table>
-<div id="pager_holder_btm">{pager2}</div>
+
+{pager2}
 
 <div id="bottom_links">
 	<a class="add" href="loc_cities_addedit.php?state_id={state_id}&amp;country_id={country_id}&amp;o={o}&amp;r={r}&amp;so={so}&amp;sr={sr}&amp;co={co}&amp;cr={cr}" title="Add new city">Add new city</a>

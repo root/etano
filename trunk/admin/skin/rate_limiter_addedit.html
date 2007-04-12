@@ -1,8 +1,7 @@
-<script type="text/javascript" src="js/rate_limiter_addedit.js"></script>
-
-<h1>Add / Edit Limits</h1>
+<h2>Add / Edit Limits</h2>
 
 <div class="hint">Please enter all limit info:</div>
+
 <form action="processors/rate_limiter_addedit.php" method="post" id="rate_limiter_addedit" onsubmit="return(check_form(this))">
 <input type="hidden" name="rate_id" value="{rate_limiter.rate_id}" />
 <table id="rate_addedit" class="form_table">
@@ -50,8 +49,12 @@
 </tr>
 </table>
 </form>
+
 <div id="bottom_links"><a class="back" href="rate_limiter.php">Back to list</a></div>
+
 <script type="text/javascript">
 	document.onkeydown=manage_keydown;	// this type of call here lets us return true/false from the function
 	document.getElementById('m_value').focus();
 </script>
+
+<script type="text/javascript" src="js/rate_limiter_addedit.js"></script>

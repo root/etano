@@ -114,3 +114,4 @@ TODO
 
 - news de la admin pt membri (site_news)
 - search membri case 'vote',case 'views',case 'comm'
+- search default cu defaultul membrului.

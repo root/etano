@@ -1,58 +1,49 @@
-<script type="text/javascript" src="js/photo_search.js"></script>
+<h2>Search Photos</h2>
 
-<h1>Search Photos</h1>
-
-<div id="photo_search">
-	<div id="photo_submenu" class="menu_box">
-		<h4>Quick links</h4>
-		<div class="box_content">
-			<ul>
-			<li><a href="photo_results.php">Browse all</a></li>
-			<li><a href="photo_results.php?stat=5">Awaiting approval</a></li>
-			<li><a href="photo_results.php?is_main=1">Main photos</a></li>
-			</ul>
-		</div>
+<div id="photo_submenu" class="menu_box">
+	<h3>Quick links</h3>
+	<div class="box_content">
+		<ul>
+		<li><a href="photo_results.php">Browse all</a></li>
+		<li><a href="photo_results.php?stat=5">Awaiting approval</a></li>
+		<li><a href="photo_results.php?is_main=1">Main photos</a></li>
+		</ul>
 	</div>
-
-	<form action="photo_results.php" method="get" id="photo_search_form">
-	<fieldset>
-	<div class="edit_row" id="row_pstat">
-		<label class="mainlabel" for="stat">Photo status:</label>
-		<div class="field">
-			<select name="stat" id="stat" tabindex="1">
-			<option value="0">-</option>
-			{output.stat}
-			</select>
-		</div>
-	</div>
-	<div class="edit_row" id="row_main">
-		<label class="mainlabel" for="is_main">Main only:</label>
-		<div class="field">
-			<input type="checkbox" name="is_main" id="is_main" value="1" tabindex="2" />
-		</div>
-	</div>
-	<div class="edit_row" id="row_private">
-		<label class="mainlabel" for="is_private">Private only:</label>
-		<div class="field">
-			<input type="checkbox" name="is_private" id="is_private" value="1" tabindex="3" />
-		</div>
-	</div>
-	<div class="edit_row" id="row_caption">
-		<label class="mainlabel" for="caption">With caption:</label>
-		<div class="field">
-			<input type="checkbox" name="caption" id="caption" value="1" tabindex="4" />
-		</div>
-	</div>
-
-	<div class="edit_row" id="row_submit_photo">
-		<label class="mainlabel">&nbsp;</label>
-		<div class="field"><input type="submit" value="Search" tabindex="5" /></div>
-	</div>
-	</fieldset>
-	</form>
-	<div class="clear"></div>
 </div>
 
-<script type="text/javascript">
-	document.getElementById('photo_search_form').elements[0].focus();
-</script>
+<form action="photo_results.php" method="get" id="photo_search_form" class="edit_form">
+<fieldset>
+<dl>
+	<dt><label for="stat">Photo status:</label></dt>
+	<dd>
+		<select name="stat" id="stat" tabindex="1">
+		<option value="0">-</option>
+		{output.stat}
+		</select>
+	</dd>
+</dl>
+<dl>
+	<dt><label for="is_main">Main only:</label></dt>
+	<dd><input type="checkbox" name="is_main" id="is_main" value="1" tabindex="2" /></dd>
+</dl>
+<dl>
+	<dt><label for="is_private">Private only:</label></dt>
+	<dd><input type="checkbox" name="is_private" id="is_private" value="1" tabindex="3" /></dd>
+</dl>
+<dl>
+	<dt><label for="caption">With caption:</label></dt>
+	<dd><input type="checkbox" name="caption" id="caption" value="1" tabindex="4" /></dd>
+</dl>
+<dl>
+	<dt><label for="caption">Flagged:</label></dt>
+	<dd><input type="checkbox" name="flagged" id="flagged" value="1" tabindex="5" /></dd>
+</dl>
+</fieldset>
+
+<fieldset class="controls">
+	<input type="submit" value="Search" tabindex="6" />
+</fieldset>
+</form>
+<div class="clear"></div>
+
+<script type="text/javascript" src="js/photo_search.js"></script>
