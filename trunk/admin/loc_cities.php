@@ -74,6 +74,7 @@ $tpl->set_var('co',$co);
 $tpl->set_var('cr',$cr);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('cities');
+unset($cities);
 
 $tplvars['title']='Location Management: Cities';
 include 'frame.php';

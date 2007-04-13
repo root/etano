@@ -47,6 +47,7 @@ $tpl->set_var('output',$output);
 $tpl->set_loop('networks',$networks);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTLOOP | TPL_NOLOOP);
 $tpl->drop_loop('networks');
+unset($networks);
 
 $tplvars['title']='My network members';
 $tplvars['page_title']='How I am connected';

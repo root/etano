@@ -84,7 +84,8 @@ if (isset($_GET['r'])) {
 }
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
-$tpl->drop_loop('comments');
+$tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='View photos';
 $tplvars['page_title']=sprintf('%s photos','<a href="profile.php?uid='.$output['fk_user_id'].'">'.$output['user'].'</a>');	// translate this

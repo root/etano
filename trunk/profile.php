@@ -79,6 +79,7 @@ $tpl->set_var('profile',$profile);
 $tpl->set_var('uid',$uid);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
+unset($categs);
 
 $tplvars['title']='Member Profile';
 if (is_file('profile_left.php')) {

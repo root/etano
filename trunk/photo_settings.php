@@ -53,6 +53,7 @@ if (isset($_GET['r'])) {
 }
 $tpl->process('content','content',TPL_LOOP);
 $tpl->drop_loop('photos');
+unset($photos);
 
 $tplvars['title']='Add description to my photos';
 $tplvars['page_title']='Photo Settings';

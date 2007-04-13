@@ -37,6 +37,7 @@ $tpl->set_file('content','folders.html');
 $tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='Manage folders';     // translate
 $tplvars['page_title']='My personal folders';

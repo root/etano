@@ -45,6 +45,7 @@ $tpl->set_loop('loop',$loop);
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='My Searches';
 $tplvars['page_title']='My Searches';

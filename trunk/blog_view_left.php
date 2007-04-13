@@ -42,4 +42,5 @@ $tpl->set_file('left_content','blog_view_left.html');
 $tpl->set_loop('loop',$loop);
 $tpl->process('left_content','left_content',TPL_MULTILOOP);
 $tpl->drop_loop('loop');
+unset($loop);
 ?>

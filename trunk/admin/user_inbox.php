@@ -59,6 +59,7 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	$tpl->set_var('output',$output);
 	$tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP);
 	$tpl->drop_loop('loop');
+	unset($loop);
 }
 
 $tplvars['title']='User Inbox';

@@ -27,4 +27,5 @@ $tpl->set_loop('my_searches',$my_searches);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('left_content','left_content',TPL_LOOP | TPL_NOLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('my_searches');
+unset($my_searches);
 ?>

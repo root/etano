@@ -50,6 +50,7 @@ $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('flirts');
+unset($flirts);
 
 $tplvars['title']='Flirt Management';
 include 'frame.php';

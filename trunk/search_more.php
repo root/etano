@@ -90,6 +90,7 @@ $tpl->set_file('content','search_more.html');
 $tpl->set_loop('search',$search);
 $tpl->process('content','content',TPL_LOOP);
 $tpl->drop_loop('search');
+unset($search);
 
 $tplvars['title']='Advanced Search';
 $tplvars['page_title']='Advanced search';

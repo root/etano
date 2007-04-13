@@ -12,7 +12,7 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $blog_archive=array();
-include _CACHEPATH_.'/blogs/'.$output['fk_blog_id']{0}.'/'.$output['fk_blog_id'].'/blog_archive.inc.php';
+//include _CACHEPATH_.'/blogs/'.$output['fk_blog_id']{0}.'/'.$output['fk_blog_id'].'/blog_archive.inc.php';
 
 $blog['blog_id']=$output['fk_blog_id'];
 $year=sanitize_and_format_gpc($_GET,'y',TYPE_INT,0,0);
@@ -44,4 +44,5 @@ $tpl->set_var('blog',$blog);
 $tpl->set_loop('loop',$loop);
 $tpl->process('left_content','left_content',TPL_MULTILOOP);
 $tpl->drop_loop('loop');
+unset($loop);
 ?>
