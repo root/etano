@@ -77,6 +77,7 @@ $tpl->set_var('blog',$blog);
 $tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP);
 $tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='Blog posts';
 $tplvars['page_title']=$blog['blog_name'];

@@ -81,6 +81,7 @@ class widget_blogs extends icontent_widget {
 			$this->tpl->set_loop('loop',$loop);
 			$this->tpl->process('widget.content','widget.content',TPL_LOOP | TPL_OPTLOOP);
 			$this->tpl->drop_loop('loop');
+			unset($loop);
 		}
 	}
 

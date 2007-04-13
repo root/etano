@@ -49,6 +49,7 @@ if (isset($_GET['s'])) {
 	$tpl->set_var('skin',$skin);
 	$tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP);
 	$tpl->drop_loop('lang_strings');
+	unset($lang_strings);
 }
 
 $tplvars['title']='Language Strings';

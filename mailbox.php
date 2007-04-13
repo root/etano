@@ -114,6 +114,7 @@ $tpl->set_var('folder_options',vector2options($moveto_folders));
 $tpl->set_var('return',rawurlencode($return));
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='Read your messages';     // translate
 $tplvars['page_title']=$my_folders[$fid];

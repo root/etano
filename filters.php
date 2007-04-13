@@ -106,6 +106,7 @@ $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='Manage your filters';     // translate
 $tplvars['page_title']='Message filters';

@@ -74,6 +74,7 @@ $tpl->set_var('profile',$profile);
 $tpl->set_var('uid',$uid);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
+unset($categs);
 
 $tplvars['title']='My Profile';
 $tplvars['page_title']='My Profile';

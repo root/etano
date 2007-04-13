@@ -177,6 +177,7 @@ $tpl->set_var('tplvars',$tplvars);
 $tpl->set_loop('profile',$profile);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP);
 $tpl->drop_loop('profile');
+unset($profile);
 
 $tplvars['title']='Member Profile';
 include 'frame.php';

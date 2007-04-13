@@ -58,6 +58,8 @@ $tpl->set_loop('memberships',$memberships);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('access_levels');
 $tpl->drop_loop('memberships');
+unset($access_levels);
+unset($memberships);
 
 $tplvars['title']='Define access levels';
 include 'frame.php';

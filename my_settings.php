@@ -71,6 +71,7 @@ $tpl->set_file('content','my_settings.html');
 $tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP);
 $tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='My Settings';
 $tplvars['page_title']='My Settings';

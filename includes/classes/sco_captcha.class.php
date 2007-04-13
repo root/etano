@@ -1,9 +1,9 @@
 <?php
 /******************************************************************************
-File:                       includes/sco_captcha.class.php
+File:                       includes/classes/sco_captcha.class.php
 Info:   					class for generating captcha images
 File version:				1.2006101601
-Created by:                 Dan Caragea (http://www.sco.ro - dan@rdsct.ro)
+Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
 /*

@@ -158,6 +158,7 @@ $tpl->set_loop('loop',$loop);
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='Registration';
 $tplvars['page_title']='Registration';

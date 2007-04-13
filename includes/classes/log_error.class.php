@@ -1,4 +1,16 @@
 <?php
+/******************************************************************************
+newdsb
+===============================================================================
+File:                       includes/classes/log_error.class.php
+$Revision$
+Software by:                DateMill (http://www.datemill.com)
+Copyright by:               DateMill (http://www.datemill.com)
+Support at:                 http://forum.datemill.com
+*******************************************************************************
+* See the "softwarelicense.txt" file for license.                             *
+******************************************************************************/
+
 define('_ERRORLOG_DB_',0);
 define('_ERRORLOG_FILE_',1);
 define('_ERRORLOG_STDOUT_',2);

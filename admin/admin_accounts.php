@@ -52,6 +52,7 @@ $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('admin_accounts');
+unset($admin_accounts);
 
 $tplvars['title']='Admin Accounts';
 include 'frame.php';
