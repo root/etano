@@ -60,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Blog details changed.';     // translate
+			$input['blog_id']=(string)$input['blog_id'];
 		} else {
 			unset($input['blog_id']);
 			$query="INSERT INTO `{$dbtable_prefix}user_blogs` SET ";
@@ -73,17 +74,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['blog_id']=mysql_insert_id();
 			$towrite['blog_id']=$input['blog_id'];
+			$input['blog_id']=(string)$input['blog_id'];
 
 			// create the blog cache folder if it doesn't exist
-			if (!is_dir(_CACHEPATH_.'/blogs/'.$input['blog_id'])) {
-				$modman->fileop->mkdir(_CACHEPATH_.'/blogs/'.$input['blog_id']);
+			if (!is_dir(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'])) {
+				$modman->fileop->mkdir(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id']);
 			}
-			$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id'].'/blog_archive.inc.php','<?php $blog_archive=array();');
+			$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'].'/blog_archive.inc.php','<?php $blog_archive=array();');
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Blog created.';     // translate
 		}
+
 		$towrite='<?php $blog='.var_export($towrite,true).';';
-		$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id'].'/blog.inc.php',$towrite);
+		$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'].'/blog.inc.php',$towrite);
 	} else {
 		$nextpage='blog_addedit.php';
 // 		you must re-read all textareas from $_POST like this:

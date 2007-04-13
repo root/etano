@@ -40,7 +40,7 @@ class widget_photos extends icontent_widget {
 		$query="SELECT `photo_id`,`photo`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `is_private`=0 AND `status`='".STAT_APPROVED."' AND `del`=0";
 		switch ($this->config['mode']) {
 			case 'vote':
-				$query.=" ORDER BY `stat_votes_total` DESC";
+				$query.=" AND `stat_votes_total`>0 ORDER BY `stat_votes_total` DESC";
 				break;
 
 			case 'new':
@@ -48,11 +48,11 @@ class widget_photos extends icontent_widget {
 				break;
 
 			case 'views':
-				$query.=" ORDER BY `stat_views` DESC";
+				$query.=" AND `stat_views`>0 ORDER BY `stat_views` DESC";
 				break;
 
 			case 'comm':
-				$query.=" ORDER BY `stat_comments` DESC";
+				$query.=" AND `stat_comments`>0 ORDER BY `stat_comments` DESC";
 				break;
 
 		}

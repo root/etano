@@ -17,6 +17,8 @@ if (@ini_get('zlib.output_compression')!='1' && strtolower(ini_get('zlib.output_
 
 ini_set('include_path','.');
 ini_set('session.use_cookies',1);
+setlocale(LC_CTYPE,'C');
+setlocale(LC_COLLATE,'C');
 define('_DEBUG_',2);// Set to 0 for production! 0-No,1-Yes,2-Verbose. Used for debug in case of errors.
 if (_DEBUG_!=0) {
 	ini_set('error_reporting',2047);

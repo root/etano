@@ -31,14 +31,11 @@ while ($blog=mysql_fetch_assoc($res)) {
 		unset($blog['fk_user_id']);
 	}
 
-	if (!is_dir(_CACHEPATH_.'/blogs/'.$blog['fk_blog_id']{0}.'/'.$blog['fk_blog_id'])) {
-		$modman->fileop->mkdir(_CACHEPATH_.'/blogs/'.$blog['fk_blog_id']{0}.'/'.$blog['fk_blog_id']);
-	}
 	$towrite='<?php $post='.var_export($blog,true).';';
-	$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$blog['fk_blog_id']{0}.'/'.$blog['fk_blog_id'].'/'.$blog['post_id'].'.inc.php',$towrite);
+	$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/posts/'.$blog['post_id']{0}.'/'.$blog['post_id'].'.inc.php',$towrite);
 
 	$blog['post_content']=$post_content_short;
 	$towrite='<?php $post='.var_export($blog,true).';';
-	$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$blog['fk_blog_id']{0}.'/'.$blog['fk_blog_id'].'/'.$blog['post_id'].'_short.inc.php',$towrite);
+	$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/posts/'.$blog['post_id']{0}.'/'.$blog['post_id'].'_short.inc.php',$towrite);
 }
 ?>

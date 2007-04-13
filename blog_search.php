@@ -70,10 +70,10 @@ if (!empty($output['search_md5'])) {
 				$input['acclevel_id']=17;
 				$input['tags']=sanitize_and_format_gpc($_GET,'tags',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 				// remove extra spaces and words with less than 3 chars
-				$input['tags']=trim(preg_replace(array("/[^a-zA-Z0-9']/","/\b.{1,3}\b/","/\s\s+/"),array(' ','',' '),$input['tags']));
+				$input['tags']=trim(preg_replace(array("/['\"%<>\+-]/","/\s\s+/","/\b[^\s]{1,3}\b/"),array(' ',' ',''),$input['tags']));
 				if (!empty($input['tags'])) {
-					$select.=",MATCH (a.`title`,a.`post_content`) AGAINST ('".$input['tags']."' IN BOOLEAN MODE) as `match_score`";
-					$where.=" AND MATCH (a.`title`,a.`post_content`) AGAINST ('".$input['tags']."' IN BOOLEAN MODE)";
+					$select.=",MATCH (a.`title`,a.`post_content`) AGAINST ('".$input['tags']."') as `match_score`";
+					$where.=" AND MATCH (a.`title`,a.`post_content`) AGAINST ('".$input['tags']."')";
 					$orderby="`match_score` DESC";
 				} else {
 					$error=true;
@@ -107,12 +107,28 @@ if (!empty($output['search_md5'])) {
 $output['totalrows']=count($post_ids);
 
 // get the results from user cache for the found post_ids
-$results=array();
+$loop=array();
 if (!empty($output['totalrows'])) {
 	$post_ids=array_slice($post_ids,$output['o'],$output['r']);
-	require_once _BASEPATH_.'/includes/classes/blog_cache.class.php';
-	$blog_cache=new blog_cache(get_my_skin());
-	$loop=$blog_cache->get_cache_beta($post_ids,'result_blog','tpl');
+	require_once _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
+	$blog_posts_cache=new blog_posts_cache();
+	$loop=$blog_posts_cache->get_tpl_array($post_ids);
+	unset($blog_posts_cache);
+	if (isset($input['tags'])) {
+		$search_words=explode(' ',$input['tags']);
+		$replace_words=array();
+		for ($i=0;isset($search_words[$i]);++$i) {
+			$replace_words[$i]='<span class="matched_word">'.$search_words[$i].'</span>';
+		}
+	}
+	for ($i=0;isset($loop[$i]);++$i) {
+		$loop[$i]['date_posted']=strftime($_user_settings['datetime_format'],$loop[$i]['date_posted']+$_user_settings['time_offset']);
+		// fancy word coloring - lightning fast now :)
+		if (isset($input['tags'])) {
+			$loop[$i]['title']=str_replace($search_words,$replace_words,$loop[$i]['title']);
+			$loop[$i]['post_content']=str_replace($search_words,$replace_words,$loop[$i]['post_content']);
+		}
+	}
 
 	// set $_GET for the pager.
 	$_GET=array('search'=>$output['search_md5']);
@@ -122,13 +138,13 @@ if (!empty($output['totalrows'])) {
 $tpl->set_file('content','blog_search.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);
-$tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTIONAL);
+$tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_NOLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
 
 $tplvars['title']='Search Results';
 $tplvars['page_title']='Search Results';
 $tplvars['page']='blog_search';
-$tplvars['css']='blog_search.css.php';
+$tplvars['css']='blog_search.css';
 if (is_file('blog_search_left.php')) {
 	include 'blog_search_left.php';
 }
