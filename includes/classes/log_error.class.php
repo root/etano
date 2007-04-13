@@ -10,7 +10,7 @@ class log_error {
 	function log_error($module_name,$error) {
 		$this->_init();
 		if ($this->config['log_mode']==_ERRORLOG_DB_) {
-			$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+			global $dbtable_prefix;
 			$query="INSERT IGNORE INTO `{$dbtable_prefix}error_log` SET `module`='$module_name',`error`='".sanitize_and_format($error,TYPE_STRING,FORMAT_ADDSLASH)."'";
 			@mysql_query($query);
 		} elseif ($this->config['log_mode']==_ERRORLOG_FILE_) {

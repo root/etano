@@ -2,7 +2,7 @@
 $jobs[]='delete_members';
 
 function delete_members() {
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 
 	$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `del`=1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

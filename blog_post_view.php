@@ -67,7 +67,7 @@ $tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('comments');
 
-$tplvars['title']=sprintf('%1s - %2s - Comments',$output['blog_name'],$output['title']);
+$tplvars['title']=sprintf('Blogs - %1s - %2s',$output['blog_name'],$output['title']);
 $tplvars['page_title']=sprintf('%1s : %2s','<a href="blog_view.php?bid='.$output['fk_blog_id'].'">'.$output['blog_name'].'</a>',$output['title']);	// translate this
 $tplvars['page']='blog_comments';
 $tplvars['css']='blog_comments.css';

@@ -2,7 +2,7 @@
 $jobs[]='gen_user_cache';
 
 function gen_user_cache() {
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$dirname=dirname(__FILE__);
 	$temp=array();
 	if ($dirname{0}=='/') {				// unixes here

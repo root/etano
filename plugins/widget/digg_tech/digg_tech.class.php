@@ -39,7 +39,7 @@ class widget_digg_tech extends icontent_widget {
 
 
 	function _content() {
-		$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+		global $dbtable_prefix;
 		$this->tpl->set_file('widget_content','widgets/digg_tech/display.html');
 		$query="SELECT `feed_xml` FROM `{$dbtable_prefix}feed_cache` WHERE `module_code`='".$this->module_code."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

@@ -1,10 +1,11 @@
-<form action="blogs_search.php" method="get" id="blog_search">
+<form action="blog_search.php" method="get" id="blog_search">
 <fieldset>
-<dl>
-	<dt>Search blogs:</dt>
-	<dd><input type="text" name="tags" id="tags" /></dd>
-	<dd><input type="submit" class="button bmedium" value="Search" /></dd>
-</dl>
+	<input type="hidden" name="st" value="tag" />
+	<dl>
+		<dt>Search blogs:</dt>
+		<dd><input type="text" name="tags" id="tags" /></dd>
+		<dd><input type="submit" class="button bmedium" value="Search" /></dd>
+	</dl>
 </fieldset>
 </form>
 
@@ -13,3 +14,5 @@
 <!--widget="blogs(array('area'=>'front','mode'=>'comm','total'=>3,'chars'=>1200))"-->
 
 <!--widget="blogs(array('area'=>'front','mode'=>'new','total'=>3,'chars'=>1200))"-->
+
+<script type="text/javascript" src="js/blogs.js"></script>

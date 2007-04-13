@@ -2,7 +2,7 @@
 $jobs[]='get_digg_stories';
 
 function get_digg_stories() {
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	require_once _BASEPATH_.'/includes/classes/feed_reader.class.php';
 	$module_code='digg_tech';
 	$config=get_site_option(array('enabled','feed_url'),$module_code);
