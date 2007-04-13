@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       my_photos.php
+File:                       photo_search.php
 $Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -23,11 +23,61 @@ define('COLUMNS',3);
 $accepted_results_per_page=array('6'=>6,'12'=>12,'24'=>24,'48'=>48);
 
 $output=array();
-$o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
+$output['r']=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
-$where="`fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
-$from="`{$dbtable_prefix}user_photos`";
+$input['acclevel_id']=17; // default access level is the one for advanced search!!!!
+$from="`{$dbtable_prefix}user_photos` a";
+$where="a.`is_private`=0 AND a.`status`='".STAT_APPROVED."' AND a.`del`=0";
+$orderby="a.`date_posted` DESC";
+
+// define here all search types
+if (isset($_GET['st'])) {
+	$input['st']=$_GET['st'];
+	switch ($_GET['st']) {
+
+		case 'new':
+			//$orderby="a.`date_posted` DESC";	// default
+			$tplvars['page_title']='Browse Newest Photos';
+			break;
+
+		case 'views':
+			$input['acclevel_id']=17;
+			$orderby="a.`stat_views` DESC";
+			$tplvars['page_title']='Browse Most Popular Photos';
+			break;
+
+		case 'vote':
+			$input['acclevel_id']=17;
+			$orderby="a.`stat_votes_total` DESC";
+			$tplvars['page_title']='Browse Most Voted Photos';
+			break;
+
+		case 'comm':
+			$input['acclevel_id']=17;
+			$orderby="a.`stat_comments` DESC";
+			$tplvars['page_title']='Browse Most Discussed Photos';
+			break;
+
+		case 'tag':
+			$input['acclevel_id']=17;
+			$input['tags']=sanitize_and_format_gpc($_GET,'tags',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+			$tags=$input['tags'];
+			// remove extra spaces and words with less than 3 chars
+			$input['tags']=trim(preg_replace(array("/['\"%<>\+-]/","/\s\s+/","/\b[^\s]{1,3}\b/"),array(' ',' ',''),$input['tags']));
+			if (!empty($input['tags'])) {
+				$where="MATCH (a.`caption`) AGAINST ('".$input['tags']."') AND ".$where;
+			} else {
+				$error=true;
+			}
+			$tplvars['page_title']=sprintf('Results for "%s"',$tags);
+			break;
+
+		default:
+			break;
+
+	}
+}
 
 $query="SELECT count(*) FROM $from WHERE $where";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -35,7 +85,7 @@ $totalrows=mysql_result($res,0,0);
 
 $loop_rows=array();
 if (!empty($totalrows)) {
-	$query="SELECT *,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM $from WHERE $where ORDER BY `date_posted` DESC LIMIT $o,$r";
+	$query="SELECT a.`photo_id`,a.`fk_user_id`,a.`_user` as `user`,a.`photo`,a.`allow_comments`,a.`caption`,a.`stat_views`,a.`stat_comments`,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM $from WHERE $where ORDER BY $orderby LIMIT ".$output['o'].','.$output['r'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$loop_items=array();
 	$i=1;
@@ -68,15 +118,15 @@ if (!empty($totalrows)) {
 	} else {
 		$loop_rows[count($loop_rows)-1]['class']='last';
 	}
-	$output['pager2']=pager($totalrows,$o,$r);
+	$output['pager2']=pager($totalrows,$output['o'],$output['r']);
 }
 
-$output['return']='my_photos.php';
+$output['return']='photo_search.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
 	$output['return'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return']=rawurlencode($output['return']);
-$tpl->set_file('content','my_photos.html');
+$tpl->set_file('content','photo_search.html');
 $tpl->set_loop('loop_rows',$loop_rows);
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTLOOP | TPL_OPTIONAL | TPL_NOLOOP);
@@ -84,12 +134,11 @@ $tpl->drop_loop('loop_rows');
 unset($loop_rows);
 $tpl->drop_var('output.pager2');
 
-$tplvars['title']='My Photos';
-$tplvars['page_title']='My Photos';
-$tplvars['page']='my_photos';
-$tplvars['css']='my_photos.css';
-if (is_file('my_photos_left.php')) {
-	include 'my_photos_left.php';
+$tplvars['title']='Photos';
+$tplvars['page']='photo_search';
+$tplvars['css']='photo_search.css';
+if (is_file('photo_search_left.php')) {
+	include 'photo_search_left.php';
 }
 include 'frame.php';
 ?>

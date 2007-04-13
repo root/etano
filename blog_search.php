@@ -47,7 +47,6 @@ if (!empty($output['search_md5'])) {
 	$orderby="a.`date_posted` DESC";
 
 	// define here all search types
-	// you can either add fields to be read into $search_fields or build the query directly
 	if (isset($_GET['st'])) {
 		$input['st']=$_GET['st'];
 		switch ($_GET['st']) {
