@@ -131,7 +131,7 @@ class payment_paypal extends ipayment {
 		header('Status: 200 OK');
 		$myreturn=false;
 		$gateway_text='';
-		$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+		global $dbtable_prefix;
 		$input=array();
 		foreach ($this->from_paypal['types'] as $k=>$v) {
 			$input[$k]=sanitize_and_format_gpc($_POST,$k,$GLOBALS['__html2type'][$v],$GLOBALS['__html2format'][$v],$this->from_paypal['defaults'][$k]);

@@ -2,7 +2,7 @@
 $jobs[]='clean_online_table';
 
 function clean_online_table() {
-	$dbtable_prefix=$GLOBALS['dbtable_prefix'];
+	global $dbtable_prefix;
 	$config=get_site_option(array('inactive_time'),'core');
 
 	$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}online` WHERE `last_activity`<=now()-INTERVAL '".$config['inactive_time']."' MINUTE";
