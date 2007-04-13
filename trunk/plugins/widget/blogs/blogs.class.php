@@ -44,11 +44,11 @@ class widget_blogs extends icontent_widget {
 				break;
 
 			case 'views':
-				$query.=" ORDER BY a.`stat_views` DESC";
+				$query.=" AND a.`stat_views`>0 ORDER BY a.`stat_views` DESC";
 				break;
 
 			case 'comm':
-				$query.=" ORDER BY a.`stat_comments` DESC";
+				$query.=" AND a.`stat_comments`>0 ORDER BY a.`stat_comments` DESC";
 				break;
 
 		}

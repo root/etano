@@ -105,8 +105,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$modman=new modman();
 
 				$blog_archive=array();
-				if (is_file(_CACHEPATH_.'/blogs/'.$input['fk_blog_id'].'/blog_archive.inc.php')) {
-					include _CACHEPATH_.'/blogs/'.$input['fk_blog_id'].'/blog_archive.inc.php';
+				if (is_file(_CACHEPATH_.'/blogs/'.$input['fk_blog_id']{0}.'/'.$input['fk_blog_id'].'/blog_archive.inc.php')) {
+					include _CACHEPATH_.'/blogs/'.$input['fk_blog_id']{0}.'/'.$input['fk_blog_id'].'/blog_archive.inc.php';
 				}
 				if (isset($blog_archive[(int)date('Y')][(int)date('m')])) {
 					++$blog_archive[(int)date('Y')][(int)date('m')];
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$blog_archive[(int)date('Y')][(int)date('m')]=1;
 				}
 				krsort($blog_archive,SORT_NUMERIC);
-				$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['fk_blog_id'].'/blog_archive.inc.php','<?php $blog_archive='.var_export($blog_archive,true).';');
+				$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['fk_blog_id']{0}.'/'.$input['fk_blog_id'].'/blog_archive.inc.php','<?php $blog_archive='.var_export($blog_archive,true).';');
 			}
 		}
 		if (!isset($input['return']) || empty($input['return'])) {

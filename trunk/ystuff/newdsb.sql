@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Apr 05, 2007 at 10:29 PM
+-- Generation Time: Apr 13, 2007 at 02:31 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 -- 
@@ -41,7 +41,7 @@ INSERT INTO `dsb_access_levels` (`level_id`, `level_code`, `level_diz`, `level`,
 (8, 0x75706c6f61645f70686f746f73, 'Upload photos', 6, 1),
 (9, 0x77726974655f70686f746f5f636f6d6d656e7473, 'Add comments to photos', 6, 0),
 (10, 0x726561645f626c6f6773, 'Read blogs', 7, 0),
-(11, 0x77726974655f626c6f6773, 'Write own blogs', 4, 1),
+(11, 0x77726974655f626c6f6773, 'Write own blogs', 6, 1),
 (12, 0x766965775f616c62756d, 'Who''s allowed to view the list of photos in a photo album', 7, 0),
 (13, 0x766965775f70686f746f, 'View a single photo with a bigger size and photo comments', 7, 0),
 (14, 0x6d616e6167655f666f6c646572, 'Add/Edit/Delete personal mail folders', 6, 1),
@@ -126,10 +126,7 @@ CREATE TABLE `dsb_blog_comments` (
 -- Dumping data for table `dsb_blog_comments`
 -- 
 
-INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_post_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (1, 19, 2, 'test', 'bine baaaa', '2007-03-17 15:25:50', '2007-03-17 15:25:50', 15),
-(2, 19, 2, 'test', 'toata viata mea\r\ndoar iubirea ta\r\nma poate salvaaaaaa\r\n\r\nnanananan nanan an ana nan an a\r\n', '2007-03-17 15:27:26', '2007-03-17 15:27:26', 15),
-(3, 19, 2, 'test', 'se spune ca vremea-i frumoasa atunci cand in suflet e soare\r\nse spune ca ploaia-i mai rece atunci cand in suflet te doar\r\nse supune ca vantul nu bate in loc atunci cand iubesti', '2007-03-17 15:28:36', '2007-03-17 15:28:36', 15),
-(4, 19, 2, 'test', '[b]te voi astepta[/b]\r\ntoata viata [quote]meaaaa[/quote]\r\ndoar iubirea taaaa\r\nma poate salvaaaaa', '2007-03-17 15:29:27', '2007-03-17 15:29:27', 15);
+INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_post_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (1, 1, 1, 'test', 'Fratii-ostasi nici macar nu incercau sa-si disimuleze nemultumirea. De cind Abatele hotarise sa pronunte consacrari numai in afara Fortaretei, paznicii nu incetasera sa se plinga, argumentind ca o asemenea schimbare nu numai ca nu avea precedent in istoria de 47 de generatii a Abatiei dar reprezenta si o invitatie la violenta pentru hoardele de barbari care bintuiau cimpiile arse ale vechii Terre.\r\n     - Nu mai exista credinta, Isidor! Fiecare dintre noi e convins ca poate hotari pentru propria persoana, ca in nimicnicia lui, poate schimba cumva cuvintul lui Dumnezeu, vorbi cu blindete Abatele privind cu indulgenta spre candidat.\r\n     Staretul era un barbat in putere, cu fata acoperita de o barba imensa, peste care trona un nas proeminent, ce tisnea parca dintre doi ochi cenusii, de culoarea unui cer de toamna rece.\r\n     - Uita-te la fratii care ne insotesc si spune-mi ce vezi?\r\n     Tinarul privi inapoi, tulburat de situatia delicata in care il punea Staretul. Nu avea cum sa nu supere pe cineva... Stia ca Abatele astepta un raspuns in defavoarea fratilor-ostasi, renumiti pentru ritualurile lor sadice de initiere a candidatilor.\r\n     Sintem sub Dumnezeu!\r\n     Isidor zimbi insa unui gind tainic si rosti, masurindu-si cu atentie vorbele:\r\n     - Nu par convinsi ca Domnul nostru vegheaza asupra-ne si ca nu va lasa sa ni se intimple nimic rau. Iar cind Dumnezeu pravale furtuna asupra stincii, o face doar pentru a-i incerca taria!\r\n     Abatele zimbi. Barba sa impunatoare abia daca se misca, ascunzindu-i multumirea, atunci cind raspunse.\r\n     - Putini dintre predecesorii mei au avut parte de rugaciuni si luminare la capatii. Majoritatea au avut morti violente, il recompensa Abatele pe tinar.\r\n     Bucuros ca Staretul ii daduse ocazia sa citeze din Texte si chinuindu-se sa-si aduca aminte despre vreun novice care sa mai fi avut sansa asta, tinarul rosti repede:\r\n     - Dar lucrarea Lui a dainuit; printre zidurile Abatiei inca nu vijiie timpul.\r\n     Ochii Abatelui se intunecara. Printre novici se spunea ca un citat din Texte, strecurat in timpul consacrarii, era sinonim cu reusita. Tocmai de aceea Abatele nu obisnuia prea des sa dea tinerilor prilejul de a cita din Revelatiile Sfintului Augustin. Iar in rarele ocazii cind oferea aceasta ocazie, spera tainic ca ucenicul va ignora acest avantaj, spunind ca un text e doar un text, o insiruire de cuvinte, sipet aurit pentru o credinta adevarata, a carei esenta ramine insa inexprimabila.\r\n     - Sirguinta, baiete, sta la baza tuturor lucrurilor. Amestecata cu tot atita smerenie, ea formeaza lutul cel bun din care sint plamaditi cei mai alesi frati ai nostri, rosti Abatele de parca ar fi fost o masina de dictat, incercind sa-l faca pe candidat sa inteleaga ca victoria ii era inca departe.\r\n     Nici macar Dumnezeu nu e un cu adevarat sirguincios continua in gind Abatele. Se prea poate ca acum sa priveasca in cu totul alta parte si pe noi sa ne ucida vreo hoarda de barbari. Si care ar fi invatatura Lui pentru sufletele noastre? Sa nu fim trufasi, desigur...\r\n     - Spune-mi ce crezi despre Augustin Intemeietorul.\r\n     Candidatul incepu sa recite pe un ton egal un text pe care, cu multe decenii in urma, si Abatele il rostise intr-o ceremonie similara.\r\n     - Augustin, Intemeietorul si Intii Facatorul de Dumnezeu, a pornit lucrarea sfinta a Abatiei acum patruzeci si sapte de generatii. Strabatind desertul vechii Europe, din praful Pannoniei i s-a aratat Dumnezeu, care luase chipul unui hoinar incalecat pe o ticaloasa masinarie. "De ce te temi, Augustine?" a intrebat Domnul. "De minia ta, Doamne!" "Ba nu Augustine", i-a raspuns atunci Domnul, "te temi de suferinta pe care stii ca o poti indura in numele Meu. Ti-e frica de incercarile prin care Eu iti arat drumul. Dar oare, Augustine, te-ai gindit vreodata cit de mici sint fricile tale pe linga spaima Mea?..."\r\n     Eu sint Domnul Dumnezeu tau si mi-e frica numai de propria-mi nemarginire murmura in gind Abatele, dimpreuna cu Isidor.\r\n     - ... iar faptul ca te cheama Augustin, ca pe un discipol drag, e Intiia Mea lucrare. A doua sa fie o Abatie pe care sa o cladesti chiar in acest loc! a grait Domnul.\r\n     Si, in timp ce novicele depana cu voce egala Intemeierea, primul capitol al Revelatiilor, Abatele isi ingadui sa mediteze la aceasta istorie. In anii care trecusera de la moartea Sfintului Augustin, Abatia devenise un pilon important al Regatului Celor o Mie de Stele. Cele mai eficiente Lumi Agricole functionau numai datorita religiilor distilate de Abatie. Desi serviciile calugarilor terrani nu erau deloc ieftine, nici o familie care se respecta nu mai apela la vechile mijloace de socio-terraformare. Credintele importate din Abatie erau recunoscute ca fiind cel mai sigur mod de echilibrare durabila a comunitatilor rurale de clone, singura populatie acceptata pe Lumile Agricole.\r\n     Fara indoiala ca insusi Dumnezeu ne-a dat putere asupra fiilor sai, de vreme ce indeplinim cu totii lucrarea Lui.\r\n     Abatele privi spre cerul inalt, de vara. Fulgii unei zapezi timide ii intrara in ochi. Usturime. Cauta apoi spre tinarul care nu mai termina de recitat. Il intrerupse cu un gest si intreba pe un ton bolovanos:\r\n     - De ce crezi ca se teme Dumnezeu, baiete? Ca isi va atinge nemarginirea sau ca nu-si va afla niciodata limitele?\r\n     Naucit, novicele il privi deznadajduit pe Abate. Dogmele se invatau abia la zece ani de la consacrare si nu puteau fi nicidecum subiectul unei conversatii scolaresti. Pentru citeva clipe, Isidor spera ca Staretul incercase o gluma pe seama lui. Ochii stapinului sau straluceau reci si intrebatori.\r\n     - Sa nu indraznesti sa-mi raspunzi ca Domnului ii este frica de ambele extreme!\r\n     Tinarul inghiti in sec, miscindu-si spasmodic marul lui Adam.\r\n     - Cred ca Dumnezeu e mai mult decit cuvinte si noi trebuie sa ne judecam cu smerenie locul. Natura sentimentelor Lui nu poate fi nicicum confundata cu trairile noastre. Domnului ii este frica pentru lucrarea Lui ultima, pentru Omul caruia i-a jertfit atitia fii.\r\n     Staretul isi ingusta privirea, cugetind la cuvintele pronuntate cu o stranie insufletire:\r\n     - Adevarata semnificatie a cuvintelor Domnului catre Augustin, Intii Fauritorul de Dumnezeu, este aceea ca, El va fi prezent in tot ceea ce va realiza si oriunde se va duce Omul. Si tocmai de cararile intortocheate ale devenirii si ale mintii omenesti ii este frica lui Dumnezeu! Ii e teama ca il vom cauta in locuri in care nu vrea sa ajunga si ca il vom ignora pina si in bisericile Sale cele mai falnice!\r\n     Dintr-un motiv obscur, Isidor il nelinistea pe Abate. Perspectiva pe care o aruncase asupra Revelatiilor era, fireste, falsa, naiva, dar nu se potrivea nicicum cu ceea ce ii spusesera fratii arhivari despre Isidor. Ceva era strimb...\r\n     - Vorbele tale suna ca o erezie crestina! Fii atent, baiete! Nu m-am omorit niciodata dupa religia asta, il preveni Staretul pe novice.\r\n     Tinarul puse capul in pamint si se cufunda in mutenie. Staretului ii displacu tacerea care se lasase peste micul lor grup. Ii accentua o stare de neliniste care izvora de undeva de dincolo de constienta si de logica.\r\n     - Spune-mi ce stii despre economia Abatiei.\r\n     Isidor incepu sa vorbeasca repede:\r\n     - In ultimii zece ani, rata de rentabilitate a programelor noastre s-a imbunatatit cu 62 la suta, mai ales pe seama scaderii cu doua generatii a timpului minim de constructie a templelor. Pe Marish V si Dilin III au aparut temple chiar dupa trei generatii de la Insamintare, ceea ce a redus...\r\n     Novicele stia carte. Dar consacrarea avea legile ei clare, pe care nici macar Staretul nu putea sa le eludeze. Isidor trebuia sa recite. Abatele se cufunda din nou in gindurile sale. Citise undeva ca primii agricultori insamintau aruncind pe ogor seminte in niste brazde scrijelite cu pluguri primitive. De fiecare data cind se gindea la similitudinea dintre munca fratilor sai si aceea a primilor agricultori, Abatele era cuprins de un respect vecin cu duiosia.\r\n     E singurul timp in care sint sigur de esenta mea profund religioasa. Si noi insamintam cu virusii nostri. Prin voia Domnului, eu arunc semintele... Si dintr-o gloata replicata sinistru in maternitatile familiilor, clonele se transforma in oameni, ridicind dintre ei Mintuitorul. Mereu acelasi, mereu jertfit, mereu fauritor al Caii spre Dumnezeu. Si devin credinciosi, religiosi, muncitori, multumiti de statutul lor, fara ambitie, fara veleitarism, fara talente... In lipsa Lor, Regatul Celor o Mie de Stele ar muri de foame. Iar clonele il slavesc pe Dumnezeul nostru, care intuneca vederea Familiilor, nedeslusindu-le Lucrarea Lui: numai un om poate fi religios! Restul e Armaghedon.\r\n     Novicele terminase de citava vreme si astepta cuviincios ca Staretul sa-si reia intrebarile:\r\n     - O sa fii un frate bun, Isidor. Te vom primi printre noi si fi-vei ostean al Sfintului Augustin, Intii Facatorul de Dumnezeu.\r\n     Baiatul strinse tare din pumni si zimbi larg, lasind pentru o clipa impresia ca va incepe sa topaie de bucurie precum un copil.\r\n     - Iti voi pune insa o ultima intrebare, deja ca intre frati. Daca vrei, poti sa nu-mi raspunzi... De ce crezi ca exista Abatia? intreba Starostele aratind spre zidurile intunecate ale Fortaretei.\r\n     Baiatul cazu pe ginduri, dadu sa plece dar apoi isi lua inima in dinti.\r\n     Ciudat, ciudat...\r\n     - Misiunea noastra este sa-L sadim pe Dumnezeu acolo unde nu exista, sa luminam mintea celor care nu-L vor fi aflat inca...\r\n     Staretul clatina din cap, ignorindu-si cu greu senzatia clara a unui pericol iminent.\r\n     - Nu. nu, nu... Noi nu facem decit sa ii gasim pe fii lui Dumnezeu, care se jertfesc in numele Lui, care pun iertarea si umilinta mai presus de fiinta lor. Asta facem noi aici, baiete. Cautam intr-un sac de seminte pentru a o alege pe aceea din care va creste floarea cea mai frumoasa, aceea care va arata intregii gradini splendoarea unica a Dumnezeirii. Asta facem! Nu mi-ai raspuns la intrebare!\r\n     Zimbind larg tinarul rosti cu credinta:\r\n     - Pentru ca Dumnezeu nu se teme decit de propria-i nemarginire!\r\n     - Pe sandalele Sfintului Augustin, ce vrei sa spui?', '2007-04-12 09:32:45', '2007-04-12 09:32:45', 15);
 
 -- --------------------------------------------------------
 
@@ -155,35 +152,21 @@ CREATE TABLE `dsb_blog_posts` (
   `last_changed` datetime NOT NULL default '0000-00-00 00:00:00',
   `reject_reason` text NOT NULL,
   PRIMARY KEY  (`post_id`),
-  KEY `fk_user_id` (`fk_user_id`),
   KEY `is_public` (`is_public`),
   KEY `date_posted` (`date_posted`),
-  KEY `key1` (`fk_blog_id`,`fk_user_id`)
+  KEY `key1` (`fk_blog_id`,`is_public`,`status`),
+  KEY `key2` (`fk_user_id`,`is_public`,`status`),
+  FULLTEXT KEY `text_key` (`title`,`post_content`)
 ) TYPE=MyISAM PACK_KEYS=0;
 
 -- 
 -- Dumping data for table `dsb_blog_posts`
 -- 
 
-INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`) VALUES (1, '2006-10-25 14:02:46', 2, 'test', 1, 1, 'test titlu', 'ala bala portocala', 1, 15, '', 0, 0, '2006-10-25 14:02:46', ''),
-(2, '2006-10-25 20:55:04', 2, 'test', 1, 1, 'second post', '// get the input we need and sanitize it\r\n	foreach ($blog_posts_default[''types''] as $k=>$v) {\r\n		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$blog_posts_default[''defaults''][$k]);\r\n	}\r\n	$input[''fk_user_id'']=$_SESSION[''user''][''user_id''];\r\n	$input[''posted_by'']=$_SESSION[''user''][''user''];\r\n\r\n	if (!$error) {\r\n		if (!empty($input[''post_id''])) {\r\n			unset($input[''date_posted'']);\r\n			$query="UPDATE `$blog_posts` SET `last_changed`=''".gmdate(''YmdHis'')."''";\r\n			if (get_site_option(''manual_blog_approval'',2)==1) {\r\n				$query.=",`status`=''".PSTAT_PROCESSING."''";\r\n			} else {\r\n				$query.=",`status`=''".PSTAT_APPROVED."''";\r\n			}\r\n			foreach ($blog_posts_default[''defaults''] as $k=>$v) {\r\n				if (isset($input[$k])) {\r\n					$query.=",`$k`=''".$input[$k]."''";\r\n				}\r\n			}\r\n			$query.=" WHERE `post_id`=''".$input[''post_id'']."''";\r\n			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}\r\n			$topass[''message''][''type'']=MESSAGE_INFO;\r\n			$topass[''message''][''text'']=''Post changed successfully.'';\r\n		} else {\r\n			$input[''date_posted'']=date(''Y-m-d H:i:s'');\r\n			$query="INSERT INTO `$blog_posts` SET `last_changed`=''".gmdate(''YmdHis'')."''";\r\n			if (get_site_option(''manual_blog_approval'',2)==1) {\r\n				$query.=",`status`=''".PSTAT_PROCESSING."''";\r\n			} else {\r\n				$query.=",`status`=''".PSTAT_APPROVED."''";\r\n			}\r\n			foreach ($blog_posts_default[''defaults''] as $k=>$v) {\r\n				if (isset($input[$k])) {\r\n					$query.=",`$k`=''".$input[$k]."''";\r\n				}\r\n			}\r\n			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}\r\n			$topass[''message''][''type'']=MESSAGE_INFO;\r\n			$topass[''message''][''text'']=''Post saved.'';\r\n		}\r\n	} else {\r\n		$nextpage=''blogs_addedit.php'';\r\n		$topass[''input'']=$input;\r\n	}\r\n}\r\nredirect2page($nextpage,$topass,$qs);\r\n?>', 1, 15, '', 0, 0, '2007-03-16 13:02:39', ''),
-(3, '2007-03-11 13:39:52', 2, 'test', 1, 1, 'alt titlu la oha', 'si continut lipsa', 1, 15, '', 0, 0, '2007-03-16 13:03:13', ''),
-(4, '2007-03-11 13:44:03', 2, 'test', 1, 1, 'titlu aiurea', 'content aiurea', 0, 15, '', 0, 0, '2007-03-16 13:02:56', ''),
-(5, '2007-03-11 14:58:00', 2, 'test', 1, 1, 'primul blog', 'testing testing paratesting', 1, 15, '', 0, 0, '2007-03-16 13:49:53', ''),
-(6, '2007-03-11 14:59:56', 2, 'test', 1, 1, 'test2', 'test2', 0, 15, '', 0, 0, '2007-03-16 14:10:50', ''),
-(7, '2007-03-11 16:25:29', 2, 'test', 3, 1, 'test second life', 'ala bala\r\n\r\n\r\nportocala', 0, 15, '', 0, 0, '2007-03-11 16:25:29', ''),
-(8, '2007-03-11 16:28:05', 2, 'test', 3, 1, 'inca unu si ma duc', 'gata', 0, 15, '', 0, 0, '2007-03-11 16:28:05', '');
-INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`) VALUES (9, '2007-03-11 16:28:37', 2, 'test', 3, 1, 'Pletele Sfintului Augustin', '1.\r\n\r\nFratii-ostasi nici macar nu incercau sa-si disimuleze nemultumirea. De cind Abatele hotarise sa pronunte consacrari numai in afara Fortaretei, paznicii nu incetasera sa se plinga, argumentind ca o asemenea schimbare nu numai ca nu avea precedent in istoria de 47 de generatii a Abatiei dar reprezenta si o invitatie la violenta pentru hoardele de barbari care bintuiau cimpiile arse ale vechii Terre.\r\n\r\n- Nu mai exista credinta, Isidor! Fiecare dintre noi e convins ca poate hotari pentru propria persoana, ca in nimicnicia lui, poate schimba cumva cuvintul lui Dumnezeu, vorbi cu blindete Abatele privind cu indulgenta spre candidat.\r\nStaretul era un barbat in putere, cu fata acoperita de o barba imensa, peste care trona un nas proeminent, ce tisnea parca dintre doi ochi cenusii, de culoarea unui cer de toamna rece.\r\n- Uita-te la fratii care ne insotesc si spune-mi ce vezi?\r\nTinarul privi inapoi, tulburat de situatia delicata in care il punea Staretul. Nu avea cum sa nu supere pe cineva... Stia ca Abatele astepta un raspuns in defavoarea fratilor-ostasi, renumiti pentru ritualurile lor sadice de initiere a candidatilor.\r\n     Sintem sub Dumnezeu!\r\n     Isidor zimbi insa unui gind tainic si rosti, masurindu-si cu atentie vorbele:\r\n     - Nu par convinsi ca Domnul nostru vegheaza asupra-ne si ca nu va lasa sa ni se intimple nimic rau. Iar cind Dumnezeu pravale furtuna asupra stincii, o face doar pentru a-i incerca taria!\r\n     Abatele zimbi. Barba sa impunatoare abia daca se misca, ascunzindu-i multumirea, atunci cind raspunse.\r\n     - Putini dintre predecesorii mei au avut parte de rugaciuni si luminare la capatii. Majoritatea au avut morti violente, il recompensa Abatele pe tinar.\r\n     Bucuros ca Staretul ii daduse ocazia sa citeze din Texte si chinuindu-se sa-si aduca aminte despre vreun novice care sa mai fi avut sansa asta, tinarul rosti repede:\r\n     - Dar lucrarea Lui a dainuit; printre zidurile Abatiei inca nu vijiie timpul.\r\n     Ochii Abatelui se intunecara. Printre novici se spunea ca un citat din Texte, strecurat in timpul consacrarii, era sinonim cu reusita. Tocmai de aceea Abatele nu obisnuia prea des sa dea tinerilor prilejul de a cita din Revelatiile Sfintului Augustin. Iar in rarele ocazii cind oferea aceasta ocazie, spera tainic ca ucenicul va ignora acest avantaj, spunind ca un text e doar un text, o insiruire de cuvinte, sipet aurit pentru o credinta adevarata, a carei esenta ramine insa inexprimabila.\r\n     - Sirguinta, baiete, sta la baza tuturor lucrurilor. Amestecata cu tot atita smerenie, ea formeaza lutul cel bun din care sint plamaditi cei mai alesi frati ai nostri, rosti Abatele de parca ar fi fost o masina de dictat, incercind sa-l faca pe candidat sa inteleaga ca victoria ii era inca departe.\r\n     Nici macar Dumnezeu nu e un cu adevarat sirguincios continua in gind Abatele. Se prea poate ca acum sa priveasca in cu totul alta parte si pe noi sa ne ucida vreo hoarda de barbari. Si care ar fi invatatura Lui pentru sufletele noastre? Sa nu fim trufasi, desigur...\r\n     - Spune-mi ce crezi despre Augustin Intemeietorul.\r\n     Candidatul incepu sa recite pe un ton egal un text pe care, cu multe decenii in urma, si Abatele il rostise intr-o ceremonie similara.\r\n     - Augustin, Intemeietorul si Intii Facatorul de Dumnezeu, a pornit lucrarea sfinta a Abatiei acum patruzeci si sapte de generatii. Strabatind desertul vechii Europe, din praful Pannoniei i s-a aratat Dumnezeu, care luase chipul unui hoinar incalecat pe o ticaloasa masinarie. "De ce te temi, Augustine?" a intrebat Domnul. "De minia ta, Doamne!" "Ba nu Augustine", i-a raspuns atunci Domnul, "te temi de suferinta pe care stii ca o poti indura in numele Meu. Ti-e frica de incercarile prin care Eu iti arat drumul. Dar oare, Augustine, te-ai gindit vreodata cit de mici sint fricile tale pe linga spaima Mea?..."\r\n     Eu sint Domnul Dumnezeu tau si mi-e frica numai de propria-mi nemarginire murmura in gind Abatele, dimpreuna cu Isidor.\r\n     - ... iar faptul ca te cheama Augustin, ca pe un discipol drag, e Intiia Mea lucrare. A doua sa fie o Abatie pe care sa o cladesti chiar in acest loc! a grait Domnul.\r\n     Si, in timp ce novicele depana cu voce egala Intemeierea, primul capitol al Revelatiilor, Abatele isi ingadui sa mediteze la aceasta istorie. In anii care trecusera de la moartea Sfintului Augustin, Abatia devenise un pilon important al Regatului Celor o Mie de Stele. Cele mai eficiente Lumi Agricole functionau numai datorita religiilor distilate de Abatie. Desi serviciile calugarilor terrani nu erau deloc ieftine, nici o familie care se respecta nu mai apela la vechile mijloace de socio-terraformare. Credintele importate din Abatie erau recunoscute ca fiind cel mai sigur mod de echilibrare durabila a comunitatilor rurale de clone, singura populatie acceptata pe Lumile Agricole.\r\n     Fara indoiala ca insusi Dumnezeu ne-a dat putere asupra fiilor sai, de vreme ce indeplinim cu totii lucrarea Lui.\r\n     Abatele privi spre cerul inalt, de vara. Fulgii unei zapezi timide ii intrara in ochi. Usturime. Cauta apoi spre tinarul care nu mai termina de recitat. Il intrerupse cu un gest si intreba pe un ton bolovanos:\r\n     - De ce crezi ca se teme Dumnezeu, baiete? Ca isi va atinge nemarginirea sau ca nu-si va afla niciodata limitele?\r\n     Naucit, novicele il privi deznadajduit pe Abate. Dogmele se invatau abia la zece ani de la consacrare si nu puteau fi nicidecum subiectul unei conversatii scolaresti. Pentru citeva clipe, Isidor spera ca Staretul incercase o gluma pe seama lui. Ochii stapinului sau straluceau reci si intrebatori.\r\n     - Sa nu indraznesti sa-mi raspunzi ca Domnului ii este frica de ambele extreme!\r\n     Tinarul inghiti in sec, miscindu-si spasmodic marul lui Adam.\r\n     - Cred ca Dumnezeu e mai mult decit cuvinte si noi trebuie sa ne judecam cu smerenie locul. Natura sentimentelor Lui nu poate fi nicicum confundata cu trairile noastre. Domnului ii este frica pentru lucrarea Lui ultima, pentru Omul caruia i-a jertfit atitia fii.\r\n     Staretul isi ingusta privirea, cugetind la cuvintele pronuntate cu o stranie insufletire:\r\n     - Adevarata semnificatie a cuvintelor Domnului catre Augustin, Intii Fauritorul de Dumnezeu, este aceea ca, El va fi prezent in tot ceea ce va realiza si oriunde se va duce Omul. Si tocmai de cararile intortocheate ale devenirii si ale mintii omenesti ii este frica lui Dumnezeu! Ii e teama ca il vom cauta in locuri in care nu vrea sa ajunga si ca il vom ignora pina si in bisericile Sale cele mai falnice!\r\n     Dintr-un motiv obscur, Isidor il nelinistea pe Abate. Perspectiva pe care o aruncase asupra Revelatiilor era, fireste, falsa, naiva, dar nu se potrivea nicicum cu ceea ce ii spusesera fratii arhivari despre Isidor. Ceva era strimb...\r\n     - Vorbele tale suna ca o erezie crestina! Fii atent, baiete! Nu m-am omorit niciodata dupa religia asta, il preveni Staretul pe novice.\r\n     Tinarul puse capul in pamint si se cufunda in mutenie. Staretului ii displacu tacerea care se lasase peste micul lor grup. Ii accentua o stare de neliniste care izvora de undeva de dincolo de constienta si de logica.\r\n     - Spune-mi ce stii despre economia Abatiei.\r\n     Isidor incepu sa vorbeasca repede:\r\n     - In ultimii zece ani, rata de rentabilitate a programelor noastre s-a imbunatatit cu 62 la suta, mai ales pe seama scaderii cu doua generatii a timpului minim de constructie a templelor. Pe Marish V si Dilin III au aparut temple chiar dupa trei generatii de la Insamintare, ceea ce a redus...\r\n     Novicele stia carte. Dar consacrarea avea legile ei clare, pe care nici macar Staretul nu putea sa le eludeze. Isidor trebuia sa recite. Abatele se cufunda din nou in gindurile sale. Citise undeva ca primii agricultori insamintau aruncind pe ogor seminte in niste brazde scrijelite cu pluguri primitive. De fiecare data cind se gindea la similitudinea dintre munca fratilor sai si aceea a primilor agricultori, Abatele era cuprins de un respect vecin cu duiosia.\r\n     E singurul timp in care sint sigur de esenta mea profund religioasa. Si noi insamintam cu virusii nostri. Prin voia Domnului, eu arunc semintele... Si dintr-o gloata replicata sinistru in maternitatile familiilor, clonele se transforma in oameni, ridicind dintre ei Mintuitorul. Mereu acelasi, mereu jertfit, mereu fauritor al Caii spre Dumnezeu. Si devin credinciosi, religiosi, muncitori, multumiti de statutul lor, fara ambitie, fara veleitarism, fara talente... In lipsa Lor, Regatul Celor o Mie de Stele ar muri de foame. Iar clonele il slavesc pe Dumnezeul nostru, care intuneca vederea Familiilor, nedeslusindu-le Lucrarea Lui: numai un om poate fi religios! Restul e Armaghedon.\r\n     Novicele terminase de citava vreme si astepta cuviincios ca Staretul sa-si reia intrebarile:\r\n     - O sa fii un frate bun, Isidor. Te vom primi printre noi si fi-vei ostean al Sfintului Augustin, Intii Facatorul de Dumnezeu.\r\n     Baiatul strinse tare din pumni si zimbi larg, lasind pentru o clipa impresia ca va incepe sa topaie de bucurie precum un copil.\r\n     - Iti voi pune insa o ultima intrebare, deja ca intre frati. Daca vrei, poti sa nu-mi raspunzi... De ce crezi ca exista Abatia? intreba Starostele aratind spre zidurile intunecate ale Fortaretei.\r\n     Baiatul cazu pe ginduri, dadu sa plece dar apoi isi lua inima in dinti.\r\n     Ciudat, ciudat...\r\n     - Misiunea noastra este sa-L sadim pe Dumnezeu acolo unde nu exista, sa luminam mintea celor care nu-L vor fi aflat inca...\r\n     Staretul clatina din cap, ignorindu-si cu greu senzatia clara a unui pericol iminent.\r\n     - Nu. nu, nu... Noi nu facem decit sa ii gasim pe fii lui Dumnezeu, care se jertfesc in numele Lui, care pun iertarea si umilinta mai presus de fiinta lor. Asta facem noi aici, baiete. Cautam intr-un sac de seminte pentru a o alege pe aceea din care va creste floarea cea mai frumoasa, aceea care va arata intregii gradini splendoarea unica a Dumnezeirii. Asta facem! Nu mi-ai raspuns la intrebare!\r\n     Zimbind larg tinarul rosti cu credinta:\r\n     - Pentru ca Dumnezeu nu se teme decit de propria-i nemarginire!\r\n     - Pe sandalele Sfintului Augustin, ce vrei sa spui?\r\n     - Fara Abatie, religiile vechii Terre...\r\n     Religiile?!\r\n     -... ar fi doar amintire. Fumul de tamiie al templelor care au ridicat Omul din animal s-a risipit in nimicul negru dintre cele o mie de stele! Cit de nemarginit ar fi Omul fara Dumnezeul sau?\r\n     ... si cit de speriat ar fi Domnul nostru atunci.\r\n     - Folosesti vorbe cu mult dincolo de puterea ta de intelegere.\r\n     - Domnul e deasupra mea si lumina Lui ma calauzeste in tot cea ce spun.\r\n     - Nu trebuie sa te joci cu blasfemia! Domnul nostru nu e nicicum hainul zeu crestin. El e in orice piatra pe care o atingem, e in taisul sabiei cu care ii macelarim pe necredinciosi, e in navele cu care strabatem nimicul negru spre planetele de Insamintat. Dumnezeu nu e numai in oameni ci in tot ceea ce ating ei cu miinile sau cu mintea!\r\n     Un muschi de pe fata novicelui tresari necontrolat:\r\n     Nu putea fi! Nu vor indrazni!\r\n     - Sa fie oare Dumnezeu si in zidurile Abatiei atunci?\r\n     Violenta?\r\n     - Cu siguranta!\r\n     Tinarul scoase un hohot de ris gutural si porni o miscare fluida, de luptator incercat. Se feri de halebardele celor doi frati-ostasi din spate, implintind mici sageti de lemn in grumazurile celor doi din fata. Calugarii se prabusira inainte de a realiza ce li se intimpla. Isidor se rasuci cu iuteala la atacatori si rupse dintr-o lovitura ambele picioare ale unuia din ei, numai pentru a se folosi de greutatea naturala a omului ca sa ajunga cu degetele sale ascutite a niste cangi, pe sub barbie, direct in creierul nefericitului frate-ostas. Ultimul dintre calugari incerca sa-si foloseasca transmitatorul subvocal dar dispozitivul ramase brusc fara curentul generat de bateria din spatele urechii... Capul fusese despartit de trup cu o sabie subtire cit o pelicula de film pe care Isidor o smulsese de sub pielea bratului sting, care atirna acum sinistru, insingerata, ca un afis vechi, cojit de pe zid.\r\n     Abatele inghiti in sec si isi ridica ochii spre cer, asteptind lovitura. Insa, in loc de suferinta, Staretul primi in obraz vorbele batjocoritoare ale lui Isidor\r\n     - Popo, daca Dumnezeu e pitit intre zidurile manastirii, ar fi trebuit sa-ti fi spus demult cine ti-a calcat pragul...\r\n     Isidor isi scoase de pe fata o masca...\r\n     Dumnezeule, au domesticit un simbiont lipunian!\r\n     ... si se prezenta scurt:\r\n     - Capitan de rang inalt Rimio de Vassur, corpul intii al armatei maiestatii sale. Sint aici din ordinul...\r\n     - Stii prea bine ca ne vor omori pe amindoi daca vor banui ca reprezentam chiar si cea mai mica amenintare la adresa Abatiei. Sintem dincolo de ziduri si...\r\n     Rimio schita un gest de nepasare:\r\n     - Asta o sa vedem.\r\n     Scoase un strigat inuman de ascutit si, din ascunzatori subpamintene, navalira spre ei zece soldati regali, echipati de lupta. Se apucara cu frenezie sa monteze ceva ce semana izbitor cu un laser de mare putere...\r\n     - Sfintul Tratat din Eridani garanteaza inviolabilitatea Cetatii noastre. Toate familiile din Adunarea Planetelor ne vor sari in ajutor...\r\n     Cu un gest scurt, militarul comanda foc. Chiuind de bucurie, soldatii lui pulverizara zidul Fortaretei.\r\n     Staretul mai gasi doar forta de a ridica ochii spre cer:\r\n     Armatele tale Doamne nasc Apocalipsa. Imbraca-voi armura Armaghedonului si strivi-voi pe necredinciosi! Nu-Ti fie teama!\r\n     \r\n     2.\r\n\r\n     Ultimele doua zile nu fusesera prea fericite pentru Abate. Era convins ca secretul atit de bine pazit al felului in care replicau religiile se va afla cum si se va raspindi in toate colturile regatului. Chiar daca ei aveau sa scape cu viata, Abatia era pierduta.\r\n     Sperase totusi ca Vassur e un fel de ariergarda. Se asteptase la zeci de savanti barbosi si cu ochelari de moda veche, care sa scotoceasca prin cele mai intunecate tainite ale Cetatii. Gindise ca, in fata miilor de tomuri in care erau descrise procedeele de clonare si de selectare a materialului genetic, spionii regelui se vor sparge in mici formatiuni care vor sfirsi prin a se uri reciproc si, in final, nu vor mai comunica si nu vor afla niciodata esenta divina a sfintei Insamintari.\r\n     Nu fusese insa asa. Dupa ce cei zece soldati ai lui Vassur intrasera in Abatie, si executasera pe loc pe oricine purta o arma, in interiorul Cetatii, pe terenul de linga piersicul inflorit aterizase o naveta simpla, din care coborise un grup restrins de oameni. Toti aveau un mers militaros in afara celui care statea in mijlocul lor. Era un barbat mic de statura, care pasea hotarit dar degajat, ca un om obisnuit sa comande. Miscarile ii erau amplificate de faldurile mantiei largi, care flutura pe linga uniforma regala, strinsa pe corp. In cele doua zile scurse de la inceputul agresiunii, seful navalitorilor nu dorise sa ii vorbeasca. Acum insa Abatele il astepta in sala de consiliu, pentru ceea ce parea a fi o intilnire decisiva. Si, dintr-un motiv pe care nu si-l putea explica, era linistit fiindca stia ca numai un singur motiv ar fi putut cautiona o asemenea purtare brutala din partea Curtii Regale. Mascarada trebuia insa jucata pina la capat.\r\n     - Slavit fie Dumnezeu tau, Abate! Sint Diribal de Carant, consilier regal sef pe probleme stiintifice...\r\n     - Stiu cine esti, ii taie Staretul cuvintele. Si mai stiu ca nu faci decit sa incalci vreo trei tratate si, daca asta mai inseamna ceva pentru uniforma regala, legile curtoaziei si ale politetii. Eu si fratii mei...\r\n     - Sinteti de-a dreptul depasiti de situatie! Tratatele pe care le invoci contin, stii bine, un amendament general...\r\n     Clipa Armaghedonului sticleste dintre stele...\r\n     Abatele clipi de citeva ori, calculind cu frenezie implicatiile insinuarii lui Diribal. Incerca sa traga de timp desi stia ca e zadarnic.\r\n     - Nu am auzit ca omul sa fi avut vreun contact cu vreo civilizatie extraterestra, cu vreun semen inteligent.\r\n     Diribal se ridica si incepu sa se plimbe repede in jurul mesei din sala de consiliu a Abatiei.\r\n     - Nu e vina nimanui ca v-ati izolat aici, la marginea civilizatiei. La curte se stie de mai bine de doua saptamini ca am descoperit o rasa inteligenta, undeva linga Noua Andromeda. Sint fiinte inteligente, cu toate ca dezvoltarea lor tehnologica e mult inferioara...\r\n     Abatele se ridica de pe scaun si izbi cu pumnii in masa.\r\n     - Asta tot nu justifica agresiunea regala! Sintem un asezamint sfint, un templu al creatiei. Fara noi lumea asa cum o cunoastem nu ar mai avea nici un sens. Deja pierderile pe care ni le-ati pricinuit pun in pericol...\r\n     Dupa un schimb scurt de priviri cu Diribal, Vassur zvicni fulgerator din bratul sting. O sageata din lemn de succu se infipse in mina abatelui tintuind-o de masa. Imediat, calugarul simti in rana arsura crunta a semintelor care ii patrundeau in carne.\r\n     Diribal rinji amuzat:\r\n     - Nu te ingrijora! Nu sint seminte ci doar unul dintre virusii prietenosi, de casa, ai regelui nostru. O sa doara fix o suta de ore. Obisnuim sa pedepsim cu el nevestele infidele. Li-l administram intr-un gingas act sexual... Nu gasesti, popo, ca si tu ne esti cumva infidel?\r\n     Smulgindu-si mina ranita, Staretul se aseza pe scaun. Folosirea fara rezerve a violentei asupra lui era semnul spaimei de inceput de lume care cuprinsese curtea regala.\r\n     Pericolul nu e iminent, dar e clar ca se simt amenintati. Iar natura acestei provocari e atit de straina de orice altceva au intilnit vreodata incit risca orice. Stiu ca daca ne omoara, Lumile Agricole nu vor mai insemna nimic. Si totusi risca! Sfinte Augustine, pastrator al tainelor, fie-ti mila de noi si calauzeste-ne!\r\n     - Sa revenim, popo, susura calm Diribal. Acum doua saptamini, o expeditie pe care regele o credea deja pierduta s-a intors cu citeva imagini absolut tulburatoare: planeta Z. I-am spus asa pentru ca pur si simplu ne e teama sa-i dam vreun nume. E locuita de fiinte cu metabolism carbonic, in mare masura apropiat de al nostru. Ne intrec insa cam de trei ori ca talie, rezista la temperaturi cuprinse intre -100 si +150 de grade Celsius, nu respira dar pot zbura si, mai ales sint extrem de rezistente la radiatii.\r\n     - Slavit fie Domnul si creatiile lui! rosti Abatele impreunindu-si miinile cu o grimasa de durere.\r\n     - Cam asa am zis si noi... Ne gindeam chiar ca am facut rost de lucratori perfecti pentru cel putin o duzina de noi feluri de Lumi Agricole. Zetii pot trai practic oriunde, sint mult mai puternici, mult mai harnici decit clonele standard, nu maninca aproape nimic... Si va veneam si voua de hac, eliminind dependenta lumii civilizate de aroganta cu care o tratati de generatii! Apoi am descoperit ceva ciudat...Se pare ca zetii sint conditionati din nastere intru imbratisarea unei religii.\r\n     Minunat, Doamne! Caile tale ma umplu de smerenie!\r\n     - Citesc pe fata ta, popo, o satisfactie inexplicabila. Dumnezeu si sfintul ala al vostru...\r\n     - Augustin...\r\n     - Ma rog! Nu v-au invatat ei oare caile pe care le poate lua religia? Ati uitat exemplul istoric al Sfintei sirguinte a invataturilor materiale, cartea de capatii a primilor exploratori? Preotii scientisti proslaveau creatia pura...\r\n     Din spatele stapinului sau, Vassur izbucni in ris si completa ironic.\r\n     - Asta cind nu macelareau crestini si mahomedani...\r\n     - Cam asta este si credinta zetilor. Cu o regularitate infricosatoare, fiecare al saizeci si treilea copil e un fel de Mesia, un ales al sortii. Sau poate al sortilor? Inca de mic el stie ca la virsta maturitatii se va transforma intr-un creier imens, invaluit de un cocon roz, o masa cornoasa care incepe sa-i creasca inca din primii ani de viata. Planeta Z e plina de astfel de coconi, din care zetii care s-au jertfit gindesc si comunica rezultatele celor de-afara. Iar prostimea ii venereaza ca pe niste invatatori. Nu e greu de imaginat pentru tine, popo, cui se inchina ei...\r\n     - Primului cocon?\r\n     - Esti periculos de destept, popo! zimbi Diribal. Ce sa mai vorbim, in esenta, zetii proslavesc cunoasterea pura. Primele proiectii arata ca ne vor depasi din punct de vedere stiintific in numai trei generatii, din punct de vedere tehnologic in maximum cinci, iar economic in cel mult zece generatii. Pur si simplu, blegul ala de Dumnezeu al tau i-a facut mai destepti si mai rezistenti decit noi!\r\n     Dumnezeul meu nu greseste niciodata! Stinca stie asta.\r\n     Abatele incerca sa mediteze la implicatiile celor dezvaluite de slugile regelui. Daca nu era mintit, lucrurile erau cu adevarat extrem de grave. Agresiunea asupra Abatiei putea fi considerata o masura disperata, justificata de amenintarea stingerii umanitatii, iar fratii sai ucisi cu singe rece erau doar pierderi de razboi. Tratatele pe care se sprijinea Regatul aveau fara exceptie un codicil care mentiona trei situatii in care regele capata puteri absolute. Contactul cu o civilizatie neumana era una din ele.\r\n     - Si ce-am putea face noi? Si mai ales acum cind ne-ati distrus mai toate laboratoarele si consistoriile?\r\n     Diribal se apropie atit de mult incit Staretul putu sa-i simta respiratia grea.\r\n     - Va trebui, popo, sa ne inveti cum sa fabricam o secta pentru lumea asta. Si fiindca niciodata nu am avut incredere in metodele voastre, o voi face personal, cu oamenii mei. Voi veti fi... aaa... doar consultanti.\r\n     - Dar vom face toata treaba...\r\n     - Vezi ca ne intelegem!? O sa incepem prin a ne explica exact cum obtineti zeama aia cu care infectati...\r\n     - E pacat sa vorbesti asa despre sfinta taina a Insamintarii...\r\n     Diribal zimbi strimb:\r\n     - Iti place sa te auzi, popo, dar mie mi se pare ca nici macar tu nu crezi in ceea ce spui. Intii o sa-mi arati cum functioneaza tehnica in cazul Lumilor Agricole si apoi o sa incercam sa punem la cale o religie pentru zeti.\r\n     Abatele incerca sa protesteze:\r\n     - Dar nu stim nimic despre ei! Cum am putea sa gasim...\r\n     - Am sa-ti explic pe intelesul tau, popo. E sadit in genomul oricarui barbat sa caute perpetuu sa se acupleze cu cit mai multe femei. Esti de acord?\r\n     - Da, dar asta...\r\n     - Cu toate acestea, continua calm Diribal, exista si monahi, asa ca voi. Ati facut legamint de castitate pentru ca sinteti convinsi ca Dumnezeu v-o cere. O asemenea anomalie motivata religios asteapta cele o mie de stele de la voi: sa inventati un Dumnezeu pe care zetii sa-l urmeze in bezna unor dogme care sa dureze macar o suta de generatii.\r\n     - Bine, dar de ce nu pirjoliti pur si simplu planeta Anticristului. Transformati-o in desert radioactiv, ca aici pe Terra...\r\n     Diribal isi ciocani scurt zarul tatuat in palma dreapta, blazonul casei regale.\r\n     - Ne place sa jucam, popo! Chiar si un om desprins de cele lumesti isi poate da extrem de lesne seama cit de pretioasa ar fi o populatie de zeti usor controlabila... Ce muncitori minunati ar fi! Si numai pentru noi!\r\n     Fu rindul Abatelui sa zimbeasca:\r\n     - Nu va pot ajuta nicicum!\r\n     - Inseamna ca ai sa mori incercind, popo! rise scurt Vassur.\r\n     Grauntele de nisip nu stie ca in caderea lui cerne vremurile. La rindul ei, clepsidra nu e constienta decit de propria goliciune. Cea care descatuseaza cu adevarat timpul este mina care intoarce clepsidra. Asa inteleg eu divinitatea.\r\n     \r\n     3.\r\n\r\n     Satul clonelor era construit pe un gorgan care acoperea intreaga aripa de vest a Abatiei. Privit de departe, parea un fel de meterez din care razbateau cind si cind zgomote enigmatice.\r\n     - Clone, repeta a treia oara Diribal, abia potolindu-si risul. Vrei sa spui ca Dumnezeii pe care ii creezi...\r\n     - Mesia... Dumnezeu e numai unul...\r\n     - Ma rog, cum spui... Sint cu totii clone?\r\n     Abatele isi ingusta ochii. Ceremonia de consacrare a fiecarui Staret, avea ca miez exact ceea ce trebuia el sa faca acum. Din motive care abia acum i se desluseau, fusese pus, spre marea lui surpriza, sa fie ghid al unui ipotetic turist prin Abatie. "Va trebui sa-mi spui destule ca sa fie interesant dar mai putine decit imi trebuie ca sa inteleg intregul", enuntase predecesorul sau incercarea. Reusise cu brio, minunindu-se insa atunci de inutilitatea unui asemenea test. Incepu sa vorbeasca cu voce joasa, egala:\r\n     - Noi credem in invataturile sfintului Augustin.\r\n     - Da, stiu, vagabondul care a intemeiat Abatia.\r\n     - Nu, nu, de data asta ma refeream la un crestin, Augustin. Nu sintem insa nicicum crestini, se grabi sa precizeze Abatele la vederea dezaprobarii din ochii lui Vassur.\r\n     - Te joci cu focul, popo!?\r\n     - Dupa Augustin, care a trait acum mai bine de cinci mii de ani, crestinismul nu a mai cunoscut decit o singura figura importanta, Sf. Toma. El a trait...\r\n     - Lasa prostiile! Zi-mi de clone!\r\n     - Sfintul Augustin spunea ca Dumnezeu a creat lumea intr-o determinare absoluta. Inca de cind a inceput sa cladeasca, stia exact citi sfinti va avea, ba chiar ii si alesese pentru Lucrarea Lui. De aceea, intiiul nostru Staret, care se numea prin minunata Lucrare divina tot Augustin, a inteles ca putem sa ne imaginam oricind orice religie, dar sfintii nu-i vom putea multiplica niciodata pe cai dumnezeiesti. Cu atit mai putin pe copii lui Dumnezeu, profetii care duc invatatura Lui pe Lumile Agricole. Geniul Intii Facatorului nostru de Dumnezeu a constat tocmai in intelegerea misiunii sale si a cuvintului Domnului, relevat lui in cimpia Pannoniei... Dumnezeu nu mai are sfinti pentru noi, dar ii putem oricind replica pe cei vechi. Dar cum moastele nici unui profet nu contineau vreo urma de material genetic, aveam o mare problema...\r\n     - N-am inteles nimic, se plinse Vassur. Si mi-am stricat capul sase ani in gaoaza asta de Abatie!\r\n     Staretul il fulgera cu privirea:\r\n     - Nu intelegi pentru ca nu e nimic de inteles inca. Cea mai insemnata revelatie a Fratelui Augustin a fost aceea ca omenirea a epuizat sfintii si profetii pe linia frusta a existentei liniare. Dar oare o populatie de clone crescute departe de civilizatia moderna, in conditii identice acelora din Asia Mica de la inceputul erei crestine, nu va sfirsi ea oare prin a-si produce un nou sfint, un nou Mesia, daca ii este dat sa retraiasca experientele de la inceputul religiilor? Nu ne mai trebuiau moastele sfintilor adevarati...\r\n     Diribal isi freca barbia cu un gest nervos, In mintea lui incepuse sa biziie de citva timp un sentiment ciudat, dar pe care il putea defini. Avea senzatia ca este pacalit cu nerusinare, dus de nas intr-o maniera insidioasa, subtila si extrem de periculoasa.\r\n     - Pe parul blond al maica-mii! O erezie perfecta! isi plesni miinile Diribal. Stiam eu ca nu sinteti decit niste poponari fatarnici!\r\n     - Hulesti din ignoranta, spuse calm Abatele. Dumnezeu a prevazut inca inainte de facerea lumii toate actiunile noastre. Nimic din ceea ce facem nu iese din ordinea Lui. De aceea ne si deosebim de crestini. Noi credem in razbunare, in moarte ca invatatura, acceptam relatiile homosexuale, credem ca daca ai reusit sa furi un lucru atunci tot universul a convers spre solutia unica de a-ti oferi acel lucru... Atita doar ca unii sintem sortiti a impartasi adevarata cunoastere, sa devenim sfinti, iar altii, cei mai multi dintre noi, purtam sadit in fiinta noastra pacatul originar si nu vom ajunge niciodata sa-i stea Domnului alaturi... E dumnezeiesc de simplu.\r\n     Vassur interveni surescitat in conversatie, in ciuda privirii ucigatoare pe care i-o arunca superiorul lui:\r\n     - Vrei sa spui ca voi, pur si simplu, adunati aici oameni care au mai existat si ii puneti sa traiasca impreuna sperind ca societatea asta o sa... o sa... secrete la un moment dat un Mesia?\r\n     - Ai fi fost un frate bun, Isidor, incuviinta Abatele. Si folosim clone pentru simplul fapt ca originalele, oamenii care au purtat genele celor din sat, nu mai aveau cum sa degaje un sfint, fiindca, sfintii lor s-au terminat. S-au epuizat precum apa dintr-o plosca.\r\n     Abatele a continuat o vreme fara sa fie intrerupt. Diribal si Vassur ascultau fascinati detaliile facerii de Dumnezeu.\r\n     - Imediat ce se manifesta si sintem siguri de vocatia lui, Mesia este prins intr-un paienjenis de situatii si de experiente care il modeleaza dupa trebuintele Lumii Agricole pe care o va insaminta. In general, el corespunde cumva cu modelul crestin: incurajeaza supunerea si munca, condamna crima, incestul si hotia, are grija de semenii sai si mai ales este gata sa-si dea viata intru mintuirea lor de un pacat pe care tot el il defineste. Imediat ce s-a cristalizat personalitatea mesianica, ii manipulam existenta in asa fel incit el intra de bunavoie in rezonatoarele noastre, unde structura sa mentala este replicata fidel intr-o matrita organica de ordin cinci. Ea este implantata apoi unui virus purtator clasic, de tipul celor folosite in Capitala pentru vaccinurile aeriene anuale, caruia i s-a exacerbat insa selectivitatea la maximum, asa incit va infecta numai un individ, cel mai apropiat ca structura mentala de aceea a Mintuitorului pregatit de noi. De obicei, transformarea dureaza intre trei si cinci ani. Dupa aceea, clona noastra si cu cea infectata ajung sa gindeasca perfect identic. Simplu, elegant... E lucrarea lui Dumnezeu.\r\n     - E eretic, e total impotriva legilor regatului si e profund imoral. Poate ca n-oi fi fiind eu o persoana prea religioasa dar nu cred ca Dumnezeul crestin ar fi aprobat clonarea si manipularea religiei sale...\r\n     - Noi nu sintem crestini! Apreciem doar ca valabile concluziile sfintului Augustin... si partial pe acelea ale sfintululi Toma. Dar in rest... Singura noastra credinta este aceea ca Dumnezeu se teme doar de propria nemarginire, care va ramine vesnic neexplorata. Niciodata nu se vor fi nascut toti copiii Lui, nici chiar atunci cind vestea despre Lucrarea Lui de aici se va fi raspindit. Pur si simplu, infinitatea lui Dumnezeu nu va putea fi niciodata egalata de noi...\r\n     - Sinteti fatarnici, lacomi...\r\n     - Nu mai mult decit familiile care creeaza clonele din Lumile Agricole, combinind puterea politica si pe aceea religioasa in cea mai crunta forma de sclavie cunoscuta vreodata.\r\n     - Familiile nu au pretentia de a fi morale. Ele cauta doar sa traiasca din ce in ce mai bine. Dogma asta poate fi la fel de valabila ca oricare alta, zimbi Diribal.\r\n     - Si atunci de ce crezi ca noi avem obligatia de a fi morali? Iti repet, in ciuda impresiei generale, nu sintem crestini.\r\n     - Dar religiile pe care le fabricati? intreba Vassur.\r\n     - Poate ca se apropie de proto-crestinism. Dar cum altfel ar fi putut fi religia Lumilor Agricole decit una pseudo-crestina? Crezi ca scormonim de buna voie in scursorile istoriei? Nu trebuie sa fii cine stie ce argat spilcuit de la Curtea regala ca sa fii liber cugetator, in pas cu vremurile! Ajunge sa te uiti in jur, spuse Abatele facind un gest larg, de parca ar fi dorit sa cuprinda intreaga Terra. Desertul care ne inconjoara este expresia a doua milenii si ceva in care crestinismul si-a uniformizat geniile si a otravit diversitatea umana si, mai ales, a subordonat toate actiunile sale unei morale dogmatice, absolute, creind un surplus scirbos de bunatate si o avalansa de vieti fara vreo valoare intrinseca. Si, chiar daca am fi oarecum crestini, avem o scuza! Cind lucrezi cu asemenea scirbavnice materiale, uneori, e greu sa te feresti de o usoara contaminare.\r\n     Ca si cum s-ar fi dedublat brusc, Diribal dadu sa intrebe ceva, dar in drumul ei spre vorbire, ideea se topi si se ascunse undeva in subconstient.\r\n     Atita vreme cit nu a inteles cum curge timpul, Ahile nu a prins niciodata broasca, fiindca se impiedica perpetuu de jumatatea distantei dintre ei... Crestinii stiu asta. Ei au cautat broasca aproape un mileniu, nestiind ca o tin in buzunar. Iata de ce, in locul vostru nu as dispretui experienta crestina si lectiile ei despre viltorile Timpului. Fiindca intiiul invatamint al crestinismului este furia distrugatoare cu care a inceput atunci Omul sa recupereze timpul pierdut.\r\n     \r\n     4.\r\n\r\n     - Nu stiu la ce v-ati asteptat? La o retorta din care sa distilam Dumnezei? Metodele noastre sint cele care sint... Si nu cred ca e vina noastra ca nu ne-am gindit ca la un moment dat va trebui sa cream religii si pentru alte fiinte decit pentru clonele Lumilor Agricole. Stim foarte bine ceea ce facem... Insamintam o populatie de clone proaspete, apare un Mintuitor, inspira o religie care proslaveste munca si condamna savurarea roadelor ei. Asta facem de patruzeci si doua de generatii si nimeni nu s-a plins. Il recream mereu si mereu pe Mesia. Dar chiar si asa am avut nevoie de cinci generatii pentru a pune la punct prima Insamintare! Dumnezeu stie cit ar putea dura pina sa reusim cu zetii!\r\n     Staretul incerca aproape o saptamina sa le explice invadatorilor ca ii este imposibil sa fabrice o religie pentru o rasa despre care nu stia nimic. De citeva ori fusese extrem de aproape de moarte si-si citise sfirsitul in ochii rosii ai lui Vassur.\r\n     - Trebuie sa fie o cale! exclama Diribal. Poate daca aducem unii aici si ii studiem... sa incercam... sa vedem...\r\n     Stateau in curtea interioara a Abatiei, linga piersicul firav care abia ce inflorise. Cu un frison usor, Abatele se ridica si isi strinse hainele lungi pe linga corp. Incepu sa se plimbe cu pasi mari, vorbind cu glas egal:\r\n     - Am putea, desigur, incerca sa modificam religia pe care zetii o au deja... Dar mi-e frica. A doua pogorire a lui Cristos e intotdeauna un eveniment de care ne ferim, o necunoscuta ancestrala.\r\n     Ce-ti face blazonul din palma, Diribal? Si noua ne place sa jucam. Stii totul acum si totusi nu stii nimic!\r\n     - O singura data am incercat sa modificam o religie... rezultatele au fost lamentabile si din planeta aceea s-a ales un desert mai cumplit chiar si decit vechea Terra.\r\n     - Quintrium? isi ridica ochii Diribal dintre hirtiile sale.\r\n     - Da. Fiindca nu ni se dadusera toate particularitatile lumii respective, am esuat lamentabil.\r\n     Diribal zimbi subtire:\r\n     - Unde iti e credinta, popo? Hotaraste-te: ori esti unealta infailibilului tau Dumnezeu si atunci esecul e din vrerea Lui, ori dimpotriva esti un necredincios fioros care nu se ridica niciodata...\r\n     Staretul se minie. Miinile sale noduroase se inclestara pe toiagul incovoiat de care nu se despartea niciodata.\r\n     - Daca barbarii tai de soldati iti dau dreptul sa imi batjocoresti Abatia, daca asasinul tau perfect ma poate tine la respect, asta nu inseamna ca stii si ce este credinta mea. Nu incerca niciodata puterea martiriului! Sa-ti spun eu unde e Dumnezeu? E acolo unde tu nu poti nici macar privi, e la capatul lantului nefericit de evenimente care a dus la nasterea ta. Acolo unde nu era nici Cuvintul, El exista pentru a declansa tot ceea ce este...\r\n     - Ho, popo! urla Diribal. Nu te-aprinde ca te tradezi. Furia ta arata clar ca am nimerit un punct sensibil! Lasa prostiile si vorbeste-mi de Quintrium!\r\n     Incercind sa se stapineasca, Staretul isi relua locul pe banca de piatra.\r\n     Alegem in fiecare clipa. Fara sa stim, fara sa vrem. Dar oare ce-am alege daca ne-am da seama ca avem dreptul de a alege? Poate ca timpul ar deveni stufos ca un papuris numai bun de ascunzis pentru pradatori care ne pindesc pasarile cintatoare.Ce-am alege sa fim atunci, pradator sau prada? Si, mai ales, cit de mult am fi dispusi sa platim ca sa ni se implineasca vrerea?\r\n     - Cronicile noastre povestesc totul cu amanuntime, spuse Abatele. Familia Census nu ne-a vorbit nici macar o clipa despre imensul complex de pesteri al planetei. Si poate ca acest lucru n-ar fi fost atit de important daca intreg labirintul acela n-ar fi avut decit o singura poarta de comunicare cu exteriorul. In interiorul unui vulcan! Un asemenea dualism la o populatie primitiva de clone nu are cum sa nu nasca legende si mituri secundare, perturbatoare... Din pacate, noi gindisem o religie care sa venereze soarele si munca si sa ameninte cu damnarea in iadul subpamintean. Ne mai trebuiau doar citiva ani pentru a izbindi, cind o clona a venit si a racnit in piata centrala a capitalei: "Am fost in Iad. E mult mai bine ca aici. Veniti cu mine si n-o sa va para rau!" Subteranele erau pline cu fel de fel de ciuperci comestibile, care cresteau aparent din niciunde. Unele reuseau sa induca si stari euforice, altele erau incredibil de hranitoare si gustoase si absolut toate erau afrodisiace. Iadul nostru n-ar fi trebuit sa arate asa. Pina si Mintuitorul planuit de noi a sfirsit prin a-si face culcus undeva in adinc... La insistentele familiei Census, am Insamintat a doua oara, desi multi dintre fratii nostri s-au opus. Al doilea Mintuitor a patruns in pesteri si, intr-un fel sau in altul ne-a scapat de sub control. Ca si cum viata sub pamint l-ar fi transformat in antiteza sa, a devenit un fel de fanatic militar. Ce s-a intimplat apoi stiti...\r\n     Vassur stia intr-adevar povestea. Unul dintre stramosii sai isi daduse viata incercind sa patrunda prin poarta Iadului de pe Quintrium, strapungind o aparare disperata de clone care luptau dincolo de sine, drogate cu o ciuperca verde...\r\n     - Vrei sa spui ca Familia Census a mai Insamintat o data?! exclama Diribal.\r\n     - Da. Desi lucrul asta ar fi trebuit sa ramina secret...\r\n     - Atunci isi merita soarta. In fond, dupa Quintrium n-au mai apucat niciodata sa cumpere o Lume Agricola. Mizeria lor actuala, dealtfel meritata, nu va rezolva insa problema zetilor.\r\n     Staretul tusi scurt, isi drese glasul si rosti cu o voce pierita:\r\n     - N-am adus din intimplare vorba despre Quintrium...\r\n     Diribal il privi cu gura cascata:\r\n     - Vrei sa sugerezi ca ar trebui sa ardem Z?\r\n     - Eu unul nu vad alta solutie.\r\n     - Esti nebun, popo! Religia ar trebui pur si simplu interzisa! Vrei sa spui ca Dumnezeul tau stia ca ii vom descoperi pe zeti si a aranjat lucrurile in asa fel incit sa ii nimicim? Singura specie inteligenta din Universul cunoscut? Esti dincolo de orice furie! Esti gretos! striga Vassur.\r\n     - Am fost trimisi aici tocmai pentru a ocoli varianta uciderii zetilor! rosti calm Diribal.\r\n     - Si pentru a ne smulge secretele, completa incet Abatele.\r\n     - Da si pentru asta, il sfida Diribal. E dreptul regelui nostru. Primul contact al omului cu o specie inteligenta e mult mai important decit misterul ieftin cu care iti inconjori clonele.\r\n     Am vrut odata sa creez o religie care sa preamareasca riscul. Cum ar fi oare un Dumnezeu cartofor si vicios? M-am razgindit fiindca preotii din templele Lui nu ar putea fi decit trisori. Spre deosebire de zeul lor, ei nu-si pot permite sa piarda niciodata. Si ce mai reprezinta riscul daca excludem din start varianta infringerii? Asemenea scrupule morale sint insa pentru vremuri de pace.\r\n     - Am putea pastra oricind citeva exemplare si ceva material genetic pentru clonare, spuse in treacat Staretul. Cu timpul, poate vom reusi sa gasim o solutie impreuna.\r\n     Diribal si Vassur il privira cu ochi stralucitori.\r\n     \r\n     5.\r\n\r\n     - Popo, de ce am impresia ca imi ascunzi ceva?\r\n     - Fiindca asa este, zimbi Abatele. Iti ascund supararea mea pentru ca mi-ai omorit o mare parte din frati, iti ascund disperarea si obida mea, iti ascund dezamagirea ca unul dintre cei mai promitatori novici pe care i-am vazut vreodata s-a dovedit a fi un spion asasin...\r\n     Vassur rise cu pofta:\r\n     - E si in asta o lectie, mosule. Poate ca nu iti cauti novicii acolo unde trebuie!\r\n     Staretul zimbi la rindul lui.\r\n     - O sa va intoarceti. O sa aveti nevoie de Abatie ca sa va duceti planurile la bun sfirsit, Nimeni, in tot regatul, nu se pricepe mai bine ca noi sa fabrice religii. Sinteti siguri ca nu doriti sa ne incredintati noua zetii?\r\n     Bratul lui Vassur zvicni scurt si se opri la un milimetru de beregata Abatelui:\r\n     - Singurul motiv pentru care te las in viata este faptul ca Regele nostru si-a exprimat speranta ca vei repune sandramaua asta pe picioare si ne vei putea ajuta daca dam gres. Dar nu inainte ca noi sa ne recunoastem neputinta. Si nu uita niciodata ca acum secretul Abatiei e in miinile noastre! Nu ne interereseaza sa va luam negotul cu Dumnezei. E o treaba murdara, sub demnitatea curtii regale. Dar sa nu va imaginati ca veti mai putea sfida vreodata pe regele meu asa cum ati facut-o pina acum. Ne veti asculta orbeste! De asta mai esti inca in viata, Tu si fratii tai fatalai!\r\n     - Veti avea nevoie de stiinta noastra. Va e predestinat, comenta Abatele, deloc impresionat de violenta celuilalt.\r\n     - Sa-i zicem polita de asigurare, domnilor, spuse Diribal. Traiesti ca sa ne ajuti. Si cel mai bun lucru care ti s-ar putea intimpla este ca noi sa esuam si sa avem nevoie de tine. Roaga-te la Dumnezeul tau sa fi planuit lucrurile in asa fel inca de la inceputul Timpului.\r\n     - Folosesti vorbe mari, Diribal. Timp, Dumnezeu...\r\n     - Iar tu te joci cu vorbele mari, popo!\r\n     Cu un gest scurt, consilierul regal inchise usa navetei care decola cu un fisiit puternic. Nava se pierdu repede printre norii verzi care pluteau vesnic deasupra Abatiei. Staretul se aseza pe o banca de piatra de linga piersic. Privi spre zidul ciobit al Fortaretei. Legenda caracterului inexpugnabil al cetatii calugarilor terrani se spulberase... Desi nu aveau cum sa fie inarmati cu lasere militare grele, barbarii vechii Terre nu vor prididi sa incerce sa-i imite pe soldatii regali.\r\n     "Secretul facerii tale de Dumnezei va fi pastrat, popo! Regele nu are nici un interes sa destabilizeze Lumile Agricole. Nu am pretentia ca am inteles exact cum si de ce ti se pare ca ii creezi pe Mintuitori din adunatura ta de clone, dar sint convins ca mijloacele voastre primitive nu vor putea nicicind sa ne puna in pericol. Un timp o sa va lasam in pace" il asigurase Diribal.\r\n     Secretul meu? Secretul Tau, Doamne. Lucrarea Ta cea mai tainica!\r\n     Adia un vint usor dinspre cimpia arsa a Pannoniei. Piersicul din curtea Abatiei inflorise doar cu o seara inainte, bucurindu-i pe fratii care inca ii mai jeleau pe cei sase sute dintre ei care fusesera ucisi de garzile regale. Lucrurile intrasera oarecum in normal. Abatele gindi ca era prima zi obisnuita in Fortareata din seara in care iesise sa-l consacre pe Isidor-Vassur.\r\n     O zi numai buna de stirnit Armaghedonul.\r\n     \r\n     6.\r\n\r\n     In singuratatea chiliei sale, Abatele isi aranja hainele intr-o boccea modesta. Barba imensa, care ii mascase pina acum citeva ore fata, disparuse iar obrajii pastrau inca amintirea sarutului pe care i-l daduse Mirial inainte de plecare, novicele cu care isi impartise noptile timp de mai bine de trei ani. Matura mobilele simple cu o ultima privire si inchise usa de lemn negru in urma lui.\r\n     Bocancii grei stirneau zvonuri sinistre pe culoarele pustii ale Abatiei. Ajuns in cel mai intunecos dintre beciuri, Staretul isi aseza palma stinga si ochiul drept in fata unor fante abia ghicite in zidaria veche. Cu un scrisnet de uscaciune, un bloc imens de piatra se dadu la o parte lasindu-l pe barbat inauntru si apoi culisa la loc. Cu gesturile unui om care stie ce face, Abatele lua din boccea o cutie ferecata in aur si argint. Din ea scoase citeva suvite de par si incepu sa plaseze cite un fir in fiecare Ou. Stia ca avea nevoie de exact 643 de fire de par.\r\n     Ouale erau de fapt mici sonde spatiale autonome. Ele fusesera proiectate si construite cu scopul de a permite, in timpul calatoriei spatiale, dezvoltarea in interiorul lor a unei clone umane mature, perfect formate. Desi timp de patruzeci si cinci de generatii, lumea le spusese Oua, Abatele trebui sa recunoasca fata de sine insusi ca le gasea asemanatoare mai mult cu niste cosciuge. Si poate ca era chiar in firea lucrurilor sa fie asa. La urma-urmei Mintuitorul avea sa se ridice din morti, dintr-un cosciug.\r\n     Fiecare Ou avea inscris pe el destinatia: Delta IV, Pruzz, Nova Betelgeuse... Toate cele 643 de lumi agricole pe care le insamintase Abatia. Aproape o suta de miliarde de suflete. Ce tavalug urias aveau sa stirneasca aceste Oua, ce forta dumnezeiasca aveau pletele Sfintului Augustin! Abatele terminase de inchis Ouale si se aseza sa le mai contemple inca o data;\r\n     - Sase sute patruzeci si trei. Si totusi numai unul. Clona Sfintului Augustin. Oare cum o sa i se spuna?\r\n     Cartea Abatelui nu era extrem de clara in privinta celui care initiase proiectul pe care il denumea "Pletele Sfintului Augustin". Incepuse sa fie scrisa abia de al cincilea Abate, dupa supunerea primelor hoarde de barbari si ridicarea zidurilor imprejmuitoare. Se stia insa ca primul care isi daduse seama de importanta revelatiilor lui Augustin intemeietorul, fusese cel de-al saptelea Abate. El gasise intr-o veche biblioteca europeana scrierile unui sfint crestin pe care il chema Augustin si care avusese revelatia ultima a celor sase Timpuri care se incheiau tocmai cu a doua venire a lui Cristos. Armagedonul, Timpul incertitudinii! Dincolo de el era nemarginirea de care se teme Dumnezeu.\r\n     Dar nemarginire mai sint si Apocalipsa si Anticristul... Controversele teologice durasera doua generatii si facusera mai bine de o mie de victime. Razboiul fratricid purificator avusese insa doua consecinte divine: intii se pusesera la punct tehnicile Insamintarii ca arma impotriva calugarilor razvratiti si se scrisesera primele lucrari de ingineria mintuirii si apoi incoltise ideea crearii unui singure esente mesianice, care sa imbrace mereu alte forme.\r\n     Cind au construit satul de clone, calugarii au constatat ca distilarea unui mintuitor e destul de grea. S-au gindit atunci ca in sat ar trebui sa existe si clona unei constiinte cu adevarat religioase. Si cum singurul astfel de om era Sf. Augustin, au decis sa-l cloneze la infinit. Aveau la dispozitie pletele sale, pe care Intemeietorul si le taiase cu o zi inainte de a muri, insistind sa fie pastrate ca moaste, intr-o racla de aur. Parul purta cu el pretioasele informatii genetice ale celui ce fusese Sf. Augustin si calugarii au profitat: un fir de par, o noua clona pentru satul din care isi obtineau Mintuitorii. Si, fara nici o exceptie, clonele Sf Augustin se dovedisera Mintuitorul de care avusesera nevoie calugarii. Fara sa stie una de alta, toate Lumile Agricole se inchinau aceluiasi Mintuitor, Sfintului Augustin. Iar acum el avea sa revina!\r\n     Mereu altul si mereu acelasi! ce definitie sublima pentru un Mintuitor!\r\n     Niciodata vreo alta clona nu ajunsese inaintea Sf. Augustin sa treaca purgatoriul si sa Insaminteze vreo lume.\r\n     Fara ca cineva sa banuiasca, Abatia crease religii plecind de la esenta unui singur profet. Iar acum, Cristos avea sa vina din nou! Din pletele Sf Augustin, Ouale aveau sa-l nasca pe Augustin si sa-l duca din nou pe Lumile Agricole, acelasi fiu al lui Dumnezeu, intruparea reinvierii primului Mintuitor. Era a doua venire a lui Cristos pe Pamint. Dincolo de asta, urma nemarginirea, locul in care pina si lui Dumnezeu ii este greu sa priveasca.\r\n     Abatele se ridica si incepu sa se plimbe nervos. Ce altceva ar fi putut face din moment ce nemarginirea dumnezeiasca se revarsase peste oameni? Zetii erau altceva, erau haul de care ii era frica lui Dumnezeu. Extraterestrii erau Anticristul! Abatii stabilisera asta inca din urma cu treizeci si trei de generatii si pregatisera Ouale intru Lucrarea ultima a Domnului: a doua venire a lui Cristos. Insufletit de acest semn divin, omul trebuia sa hotarasca in locul lui Dumnezeu, trebuia sa infrunte nemarginirea de care ii era frica Domnului sau. Era timpul ca fiul sa-l apere pe tata. Clonele Lumilor Agricole, se vor ridica din nimicnicia propriei existente si ii vor zdrobi pe zeti. Sf Augustin, unit in cele 643 de intrupari ale sale va fi arhanghelul care va suna din goarna razbunarii.\r\n     - Dupa chipul si asemanarea Ta, Doamne! rosti simplu Abatele apasind o maneta. O imensa placa de beton culisa in curtea din centrul Abatiei, strivind piersicul inflorit. Ca la un semn, Ouale isi luara zborul spre a doua Insamintare. Erau atit de mici incit puteau patrunde lesne prin apararile orbitale extrem de rarefiate ale Lumilor Agricole. Si, pe fiecare planeta inrobita il vor aduce din nou pe Mesia, incheind un Timp, stirnind o nemarginire, pornind razboiul ultim.\r\n     Abia a doua zi, cind ajunsese la o distanta sigura, Abatele scoase un emitator micut. Pe locul Abatiei rasari un soare. Antica arma nucleara isi facu datoria, stergind orice urma a Fortaretei.\r\n     Urmau timpuri interesante. Crist si Anticrist, oameni si extraterestri se vor lupta pe viata si pe moarte. Armaghedon! Abatele privi cu incredere zarea verde. Nu era chiar neajutorat... In intestinele sale exista o bacterie capabila sa secrete toxine din cele mai mortale, la care el insa era imun, ochii sai adinci mai erau inca in stare sa hipnotizeze pina la isterie, era mai bogat decit insusi regele... Si, undeva in bocceaua de pe umar, mai avea, intr-o cirpa ordinara, si firele care mai ramasesera din pletele Sf. Augustin. La urma urmei, nu poti sti niciodata cind, in viata asta mizerabila, poti sa ai nevoie de un Mesia.\r\n     Nici un Dumnezeu de rezerva nu are cum strica.', 0, 15, '', 0, 0, '2007-03-15 11:58:22', '');
-INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`) VALUES (10, '2007-03-11 16:33:16', 2, 'test', 1, 1, 'grgrgrg', 'hhrhrhrhrhr[u][quote]test[/quote][/u]', 0, 15, '', 0, 0, '2007-03-11 16:34:00', ''),
-(11, '2007-03-16 14:12:19', 2, 'test', 0, 1, 'fifi', 'return to innocence', 1, 15, '', 0, 0, '2007-03-16 14:12:19', ''),
-(12, '2007-03-16 14:14:19', 2, 'test', 1, 1, 'cucurigu', 'carcalacu', 1, 15, '', 0, 0, '2007-03-16 14:14:19', ''),
-(13, '2007-03-16 14:16:16', 2, 'test', 1, 1, 'farfalau', 'bumbisor', 1, 15, '', 0, 0, '2007-03-16 14:16:16', ''),
-(14, '2007-03-16 14:17:42', 2, 'test', 1, 1, 'morcovel', 'patrunjica', 1, 15, '', 0, 0, '2007-03-16 14:17:42', ''),
-(15, '2007-03-16 14:19:12', 2, 'test', 1, 1, 'vasilica', 'morticel', 1, 15, '', 0, 0, '2007-03-16 14:19:12', ''),
-(16, '2007-02-16 14:20:35', 2, 'test', 1, 1, 'post in februarie 2007', 'ciocardan', 1, 15, '', 0, 0, '2007-02-16 14:20:35', ''),
-(17, '2007-04-16 13:21:21', 2, 'test', 1, 1, 'post in aprilie', 'hehe', 1, 15, '', 0, 0, '2007-04-16 13:21:21', ''),
-(18, '2006-03-16 14:23:13', 2, 'test', 1, 1, 'post in 2006', 'circomac', 1, 15, '', 0, 0, '2006-03-16 14:23:13', ''),
-(19, '2008-03-16 14:24:25', 2, 'test', 1, 1, 'post in 2008', 'offf', 1, 15, '', 0, 4, '2008-03-16 14:24:25', '');
+INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`) VALUES (1, '2007-04-12 09:19:16', 1, 'test', 1, 1, 'first stupid thing', 'mmm, let''s see, for the first blog I could say nothing.\n\nNothing at all.\n\nCome on, get lost, I have nothing to say.', 1, 15, '', 0, 1, '2007-04-12 11:27:16', ''),
+(2, '2007-04-12 11:29:34', 1, 'test', 1, 1, 'Feeling of Power', 'by Isaac Asimov\n\n[b]JEHAN SHUMAN[/b] was used to dealing with the men in authority on long-embattled Earth. He was only a civilian but he originated programming patterns that resulted in self-directing war computers of the highest sort. Generals consequently listened to him. Heads of congressional committees, too. There was one of each in the special lounge of New Pentagon. General Weider was space-burnt and had a small mouth puckered almost into a cipher. Congressman Brant was smooth-cheeked and clear-eyed. He smoked Denebian tobacco with the air of one whose patriotism was so notorious, he could be allowed such liberties. Shuman, tall, [b]distinguished[/b],  and Programmer-first-class, faced them fearlessly.\nHe said, [quote]This, gentlemen, is Myron Aub.[/quote] [quote]The one with the unusual gift that you discovered quite by accident,[/quote] said Congressman Brant placidly. [quote]Ah.[/quote] He inspected the little man with the egg-bald head with amia-ble curiosity.\n', 1, 15, '', 0, 0, '2007-04-12 13:00:03', ''),
+(3, '2007-04-12 13:27:13', 1, 'test', 1, 1, 'russia forever', 'Вообще-то Glu Mobile не специализируется на 3D играх, но на сегодняшний день объемная графика все более и более популярна и интересна большинству пользователей. Многие именитые разработчики взялись за трехмерные игры, и Glu отставать от них не хочет.\n\nProject Gotham Racing обещает сохранить все основные особенности геймплея оригинальной версии – гонки по городу на умопомрачительной скорости и супер автомобили. Среди машин, на которых вы сможете погонять в PGR будут самые известные бренды: Aston Martin V12 Vanquish, Cadillac Sixteen, Ford GT, Honda NSX-R, Lamborghini Gallardo, AMG-Mercedes C-DTM 2006, Toyota GT-One и другие чудеса мирового автопрома. Каждый из этих автомобилей будет обладать рядом уникальных характеристик и собственной физикой движения.\n\nЧто касается графики Project Gotham Racing, то разработчиками был использован новейший графический движок, который демонстрирует потрясающий объем и детальность изображения. Можете убедиться в этом сами, взглянув на скриншоты.', 1, 15, '', 0, 0, '2007-04-12 13:27:13', ''),
+(4, '2007-04-12 13:39:01', 2, 'test2', 2, 1, 'sdsd', 'הגלימ תעצומ ןיקפ תטיסרבינואו תירבעה הטיסרבינואה ןיב םיטנדוטס יפוליח םכסה תרגסמב\n\n.ןיסב ,ןיקפ תטיסרבינואב ,הנש יצח לש הייהשל תוגלמ יתש וא הנש לש הייהשל ,תירבעה הטיסרבינואה ידימלתל\n\n:תללוכ הגלמה\n\nהמשרה ימדו דומיל רכשמ רוטפ -\n\n.שדוחל ($-100כ) 800 RMB (Yuan) ךרעב לש םוכס -\n\n.םולשת אלל ,םיטנדוטסה תונועמב רויד -\n\n.ט"נשת םידומילה תנש ףוסב ,תוחפל ןושאר ראות לעב תויהל ךירצ דימלתה\n\n.תיחרכה הבוט המרב תיניסה הפשה תעידי\n\n ,ינושאר השקב ספוט ואלמי ,וז הגלימל םתודמעומ תא שיגהל םינינועמה םידימלת\n\n,404/5 רדח ,1 המוק ,הלהנמה ןינב ,םיפוצה-רהב תימדקאה תוריכזמב 2002 ראונימ לחה ולבקל ןתינש\n\nmsdebsin@mscc.huji.ac.il :ינורטקלא ראוד ,02-5882916,02-5881032 ןופלט\n\n:ףרצל שי השקבה ספוטל\n\nםייח תורוק -\n\n(תירבעב רשפא) עצוממ םע ,םינויצ תונויליג -\n\nהטיסרבינואב םירוממ ,תילגנאב הצלמה יבתכמ 2 -\n\nתננכותמה םידומילה תינכות -\n\n(הפשה תעידי רושיא ספוט ב"צמ) הטיסרבינואב הרוממ תיניסה הפשה תעידי לע רושיא -\n\n.תימדקאה תוריכזמל ,תילגנאב םיספדומ םיקתוע 2-ב שיגהל שי הוולנה רמוחה לכו ספוטה תא\n\n:םכבל תמושתל\n\n.ראותל םידומילכ םש בשחיהל םילוכי םניא ,ןיפוליח םכסה תרגסמב ל"וחב םידומיל ,ללככ -\n\n.הטלוקפב/גוחב הנתומ רבדה .תוכז תודוקנ יטמוטוא ןפואב םינקמ םניא ןיפוליח םכסה תרגסמב ל"וחב םידומיל -\n\n', 1, 15, '', 0, 0, '2007-04-12 13:39:01', '');
 
 -- --------------------------------------------------------
 
@@ -712,8 +695,6 @@ CREATE TABLE `dsb_message_filters` (
 -- Dumping data for table `dsb_message_filters`
 -- 
 
-INSERT INTO `dsb_message_filters` (`filter_id`, `filter_type`, `fk_user_id`, `field`, `field_value`, `fk_folder_id`) VALUES (1, 1, 2, '', '2', -3),
-(2, 2, 2, 0x6669656c645f3436, '2', -3);
 
 -- --------------------------------------------------------
 
@@ -790,26 +771,19 @@ CREATE TABLE `dsb_online` (
 -- Dumping data for table `dsb_online`
 -- 
 
-INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (0, '20070403144004', 0x3966303230373536646464363733316166366133353365326365643831616262),
-(0, '20070318120332', 0x3538353565346462653034396534633263313163636638366332616335343739),
-(0, '20070402182130', 0x6463316330303161626561386163386365653165636637373533643139393836),
-(0, '20070402181259', 0x3365316437656461333236343434326461653562396330306561326264653561),
-(0, '20070315223451', 0x3535383234663432323038323335366665386166323365623734613332353465),
-(0, '20070314234459', 0x3031323366363166326566653232336436343063633066326632313338323236),
-(0, '20070402181145', 0x3934386665373062383636386338383336326133643064656235333539643336),
-(0, '20070321224708', 0x6433336562643866643037613765366266376438623263363636386431623431),
-(0, '20070402181138', 0x6638363831373862653363613362326230646563396635333233653066623730),
-(0, '20070402180129', 0x3435333161333364366165336237393433383934323336323838343632363734),
-(0, '20070326164813', 0x3765623935386664313466323664366631613438346438376132393461666131),
-(0, '20070402155640', 0x3131616536373861616631313461383664666261323735393339303064623532),
-(0, '20070402155621', 0x3662643061363134363837636365643935336232306662623531316130613338),
-(2, '20070402182126', 0x3439373764353631363761653361356236623736613262653932306539323864),
-(0, '20070401233705', 0x3161343336663732363338396635656566633535373830326238353835666461),
-(0, '20070402154849', 0x6461303231626536363363623163313737303264666239386162663163626630),
-(0, '20070331130412', 0x6161373938363865356132336637373266653966346430346338613331356236),
-(2, '20070404235019', 0x3639633062393865343737396266366261643331346436336263636430656331),
-(0, '20070404172436', 0x6330623430316165393963666564303362663236356433643838303531383363),
-(2, '20070405214231', 0x3737623935303639393363386164643138316436313834393661656636303638);
+INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (0, '20070406234932', 0x6363393231353033353538393831383662616538393661643531383038663261),
+(0, '20070407113710', 0x6632333830316133316463363537346433636333313962643062636333633461),
+(0, '20070410233953', 0x6230323863383935653633326466336639346663336663616639663332373935),
+(1, '20070413141913', 0x3833363964626331366431393461616535353238613038623430653233663231),
+(0, '20070409205632', 0x3534336338376362653435653863356138373738306162393132653861636562),
+(0, '20070410133144', 0x6131636430643436376663623031383365353464396334626266663137346436),
+(0, '20070410130410', 0x3361653036346338633663623033356135313631393236646131633962323364),
+(0, '20070411095037', 0x3138313630636135663231396330303133306164666436306536343038373834),
+(0, '20070411131812', 0x6165616165306165313861616566663034633132636565326662383365303834),
+(0, '20070411152355', 0x3238373566323863303636616666333833613162346435626663303261396535),
+(0, '20070411152456', 0x3132636130356539363037643265343065343564356433323234643231636135),
+(2, '20070412225212', 0x6562373634616662653966626232323030643838383566666536653961316239),
+(0, '20070412163833', 0x6637663662653366386136666165313834366133616331616366313636393937);
 
 -- --------------------------------------------------------
 
@@ -849,11 +823,6 @@ CREATE TABLE `dsb_payments` (
 -- Dumping data for table `dsb_payments`
 -- 
 
-INSERT INTO `dsb_payments` (`payment_id`, `fk_user_id`, `_user`, `gateway`, `fk_subscr_id`, `is_recuring`, `gw_txn`, `name`, `country`, `state`, `city`, `zip`, `street_address`, `email`, `phone`, `m_value_from`, `m_value_to`, `amount_paid`, `paid_from`, `paid_until`, `is_suspect`, `suspect_reason`, `date`) VALUES (1, 2, 'guest', 'paypal', 4, 0, '68K892680N420214D', 'Dan Caragea', 'United States', '', '', '', '', 'paypal@sco.ro', '', 2, 4, 100.00, '2006-12-12', '2006-12-13', 0, '', '20070127180529'),
-(2, 2, 'guest', 'paypal', 1, 0, '69X88270JS012512S', 'Dan Caragea', 'United States', '', '', '', '', 'paypal@sco.ro', '', 2, 4, 30.00, '2006-12-13', '2007-01-12', 0, '', '20070127180529'),
-(3, 1, 'dan', '', 0, 0, '', '', '', '', '', '', '', '', '', 2, 4, 0.00, '2007-01-23', '2007-02-22', 0, '', '20070127180529'),
-(4, 2, 'test', '', 0, 0, '', '', '', '', '', '', '', '', '', 4, 4, 0.00, '2007-01-23', '2007-02-22', 0, '', '20070127180529'),
-(5, 209, 'test2', '', 0, 0, '', '', '', '', '', '', '', '', '', 2, 4, 0.00, '2007-01-23', '2007-02-22', 0, '', '20070127180529');
 
 -- --------------------------------------------------------
 
@@ -882,6 +851,77 @@ CREATE TABLE `dsb_photo_comments` (
 -- 
 
 INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_photo_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (6, 79, 2, 'test', 'bleah\r\n[b]cahhhhhhhhhhh[/b]', '2007-03-22 21:00:15', '2007-03-22 21:00:15', 15);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `dsb_photo_ratings`
+-- 
+
+DROP TABLE IF EXISTS `dsb_photo_ratings`;
+CREATE TABLE `dsb_photo_ratings` (
+  `fk_photo_id` int(10) unsigned NOT NULL default '0',
+  `fk_user_id` int(10) unsigned NOT NULL default '0',
+  `vote` int(2) unsigned NOT NULL default '0',
+  `date_voted` datetime NOT NULL default '0000-00-00 00:00:00',
+  KEY `fk_photo_id` (`fk_photo_id`),
+  KEY `key1` (`fk_user_id`,`date_voted`)
+) TYPE=MyISAM;
+
+-- 
+-- Dumping data for table `dsb_photo_ratings`
+-- 
+
+INSERT INTO `dsb_photo_ratings` (`fk_photo_id`, `fk_user_id`, `vote`, `date_voted`) VALUES (3, 1, 3, '2007-04-11 14:24:28'),
+(3, 1, 3, '2007-04-11 14:24:54'),
+(3, 1, 3, '2007-04-11 14:25:17'),
+(3, 1, 3, '2007-04-11 14:25:21'),
+(3, 1, 3, '2007-04-11 14:25:21'),
+(3, 1, 4, '2007-04-11 14:25:45'),
+(3, 1, 5, '2007-04-11 14:38:00'),
+(3, 1, 4, '2007-04-11 14:38:05'),
+(3, 1, 3, '2007-04-11 14:38:09'),
+(3, 1, 2, '2007-04-11 14:38:18'),
+(3, 1, 1, '2007-04-11 14:40:21'),
+(3, 1, 2, '2007-04-11 14:40:27'),
+(3, 1, 1, '2007-04-11 14:40:29'),
+(3, 1, 1, '2007-04-11 14:40:32'),
+(3, 1, 5, '2007-04-11 14:40:37'),
+(3, 1, 4, '2007-04-11 14:42:00'),
+(3, 1, 4, '2007-04-11 14:42:36'),
+(3, 1, 4, '2007-04-11 14:42:53'),
+(3, 1, 5, '2007-04-11 14:42:58'),
+(3, 1, 5, '2007-04-11 14:42:59'),
+(3, 1, 5, '2007-04-11 14:43:05'),
+(3, 1, 5, '2007-04-11 14:43:07'),
+(3, 1, 5, '2007-04-11 14:43:08'),
+(3, 1, 5, '2007-04-11 14:43:09'),
+(3, 1, 5, '2007-04-11 14:43:09'),
+(3, 1, 5, '2007-04-11 14:43:11'),
+(3, 1, 5, '2007-04-11 14:43:12'),
+(3, 1, 5, '2007-04-11 14:43:13'),
+(3, 1, 5, '2007-04-11 14:43:15'),
+(3, 1, 5, '2007-04-11 14:43:16'),
+(3, 1, 5, '2007-04-11 14:43:18'),
+(3, 1, 5, '2007-04-11 14:43:19'),
+(3, 1, 5, '2007-04-11 14:43:21'),
+(3, 1, 5, '2007-04-11 14:43:22'),
+(3, 1, 5, '2007-04-11 14:43:22'),
+(3, 1, 5, '2007-04-11 14:43:22'),
+(3, 1, 5, '2007-04-11 14:43:22'),
+(3, 1, 5, '2007-04-11 14:43:23'),
+(3, 1, 5, '2007-04-11 14:43:23'),
+(3, 1, 5, '2007-04-11 14:44:29'),
+(3, 1, 5, '2007-04-11 14:44:32'),
+(3, 1, 5, '2007-04-11 14:44:33'),
+(3, 1, 5, '2007-04-11 14:44:35'),
+(3, 1, 1, '2007-04-11 14:59:54'),
+(3, 1, 2, '2007-04-11 14:59:57'),
+(3, 1, 4, '2007-04-11 15:00:00'),
+(3, 1, 1, '2007-04-11 15:00:03'),
+(3, 1, 5, '2007-04-11 15:00:06'),
+(14, 1, 4, '2007-04-12 12:25:45'),
+(15, 2, 5, '2007-04-12 12:29:00');
 
 -- --------------------------------------------------------
 
@@ -941,11 +981,11 @@ CREATE TABLE `dsb_profile_fields` (
 -- Dumping data for table `dsb_profile_fields`
 -- 
 
-INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `html_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES (1, 3, 2, 0, 1, 0, 4, 0, 1, 0, 1, 1, 0x6631, 5, 1, 0, '', '', '', '', 3),
+INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `html_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES (1, 3, 2, 0, 1, 0, 4, 1, 2, 0, 1, 1, 0x6631, 5, 1, 0, '', '', '', '', 3),
 (2, 8, 3, 1, 10, 1, 9, 1, 1, 1, 1, 1, 0x6632, 10, 1, 0, '|6|7|', '|0|', '|1|', '', 1),
 (3, 13, 10, 1, 10, 1, 14, 1, 1, 1, 1, 1, 0x6633, 15, 1, 0, '|11|12|', '|1|', '|0|', '', 2),
-(4, 22, 3, 1, 108, 1, 23, 0, 1, 0, 1, 1, 0x6634, 24, 2, 0, '|16|17|18|19|20|21|', '|2|', '|0|5|', '', 4),
-(5, 25, 103, 1, 108, 1, 26, 1, 1, 0, 1, 1, 0x6635, 27, 1, 0, '|1930|1989|', '', '|18|75|', '', 5);
+(4, 22, 3, 1, 108, 1, 23, 1, 2, 0, 1, 1, 0x6634, 24, 2, 0, '|16|17|18|19|20|21|', '|2|', '|0|5|', '', 4),
+(5, 25, 103, 1, 108, 1, 26, 1, 3, 0, 1, 1, 0x6635, 27, 1, 0, '|1930|1989|', '', '|18|75|', '', 5);
 
 -- --------------------------------------------------------
 
@@ -967,12 +1007,6 @@ CREATE TABLE `dsb_queue_email` (
 -- Dumping data for table `dsb_queue_email`
 -- 
 
-INSERT INTO `dsb_queue_email` (`mail_id`, `to`, `subject`, `message_body`, `date_added`) VALUES (1, 'dan@rdsct.ro', 'Your profile was not approved', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', '20061222002332'),
-(2, 'dan@sco.ro', 'r', '<html dir="ltr">\r\n    <head>\r\n    </head>\r\n    <body>\r\n        &lt;a href=&quot;&quot;&gt;asd&lt;/a&gt;<br />\r\n        <br />\r\n        asd<br />\r\n        asd<br />\r\n        asd<br />\r\n        &quot; ''<br />\r\n    </body>\r\n</html>', '20070124232308'),
-(3, 'dan@rdsct.ro', 'r', '<html dir="ltr">\r\n    <head>\r\n    </head>\r\n    <body>\r\n        &lt;a href=&quot;&quot;&gt;asd&lt;/a&gt;<br />\r\n        <br />\r\n        asd<br />\r\n        asd<br />\r\n        asd<br />\r\n        &quot; ''<br />\r\n    </body>\r\n</html>', '20070124232308'),
-(4, 'dan@rdsct.ro', 'r', '<html dir="ltr">\r\n    <head>\r\n    </head>\r\n    <body>\r\n        &lt;a href=&quot;&quot;&gt;asd&lt;/a&gt;<br />\r\n        <br />\r\n        asd<br />\r\n        asd<br />\r\n        asd<br />\r\n        &quot; ''<br />\r\n    </body>\r\n</html>', '20070124232308'),
-(5, 'dan@rdsct.ro', 'Web Application: One of your photos was not approved', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', '20070130134403'),
-(6, 'dan@rdsct.ro', 'Web Application: One of your photos was not approved', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', '20070130161551');
 
 -- --------------------------------------------------------
 
@@ -999,19 +1033,7 @@ CREATE TABLE `dsb_queue_message` (
 -- Dumping data for table `dsb_queue_message`
 -- 
 
-INSERT INTO `dsb_queue_message` (`mail_id`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (1, 1, 2, 'test', 'test subj', 'test body\r\n', '2006-11-02 11:54:47', 0),
-(2, 1, 2, 'test', 'sdsd', 'asdasd', '2006-11-02 11:58:46', 0),
-(3, 1, 2, 'test', 'sdsd', '[quote]asdasd[/quote]', '2006-11-03 21:00:19', 0),
-(4, 1, 2, 'test', 'test subj', '[quote]test body\r\n[/quote]', '2006-11-03 21:01:24', 0),
-(5, 2, 2, 'test', 'test subjasd', '\r\n[quote]test body\r\n[/quote]', '2006-11-04 11:07:26', 0),
-(6, 1, 2, 'test', 'You have received a flirt from test', 'Let''s rock and roll!', '2007-02-11 18:56:11', 2),
-(7, 2, 2, 'test', 'xxx', 'xxx\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 13:04:24', 0),
-(8, 2, 2, 'test', 'Re: Spam test message', '\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 14:22:35', 0),
-(9, 2, 2, 'test', 'Re: Spam test message', '\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 14:31:01', 0),
-(10, 2, 2, 'test', 'Re: Spam test message', '\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 14:31:25', 0),
-(11, 2, 2, 'test', 'test sent you a flirt', 'Hello, baby!<img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-03-09 15:15:02', 1),
-(12, 2, 2, 'test', 'test sent you a flirt', 'Hello, baby!<img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-03-09 15:15:17', 1),
-(13, 2, 2, 'test', 'test sent you a flirt', 'Hello, baby!<img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-03-09 15:18:03', 1);
+INSERT INTO `dsb_queue_message` (`mail_id`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (1, 1, 1, 'test', 'test sent you a flirt', 'Aye aye, mate!', '2007-04-11 09:09:41', 1);
 
 -- --------------------------------------------------------
 
@@ -1055,10 +1077,6 @@ CREATE TABLE `dsb_site_bans` (
 -- Dumping data for table `dsb_site_bans`
 -- 
 
-INSERT INTO `dsb_site_bans` (`ban_id`, `ban_type`, `what`, `reason`) VALUES (1, 2, 'asd', ''),
-(2, 2, 'asd', ''),
-(3, 2, 'asd', ''),
-(4, 2, 'asd', '');
 
 -- --------------------------------------------------------
 
@@ -1084,6 +1102,43 @@ CREATE TABLE `dsb_site_log` (
 -- Dumping data for table `dsb_site_log`
 -- 
 
+INSERT INTO `dsb_site_log` (`log_id`, `fk_user_id`, `user`, `m_value`, `fk_level_id`, `ip`, `time`) VALUES (1, 0, 'test', 1, 1, 2130706433, '20070407114023'),
+(2, 0, 'test', 1, 1, 2130706433, '20070407114247'),
+(3, 0, 'test', 1, 1, 2130706433, '20070407121752'),
+(4, 0, 'test', 1, 1, 2130706433, '20070407121753'),
+(5, 0, 'test', 1, 1, 2130706433, '20070407124935'),
+(6, 0, 'test', 1, 1, 2130706433, '20070409191932'),
+(7, 0, 'test', 1, 1, 2130706433, '20070409191934'),
+(8, 0, 'test', 1, 1, 2130706433, '20070409200222'),
+(9, 0, 'test', 1, 1, 2130706433, '20070409200246'),
+(10, 0, 'test', 1, 1, 2130706433, '20070409204827'),
+(11, 0, 'test', 1, 1, 2130706433, '20070409205019'),
+(12, 0, 'test3', 1, 1, 2130706433, '20070409205128'),
+(13, 0, 'test', 1, 1, 2130706433, '20070409224216'),
+(14, 0, 'test', 1, 1, 2130706433, '20070410000316'),
+(15, 0, 'test', 1, 1, 2130706433, '20070410111510'),
+(16, 0, 'test', 1, 1, 2130706433, '20070410112117'),
+(17, 0, 'test', 1, 1, 2130706433, '20070410112122'),
+(18, 0, 'test', 1, 1, 2130706433, '20070410192008'),
+(19, 0, 'test', 1, 1, 2130706433, '20070410192334'),
+(20, 0, 'test', 1, 1, 2130706433, '20070410192645'),
+(21, 0, 'test', 1, 1, 2130706433, '20070411103642'),
+(22, 0, 'test', 1, 1, 2130706433, '20070411155439'),
+(23, 0, 'test', 1, 1, 2130706433, '20070411172428'),
+(24, 0, 'test', 1, 1, 2130706433, '20070411195947'),
+(25, 0, 'test', 1, 1, 2130706433, '20070412084633'),
+(26, 0, 'test', 1, 1, 2130706433, '20070412140306'),
+(27, 0, 'test2', 1, 1, 2130706433, '20070412151629'),
+(28, 0, 'test2', 1, 1, 2130706433, '20070412151640'),
+(29, 0, 'test', 1, 1, 2130706433, '20070412151714'),
+(30, 0, 'test3', 1, 1, 2130706433, '20070412152122'),
+(31, 0, 'test', 1, 1, 2130706433, '20070412152428'),
+(32, 0, 'test', 1, 1, 2130706433, '20070412152445'),
+(33, 0, 'test', 1, 1, 2130706433, '20070412152538'),
+(34, 0, 'test2', 1, 1, 2130706433, '20070412152724'),
+(35, 0, 'test', 1, 1, 2130706433, '20070412153049'),
+(36, 0, 'test2', 1, 1, 2130706433, '20070412163847'),
+(37, 0, 'test', 1, 1, 2130706433, '20070413133346');
 
 -- --------------------------------------------------------
 
@@ -1111,7 +1166,7 @@ CREATE TABLE `dsb_site_options3` (
 -- 
 
 INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `config_diz`, `option_type`, `fk_module_code`, `per_user`) VALUES (1, 0x64626669656c645f696e646578, '6', 'The last index of the custom profile fields (field_xx)', 0, 0x636f7265, 0),
-(2, 0x7573655f63617074636861, '1', 'Use the dynamic image text to keep spam bots out?', 9, 0x636f7265, 0),
+(2, 0x7573655f63617074636861, '1', 'Use the dynamic image text (captcha image) to keep spam bots out?', 9, 0x636f7265, 0),
 (3, 0x6d616e75616c5f70726f66696c655f617070726f76616c, '1', 'New profiles or changes to existing profiles require manual approval from an administrator before being displayed on site?', 9, 0x636f7265, 0),
 (4, 0x646174655f666f726d6174, '%m/%d/%Y', 'Default date format', 2, 0x636f7265, 1),
 (5, 0x74315f7769647468, '100', 'The width in pixels of the smalest thumbnail generated for each user photo', 104, 0x636f72655f70686f746f, 0),
@@ -1138,8 +1193,8 @@ INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `
 (26, 0x736b696e5f6e616d65, 'Basic', '', 0, 0x736b696e5f6261736963, 0),
 (27, 0x666b5f6c6f63616c655f6964, '11', '', 0, 0x736b696e5f6261736963, 0),
 (28, 0x69735f64656661756c74, '0', 'Is this skin the default site skin?', 0, 0x736b696e5f6261736963, 0),
-(32, 0x6d696e5f73697a65, '', 'Minimum photo file size in bytes (use 0 for not limited).', 104, 0x636f72655f70686f746f, 0),
-(33, 0x6d61785f73697a65, '', 'Maximum photo file size in bytes (use 0 for server default).', 104, 0x636f72655f70686f746f, 0),
+(32, 0x6d696e5f73697a65, '0', 'Minimum photo file size in bytes (use 0 for not limited).', 104, 0x636f72655f70686f746f, 0),
+(33, 0x6d61785f73697a65, '0', 'Maximum photo file size in bytes (use 0 for server default).', 104, 0x636f72655f70686f746f, 0),
 (34, 0x6262636f64655f6d657373616765, '1', 'Allow BBCode in member to member messages?', 9, 0x636f7265, 0),
 (35, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 'Date and time format', 2, 0x636f7265, 1),
 (36, 0x726f756e645f636f726e657273, '1', 'Use round corners for user photos?', 9, 0x636f72655f70686f746f, 0),
@@ -1153,7 +1208,9 @@ INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `
 (44, 0x6262636f64655f626c6f6773, '1', 'Allow bbcode in blog posts?', 9, 0x636f72655f626c6f67, 0),
 (45, 0x73656e645f616c6572745f696e74657276616c, '2', 'How often do you want to receive your search matches? (days)', 104, 0x6465665f757365725f7072656673, 1),
 (46, 0x726174655f6d795f70726f66696c65, '1', 'Allow your profile to be rated?', 9, 0x6465665f757365725f7072656673, 1),
-(47, 0x726174655f6d795f70686f746f73, '1', 'Allow your photos to be rated?', 9, 0x6465665f757365725f7072656673, 1);
+(47, 0x726174655f6d795f70686f746f73, '1', 'Allow your photos to be rated?', 9, 0x6465665f757365725f7072656673, 1),
+(48, 0x70757267655f756e7665726966696564, '7', 'Purge unverified accounts after how many days?', 104, 0x636f7265, 0),
+(50, 0x6e6f746966795f6d65, '1', 'Send me email notifications when I receive messages?', 9, 0x6465665f757365725f7072656673, 1);
 
 -- --------------------------------------------------------
 
@@ -1177,25 +1234,26 @@ CREATE TABLE `dsb_site_searches` (
 -- Dumping data for table `dsb_site_searches`
 -- 
 
-INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('98c401243f35f2828d504ef24ade5567', 1, 'a:9:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:8:"field_46";a:1:{i:0;s:1:"2";}s:8:"field_47";a:1:{i:0;s:1:"1";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";s:16:"field_50_country";s:3:"218";s:3:"f51";s:1:"1";s:3:"f52";s:1:"1";}', '2', 2, '20070317161512'),
-('8be66aca9a1a9003f72585c258c916a5', 1, 'a:1:{s:11:"acclevel_id";i:17;}', '1,2,209', 2, '20070320174312'),
-('116e715ab88dedbb4506f1fa4462bdc2', 1, 'a:7:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:8:"field_46";a:1:{i:0;s:1:"2";}s:8:"field_47";a:1:{i:0;s:1:"1";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";s:16:"field_50_country";s:3:"218";}', '2', 0, '20070321115208'),
-('d027bb15d2e91eb9c221e6feeabc5ba4', 1, 'a:6:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:8:"field_46";a:1:{i:0;s:1:"2";}s:8:"field_47";a:1:{i:0;s:1:"1";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";}', '2,209', 0, '20070321115420'),
-('0737b04b4eca702e7d0ab22b1526269c', 1, 'a:8:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:8:"field_46";a:1:{i:0;s:1:"2";}s:8:"field_47";a:1:{i:0;s:1:"1";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";s:3:"f51";s:1:"1";s:3:"f52";s:1:"1";}', '2', 2, '20070321120722'),
-('5fec338e05a67bc77d31ab370dc02453', 1, 'a:6:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:8:"field_46";a:1:{i:0;s:1:"2";}s:8:"field_47";a:1:{i:0;s:1:"1";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"57";}', '2,209', 2, '20070321120751'),
-('04a51b8634d9c552baeb60eb5109b481', 2, 'a:1:{s:4:"stat";s:1:"5";}', '', 0, '20070321125629'),
-('40cd750bba9870f18aada2478b24840a', 1, 'a:0:{}', '1,2,209', 0, '20070321125631'),
-('435529d231ba67d0c3917ecf7fa0dbd0', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";}', '1,2,209', 2, '20070321130820'),
-('a58953208bfc1e285a9feb0acee320fe', 1, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";}', '1,2,209', 2, '20070321131118'),
-('a9ed76f7355b148cf3a870e8745aa764', 1, 'a:6:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:8:"field_47";a:1:{i:0;s:1:"2";}s:12:"field_48_min";s:2:"18";s:12:"field_48_max";s:2:"35";s:16:"field_50_country";s:3:"218";}', '', 2, '20070321204732'),
-('', 1, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";}', '2,1,209', 2, '20070321225655'),
-('8816b2c8b45df99a22880b00513d7867', 1, 'a:1:{s:5:"pstat";s:1:"5";}', '210,211,212,213', 0, '20070322112801'),
-('7a05c5fb87b1158778adbc2a4867b009', 1, 'a:4:{s:11:"acclevel_id";i:16;s:2:"st";s:3:"net";s:10:"fk_user_id";s:1:"2";s:9:"fk_net_id";s:1:"2";}', '1', 2, '20070322205702'),
-('0143a1c3121c434d9acefa1a1f1f772d', 1, 'a:4:{s:11:"acclevel_id";i:16;s:2:"st";s:3:"net";s:10:"fk_user_id";s:1:"2";s:9:"fk_net_id";s:1:"1";}', '1,2', 2, '20070322205716'),
-('0449abf79c5a3f2f76d5f0ec03a8dd25', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:6:"latest";}', '1,2,209,210,211,212,213', 0, '20070323154544'),
-('512c7839f3bc946c119a95cc478fb513', 1, 'a:4:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}}', '', 0, '20070405205931'),
-('e63727e333610e210864e40b8444bee8', 1, 'a:6:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";}', '', 2, '20070405213203'),
-('58a4fac5fe804a4e068ea95e0ca1029d', 1, 'a:8:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f4_min";s:1:"1";s:6:"f4_max";s:1:"6";s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";}', '', 2, '20070405214229');
+INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('58a4fac5fe804a4e068ea95e0ca1029d', 1, 'a:8:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f4_min";s:1:"1";s:6:"f4_max";s:1:"6";s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";}', '', 0, '20070409144626'),
+('f229dff8e9bf417f8a116f6c693f4864', 1, 'a:4:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}}', '', 1, '20070410125422'),
+('5f129e4520ac00fc5177c7b7a26c2ca9', 1, 'a:8:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f4_min";s:1:"1";s:6:"f4_max";s:1:"6";s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";}', '', 1, '20070410200426'),
+('8816b2c8b45df99a22880b00513d7867', 1, 'a:1:{s:5:"pstat";s:1:"5";}', '1,2,3', 0, '20070410200527'),
+('40cd750bba9870f18aada2478b24840a', 1, 'a:0:{}', '1,2,3', 0, '20070410202713'),
+('0449abf79c5a3f2f76d5f0ec03a8dd25', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:6:"latest";}', '3,2,1', 2, '20070410232101'),
+('04a51b8634d9c552baeb60eb5109b481', 2, 'a:1:{s:4:"stat";s:1:"5";}', '', 0, '20070411103830'),
+('d9c125814e6d01cc042129671cc93b19', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:6:"online";}', '1,2', 1, '20070411114514'),
+('9e0e733657e4978c3fb5fcdea3f0dc2b', 1, 'a:8:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:2:"f2";a:2:{i:0;s:1:"1";i:1;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f4_min";s:1:"1";s:6:"f4_max";s:1:"6";s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";}', '', 1, '20070411230259'),
+('654d666a7ef3cdf3a31d36d7676f898e', 1, 'a:8:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:2:"f2";a:2:{i:0;s:1:"1";i:1;s:1:"2";}s:2:"f3";a:2:{i:0;s:1:"1";i:1;s:1:"2";}s:6:"f4_min";s:1:"1";s:6:"f4_max";s:1:"6";s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";}', '1', 1, '20070411230306'),
+('a02a5083e81539264df53de31964da9a', 2, 'a:1:{s:7:"flagged";s:1:"1";}', '', 0, '20070412091012'),
+('40cd750bba9870f18aada2478b24840a', 2, 'a:0:{}', '1,2,3,4,5,6,7', 0, '20070412091016'),
+('7e81e2de7df88ab99c15c4a8971b2b9d', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:3:"new";}', '3,2,1', 1, '20070412151925'),
+('79a2ea62a425ff437f970e3b3407db76', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:9:"computers";}', '2', 2, '20070412225204'),
+('31b8ba2df63d76c2dae7c1d5e7146838', 3, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:5:"views";}', '1,2,3,4', 2, '20070412225212'),
+('c6109b40aa58997744213128291c7b53', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:5:"earth";}', '2', 1, '20070413133346'),
+('4bb808db25e5349571c321a8d4ab0bec', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:6:"уея";}', '', 1, '20070413134539'),
+('65bf4d8448f34c3fd5e985dcb5cd9608', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:32:"специализируется";}', '', 1, '20070413135650'),
+('8a03fb895f0b3a9bbd3185ef5553bb07', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:6:"mobile";}', '3', 1, '20070413140022'),
+('9d53c19391ff02a9daa4fe9d6d7b7c56', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:10:"играх";}', '', 1, '20070413140032');
 
 -- --------------------------------------------------------
 
@@ -1276,9 +1334,6 @@ CREATE TABLE `dsb_subscriptions_auto` (
 -- Dumping data for table `dsb_subscriptions_auto`
 -- 
 
-INSERT INTO `dsb_subscriptions_auto` (`asubscr_id`, `dbfield`, `field_value`, `fk_subscr_id`, `date_start`) VALUES (1, '', 0, 3, '0000-00-00'),
-(2, 'field_46', 2, 2, '0000-00-00'),
-(4, 'field_46', 2, 1, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -1298,20 +1353,18 @@ CREATE TABLE `dsb_user_accounts` (
   `temp_pass` varchar(32) NOT NULL default '',
   `last_activity` timestamp(14) NOT NULL,
   PRIMARY KEY  (`user_id`),
-  UNIQUE KEY `user` (`user`)
+  UNIQUE KEY `user` (`user`),
+  KEY `key1` (`status`,`temp_pass`),
+  KEY `email` (`email`)
 ) TYPE=MyISAM COMMENT='membership is m_value';
 
 -- 
 -- Dumping data for table `dsb_user_accounts`
 -- 
 
-INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x64616e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@sco.ro', '', '', '20070402155030'),
-(2, 0x74657374, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@rdsct.ro', 'basic', '', '20070405214231'),
-(209, 0x7465737432, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 4, 'dan@rdsct.ro', '', '', '20070402155030'),
-(210, 0x7465737433, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070402164955'),
-(211, 0x7465737434, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070402155030'),
-(212, 0x7465737435, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070402155030'),
-(213, 0x7465737436, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'test@sco.ro', '', '', '20070402155030');
+INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x74657374, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', 'bd7adef567b68d45680681c80caea0d5', '20070413141913'),
+(2, 0x7465737432, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', 'e48ff8c5b0ad60f79815afeae1b91cb2', '20070412225212'),
+(3, 0x7465737433, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '8261d480f9450587f39447d310f0d529', '20070412152334');
 
 -- --------------------------------------------------------
 
@@ -1336,8 +1389,8 @@ CREATE TABLE `dsb_user_blogs` (
 -- Dumping data for table `dsb_user_blogs`
 -- 
 
-INSERT INTO `dsb_user_blogs` (`blog_id`, `fk_user_id`, `blog_name`, `blog_diz`, `stat_posts`, `blog_skin`, `blog_url`) VALUES (1, 2, 'My life', 'How much wood would a woodchuck chuck if a woodchuck could chuck wood?', 9, '', ''),
-(3, 2, 'Second life', '', 3, '', '');
+INSERT INTO `dsb_user_blogs` (`blog_id`, `fk_user_id`, `blog_name`, `blog_diz`, `stat_posts`, `blog_skin`, `blog_url`) VALUES (1, 1, 'My Stuff', 'test for the most stupid things I could say', 3, '', ''),
+(2, 2, 'asdasd', 'ddd', 1, '', '');
 
 -- --------------------------------------------------------
 
@@ -1400,7 +1453,6 @@ CREATE TABLE `dsb_user_folders` (
 -- Dumping data for table `dsb_user_folders`
 -- 
 
-INSERT INTO `dsb_user_folders` (`folder_id`, `fk_user_id`, `folder`) VALUES (2, 2, ''' "');
 
 -- --------------------------------------------------------
 
@@ -1430,10 +1482,6 @@ CREATE TABLE `dsb_user_inbox` (
 -- Dumping data for table `dsb_user_inbox`
 -- 
 
-INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES (4, 0, 1, 0, 'Admin', 'crcr', 'mrmr [b]ala bala[/b] [u]portocala[/u]', '2007-01-24 14:26:46', 2, 0, 0),
-(5, 1, 2, 0, 'Admin', 'crcr', 'mrmr [b]ala bala[/b] [u]portocala[/u]', '2007-01-24 14:26:46', 2, 0, 0),
-(6, 0, 209, 0, 'Admin', 'crcr', 'mrmr [b]ala bala[/b] [u]portocala[/u]', '2007-01-24 14:26:46', 2, 0, 0),
-(7, 1, 2, 2, 'test', 'Spam test message', '[u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.', '2007-01-12 19:00:00', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1455,11 +1503,6 @@ CREATE TABLE `dsb_user_mtpls` (
 -- Dumping data for table `dsb_user_mtpls`
 -- 
 
-INSERT INTO `dsb_user_mtpls` (`mtpl_id`, `fk_user_id`, `subject`, `message_body`) VALUES (1, 2, 'sdsd', 'asd'),
-(2, 2, 'sdsd', 'dsa'),
-(3, 2, 'sdsd', 'zxc'),
-(4, 2, 'Re%3A%20Spam%20test%20message', '%0A%5Bquote%5D%5Bu%5DThis%5B/u%5D%20%5Bb%5Dis%20a%5B/b%5D%20%5Bquote%5Dspam%20mes%5B/quote%5Dsage%20test.%5B/quote%5D'),
-(5, 2, 'Re: Spam test message', '\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]');
 
 -- --------------------------------------------------------
 
@@ -1483,9 +1526,6 @@ CREATE TABLE `dsb_user_networks` (
 -- Dumping data for table `dsb_user_networks`
 -- 
 
-INSERT INTO `dsb_user_networks` (`nconn_id`, `fk_user_id`, `fk_net_id`, `fk_user_id_friend`, `nconn_status`) VALUES (1, 2, 1, 1, 1),
-(2, 2, 1, 2, 1),
-(3, 2, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1513,20 +1553,6 @@ CREATE TABLE `dsb_user_outbox` (
 -- Dumping data for table `dsb_user_outbox`
 -- 
 
-INSERT INTO `dsb_user_outbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (1, 0, 2, 2, 'test', 'Outbox test message', 'This is an outbox test message.', '2007-01-12 17:00:00', 0),
-(4, 1, 2, 2, 'test', 'test subj', 'mamma mia\r\n\r\n[quote]test body\r\n[/quote]', '2007-01-15 19:48:40', 0),
-(5, 0, 2, 2, 'test', 'Re: sdsd', '\r\n[quote]asdasd[/quote]', '2007-01-15 19:51:25', 0),
-(10, 0, 2, 2, 'test', 'Re: Spam test message', '\r\n1\r\n\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 10:59:36', 0),
-(7, 1, 2, 0, 'qqqq', 'You have received a flirt from test', 'Let''s rock and roll!', '2007-02-11 18:44:11', 2),
-(8, 1, 2, 1, 'dan', 'hello again', 'this is a hello message\r\n', '2007-02-11 18:48:49', 0),
-(9, 1, 2, 1, 'dan', 'You have received a flirt from test', 'Let''s rock and roll!', '2007-02-11 18:56:11', 1),
-(11, 0, 2, 2, 'test', 'Re: Spam test message', '\r\n1\r\n\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 12:13:02', 0),
-(12, 0, 2, 2, 'test', 'ASD', '1\r\nr\r\n"''\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 13:02:11', 0),
-(13, 1, 2, 2, 'test', 'GIGI', 'mimi\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 13:03:15', 0),
-(14, 0, 2, 2, 'test', 'xxx', 'xxx\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 13:04:24', 0),
-(15, 0, 2, 2, 'test', 'Re: Spam test message', '\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 14:22:35', 0),
-(16, 1, 2, 2, 'test', 'Re: Spam test message', '\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 14:31:01', 0),
-(17, 0, 2, 2, 'test', 'Re: Spam test message', '\r\n[quote][u]This[/u] [b]is a[/b] [quote]spam mes[/quote]sage test.[/quote]', '2007-03-06 14:31:25', 0);
 
 -- --------------------------------------------------------
 
@@ -1543,38 +1569,50 @@ CREATE TABLE `dsb_user_photos` (
   `is_main` tinyint(1) unsigned NOT NULL default '0',
   `is_private` tinyint(1) unsigned NOT NULL default '0',
   `allow_comments` tinyint(1) unsigned NOT NULL default '0',
+  `allow_rating` tinyint(1) unsigned NOT NULL default '0',
   `caption` varchar(255) NOT NULL default '',
   `status` tinyint(2) unsigned NOT NULL default '0',
+  `del` tinyint(1) unsigned NOT NULL default '0',
+  `flagged` tinyint(1) unsigned NOT NULL default '0',
   `reject_reason` text NOT NULL,
   `stat_views` int(10) unsigned NOT NULL default '0',
+  `stat_votes` int(4) unsigned NOT NULL default '0',
+  `stat_votes_total` int(5) unsigned NOT NULL default '0',
   `stat_comments` int(5) unsigned NOT NULL default '0',
   `date_posted` datetime NOT NULL default '0000-00-00 00:00:00',
   `last_changed` datetime NOT NULL default '0000-00-00 00:00:00',
-  `del` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`photo_id`),
   KEY `fk_user_id` (`fk_user_id`),
   KEY `is_main` (`is_main`),
   KEY `is_private` (`is_private`),
-  KEY `del` (`del`),
-  KEY `date_posted` (`date_posted`)
+  KEY `date_posted` (`date_posted`),
+  KEY `key1` (`status`,`del`),
+  KEY `flagged` (`flagged`)
 ) TYPE=MyISAM;
 
 -- 
 -- Dumping data for table `dsb_user_photos`
 -- 
 
-INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `caption`, `status`, `reject_reason`, `stat_views`, `stat_comments`, `date_posted`, `last_changed`, `del`) VALUES (82, 210, 'test3', '9/210_31175518453.jpg', 1, 0, 1, 'screen captures of a nice arkanoid clone', 15, '', 0, 0, '2007-04-02 12:54:25', '2007-04-02 12:55:05', 0),
-(67, 1, 'dan', '9/1_21171197584.jpg', 1, 0, 0, '', 15, '', 0, 0, '2007-02-11 12:39:49', '2007-02-11 12:40:00', 0),
-(66, 1, 'dan', '1/1_11171197584.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 12:39:49', '2007-02-11 12:40:00', 0),
-(69, 2, 'test', '6/2_21171208327.jpg', 1, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-04-02 12:34:12', 0),
-(70, 2, 'test', '8/2_31171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
-(81, 210, 'test3', '6/210_21175518453.jpg', 0, 0, 1, 'screen captures of a nice arkanoid clone', 15, '', 0, 0, '2007-04-02 12:54:25', '2007-04-02 12:55:05', 0),
-(73, 2, 'test', '3/2_61171208327.jpg', 0, 0, 0, '', 15, '', 0, 0, '2007-02-11 15:38:55', '2007-02-11 15:39:03', 0),
-(80, 210, 'test3', '8/210_11175518453.jpg', 0, 0, 1, 'screen captures of a nice arkanoid clone', 15, '', 0, 0, '2007-04-02 12:54:25', '2007-04-02 12:55:05', 0),
-(75, 211, 'test4', '7/211_11174509897.jpg', 1, 0, 1, '', 15, '', 0, 0, '2007-03-21 20:44:58', '2007-03-21 20:45:14', 0),
-(76, 212, 'test5', '6/212_11174509951.jpg', 1, 0, 1, '', 15, '', 0, 0, '2007-03-21 20:45:53', '2007-03-21 20:46:05', 0),
-(77, 213, 'test6', '8/213_51174510004.jpg', 1, 0, 1, '', 15, '', 0, 0, '2007-03-21 20:46:47', '2007-03-21 20:47:02', 0),
-(79, 2, 'test', '8/2_11174596557.jpg', 0, 0, 1, 'babe', 15, '', 0, 1, '2007-03-22 20:49:18', '2007-04-02 12:16:49', 0);
+INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `allow_rating`, `caption`, `status`, `del`, `flagged`, `reject_reason`, `stat_views`, `stat_votes`, `stat_votes_total`, `stat_comments`, `date_posted`, `last_changed`) VALUES (1, 2, 'test2', '8/2_11176235928.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 1, 0, 0, 0, '2007-04-10 20:12:09', '2007-04-10 20:12:21'),
+(2, 1, 'test', '0/1_11176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 2, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-11 07:52:11'),
+(3, 1, 'test', '6/1_21176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 3, 42, 174, 0, '2007-04-11 07:37:49', '2007-04-11 07:38:14'),
+(4, 1, 'test', '5/1_31176277054.jpg', 0, 0, 0, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-11 07:38:14'),
+(5, 1, 'test', '3/1_41176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-11 07:38:14'),
+(6, 1, 'test', '0/1_51176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-12 06:15:52'),
+(7, 1, 'test', '4/1_61176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-11 07:38:14'),
+(8, 1, 'test', '0/1_11176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
+(9, 1, 'test', '9/1_21176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
+(10, 1, 'test', '1/1_31176380289.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:37'),
+(11, 1, 'test', '3/1_41176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
+(12, 1, 'test', '3/1_51176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
+(13, 1, 'test', '0/1_61176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
+(14, 3, 'test3', '4/3_11176380554.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 1, 1, 4, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
+(15, 3, 'test3', '4/3_21176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 1, 1, 5, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
+(16, 3, 'test3', '0/3_31176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
+(17, 3, 'test3', '4/3_41176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
+(18, 3, 'test3', '3/3_51176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
+(19, 3, 'test3', '6/3_61176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04');
 
 -- --------------------------------------------------------
 
@@ -1587,6 +1625,7 @@ CREATE TABLE `dsb_user_profiles` (
   `profile_id` int(10) unsigned NOT NULL auto_increment,
   `fk_user_id` int(10) unsigned NOT NULL default '0',
   `status` tinyint(2) unsigned NOT NULL default '0',
+  `del` tinyint(1) unsigned NOT NULL default '0',
   `last_changed` datetime NOT NULL default '0000-00-00 00:00:00',
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   `reject_reason` text NOT NULL,
@@ -1595,7 +1634,6 @@ CREATE TABLE `dsb_user_profiles` (
   `longitude` float(20,10) NOT NULL default '0.0000000000',
   `latitude` float(20,10) NOT NULL default '0.0000000000',
   `score` int(5) unsigned NOT NULL default '0',
-  `del` tinyint(1) unsigned NOT NULL default '0',
   `f1` varchar(100) NOT NULL default '',
   `f2` int(5) NOT NULL default '0',
   `f3` text NOT NULL,
@@ -1604,23 +1642,18 @@ CREATE TABLE `dsb_user_profiles` (
   PRIMARY KEY  (`profile_id`),
   KEY `fk_user_id` (`fk_user_id`),
   KEY `_user` (`_user`),
-  KEY `status` (`status`),
-  KEY `del` (`del`),
   KEY `score` (`score`),
-  KEY `longitude` (`longitude`,`latitude`)
+  KEY `longitude` (`longitude`,`latitude`),
+  KEY `key1` (`status`,`del`)
 ) TYPE=MyISAM;
 
 -- 
 -- Dumping data for table `dsb_user_profiles`
 -- 
 
-INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `del`, `f1`, `f2`, `f3`, `f4`, `f5`) VALUES (1, 1, 15, '2007-02-11 12:40:00', '2007-02-11 14:40:00', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'dan', '9/1_21171197584.jpg', 0.0000000000, 0.0000000000, 1, 0, '', 0, '', 0, '0000-00-00'),
-(3, 2, 15, '2007-04-02 12:34:12', '2007-02-11 14:37:59', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test', '6/2_21171208327.jpg', -93.6367034912, 42.0276985168, 243, 0, '', 0, '', 0, '0000-00-00'),
-(620, 209, 15, '2007-02-07 15:57:51', '2007-02-07 15:57:51', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 'test2', '', 0.0000000000, 0.0000000000, 0, 0, '', 0, '', 0, '0000-00-00'),
-(621, 210, 15, '2007-04-02 12:55:05', '0000-00-00 00:00:00', '', 'test3', '9/210_31175518453.jpg', 0.0000000000, 0.0000000000, 5, 0, '', 0, '', 0, '0000-00-00'),
-(622, 211, 15, '2007-03-22 11:28:35', '0000-00-00 00:00:00', '', 'test4', '7/211_11174509897.jpg', 0.0000000000, 0.0000000000, 0, 0, '', 0, '', 0, '0000-00-00'),
-(623, 212, 15, '2007-03-22 11:28:25', '0000-00-00 00:00:00', '', 'test5', '6/212_11174509951.jpg', 0.0000000000, 0.0000000000, 0, 0, '', 0, '', 0, '0000-00-00'),
-(624, 213, 15, '2007-03-22 11:28:28', '0000-00-00 00:00:00', '', 'test6', '8/213_51174510004.jpg', 0.0000000000, 0.0000000000, 0, 0, '', 0, '', 0, '0000-00-00');
+INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`) VALUES (1, 1, 15, 0, '2007-04-12 12:18:37', '2007-04-06 21:01:10', '', 'test', '1/1_31176380289.jpg', 0.0000000000, 0.0000000000, 13, '', 1, '|2|', 4, '1974-04-06'),
+(2, 2, 15, 0, '2007-04-10 20:12:21', '2007-04-07 08:46:16', '', 'test2', '8/2_11176235928.jpg', 0.0000000000, 0.0000000000, 8, 'alandala', 1, '|2|', 3, '0000-00-00'),
+(3, 3, 15, 0, '2007-04-12 12:23:04', '2007-04-07 10:20:56', '', 'test3', '4/3_11176380554.jpg', 0.0000000000, 0.0000000000, 1, '', 2, '|1|2|', 3, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -1646,8 +1679,6 @@ CREATE TABLE `dsb_user_searches` (
 -- Dumping data for table `dsb_user_searches`
 -- 
 
-INSERT INTO `dsb_user_searches` (`search_id`, `fk_user_id`, `title`, `is_default`, `search_qs`, `alert`, `alert_last_id`) VALUES (5, 2, 'latest', 0, 'st=latest', 0, 0),
-(9, 2, 'default adv search', 1, 'st=adv&field_46%5B0%5D=2&field_47%5B0%5D=1&field_48_min=18&field_48_max=35&field_50_country=218&f51=1&f52=1', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1671,9 +1702,6 @@ CREATE TABLE `dsb_user_settings2` (
 -- Dumping data for table `dsb_user_settings2`
 -- 
 
-INSERT INTO `dsb_user_settings2` (`config_id`, `fk_user_id`, `config_option`, `config_value`, `fk_module_code`) VALUES (9, 2, 0x646174655f666f726d6174, '%m/%d/%Y', 0x636f7265),
-(10, 2, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x636f7265),
-(11, 2, 0x73656e645f616c6572745f696e74657276616c, '5', 0x6465665f757365725f7072656673);
 
 -- --------------------------------------------------------
 
@@ -1720,8 +1748,9 @@ CREATE TABLE `dsb_user_stats` (
 -- Dumping data for table `dsb_user_stats`
 -- 
 
-INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (2, 'pviews', 20),
-(2, 'total_messages', 2),
-(2, 'new_messages', 0),
-(2, 'total_photos', 7),
-(210, 'total_photos', 2);
+INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (2, 'total_photos', 1),
+(1, 'total_photos', 12),
+(1, 'flirts_sent', 1),
+(1, 'blog_posts', 3),
+(3, 'total_photos', 6),
+(2, 'blog_posts', 1);

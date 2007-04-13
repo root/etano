@@ -24,8 +24,8 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $blog=array();
 $loop=array();
 if (isset($_GET['bid']) && !empty($_GET['bid'])) {
-	$blog_id=(int)$_GET['bid'];
-	include _CACHEPATH_.'/blogs/'.$blog_id.'/blog.inc.php';
+	$blog_id=(string)(int)$_GET['bid'];
+	include _CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php';
 
 	$is_auth_user=false;
 	if (isset($_SESSION['user']['user_id'])) {

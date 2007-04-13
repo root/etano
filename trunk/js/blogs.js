@@ -1,7 +1,7 @@
 $(function() {
 	$('#blog_search').bind('submit',function() {
 		return(check_form($(this)[0]));
-	}
+	});
 });
 
 function check_form(the) {

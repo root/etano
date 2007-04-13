@@ -48,7 +48,7 @@ if (empty($tplvars['bbcode_blogs'])) {
 	unset($tplvars['bbcode_blogs']);
 }
 
-include _CACHEPATH_.'/blogs/'.$output['fk_blog_id'].'/blog.inc.php';
+include _CACHEPATH_.'/blogs/'.$output['fk_blog_id']{0}.'/'.$output['fk_blog_id'].'/blog.inc.php';
 $tpl->set_file('content','blog_posts_addedit.html');
 $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);
