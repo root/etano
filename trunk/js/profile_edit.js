@@ -2,6 +2,8 @@ $(function() {
 	$('#edit_form').bind('submit',function() {
 		return(check_form($(this)[0]));
 	});
+
+	$('#edit_form input:visible:first').focus();
 });
 
 function req_update_location(str_field,val) {

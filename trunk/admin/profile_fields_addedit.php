@@ -142,7 +142,7 @@ switch ($output['html_type']) {
 		$output['default_value']=substr($output['default_value'],1,-1);
 		$output['row_searchable']=true;
 		$output['row_st']='visible';
-		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_DATE));
+		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_DATE,HTML_RANGE));
 		$output['row_accval_location']=true;
 		$output['default_value']=dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output['default_value']);
 		break;
