@@ -17,7 +17,7 @@
 <opt name="allow_comments">
 <loop name="loop">
 <div class="comment {loop.is_online}">
-	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo thumb1" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
+	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
 	<opt name="loop.fk_user_id"><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id"> said...
 	<p>{loop.comment}</p>
 	<div class="clear"></div>
@@ -47,7 +47,7 @@
 </opt name="allow_comments">
 
 <div id="bottom_links">
-	<a class="content-link link_previous" href="{output.return2}" title="Back to photos">Back to photos</a>
+	<a class="content-link link_previous" href="{output.return2}" title="Back">Back</a>
 </div>
 
 <script type="text/javascript" src="js/photo_view.js"></script>

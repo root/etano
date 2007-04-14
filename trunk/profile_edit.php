@@ -21,7 +21,7 @@ check_login_member(1);
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $cid=1;
-$profile=array();
+$loop=array();
 $user_details=array();
 if (isset($_SESSION['topass']['input'])) {
 	$user_details=$_SESSION['topass']['input'];
@@ -88,44 +88,47 @@ $tplvars['pcat_name']=$_pcats[$cid]['pcat_name'];
 $tplvars['pcat_id']=$cid;
 $i=0;
 foreach ($_pcats[$cid]['fields'] as $field_id) {
-	$profile[$i]['label']=$_pfields[$field_id]['label'];
-	$profile[$i]['dbfield']=$_pfields[$field_id]['dbfield'];
-	$profile[$i]['required']=isset($_pfields[$field_id]['required']) ? true : false;
-	$profile[$i]['help_text']=$_pfields[$field_id]['help_text'];
+	$loop[$i]['label']=$_pfields[$field_id]['label'];
+	$loop[$i]['dbfield']=$_pfields[$field_id]['dbfield'];
+	$loop[$i]['required']=isset($_pfields[$field_id]['required']) ? true : false;
+	if ($loop[$i]['required']) {
+		$loop[$i]['class']='required';
+	}
+	$loop[$i]['help_text']=$_pfields[$field_id]['help_text'];
 	if (isset($user_details['error_'.$_pfields[$field_id]['dbfield']])) {
-		$profile[$i]['class_error']=$user_details['error_'.$_pfields[$field_id]['dbfield']];
+		$loop[$i]['class_error']=$user_details['error_'.$_pfields[$field_id]['dbfield']];
 		unset($user_details['error_'.$_pfields[$field_id]['dbfield']]);
 	}
 	switch ($_pfields[$field_id]['html_type']) {
 
 		case HTML_TEXTFIELD:
-			$profile[$i]['field']='<input type="text" name="'.$_pfields[$field_id]['dbfield'].'" id="'.$_pfields[$field_id]['dbfield'].'" value="'.(isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : '').'" tabindex="'.($i+4).'" />';
+			$loop[$i]['field']='<input type="text" name="'.$_pfields[$field_id]['dbfield'].'" id="'.$_pfields[$field_id]['dbfield'].'" value="'.(isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : '').'" tabindex="'.($i+4).'" />';
 			break;
 
 		case HTML_TEXTAREA:
-			$profile[$i]['field']='<textarea name="'.$_pfields[$field_id]['dbfield'].'" id="'.$_pfields[$field_id]['dbfield'].'" tabindex="'.($i+4).'">'.(isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : '').'</textarea>';
+			$loop[$i]['field']='<textarea name="'.$_pfields[$field_id]['dbfield'].'" id="'.$_pfields[$field_id]['dbfield'].'" tabindex="'.($i+4).'">'.(isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : '').'</textarea>';
 			break;
 
 		case HTML_SELECT:
-			$profile[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'" id="'.$_pfields[$field_id]['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($_pfields[$field_id]['accepted_values'],isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : 0,array(0)).'</select>';
+			$loop[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'" id="'.$_pfields[$field_id]['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($_pfields[$field_id]['accepted_values'],isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : 0,array(0)).'</select>';
 			break;
 
 		case HTML_CHECKBOX_LARGE:
-			$profile[$i]['field']=vector2checkboxes_str($_pfields[$field_id]['accepted_values'],array(0),$_pfields[$field_id]['dbfield'],isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : '',1,true,'tabindex="'.($i+4).'"');
+			$loop[$i]['field']=vector2checkboxes_str($_pfields[$field_id]['accepted_values'],array(0),$_pfields[$field_id]['dbfield'],isset($user_details[$_pfields[$field_id]['dbfield']]) ? $user_details[$_pfields[$field_id]['dbfield']] : '',1,true,'tabindex="'.($i+4).'"');
 			break;
 
 		case HTML_DATE:
-			$profile[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'_month" id="'.$_pfields[$field_id]['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$user_details[$_pfields[$field_id]['dbfield'].'_month']).'</select>';
-			$profile[$i]['field'].='<select name="'.$_pfields[$field_id]['dbfield'].'_day" id="'.$_pfields[$field_id]['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">day</option>'.interval2options(1,31,$user_details[$_pfields[$field_id]['dbfield'].'_day']).'</select>'; // translate
-			$profile[$i]['field'].='<select name="'.$_pfields[$field_id]['dbfield'].'_year" id="'.$_pfields[$field_id]['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">year</option>'.interval2options($_pfields[$field_id]['accepted_values'][1],$_pfields[$field_id]['accepted_values'][2],$user_details[$_pfields[$field_id]['dbfield'].'_year'],array(),1,2).'</select>'; // translate
+			$loop[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'_month" id="'.$_pfields[$field_id]['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$user_details[$_pfields[$field_id]['dbfield'].'_month']).'</select>';
+			$loop[$i]['field'].='<select name="'.$_pfields[$field_id]['dbfield'].'_day" id="'.$_pfields[$field_id]['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">day</option>'.interval2options(1,31,$user_details[$_pfields[$field_id]['dbfield'].'_day']).'</select>'; // translate
+			$loop[$i]['field'].='<select name="'.$_pfields[$field_id]['dbfield'].'_year" id="'.$_pfields[$field_id]['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">year</option>'.interval2options($_pfields[$field_id]['accepted_values'][1],$_pfields[$field_id]['accepted_values'][2],$user_details[$_pfields[$field_id]['dbfield'].'_year'],array(),1,2).'</select>'; // translate
 			break;
 
 		case HTML_LOCATION:
 			$country_id=$user_details[$_pfields[$field_id]['dbfield'].'_country'];
 			$state_id=$user_details[$_pfields[$field_id]['dbfield'].'_state'];
-			$profile[$i]['label']='Country:';	//translate this
-			$profile[$i]['dbfield']=$_pfields[$field_id]['dbfield'].'_country';
-			$profile[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'_country" id="'.$_pfields[$field_id]['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)" class="full_width"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$user_details[$_pfields[$field_id]['dbfield'].'_country']).'</select>';	// translate this
+			$loop[$i]['label']='Country:';	//translate this
+			$loop[$i]['dbfield']=$_pfields[$field_id]['dbfield'].'_country';
+			$loop[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'_country" id="'.$_pfields[$field_id]['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)" class="full_width"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$user_details[$_pfields[$field_id]['dbfield'].'_country']).'</select>';	// translate this
 			$prefered_input='s';
 			$num_states=0;
 			$num_cities=0;
@@ -144,28 +147,28 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 				}
 			}
 			++$i;
-			$profile[$i]['label']='State:';	//translate this
-			$profile[$i]['dbfield']=$_pfields[$field_id]['dbfield'].'_state';
-			$profile[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'_state" id="'.$_pfields[$field_id]['dbfield'].'_state" tabindex="'.($i+4).'" class="full_width"><option value="0">Select state</option>';	// translate this
+			$loop[$i]['label']='State:';	//translate this
+			$loop[$i]['dbfield']=$_pfields[$field_id]['dbfield'].'_state';
+			$loop[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'_state" id="'.$_pfields[$field_id]['dbfield'].'_state" tabindex="'.($i+4).'" class="full_width"><option value="0">Select state</option>';	// translate this
 			if (!empty($country_id) && $prefered_input=='s' && !empty($num_states)) {
-				$profile[$i]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$user_details[$_pfields[$field_id]['dbfield'].'_state'],"`fk_country_id`='$country_id'");
+				$loop[$i]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$user_details[$_pfields[$field_id]['dbfield'].'_state'],"`fk_country_id`='$country_id'");
 			}
-			$profile[$i]['field'].='</select>';
-			$profile[$i]['class']=(!empty($country_id) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
+			$loop[$i]['field'].='</select>';
+			$loop[$i]['class']=(!empty($country_id) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
 			++$i;
-			$profile[$i]['label']='City:';	//translate this
-			$profile[$i]['dbfield']=$_pfields[$field_id]['dbfield'].'_city';
-			$profile[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'_city" id="'.$_pfields[$field_id]['dbfield'].'_city" tabindex="'.($i+4).'" class="full_width"><option value="0">Select city</option>';	// translate this
+			$loop[$i]['label']='City:';	//translate this
+			$loop[$i]['dbfield']=$_pfields[$field_id]['dbfield'].'_city';
+			$loop[$i]['field']='<select name="'.$_pfields[$field_id]['dbfield'].'_city" id="'.$_pfields[$field_id]['dbfield'].'_city" tabindex="'.($i+4).'" class="full_width"><option value="0">Select city</option>';	// translate this
 			if (!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) {
-				$profile[$i]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$user_details[$_pfields[$field_id]['dbfield'].'_city'],"`fk_state_id`='$state_id'");
+				$loop[$i]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$user_details[$_pfields[$field_id]['dbfield'].'_city'],"`fk_state_id`='$state_id'");
 			}
-			$profile[$i]['field'].='</select>';
-			$profile[$i]['class']=(!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';
+			$loop[$i]['field'].='</select>';
+			$loop[$i]['class']=(!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';
 			++$i;
-			$profile[$i]['label']='Zip code:';	//translate this
-			$profile[$i]['dbfield']=$_pfields[$field_id]['dbfield'].'_zip';
-			$profile[$i]['field']='<input type="text" name="'.$_pfields[$field_id]['dbfield'].'_zip" id="'.$_pfields[$field_id]['dbfield'].'_zip" value="'.$user_details[$_pfields[$field_id]['dbfield'].'_zip'].'" tabindex="'.($i+4).'" />';
-			$profile[$i]['class']=(!empty($country_id) && $prefered_input=='z') ? 'visible' : 'invisible';
+			$loop[$i]['label']='Zip code:';	//translate this
+			$loop[$i]['dbfield']=$_pfields[$field_id]['dbfield'].'_zip';
+			$loop[$i]['field']='<input type="text" name="'.$_pfields[$field_id]['dbfield'].'_zip" id="'.$_pfields[$field_id]['dbfield'].'_zip" value="'.$user_details[$_pfields[$field_id]['dbfield'].'_zip'].'" tabindex="'.($i+4).'" />';
+			$loop[$i]['class']=(!empty($country_id) && $prefered_input=='z') ? 'visible' : 'invisible';
 			break;
 
 	}
@@ -174,11 +177,17 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 
 $tpl->set_file('content','profile_edit.html');
 $tpl->set_var('tplvars',$tplvars);
-$tpl->set_loop('profile',$profile);
+$tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP);
-$tpl->drop_loop('profile');
-unset($profile);
+$tpl->drop_loop('loop');
+unset($loop);
 
-$tplvars['title']='Member Profile';
+$tplvars['title']=sprintf('Edit My %s',$_pcats[$cid]['pcat_name']);
+$tplvars['page_title']=sprintf('<a href="my_profile.php">My Profile</a> - %s',$_pcats[$cid]['pcat_name']);
+$tplvars['page']='profile_edit';
+$tplvars['css']='profile_edit.css';
+if (is_file('profile_edit_left.php')) {
+	include 'profile_edit_left.php';
+}
 include 'frame.php';
 ?>

@@ -1,0 +1,45 @@
+#main_photo {
+	float: left;
+	display: block;
+}
+
+#widg_user_photos {
+	width: 600px;
+	background: none;
+}
+
+#user_photos li {
+	float: left;
+	height: 60px;
+	width: 60px;
+	margin: 0 10px;
+}
+
+#user_photos li.first {
+	  margin-left: 20px;
+}
+
+#user_photos li.last {
+	width: 120px;
+	padding-top: 30px;
+}
+
+.profile_cat {
+	padding-bottom: 10px;
+}
+
+.profile_cat h3 {
+	padding-left: 0;
+	padding-bottom: 5px;
+	color: #3969A5;
+	border-bottom: 1px dashed #ccc;
+}
+
+.profile_cat li p {
+	display: inline;
+	font-weight: bold;
+}
+
+#profile_area {
+	width: 400px;
+}

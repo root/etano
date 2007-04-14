@@ -80,6 +80,9 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 	$loop[$j]['label']=$field['label'];
 	$loop[$j]['dbfield']=$field['dbfield'];
 	$loop[$j]['required']=isset($field['required']) ? true : false;
+	if ($loop[$i]['required']) {
+		$loop[$i]['class']='required';
+	}
 	$loop[$j]['help_text']=$field['help_text'];
 	if (isset($output['error_'.$field['dbfield']])) {
 		$loop[$j]['class_error']=$output['error_'.$field['dbfield']];

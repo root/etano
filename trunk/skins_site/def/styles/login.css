@@ -3,9 +3,10 @@
 }
 
 #login_tease {
-	padding: 5px 0px 0px 260px;
+	padding: 5px 0px 0px 0;
 	font-size: 14px;
 	float: right;
+	width: 400px;
 }
 
 #login_tease ul {
@@ -13,23 +14,18 @@
 	margin-left: 25px;
 }
 
-#relogin {
-	width: 300px;
+#relogin dl {
+	width: 280px;
+	overflow: hidden;
 }
 
 * html #relogin dl {
 	height: 1%;
 }
 
-#relogin dl {
-	width: 300px;
-	overflow: hidden;
-	background-image: url('../images/profile-field-bg.gif') no-repeat bottom;
-}
-
 #relogin dt {
 	float: left;
-	width: 80px;
+	width: 70px;
 	font-size: 13px;
 	padding: 5px 0 5px 10px;
 }
@@ -47,8 +43,4 @@
 
 .controls a {
 	margin-left: 10px;
-}
-
-#btn_login {
-	float: left;
 }

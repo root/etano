@@ -80,11 +80,6 @@ while ($profile=mysql_fetch_assoc($res)) {
 			$modman->fileop->mkdir(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id']);
 		}
 
-		// generate the profile.html page (without the categories loop)
-		$tpl->set_file('temp',$skins[$s].'/static/profile.html');
-		$towrite=$tpl->process('','temp',TPL_OPTIONAL);
-		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/profile.html',$towrite);
-
 		// generate the user details for result lists
 		$tpl->set_file('temp',$skins[$s].'/static/result_user.html');
 		$towrite=$tpl->process('','temp');
@@ -97,8 +92,10 @@ while ($profile=mysql_fetch_assoc($res)) {
 			$fields=array();
 			$j=0;
 			for ($i=0;isset($pcat['fields'][$i]);++$i) {
-				$fields[$i]['label']=$_pfields[$pcat['fields'][$i]]['label'];
-				$fields[$i]['field']=$profile[$_pfields[$pcat['fields'][$i]]['dbfield']];
+				if (!empty($profile[$_pfields[$pcat['fields'][$i]]['dbfield']])) {
+					$fields[$i]['label']=$profile[$_pfields[$pcat['fields'][$i]]['dbfield'].'_label'];
+					$fields[$i]['field']=$profile[$_pfields[$pcat['fields'][$i]]['dbfield']];
+				}
 			}
 			$categs['pcat_name']=$pcat['pcat_name'];
 			$categs['pcat_id']=$pcat_id;

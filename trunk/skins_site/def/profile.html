@@ -1,0 +1,20 @@
+<div id="photo_area">
+	<opt name="output.photo"><a href="javascript:;" onclick="popWin('popup_photo_view.php?uid={output.user_id}&main=1','photo',{tplvars.pic_width},{tplvars.pic_width},1)"><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/{output.photo}" /></a></opt name="output.photo">
+	<opt name="!output.photo"><img class="user_photo" src="{tplvars.photourl}/t1/no_photo.gif" /></opt name="!output.photo">
+
+	<opt name="output.num_photos">
+	<ul id="user_photos">
+		<loop name="user_photos">
+		<li class="{user_photos.class}"><a href="photo_view.php?photo_id={user_photos.photo_id}&amp;return={output.return}"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{user_photos.photo}" /></a></li>
+		</loop name="user_photos">
+		<li class="last"><a class="content-link simple" href="photo_search.php?st=user&amp;uid={output.uid}&amp;return={output.return}">View all photos</a>({output.num_photos})</li>
+	</ul>
+	</opt name="output.num_photos">
+</div>
+<div class="clear"></div>
+
+<div id="profile_area">
+	<loop name="categs">
+	{categs.content}
+	</loop name="categs">
+</div>

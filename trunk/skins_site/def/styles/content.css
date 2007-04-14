@@ -52,6 +52,8 @@
 }
 	.content_area.medium h2 {
 		background-image: url('../images/mbox-top.gif');
+		font-size: 14px;
+		color: #3969A5;
 	}
 	.content_area.medium .box_content {
 		background: url('../images/mbox-bottom.gif') no-repeat bottom left;
@@ -468,7 +470,7 @@ form.edit_form dd label {
 .field-help {
 	font-size: 12px;
 	color: #878787;
-	padding-left: 10px;
+	margin-left: 10px;
 }
 
 form.edit_form dd.field-help {
@@ -564,7 +566,12 @@ blockquote {
 
 }
 
-	.user_photo.thumb1 {
+	.thumb0 {
+		width: 60px;
+		height: 60px;
+	}
+
+	.thumb1 {
 		max-width: 100px;
 		max-height: 100px;
 	}

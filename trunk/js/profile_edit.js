@@ -1,3 +1,9 @@
+$(function() {
+	$('#edit_form').bind('submit',function() {
+		return(check_form($(this)[0]));
+	});
+});
+
 function req_update_location(str_field,val) {
 	$.post('ajax/location.php',
 			{'field':str_field,'val':val},
@@ -27,5 +33,5 @@ function req_update_location(str_field,val) {
 }
 
 function check_form(theform) {
-	return true;
+	return confirm('Save?');
 }
