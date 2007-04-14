@@ -13,7 +13,7 @@ Support at:                 http://forum.datemill.com
 
 require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 
-// accepts 'mode','total','cols','area' as parameters
+// accepts 'mode','total','cols','area','uid' as parameters
 
 class widget_photos extends icontent_widget {
 	var $module_code='photos';
@@ -53,6 +53,12 @@ class widget_photos extends icontent_widget {
 
 			case 'comm':
 				$query.=" AND `stat_comments`>0 ORDER BY `stat_comments` DESC";
+				break;
+
+			case 'user':
+				if (isset($this->config['uid']) && !empty($this->config['uid'])) {
+					$query.=" AND `fk_user_id`='".$this->config['uid']."' ORDER BY `date_posted` DESC";
+				}
 				break;
 
 		}
@@ -106,6 +112,11 @@ class widget_photos extends icontent_widget {
 				case 'comm':
 					$widget['title']='Most Discussed Photos';	// translate this
 					$widget['id']='widg_comm_photos';
+					break;
+
+				case 'user':
+					$widget['title']='Photos';	// translate this
+					$widget['id']='widg_user_photos';
 					break;
 
 			}

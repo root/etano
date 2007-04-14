@@ -20,36 +20,58 @@ check_login_member(-1);
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
-$uid=(string)$_SESSION['user']['user_id'];
+$config=get_site_option(array('bbcode_profile'),'core');
 
-$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='$uid'";
+$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-$profile=mysql_fetch_assoc($res);
+$output=mysql_fetch_assoc($res);
 // set all the fields to their real (readable) values
 foreach ($_pfields as $field_id=>$field) {
 	if ($field['visible']) {
-		if ($field['html_type']==HTML_TEXTFIELD || $field['html_type']==HTML_TEXTAREA) {
-			$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		} elseif ($field['html_type']==HTML_SELECT) {
-			$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
-			$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		} elseif ($field['html_type']==HTML_INT || $field['html_type']==HTML_FLOAT) {
-//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
-		} elseif ($field['html_type']==HTML_DATE) {
-//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
-		} elseif ($field['html_type']==HTML_LOCATION) {
-			$profile[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$profile[$field['dbfield'].'_country'],'-');
-			if (!empty($profile[$field['dbfield'].'_state'])) {
-				$profile[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$profile[$field['dbfield'].'_state'],'-');
+		if ($field['html_type']==HTML_TEXTFIELD) {
+			$output[$field['dbfield']]=sanitize_and_format($output[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		} elseif ($field['html_type']==HTML_TEXTAREA) {
+			$output[$field['dbfield']]=sanitize_and_format($output[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			if ($config['bbcode_profile']) {
+				$output[$field['dbfield']]=bbcode2html($output[$field['dbfield']]);
 			}
-			if (!empty($profile[$field['dbfield'].'_city'])) {
-				$profile[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$profile[$field['dbfield'].'_city'],'-');
+		} elseif ($field['html_type']==HTML_SELECT) {
+			$output[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$output[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
+			$output[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$output[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		} elseif ($field['html_type']==HTML_INT || $field['html_type']==HTML_FLOAT) {
+//			$output[$field['dbfield']]=$output[$field['dbfield']];
+		} elseif ($field['html_type']==HTML_DATE) {
+//			$output[$field['dbfield']]=$output[$field['dbfield']];
+		} elseif ($field['html_type']==HTML_LOCATION) {
+			$output[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$output[$field['dbfield'].'_country'],'-');
+			if (!empty($output[$field['dbfield'].'_state'])) {
+				$output[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$output[$field['dbfield'].'_state'],'-');
+			}
+			if (!empty($output[$field['dbfield'].'_city'])) {
+				$output[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$output[$field['dbfield'].'_city'],'-');
 			}
 		}
 	} else {
-		unset($profile[$field['dbfield']]);
+		unset($output[$field['dbfield']]);
 	}
+}
+
+if (empty($output['_photo']) || !is_file(_PHOTOPATH_.'/t1/'.$output['_photo'])) {
+	unset($output['_photo']);
+}
+
+$user_photos=array();
+$query="SELECT `photo_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+if (mysql_num_rows($res)) {
+	while (count($user_photos)<3 && $rsrow=mysql_fetch_assoc($res)) {
+		if (is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
+			$user_photos[]=$rsrow;
+		}
+	}
+	$user_photos[0]['class']='first';
+	$output['num_photos']=mysql_num_rows($res);
 }
 
 $categs=array();
@@ -58,7 +80,7 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 	$fields=array();
 	for ($j=0;isset($pcat['fields'][$j]);++$j) {
 		$fields[$j]['label']=$_pfields[$pcat['fields'][$j]]['label'];
-		$fields[$j]['field']=$profile[$_pfields[$pcat['fields'][$j]]['dbfield']];
+		$fields[$j]['field']=$output[$_pfields[$pcat['fields'][$j]]['dbfield']];
 	}
 	$categs[$i]['pcat_name']=$pcat['pcat_name'];
 	$categs[$i]['pcat_id']=$pcat_id;
@@ -66,12 +88,17 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 	++$i;
 }
 
-$tplvars['pic_width']=get_site_option('pic_width','core_photo');
+$output['pic_width']=get_site_option('pic_width','core_photo');
 
+$output['return']='my_profile.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$output['return'].='?'.$_SERVER['QUERY_STRING'];
+}
+$output['return']=rawurlencode($output['return']);
 $tpl->set_file('content','my_profile.html');
+$tpl->set_loop('user_photos',$user_photos);
 $tpl->set_loop('categs',$categs);
-$tpl->set_var('profile',$profile);
-$tpl->set_var('uid',$uid);
+$tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 unset($categs);

@@ -44,7 +44,11 @@ if (!empty($output['search_md5'])) {
 	$continue=false;	// for searches not based on search_fields
 	$select="a.`fk_user_id`";
 	$from="`{$dbtable_prefix}user_profiles` a";
-	$where='a.`status`='.STAT_APPROVED.' AND a.`del`=0';
+	$where='1';
+	if (isset($_SESSION['user']['user_id'])) {
+		$where.=" AND a.`fk_user_id`<>'".$_SESSION['user']['user_id']."'";
+	}
+	$where.=' AND a.`status`='.STAT_APPROVED.' AND a.`del`=0';
 	$orderby="a.`score` DESC";
 
 	// define here all search types
