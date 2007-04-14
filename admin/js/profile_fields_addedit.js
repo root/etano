@@ -67,67 +67,69 @@ function check_form() {
 
 
 function update_list() {
-	towrite='';
-	stval=$('#searchable')[0].checked ? $('#search_type').val() : 0;
-	if (stval==3 && default_search.length>1) {	// HTML_SELECT
-		default_search=default_search.slice(0,1);
-	}
-	if (stval==108 && default_search.length>2) {	// HTML_RANGE
-		default_search=default_search.slice(0,2);
-	}
-	for (i=0;i<accvals.length;i++) {
-		towrite+='<li><ul class="litem_tools"><li><a class="item_edit" href="javascript:;" onclick="addedit_accval(\'edit\','+i+')" title="Edit value">Edit</a></li><li><a class="item_add" href="javascript:;" onclick="addedit_accval(\'add\','+(i+1)+')" title="Add new value after this one">Add new value after this one</a></li><li><a class="item_del" href="javascript:;" onclick="delete_accval('+i+')" title="Delete value">Delete value</a></li>';
-		if (html_type==3) {	// HTML_SELECT
-			towrite+='<li><input type="radio" name="default_value[]" id="default_value_'+i+'" value="'+i+'" title="Default value" onclick="adddel_defval(true,'+i+')"';
-			for (j=0;j<default_value.length;j++) {
-				if (parseInt(default_value[j])==i) {
-					towrite+=' checked="checked"';
-					break;
-				}
-			}
-			towrite+=' /></li>';
-		} else if (html_type==10 || html_type==108) {	// HTML_CHECKBOX_LARGE || HTML_RANGE
-			towrite+='<li><input type="checkbox" name="default_value[]" id="default_value_'+i+'" value="'+i+'" title="Default value" onclick="adddel_defval(this.checked,'+i+')"';
-			for (j=0;j<default_value.length;j++) {
-				if (parseInt(default_value[j])==i) {
-					towrite+=' checked="checked"';
-					break;
-				}
-			}
-			towrite+=' /></li>';
+	if (typeof(accvals)!='undefined') {
+		towrite='';
+		stval=$('#searchable')[0].checked ? $('#search_type').val() : 0;
+		if (stval==3 && default_search.length>1) {	// HTML_SELECT
+			default_search=default_search.slice(0,1);
 		}
-// the search checkbox/radio depends on the search_type:
-		if (stval==3) {	// HTML_SELECT
-			towrite+='<li><input type="radio" name="default_search[]" id="default_search_'+i+'" value="'+i+'" title="Default search value" onclick="adddel_defsearch(true,'+i+')"';
-			for (j=0;j<default_search.length;j++) {
-				if (parseInt(default_search[j])==i) {
-					towrite+=' checked="checked"';
-					break;
-				}
-			}
-			towrite+=' /></li>';
-		} else if (stval==10) {	// HTML_CHECKBOX_LARGE
-			towrite+='<li><input type="checkbox" name="default_search[]" id="default_search_'+i+'" value="'+i+'" title="Default search value" onclick="adddel_defsearch(this.checked,'+i+')"';
-			for (j=0;j<default_search.length;j++) {
-				if (parseInt(default_search[j])==i) {
-					towrite+=' checked="checked"';
-					break;
-				}
-			}
-			towrite+=' /></li>';
-		} else if (stval==108) {	// HTML_RANGE
-			towrite+='<li><input type="checkbox" name="default_search[]" id="default_search_'+i+'" value="'+i+'" title="Default search value" onclick="adddel_defsearch(this.checked,'+i+')"';
-			for (j=0;j<default_search.length;j++) {
-				if (parseInt(default_search[j])==i) {
-					towrite+=' checked="checked"';
-					break;
-				}
-			}
-			towrite+=' /></li>';
+		if (stval==108 && default_search.length>2) {	// HTML_RANGE
+			default_search=default_search.slice(0,2);
 		}
-		towrite+='</ul><span class="litem_text">'+accvals[i]+'</span></li>'+"\n";
+		for (i=0;i<accvals.length;i++) {
+			towrite+='<li><ul class="litem_tools"><li><a class="item_edit" href="javascript:;" onclick="addedit_accval(\'edit\','+i+')" title="Edit value">Edit</a></li><li><a class="item_add" href="javascript:;" onclick="addedit_accval(\'add\','+(i+1)+')" title="Add new value after this one">Add new value after this one</a></li><li><a class="item_del" href="javascript:;" onclick="delete_accval('+i+')" title="Delete value">Delete value</a></li>';
+			if (html_type==3) {	// HTML_SELECT
+				towrite+='<li><input type="radio" name="default_value[]" id="default_value_'+i+'" value="'+i+'" title="Default value" onclick="adddel_defval(true,'+i+')"';
+				for (j=0;j<default_value.length;j++) {
+					if (parseInt(default_value[j])==i) {
+						towrite+=' checked="checked"';
+						break;
+					}
+				}
+				towrite+=' /></li>';
+			} else if (html_type==10 || html_type==108) {	// HTML_CHECKBOX_LARGE || HTML_RANGE
+				towrite+='<li><input type="checkbox" name="default_value[]" id="default_value_'+i+'" value="'+i+'" title="Default value" onclick="adddel_defval(this.checked,'+i+')"';
+				for (j=0;j<default_value.length;j++) {
+					if (parseInt(default_value[j])==i) {
+						towrite+=' checked="checked"';
+						break;
+					}
+				}
+				towrite+=' /></li>';
+			}
+	// the search checkbox/radio depends on the search_type:
+			if (stval==3) {	// HTML_SELECT
+				towrite+='<li><input type="radio" name="default_search[]" id="default_search_'+i+'" value="'+i+'" title="Default search value" onclick="adddel_defsearch(true,'+i+')"';
+				for (j=0;j<default_search.length;j++) {
+					if (parseInt(default_search[j])==i) {
+						towrite+=' checked="checked"';
+						break;
+					}
+				}
+				towrite+=' /></li>';
+			} else if (stval==10) {	// HTML_CHECKBOX_LARGE
+				towrite+='<li><input type="checkbox" name="default_search[]" id="default_search_'+i+'" value="'+i+'" title="Default search value" onclick="adddel_defsearch(this.checked,'+i+')"';
+				for (j=0;j<default_search.length;j++) {
+					if (parseInt(default_search[j])==i) {
+						towrite+=' checked="checked"';
+						break;
+					}
+				}
+				towrite+=' /></li>';
+			} else if (stval==108) {	// HTML_RANGE
+				towrite+='<li><input type="checkbox" name="default_search[]" id="default_search_'+i+'" value="'+i+'" title="Default search value" onclick="adddel_defsearch(this.checked,'+i+')"';
+				for (j=0;j<default_search.length;j++) {
+					if (parseInt(default_search[j])==i) {
+						towrite+=' checked="checked"';
+						break;
+					}
+				}
+				towrite+=' /></li>';
+			}
+			towrite+='</ul><span class="litem_text">'+accvals[i]+'</span></li>'+"\n";
+		}
+		$('#litems').html(towrite);
 	}
-	$('#litems').html(towrite);
 }
 
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Apr 13, 2007 at 02:31 PM
+-- Generation Time: Apr 14, 2007 at 10:34 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 -- 
@@ -163,10 +163,6 @@ CREATE TABLE `dsb_blog_posts` (
 -- Dumping data for table `dsb_blog_posts`
 -- 
 
-INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`) VALUES (1, '2007-04-12 09:19:16', 1, 'test', 1, 1, 'first stupid thing', 'mmm, let''s see, for the first blog I could say nothing.\n\nNothing at all.\n\nCome on, get lost, I have nothing to say.', 1, 15, '', 0, 1, '2007-04-12 11:27:16', ''),
-(2, '2007-04-12 11:29:34', 1, 'test', 1, 1, 'Feeling of Power', 'by Isaac Asimov\n\n[b]JEHAN SHUMAN[/b] was used to dealing with the men in authority on long-embattled Earth. He was only a civilian but he originated programming patterns that resulted in self-directing war computers of the highest sort. Generals consequently listened to him. Heads of congressional committees, too. There was one of each in the special lounge of New Pentagon. General Weider was space-burnt and had a small mouth puckered almost into a cipher. Congressman Brant was smooth-cheeked and clear-eyed. He smoked Denebian tobacco with the air of one whose patriotism was so notorious, he could be allowed such liberties. Shuman, tall, [b]distinguished[/b],  and Programmer-first-class, faced them fearlessly.\nHe said, [quote]This, gentlemen, is Myron Aub.[/quote] [quote]The one with the unusual gift that you discovered quite by accident,[/quote] said Congressman Brant placidly. [quote]Ah.[/quote] He inspected the little man with the egg-bald head with amia-ble curiosity.\n', 1, 15, '', 0, 0, '2007-04-12 13:00:03', ''),
-(3, '2007-04-12 13:27:13', 1, 'test', 1, 1, 'russia forever', 'Вообще-то Glu Mobile не специализируется на 3D играх, но на сегодняшний день объемная графика все более и более популярна и интересна большинству пользователей. Многие именитые разработчики взялись за трехмерные игры, и Glu отставать от них не хочет.\n\nProject Gotham Racing обещает сохранить все основные особенности геймплея оригинальной версии – гонки по городу на умопомрачительной скорости и супер автомобили. Среди машин, на которых вы сможете погонять в PGR будут самые известные бренды: Aston Martin V12 Vanquish, Cadillac Sixteen, Ford GT, Honda NSX-R, Lamborghini Gallardo, AMG-Mercedes C-DTM 2006, Toyota GT-One и другие чудеса мирового автопрома. Каждый из этих автомобилей будет обладать рядом уникальных характеристик и собственной физикой движения.\n\nЧто касается графики Project Gotham Racing, то разработчиками был использован новейший графический движок, который демонстрирует потрясающий объем и детальность изображения. Можете убедиться в этом сами, взглянув на скриншоты.', 1, 15, '', 0, 0, '2007-04-12 13:27:13', ''),
-(4, '2007-04-12 13:39:01', 2, 'test2', 2, 1, 'sdsd', 'הגלימ תעצומ ןיקפ תטיסרבינואו תירבעה הטיסרבינואה ןיב םיטנדוטס יפוליח םכסה תרגסמב\n\n.ןיסב ,ןיקפ תטיסרבינואב ,הנש יצח לש הייהשל תוגלמ יתש וא הנש לש הייהשל ,תירבעה הטיסרבינואה ידימלתל\n\n:תללוכ הגלמה\n\nהמשרה ימדו דומיל רכשמ רוטפ -\n\n.שדוחל ($-100כ) 800 RMB (Yuan) ךרעב לש םוכס -\n\n.םולשת אלל ,םיטנדוטסה תונועמב רויד -\n\n.ט"נשת םידומילה תנש ףוסב ,תוחפל ןושאר ראות לעב תויהל ךירצ דימלתה\n\n.תיחרכה הבוט המרב תיניסה הפשה תעידי\n\n ,ינושאר השקב ספוט ואלמי ,וז הגלימל םתודמעומ תא שיגהל םינינועמה םידימלת\n\n,404/5 רדח ,1 המוק ,הלהנמה ןינב ,םיפוצה-רהב תימדקאה תוריכזמב 2002 ראונימ לחה ולבקל ןתינש\n\nmsdebsin@mscc.huji.ac.il :ינורטקלא ראוד ,02-5882916,02-5881032 ןופלט\n\n:ףרצל שי השקבה ספוטל\n\nםייח תורוק -\n\n(תירבעב רשפא) עצוממ םע ,םינויצ תונויליג -\n\nהטיסרבינואב םירוממ ,תילגנאב הצלמה יבתכמ 2 -\n\nתננכותמה םידומילה תינכות -\n\n(הפשה תעידי רושיא ספוט ב"צמ) הטיסרבינואב הרוממ תיניסה הפשה תעידי לע רושיא -\n\n.תימדקאה תוריכזמל ,תילגנאב םיספדומ םיקתוע 2-ב שיגהל שי הוולנה רמוחה לכו ספוטה תא\n\n:םכבל תמושתל\n\n.ראותל םידומילכ םש בשחיהל םילוכי םניא ,ןיפוליח םכסה תרגסמב ל"וחב םידומיל ,ללככ -\n\n.הטלוקפב/גוחב הנתומ רבדה .תוכז תודוקנ יטמוטוא ןפואב םינקמ םניא ןיפוליח םכסה תרגסמב ל"וחב םידומיל -\n\n', 1, 15, '', 0, 0, '2007-04-12 13:39:01', '');
 
 -- --------------------------------------------------------
 
@@ -266,18 +262,160 @@ INSERT INTO `dsb_lang_keys` (`lk_id`, `lk_type`, `lk_diz`, `lk_use`) VALUES (1, 
 (13, 2, 'Label for f3 field', 0),
 (14, 2, 'Search label for f3 field', 0),
 (15, 4, 'Help text for f3 field', 0),
-(16, 2, 'Field value', 1),
-(17, 2, 'Field value', 1),
-(18, 2, 'Field value', 1),
-(19, 2, 'Field value', 1),
-(20, 2, 'Field value', 1),
-(21, 2, 'Field value', 1),
+(46, 2, 'Field value', 1),
+(47, 2, 'Field value', 1),
+(48, 2, 'Field value', 1),
+(49, 2, 'Field value', 1),
 (22, 2, 'Label for f4 field', 0),
 (23, 2, 'Search label for f4 field', 0),
 (24, 4, 'Help text for f4 field', 0),
 (25, 2, 'Label for f5 field', 0),
 (26, 2, 'Search label for f5 field', 0),
-(27, 4, 'Help text for f5 field', 0);
+(27, 4, 'Help text for f5 field', 0),
+(28, 2, 'Label for f6 field', 0),
+(29, 2, 'Search label for f6 field', 0),
+(30, 4, 'Help text for f6 field', 0),
+(31, 2, 'Category name', 1),
+(32, 2, 'Category name', 1),
+(33, 2, 'Category name', 1),
+(34, 2, 'Field value', 1),
+(35, 2, 'Field value', 1),
+(36, 2, 'Field value', 1),
+(37, 2, 'Field value', 1),
+(38, 2, 'Field value', 1),
+(39, 2, 'Field value', 1),
+(40, 2, 'Field value', 1),
+(41, 2, 'Field value', 1),
+(42, 2, 'Field value', 1),
+(43, 2, 'Label for f7 field', 0),
+(44, 2, 'Search label for f7 field', 0),
+(45, 4, 'Help text for f7 field', 0),
+(50, 2, 'Field value', 1),
+(51, 2, 'Field value', 1),
+(52, 2, 'Field value', 1),
+(53, 2, 'Field value', 1),
+(54, 2, 'Field value', 1),
+(55, 2, 'Field value', 1),
+(106, 2, 'Field value', 1),
+(57, 2, 'Field value', 1),
+(58, 2, 'Field value', 1),
+(59, 2, 'Field value', 1),
+(60, 2, 'Field value', 1),
+(61, 2, 'Field value', 1),
+(62, 2, 'Field value', 1),
+(63, 2, 'Field value', 1),
+(64, 2, 'Field value', 1),
+(65, 2, 'Field value', 1),
+(66, 2, 'Field value', 1),
+(67, 2, 'Field value', 1),
+(68, 2, 'Field value', 1),
+(69, 2, 'Field value', 1),
+(70, 2, 'Field value', 1),
+(71, 2, 'Field value', 1),
+(72, 2, 'Field value', 1),
+(73, 2, 'Field value', 1),
+(74, 2, 'Field value', 1),
+(75, 2, 'Field value', 1),
+(76, 2, 'Field value', 1),
+(77, 2, 'Field value', 1),
+(78, 2, 'Field value', 1),
+(79, 2, 'Field value', 1),
+(80, 2, 'Field value', 1),
+(81, 2, 'Field value', 1),
+(82, 2, 'Field value', 1),
+(83, 2, 'Field value', 1),
+(84, 2, 'Field value', 1),
+(85, 2, 'Field value', 1),
+(86, 2, 'Field value', 1),
+(87, 2, 'Field value', 1),
+(88, 2, 'Field value', 1),
+(89, 2, 'Field value', 1),
+(90, 2, 'Field value', 1),
+(91, 2, 'Field value', 1),
+(92, 2, 'Field value', 1),
+(93, 2, 'Field value', 1),
+(94, 2, 'Field value', 1),
+(95, 2, 'Field value', 1),
+(96, 2, 'Field value', 1),
+(97, 2, 'Field value', 1),
+(98, 2, 'Field value', 1),
+(99, 2, 'Field value', 1),
+(100, 2, 'Field value', 1),
+(101, 2, 'Field value', 1),
+(102, 2, 'Field value', 1),
+(103, 2, 'Field value', 1),
+(104, 2, 'Field value', 1),
+(105, 2, 'Field value', 1),
+(107, 2, 'Field value', 1),
+(108, 2, 'Field value', 1),
+(109, 2, 'Field value', 1),
+(110, 2, 'Field value', 1),
+(111, 2, 'Field value', 1),
+(112, 2, 'Field value', 1),
+(113, 2, 'Field value', 1),
+(114, 2, 'Field value', 1),
+(115, 2, 'Field value', 1),
+(116, 2, 'Label for f8 field', 0),
+(117, 2, 'Search label for f8 field', 0),
+(118, 4, 'Help text for f8 field', 0),
+(119, 2, 'Field value', 1),
+(120, 2, 'Field value', 1),
+(121, 2, 'Field value', 1),
+(122, 2, 'Field value', 1),
+(123, 2, 'Field value', 1),
+(124, 2, 'Field value', 1),
+(125, 2, 'Label for f9 field', 0),
+(126, 2, 'Search label for f9 field', 0),
+(127, 4, 'Help text for f9 field', 0),
+(128, 2, 'Field value', 1),
+(129, 2, 'Field value', 1),
+(130, 2, 'Field value', 1),
+(131, 2, 'Field value', 1),
+(132, 2, 'Field value', 1),
+(133, 2, 'Field value', 1),
+(134, 2, 'Field value', 1),
+(135, 2, 'Field value', 1),
+(136, 2, 'Field value', 1),
+(137, 2, 'Label for f10 field', 0),
+(138, 2, 'Search label for f10 field', 0),
+(139, 4, 'Help text for f10 field', 0),
+(140, 2, 'Field value', 1),
+(141, 2, 'Field value', 1),
+(142, 2, 'Field value', 1),
+(143, 2, 'Label for f11 field', 0),
+(144, 2, 'Search label for f11 field', 0),
+(145, 4, 'Help text for f11 field', 0),
+(146, 2, 'Field value', 1),
+(147, 2, 'Field value', 1),
+(148, 2, 'Field value', 1),
+(149, 2, 'Label for f12 field', 0),
+(150, 2, 'Search label for f12 field', 0),
+(151, 4, 'Help text for f12 field', 0),
+(152, 2, 'Field value', 1),
+(153, 2, 'Field value', 1),
+(154, 2, 'Field value', 1),
+(155, 2, 'Field value', 1),
+(156, 2, 'Field value', 1),
+(157, 2, 'Label for f13 field', 0),
+(158, 2, 'Search label for f13 field', 0),
+(159, 4, 'Help text for f13 field', 0),
+(160, 2, 'Field value', 1),
+(161, 2, 'Field value', 1),
+(162, 2, 'Field value', 1),
+(163, 2, 'Field value', 1),
+(164, 2, 'Label for f14 field', 0),
+(165, 2, 'Search label for f14 field', 0),
+(166, 4, 'Help text for f14 field', 0),
+(167, 2, 'Field value', 1),
+(168, 2, 'Field value', 1),
+(169, 2, 'Field value', 1),
+(170, 2, 'Field value', 1),
+(171, 2, 'Field value', 1),
+(172, 2, 'Field value', 1),
+(173, 2, 'Field value', 1),
+(174, 2, 'Label for f15 field', 0),
+(175, 2, 'Search label for f15 field', 0),
+(176, 4, 'Help text for f15 field', 0);
 
 -- --------------------------------------------------------
 
@@ -300,32 +438,174 @@ CREATE TABLE `dsb_lang_strings` (
 -- 
 
 INSERT INTO `dsb_lang_strings` (`ls_id`, `fk_lk_id`, `skin`, `lang_value`) VALUES (1, 1, 'skin_def', 'Basic Info'),
-(2, 2, 'skin_def', 'Looks'),
+(2, 2, 'skin_def', 'Appearance'),
 (3, 3, 'skin_def', 'About me'),
 (4, 4, 'skin_def', ''),
 (5, 5, 'skin_def', ''),
 (6, 6, 'skin_def', 'Man'),
 (7, 7, 'skin_def', 'Woman'),
-(8, 8, 'skin_def', 'Gender'),
-(9, 9, 'skin_def', 'Find'),
+(8, 8, 'skin_def', 'I am a'),
+(9, 9, 'skin_def', 'Find a'),
 (10, 10, 'skin_def', ''),
 (11, 11, 'skin_def', 'Men'),
 (12, 12, 'skin_def', 'Women'),
-(13, 13, 'skin_def', 'Looking for'),
-(14, 14, 'skin_def', 'Looking for'),
+(13, 13, 'skin_def', 'Seeking'),
+(14, 14, 'skin_def', 'Seeking'),
 (15, 15, 'skin_def', ''),
-(16, 16, 'skin_def', 'Under 1m 50cm'),
-(17, 17, 'skin_def', '1m 60cm'),
-(18, 18, 'skin_def', '1m 70cm'),
-(19, 19, 'skin_def', '1m 80cm'),
-(20, 20, 'skin_def', '1m 90cm'),
-(21, 21, 'skin_def', 'Over 2m'),
-(22, 22, 'skin_def', 'Height'),
+(49, 49, 'skin_def', '3''3"'),
+(50, 50, 'skin_def', '3''4"'),
+(51, 51, 'skin_def', '3''5"'),
+(52, 52, 'skin_def', '3''6"'),
+(22, 22, 'skin_def', 'My height is'),
 (23, 23, 'skin_def', 'Height'),
 (24, 24, 'skin_def', ''),
+(31, 31, 'skin_def', 'Lifestyle'),
+(46, 46, 'skin_def', '3''0"'),
+(47, 47, 'skin_def', '3''1"'),
+(48, 48, 'skin_def', '3''2"'),
 (25, 25, 'skin_def', 'Birthdate'),
 (26, 26, 'skin_def', 'Age'),
-(27, 27, 'skin_def', '');
+(27, 27, 'skin_def', ''),
+(28, 28, 'skin_def', 'Country'),
+(29, 29, 'skin_def', 'From'),
+(30, 30, 'skin_def', ''),
+(32, 32, 'skin_def', 'Home Life'),
+(33, 33, 'skin_def', 'Personality'),
+(34, 34, 'skin_def', 'African American (black)'),
+(35, 35, 'skin_def', 'Asian'),
+(36, 36, 'skin_def', 'Caucasian (white)'),
+(37, 37, 'skin_def', 'East Indian'),
+(38, 38, 'skin_def', 'Hispanic/Latino'),
+(39, 39, 'skin_def', 'Middle Eastern'),
+(40, 40, 'skin_def', 'Native American'),
+(41, 41, 'skin_def', 'Pacific Islander'),
+(42, 42, 'skin_def', 'Inter-racial'),
+(43, 43, 'skin_def', 'My ethnicity is'),
+(44, 44, 'skin_def', 'Having ethnicity'),
+(45, 45, 'skin_def', ''),
+(53, 53, 'skin_def', '3''7"'),
+(54, 54, 'skin_def', '3''8"'),
+(55, 55, 'skin_def', '3''9"'),
+(106, 106, 'skin_def', '4''0"'),
+(57, 57, 'skin_def', '3''10"'),
+(58, 58, 'skin_def', '3''11"'),
+(59, 59, 'skin_def', '4''1"'),
+(60, 60, 'skin_def', '4''2"'),
+(61, 61, 'skin_def', '4''3"'),
+(62, 62, 'skin_def', '4''4"'),
+(63, 63, 'skin_def', '4''5"'),
+(64, 64, 'skin_def', '4''6"'),
+(65, 65, 'skin_def', '4''7"'),
+(66, 66, 'skin_def', '4''8"'),
+(67, 67, 'skin_def', '4''9"'),
+(68, 68, 'skin_def', '4''10"'),
+(69, 69, 'skin_def', '4''11"'),
+(70, 70, 'skin_def', '5''0"'),
+(71, 71, 'skin_def', '5''1"'),
+(72, 72, 'skin_def', '5''2"'),
+(73, 73, 'skin_def', '5''3"'),
+(74, 74, 'skin_def', '5''4"'),
+(75, 75, 'skin_def', '5''5"'),
+(76, 76, 'skin_def', '5''6"'),
+(77, 77, 'skin_def', '5''7"'),
+(78, 78, 'skin_def', '5''8"'),
+(79, 79, 'skin_def', '5''9"'),
+(80, 80, 'skin_def', '5''10"'),
+(81, 81, 'skin_def', '5''11"'),
+(82, 82, 'skin_def', '6''0"'),
+(83, 83, 'skin_def', '6''1"'),
+(84, 84, 'skin_def', '6''2"'),
+(85, 85, 'skin_def', '6''3"'),
+(86, 86, 'skin_def', '6''4"'),
+(87, 87, 'skin_def', '6''5"'),
+(88, 88, 'skin_def', '6''6"'),
+(89, 89, 'skin_def', '6''7"'),
+(90, 90, 'skin_def', '6''8"'),
+(91, 91, 'skin_def', '6''9"'),
+(92, 92, 'skin_def', '6''10"'),
+(93, 93, 'skin_def', '6''11"'),
+(94, 94, 'skin_def', '7''0"'),
+(95, 95, 'skin_def', '7''1"'),
+(96, 96, 'skin_def', '7''2"'),
+(97, 97, 'skin_def', '7''3"'),
+(98, 98, 'skin_def', '7''4"'),
+(99, 99, 'skin_def', '7''5"'),
+(100, 100, 'skin_def', '7''6"'),
+(101, 101, 'skin_def', '7''7"'),
+(102, 102, 'skin_def', '7''8"'),
+(103, 103, 'skin_def', '7''9"'),
+(104, 104, 'skin_def', '7''10"'),
+(105, 105, 'skin_def', '7''11"'),
+(107, 107, 'skin_def', 'Slim'),
+(108, 108, 'skin_def', 'Slender'),
+(109, 109, 'skin_def', 'Average'),
+(110, 110, 'skin_def', 'Athletic'),
+(111, 111, 'skin_def', 'Fit'),
+(112, 112, 'skin_def', 'Thick'),
+(113, 113, 'skin_def', 'A few extra pounds'),
+(114, 114, 'skin_def', 'Large'),
+(115, 115, 'skin_def', 'Voluptous'),
+(116, 116, 'skin_def', 'My body type is'),
+(117, 117, 'skin_def', 'Body'),
+(118, 118, 'skin_def', ''),
+(119, 119, 'skin_def', 'Black'),
+(120, 120, 'skin_def', 'Blue'),
+(121, 121, 'skin_def', 'Brown'),
+(122, 122, 'skin_def', 'Gray'),
+(123, 123, 'skin_def', 'Green'),
+(124, 124, 'skin_def', 'Hazel'),
+(125, 125, 'skin_def', 'My eyes are'),
+(126, 126, 'skin_def', 'Eyes'),
+(127, 127, 'skin_def', ''),
+(128, 128, 'skin_def', 'Auburn'),
+(129, 129, 'skin_def', 'Black'),
+(130, 130, 'skin_def', 'Blonde'),
+(131, 131, 'skin_def', 'Light Brown'),
+(132, 132, 'skin_def', 'Dark Brown'),
+(133, 133, 'skin_def', 'Red'),
+(134, 134, 'skin_def', 'White/Gray'),
+(135, 135, 'skin_def', 'Bald'),
+(136, 136, 'skin_def', 'A little gray'),
+(137, 137, 'skin_def', 'My hair is'),
+(138, 138, 'skin_def', 'Hair'),
+(139, 139, 'skin_def', ''),
+(140, 140, 'skin_def', 'No'),
+(141, 141, 'skin_def', 'Socially'),
+(142, 142, 'skin_def', 'Daily'),
+(143, 143, 'skin_def', 'I smoke'),
+(144, 144, 'skin_def', 'Smoke'),
+(145, 145, 'skin_def', ''),
+(146, 146, 'skin_def', 'No'),
+(147, 147, 'skin_def', 'Socially'),
+(148, 148, 'skin_def', 'Daily'),
+(149, 149, 'skin_def', 'I drink'),
+(150, 150, 'skin_def', 'Drink'),
+(151, 151, 'skin_def', ''),
+(152, 152, 'skin_def', 'Some High School'),
+(153, 153, 'skin_def', 'High School Grad'),
+(154, 154, 'skin_def', 'Some College'),
+(155, 155, 'skin_def', 'College Grad'),
+(156, 156, 'skin_def', 'Post-Graduate'),
+(157, 157, 'skin_def', 'My education is'),
+(158, 158, 'skin_def', 'Education'),
+(159, 159, 'skin_def', ''),
+(160, 160, 'skin_def', 'Single, never married'),
+(161, 161, 'skin_def', 'Divorced'),
+(162, 162, 'skin_def', 'Widowed'),
+(163, 163, 'skin_def', 'Separated'),
+(164, 164, 'skin_def', 'My marital status is'),
+(165, 165, 'skin_def', 'Marital status'),
+(166, 166, 'skin_def', ''),
+(167, 167, 'skin_def', 'Alone'),
+(168, 168, 'skin_def', 'With kids'),
+(169, 169, 'skin_def', 'With parents'),
+(170, 170, 'skin_def', 'With pets'),
+(171, 171, 'skin_def', 'With roommate(s)'),
+(172, 172, 'skin_def', 'Family and friends visit often'),
+(173, 173, 'skin_def', 'There is a party every night'),
+(174, 174, 'skin_def', 'I am currently living'),
+(175, 175, 'skin_def', 'Living'),
+(176, 176, 'skin_def', '');
 
 -- --------------------------------------------------------
 
@@ -774,16 +1054,20 @@ CREATE TABLE `dsb_online` (
 INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (0, '20070406234932', 0x6363393231353033353538393831383662616538393661643531383038663261),
 (0, '20070407113710', 0x6632333830316133316463363537346433636333313962643062636333633461),
 (0, '20070410233953', 0x6230323863383935653633326466336639346663336663616639663332373935),
-(1, '20070413141913', 0x3833363964626331366431393461616535353238613038623430653233663231),
+(0, '20070413163544', 0x3563316335343234323035626666343266323366303031396366656535343333),
 (0, '20070409205632', 0x3534336338376362653435653863356138373738306162393132653861636562),
 (0, '20070410133144', 0x6131636430643436376663623031383365353464396334626266663137346436),
 (0, '20070410130410', 0x3361653036346338633663623033356135313631393236646131633962323364),
 (0, '20070411095037', 0x3138313630636135663231396330303133306164666436306536343038373834),
+(0, '20070414190327', 0x6332326535343838336435303762386631356233626539343231643231323839),
 (0, '20070411131812', 0x6165616165306165313861616566663034633132636565326662383365303834),
+(0, '20070414135330', 0x3738313162663266653164316564663732666564666231373266336432613130),
 (0, '20070411152355', 0x3238373566323863303636616666333833613162346435626663303261396535),
 (0, '20070411152456', 0x3132636130356539363037643265343065343564356433323234643231636135),
-(2, '20070412225212', 0x6562373634616662653966626232323030643838383566666536653961316239),
-(0, '20070412163833', 0x6637663662653366386136666165313834366133616331616366313636393937);
+(0, '20070414152729', 0x6630346536663830633631363835386234306636616365303563343463366563),
+(0, '20070414184004', 0x3066646538633531373237636239386234343961633765646236383638313136),
+(0, '20070412163833', 0x6637663662653366386136666165313834366133616331616366313636393937),
+(0, '20070414223354', 0x6465343363303666626466376633656534393331306335313166653331316636);
 
 -- --------------------------------------------------------
 
@@ -850,7 +1134,8 @@ CREATE TABLE `dsb_photo_comments` (
 -- Dumping data for table `dsb_photo_comments`
 -- 
 
-INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_photo_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (6, 79, 2, 'test', 'bleah\r\n[b]cahhhhhhhhhhh[/b]', '2007-03-22 21:00:15', '2007-03-22 21:00:15', 15);
+INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_photo_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (7, 14, 1, 'test', 'beeeton', '2007-04-14 10:38:08', '2007-04-14 10:38:08', 15),
+(6, 79, 2, 'test', 'bleah\r\n[b]cahhhhhhhhhhh[/b]', '2007-03-22 21:00:15', '2007-03-22 21:00:15', 15);
 
 -- --------------------------------------------------------
 
@@ -921,7 +1206,10 @@ INSERT INTO `dsb_photo_ratings` (`fk_photo_id`, `fk_user_id`, `vote`, `date_vote
 (3, 1, 1, '2007-04-11 15:00:03'),
 (3, 1, 5, '2007-04-11 15:00:06'),
 (14, 1, 4, '2007-04-12 12:25:45'),
-(15, 2, 5, '2007-04-12 12:29:00');
+(15, 2, 5, '2007-04-12 12:29:00'),
+(1, 1, 4, '2007-04-14 08:56:26'),
+(15, 1, 4, '2007-04-14 12:16:29'),
+(14, 1, 1, '2007-04-14 12:20:02');
 
 -- --------------------------------------------------------
 
@@ -943,7 +1231,10 @@ CREATE TABLE `dsb_profile_categories` (
 -- 
 
 INSERT INTO `dsb_profile_categories` (`pcat_id`, `fk_lk_id_pcat`, `access_level`) VALUES (1, 1, 7),
-(2, 2, 7);
+(2, 2, 7),
+(3, 31, 7),
+(4, 32, 7),
+(5, 33, 7);
 
 -- --------------------------------------------------------
 
@@ -981,11 +1272,21 @@ CREATE TABLE `dsb_profile_fields` (
 -- Dumping data for table `dsb_profile_fields`
 -- 
 
-INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `html_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES (1, 3, 2, 0, 1, 0, 4, 1, 2, 0, 1, 1, 0x6631, 5, 1, 0, '', '', '', '', 3),
+INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `html_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES (1, 3, 2, 0, 1, 0, 4, 1, 2, 0, 1, 1, 0x6631, 5, 1, 0, '', '', '', '', 5),
 (2, 8, 3, 1, 10, 1, 9, 1, 1, 1, 1, 1, 0x6632, 10, 1, 0, '|6|7|', '|0|', '|1|', '', 1),
 (3, 13, 10, 1, 10, 1, 14, 1, 1, 1, 1, 1, 0x6633, 15, 1, 0, '|11|12|', '|1|', '|0|', '', 2),
-(4, 22, 3, 1, 108, 1, 23, 1, 2, 0, 1, 1, 0x6634, 24, 2, 0, '|16|17|18|19|20|21|', '|2|', '|0|5|', '', 4),
-(5, 25, 103, 1, 108, 1, 26, 1, 3, 0, 1, 1, 0x6635, 27, 1, 0, '|1930|1989|', '', '|18|75|', '', 5);
+(4, 22, 3, 1, 108, 0, 23, 1, 2, 0, 1, 1, 0x6634, 24, 2, 0, '|49|50|51|52|46|47|48|53|54|55|57|58|106|59|60|61|62|63|64|65|66|67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99|100|101|102|103|104|105|', '', '|0|59|', '', 7),
+(5, 25, 103, 1, 108, 1, 26, 1, 3, 0, 1, 1, 0x6635, 27, 1, 0, '|1930|1989|', '', '|18|75|', '', 3),
+(6, 28, 107, 1, 107, 1, 29, 1, 1, 0, 1, 1, 0x6636, 30, 1, 0, '', '|218|', '', 'update_location', 4),
+(7, 43, 3, 1, 10, 0, 44, 1, 2, 0, 1, 1, 0x6637, 45, 2, 0, '|34|35|36|37|38|39|40|41|42|', '', '|0|', '', 6),
+(8, 116, 3, 1, 10, 0, 117, 1, 2, 0, 1, 1, 0x6638, 118, 2, 0, '|107|108|109|110|111|112|113|114|115|', '', '', '', 8),
+(9, 125, 3, 1, 3, 0, 126, 1, 2, 0, 1, 1, 0x6639, 127, 2, 0, '|119|120|121|122|123|124|', '', '', '', 9),
+(10, 137, 3, 1, 10, 0, 138, 1, 2, 0, 1, 1, 0x663130, 139, 2, 0, '|128|129|130|131|132|133|134|135|136|', '', '', '', 10),
+(11, 143, 3, 1, 10, 0, 144, 1, 2, 0, 1, 1, 0x663131, 145, 3, 0, '|140|141|142|', '', '', '', 11),
+(12, 149, 3, 1, 10, 0, 150, 1, 2, 0, 1, 1, 0x663132, 151, 3, 0, '|146|147|148|', '', '', '', 12),
+(13, 157, 3, 1, 3, 0, 158, 1, 2, 0, 1, 1, 0x663133, 159, 3, 0, '|152|153|154|155|156|', '', '', '', 13),
+(14, 164, 3, 1, 3, 0, 165, 1, 2, 0, 1, 1, 0x663134, 166, 4, 0, '|160|161|162|163|', '', '', '', 14),
+(15, 174, 10, 1, 10, 0, 175, 1, 2, 0, 1, 1, 0x663135, 176, 4, 0, '|167|168|169|170|171|172|173|', '', '', '', 15);
 
 -- --------------------------------------------------------
 
@@ -1138,7 +1439,17 @@ INSERT INTO `dsb_site_log` (`log_id`, `fk_user_id`, `user`, `m_value`, `fk_level
 (34, 0, 'test2', 1, 1, 2130706433, '20070412152724'),
 (35, 0, 'test', 1, 1, 2130706433, '20070412153049'),
 (36, 0, 'test2', 1, 1, 2130706433, '20070412163847'),
-(37, 0, 'test', 1, 1, 2130706433, '20070413133346');
+(37, 0, 'test', 1, 1, 2130706433, '20070413133346'),
+(38, 0, 'test2', 1, 1, 2130706433, '20070413163521'),
+(39, 0, 'test3', 1, 1, 2130706433, '20070413163539'),
+(40, 0, 'test', 1, 1, 2130706433, '20070413163548'),
+(41, 0, 'test', 1, 1, 2130706433, '20070414113652'),
+(42, 0, 'test2', 1, 1, 2130706433, '20070414134035'),
+(43, 0, 'test', 1, 1, 2130706433, '20070414134959'),
+(44, 0, 'test2', 1, 1, 2130706433, '20070414135021'),
+(45, 0, 'test', 1, 1, 2130706433, '20070414135027'),
+(46, 0, 'test', 1, 1, 2130706433, '20070414175445'),
+(47, 0, 'test', 1, 1, 2130706433, '20070414185411');
 
 -- --------------------------------------------------------
 
@@ -1165,7 +1476,7 @@ CREATE TABLE `dsb_site_options3` (
 -- Dumping data for table `dsb_site_options3`
 -- 
 
-INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `config_diz`, `option_type`, `fk_module_code`, `per_user`) VALUES (1, 0x64626669656c645f696e646578, '6', 'The last index of the custom profile fields (field_xx)', 0, 0x636f7265, 0),
+INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `config_diz`, `option_type`, `fk_module_code`, `per_user`) VALUES (1, 0x64626669656c645f696e646578, '16', 'The last index of the custom profile fields (field_xx)', 0, 0x636f7265, 0),
 (2, 0x7573655f63617074636861, '1', 'Use the dynamic image text (captcha image) to keep spam bots out?', 9, 0x636f7265, 0),
 (3, 0x6d616e75616c5f70726f66696c655f617070726f76616c, '1', 'New profiles or changes to existing profiles require manual approval from an administrator before being displayed on site?', 9, 0x636f7265, 0),
 (4, 0x646174655f666f726d6174, '%m/%d/%Y', 'Default date format', 2, 0x636f7265, 1),
@@ -1253,7 +1564,22 @@ INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results
 ('4bb808db25e5349571c321a8d4ab0bec', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:6:"уея";}', '', 1, '20070413134539'),
 ('65bf4d8448f34c3fd5e985dcb5cd9608', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:32:"специализируется";}', '', 1, '20070413135650'),
 ('8a03fb895f0b3a9bbd3185ef5553bb07', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:6:"mobile";}', '3', 1, '20070413140022'),
-('9d53c19391ff02a9daa4fe9d6d7b7c56', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:10:"играх";}', '', 1, '20070413140032');
+('9d53c19391ff02a9daa4fe9d6d7b7c56', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:10:"играх";}', '', 1, '20070413140032'),
+('824507ed8719f0a811ef06eb6bec9759', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:12:"firstnothing";}', '', 1, '20070413143401'),
+('9a4e65874be908e020256e8c214ea02d', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:5:"first";}', '', 1, '20070413143426'),
+('b44883f63f012af69a37147257a70cec', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:13:"computerssort";}', '', 1, '20070413143555'),
+('e36283738a5f31bc36497d06cd21b753', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:14:"computers sort";}', '2', 1, '20070413143841'),
+('0259caf83d0105367947ec0bdd101338', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:17:"result committees";}', '2', 1, '20070413143915'),
+('2e3f882251d90c3bdd28e3ce0977eb96', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:4:"asda";}', '', 1, '20070413144123'),
+('feff091ed1dfafe7304140b433319b11', 3, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:4:"comm";}', '1,2,3,4', 1, '20070413144136'),
+('eba15f899a6a6d0596b3b3f1c4af00fe', 3, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"new";}', '4,3,2,1', 1, '20070413144201'),
+('51ed9256e4c8850c602134f7d0cad419', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:16:"computer special";}', '2', 1, '20070413150019'),
+('ff48ff27034b9a71bd2ce49c8b7bfcc5', 3, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"ggg";}', '4,3,2,1', 1, '20070413150435'),
+('a5b56d003363affd31ccfddaa65dc425', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:7:"nothing";}', '', 1, '20070413150449'),
+('1f1431fc4bc46ad030c1a33fa4d9e758', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:20:"blog  could  nothing";}', '1', 1, '20070413150519'),
+('c821195d8de01feb4bf9074f32209e64', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:4:"test";}', '', 1, '20070413163647'),
+('4cd40acb49a545cc090e3988dc5f55b2', 1, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:6:"latest";}', '2,3', 1, '20070414135949'),
+('9057d3e596c42fff29b9476632483e16', 1, 'a:7:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";s:10:"f6_country";s:3:"218";}', '', 0, '20070414223326');
 
 -- --------------------------------------------------------
 
@@ -1362,9 +1688,9 @@ CREATE TABLE `dsb_user_accounts` (
 -- Dumping data for table `dsb_user_accounts`
 -- 
 
-INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x74657374, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', 'bd7adef567b68d45680681c80caea0d5', '20070413141913'),
-(2, 0x7465737432, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', 'e48ff8c5b0ad60f79815afeae1b91cb2', '20070412225212'),
-(3, 0x7465737433, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '8261d480f9450587f39447d310f0d529', '20070412152334');
+INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x74657374, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', 'bd7adef567b68d45680681c80caea0d5', '20070414185949'),
+(2, 0x7465737432, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', 'e48ff8c5b0ad60f79815afeae1b91cb2', '20070414135021'),
+(3, 0x7465737433, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '8261d480f9450587f39447d310f0d529', '20070413163541');
 
 -- --------------------------------------------------------
 
@@ -1389,8 +1715,6 @@ CREATE TABLE `dsb_user_blogs` (
 -- Dumping data for table `dsb_user_blogs`
 -- 
 
-INSERT INTO `dsb_user_blogs` (`blog_id`, `fk_user_id`, `blog_name`, `blog_diz`, `stat_posts`, `blog_skin`, `blog_url`) VALUES (1, 1, 'My Stuff', 'test for the most stupid things I could say', 3, '', ''),
-(2, 2, 'asdasd', 'ddd', 1, '', '');
 
 -- --------------------------------------------------------
 
@@ -1587,14 +1911,15 @@ CREATE TABLE `dsb_user_photos` (
   KEY `is_private` (`is_private`),
   KEY `date_posted` (`date_posted`),
   KEY `key1` (`status`,`del`),
-  KEY `flagged` (`flagged`)
+  KEY `flagged` (`flagged`),
+  FULLTEXT KEY `caption` (`caption`)
 ) TYPE=MyISAM;
 
 -- 
 -- Dumping data for table `dsb_user_photos`
 -- 
 
-INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `allow_rating`, `caption`, `status`, `del`, `flagged`, `reject_reason`, `stat_views`, `stat_votes`, `stat_votes_total`, `stat_comments`, `date_posted`, `last_changed`) VALUES (1, 2, 'test2', '8/2_11176235928.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 1, 0, 0, 0, '2007-04-10 20:12:09', '2007-04-10 20:12:21'),
+INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `allow_rating`, `caption`, `status`, `del`, `flagged`, `reject_reason`, `stat_views`, `stat_votes`, `stat_votes_total`, `stat_comments`, `date_posted`, `last_changed`) VALUES (1, 2, 'test2', '8/2_11176235928.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 4, 1, 4, 0, '2007-04-10 20:12:09', '2007-04-10 20:12:21'),
 (2, 1, 'test', '0/1_11176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 2, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-11 07:52:11'),
 (3, 1, 'test', '6/1_21176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 3, 42, 174, 0, '2007-04-11 07:37:49', '2007-04-11 07:38:14'),
 (4, 1, 'test', '5/1_31176277054.jpg', 0, 0, 0, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-11 07:38:14'),
@@ -1607,9 +1932,9 @@ INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_m
 (11, 1, 'test', '3/1_41176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
 (12, 1, 'test', '3/1_51176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
 (13, 1, 'test', '0/1_61176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
-(14, 3, 'test3', '4/3_11176380554.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 1, 1, 4, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
-(15, 3, 'test3', '4/3_21176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 1, 1, 5, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
-(16, 3, 'test3', '0/3_31176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
+(14, 3, 'test3', '4/3_11176380554.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 8, 2, 5, 1, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
+(15, 3, 'test3', '4/3_21176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 5, 2, 9, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
+(16, 3, 'test3', '0/3_31176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 1, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
 (17, 3, 'test3', '4/3_41176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
 (18, 3, 'test3', '3/3_51176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
 (19, 3, 'test3', '6/3_61176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04');
@@ -1639,6 +1964,19 @@ CREATE TABLE `dsb_user_profiles` (
   `f3` text NOT NULL,
   `f4` int(5) NOT NULL default '0',
   `f5` date NOT NULL default '0000-00-00',
+  `f6_country` int(3) NOT NULL default '0',
+  `f6_state` int(10) NOT NULL default '0',
+  `f6_city` int(10) NOT NULL default '0',
+  `f6_zip` varchar(10) NOT NULL default '',
+  `f7` int(5) NOT NULL default '0',
+  `f8` int(5) NOT NULL default '0',
+  `f9` int(5) NOT NULL default '0',
+  `f10` int(5) NOT NULL default '0',
+  `f11` int(5) NOT NULL default '0',
+  `f12` int(5) NOT NULL default '0',
+  `f13` int(5) NOT NULL default '0',
+  `f14` int(5) NOT NULL default '0',
+  `f15` text NOT NULL,
   PRIMARY KEY  (`profile_id`),
   KEY `fk_user_id` (`fk_user_id`),
   KEY `_user` (`_user`),
@@ -1651,9 +1989,9 @@ CREATE TABLE `dsb_user_profiles` (
 -- Dumping data for table `dsb_user_profiles`
 -- 
 
-INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`) VALUES (1, 1, 15, 0, '2007-04-12 12:18:37', '2007-04-06 21:01:10', '', 'test', '1/1_31176380289.jpg', 0.0000000000, 0.0000000000, 13, '', 1, '|2|', 4, '1974-04-06'),
-(2, 2, 15, 0, '2007-04-10 20:12:21', '2007-04-07 08:46:16', '', 'test2', '8/2_11176235928.jpg', 0.0000000000, 0.0000000000, 8, 'alandala', 1, '|2|', 3, '0000-00-00'),
-(3, 3, 15, 0, '2007-04-12 12:23:04', '2007-04-07 10:20:56', '', 'test3', '4/3_11176380554.jpg', 0.0000000000, 0.0000000000, 1, '', 2, '|1|2|', 3, '0000-00-00');
+INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`, `f6_country`, `f6_state`, `f6_city`, `f6_zip`, `f7`, `f8`, `f9`, `f10`, `f11`, `f12`, `f13`, `f14`, `f15`) VALUES (1, 1, 5, 0, '2007-04-14 15:59:49', '2007-04-06 21:01:10', '', 'test', '1/1_31176380289.jpg', 0.0000000000, 0.0000000000, 13, 'ala babala portocala', 1, '|2|', 4, '1976-11-01', 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(2, 2, 15, 0, '2007-04-10 20:12:21', '2007-04-07 08:46:16', '', 'test2', '8/2_11176235928.jpg', 0.0000000000, 0.0000000000, 15, 'alandala', 1, '|2|', 3, '0000-00-00', 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(3, 3, 15, 0, '2007-04-12 12:23:04', '2007-04-07 10:20:56', '', 'test3', '4/3_11176380554.jpg', 0.0000000000, 0.0000000000, 2, '', 2, '|1|2|', 3, '0000-00-00', 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -1753,4 +2091,5 @@ INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (2, 'total_p
 (1, 'flirts_sent', 1),
 (1, 'blog_posts', 3),
 (3, 'total_photos', 6),
-(2, 'blog_posts', 1);
+(2, 'blog_posts', 1),
+(1, 'comments', 1);
