@@ -91,8 +91,8 @@ if (!empty($output['search_md5'])) {
 //print $query;
 //die;
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		while ($rsrow=mysql_fetch_assoc($res)) {
-			$post_ids[]=$rsrow['post_id'];
+		for ($i=0;$i<mysql_num_rows($res);++$i) {
+			$post_ids[]=mysql_result($res,$i,0);
 		}
 		$serialized_input=serialize($input);
 		$output['search_md5']=md5($serialized_input);

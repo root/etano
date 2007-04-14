@@ -31,6 +31,7 @@ $from="`{$dbtable_prefix}user_photos` a";
 $where="a.`is_private`=0 AND a.`status`='".STAT_APPROVED."' AND a.`del`=0";
 $orderby="a.`date_posted` DESC";
 
+$error=false;
 // define here all search types
 if (isset($_GET['st'])) {
 	$input['st']=$_GET['st'];
@@ -59,6 +60,45 @@ if (isset($_GET['st'])) {
 			$tplvars['page_title']='Browse Most Discussed Photos';
 			break;
 
+		case 'user':
+			$input['acclevel_id']=17;
+			$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
+			if (isset($_SESSION['user']['user_id']) && $input['uid']==$_SESSION['user']['user_id']) {
+				redirect2page('my_photos.php');
+			}
+			if (!empty($input['uid'])) {
+				$where="a.`fk_user_id`='".$input['uid']."' AND ".$where;
+			} else {
+				$error=true;
+			}
+			$tplvars['page_title']=sprintf('%s\'s Photos',get_user_by_userid($input['uid']));	// translate
+			break;
+
+		case 'field':
+			$input['acclevel_id']=17;
+			$input['f']=sanitize_and_format_gpc($_GET,'f',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+			$input['v']=sanitize_and_format_gpc($_GET,'v',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+			if (!empty($input['f']) && !empty($input['v'])) {
+				$field_ok=false;
+				$fid=0;
+				foreach ($_pfields as $k=>$field) {
+					if ($field['dbfield']==$input['f'] && $field['html_type']==HTML_SELECT) {
+						$field_ok=true;
+						$fid=$k;
+						break;
+					}
+				}
+				if ($field_ok) {
+					$from.=",`{$dbtable_prefix}user_profiles` b";
+					$where="a.`fk_user_id`=b.`fk_user_id` AND ".$where." AND b.`".$input['f']."`='".$input['v']."'";
+					$field_value=isset($_pfields[$fid]['accepted_values'][$input['v']]) ? $_pfields[$fid]['accepted_values'][$input['v']] : '';
+					$tplvars['page_title']=sprintf('Browse %s Photos',$field_value);	// translate
+				} else {
+					$error=true;
+				}
+			}
+			break;
+
 		case 'tag':
 			$input['acclevel_id']=17;
 			$input['tags']=sanitize_and_format_gpc($_GET,'tags',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
@@ -79,9 +119,12 @@ if (isset($_GET['st'])) {
 	}
 }
 
-$query="SELECT count(*) FROM $from WHERE $where";
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-$totalrows=mysql_result($res,0,0);
+$totalrows=0;
+if (!$error) {
+	$query="SELECT count(*) FROM $from WHERE $where";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$totalrows=mysql_result($res,0,0);
+}
 
 $loop_rows=array();
 if (!empty($totalrows)) {
