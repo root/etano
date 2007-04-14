@@ -37,7 +37,7 @@ class widget_blogs extends icontent_widget {
 
 	function _content() {
 		global $dbtable_prefix;
-		$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user` as `user`,a.`fk_blog_id`,a.`title`,a.`post_content`,b.`_photo` as `photo` FROM `{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`is_public`=1 AND a.`status`='".STAT_APPROVED."'";
+		$query="SELECT a.`post_id` FROM `{$dbtable_prefix}blog_posts` a WHERE a.`is_public`=1 AND a.`status`='".STAT_APPROVED."'";
 		switch ($this->config['mode']) {
 			case 'new':
 				$query.=" ORDER BY a.`date_posted` DESC";
@@ -55,24 +55,17 @@ class widget_blogs extends icontent_widget {
 		$query.=" LIMIT ".$this->config['total'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$bbcode_blogs=get_site_option('bbcode_blogs','core_blog');
-		$loop=array();
-		while ($rsrow=mysql_fetch_assoc($res)) {
-			$rsrow['date_posted']=strftime($GLOBALS['_user_settings']['datetime_format'],$rsrow['date_posted']+$GLOBALS['_user_settings']['time_offset']);
-			$rsrow['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
-			if (isset($this->config['chars']) && !empty($this->config['chars'])) {
-				$rsrow['post_content']=substr($rsrow['post_content'],0,strrpos(substr($rsrow['post_content'],0,$this->config['chars']),' '));
-			}
-			$rsrow['post_content']=sanitize_and_format($rsrow['post_content'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
-			if ($bbcode_blogs) {
-				$rsrow['post_content']=bbcode2html($rsrow['post_content']);
-			}
-			if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
-				$rsrow['photo']='no_photo.gif';
-			}
-			if (empty($rsrow['fk_user_id'])) {
-				unset($rsrow['fk_user_id']);
-			}
-			$loop[]=$rsrow;
+		$post_ids=array();
+		for ($i=0;$i<mysql_num_rows($res);++$i) {
+			$post_ids[]=mysql_result($res,$i,0);
+		}
+		require_once _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
+		$blog_posts_cache=new blog_posts_cache();
+		$loop=$blog_posts_cache->get_tpl_array($post_ids);
+		unset($blog_posts_cache);
+
+		for ($i=0;isset($loop[$i]);++$i) {
+			$loop[$i]['date_posted']=strftime($GLOBALS['_user_settings']['datetime_format'],$loop[$i]['date_posted']+$GLOBALS['_user_settings']['time_offset']);
 		}
 		if (!empty($loop)) {
 			$loop[0]['class']='first';
