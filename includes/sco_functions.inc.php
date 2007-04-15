@@ -384,7 +384,8 @@ function vector2options($show_vector,$selected_map_val='',$exclusion_vector=arra
 			if ((!is_array($selected_map_val) && $k==$selected_map_val) || (is_array($selected_map_val) && in_array($k,$selected_map_val))) {
 				$myreturn.=' selected="selected"';
 			}
-			$myreturn.='>'.sanitize_and_format($v,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT])."</option>\n";
+//			$myreturn.='>'.sanitize_and_format($v,TYPE_STRING,$GLOBALS['__html2format'][TEXT_GPC2EDIT])."</option>\n";
+			$myreturn.=">$v</option>\n";
 		}
 	}
 	return $myreturn;
@@ -665,8 +666,8 @@ function upload_file($destdir,$actual_field_name,$desired_filename='',$required=
 		$ext=strtolower(substr(strrchr($_FILES[$actual_field_name]['name'],"."),1));
 		if ($_FILES[$actual_field_name]['size']==0) {
 			$error=true;
-			$GLOBALS['message']['type']=MESSAGE_ERROR;
-			$GLOBALS['message']['text']='File upload error';
+			$GLOBALS['topass']['message']['type']=MESSAGE_ERROR;
+			$GLOBALS['topass']['message']['text']='File upload error';
 		} else {
 			if (!empty($desired_filename)) {
 				$filename=$desired_filename.'.'.$ext;
@@ -675,14 +676,14 @@ function upload_file($destdir,$actual_field_name,$desired_filename='',$required=
 				@chmod($destdir.'/'.$filename,0644);
 			} else {
 				$error=true;
-				$GLOBALS['message']['type']=MESSAGE_ERROR;
-				$GLOBALS['message']['text']='Cannot move file to the destination directory.';
+				$GLOBALS['topass']['message']['type']=MESSAGE_ERROR;
+				$GLOBALS['topass']['message']['text']='Cannot move file to the destination directory.';
 			}
 		}
 	} elseif ($required) {
 		$error=true;
-		$GLOBALS['message']['type']=MESSAGE_ERROR;
-		$GLOBALS['message']['text']='File is required';
+		$GLOBALS['topass']['message']['type']=MESSAGE_ERROR;
+		$GLOBALS['topass']['message']['text']='File is required';
 	}
 	if ($error) {
 		$myreturn=false;

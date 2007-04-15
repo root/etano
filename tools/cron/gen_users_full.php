@@ -20,10 +20,12 @@ $modman=new modman();
 
 $select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`longitude`,`latitude`';
 foreach ($_pfields as $field_id=>$field) {
-	if ($field['html_type']!=HTML_DATE) {
-		$select.=',`'.$field['dbfield'].'`';
-	} else {
+	if ($field['html_type']==HTML_DATE) {
 		$select.=",DATE_FORMAT(NOW(),'%Y')-DATE_FORMAT(`".$field['dbfield']."`,'%Y')-(DATE_FORMAT(NOW(),'%m%d')<DATE_FORMAT(`".$field['dbfield']."`,'%m%d')) as `".$field['dbfield']."`";
+	} elseif ($field['html_type']==HTML_LOCATION) {
+		$select.=',`'.$field['dbfield'].'_country`,`'.$field['dbfield'].'_state`,`'.$field['dbfield'].'_city`,`'.$field['dbfield'].'_zip`';
+	} else {
+		$select.=',`'.$field['dbfield'].'`';
 	}
 }
 
@@ -43,7 +45,9 @@ while ($profile=mysql_fetch_assoc($res)) {
 					$profile[$field['dbfield']]=bbcode2html($profile[$field['dbfield']]);
 				}
 			} elseif ($field['html_type']==HTML_SELECT) {
-				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				// if we sanitize here " will be rendered as &quot; which is not what we want
+//				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				$profile[$field['dbfield']]=$field['accepted_values'][$profile[$field['dbfield']]];
 			} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
 				$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 			} elseif ($field['html_type']==HTML_INT || $field['html_type']==HTML_FLOAT) {

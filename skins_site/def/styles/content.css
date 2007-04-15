@@ -219,7 +219,7 @@ a.big:hover {
 
 .table_row li {
 	float: left;
-	width: 100px;
+	width: 120px;
 }
 
 
@@ -465,6 +465,11 @@ form.edit_form dd select {
 
 form.edit_form dd label {
 	margin: 0 3px 0 1px;
+}
+
+form.edit_form dd textarea {
+	width: 100%;
+	height: 150px;
 }
 
 .field-help {

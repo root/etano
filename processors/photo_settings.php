@@ -22,7 +22,7 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='user_photos.php';
+$nextpage='my_photos.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it

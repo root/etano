@@ -32,6 +32,11 @@ if (isset($_SESSION['topass']['input'])) {
 	$page=(int)$_GET['p'];
 }
 
+// no landing on 2+ join pages.
+if ($page>1 && (!isset($_SESSION['user']['reg_id']) || empty($_SESSION['user']['reg_id']))) {
+	redirect2page('join.php');
+}
+
 $my_fields=array();
 foreach ($_pfields as $field_id=>$field) {
 	if (isset($field['reg_page']) && $field['reg_page']==$page) {
@@ -80,8 +85,8 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 	$loop[$j]['label']=$field['label'];
 	$loop[$j]['dbfield']=$field['dbfield'];
 	$loop[$j]['required']=isset($field['required']) ? true : false;
-	if ($loop[$i]['required']) {
-		$loop[$i]['class']='required';
+	if ($loop[$j]['required']) {
+		$loop[$j]['class']='required';
 	}
 	$loop[$j]['help_text']=$field['help_text'];
 	if (isset($output['error_'.$field['dbfield']])) {
