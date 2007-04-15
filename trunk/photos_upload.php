@@ -20,7 +20,18 @@ check_login_member(8);
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
+$output['max_file_size']=get_site_option('max_size','core_photo');
+if (empty($output['max_file_size'])) {
+	$output['max_file_size']=ini_get('upload_max_filesize');
+	if (strcasecmp(substr($output['max_file_size'],-1),'m')==0) {
+		$output['max_file_size']=((int)substr($output['max_file_size'],0,-1))*1024*1024;
+	} elseif (strcasecmp(substr($output['max_file_size'],-1),'k')==0) {
+		$output['max_file_size']=((int)substr($output['max_file_size'],0,-1))*1024;
+	}
+}
+
 $tpl->set_file('content','photos_upload.html');
+$tpl->set_var('output',$output);
 $tpl->process('content','content');
 
 $tplvars['title']='Upload photos';

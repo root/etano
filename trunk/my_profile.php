@@ -36,7 +36,9 @@ foreach ($_pfields as $field_id=>$field) {
 				$output[$field['dbfield']]=bbcode2html($output[$field['dbfield']]);
 			}
 		} elseif ($field['html_type']==HTML_SELECT) {
-			$output[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$output[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			// if we sanitize here " will be rendered as &quot; which is not what we want
+//			$output[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$output[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			$output[$field['dbfield']]=$field['accepted_values'][$output[$field['dbfield']]];
 		} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
 			$output[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$output[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 		} elseif ($field['html_type']==HTML_INT || $field['html_type']==HTML_FLOAT) {

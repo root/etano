@@ -19,12 +19,13 @@ require_once '../includes/user_functions.inc.php';
 require_once '../includes/classes/modman.class.php';
 require_once '../includes/img_functions.inc.php';
 check_login_member(8);
+set_time_limit(0);
 
 $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='user_photos.php';
+$nextpage='my_photos.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
@@ -35,95 +36,212 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	unset($config['round_corners']);
 	$curtime=mktime();
 
-	$filename=$_SESSION['user']['user_id'].'_1'.$curtime;
-	$input['file1']=upload_file(_BASEPATH_.'/tmp','file1',$filename);
-	mt_srand(make_seed());
-	if (!empty($input['file1'])) {
-		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file1'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file1'])<$config['max_size']) || empty($config['max_size']))) {
-			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
-			@unlink(_BASEPATH_.'/tmp/'.$input['file1']);
-			$input['file1']=$rand.'/'.$filename.'.jpg';
-		} else {
-			$input['file1']='';
-		}
+	$modman=new modman();
+
+	if (!isset($_FILES) || empty($_FILES)) {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text'][]='Sorry, an error has occured. Try uploading less photos at once or smaller photos.';
 	}
-	$filename=$_SESSION['user']['user_id'].'_2'.$curtime;
-	$input['file2']=upload_file(_BASEPATH_.'/tmp','file2',$filename);
-	mt_srand(make_seed());
-	if (!empty($input['file2'])) {
-		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file2'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file2'])<$config['max_size']) || empty($config['max_size']))) {
-			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
-			@unlink(_BASEPATH_.'/tmp/'.$input['file2']);
-			$input['file2']=$rand.'/'.$filename.'.jpg';
-		} else {
-			$input['file2']='';
+
+	if (!$error) {
+		$filename=$_SESSION['user']['user_id'].'_1'.$curtime;
+		$input['file1']=upload_file(_BASEPATH_.'/tmp','file1',$filename);
+		mt_srand(make_seed());
+		if (!empty($input['file1'])) {
+			if (!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file1'])<$config['min_size']) {
+				$input['file1']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The first photo was not uploaded because the minimum allowed size for photos is %1s bytes.',$config['min_size']);
+			} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file1'])>$config['max_size']) {
+				$input['file1']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The first photo was not uploaded because the maximum allowed size for photos is %1s bytes.',$config['max_size']);
+			} else {
+				$rand=mt_rand(0,9);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
+				@unlink(_BASEPATH_.'/tmp/'.$input['file1']);
+				$input['file1']=$rand.'/'.$filename.'.jpg';
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file1']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file1']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file1']);
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+			}
+		} elseif ($input['file1']===false) {
+			$error=true;
+			// we should have $topass['message'] set from within upload_file();
 		}
-	}
-	$filename=$_SESSION['user']['user_id'].'_3'.$curtime;
-	$input['file3']=upload_file(_BASEPATH_.'/tmp','file3',$filename);
-	mt_srand(make_seed());
-	if (!empty($input['file3'])) {
-		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file3'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file3'])<$config['max_size']) || empty($config['max_size']))) {
-			mt_srand(make_seed());
-			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
-			@unlink(_BASEPATH_.'/tmp/'.$input['file3']);
-			$input['file3']=$rand.'/'.$filename.'.jpg';
-		} else {
-			$input['file3']='';
+
+		$filename=$_SESSION['user']['user_id'].'_2'.$curtime;
+		$input['file2']=upload_file(_BASEPATH_.'/tmp','file2',$filename);
+		mt_srand(make_seed());
+		if (!empty($input['file2'])) {
+			if (!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file2'])<$config['min_size']) {
+				$input['file2']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The second photo was not uploaded because the minimum allowed size for photos is %1s bytes.',$config['min_size']);
+			} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file2'])>$config['max_size']) {
+				$input['file2']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The second photo was not uploaded because the maximum allowed size for photos is %1s bytes.',$config['max_size']);
+			} else {
+				$rand=mt_rand(0,9);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
+				@unlink(_BASEPATH_.'/tmp/'.$input['file2']);
+				$input['file2']=$rand.'/'.$filename.'.jpg';
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file2']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file2']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file2']);
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+			}
+		} elseif ($input['file2']===false) {
+			$error=true;
+			// we should have $topass['message'] set from within upload_file();
 		}
-	}
-	$filename=$_SESSION['user']['user_id'].'_4'.$curtime;
-	$input['file4']=upload_file(_BASEPATH_.'/tmp','file4',$filename);
-	mt_srand(make_seed());
-	if (!empty($input['file4'])) {
-		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file4'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file4'])<$config['max_size']) || empty($config['max_size']))) {
-			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
-			@unlink(_BASEPATH_.'/tmp/'.$input['file4']);
-			$input['file4']=$rand.'/'.$filename.'.jpg';
-		} else {
-			$input['file4']='';
+
+		$filename=$_SESSION['user']['user_id'].'_3'.$curtime;
+		$input['file3']=upload_file(_BASEPATH_.'/tmp','file3',$filename);
+		mt_srand(make_seed());
+		if (!empty($input['file3'])) {
+			if (!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file3'])<$config['min_size']) {
+				$input['file3']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The third photo was not uploaded because the minimum allowed size for photos is %1s bytes.',$config['min_size']);
+			} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file3'])>$config['max_size']) {
+				$input['file3']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The third photo was not uploaded because the maximum allowed size for photos is %1s bytes.',$config['max_size']);
+			} else {
+				mt_srand(make_seed());
+				$rand=mt_rand(0,9);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
+				@unlink(_BASEPATH_.'/tmp/'.$input['file3']);
+				$input['file3']=$rand.'/'.$filename.'.jpg';
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file3']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file3']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file3']);
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+			}
+		} elseif ($input['file3']===false) {
+			$error=true;
+			// we should have $topass['message'] set from within upload_file();
 		}
-	}
-	$filename=$_SESSION['user']['user_id'].'_5'.$curtime;
-	$input['file5']=upload_file(_BASEPATH_.'/tmp','file5',$filename);
-	mt_srand(make_seed());
-	if (!empty($input['file5'])) {
-		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file5'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file5'])<$config['max_size']) || empty($config['max_size']))) {
-			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
-			@unlink(_BASEPATH_.'/tmp/'.$input['file5']);
-			$input['file5']=$rand.'/'.$filename.'.jpg';
-		} else {
-			$input['file5']='';
+
+		$filename=$_SESSION['user']['user_id'].'_4'.$curtime;
+		$input['file4']=upload_file(_BASEPATH_.'/tmp','file4',$filename);
+		mt_srand(make_seed());
+		if (!empty($input['file4'])) {
+			if (!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file4'])<$config['min_size']) {
+				$input['file4']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The fourth photo was not uploaded because the minimum allowed size for photos is %1s bytes.',$config['min_size']);
+			} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file4'])>$config['max_size']) {
+				$input['file4']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The fourth photo was not uploaded because the maximum allowed size for photos is %1s bytes.',$config['max_size']);
+			} else {
+				$rand=mt_rand(0,9);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
+				@unlink(_BASEPATH_.'/tmp/'.$input['file4']);
+				$input['file4']=$rand.'/'.$filename.'.jpg';
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file4']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file4']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file4']);
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+			}
+		} elseif ($input['file4']===false) {
+			$error=true;
+			// we should have $topass['message'] set from within upload_file();
 		}
-	}
-	$filename=$_SESSION['user']['user_id'].'_6'.$curtime;
-	$input['file6']=upload_file(_BASEPATH_.'/tmp','file6',$filename);
-	mt_srand(make_seed());
-	if (!empty($input['file6'])) {
-		if (((!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file6'])>$config['min_size']) || empty($config['min_size'])) && ((!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file6'])<$config['max_size']) || empty($config['max_size']))) {
-			$rand=mt_rand(0,9);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t1_width'],_PHOTOPATH_.'/t1/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t2_width'],_PHOTOPATH_.'/t2/'.$rand,$filename,$config2);
-			save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['pic_width'],_PHOTOPATH_.'/'.$rand,$filename,$config);
-			@unlink(_BASEPATH_.'/tmp/'.$input['file6']);
-			$input['file6']=$rand.'/'.$filename.'.jpg';
-		} else {
-			$input['file6']='';
+
+		$filename=$_SESSION['user']['user_id'].'_5'.$curtime;
+		$input['file5']=upload_file(_BASEPATH_.'/tmp','file5',$filename);
+		mt_srand(make_seed());
+		if (!empty($input['file5'])) {
+			if (!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file5'])<$config['min_size']) {
+				$input['file5']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The fifth photo was not uploaded because the minimum allowed size for photos is %1s bytes.',$config['min_size']);
+			} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file5'])>$config['max_size']) {
+				$input['file5']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The fifth photo was not uploaded because the maximum allowed size for photos is %1s bytes.',$config['max_size']);
+			} else {
+				$rand=mt_rand(0,9);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
+				@unlink(_BASEPATH_.'/tmp/'.$input['file5']);
+				$input['file5']=$rand.'/'.$filename.'.jpg';
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file5']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file5']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file5']);
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+			}
+		} elseif ($input['file5']===false) {
+			$error=true;
+			// we should have $topass['message'] set from within upload_file();
+		}
+
+		$filename=$_SESSION['user']['user_id'].'_6'.$curtime;
+		$input['file6']=upload_file(_BASEPATH_.'/tmp','file6',$filename);
+		mt_srand(make_seed());
+		if (!empty($input['file6'])) {
+			if (!empty($config['min_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file6'])<$config['min_size']) {
+				$input['file6']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The sixth photo was not uploaded because the minimum allowed size for photos is %1s bytes.',$config['min_size']);
+			} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file6'])>$config['max_size']) {
+				$input['file6']='';
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text'][]=sprintf('The sixth photo was not uploaded because the maximum allowed size for photos is %1s bytes.',$config['max_size']);
+			} else {
+				$rand=mt_rand(0,9);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
+				@unlink(_BASEPATH_.'/tmp/'.$input['file6']);
+				$input['file6']=$rand.'/'.$filename.'.jpg';
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file6']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file6']);
+				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file6']);
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
+				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+			}
+		} elseif ($input['file6']===false) {
+			$error=true;
+			// we should have $topass['message'] set from within upload_file();
 		}
 	}
 
@@ -151,7 +269,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$qs=$qs_sep.array2qs(array('photo_ids'=>$ids));
 			$qs_sep='&';
 			$nextpage='photo_settings.php';
+		} else {
+			$topass['message']['type']=MESSAGE_ERROR;
+			$topass['message']['text']=sprintf('No photo uploaded.');
 		}
+	} else {
+		$nextpage='photos_upload.php';
 	}
 }
 redirect2page($nextpage,$topass,$qs);

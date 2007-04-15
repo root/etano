@@ -135,7 +135,7 @@ function send_template_email($to,$subject,$template,$skin,$output=array()) {
 	$mail->From=$config['mail_from'];
 	$mail->Sender=$config['mail_from'];
 	$mail->FromName=_SITENAME_;
-	$mail->LE="\r\n";
+	$mail->LE="\n";
 	$mail->IsMail();
 	$mail->AddAddress($to);
 	$mail->Subject=$subject;
