@@ -83,9 +83,9 @@ if (!empty($output['search_md5'])) {
 				$continue=true;
 				$input['fk_user_id']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
 				$input['fk_net_id']=sanitize_and_format_gpc($_GET,'nid',TYPE_INT,0,0);
-				$select="b.`fk_user_id_friend`";
+				$select="b.`fk_user_id_other`";
 				$from="`{$dbtable_prefix}user_networks` b,".$from;
-				$where="b.`fk_user_id`='".$input['fk_user_id']."' AND b.`fk_net_id`='".$input['fk_net_id']."' AND b.`nconn_status`=1 AND b.`fk_user_id`=a.`fk_user_id` AND ".$where;
+				$where="b.`fk_user_id`='".$input['fk_user_id']."' AND b.`fk_net_id`='".$input['fk_net_id']."' AND b.`nconn_status`=1 AND b.`fk_user_id_other`=a.`fk_user_id` AND ".$where;
 				break;
 
 			case 'new':

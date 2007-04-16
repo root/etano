@@ -46,6 +46,10 @@ define('MESS_MESS',0);	// regular messages
 define('MESS_FLIRT',1);	// flirts
 define('MESS_SYSTEM',2);	// admin messages
 
+// flirt types
+define('FLIRT_INIT',0);
+define('FLIRT_REPLY',1);
+
 // search types
 define('SEARCH_USER',1);
 define('SEARCH_PHOTO',2);
@@ -70,9 +74,10 @@ define('FOLDER_TRASH',-1);
 define('FOLDER_OUTBOX',-2);
 define('FOLDER_SPAMBOX',-3);
 
-// flirt types
-define('FLIRT_INIT',0);
-define('FLIRT_REPLY',1);
+// default networks
+define('NET_FRIENDS',1);
+define('NET_BLOCK',2);
+define('NET_FAVES',3);
 
 // Unset globally registered vars
 function _unset_vars(&$var) {
