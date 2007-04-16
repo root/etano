@@ -1,20 +1,20 @@
 -- phpMyAdmin SQL Dump
 -- version 2.8.2
 -- http://www.phpmyadmin.net
--- 
+--
 -- Host: localhost
--- Generation Time: Apr 14, 2007 at 10:34 PM
+-- Generation Time: Apr 16, 2007 at 04:17 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
--- 
+--
 -- Database: `newdsb`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_access_levels`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_access_levels`;
 CREATE TABLE `dsb_access_levels` (
@@ -27,9 +27,9 @@ CREATE TABLE `dsb_access_levels` (
   KEY `level_code` (`level_code`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_access_levels`
--- 
+--
 
 INSERT INTO `dsb_access_levels` (`level_id`, `level_code`, `level_diz`, `level`, `disabled_level`) VALUES (1, 0x6c6f67696e, 'when someone tries to login', 6, 1),
 (2, 0x70726f66696c655f76696577, 'View a member profile', 7, 0),
@@ -53,9 +53,9 @@ INSERT INTO `dsb_access_levels` (`level_id`, `level_code`, `level_diz`, `level`,
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_admin_accounts`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_admin_accounts`;
 CREATE TABLE `dsb_admin_accounts` (
@@ -70,17 +70,17 @@ CREATE TABLE `dsb_admin_accounts` (
   UNIQUE KEY `user` (`user`)
 ) TYPE=MyISAM PACK_KEYS=0;
 
--- 
+--
 -- Dumping data for table `dsb_admin_accounts`
--- 
+--
 
 INSERT INTO `dsb_admin_accounts` (`admin_id`, `user`, `pass`, `name`, `status`, `dept_id`, `email`) VALUES (1, 0x61646d696e, 0x3931383062346461336630633765383039373566616436383566376631333465, 'Dan Caragea', 15, 4, 'dan@sco.ro');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_admin_mtpls`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_admin_mtpls`;
 CREATE TABLE `dsb_admin_mtpls` (
@@ -93,18 +93,18 @@ CREATE TABLE `dsb_admin_mtpls` (
   KEY `amtpl_type` (`amtpl_type`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_admin_mtpls`
--- 
+--
 
 INSERT INTO `dsb_admin_mtpls` (`amtpl_id`, `amtpl_name`, `subject`, `message_body`, `amtpl_type`) VALUES (1, 'Reject member profile', 'Your profile was not approved', '<html><head><title>Your profile has not been approved</title>   <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" /> </head><body> <div id="trim"> 	<div id="content"> 		<p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p> 		<p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest to other members.</p><p>Please update your profile with relevant information.<br /></p> 	</div> </div> </body></html>', 1),
-(2, 'Reject photo', 'Web Application: One of your photos was not approved', '<html>\n<head>\n<title>Your profile has not been approved</title>\n<link rel="stylesheet" type="text/css" media="screen" href="{tplvars.baseurl}/skins/basic/styles/screen.css" />\n</head>\n<body>\n<div id="trim">\n   <div id="content">\n       <p>Thank you for joining <a href="{tplvars.baseurl}">{tplvars.sitename}</a>.</p>\n       <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\n   </div>\n</div>\n</body>\n</html>', 2);
+(2, 'Reject photo', 'F r i e n d y: One of your photos was not approved', '<html>\n<head>\n<title>Your profile has not been approved</title>\n<link rel="stylesheet" type="text/css" media="screen" href="{tplvars.baseurl}/skins/basic/styles/screen.css" />\n</head>\n<body>\n<div id="trim">\n   <div id="content">\n       <p>Thank you for joining <a href="{tplvars.baseurl}">{tplvars.sitename}</a>.</p>\n       <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\n   </div>\n</div>\n</body>\n</html>', 2);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_blog_comments`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_blog_comments`;
 CREATE TABLE `dsb_blog_comments` (
@@ -122,17 +122,11 @@ CREATE TABLE `dsb_blog_comments` (
   KEY `key1` (`fk_post_id`,`status`)
 ) TYPE=MyISAM;
 
--- 
--- Dumping data for table `dsb_blog_comments`
--- 
-
-INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_post_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (1, 1, 1, 'test', 'Fratii-ostasi nici macar nu incercau sa-si disimuleze nemultumirea. De cind Abatele hotarise sa pronunte consacrari numai in afara Fortaretei, paznicii nu incetasera sa se plinga, argumentind ca o asemenea schimbare nu numai ca nu avea precedent in istoria de 47 de generatii a Abatiei dar reprezenta si o invitatie la violenta pentru hoardele de barbari care bintuiau cimpiile arse ale vechii Terre.\r\n     - Nu mai exista credinta, Isidor! Fiecare dintre noi e convins ca poate hotari pentru propria persoana, ca in nimicnicia lui, poate schimba cumva cuvintul lui Dumnezeu, vorbi cu blindete Abatele privind cu indulgenta spre candidat.\r\n     Staretul era un barbat in putere, cu fata acoperita de o barba imensa, peste care trona un nas proeminent, ce tisnea parca dintre doi ochi cenusii, de culoarea unui cer de toamna rece.\r\n     - Uita-te la fratii care ne insotesc si spune-mi ce vezi?\r\n     Tinarul privi inapoi, tulburat de situatia delicata in care il punea Staretul. Nu avea cum sa nu supere pe cineva... Stia ca Abatele astepta un raspuns in defavoarea fratilor-ostasi, renumiti pentru ritualurile lor sadice de initiere a candidatilor.\r\n     Sintem sub Dumnezeu!\r\n     Isidor zimbi insa unui gind tainic si rosti, masurindu-si cu atentie vorbele:\r\n     - Nu par convinsi ca Domnul nostru vegheaza asupra-ne si ca nu va lasa sa ni se intimple nimic rau. Iar cind Dumnezeu pravale furtuna asupra stincii, o face doar pentru a-i incerca taria!\r\n     Abatele zimbi. Barba sa impunatoare abia daca se misca, ascunzindu-i multumirea, atunci cind raspunse.\r\n     - Putini dintre predecesorii mei au avut parte de rugaciuni si luminare la capatii. Majoritatea au avut morti violente, il recompensa Abatele pe tinar.\r\n     Bucuros ca Staretul ii daduse ocazia sa citeze din Texte si chinuindu-se sa-si aduca aminte despre vreun novice care sa mai fi avut sansa asta, tinarul rosti repede:\r\n     - Dar lucrarea Lui a dainuit; printre zidurile Abatiei inca nu vijiie timpul.\r\n     Ochii Abatelui se intunecara. Printre novici se spunea ca un citat din Texte, strecurat in timpul consacrarii, era sinonim cu reusita. Tocmai de aceea Abatele nu obisnuia prea des sa dea tinerilor prilejul de a cita din Revelatiile Sfintului Augustin. Iar in rarele ocazii cind oferea aceasta ocazie, spera tainic ca ucenicul va ignora acest avantaj, spunind ca un text e doar un text, o insiruire de cuvinte, sipet aurit pentru o credinta adevarata, a carei esenta ramine insa inexprimabila.\r\n     - Sirguinta, baiete, sta la baza tuturor lucrurilor. Amestecata cu tot atita smerenie, ea formeaza lutul cel bun din care sint plamaditi cei mai alesi frati ai nostri, rosti Abatele de parca ar fi fost o masina de dictat, incercind sa-l faca pe candidat sa inteleaga ca victoria ii era inca departe.\r\n     Nici macar Dumnezeu nu e un cu adevarat sirguincios continua in gind Abatele. Se prea poate ca acum sa priveasca in cu totul alta parte si pe noi sa ne ucida vreo hoarda de barbari. Si care ar fi invatatura Lui pentru sufletele noastre? Sa nu fim trufasi, desigur...\r\n     - Spune-mi ce crezi despre Augustin Intemeietorul.\r\n     Candidatul incepu sa recite pe un ton egal un text pe care, cu multe decenii in urma, si Abatele il rostise intr-o ceremonie similara.\r\n     - Augustin, Intemeietorul si Intii Facatorul de Dumnezeu, a pornit lucrarea sfinta a Abatiei acum patruzeci si sapte de generatii. Strabatind desertul vechii Europe, din praful Pannoniei i s-a aratat Dumnezeu, care luase chipul unui hoinar incalecat pe o ticaloasa masinarie. "De ce te temi, Augustine?" a intrebat Domnul. "De minia ta, Doamne!" "Ba nu Augustine", i-a raspuns atunci Domnul, "te temi de suferinta pe care stii ca o poti indura in numele Meu. Ti-e frica de incercarile prin care Eu iti arat drumul. Dar oare, Augustine, te-ai gindit vreodata cit de mici sint fricile tale pe linga spaima Mea?..."\r\n     Eu sint Domnul Dumnezeu tau si mi-e frica numai de propria-mi nemarginire murmura in gind Abatele, dimpreuna cu Isidor.\r\n     - ... iar faptul ca te cheama Augustin, ca pe un discipol drag, e Intiia Mea lucrare. A doua sa fie o Abatie pe care sa o cladesti chiar in acest loc! a grait Domnul.\r\n     Si, in timp ce novicele depana cu voce egala Intemeierea, primul capitol al Revelatiilor, Abatele isi ingadui sa mediteze la aceasta istorie. In anii care trecusera de la moartea Sfintului Augustin, Abatia devenise un pilon important al Regatului Celor o Mie de Stele. Cele mai eficiente Lumi Agricole functionau numai datorita religiilor distilate de Abatie. Desi serviciile calugarilor terrani nu erau deloc ieftine, nici o familie care se respecta nu mai apela la vechile mijloace de socio-terraformare. Credintele importate din Abatie erau recunoscute ca fiind cel mai sigur mod de echilibrare durabila a comunitatilor rurale de clone, singura populatie acceptata pe Lumile Agricole.\r\n     Fara indoiala ca insusi Dumnezeu ne-a dat putere asupra fiilor sai, de vreme ce indeplinim cu totii lucrarea Lui.\r\n     Abatele privi spre cerul inalt, de vara. Fulgii unei zapezi timide ii intrara in ochi. Usturime. Cauta apoi spre tinarul care nu mai termina de recitat. Il intrerupse cu un gest si intreba pe un ton bolovanos:\r\n     - De ce crezi ca se teme Dumnezeu, baiete? Ca isi va atinge nemarginirea sau ca nu-si va afla niciodata limitele?\r\n     Naucit, novicele il privi deznadajduit pe Abate. Dogmele se invatau abia la zece ani de la consacrare si nu puteau fi nicidecum subiectul unei conversatii scolaresti. Pentru citeva clipe, Isidor spera ca Staretul incercase o gluma pe seama lui. Ochii stapinului sau straluceau reci si intrebatori.\r\n     - Sa nu indraznesti sa-mi raspunzi ca Domnului ii este frica de ambele extreme!\r\n     Tinarul inghiti in sec, miscindu-si spasmodic marul lui Adam.\r\n     - Cred ca Dumnezeu e mai mult decit cuvinte si noi trebuie sa ne judecam cu smerenie locul. Natura sentimentelor Lui nu poate fi nicicum confundata cu trairile noastre. Domnului ii este frica pentru lucrarea Lui ultima, pentru Omul caruia i-a jertfit atitia fii.\r\n     Staretul isi ingusta privirea, cugetind la cuvintele pronuntate cu o stranie insufletire:\r\n     - Adevarata semnificatie a cuvintelor Domnului catre Augustin, Intii Fauritorul de Dumnezeu, este aceea ca, El va fi prezent in tot ceea ce va realiza si oriunde se va duce Omul. Si tocmai de cararile intortocheate ale devenirii si ale mintii omenesti ii este frica lui Dumnezeu! Ii e teama ca il vom cauta in locuri in care nu vrea sa ajunga si ca il vom ignora pina si in bisericile Sale cele mai falnice!\r\n     Dintr-un motiv obscur, Isidor il nelinistea pe Abate. Perspectiva pe care o aruncase asupra Revelatiilor era, fireste, falsa, naiva, dar nu se potrivea nicicum cu ceea ce ii spusesera fratii arhivari despre Isidor. Ceva era strimb...\r\n     - Vorbele tale suna ca o erezie crestina! Fii atent, baiete! Nu m-am omorit niciodata dupa religia asta, il preveni Staretul pe novice.\r\n     Tinarul puse capul in pamint si se cufunda in mutenie. Staretului ii displacu tacerea care se lasase peste micul lor grup. Ii accentua o stare de neliniste care izvora de undeva de dincolo de constienta si de logica.\r\n     - Spune-mi ce stii despre economia Abatiei.\r\n     Isidor incepu sa vorbeasca repede:\r\n     - In ultimii zece ani, rata de rentabilitate a programelor noastre s-a imbunatatit cu 62 la suta, mai ales pe seama scaderii cu doua generatii a timpului minim de constructie a templelor. Pe Marish V si Dilin III au aparut temple chiar dupa trei generatii de la Insamintare, ceea ce a redus...\r\n     Novicele stia carte. Dar consacrarea avea legile ei clare, pe care nici macar Staretul nu putea sa le eludeze. Isidor trebuia sa recite. Abatele se cufunda din nou in gindurile sale. Citise undeva ca primii agricultori insamintau aruncind pe ogor seminte in niste brazde scrijelite cu pluguri primitive. De fiecare data cind se gindea la similitudinea dintre munca fratilor sai si aceea a primilor agricultori, Abatele era cuprins de un respect vecin cu duiosia.\r\n     E singurul timp in care sint sigur de esenta mea profund religioasa. Si noi insamintam cu virusii nostri. Prin voia Domnului, eu arunc semintele... Si dintr-o gloata replicata sinistru in maternitatile familiilor, clonele se transforma in oameni, ridicind dintre ei Mintuitorul. Mereu acelasi, mereu jertfit, mereu fauritor al Caii spre Dumnezeu. Si devin credinciosi, religiosi, muncitori, multumiti de statutul lor, fara ambitie, fara veleitarism, fara talente... In lipsa Lor, Regatul Celor o Mie de Stele ar muri de foame. Iar clonele il slavesc pe Dumnezeul nostru, care intuneca vederea Familiilor, nedeslusindu-le Lucrarea Lui: numai un om poate fi religios! Restul e Armaghedon.\r\n     Novicele terminase de citava vreme si astepta cuviincios ca Staretul sa-si reia intrebarile:\r\n     - O sa fii un frate bun, Isidor. Te vom primi printre noi si fi-vei ostean al Sfintului Augustin, Intii Facatorul de Dumnezeu.\r\n     Baiatul strinse tare din pumni si zimbi larg, lasind pentru o clipa impresia ca va incepe sa topaie de bucurie precum un copil.\r\n     - Iti voi pune insa o ultima intrebare, deja ca intre frati. Daca vrei, poti sa nu-mi raspunzi... De ce crezi ca exista Abatia? intreba Starostele aratind spre zidurile intunecate ale Fortaretei.\r\n     Baiatul cazu pe ginduri, dadu sa plece dar apoi isi lua inima in dinti.\r\n     Ciudat, ciudat...\r\n     - Misiunea noastra este sa-L sadim pe Dumnezeu acolo unde nu exista, sa luminam mintea celor care nu-L vor fi aflat inca...\r\n     Staretul clatina din cap, ignorindu-si cu greu senzatia clara a unui pericol iminent.\r\n     - Nu. nu, nu... Noi nu facem decit sa ii gasim pe fii lui Dumnezeu, care se jertfesc in numele Lui, care pun iertarea si umilinta mai presus de fiinta lor. Asta facem noi aici, baiete. Cautam intr-un sac de seminte pentru a o alege pe aceea din care va creste floarea cea mai frumoasa, aceea care va arata intregii gradini splendoarea unica a Dumnezeirii. Asta facem! Nu mi-ai raspuns la intrebare!\r\n     Zimbind larg tinarul rosti cu credinta:\r\n     - Pentru ca Dumnezeu nu se teme decit de propria-i nemarginire!\r\n     - Pe sandalele Sfintului Augustin, ce vrei sa spui?', '2007-04-12 09:32:45', '2007-04-12 09:32:45', 15);
-
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_blog_posts`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_blog_posts`;
 CREATE TABLE `dsb_blog_posts` (
@@ -159,16 +153,16 @@ CREATE TABLE `dsb_blog_posts` (
   FULLTEXT KEY `text_key` (`title`,`post_content`)
 ) TYPE=MyISAM PACK_KEYS=0;
 
--- 
+--
 -- Dumping data for table `dsb_blog_posts`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_error_log`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_error_log`;
 CREATE TABLE `dsb_error_log` (
@@ -179,16 +173,16 @@ CREATE TABLE `dsb_error_log` (
   PRIMARY KEY  (`log_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_error_log`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_feed_cache`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_feed_cache`;
 CREATE TABLE `dsb_feed_cache` (
@@ -198,17 +192,17 @@ CREATE TABLE `dsb_feed_cache` (
   PRIMARY KEY  (`module_code`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_feed_cache`
--- 
+--
 
 INSERT INTO `dsb_feed_cache` (`module_code`, `feed_xml`, `update_time`) VALUES (0x646967675f74656368, '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:digg="http://digg.com/docs/diggrss/">\n<channel>\n<title>Digg / Technology</title>\n<language>en-us</language><link>http://digg.com/view/technology</link>\n<description>Digg / Technology</description>\n<item>\n<title>Windows XP apps on your Ubuntu desktop - now with Coherence !</title>\n<link>http://digg.com/linux_unix/Windows_XP_apps_on_your_Ubuntu_desktop_now_with_Coherence</link>\n<description>Run Windows XP apps on Ubuntu without having and have them appear on your normal Gnome or KDE desktop. The tutorial starts with uses KQemu  (now Open Source as of today) but the latter section on coherence can easily be adapted to VMWare Player or Xen.</description>\n<pubDate>Wed, 7 Feb 2007 13:40:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/Windows_XP_apps_on_your_Ubuntu_desktop_now_with_Coherence</guid>\n<digg:diggCount>62</digg:diggCount>\n<digg:submitter><digg:username>nailer</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>2</digg:commentCount>\n</item>\n<item>\n<title>Breaking: Tivo Boxes to Download Amazon Unboxed Videos</title>\n<link>http://digg.com/tech_news/Breaking_Tivo_Boxes_to_Download_Amazon_Unboxed_Videos</link>\n<description>Amazon and TiVo just made me wet my pants with what could be a killer app in the digital video distribution arms race: TiVo Series 3 and 2 set top boxes will be living room conduits for Amazon''s Unbox IP video on demand service. This is the first single box solution that intermingles downloadable broadband video and traditional TV in one place.</description>\n<pubDate>Wed, 7 Feb 2007 13:30:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Breaking_Tivo_Boxes_to_Download_Amazon_Unboxed_Videos</guid>\n<digg:diggCount>85</digg:diggCount>\n<digg:submitter><digg:username>maxaids</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>13</digg:commentCount>\n</item>\n<item>\n<title>New version of Joost available!</title>\n<link>http://digg.com/tech_news/New_version_of_Joost_available</link>\n<description>Version 0.74 of Joost is available to download for beta testers. Improvements include: better coping with certainlocal configurations, better fonts, interface tweaks, added channel numbers in the EPG that are selectable from the keyboard &amp; enabled dual monitor support. If you want a beta invite leave a comment on the blog &amp; I''ll see what I can do</description>\n<pubDate>Wed, 7 Feb 2007 12:20:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/New_version_of_Joost_available</guid>\n<digg:diggCount>172</digg:diggCount>\n<digg:submitter><digg:username>MrSolutions</digg:username><digg:userimage>http://digg.com/userimages/m/r/s/mrsolutions/medium2222.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>43</digg:commentCount>\n</item>\n<item>\n<title>Run Your Existing Windows Installation on Ubuntu with Vmware Player</title>\n<link>http://digg.com/linux_unix/Run_Your_Existing_Windows_Installation_on_Ubuntu_with_Vmware_Player</link>\n<description>Title says it all.</description>\n<pubDate>Wed, 7 Feb 2007 09:00:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/Run_Your_Existing_Windows_Installation_on_Ubuntu_with_Vmware_Player</guid>\n<digg:diggCount>468</digg:diggCount>\n<digg:submitter><digg:username>blackmh</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>51</digg:commentCount>\n</item>\n<item>\n<title>25 things to see at the Googleplex before you die</title>\n<link>http://digg.com/tech_news/25_things_to_see_at_the_Googleplex_before_you_die</link>\n<description>Google''s sprawling, cheerfully dystopian campus at Mountain View may intimidate the first-time visitor. But there''s no need to fear. Enjoy our annotated map of 25 sights to take in across the entire Google campus before you die, and/or are killed by Google''s very understanding but nevertheless lethal security forces.</description>\n<pubDate>Wed, 7 Feb 2007 08:50:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/25_things_to_see_at_the_Googleplex_before_you_die</guid>\n<digg:diggCount>453</digg:diggCount>\n<digg:submitter><digg:username>mklopez</digg:username><digg:userimage>http://digg.com/userimages/mklopez/medium.gif</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>28</digg:commentCount>\n</item>\n<item>\n<title>The Evolution of Apple.com</title>\n<link>http://digg.com/apple/The_Evolution_of_Apple_com</link>\n<description>Over 150 screenshots documenting how apple.com has changed from 1996 to the present.</description>\n<pubDate>Wed, 7 Feb 2007 06:40:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/The_Evolution_of_Apple_com</guid>\n<digg:diggCount>888</digg:diggCount>\n<digg:submitter><digg:username>diggamer</digg:username><digg:userimage>http://digg.com/userimages/d/i/g/diggamer/medium1332.jpg</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>40</digg:commentCount>\n</item>\n<item>\n<title>Traffic Graph of the Core Internet DNS Services Being Attacked This Morning</title>\n<link>http://digg.com/security/Traffic_Graph_of_the_Core_Internet_DNS_Services_Being_Attacked_This_Morning</link>\n<description>If you haven''t heard the story - &quot;Hackers briefly overwhelmed at least three of the most important root domain name servers in the United States yesterday, in one of the most significant attacks against the Internet since 2002.&quot;.  Here is the graph of the traffic levels on the DNS servers.</description>\n<pubDate>Wed, 7 Feb 2007 06:10:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/security/Traffic_Graph_of_the_Core_Internet_DNS_Services_Being_Attacked_This_Morning</guid>\n<digg:diggCount>577</digg:diggCount>\n<digg:submitter><digg:username>marksmayo</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Security</digg:category>\n<digg:commentCount>67</digg:commentCount>\n</item>\n<item>\n<title>Hackers Attack Key Net Traffic Computers</title>\n<link>http://digg.com/security/Hackers_Attack_Key_Net_Traffic_Computers_3</link>\n<description>Hackers briefly overwhelmed at least three of the 13 computers that help manage global computer traffic Tuesday in one of the most significant attacks against the Internet since 2002.</description>\n<pubDate>Wed, 7 Feb 2007 04:20:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/security/Hackers_Attack_Key_Net_Traffic_Computers_3</guid>\n<digg:diggCount>901</digg:diggCount>\n<digg:submitter><digg:username>scoreboard27</digg:username><digg:userimage>http://digg.com/userimages/s/c/o/scoreboard27/medium3301.jpg</digg:userimage></digg:submitter>\n<digg:category>Security</digg:category>\n<digg:commentCount>77</digg:commentCount>\n</item>\n<item>\n<title>Microsoft Increases Support Prices for Windows, Office</title>\n<link>http://digg.com/tech_news/Microsoft_Increases_Support_Prices_for_Windows_Office</link>\n<description>Surprise, surprise... Prices for both Windows Vista and XP support were raised, from $39 to $59 per incident while support prices for Office XP and Office 2007 went from $35 to $49 per incident.</description>\n<pubDate>Wed, 7 Feb 2007 04:20:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Microsoft_Increases_Support_Prices_for_Windows_Office</guid>\n<digg:diggCount>325</digg:diggCount>\n<digg:submitter><digg:username>bonez05</digg:username><digg:userimage>http://digg.com/userimages/b/o/n/bonez05/medium9629.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>49</digg:commentCount>\n</item>\n<item>\n<title>Norway responds to Jobs'' open letter</title>\n<link>http://digg.com/apple/Norway_responds_to_Jobs_open_letter</link>\n<description>Senior advisor Torgeir Waterhouse of the Norwegian Consumer Council has responded to Apple CEO Steve Jobs'' open letter concerning digital rights management and free music, which the executive published earlier today.</description>\n<pubDate>Wed, 7 Feb 2007 04:20:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/Norway_responds_to_Jobs_open_letter</guid>\n<digg:diggCount>588</digg:diggCount>\n<digg:submitter><digg:username>jogrim</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>102</digg:commentCount>\n</item>\n<item>\n<title>New Wal-Mart Download Service 100% Fails in Firefox</title>\n<link>http://digg.com/design/New_Wal_Mart_Download_Service_100_Fails_in_Firefox</link>\n<description>Some design flexibility is OK when doing CSS or Standards-based design.  Degrading without the style sheet is also OK in some instances.  But check out the fancy new Wal-Mart download service that is 100% incompatible with Firefox. Wow.  Oops!</description>\n<pubDate>Wed, 7 Feb 2007 03:40:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/design/New_Wal_Mart_Download_Service_100_Fails_in_Firefox</guid>\n<digg:diggCount>1738</digg:diggCount>\n<digg:submitter><digg:username>erikjernberg</digg:username><digg:userimage>http://digg.com/userimages/erikjernberg/medium2934.jpg</digg:userimage></digg:submitter>\n<digg:category>Design</digg:category>\n<digg:commentCount>241</digg:commentCount>\n</item>\n<item>\n<title>The Coming Internet Traffic Jam</title>\n<link>http://digg.com/tech_news/The_Coming_Internet_Traffic_Jam</link>\n<description>A new assessment from Deloitte &amp; Touche predicts that global traffic will exceed the Internet''s capacity as soon as this year. Why? The rapid growth in the number of global Internet users, combined with the rise of online video services and the lack of investment in new infrastructure.</description>\n<pubDate>Wed, 7 Feb 2007 03:30:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/The_Coming_Internet_Traffic_Jam</guid>\n<digg:diggCount>535</digg:diggCount>\n<digg:submitter><digg:username>spinchange</digg:username><digg:userimage>http://digg.com/userimages/spinchange/medium8749.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>82</digg:commentCount>\n</item>\n<item>\n<title>6 Startup Lessons for the Year 2007</title>\n<link>http://digg.com/software/6_Startup_Lessons_for_the_Year_2007</link>\n<description>Too many niche startups fall into the trap of trying to satisfy everyone''s needs. Companies have a natural tendency to expand their line of goods as they grow. The article argues that what startups need to do, instead, is stop trying to be everybody products and deliberately narrow their reach regardless of their growth or traffic.</description>\n<pubDate>Wed, 7 Feb 2007 03:00:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/software/6_Startup_Lessons_for_the_Year_2007</guid>\n<digg:diggCount>505</digg:diggCount>\n<digg:submitter><digg:username>IvanB</digg:username><digg:userimage>http://digg.com/userimages/ivanb/medium1979.jpg</digg:userimage></digg:submitter>\n<digg:category>Software</digg:category>\n<digg:commentCount>16</digg:commentCount>\n</item>\n<item>\n<title>25 Games Tested in Vista</title>\n<link>http://digg.com/software/25_Games_Tested_in_Vista</link>\n<description>25 popular game titles tested in Vista. Which ones work, which ones don''t.</description>\n<pubDate>Wed, 7 Feb 2007 02:00:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/software/25_Games_Tested_in_Vista</guid>\n<digg:diggCount>976</digg:diggCount>\n<digg:submitter><digg:username>jervana</digg:username><digg:userimage>http://digg.com/userimages/jervana/medium.gif</digg:userimage></digg:submitter>\n<digg:category>Software</digg:category>\n<digg:commentCount>69</digg:commentCount>\n</item>\n<item>\n<title>TransGaming and Nvidia team up for high-end games on the Mac</title>\n<link>http://digg.com/apple/TransGaming_and_Nvidia_team_up_for_high_end_games_on_the_Mac</link>\n<description>TransGaming and Nvidia have &quot;joined forces&quot; to &quot;bring top tier video games to the Intel-based Macintosh platform using TransGaming''s Cider portability engine in conjunction with NVIDIA''s CgFX graphics system.&quot;</description>\n<pubDate>Wed, 7 Feb 2007 01:30:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/TransGaming_and_Nvidia_team_up_for_high_end_games_on_the_Mac</guid>\n<digg:diggCount>566</digg:diggCount>\n<digg:submitter><digg:username>keiths</digg:username><digg:userimage>http://digg.com/userimages/k/e/i/keiths/medium8096.png</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>59</digg:commentCount>\n</item>\n<item>\n<title>BBC slammed for using public funds for Microsoft lock-in</title>\n<link>http://digg.com/linux_unix/BBC_slammed_for_using_public_funds_for_Microsoft_lock_in</link>\n<description>The Open Source Consortium (OSC) has slammed the BBC over plans to lock online TV viewers into Microsoft products. The accusations come after the BBC announced that its new on-demand services will be limited to Microsoft Windows. OSC believes this is anti-competitive, and would be in breach of the broadcaster''s charter.</description>\n<pubDate>Wed, 7 Feb 2007 01:07:56 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/BBC_slammed_for_using_public_funds_for_Microsoft_lock_in</guid>\n<digg:diggCount>757</digg:diggCount>\n<digg:submitter><digg:username>jrepin</digg:username><digg:userimage>http://digg.com/userimages/jrepin/medium.png</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>92</digg:commentCount>\n</item>\n<item>\n<title>Hacking Skype: 25 Tips to Improve Your Skype Experience</title>\n<link>http://digg.com/tech_news/Hacking_Skype_25_Tips_to_Improve_Your_Skype_Experience</link>\n<description>&quot;Skype is the most popular VoIP solution of choice. If you''re just getting into this telephone alternative, you are going to be surprised how much you can do with it. In this article we cover 25 tips, hacks, and extras to help you utilize Skype to its fullest potential.&quot;</description>\n<pubDate>Wed, 7 Feb 2007 00:30:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Hacking_Skype_25_Tips_to_Improve_Your_Skype_Experience</guid>\n<digg:diggCount>1132</digg:diggCount>\n<digg:submitter><digg:username>BoneyB</digg:username><digg:userimage>http://digg.com/userimages/b/o/n/boneyb/medium5683.JPG</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>34</digg:commentCount>\n</item>\n<item>\n<title>Gates “dares anybody” to exploit Vista </title>\n<link>http://digg.com/tech_news/Gates_dares_anybody_to_exploit_Vista</link>\n<description>Microsoft chairman Bill Gates talked with Newsweek magazine''s Steven Levy about the new version of Windows and shared his views on the &quot;I''m a Mac&quot; television commercials. In excerpts from the interview Gates goes on the offensive and claims that the security in Vista is better that the security in the Mac</description>\n<pubDate>Wed, 7 Feb 2007 00:00:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Gates_dares_anybody_to_exploit_Vista</guid>\n<digg:diggCount>2054</digg:diggCount>\n<digg:submitter><digg:username>populist</digg:username><digg:userimage>http://digg.com/userimages/p/o/p/populist/medium6019.gif</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>303</digg:commentCount>\n</item>\n<item>\n<title>Man gives away free iPods because it makes him feel good.</title>\n<link>http://digg.com/apple/Man_gives_away_free_iPods_because_it_makes_him_feel_good</link>\n<description>This guy fixes and gives away iPods because he &quot;gets a real buzz out of knowing I just made someone’s day&quot;. But he''s not the biggest fan of Apple.</description>\n<pubDate>Tue, 6 Feb 2007 23:40:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/Man_gives_away_free_iPods_because_it_makes_him_feel_good</guid>\n<digg:diggCount>1470</digg:diggCount>\n<digg:submitter><digg:username>Hinchcliffe</digg:username><digg:userimage>http://digg.com/userimages/hinchcliffe/medium4585.gif</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>82</digg:commentCount>\n</item>\n<item>\n<title>Use Quicksilver for quick timed reminders</title>\n<link>http://digg.com/apple/Use_Quicksilver_for_quick_timed_reminders</link>\n<description>This tutorial shows you have to setup Quicksilver to display a text message, play a song, go to webpage, etc in a set amount of time. It''s a quick way to give yourself a little reminder.</description>\n<pubDate>Tue, 6 Feb 2007 23:30:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/Use_Quicksilver_for_quick_timed_reminders</guid>\n<digg:diggCount>468</digg:diggCount>\n<digg:submitter><digg:username>RadiantBeing</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>21</digg:commentCount>\n</item>\n<item>\n<title>The Road to KDE 4: Phonon Makes Multimedia Easier (fixed link)</title>\n<link>http://digg.com/linux_unix/The_Road_to_KDE_4_Phonon_Makes_Multimedia_Easier_fixed_link</link>\n<description>Phonon is designed to take some of the complications out of writing multimedia applications in KDE 4, and ensure that these applications will work on a multitude of platforms and sound architectures. Unfortunately, writing about a sound technology produces very few snazzy screenshots, so instead this week has a few more technical details.</description>\n<pubDate>Tue, 6 Feb 2007 23:10:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/The_Road_to_KDE_4_Phonon_Makes_Multimedia_Easier_fixed_link</guid>\n<digg:diggCount>324</digg:diggCount>\n<digg:submitter><digg:username>jrepin</digg:username><digg:userimage>http://digg.com/userimages/jrepin/medium.png</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>19</digg:commentCount>\n</item>\n<item>\n<title>Hack Attack: Getting good with Google Reader</title>\n<link>http://digg.com/software/Hack_Attack_Getting_good_with_Google_Reader</link>\n<description>Today, I''m going to show you the ins and outs of Google''s powerful newsreader, with an emphasis on Reader''s powerful and time-saving keyboard shortcuts. To round things off, I''ll finish up with some of my favorite Google Reader-related tweaks and downloads to get you up to speed with the best newsreader on the planet.</description>\n<pubDate>Tue, 6 Feb 2007 22:01:08 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/software/Hack_Attack_Getting_good_with_Google_Reader</guid>\n<digg:diggCount>628</digg:diggCount>\n<digg:submitter><digg:username>mklopez</digg:username><digg:userimage>http://digg.com/userimages/mklopez/medium.gif</digg:userimage></digg:submitter>\n<digg:category>Software</digg:category>\n<digg:commentCount>18</digg:commentCount>\n</item>\n<item>\n<title>Make a Movie of Your Linux Desktop </title>\n<link>http://digg.com/linux_unix/Make_a_Movie_of_Your_Linux_Desktop</link>\n<description>Want to show off your snazzy 3d desktop, or demonstrate the features of your favourite new program? Make a movie of your desktop to capture all your actions, edit it, then add a soundtrack.</description>\n<pubDate>Tue, 6 Feb 2007 21:10:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/Make_a_Movie_of_Your_Linux_Desktop</guid>\n<digg:diggCount>580</digg:diggCount>\n<digg:submitter><digg:username>bonlebon</digg:username><digg:userimage>http://digg.com/userimages/bonlebon/medium5388.jpg</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>36</digg:commentCount>\n</item>\n<item>\n<title>Multi-Column Layouts Climb Out of the Box</title>\n<link>http://digg.com/design/Multi_Column_Layouts_Climb_Out_of_the_Box</link>\n<description>“Holy Grail,” “One True Layout,” “pain in the @$$”... Alan Pearce presents a cleaner approach to designing multi-column layouts.</description>\n<pubDate>Tue, 6 Feb 2007 21:00:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/design/Multi_Column_Layouts_Climb_Out_of_the_Box</guid>\n<digg:diggCount>789</digg:diggCount>\n<digg:submitter><digg:username>cyberpear</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Design</digg:category>\n<digg:commentCount>60</digg:commentCount>\n</item>\n<item>\n<title>Five ways to make Digg more social</title>\n<link>http://digg.com/tech_news/Five_ways_to_make_Digg_more_social</link>\n<description>When Kevin Rose announced that the top digger list would be no more, he also alluded to plans to add better social networking features to the site. Here are 5 suggestions to make Digg more social.</description>\n<pubDate>Tue, 6 Feb 2007 20:50:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Five_ways_to_make_Digg_more_social</guid>\n<digg:diggCount>738</digg:diggCount>\n<digg:submitter><digg:username>asif786</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>82</digg:commentCount>\n</item>\n<item>\n<title>Itallian Phone to Feature Roll-up, Paper Thin Display</title>\n<link>http://digg.com/gadgets/Itallian_Phone_to_Feature_Roll_up_Paper_Thin_Display</link>\n<description>Telecom Italia and Polymer Vision have joined forces to create a cell phone that features a roll-up e-paper-like display. It''s a grayscale and can''t be read in the dark, but the 5-inch screen represents a significant step forward in terms of incorporating this technology on mobile devices.</description>\n<pubDate>Tue, 6 Feb 2007 20:40:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/gadgets/Itallian_Phone_to_Feature_Roll_up_Paper_Thin_Display</guid>\n<digg:diggCount>641</digg:diggCount>\n<digg:submitter><digg:username>ryland2</digg:username><digg:userimage>http://digg.com/userimages/r/y/l/ryland2/medium8027.jpg</digg:userimage></digg:submitter>\n<digg:category>Gadgets</digg:category>\n<digg:commentCount>44</digg:commentCount>\n</item>\n<item>\n<title>Steve Jobs on Music</title>\n<link>http://digg.com/apple/Steve_Jobs_on_Music</link>\n<description>An interesting column written by Steve Jobs to shout out his thoughts on music. Does he talk about DRM? Yes. &quot;The rub comes from the music Apple sells on its online iTunes Store. Since Apple does not own or control any music itself, it must license the rights to distribute music from others.&quot;Read the whole story it is interesting!</description>\n<pubDate>Tue, 6 Feb 2007 20:00:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/Steve_Jobs_on_Music</guid>\n<digg:diggCount>5044</digg:diggCount>\n<digg:submitter><digg:username>vrikis</digg:username><digg:userimage>http://digg.com/userimages/v/r/i/vrikis/medium3145.JPG</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>401</digg:commentCount>\n</item>\n<item>\n<title>''Tom Cruise'' missile jokester arrested - CNET News.com</title>\n<link>http://digg.com/tech_news/Tom_Cruise_missile_jokester_arrested_CNET_News_com</link>\n<description>Keith Henson, a fugitive since being convicted of interfering with Scientology, faces extradition to California from Arizona.</description>\n<pubDate>Tue, 6 Feb 2007 19:40:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Tom_Cruise_missile_jokester_arrested_CNET_News_com</guid>\n<digg:diggCount>1068</digg:diggCount>\n<digg:submitter><digg:username>desertrain7</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>160</digg:commentCount>\n</item>\n<item>\n<title>Make any Application Fullscreen (Mac Only)</title>\n<link>http://digg.com/apple/Make_any_Application_Fullscreen_Mac_Only</link>\n<description>&quot;Let''s limit our attention to one application--any application--at any time&quot;Because Mac''s desktops can be very distracting, this application is a lifesaver for anyone who really needs to get work done with no distractions.</description>\n<pubDate>Tue, 6 Feb 2007 19:40:01 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/Make_any_Application_Fullscreen_Mac_Only</guid>\n<digg:diggCount>881</digg:diggCount>\n<digg:submitter><digg:username>atomic16</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>89</digg:commentCount>\n</item>\n<item>\n<title>New ''Smart'' Digg This Buttons For Your Website/Blog</title>\n<link>http://digg.com/tech_news/New_Smart_Digg_This_Buttons_For_Your_Website_Blog</link>\n<description>&quot;We’re glad to announce an update to our Digg This button.  You used to need different tools to provide links on your site to submit content to Digg versus buttons to Digg content you’ve already submitted.  Our new Digg This button has finally been given a brain to do both!&quot;</description>\n<pubDate>Tue, 6 Feb 2007 19:10:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/New_Smart_Digg_This_Buttons_For_Your_Website_Blog</guid>\n<digg:diggCount>1686</digg:diggCount>\n<digg:submitter><digg:username>kevinrose</digg:username><digg:userimage>http://digg.com/userimages/kevinrose/medium3094.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>64</digg:commentCount>\n</item>\n<item>\n<title>Don''t be misled by these 10 Windows Vista myths</title>\n<link>http://digg.com/software/Don_t_be_misled_by_these_10_Windows_Vista_myths</link>\n<description>The official consumer launch of Windows Vista has brought with it a great deal of confusion, misinformation, and some fairly ignorant assertions. Windows expert Deb Shinder debunks some of the misconceptions she''s been hearing, from exaggerated cost and hardware requirements to feature limitations and compatibility issues.</description>\n<pubDate>Tue, 6 Feb 2007 18:50:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/software/Don_t_be_misled_by_these_10_Windows_Vista_myths</guid>\n<digg:diggCount>2393</digg:diggCount>\n<digg:submitter><digg:username>msaleem</digg:username><digg:userimage>http://digg.com/userimages/msaleem/medium9502.jpeg</digg:userimage></digg:submitter>\n<digg:category>Software</digg:category>\n<digg:commentCount>293</digg:commentCount>\n</item>\n<item>\n<title>PCI-E x1 Graphics Performance Investigated</title>\n<link>http://digg.com/hardware/PCI_E_x1_Graphics_Performance_Investigated</link>\n<description>PCI-E x1 graphics performance is under the spotlight with Galaxy''s GeForce 7300GT graphics card. We see if there is any difference between it and x16 slots. Is it AGP 4x vs. 8x marketing mumbo gumbo all over again?</description>\n<pubDate>Tue, 6 Feb 2007 18:40:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/hardware/PCI_E_x1_Graphics_Performance_Investigated</guid>\n<digg:diggCount>409</digg:diggCount>\n<digg:submitter><digg:username>TWEAK</digg:username><digg:userimage>http://digg.com/userimages/t/w/e/tweak/medium3854.png</digg:userimage></digg:submitter>\n<digg:category>Hardware</digg:category>\n<digg:commentCount>46</digg:commentCount>\n</item>\n<item>\n<title>Are Social Networks Just A Feature?</title>\n<link>http://digg.com/tech_news/Are_Social_Networks_Just_A_Feature</link>\n<description>It is time to rethink the whole notion of social networking, and start thinking of it as a feature for other online activities. Already, we see companies like Affinity Circles4 and Social Platform5 turning the “social network” into a commodity, by offering turnkey solutions.</description>\n<pubDate>Tue, 6 Feb 2007 18:20:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Are_Social_Networks_Just_A_Feature</guid>\n<digg:diggCount>334</digg:diggCount>\n<digg:submitter><digg:username>scoreboard27</digg:username><digg:userimage>http://digg.com/userimages/s/c/o/scoreboard27/medium3301.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>26</digg:commentCount>\n</item>\n<item>\n<title>Linux Linux Everywhere!!!An entire airplane booting Linux (with pictures)..</title>\n<link>http://digg.com/linux_unix/Linux_Linux_Everywhere_An_entire_airplane_booting_Linux_with_pictures</link>\n<description>After we landed in Orlando I talked the Delta flight crew into rebooting the entire system. I think this is the first time that something Open Source has ended up on a full, frickin'' plane! The flight crew thought I was nuts...but o well. At least the plane won''t ever crash.</description>\n<pubDate>Tue, 6 Feb 2007 18:20:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/Linux_Linux_Everywhere_An_entire_airplane_booting_Linux_with_pictures</guid>\n<digg:diggCount>1393</digg:diggCount>\n<digg:submitter><digg:username>leadstairway</digg:username><digg:userimage>http://digg.com/userimages/l/e/a/leadstairway/medium5763.jpg</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>131</digg:commentCount>\n</item>\n<item>\n<title>WWDC 2007 Officially Announced - June 11-15</title>\n<link>http://digg.com/apple/WWDC_2007_Officially_Announced_June_11_15</link>\n<description>Apple has officially announced the dates of WWDC 2007.</description>\n<pubDate>Tue, 6 Feb 2007 18:10:01 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/WWDC_2007_Officially_Announced_June_11_15</guid>\n<digg:diggCount>746</digg:diggCount>\n<digg:submitter><digg:username>AmazingSyco</digg:username><digg:userimage>http://digg.com/userimages/amazingsyco/medium.jpg</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>49</digg:commentCount>\n</item>\n<item>\n<title>23 Signs That You''re Becoming a Design Geek</title>\n<link>http://digg.com/design/23_Signs_That_You_re_Becoming_a_Design_Geek</link>\n<description>The world of design can be a ruthless one; you get lured into developing anti-social habits like font-spotting and source-code peeping. Learn to spot the warning signs in time – you know you''re becoming a design geek when...</description>\n<pubDate>Tue, 6 Feb 2007 17:50:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/design/23_Signs_That_You_re_Becoming_a_Design_Geek</guid>\n<digg:diggCount>1862</digg:diggCount>\n<digg:submitter><digg:username>andash</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Design</digg:category>\n<digg:commentCount>124</digg:commentCount>\n</item>\n<item>\n<title>The QEMU Accelerator (KQEMU Module) is Open Source!</title>\n<link>http://digg.com/linux_unix/The_QEMU_Accelerator_KQEMU_Module_is_Open_Source</link>\n<description>The KQEMU accelerator component of the open source QEMU emulation solution has been released under the GNU General Public License.</description>\n<pubDate>Tue, 6 Feb 2007 17:50:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/The_QEMU_Accelerator_KQEMU_Module_is_Open_Source</guid>\n<digg:diggCount>446</digg:diggCount>\n<digg:submitter><digg:username>kkubasik</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>42</digg:commentCount>\n</item>\n<item>\n<title>Steve Jobs'' Occupational Hazards</title>\n<link>http://digg.com/tech_news/Steve_Jobs_Occupational_Hazards</link>\n<description>With the success of the iPod, Apple CEO Steve Jobs has proven that there are, in fact, second acts in business. Once known primarily for its Macintosh line of computers, Apple is now a digital powerhouse whose shares have risen more than seven times in value over the last five years.</description>\n<pubDate>Tue, 6 Feb 2007 17:40:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Steve_Jobs_Occupational_Hazards</guid>\n<digg:diggCount>535</digg:diggCount>\n<digg:submitter><digg:username>Alexius</digg:username><digg:userimage>http://digg.com/userimages/alexius/medium1140.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>29</digg:commentCount>\n</item>\n<item>\n<title>Kodak Invents Photo Ink That''ll Last 100 Years</title>\n<link>http://digg.com/gadgets/Kodak_Invents_Photo_Ink_That_ll_Last_100_Years</link>\n<description>Kodak''s revolutionary new ink can quickly create prints with an archival life of 100 years, versus standard inkjet photos that go the way of toilet paper after 15. And the ink costs half the price. Half?! We should buy Kodak''s new printers simply because they''re not trying to fuck us on the cartridge sales.</description>\n<pubDate>Tue, 6 Feb 2007 17:10:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/gadgets/Kodak_Invents_Photo_Ink_That_ll_Last_100_Years</guid>\n<digg:diggCount>1315</digg:diggCount>\n<digg:submitter><digg:username>BLAM8</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Gadgets</digg:category>\n<digg:commentCount>97</digg:commentCount>\n</item>\n<item>\n<title>5 Things You Need to Know About SLR Lenses</title>\n<link>http://digg.com/hardware/5_Things_You_Need_to_Know_About_SLR_Lenses</link>\n<description>If you''re wanting a new lens or two but aren''t sure where to even begin looking, you''re in luck! From the author of &quot;10 Reasons to Buy a DSLR,&quot; (that''s me) comes &quot;5 Things You Need to Know About SLR Lenses.&quot; Get your read on.</description>\n<pubDate>Tue, 6 Feb 2007 17:00:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/hardware/5_Things_You_Need_to_Know_About_SLR_Lenses</guid>\n<digg:diggCount>1024</digg:diggCount>\n<digg:submitter><digg:username>TTLKurtis</digg:username><digg:userimage>http://digg.com/userimages/t/t/l/ttlkurtis/medium8223.jpg</digg:userimage></digg:submitter>\n<digg:category>Hardware</digg:category>\n<digg:commentCount>59</digg:commentCount>\n</item>\n</channel>\n</rss>', '20070207155534');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_flirts`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_flirts`;
 CREATE TABLE `dsb_flirts` (
@@ -219,9 +213,9 @@ CREATE TABLE `dsb_flirts` (
   KEY `flirt_type` (`flirt_type`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_flirts`
--- 
+--
 
 INSERT INTO `dsb_flirts` (`flirt_id`, `flirt_text`, `flirt_type`) VALUES (1, 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', 0),
 (2, 'Aye aye, mate!', 0),
@@ -229,9 +223,9 @@ INSERT INTO `dsb_flirts` (`flirt_id`, `flirt_text`, `flirt_type`) VALUES (1, 'He
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_lang_keys`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_lang_keys`;
 CREATE TABLE `dsb_lang_keys` (
@@ -243,9 +237,9 @@ CREATE TABLE `dsb_lang_keys` (
   KEY `lk_use` (`lk_use`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_lang_keys`
--- 
+--
 
 INSERT INTO `dsb_lang_keys` (`lk_id`, `lk_type`, `lk_diz`, `lk_use`) VALUES (1, 2, 'Category name', 1),
 (2, 2, 'Category name', 1),
@@ -419,9 +413,9 @@ INSERT INTO `dsb_lang_keys` (`lk_id`, `lk_type`, `lk_diz`, `lk_use`) VALUES (1, 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_lang_strings`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_lang_strings`;
 CREATE TABLE `dsb_lang_strings` (
@@ -433,9 +427,9 @@ CREATE TABLE `dsb_lang_strings` (
   UNIQUE KEY `thekey` (`fk_lk_id`,`skin`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_lang_strings`
--- 
+--
 
 INSERT INTO `dsb_lang_strings` (`ls_id`, `fk_lk_id`, `skin`, `lang_value`) VALUES (1, 1, 'skin_def', 'Basic Info'),
 (2, 2, 'skin_def', 'Appearance'),
@@ -609,9 +603,9 @@ INSERT INTO `dsb_lang_strings` (`ls_id`, `fk_lk_id`, `skin`, `lang_value`) VALUE
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_loc_countries`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_loc_countries`;
 CREATE TABLE `dsb_loc_countries` (
@@ -624,9 +618,9 @@ CREATE TABLE `dsb_loc_countries` (
   KEY `iso3166` (`iso3166`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_loc_countries`
--- 
+--
 
 INSERT INTO `dsb_loc_countries` (`country_id`, `iso3166`, `country`, `prefered_input`, `num_states`) VALUES (1, 'AF', 'Afghanistan', 's', 0),
 (2, 'AL', 'Albania', 's', 0),
@@ -860,9 +854,9 @@ INSERT INTO `dsb_loc_countries` (`country_id`, `iso3166`, `country`, `prefered_i
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_locales`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_locales`;
 CREATE TABLE `dsb_locales` (
@@ -872,9 +866,9 @@ CREATE TABLE `dsb_locales` (
   PRIMARY KEY  (`locale_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_locales`
--- 
+--
 
 INSERT INTO `dsb_locales` (`locale_id`, `locale_name`, `codes`) VALUES (1, 'Arabic (Algeria)', 'ar_DZ,arabic'),
 (2, 'Arabic (Saudi Arabia)', 'ar_SA,arabic'),
@@ -930,9 +924,9 @@ INSERT INTO `dsb_locales` (`locale_id`, `locale_name`, `codes`) VALUES (1, 'Arab
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_memberships`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_memberships`;
 CREATE TABLE `dsb_memberships` (
@@ -945,9 +939,9 @@ CREATE TABLE `dsb_memberships` (
   UNIQUE KEY `m_value` (`m_value`)
 ) TYPE=MyISAM PACK_KEYS=0 COMMENT='m_value must be uniq';
 
--- 
+--
 -- Dumping data for table `dsb_memberships`
--- 
+--
 
 INSERT INTO `dsb_memberships` (`m_id`, `m_name`, `m_value`, `is_custom`) VALUES (1, 'Non Members', 1, 0),
 (2, 'Free Members', 2, 0),
@@ -955,9 +949,9 @@ INSERT INTO `dsb_memberships` (`m_id`, `m_name`, `m_value`, `is_custom`) VALUES 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_message_filters`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_message_filters`;
 CREATE TABLE `dsb_message_filters` (
@@ -971,16 +965,16 @@ CREATE TABLE `dsb_message_filters` (
   UNIQUE KEY `filter_type` (`filter_type`,`fk_user_id`,`field_value`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_message_filters`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_modules`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_modules`;
 CREATE TABLE `dsb_modules` (
@@ -993,9 +987,9 @@ CREATE TABLE `dsb_modules` (
   KEY `module_type` (`module_type`)
 ) TYPE=MyISAM COMMENT='0-regular,1-pg,2-fraud,3-widg,4-skin';
 
--- 
+--
 -- Dumping data for table `dsb_modules`
--- 
+--
 
 INSERT INTO `dsb_modules` (`module_code`, `module_name`, `module_diz`, `module_type`, `version`) VALUES (0x636f7265, 'Basic features', '', 0, 1.00),
 (0x636f72655f626c6f67, 'Blogs', '', 0, 1.00),
@@ -1011,9 +1005,9 @@ INSERT INTO `dsb_modules` (`module_code`, `module_name`, `module_diz`, `module_t
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_networks`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_networks`;
 CREATE TABLE `dsb_networks` (
@@ -1024,19 +1018,19 @@ CREATE TABLE `dsb_networks` (
   PRIMARY KEY  (`net_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_networks`
--- 
+--
 
 INSERT INTO `dsb_networks` (`net_id`, `network`, `is_bidi`, `max_users`) VALUES (1, 'Friends', 1, 0),
-(2, 'Family', 1, 0),
-(3, 'Blocked Members', 0, 0);
+(2, 'Blocked Members', 0, 0),
+(3, 'Favorites', 0, 0);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_online`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_online`;
 CREATE TABLE `dsb_online` (
@@ -1047,33 +1041,15 @@ CREATE TABLE `dsb_online` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_online`
--- 
-
-INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (0, '20070406234932', 0x6363393231353033353538393831383662616538393661643531383038663261),
-(0, '20070407113710', 0x6632333830316133316463363537346433636333313962643062636333633461),
-(0, '20070410233953', 0x6230323863383935653633326466336639346663336663616639663332373935),
-(0, '20070413163544', 0x3563316335343234323035626666343266323366303031396366656535343333),
-(0, '20070409205632', 0x3534336338376362653435653863356138373738306162393132653861636562),
-(0, '20070410133144', 0x6131636430643436376663623031383365353464396334626266663137346436),
-(0, '20070410130410', 0x3361653036346338633663623033356135313631393236646131633962323364),
-(0, '20070411095037', 0x3138313630636135663231396330303133306164666436306536343038373834),
-(0, '20070414190327', 0x6332326535343838336435303762386631356233626539343231643231323839),
-(0, '20070411131812', 0x6165616165306165313861616566663034633132636565326662383365303834),
-(0, '20070414135330', 0x3738313162663266653164316564663732666564666231373266336432613130),
-(0, '20070411152355', 0x3238373566323863303636616666333833613162346435626663303261396535),
-(0, '20070411152456', 0x3132636130356539363037643265343065343564356433323234643231636135),
-(0, '20070414152729', 0x6630346536663830633631363835386234306636616365303563343463366563),
-(0, '20070414184004', 0x3066646538633531373237636239386234343961633765646236383638313136),
-(0, '20070412163833', 0x6637663662653366386136666165313834366133616331616366313636393937),
-(0, '20070414223354', 0x6465343363303666626466376633656534393331306335313166653331316636);
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_payments`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_payments`;
 CREATE TABLE `dsb_payments` (
@@ -1103,16 +1079,16 @@ CREATE TABLE `dsb_payments` (
   PRIMARY KEY  (`payment_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_payments`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_photo_comments`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_photo_comments`;
 CREATE TABLE `dsb_photo_comments` (
@@ -1130,18 +1106,15 @@ CREATE TABLE `dsb_photo_comments` (
   KEY `key1` (`fk_photo_id`,`status`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_photo_comments`
--- 
-
-INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_photo_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (7, 14, 1, 'test', 'beeeton', '2007-04-14 10:38:08', '2007-04-14 10:38:08', 15),
-(6, 79, 2, 'test', 'bleah\r\n[b]cahhhhhhhhhhh[/b]', '2007-03-22 21:00:15', '2007-03-22 21:00:15', 15);
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_photo_ratings`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_photo_ratings`;
 CREATE TABLE `dsb_photo_ratings` (
@@ -1153,69 +1126,15 @@ CREATE TABLE `dsb_photo_ratings` (
   KEY `key1` (`fk_user_id`,`date_voted`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_photo_ratings`
--- 
-
-INSERT INTO `dsb_photo_ratings` (`fk_photo_id`, `fk_user_id`, `vote`, `date_voted`) VALUES (3, 1, 3, '2007-04-11 14:24:28'),
-(3, 1, 3, '2007-04-11 14:24:54'),
-(3, 1, 3, '2007-04-11 14:25:17'),
-(3, 1, 3, '2007-04-11 14:25:21'),
-(3, 1, 3, '2007-04-11 14:25:21'),
-(3, 1, 4, '2007-04-11 14:25:45'),
-(3, 1, 5, '2007-04-11 14:38:00'),
-(3, 1, 4, '2007-04-11 14:38:05'),
-(3, 1, 3, '2007-04-11 14:38:09'),
-(3, 1, 2, '2007-04-11 14:38:18'),
-(3, 1, 1, '2007-04-11 14:40:21'),
-(3, 1, 2, '2007-04-11 14:40:27'),
-(3, 1, 1, '2007-04-11 14:40:29'),
-(3, 1, 1, '2007-04-11 14:40:32'),
-(3, 1, 5, '2007-04-11 14:40:37'),
-(3, 1, 4, '2007-04-11 14:42:00'),
-(3, 1, 4, '2007-04-11 14:42:36'),
-(3, 1, 4, '2007-04-11 14:42:53'),
-(3, 1, 5, '2007-04-11 14:42:58'),
-(3, 1, 5, '2007-04-11 14:42:59'),
-(3, 1, 5, '2007-04-11 14:43:05'),
-(3, 1, 5, '2007-04-11 14:43:07'),
-(3, 1, 5, '2007-04-11 14:43:08'),
-(3, 1, 5, '2007-04-11 14:43:09'),
-(3, 1, 5, '2007-04-11 14:43:09'),
-(3, 1, 5, '2007-04-11 14:43:11'),
-(3, 1, 5, '2007-04-11 14:43:12'),
-(3, 1, 5, '2007-04-11 14:43:13'),
-(3, 1, 5, '2007-04-11 14:43:15'),
-(3, 1, 5, '2007-04-11 14:43:16'),
-(3, 1, 5, '2007-04-11 14:43:18'),
-(3, 1, 5, '2007-04-11 14:43:19'),
-(3, 1, 5, '2007-04-11 14:43:21'),
-(3, 1, 5, '2007-04-11 14:43:22'),
-(3, 1, 5, '2007-04-11 14:43:22'),
-(3, 1, 5, '2007-04-11 14:43:22'),
-(3, 1, 5, '2007-04-11 14:43:22'),
-(3, 1, 5, '2007-04-11 14:43:23'),
-(3, 1, 5, '2007-04-11 14:43:23'),
-(3, 1, 5, '2007-04-11 14:44:29'),
-(3, 1, 5, '2007-04-11 14:44:32'),
-(3, 1, 5, '2007-04-11 14:44:33'),
-(3, 1, 5, '2007-04-11 14:44:35'),
-(3, 1, 1, '2007-04-11 14:59:54'),
-(3, 1, 2, '2007-04-11 14:59:57'),
-(3, 1, 4, '2007-04-11 15:00:00'),
-(3, 1, 1, '2007-04-11 15:00:03'),
-(3, 1, 5, '2007-04-11 15:00:06'),
-(14, 1, 4, '2007-04-12 12:25:45'),
-(15, 2, 5, '2007-04-12 12:29:00'),
-(1, 1, 4, '2007-04-14 08:56:26'),
-(15, 1, 4, '2007-04-14 12:16:29'),
-(14, 1, 1, '2007-04-14 12:20:02');
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_profile_categories`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_profile_categories`;
 CREATE TABLE `dsb_profile_categories` (
@@ -1226,9 +1145,9 @@ CREATE TABLE `dsb_profile_categories` (
   KEY `access_level` (`access_level`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_profile_categories`
--- 
+--
 
 INSERT INTO `dsb_profile_categories` (`pcat_id`, `fk_lk_id_pcat`, `access_level`) VALUES (1, 1, 7),
 (2, 2, 7),
@@ -1238,9 +1157,9 @@ INSERT INTO `dsb_profile_categories` (`pcat_id`, `fk_lk_id_pcat`, `access_level`
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_profile_fields`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_profile_fields`;
 CREATE TABLE `dsb_profile_fields` (
@@ -1268,9 +1187,9 @@ CREATE TABLE `dsb_profile_fields` (
   PRIMARY KEY  (`pfield_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_profile_fields`
--- 
+--
 
 INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `html_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES (1, 3, 2, 0, 1, 0, 4, 1, 2, 0, 1, 1, 0x6631, 5, 1, 0, '', '', '', '', 5),
 (2, 8, 3, 1, 10, 1, 9, 1, 1, 1, 1, 1, 0x6632, 10, 1, 0, '|6|7|', '|0|', '|1|', '', 1),
@@ -1290,9 +1209,9 @@ INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `html_type`, `s
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_queue_email`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_queue_email`;
 CREATE TABLE `dsb_queue_email` (
@@ -1304,16 +1223,16 @@ CREATE TABLE `dsb_queue_email` (
   PRIMARY KEY  (`mail_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_queue_email`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_queue_message`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_queue_message`;
 CREATE TABLE `dsb_queue_message` (
@@ -1327,20 +1246,17 @@ CREATE TABLE `dsb_queue_message` (
   `message_type` tinyint(2) unsigned NOT NULL default '0',
   PRIMARY KEY  (`mail_id`),
   KEY `from_id` (`fk_user_id_other`),
-  KEY `user_id_2` (`fk_user_id`)
+  KEY `to_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_queue_message`
--- 
-
-INSERT INTO `dsb_queue_message` (`mail_id`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (1, 1, 1, 'test', 'test sent you a flirt', 'Aye aye, mate!', '2007-04-11 09:09:41', 1);
-
+--
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_rate_limiter`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_rate_limiter`;
 CREATE TABLE `dsb_rate_limiter` (
@@ -1354,16 +1270,16 @@ CREATE TABLE `dsb_rate_limiter` (
   KEY `thekey` (`fk_level_id`,`m_value`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_rate_limiter`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_site_bans`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_site_bans`;
 CREATE TABLE `dsb_site_bans` (
@@ -1374,16 +1290,16 @@ CREATE TABLE `dsb_site_bans` (
   PRIMARY KEY  (`ban_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_site_bans`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_site_log`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_site_log`;
 CREATE TABLE `dsb_site_log` (
@@ -1399,63 +1315,16 @@ CREATE TABLE `dsb_site_log` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_site_log`
--- 
+--
 
-INSERT INTO `dsb_site_log` (`log_id`, `fk_user_id`, `user`, `m_value`, `fk_level_id`, `ip`, `time`) VALUES (1, 0, 'test', 1, 1, 2130706433, '20070407114023'),
-(2, 0, 'test', 1, 1, 2130706433, '20070407114247'),
-(3, 0, 'test', 1, 1, 2130706433, '20070407121752'),
-(4, 0, 'test', 1, 1, 2130706433, '20070407121753'),
-(5, 0, 'test', 1, 1, 2130706433, '20070407124935'),
-(6, 0, 'test', 1, 1, 2130706433, '20070409191932'),
-(7, 0, 'test', 1, 1, 2130706433, '20070409191934'),
-(8, 0, 'test', 1, 1, 2130706433, '20070409200222'),
-(9, 0, 'test', 1, 1, 2130706433, '20070409200246'),
-(10, 0, 'test', 1, 1, 2130706433, '20070409204827'),
-(11, 0, 'test', 1, 1, 2130706433, '20070409205019'),
-(12, 0, 'test3', 1, 1, 2130706433, '20070409205128'),
-(13, 0, 'test', 1, 1, 2130706433, '20070409224216'),
-(14, 0, 'test', 1, 1, 2130706433, '20070410000316'),
-(15, 0, 'test', 1, 1, 2130706433, '20070410111510'),
-(16, 0, 'test', 1, 1, 2130706433, '20070410112117'),
-(17, 0, 'test', 1, 1, 2130706433, '20070410112122'),
-(18, 0, 'test', 1, 1, 2130706433, '20070410192008'),
-(19, 0, 'test', 1, 1, 2130706433, '20070410192334'),
-(20, 0, 'test', 1, 1, 2130706433, '20070410192645'),
-(21, 0, 'test', 1, 1, 2130706433, '20070411103642'),
-(22, 0, 'test', 1, 1, 2130706433, '20070411155439'),
-(23, 0, 'test', 1, 1, 2130706433, '20070411172428'),
-(24, 0, 'test', 1, 1, 2130706433, '20070411195947'),
-(25, 0, 'test', 1, 1, 2130706433, '20070412084633'),
-(26, 0, 'test', 1, 1, 2130706433, '20070412140306'),
-(27, 0, 'test2', 1, 1, 2130706433, '20070412151629'),
-(28, 0, 'test2', 1, 1, 2130706433, '20070412151640'),
-(29, 0, 'test', 1, 1, 2130706433, '20070412151714'),
-(30, 0, 'test3', 1, 1, 2130706433, '20070412152122'),
-(31, 0, 'test', 1, 1, 2130706433, '20070412152428'),
-(32, 0, 'test', 1, 1, 2130706433, '20070412152445'),
-(33, 0, 'test', 1, 1, 2130706433, '20070412152538'),
-(34, 0, 'test2', 1, 1, 2130706433, '20070412152724'),
-(35, 0, 'test', 1, 1, 2130706433, '20070412153049'),
-(36, 0, 'test2', 1, 1, 2130706433, '20070412163847'),
-(37, 0, 'test', 1, 1, 2130706433, '20070413133346'),
-(38, 0, 'test2', 1, 1, 2130706433, '20070413163521'),
-(39, 0, 'test3', 1, 1, 2130706433, '20070413163539'),
-(40, 0, 'test', 1, 1, 2130706433, '20070413163548'),
-(41, 0, 'test', 1, 1, 2130706433, '20070414113652'),
-(42, 0, 'test2', 1, 1, 2130706433, '20070414134035'),
-(43, 0, 'test', 1, 1, 2130706433, '20070414134959'),
-(44, 0, 'test2', 1, 1, 2130706433, '20070414135021'),
-(45, 0, 'test', 1, 1, 2130706433, '20070414135027'),
-(46, 0, 'test', 1, 1, 2130706433, '20070414175445'),
-(47, 0, 'test', 1, 1, 2130706433, '20070414185411');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_site_options3`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_site_options3`;
 CREATE TABLE `dsb_site_options3` (
@@ -1472,9 +1341,9 @@ CREATE TABLE `dsb_site_options3` (
   KEY `fk_module_code` (`fk_module_code`)
 ) TYPE=MyISAM COMMENT='0-n/a,9-chkbox,2-tf,4-ta';
 
--- 
+--
 -- Dumping data for table `dsb_site_options3`
--- 
+--
 
 INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `config_diz`, `option_type`, `fk_module_code`, `per_user`) VALUES (1, 0x64626669656c645f696e646578, '16', 'The last index of the custom profile fields (field_xx)', 0, 0x636f7265, 0),
 (2, 0x7573655f63617074636861, '1', 'Use the dynamic image text (captcha image) to keep spam bots out?', 9, 0x636f7265, 0),
@@ -1525,9 +1394,9 @@ INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_site_searches`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_site_searches`;
 CREATE TABLE `dsb_site_searches` (
@@ -1541,78 +1410,15 @@ CREATE TABLE `dsb_site_searches` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_site_searches`
--- 
-
-INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('58a4fac5fe804a4e068ea95e0ca1029d', 1, 'a:8:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f4_min";s:1:"1";s:6:"f4_max";s:1:"6";s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";}', '', 0, '20070409144626'),
-('f229dff8e9bf417f8a116f6c693f4864', 1, 'a:4:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}}', '', 1, '20070410125422'),
-('5f129e4520ac00fc5177c7b7a26c2ca9', 1, 'a:8:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f4_min";s:1:"1";s:6:"f4_max";s:1:"6";s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";}', '', 1, '20070410200426'),
-('8816b2c8b45df99a22880b00513d7867', 1, 'a:1:{s:5:"pstat";s:1:"5";}', '1,2,3', 0, '20070410200527'),
-('40cd750bba9870f18aada2478b24840a', 1, 'a:0:{}', '1,2,3', 0, '20070410202713'),
-('0449abf79c5a3f2f76d5f0ec03a8dd25', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:6:"latest";}', '3,2,1', 2, '20070410232101'),
-('04a51b8634d9c552baeb60eb5109b481', 2, 'a:1:{s:4:"stat";s:1:"5";}', '', 0, '20070411103830'),
-('d9c125814e6d01cc042129671cc93b19', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:6:"online";}', '1,2', 1, '20070411114514'),
-('9e0e733657e4978c3fb5fcdea3f0dc2b', 1, 'a:8:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:2:"f2";a:2:{i:0;s:1:"1";i:1;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f4_min";s:1:"1";s:6:"f4_max";s:1:"6";s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";}', '', 1, '20070411230259'),
-('654d666a7ef3cdf3a31d36d7676f898e', 1, 'a:8:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:2:"f2";a:2:{i:0;s:1:"1";i:1;s:1:"2";}s:2:"f3";a:2:{i:0;s:1:"1";i:1;s:1:"2";}s:6:"f4_min";s:1:"1";s:6:"f4_max";s:1:"6";s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";}', '1', 1, '20070411230306'),
-('a02a5083e81539264df53de31964da9a', 2, 'a:1:{s:7:"flagged";s:1:"1";}', '', 0, '20070412091012'),
-('40cd750bba9870f18aada2478b24840a', 2, 'a:0:{}', '1,2,3,4,5,6,7', 0, '20070412091016'),
-('7e81e2de7df88ab99c15c4a8971b2b9d', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:3:"new";}', '3,2,1', 1, '20070412151925'),
-('79a2ea62a425ff437f970e3b3407db76', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:9:"computers";}', '2', 2, '20070412225204'),
-('31b8ba2df63d76c2dae7c1d5e7146838', 3, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:5:"views";}', '1,2,3,4', 2, '20070412225212'),
-('c6109b40aa58997744213128291c7b53', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:5:"earth";}', '2', 1, '20070413133346'),
-('4bb808db25e5349571c321a8d4ab0bec', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:6:"уея";}', '', 1, '20070413134539'),
-('65bf4d8448f34c3fd5e985dcb5cd9608', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:32:"специализируется";}', '', 1, '20070413135650'),
-('8a03fb895f0b3a9bbd3185ef5553bb07', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:6:"mobile";}', '3', 1, '20070413140022'),
-('9d53c19391ff02a9daa4fe9d6d7b7c56', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:10:"играх";}', '', 1, '20070413140032'),
-('824507ed8719f0a811ef06eb6bec9759', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:12:"firstnothing";}', '', 1, '20070413143401'),
-('9a4e65874be908e020256e8c214ea02d', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:5:"first";}', '', 1, '20070413143426'),
-('b44883f63f012af69a37147257a70cec', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:13:"computerssort";}', '', 1, '20070413143555'),
-('e36283738a5f31bc36497d06cd21b753', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:14:"computers sort";}', '2', 1, '20070413143841'),
-('0259caf83d0105367947ec0bdd101338', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:17:"result committees";}', '2', 1, '20070413143915'),
-('2e3f882251d90c3bdd28e3ce0977eb96', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:4:"asda";}', '', 1, '20070413144123'),
-('feff091ed1dfafe7304140b433319b11', 3, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:4:"comm";}', '1,2,3,4', 1, '20070413144136'),
-('eba15f899a6a6d0596b3b3f1c4af00fe', 3, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"new";}', '4,3,2,1', 1, '20070413144201'),
-('51ed9256e4c8850c602134f7d0cad419', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:16:"computer special";}', '2', 1, '20070413150019'),
-('ff48ff27034b9a71bd2ce49c8b7bfcc5', 3, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"ggg";}', '4,3,2,1', 1, '20070413150435'),
-('a5b56d003363affd31ccfddaa65dc425', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:7:"nothing";}', '', 1, '20070413150449'),
-('1f1431fc4bc46ad030c1a33fa4d9e758', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:20:"blog  could  nothing";}', '1', 1, '20070413150519'),
-('c821195d8de01feb4bf9074f32209e64', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"tag";s:4:"tags";s:4:"test";}', '', 1, '20070413163647'),
-('4cd40acb49a545cc090e3988dc5f55b2', 1, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:6:"latest";}', '2,3', 1, '20070414135949'),
-('9057d3e596c42fff29b9476632483e16', 1, 'a:7:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";s:10:"f6_country";s:3:"218";}', '', 0, '20070414223326');
+--
 
 -- --------------------------------------------------------
 
--- 
--- Table structure for table `dsb_site_skins`
--- 
-
-DROP TABLE IF EXISTS `dsb_site_skins`;
-CREATE TABLE `dsb_site_skins` (
-  `skin_id` int(5) unsigned NOT NULL auto_increment,
-  `skin_code` varchar(50) NOT NULL default '',
-  `skin_name` varchar(255) NOT NULL default '',
-  `fk_locale_id` int(4) unsigned NOT NULL default '0',
-  `is_default` tinyint(1) unsigned NOT NULL default '0',
-  `needs_regen` tinyint(1) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`skin_id`),
-  UNIQUE KEY `skin_name` (`skin_name`),
-  KEY `skin_code` (`skin_code`),
-  KEY `is_default` (`is_default`)
-) TYPE=MyISAM;
-
--- 
--- Dumping data for table `dsb_site_skins`
--- 
-
-INSERT INTO `dsb_site_skins` (`skin_id`, `skin_code`, `skin_name`, `fk_locale_id`, `is_default`, `needs_regen`) VALUES (1, 'basic', 'Defaultz', 11, 1, 0),
-(2, 'test', 'test', 0, 0, 0);
-
--- --------------------------------------------------------
-
--- 
+--
 -- Table structure for table `dsb_subscriptions`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_subscriptions`;
 CREATE TABLE `dsb_subscriptions` (
@@ -1631,9 +1437,9 @@ CREATE TABLE `dsb_subscriptions` (
   KEY `thekey` (`m_value_from`,`is_visible`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_subscriptions`
--- 
+--
 
 INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `price`, `currency`, `is_recurent`, `m_value_from`, `m_value_to`, `duration`, `duration_units`, `is_visible`) VALUES (1, '30$ / month', '', 30.00, 'USD', 0, 2, 4, 30, 'D', 1),
 (3, 'Trial', '', 0.00, 'USD', 0, 2, 4, 5, 'D', 0),
@@ -1642,9 +1448,9 @@ INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `pric
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_subscriptions_auto`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_subscriptions_auto`;
 CREATE TABLE `dsb_subscriptions_auto` (
@@ -1656,16 +1462,16 @@ CREATE TABLE `dsb_subscriptions_auto` (
   PRIMARY KEY  (`asubscr_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_subscriptions_auto`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_accounts`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_accounts`;
 CREATE TABLE `dsb_user_accounts` (
@@ -1684,19 +1490,14 @@ CREATE TABLE `dsb_user_accounts` (
   KEY `email` (`email`)
 ) TYPE=MyISAM COMMENT='membership is m_value';
 
--- 
+--
 -- Dumping data for table `dsb_user_accounts`
--- 
-
-INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x74657374, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', 'bd7adef567b68d45680681c80caea0d5', '20070414185949'),
-(2, 0x7465737432, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', 'e48ff8c5b0ad60f79815afeae1b91cb2', '20070414135021'),
-(3, 0x7465737433, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '8261d480f9450587f39447d310f0d529', '20070413163541');
-
+--
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_blogs`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_blogs`;
 CREATE TABLE `dsb_user_blogs` (
@@ -1711,16 +1512,16 @@ CREATE TABLE `dsb_user_blogs` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_blogs`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_cache`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_cache`;
 CREATE TABLE `dsb_user_cache` (
@@ -1731,16 +1532,16 @@ CREATE TABLE `dsb_user_cache` (
   KEY `thekey` (`fk_user_id`,`skin`,`part`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_cache`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_fav_links`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_fav_links`;
 CREATE TABLE `dsb_user_fav_links` (
@@ -1753,16 +1554,16 @@ CREATE TABLE `dsb_user_fav_links` (
   KEY `index1` (`fk_user_id`,`is_private`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_fav_links`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_folders`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_folders`;
 CREATE TABLE `dsb_user_folders` (
@@ -1773,16 +1574,16 @@ CREATE TABLE `dsb_user_folders` (
   UNIQUE KEY `fk_user_id` (`fk_user_id`,`folder`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_folders`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_inbox`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_inbox`;
 CREATE TABLE `dsb_user_inbox` (
@@ -1802,16 +1603,16 @@ CREATE TABLE `dsb_user_inbox` (
   KEY `key1` (`fk_user_id`,`fk_folder_id`,`del`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_inbox`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_mtpls`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_mtpls`;
 CREATE TABLE `dsb_user_mtpls` (
@@ -1823,39 +1624,38 @@ CREATE TABLE `dsb_user_mtpls` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_mtpls`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_networks`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_networks`;
 CREATE TABLE `dsb_user_networks` (
   `nconn_id` int(10) unsigned NOT NULL auto_increment,
   `fk_user_id` int(10) unsigned NOT NULL default '0',
   `fk_net_id` int(10) unsigned NOT NULL default '0',
-  `fk_user_id_friend` int(10) unsigned NOT NULL default '0',
+  `fk_user_id_other` int(10) unsigned NOT NULL default '0',
   `nconn_status` tinyint(2) unsigned NOT NULL default '0',
   PRIMARY KEY  (`nconn_id`),
-  UNIQUE KEY `unique1` (`fk_user_id`,`fk_net_id`,`fk_user_id_friend`),
+  UNIQUE KEY `unique1` (`fk_user_id`,`fk_net_id`,`fk_user_id_other`),
   KEY `index1` (`fk_user_id`,`fk_net_id`,`nconn_status`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_networks`
--- 
-
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_outbox`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_outbox`;
 CREATE TABLE `dsb_user_outbox` (
@@ -1873,16 +1673,16 @@ CREATE TABLE `dsb_user_outbox` (
   KEY `user_id_2` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_outbox`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_photos`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_photos`;
 CREATE TABLE `dsb_user_photos` (
@@ -1915,35 +1715,15 @@ CREATE TABLE `dsb_user_photos` (
   FULLTEXT KEY `caption` (`caption`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_photos`
--- 
-
-INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `allow_rating`, `caption`, `status`, `del`, `flagged`, `reject_reason`, `stat_views`, `stat_votes`, `stat_votes_total`, `stat_comments`, `date_posted`, `last_changed`) VALUES (1, 2, 'test2', '8/2_11176235928.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 4, 1, 4, 0, '2007-04-10 20:12:09', '2007-04-10 20:12:21'),
-(2, 1, 'test', '0/1_11176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 2, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-11 07:52:11'),
-(3, 1, 'test', '6/1_21176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 3, 42, 174, 0, '2007-04-11 07:37:49', '2007-04-11 07:38:14'),
-(4, 1, 'test', '5/1_31176277054.jpg', 0, 0, 0, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-11 07:38:14'),
-(5, 1, 'test', '3/1_41176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-11 07:38:14'),
-(6, 1, 'test', '0/1_51176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-12 06:15:52'),
-(7, 1, 'test', '4/1_61176277054.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-11 07:37:49', '2007-04-11 07:38:14'),
-(8, 1, 'test', '0/1_11176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
-(9, 1, 'test', '9/1_21176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
-(10, 1, 'test', '1/1_31176380289.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:37'),
-(11, 1, 'test', '3/1_41176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
-(12, 1, 'test', '3/1_51176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
-(13, 1, 'test', '0/1_61176380289.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:18:13', '2007-04-12 12:18:29'),
-(14, 3, 'test3', '4/3_11176380554.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 8, 2, 5, 1, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
-(15, 3, 'test3', '4/3_21176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 5, 2, 9, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
-(16, 3, 'test3', '0/3_31176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 1, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
-(17, 3, 'test3', '4/3_41176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
-(18, 3, 'test3', '3/3_51176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04'),
-(19, 3, 'test3', '6/3_61176380554.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-12 12:22:49', '2007-04-12 12:23:04');
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_profiles`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_profiles`;
 CREATE TABLE `dsb_user_profiles` (
@@ -1985,19 +1765,15 @@ CREATE TABLE `dsb_user_profiles` (
   KEY `key1` (`status`,`del`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_profiles`
--- 
-
-INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`, `f6_country`, `f6_state`, `f6_city`, `f6_zip`, `f7`, `f8`, `f9`, `f10`, `f11`, `f12`, `f13`, `f14`, `f15`) VALUES (1, 1, 5, 0, '2007-04-14 15:59:49', '2007-04-06 21:01:10', '', 'test', '1/1_31176380289.jpg', 0.0000000000, 0.0000000000, 13, 'ala babala portocala', 1, '|2|', 4, '1976-11-01', 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
-(2, 2, 15, 0, '2007-04-10 20:12:21', '2007-04-07 08:46:16', '', 'test2', '8/2_11176235928.jpg', 0.0000000000, 0.0000000000, 15, 'alandala', 1, '|2|', 3, '0000-00-00', 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
-(3, 3, 15, 0, '2007-04-12 12:23:04', '2007-04-07 10:20:56', '', 'test3', '4/3_11176380554.jpg', 0.0000000000, 0.0000000000, 2, '', 2, '|1|2|', 3, '0000-00-00', 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, '');
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_searches`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_searches`;
 CREATE TABLE `dsb_user_searches` (
@@ -2013,16 +1789,16 @@ CREATE TABLE `dsb_user_searches` (
   KEY `alert` (`alert`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_searches`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_settings2`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_settings2`;
 CREATE TABLE `dsb_user_settings2` (
@@ -2036,16 +1812,16 @@ CREATE TABLE `dsb_user_settings2` (
   KEY `fk_module_code` (`fk_module_code`)
 ) TYPE=MyISAM COMMENT='0-n/a,1-chkbox,2-tf,3-ta';
 
--- 
+--
 -- Dumping data for table `dsb_user_settings2`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_spambox`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_spambox`;
 CREATE TABLE `dsb_user_spambox` (
@@ -2063,16 +1839,16 @@ CREATE TABLE `dsb_user_spambox` (
   KEY `user_id_2` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_spambox`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_stats`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_stats`;
 CREATE TABLE `dsb_user_stats` (
@@ -2082,14 +1858,7 @@ CREATE TABLE `dsb_user_stats` (
   UNIQUE KEY `thekey` (`fk_user_id`,`stat`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_stats`
--- 
+--
 
-INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (2, 'total_photos', 1),
-(1, 'total_photos', 12),
-(1, 'flirts_sent', 1),
-(1, 'blog_posts', 3),
-(3, 'total_photos', 6),
-(2, 'blog_posts', 1),
-(1, 'comments', 1);

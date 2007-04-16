@@ -2,12 +2,13 @@
 	<h3>Connect</h3>
 	<div class="box_content">
 		<ul class="menu">
-			<li class="first"><a class="content-link link_bookmark" href="bookmark.php?uid={output.uid}">Bookmark</a></li>
+			<li class="first"><a class="content-link link_bookmark" href="processors/add2net.php?uid={output.uid}&amp;net_id=3&amp;return={output.return}">Add to favorites</a></li>
+			<li><a class="content-link link_bookmark" href="processors/add2net.php?uid={output.uid}&amp;net_id=1&amp;return={output.return}">Add to friends</a></li>
 			<li><a class="content-link link_mail" href="message_send.php?to_id={output.uid}">Send message</a></li>
 			<li><a class="content-link link_flirt" href="flirt_send.php?to_id={output.uid}">Send a flirt</a></li>
 			<li>
-				<opt name="unblock_user"><a class="content-link link_block" href="processors/filters_delete.php?uid={uid}">Unblock</a></opt name="unblock_user">
-				<opt name="!unblock_user"><a class="content-link link_block" href="processors/filters_addedit.php?uid={uid}">Block</a></opt name="!unblock_user">
+				<opt name="output.unblock_user"><a id="link_unblock" class="content-link link_block" href="processors/del_from_net.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Unblock</a></opt name="output.unblock_user">
+				<opt name="!output.unblock_user"><a id="link_block" class="content-link link_block" href="processors/add2net.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Block</a></opt name="!output.unblock_user">
 			</li>
 		</ul>
 	</div>
@@ -16,14 +17,7 @@
 <div class="content_area small">
 	<h3>Friends</h3>
 	<div class="box_content">
-		<ul id="user_friends">
-			<loop name="user_friends">
-			<li><a href="block.php?uid={uid}">Block</a></li>
-			<noloop name="user_friends">
-			<li>No friends yet</li>
-			</noloop name="user_friends">
-			</loop name="user_friends">
-		</ul>
+		{output.user_friends}
+		<opt name="!output.user_friends">No friends yet</opt name="!output.user_friends">
 	</div>
 </div>
-

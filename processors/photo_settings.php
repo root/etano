@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['is_private']=sanitize_and_format_gpc($_POST,'is_private',TYPE_INT,0,0);
 	$input['allow_comments']=sanitize_and_format_gpc($_POST,'allow_comments',TYPE_INT,0,0);
 	$input['is_main']=sanitize_and_format_gpc($_POST,'is_main',TYPE_INT,0,0);
-	$input['caption']=sanitize_and_format_gpc($_POST,'caption',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$input['caption']=sanitize_and_format_gpc($_POST,'caption',TYPE_STRING,$__html2format[HTML_TEXTFIELD],array());
 
 	if (!$error) {
 		$query="SELECT `photo_id`,`caption`,`is_main`,`photo`,`status` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",array_keys($input['caption']))."') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";

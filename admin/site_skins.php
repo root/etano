@@ -16,7 +16,6 @@ require_once '../includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/admin_functions.inc.php';
-require_once '../includes/tables/site_skins.inc.php';
 allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');

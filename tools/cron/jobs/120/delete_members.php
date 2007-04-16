@@ -49,7 +49,7 @@ function delete_members() {
 		$query="DELETE FROM `{$dbtable_prefix}user_networks` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-		$query="DELETE FROM `{$dbtable_prefix}user_networks` WHERE `fk_user_id_friend` IN ('".join("','",$uids)."')";
+		$query="DELETE FROM `{$dbtable_prefix}user_networks` WHERE `fk_user_id_other` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$query="DELETE FROM `{$dbtable_prefix}user_outbox` WHERE `fk_user_id` IN ('".join("','",$uids)."')";

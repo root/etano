@@ -147,3 +147,26 @@ function send_template_email($to,$subject,$template,$skin,$output=array()) {
 	}
 	return $myreturn;
 }
+
+// $mess_array must contain keys from $queue_message_default and should be already sanitized
+function queue_or_send_message($user_id,$mess_array,$force_send=false) {
+	require_once 'tables/queue_message.inc.php';
+	global $dbtable_prefix;
+	if (!$force_send) {
+		$query="INSERT INTO `{$dbtable_prefix}queue_message` SET `date_sent`='".gmdate('YmdHis')."'";
+		foreach ($queue_message_default['defaults'] as $k=>$v) {
+			if (isset($mess_array[$k])) {
+				$query.=",`$k`='".$mess_array[$k]."'";
+			}
+		}
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	} else {
+		$query="INSERT INTO `{$dbtable_prefix}user_inbox` SET `date_sent`='".gmdate('YmdHis')."'";
+		foreach ($queue_message_default['defaults'] as $k=>$v) {
+			if (isset($mess_array[$k])) {
+				$query.=",`$k`='".$mess_array[$k]."'";
+			}
+		}
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
+}

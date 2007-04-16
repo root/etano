@@ -31,7 +31,7 @@
 	background-repeat: no-repeat;
 }
 
-a.link_delete {
+.my_searches a.link_delete {
 	float: left;
 	width: 22px;
 	height: 22px;
@@ -40,7 +40,7 @@ a.link_delete {
 	text-indent: -9999px;
 }
 
-a.link_change {
+.my_searches a.link_change {
 	float: right;
 	width: 22px;
 	height: 22px;

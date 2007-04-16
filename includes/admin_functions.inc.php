@@ -304,8 +304,8 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 	$config=get_site_option(array('use_queue','mail_from'),'core');
 	$query_len=10000;
 	if (!$force_send && !empty($config['use_queue'])) {
-		$email['subject']=sanitize_and_format($email['subject'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
-		$email['message_body']=sanitize_and_format($email['message_body'],TYPE_STRING,$__html2format[HTML_TEXTAREA]);
+		$email['subject']=sanitize_and_format($email['subject'],TYPE_STRING,$GLOBALS['__html2format'][HTML_TEXTFIELD]);
+		$email['message_body']=sanitize_and_format($email['message_body'],TYPE_STRING,$GLOBALS['__html2format'][HTML_TEXTAREA]);
 		global $dbtable_prefix;
 		$base="INSERT INTO `{$dbtable_prefix}queue_email` (`to`,`subject`,`message_body`) VALUES ";
 		$query=$base;
