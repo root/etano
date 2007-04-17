@@ -11,10 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 *******************************************************************************/
 
-if (@ini_get('zlib.output_compression')!='1' && strtolower(ini_get('zlib.output_compression'))!='on' && @ini_get('output_handler')!='ob_gzhandler') {
-	ob_start('ob_gzhandler');
-}
-
+ob_start();
 ini_set('include_path','.');
 ini_set('session.use_cookies',1);
 setlocale(LC_CTYPE,'C');

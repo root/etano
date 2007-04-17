@@ -26,7 +26,18 @@ function gen_user_cache() {
 	require_once '../../includes/classes/modman.class.php';
 	$modman=new modman();
 
-	$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `status`='".STAT_APPROVED."' AND `last_changed`>=DATE_SUB(now(),INTERVAL ".($interval+2)." MINUTE)";
+	$select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`longitude`,`latitude`';
+	foreach ($_pfields as $field_id=>$field) {
+		if ($field['html_type']==HTML_DATE) {
+			$select.=",DATE_FORMAT(NOW(),'%Y')-DATE_FORMAT(`".$field['dbfield']."`,'%Y')-(DATE_FORMAT(NOW(),'%m%d')<DATE_FORMAT(`".$field['dbfield']."`,'%m%d')) as `".$field['dbfield']."`";
+		} elseif ($field['html_type']==HTML_LOCATION) {
+			$select.=',`'.$field['dbfield'].'_country`,`'.$field['dbfield'].'_state`,`'.$field['dbfield'].'_city`,`'.$field['dbfield'].'_zip`';
+		} else {
+			$select.=',`'.$field['dbfield'].'`';
+		}
+	}
+
+	$query="SELECT $select FROM `{$dbtable_prefix}user_profiles` WHERE `status`='".STAT_APPROVED."' AND `last_changed`>=DATE_SUB(now(),INTERVAL ".($interval+2)." MINUTE)";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($profile=mysql_fetch_assoc($res)) {
 	// set all the fields to their real (readable) values
@@ -41,13 +52,18 @@ function gen_user_cache() {
 						$profile[$field['dbfield']]=bbcode2html($profile[$field['dbfield']]);
 					}
 				} elseif ($field['html_type']==HTML_SELECT) {
-					$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+					// if we sanitize here " will be rendered as &quot; which is not what we want
+	//				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+					$profile[$field['dbfield']]=$field['accepted_values'][$profile[$field['dbfield']]];
 				} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
 					$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 				} elseif ($field['html_type']==HTML_INT || $field['html_type']==HTML_FLOAT) {
 		//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
 				} elseif ($field['html_type']==HTML_DATE) {
-		//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
+					$profile[$field['dbfield'].'_label']=$field['search_label'];
+					if ($profile[$field['dbfield']]>110) {
+						$profile[$field['dbfield']]='?';
+					}
 				} elseif ($field['html_type']==HTML_LOCATION) {
 					$profile[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$profile[$field['dbfield'].'_country'],'-');
 					if (!empty($profile[$field['dbfield'].'_state'])) {
@@ -75,16 +91,6 @@ function gen_user_cache() {
 				$modman->fileop->mkdir(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id']);
 			}
 
-			// generate the profile.html page (without the categories loop)
-			$tpl->set_file('temp',$skins[$s].'/static/profile.html');
-			$towrite=$tpl->process('','temp',TPL_OPTIONAL);
-			$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/profile.html',$towrite);
-
-			// generate the user details for gallery view
-			$tpl->set_file('temp',$skins[$s].'/static/user_gallery.html');
-			$towrite=$tpl->process('','temp');
-			$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/user_gallery.html',$towrite);
-
 			// generate the user details for result lists
 			$tpl->set_file('temp',$skins[$s].'/static/result_user.html');
 			$towrite=$tpl->process('','temp');
@@ -97,8 +103,10 @@ function gen_user_cache() {
 				$fields=array();
 				$j=0;
 				for ($i=0;isset($pcat['fields'][$i]);++$i) {
-					$fields[$i]['label']=$_pfields[$pcat['fields'][$i]]['label'];
-					$fields[$i]['field']=$profile[$_pfields[$pcat['fields'][$i]]['dbfield']];
+					if (!empty($profile[$_pfields[$pcat['fields'][$i]]['dbfield']])) {
+						$fields[$i]['label']=$profile[$_pfields[$pcat['fields'][$i]]['dbfield'].'_label'];
+						$fields[$i]['field']=$profile[$_pfields[$pcat['fields'][$i]]['dbfield']];
+					}
 				}
 				$categs['pcat_name']=$pcat['pcat_name'];
 				$categs['pcat_id']=$pcat_id;
@@ -112,4 +120,5 @@ function gen_user_cache() {
 		}
 		$tpl->drop_var('user');
 	}
+	return true;
 }
