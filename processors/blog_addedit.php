@@ -48,11 +48,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$modman=new modman();
 		$towrite=array();	// what to write in the cache file
 		if (!empty($input['blog_id'])) {
+			foreach ($input as $k=>$v) {
+				$towrite[$k]=sanitize_and_format_gpc($_POST,$k,TYPE_STRING,$__html2format[TEXT_GPC2DISPLAY],'');
+			}
 			$query="UPDATE IGNORE `{$dbtable_prefix}user_blogs` SET ";
 			foreach ($user_blogs_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.="`$k`='".$input[$k]."',";
-					$towrite[$k]=$input[$k];
 				}
 			}
 			$query=substr($query,0,-1);
@@ -63,11 +65,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input['blog_id']=(string)$input['blog_id'];
 		} else {
 			unset($input['blog_id']);
+			foreach ($input as $k=>$v) {
+				$towrite[$k]=sanitize_and_format_gpc($_POST,$k,TYPE_STRING,$__html2format[TEXT_GPC2DISPLAY],'');
+			}
 			$query="INSERT INTO `{$dbtable_prefix}user_blogs` SET ";
 			foreach ($user_blogs_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.="`$k`='".$input[$k]."',";
-					$towrite[$k]=$input[$k];
 				}
 			}
 			$query=substr($query,0,-1);

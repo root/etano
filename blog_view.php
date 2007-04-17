@@ -25,7 +25,9 @@ $blog=array();
 $loop=array();
 if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 	$blog_id=(string)(int)$_GET['bid'];
-	include _CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php';
+	if (is_file(_CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php')) {
+		include _CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php';
+	}
 
 	$is_auth_user=false;
 	if (isset($_SESSION['user']['user_id'])) {
@@ -80,7 +82,7 @@ $tpl->drop_loop('loop');
 unset($loop);
 
 $tplvars['title']='Blog posts';
-$tplvars['page_title']=$blog['blog_name'];
+$tplvars['page_title']=isset($blog['blog_name']) ? $blog['blog_name'] : '';
 $tplvars['page']='blog_view';
 $tplvars['css']='blog_view.css';
 if (is_file('blog_view_left.php')) {
