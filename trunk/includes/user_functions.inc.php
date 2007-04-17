@@ -128,14 +128,48 @@ function update_stats($user_id,$stat,$add_val) {
 }
 
 
-function get_user_settings($user_id,$module_code) {
+function get_user_settings($user_id,$module_code,$option='') {
 	$myreturn=array();
 	global $dbtable_prefix;
 	if (!empty($user_id)) {
-		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`='$user_id' AND `fk_module_code`='$module_code'";
+		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`='$user_id'";
+		if (!empty($option)) {
+			$query.=" AND `config_option`='$option'";
+		}
+		$query.=" AND `fk_module_code`='$module_code'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		while ($rsrow=mysql_fetch_row($res)) {
-			$myreturn[$rsrow[0]]=$rsrow[1];
+		if (mysql_num_rows($res)) {
+			while ($rsrow=mysql_fetch_row($res)) {
+				$myreturn[$rsrow[0]]=$rsrow[1];
+			}
+			if (!empty($option)) {
+				$myreturn=array_shift($myreturn);
+			}
+		} else {
+			$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE 1";
+			if (!empty($option)) {
+				$query.=" AND `config_option`='$option'";
+			}
+			$query.=" AND `fk_module_code`='$module_code' AND `per_user`=1";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				while ($rsrow=mysql_fetch_row($res)) {
+					$myreturn[$rsrow[0]]=$rsrow[1];
+				}
+				if (!empty($option)) {
+					$myreturn=array_shift($myreturn);
+				}
+				$query="INSERT IGNORE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='$user_id'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				if (is_array($myreturn)) {
+					foreach ($myreturn as $k=>$v) {
+						$query.=",`$k`='$v'";
+					}
+				} else {
+					$query.=",`$option`='$myreturn'";
+				}
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			}
 		}
 	}
 	return $myreturn;

@@ -30,7 +30,6 @@ foreach ($_pfields as $field_id=>$field) {
 }
 
 $query="SELECT $select FROM `{$dbtable_prefix}user_profiles` WHERE `status`='".STAT_APPROVED."'";
-//$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `status`='".STAT_APPROVED."' AND `last_changed`>=DATE_SUB(now(),INTERVAL 12 MINUTE)";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($profile=mysql_fetch_assoc($res)) {
 // set all the fields to their real (readable) values

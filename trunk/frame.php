@@ -28,4 +28,5 @@ echo $tpl->process('','frame',TPL_FINISH | TPL_OPTIONAL | TPL_INCLUDE);
 if (isset($_SESSION['topass'])) {
 	unset($_SESSION['topass']);
 }
+ob_end_flush();
 ?>

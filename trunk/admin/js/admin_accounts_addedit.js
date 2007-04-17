@@ -43,7 +43,7 @@ function check_form(the) {
 }
 
 function showhide(strCheck,strHide) {
-	if ($('#strCheck')[0].checked==true) {
+	if ($('#'+strCheck)[0].checked==true) {
 		$("#"+strHide).show();
 	} else {
 		$("#"+strHide).hide();
