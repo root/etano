@@ -65,6 +65,10 @@ if (!empty($photo_id)) {
 			}
 		}
 	}
+} else {
+	$topass['message']['type']=MESSAGE_ERROR;
+	$topass['message']['text']='Invalid photo selected';
+	redirect2page('info.php',$topass);
 }
 
 $output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');

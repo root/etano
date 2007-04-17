@@ -25,7 +25,8 @@ $output['bbcode_comments']=get_site_option('bbcode_comments','core');
 
 $loop=array();
 if (!empty($post_id)) {
-	$query="SELECT `allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id' AND `is_public`=1 AND `status`='".STAT_APPROVED."'";
+	// no need to check the status of the post ( AND `status`='".STAT_APPROVED."')
+	$query="SELECT `allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id' AND `is_public`=1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$allow_comments=mysql_result($res,0,0);
