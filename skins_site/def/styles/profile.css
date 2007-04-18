@@ -38,3 +38,24 @@
 #profile_area {
 	width: 500px;
 }
+
+
+/* LEFT MENU */
+
+#user_friends li {
+	width: 100%;
+}
+
+#user_friends .user_photo {
+	float: left;
+	padding: 0 5px 5px 0;
+}
+
+#user_friends .thumb1 {
+	width: 60px;
+	height: 60px;
+}
+
+#user_friends .info1, #user_friends .info2, #user_friends .info3 {
+	display: none;
+}

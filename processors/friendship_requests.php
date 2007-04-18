@@ -1,0 +1,65 @@
+<?php
+/******************************************************************************
+newdsb
+===============================================================================
+File:                       processors/friendship_requests.php
+$Revision: 67 $
+Software by:                DateMill (http://www.datemill.com)
+Copyright by:               DateMill (http://www.datemill.com)
+Support at:                 http://forum.datemill.com
+*******************************************************************************
+* See the "softwarelicense.txt" file for license.                             *
+******************************************************************************/
+
+require_once '../includes/sessions.inc.php';
+require_once '../includes/vars.inc.php';
+db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
+require_once '../includes/classes/phemplate.class.php';
+require_once '../includes/user_functions.inc.php';
+check_login_member(-1);
+
+$error=false;
+$qs='';
+$qs_sep='';
+$topass=array();
+$nextpage='friendship_requests.php';
+if ($_SERVER['REQUEST_METHOD']=='POST') {
+	$input=array();
+// get the input we need and sanitize it
+	$input['nconn_id']=sanitize_and_format_gpc($_POST,'nconn_id',TYPE_INT,0,array());
+	if (isset($_POST['return']) && !empty($_POST['return'])) {
+		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
+		$nextpage=$input['return'];
+	}
+
+	if (!$error) {
+		if (!empty($input['nconn_id'])) {
+			if (isset($_POST['btn_accept'])) {
+				$query="UPDATE `{$dbtable_prefix}user_networks` SET `nconn_status`=1 WHERE `nconn_id` IN ('".join("','",$input['nconn_id'])."')";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$query="SELECT `fk_user_id`,`fk_net_id` FROM `{$dbtable_prefix}user_networks` WHERE `nconn_id` IN ('".join("','",$input['nconn_id'])."')";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				while ($rsrow=mysql_fetch_assoc($res)) {
+					$query="INSERT IGNORE INTO `{$dbtable_prefix}user_networks` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`fk_net_id`='".$rsrow['fk_net_id']."',`fk_user_id_other`='".$rsrow['fk_user_id']."',`nconn_status`=1";
+					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				}
+				$topass['message']['type']=MESSAGE_INFO;
+				$topass['message']['text']=sprintf('%s connections added',count($input['nconn_id']));     // translate
+			} elseif (isset($_POST['btn_deny'])) {
+				$query="DELETE FROM `{$dbtable_prefix}user_networks` WHERE `nconn_id` IN ('".join("','",$input['nconn_id'])."')";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$topass['message']['type']=MESSAGE_INFO;
+				$topass['message']['text']=sprintf('%s connections declined',count($input['nconn_id']));     // translate
+			}
+		}
+	} else {
+// 		you must re-read all textareas from $_POST like this:
+//		$input['x']=addslashes_mq($_POST['x']);
+		$input['return']=rawurlencode($input['return']);
+		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
+		$topass['input']=$input;
+	}
+}
+$nextpage=_BASEURL_.'/'.$nextpage;
+redirect2page($nextpage,$topass,'',true);
+?>

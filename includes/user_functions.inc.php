@@ -128,54 +128,6 @@ function update_stats($user_id,$stat,$add_val) {
 }
 
 
-function get_user_settings($user_id,$module_code,$option='') {
-	$myreturn=array();
-	global $dbtable_prefix;
-	if (!empty($user_id)) {
-		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`='$user_id'";
-		if (!empty($option)) {
-			$query.=" AND `config_option`='$option'";
-		}
-		$query.=" AND `fk_module_code`='$module_code'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		if (mysql_num_rows($res)) {
-			while ($rsrow=mysql_fetch_row($res)) {
-				$myreturn[$rsrow[0]]=$rsrow[1];
-			}
-			if (!empty($option)) {
-				$myreturn=array_shift($myreturn);
-			}
-		} else {
-			$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE 1";
-			if (!empty($option)) {
-				$query.=" AND `config_option`='$option'";
-			}
-			$query.=" AND `fk_module_code`='$module_code' AND `per_user`=1";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			if (mysql_num_rows($res)) {
-				while ($rsrow=mysql_fetch_row($res)) {
-					$myreturn[$rsrow[0]]=$rsrow[1];
-				}
-				if (!empty($option)) {
-					$myreturn=array_shift($myreturn);
-				}
-				$query="INSERT IGNORE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='$user_id'";
-				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				if (is_array($myreturn)) {
-					foreach ($myreturn as $k=>$v) {
-						$query.=",`$k`='$v'";
-					}
-				} else {
-					$query.=",`$option`='$myreturn'";
-				}
-				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			}
-		}
-	}
-	return $myreturn;
-}
-
-
 function allow_at_level($level_id,$membership=1) {
 	$myreturn=false;
 	$membership=(int)$membership;
@@ -198,19 +150,4 @@ function get_user_folder_name($folder_id,$user_id=null) {
 		$myreturn=mysql_result($res,0,0);
 	}
 	return $myreturn;
-}
-
-
-function add_member_score($user_ids,$act,$times=1,$points=0) {
-	if (!is_array($user_ids)) {
-		$user_ids=array($user_ids);
-	}
-	global $dbtable_prefix;
-	$scores=array('force'=>0,'login'=>5,'logout'=>-4,'approved'=>10,'rejected'=>-10,'add_main_photo'=>10,'del_main_photo'=>-10,'add_photo'=>2,'del_photo'=>-2,'add_blog'=>5,'payment'=>50,'unpayment'=>-50,);
-	$scores['force']+=$points;
-	if (isset($scores[$act]) && !empty($user_ids)) {
-		$scores[$act]*=$times;
-		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `score`=`score`+".$scores[$act]." WHERE `fk_user_id` IN ('".join("','",$user_ids)."')";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	}
 }

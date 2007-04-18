@@ -56,6 +56,10 @@ if (!empty($post_id)) {
 				$tpl->set_var('allow_comments',true);
 			}
 		}
+	} else {
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Invalid blog selected';
+		redirect2page('info.php',$topass,'');
 	}
 }
 

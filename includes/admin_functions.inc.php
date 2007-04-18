@@ -280,20 +280,6 @@ function get_user_by_userid($user_id) {
 }
 
 
-function get_userid_by_user($user) {
-	$myreturn=0;
-	global $dbtable_prefix;
-	if (!empty($user)) {
-		$query="SELECT `user_id` FROM ".USER_ACCOUNTS_TABLE." WHERE `user`='$user'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		if (mysql_num_rows($res)) {
-			$myreturn=mysql_result($res,0,0);
-		}
-	}
-	return $myreturn;
-}
-
-
 //	$email must have the keys: 'subject','message_body'
 //	Both the subject and the message_body are assumed to be NOT sanitized but STRIPSLASH_MQ'ed
 function queue_or_send_email($email_addrs,$email,$force_send=false) {

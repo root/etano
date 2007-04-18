@@ -36,9 +36,6 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 			}
 		}
 	}
-} elseif (isset($_GET['user'])) {
-	$user=sanitize_and_format($_GET['user'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
-	$uid=get_userid_by_user($user);
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
 	$topass['message']['text']='No user selected';

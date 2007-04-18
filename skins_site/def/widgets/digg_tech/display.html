@@ -1,0 +1,14 @@
+<loop name="items">
+<div class="blog_mini">
+	<a class="link_bare" target="_blank" href="{items.link}"><img class="user_photo" src="{items.digg:userimage}" /></a>
+	<p><a target="_blank" href="{items.link}">{items.title}</a></p>
+	<p>{items.pubdate}</p>
+	<p>{items.description}</p>
+</div>
+<div class="clear"></div>
+<noloop name="items">
+<div class="blog_mini">
+	<p>No news found</p>
+</div>
+</noloop name="items">
+</loop name="items">

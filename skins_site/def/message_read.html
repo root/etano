@@ -16,11 +16,10 @@
 			<opt name="is_outbox">Message to:</opt name="is_outbox">
 		</span>
 		<strong>
-			<opt name="output.other_id"><a class="content-link member_link {output.is_online}" href="profile.php?uid={output.other_id}" title="{output._user_other}"></opt name="output.other_id">{output._user_other}<opt name="output.other_id"></a></opt name="output.other_id">
-			<opt name="output.other_id">
+			<opt name="output.other_id"><a class="content-link member_link {output.is_online}" href="profile.php?uid={output.other_id}" title="{output._user_other}"></opt name="output.other_id">{output._user_other}<opt name="output.other_id"></a>
 			<span>|</span>
-			<opt name="is_blocked"><a class="content-link link_block" href="processors/filters_delete.php?uid={output.other_id}&amp;mail_id={output.mail_id}&amp;fid={fid}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Unblock user</a></opt name="is_blocked">
-			<opt name="!is_blocked"><a class="content-link link_block" href="processors/filters_addedit.php?uid={output.other_id}&amp;mail_id={output.mail_id}&amp;fid={fid}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Block user</a></opt name="!is_blocked">
+			<opt name="output.is_blocked"><a class="content-link link_block" href="processors/net_deluser.php?uid={output.other_id}&amp;net_id={output.net_block}&amp;return={output.return2me}">Unblock user</a></opt name="output.is_blocked">
+			<opt name="!output.is_blocked"><a class="content-link link_block" href="processors/net_adduser.php?uid={output.other_id}&amp;net_id={output.net_block}&amp;return={output.return2me}">Block user</a></opt name="!output.is_blocked">
 			</opt name="output.other_id">
 		</strong>
 	</li>
@@ -56,7 +55,7 @@
 
 </div>
 <div id="bottom_links">
-	<a class="content-link link_previous" href="{output.return2}">Back to {mailbox_name}</a>
+	<a class="content-link link_previous" href="{output.return2}">Back to {output.mailbox_name}</a>
 </div>
 
 <script type="text/javascript" src="js/message_read.js"></script>

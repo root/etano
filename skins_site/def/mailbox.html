@@ -22,20 +22,20 @@
 	<div class="sender">{loop.user_other}</div>
 	<div class="subject"><a class="content-link plain" href="message_read.php?mail_id={loop.mail_id}&amp;fid={fid}&amp;return={return}" title="Subject">{loop.subject}</a></div>
 	<div class="date">{loop.date_sent}</div>
-</div>
 	<noloop name="loop">
 	<p>No messages!</p>
 	</noloop name="loop">
+</div>
 </loop name="loop">
 </form>
 
 {pager2}
 
 <div id="controls">
-	<input type="submit" id="btn_delete" class="button blarge" value="Delete selected" />
+	<input type="submit" id="btn_delete" name="btn_delete" class="button blarge" value="Delete selected" />
 	<opt name="!is_outbox">
 	<span>|</span>
-	<input type="submit" id="btn_move" class="button blarge" value="Move selected" />
+	<input type="submit" id="btn_move" name="btn_move" class="button blarge" value="Move selected" />
 	 to
 	<select name="folder_id" id="folder_id">
 	{folder_options}

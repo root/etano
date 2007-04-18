@@ -57,6 +57,8 @@ switch ($type) {
 
 	default:
 		$template='info.html';
+		$tplvars['page_title']='Message';
+		$tplvars['page']='info';
 
 }
 $tpl->set_file('content',$template);
