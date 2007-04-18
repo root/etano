@@ -128,14 +128,18 @@ function send_template_email($to,$subject,$template,$skin,$output=array()) {
 	$tpl->set_var('tplvars',$tplvars);
 	$message_body=$tpl->process('temp','temp',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL | TPL_FINISH);
 
-	$config=get_site_option(array('mail_from'),'core');
+	$config=get_site_option(array('mail_from','mail_crlf'),'core');
 	require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
 	$mail=new PHPMailer();
 	$mail->IsHTML(true);
 	$mail->From=$config['mail_from'];
 	$mail->Sender=$config['mail_from'];
 	$mail->FromName=_SITENAME_;
-	$mail->LE="\n";
+	if ($config['mail_crlf']) {
+		$mail->LE="\r\n";
+	} else {
+		$mail->LE="\n";
+	}
 	$mail->IsMail();
 	$mail->AddAddress($to);
 	$mail->Subject=$subject;
@@ -168,5 +172,100 @@ function queue_or_send_message($user_id,$mess_array,$force_send=false) {
 			}
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		// new message notification?????????????????????????
 	}
+}
+
+
+function add_member_score($user_ids,$act,$times=1,$points=0) {
+	if (!is_array($user_ids)) {
+		$user_ids=array($user_ids);
+	}
+	global $dbtable_prefix;
+	$scores=array('force'=>0,'login'=>5,'logout'=>-4,'approved'=>10,'rejected'=>-10,'add_main_photo'=>10,'del_main_photo'=>-10,'add_photo'=>2,'del_photo'=>-2,'add_blog'=>5,'payment'=>50,'unpayment'=>-50,);
+	$scores['force']+=$points;
+	if (isset($scores[$act]) && !empty($user_ids)) {
+		$scores[$act]*=$times;
+		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `score`=`score`+".$scores[$act]." WHERE `fk_user_id` IN ('".join("','",$user_ids)."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
+}
+
+
+function get_user_settings($user_id,$module_code,$option='') {
+	$myreturn=array();
+	global $dbtable_prefix;
+	if (!empty($user_id)) {
+		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`='$user_id'";
+		if (!empty($option)) {
+			$query.=" AND `config_option`='$option'";
+		}
+		$query.=" AND `fk_module_code`='$module_code'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (mysql_num_rows($res)) {
+			while ($rsrow=mysql_fetch_row($res)) {
+				$myreturn[$rsrow[0]]=$rsrow[1];
+			}
+			if (!empty($option)) {
+				$myreturn=array_shift($myreturn);
+			}
+		} else {
+			$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE 1";
+			if (!empty($option)) {
+				$query.=" AND `config_option`='$option'";
+			}
+			$query.=" AND `fk_module_code`='$module_code' AND `per_user`=1";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				while ($rsrow=mysql_fetch_row($res)) {
+					$myreturn[$rsrow[0]]=$rsrow[1];
+				}
+				if (!empty($option)) {
+					$myreturn=array_shift($myreturn);
+				}
+				$query="INSERT IGNORE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='$user_id'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				if (is_array($myreturn)) {
+					foreach ($myreturn as $k=>$v) {
+						$query.=",`config_option`='$k',`config_value`='$v'";
+					}
+				} else {
+					$query.=",`config_option`='$option',`config_value`='$myreturn'";
+				}
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			}
+		}
+	}
+	return $myreturn;
+}
+
+
+function add_message_filter($filter) {
+	$myreturn=false;
+	global $dbtable_prefix;
+	$query="INSERT IGNORE INTO `{$dbtable_prefix}message_filters` SET ";
+	foreach ($filter as $k=>$v) {
+		$query.="`$k`='$v',";
+	}
+	$query=substr($query,0,-1);
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_affected_rows()) {
+		$myreturn=true;
+	}
+	return $myreturn;
+}
+
+
+function del_message_filter($filter) {
+	$myreturn=false;
+	global $dbtable_prefix;
+	$query="DELETE FROM `{$dbtable_prefix}message_filters` WHERE 1";
+	foreach ($filter as $k=>$v) {
+		$query.=" AND `$k`='$v'";
+	}
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_affected_rows()) {
+		$myreturn=true;
+	}
+	return $myreturn;
 }

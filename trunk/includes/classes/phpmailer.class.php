@@ -365,13 +365,13 @@ class PHPMailer
         // Choose the mailer
         switch($this->Mailer)
         {
-            case "sendmail":
+            case 'sendmail':
                 $result = $this->SendmailSend($header, $body);
                 break;
-            case "mail":
+            case 'mail':
                 $result = $this->MailSend($header, $body);
                 break;
-            case "smtp":
+            case 'smtp':
                 $result = $this->SmtpSend($header, $body);
                 break;
             default:
@@ -419,30 +419,29 @@ class PHPMailer
      * @return bool
      */
     function MailSend($header, $body) {
-        $to = "";
+        $to = '';
         for($i = 0; $i < count($this->to); $i++)
         {
-            if($i != 0) { $to .= ", "; }
+            if($i != 0) { $to .= ', '; }
             $to .= $this->to[$i][0];
         }
 
-        if ($this->Sender != "" && strlen(ini_get("safe_mode"))< 1)
+        if ($this->Sender != '' && strlen(ini_get('safe_mode'))< 1)
         {
-            $old_from = ini_get("sendmail_from");
-            ini_set("sendmail_from", $this->Sender);
+            $old_from = ini_get('sendmail_from');
+            ini_set('sendmail_from', $this->Sender);
             $params = sprintf("-oi -f %s", $this->Sender);
-            $rt = @mail($to, $this->EncodeHeader($this->Subject), $body,
-                        $header, $params);
+            $rt = @mail($to, $this->EncodeHeader($this->Subject), $body, $header, $params);
         }
         else
             $rt = @mail($to, $this->EncodeHeader($this->Subject), $body, $header);
 
         if (isset($old_from))
-            ini_set("sendmail_from", $old_from);
+            ini_set('sendmail_from', $old_from);
 
         if(!$rt)
         {
-            $this->SetError($this->Lang("instantiate"));
+//            $this->SetError($this->Lang('instantiate'));
             return false;
         }
 
@@ -1459,7 +1458,7 @@ class PHPMailer
      */
     function Lang($key) {
         if(count($this->language) < 1)
-            $this->SetLanguage("en"); // set the default language
+            $this->SetLanguage('en'); // set the default language
 
         if(isset($this->language[$key]))
             return $this->language[$key];

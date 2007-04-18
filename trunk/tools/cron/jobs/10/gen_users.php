@@ -3,6 +3,8 @@ $jobs[]='gen_user_cache';
 
 function gen_user_cache() {
 	global $dbtable_prefix;
+	global $_pfields;
+
 	$dirname=dirname(__FILE__);
 	$temp=array();
 	if ($dirname{0}=='/') {				// unixes here
@@ -45,18 +47,18 @@ function gen_user_cache() {
 			if ($field['visible']) {
 				$profile[$field['dbfield'].'_label']=$field['label'];
 				if ($field['html_type']==HTML_TEXTFIELD) {
-					$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+					$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
 				} elseif ($field['html_type']==HTML_TEXTAREA) {
-					$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+					$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
 					if ($config['bbcode_profile']) {
 						$profile[$field['dbfield']]=bbcode2html($profile[$field['dbfield']]);
 					}
 				} elseif ($field['html_type']==HTML_SELECT) {
 					// if we sanitize here " will be rendered as &quot; which is not what we want
-	//				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	//				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
 					$profile[$field['dbfield']]=$field['accepted_values'][$profile[$field['dbfield']]];
 				} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
-					$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+					$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
 				} elseif ($field['html_type']==HTML_INT || $field['html_type']==HTML_FLOAT) {
 		//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
 				} elseif ($field['html_type']==HTML_DATE) {

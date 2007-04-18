@@ -94,7 +94,7 @@ if (!empty($totalrows)) {
 		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 		$rsrow['is_read']=(!empty($rsrow['is_read'])) ? 'read' : 'not_read';
 		$rsrow['message_type']=$message_types[$rsrow['message_type']];
-		if ($rsrow['message_type']==MESS_SYSTEM) {
+		if ($rsrow['message_type']==MESS_SYSTEM && empty($rsrow['user_other'])) {
 			$rsrow['user_other']='SYSTEM';     // translate
 		}
 		$loop[]=$rsrow;

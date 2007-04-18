@@ -43,7 +43,7 @@ class widget_digg_tech extends icontent_widget {
 		$this->tpl->set_file('widget_content','widgets/digg_tech/display.html');
 		$query="SELECT `feed_xml` FROM `{$dbtable_prefix}feed_cache` WHERE `module_code`='".$this->module_code."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		if (mysql_num_rows($res)) {
+		if (mysql_num_rows($res) && mysql_result($res,0,0)) {
 			require_once _BASEPATH_.'/includes/classes/feed_reader.class.php';
 			$fr=new feedReader();
 			$fr->setRawXML(mysql_result($res,0,0));

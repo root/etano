@@ -7,8 +7,8 @@
 <loop name="loop">
 <div class="row">
 	<div class="control">
-		<a class="item_delete" href="processors/filters_delete.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Delete item">Delete</a>
-		<a class="item_edit" href="filters_addedit.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Edit filter">Edit</a>
+		<a class="content-link link_delete" href="processors/filters_delete.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Delete item">Delete</a>
+		<a class="content-link link_change" href="filters_addedit.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Edit filter">Edit</a>
 	</div>
 	<div class="rule">{loop.field_value}</div>
 	<div class="moveto">{loop.fk_folder_id}</div>

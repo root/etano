@@ -28,7 +28,9 @@ if (!empty($uid) && !empty($secret)) {
 		$qs='type=acctok';
 		redirect2page('info.php',array(),$qs);
 	} else {
-		die('Sorry, your account has not been found. Maybe you have already activated your account?');
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Sorry, your account has not been found. Maybe you have already activated your account?';
+		redirect2page('info.php',$topass);
 	}
 }
 ?>

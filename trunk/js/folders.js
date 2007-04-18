@@ -6,9 +6,9 @@ $(function() {
 		}
 	});
 
-	$('a.item_delete').bind('click',function() {
+	$('div.row a.link_delete').bind('click',function() {
 		return(confirm('Are you sure you want to delete this folder? All messages inside this folder will be moved to Trash and all the filters associated with this folder will be deleted!'));
-	}
+	});
 });
 
 function rename_folder(fid,defval) {

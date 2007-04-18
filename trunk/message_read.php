@@ -17,7 +17,7 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/user_inbox.inc.php';
-// no check_login_member() here. It is used down below
+check_login_member(-1);	// allow every member for now. Finer checking is made below
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
@@ -72,7 +72,7 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 
 	}
 
-	$query="SELECT a.*,UNIX_TIMESTAMP(a.`date_sent`) as `date_sent`,b.`fk_user_id` as `other_id`,b.`_photo` as `photo`,c.`last_activity` FROM `{$dbtable_prefix}user_{$mailbox_table}` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id_other`=b.`fk_user_id` LEFT JOIN `{$dbtable_prefix}online` c ON a.`fk_user_id_other`=c.`fk_user_id` WHERE $where LIMIT 1";
+	$query="SELECT a.*,UNIX_TIMESTAMP(a.`date_sent`) as `date_sent`,b.`fk_user_id` as `other_id`,b.`_photo` as `photo` FROM `{$dbtable_prefix}user_{$mailbox_table}` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id_other`=b.`fk_user_id` WHERE $where LIMIT 1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
@@ -91,8 +91,10 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 				break;
 
 			case MESS_SYSTEM:
-				check_login_member(-1);
-				$output['_user_other']='SYSTEM';     // translate
+				// check_login_member(-1); this check was made at the begining
+				if (empty($output['_user_other'])) {
+					$output['_user_other']='SYSTEM';     // translate
+				}
 				$tpl->set_var('spam_controls',false);
 				break;
 
@@ -104,22 +106,24 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 		if (empty($output['other_id'])) {
 			unset($output['other_id']);
 		} else {
-			if (!empty($output['last_activity'])) {
-				$output['is_online']='is_online';
+			require_once 'includes/network_functions.inc.php';
+			if (is_network_member($_SESSION['user']['user_id'],$output['other_id'],NET_BLOCK)) {
+				$output['is_blocked']=true;
 			}
-			$query="SELECT `filter_id` FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `filter_type`='".FILTER_SENDER."' AND `field_value`='".$output['other_id']."' AND `fk_folder_id`='".FOLDER_SPAMBOX."'";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			if (mysql_num_rows($res)) {
-				$tpl->set_var('is_blocked',true);
-			}
+			$output['net_block']=NET_BLOCK;
 		}
+		$output['mailbox_name']=$my_folders[$output['fid']];
 
+		$output['return2me']='message_read.php';
+		if (!empty($_SERVER['QUERY_STRING'])) {
+			$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+		}
+		$output['return2me']=rawurlencode($output['return2me']);
 		$tpl->set_file('content','message_read.html');
 		$tpl->set_var('output',$output);
-		$tpl->set_var('mailbox_name',$my_folders[$output['fid']]);
 		$tpl->process('content','content',TPL_OPTIONAL);
 		if ($output['is_read']==0) {
-			$query="UPDATE `{$dbtable_prefix}user_".$mailbox_table."` SET `is_read`=1 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `mail_id`='".$output['mail_id']."'";
+			$query="UPDATE `{$dbtable_prefix}user_{$mailbox_table}` SET `is_read`=1 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `mail_id`='".$output['mail_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	} else {

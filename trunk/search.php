@@ -255,12 +255,8 @@ if (!empty($output['search_md5'])) {
 $output['totalrows']=count($user_ids);
 
 // get the results from user cache for the found user_ids
-$results=array();
 if (!empty($output['totalrows'])) {
 	$user_ids=array_slice($user_ids,$output['o'],$output['r']);
-	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
-	$user_cache=new user_cache(get_my_skin());
-	$results=$user_cache->get_cache_array($user_ids,'result_user');
 	// how to display the results: in gallery mode or in list mode
 	$rv_mode='list_view';
 	if (isset($_COOKIE['sco_app']['rv_mode']) && $_COOKIE['sco_app']['rv_mode']=='g') {
@@ -271,7 +267,9 @@ if (!empty($output['totalrows'])) {
 			$rv_mode='gallery_view';
 		}
 	}
-	$output['results']=smart_table($results,5,$rv_mode);
+	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
+	$user_cache=new user_cache(get_my_skin());
+	$output['results']=smart_table($user_cache->get_cache_array($user_ids,'result_user'),5,$rv_mode);
 
 	// set $_GET for the pager.
 	$_GET=array('search'=>$output['search_md5'],'v'=>(isset($_GET['v']) && !empty($_GET['v'])) ? $_GET['v'] : 'l');
@@ -280,8 +278,10 @@ if (!empty($output['totalrows'])) {
 
 $tpl->set_file('content','search.html');
 $tpl->set_var('output',$output);
-$tpl->process('content','content',TPL_LOOP | TPL_OPTIONAL);
+$tpl->process('content','content',TPL_OPTIONAL);
 $tpl->drop_var('output.results');
+$tpl->drop_var('output.pager2');
+unset($output['results'],$output['pager2']);
 
 $tplvars['title']='Search Results';
 $tplvars['page_title']='Search Results';
