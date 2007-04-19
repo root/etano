@@ -14,10 +14,13 @@
 	<div class="box_content">
 		<ul class="menu">
 			<li><a class="content-link link_profile" href="profile.php?uid={output.fk_user_id}">View profile</a></li>
-			<li><a class="content-link link_bookmark" href="bookmark.php?t=1&amp;id={output.fk_user_id}">Bookmark member</a></li>
+			<li><a class="content-link link_bookmark" href="processors/net_adduser.php?uid={output.fk_user_id}&amp;net_id=3&amp;return={output.return}">Add to favorites</a></li>
 			<li><a class="content-link link_mail" href="message_send.php?to_id={output.fk_user_id}">Send message</a></li>
 			<li><a class="content-link link_flirt" href="flirt_send.php?to_id={output.fk_user_id}&amp;return={output.return}">Send a flirt</a></li>
-			<li><a class="content-link link_block" href="block.php?uid={output.fk_user_id}">Block</a></li>
+			<li>
+				<opt name="output.unblock_user"><a id="link_unblock" class="content-link link_block" href="processors/net_deluser.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Unblock</a></opt name="output.unblock_user">
+				<opt name="!output.unblock_user"><a id="link_block" class="content-link link_block" href="processors/net_adduser.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Block</a></opt name="!output.unblock_user">
+			</li>
 		</ul>
 	</div>
 </div>

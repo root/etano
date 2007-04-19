@@ -72,6 +72,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_comments`=`stat_comments`+1 WHERE `photo_id`='".$input['fk_photo_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['text']='Comment added.';	// translate this
+				$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='".$input['fk_photo_id']."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				if (mysql_num_rows($res)) {
+					$notification['fk_user_id']=mysql_result($res,0,0);
+					$notification['subject']='New comment on one of your photos';	// translate
+					$notification['message_body']=sprintf('%1s posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=%2s">Click here</a> to view the comment',$_SESSION['user']['user'],$input['fk_photo_id']);
+					$notification['message_type']=MESS_SYSTEM;
+					queue_or_send_message($notification);
+				}
 			} else {
 				$topass['message']['text']='Comment added but needs to be approved first.';	// translate this
 			}

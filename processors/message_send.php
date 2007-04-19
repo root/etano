@@ -26,8 +26,9 @@ $nextpage='mailbox.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
+	unset($queue_message_default['types']['mail_id']);	// no id cause we're not editing anything
 	foreach ($queue_message_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$queue_message_default['defaults'][$k]);
+		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v] | FORMAT_HTML2TEXT_FULL,$queue_message_default['defaults'][$k]);
 	}
 	if (isset($_POST['return']) && !empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');

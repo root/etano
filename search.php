@@ -61,7 +61,7 @@ if (!empty($output['search_md5'])) {
 				$input['acclevel_id']=16;
 				$search_fields=$basic_search_fields;
 				if (isset($_GET['wphoto'])) {
-					$where="a.`_photo`<>'' AND ".$where;
+					$where.=" AND a.`_photo`<>''";
 				}
 				break;
 
@@ -74,7 +74,7 @@ if (!empty($output['search_md5'])) {
 					}
 				}
 				if (isset($_GET['wphoto'])) {
-					$where="a.`_photo`<>'' AND ".$where;
+					$where.=" AND a.`_photo`<>''";
 				}
 				break;
 

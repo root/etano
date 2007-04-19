@@ -101,7 +101,7 @@ function gen_user_cache() {
 			// generate the categories to be used on profile.php page
 			$categs=array();
 			$tpl->set_file('temp',$skins[$s].'/static/profile_categ.html');
-			foreach ($_pcats as $pcat_id=>$pcat) {
+			foreach ($GLOBALS['_pcats'] as $pcat_id=>$pcat) {
 				$fields=array();
 				$j=0;
 				for ($i=0;isset($pcat['fields'][$i]);++$i) {

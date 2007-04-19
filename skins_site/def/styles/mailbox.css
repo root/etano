@@ -65,6 +65,8 @@
 #mailbox_form .row .control {
 	width: 40px;
 	border-left: 0;
+	background-position: top right;
+	background-repeat: no-repeat;
 }
 
 * html #mailbox_form .control input {

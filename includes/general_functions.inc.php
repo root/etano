@@ -153,7 +153,7 @@ function send_template_email($to,$subject,$template,$skin,$output=array()) {
 }
 
 // $mess_array must contain keys from $queue_message_default and should be already sanitized
-function queue_or_send_message($user_id,$mess_array,$force_send=false) {
+function queue_or_send_message($mess_array,$force_send=false) {
 	require_once 'tables/queue_message.inc.php';
 	global $dbtable_prefix;
 	if (!$force_send) {
@@ -198,7 +198,11 @@ function get_user_settings($user_id,$module_code,$option='') {
 	if (!empty($user_id)) {
 		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`='$user_id'";
 		if (!empty($option)) {
-			$query.=" AND `config_option`='$option'";
+			if (is_array($option)) {
+				$query.=" AND `config_option` IN ('".join("','",$option)."')";
+			} else {
+				$query.=" AND `config_option`='$option'";
+			}
 		}
 		$query.=" AND `fk_module_code`='$module_code'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -206,13 +210,17 @@ function get_user_settings($user_id,$module_code,$option='') {
 			while ($rsrow=mysql_fetch_row($res)) {
 				$myreturn[$rsrow[0]]=$rsrow[1];
 			}
-			if (!empty($option)) {
+			if (!empty($option) && !is_array($option)) {
 				$myreturn=array_shift($myreturn);
 			}
 		} else {
 			$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE 1";
 			if (!empty($option)) {
-				$query.=" AND `config_option`='$option'";
+				if (is_array($option)) {
+					$query.=" AND `config_option` IN ('".join("','",$option)."')";
+				} else {
+					$query.=" AND `config_option`='$option'";
+				}
 			}
 			$query.=" AND `fk_module_code`='$module_code' AND `per_user`=1";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -220,7 +228,7 @@ function get_user_settings($user_id,$module_code,$option='') {
 				while ($rsrow=mysql_fetch_row($res)) {
 					$myreturn[$rsrow[0]]=$rsrow[1];
 				}
-				if (!empty($option)) {
+				if (!empty($option) && !is_array($option)) {
 					$myreturn=array_shift($myreturn);
 				}
 				$query="INSERT IGNORE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='$user_id'";

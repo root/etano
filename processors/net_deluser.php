@@ -67,18 +67,7 @@ if (!$error) {
 			del_message_filter(array('filter_type'=>FILTER_SENDER,'fk_user_id'=>$_SESSION['user']['user_id'],'field_value'=>$input['uid']));
 		}
 		$topass['message']['type']=MESSAGE_INFO;
-		if (!empty($is_bidi)) {
-			$topass['message']['text']=sprintf('A confirmation request has been sent to %s',get_user_by_userid($input['uid']));     // translate
-			$request['fk_user_id']=$input['uid'];
-			$request['fk_user_id_other']=$_SESSION['user']['user_id'];
-			$request['_user_other']=$_SESSION['user']['user'];
-			$request['subject']=sprintf('Connection request from %s',$_SESSION['user']['user']);	// translate
-			$request['message_body']=sprintf('%1s wants to be your friend.<br><a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests',$_SESSION['user']['user']);
-			$request['message_type']=MESS_SYSTEM;
-			queue_or_send_message($input['uid'],$request);
-		} else {
-			$topass['message']['text']=sprintf('%1s has been added to your %2s',get_user_by_userid($input['uid']),get_net_name($input['net_id']));     // translate
-		}
+		$topass['message']['text']=sprintf('%1s has been removed from your %2s',get_user_by_userid($input['uid']),get_net_name($input['net_id']));     // translate
 	}
 }
 

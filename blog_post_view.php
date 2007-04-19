@@ -75,8 +75,8 @@ unset($loop);
 
 $tplvars['title']=sprintf('Blogs - %1s - %2s',$output['blog_name'],$output['title']);
 $tplvars['page_title']=sprintf('%1s : %2s','<a href="blog_view.php?bid='.$output['fk_blog_id'].'">'.$output['blog_name'].'</a>',$output['title']);	// translate this
-$tplvars['page']='blog_comments';
-$tplvars['css']='blog_comments.css';
+$tplvars['page']='blog_post_view';
+$tplvars['css']='blog_post_view.css';
 if (is_file('blog_post_view_left.php')) {
 	include 'blog_post_view_left.php';
 }

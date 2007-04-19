@@ -42,28 +42,30 @@ $loop=array();
 $i=0;
 foreach ($prefs as $module_code=>$v) {
 	foreach ($v as $config_option=>$kv) {
-		$loop[$i]['config_diz']=$kv['config_diz'];
-		switch ($kv['option_type']) {
+		if (isset($kv['config_diz']) && !empty($module_code)) {
+			$loop[$i]['config_diz']=$kv['config_diz'];
+			switch ($kv['option_type']) {
 
-			case HTML_CHECKBOX:
-				$kv['config_value']=($kv['config_value']==1) ? 'checked="checked"' : '';
-				$loop[$i]['field']='<input type="checkbox" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="1" '.$kv['config_value'].' />';
-				break;
+				case HTML_CHECKBOX:
+					$kv['config_value']=($kv['config_value']==1) ? 'checked="checked"' : '';
+					$loop[$i]['field']='<input type="checkbox" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="1" '.$kv['config_value'].' />';
+					break;
 
-			case HTML_TEXTFIELD:
-				$loop[$i]['field']='<input type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" />';
-				break;
+				case HTML_TEXTFIELD:
+					$loop[$i]['field']='<input type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" />';
+					break;
 
-			case HTML_INT:
-				$loop[$i]['field']='<input class="number" type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" />';
-				break;
+				case HTML_INT:
+					$loop[$i]['field']='<input class="number" type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" />';
+					break;
 
-			case HTML_TEXTAREA:
-				$loop[$i]['field']='<textarea name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'">'.$kv['config_value'].'</textarea>';
-				break;
+				case HTML_TEXTAREA:
+					$loop[$i]['field']='<textarea name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'">'.$kv['config_value'].'</textarea>';
+					break;
 
+			}
+			++$i;
 		}
-		++$i;
 	}
 }
 

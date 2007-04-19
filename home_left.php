@@ -12,5 +12,5 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $tpl->set_file('left_content','home_left.html');
-$tpl->process('left_content','left_content',TPL_LOOP | TPL_NOLOOP);
+$tpl->process('left_content','left_content');
 ?>

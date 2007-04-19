@@ -1,20 +1,20 @@
 -- phpMyAdmin SQL Dump
 -- version 2.8.2
 -- http://www.phpmyadmin.net
---
+-- 
 -- Host: localhost
--- Generation Time: Apr 16, 2007 at 04:17 PM
+-- Generation Time: Apr 19, 2007 at 12:20 AM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
---
+-- 
 -- Database: `newdsb`
---
+-- 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_access_levels`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_access_levels`;
 CREATE TABLE `dsb_access_levels` (
@@ -27,9 +27,9 @@ CREATE TABLE `dsb_access_levels` (
   KEY `level_code` (`level_code`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_access_levels`
---
+-- 
 
 INSERT INTO `dsb_access_levels` (`level_id`, `level_code`, `level_diz`, `level`, `disabled_level`) VALUES (1, 0x6c6f67696e, 'when someone tries to login', 6, 1),
 (2, 0x70726f66696c655f76696577, 'View a member profile', 7, 0),
@@ -53,9 +53,9 @@ INSERT INTO `dsb_access_levels` (`level_id`, `level_code`, `level_diz`, `level`,
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_admin_accounts`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_admin_accounts`;
 CREATE TABLE `dsb_admin_accounts` (
@@ -70,17 +70,17 @@ CREATE TABLE `dsb_admin_accounts` (
   UNIQUE KEY `user` (`user`)
 ) TYPE=MyISAM PACK_KEYS=0;
 
---
+-- 
 -- Dumping data for table `dsb_admin_accounts`
---
+-- 
 
-INSERT INTO `dsb_admin_accounts` (`admin_id`, `user`, `pass`, `name`, `status`, `dept_id`, `email`) VALUES (1, 0x61646d696e, 0x3931383062346461336630633765383039373566616436383566376631333465, 'Dan Caragea', 15, 4, 'dan@sco.ro');
+INSERT INTO `dsb_admin_accounts` (`admin_id`, `user`, `pass`, `name`, `status`, `dept_id`, `email`) VALUES (1, 0x61646d696e, 0x3964323763666564386236633738373833616162623534643264393464393331, 'Dan Caragea', 15, 4, 'dan@sco.ro');
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_admin_mtpls`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_admin_mtpls`;
 CREATE TABLE `dsb_admin_mtpls` (
@@ -93,18 +93,18 @@ CREATE TABLE `dsb_admin_mtpls` (
   KEY `amtpl_type` (`amtpl_type`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_admin_mtpls`
---
+-- 
 
 INSERT INTO `dsb_admin_mtpls` (`amtpl_id`, `amtpl_name`, `subject`, `message_body`, `amtpl_type`) VALUES (1, 'Reject member profile', 'Your profile was not approved', '<html><head><title>Your profile has not been approved</title>   <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" /> </head><body> <div id="trim"> 	<div id="content"> 		<p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Web Application</a>.</p> 		<p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest to other members.</p><p>Please update your profile with relevant information.<br /></p> 	</div> </div> </body></html>', 1),
-(2, 'Reject photo', 'F r i e n d y: One of your photos was not approved', '<html>\n<head>\n<title>Your profile has not been approved</title>\n<link rel="stylesheet" type="text/css" media="screen" href="{tplvars.baseurl}/skins/basic/styles/screen.css" />\n</head>\n<body>\n<div id="trim">\n   <div id="content">\n       <p>Thank you for joining <a href="{tplvars.baseurl}">{tplvars.sitename}</a>.</p>\n       <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\n   </div>\n</div>\n</body>\n</html>', 2);
+(2, 'Reject photo', 'Web Application: One of your photos was not approved', '<html>\n<head>\n<title>Your profile has not been approved</title>\n<link rel="stylesheet" type="text/css" media="screen" href="{tplvars.baseurl}/skins/basic/styles/screen.css" />\n</head>\n<body>\n<div id="trim">\n   <div id="content">\n       <p>Thank you for joining <a href="{tplvars.baseurl}">{tplvars.sitename}</a>.</p>\n       <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\n   </div>\n</div>\n</body>\n</html>', 2);
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_blog_comments`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_blog_comments`;
 CREATE TABLE `dsb_blog_comments` (
@@ -122,11 +122,17 @@ CREATE TABLE `dsb_blog_comments` (
   KEY `key1` (`fk_post_id`,`status`)
 ) TYPE=MyISAM;
 
+-- 
+-- Dumping data for table `dsb_blog_comments`
+-- 
+
+INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_post_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (1, 1, 10, 'strawberries', 'a reply.\r\n\r\nHi Emma!', '2007-04-16 21:13:30', '2007-04-16 21:13:30', 15);
+
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_blog_posts`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_blog_posts`;
 CREATE TABLE `dsb_blog_posts` (
@@ -153,16 +159,19 @@ CREATE TABLE `dsb_blog_posts` (
   FULLTEXT KEY `text_key` (`title`,`post_content`)
 ) TYPE=MyISAM PACK_KEYS=0;
 
---
+-- 
 -- Dumping data for table `dsb_blog_posts`
---
+-- 
 
+INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`) VALUES (1, '2007-04-16 19:20:25', 1, 'emma', 1, 1, 'The Bicentennial Man', 'by Isaac Asimov\n\n[b]The Three Laws of Robotics[/b]\n.\n.\n.\n[quote]A robot may not injure a human being, or, through inaction, allow a human being to come to harm.[/quote]\n\n[quote]A robot must obey the orders given it by human beings except where such orders would conflict with the First Law.[/quote]\n\n[quote]A robot must protect its own existence as long as such protection does not conflict with the First or Second Law.[/quote]\n\nAndrew Martin said, "[u]Thank you[/u]," and took the seat offered him. He didn''t look driven to the last resort, but he had been.\n\nHe didn''t, actually, look anything, for there was a smooth blankness, to his face, except for the sadness one imagined one saw in his eyes. His hair was smooth, light brown, rather fine; and he had no facial hair. He looked freshly and cleanly shaved. His clothes were distinctly old-fashioned, but neat, and predominantly a velvety red-purple in color.\n\nFacing him from behind the desk was the surgeon The nameplate on the desk included a fully identifying series of letters and numbers which Andrew didn''t bother with. To call him Doctor would be quite enough\n\n"When can the operation be carried through, Doctor?" he asked.\n\nSoftly, with that certain inalienable note of respect that a robot always used to a human being, the surgeon said, "I am not certain, sir, that I understand how or upon whom such an operation could be performed."\n\nThere might have been a look of respectful intransigence on the surgeon''s face, if a robot of his sort, in lightly bronzed stainless steel, could have such an expression-or any expression.\n\nAndrew Martin studied the robot''s right hand, his cutting hand, as it lay motionless on the desk. The fingers were long and were shaped into artistically metallic, looping curves so -graceful and appropriate that one could imagine a scalpel fitting them and becoming, temporarily, one piece with them. There would be no hesitation in his work, no stumbling, no quivering, no mistakes. That confidence came with specialization, of course, a specialization so fiercely desired by humanity that few robots were, any longer, independently brained. A surgeon, of course, would have to be. But this one, though brained, was so limited in his capacity that he did not recognize Andrew, had probably never heard of him .\n\n[quote]Have you ever thought you would like to be a man?[/quote] Andrew asked.\n\nThe surgeon hesitated a moment, as though the question fitted nowhere in his allotted positronic pathways. "But I am a robot, sir."\n\n[quote]Would it be better to be a man?[/quote]', 1, 15, '', 0, 1, '2007-04-16 19:24:35', ''),
+(2, '2007-04-16 20:50:21', 10, 'strawberries', 3, 1, 'First ever post', 'Hi everyone.  Welcome to Fluffy''s blog.', 1, 15, '', 0, 0, '2007-04-16 20:50:21', ''),
+(3, '2007-04-17 12:08:28', 7, 'dragon', 5, 1, 'Now what?', 'Ok, so now that a basic preview is up for you to see and test, we''ll update it daily with whatver we''ll be working on. So stay tuned for more news.\nThere are some things to fix with blogs, we need to finish the friendship connections feature (right now you can only add another member to your favorites network and request to be a friend of another member).\n\nWe need to also finish the flirts...\nAs many of you have requested, you want to be able to reply with a flirt to a flirt and this is now possible.\n\nAs you might have seen, the flirts can include both text and images and even sounds if you want. It''s up to the admin''s imagination to create some creative flirts.\n\nAnother thing that needs to be finished is the news system. There are 2 parts here:\nYou can include news read by a rss reader from any published rss feed and you will also have site news - published by admin for the site members. The news will appear on the home page (the page after login) by default but you can put it anywhere you want in your site, even on the front page.\n', 1, 15, '', 0, 0, '2007-04-17 12:19:12', '');
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_error_log`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_error_log`;
 CREATE TABLE `dsb_error_log` (
@@ -173,16 +182,16 @@ CREATE TABLE `dsb_error_log` (
   PRIMARY KEY  (`log_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_error_log`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_feed_cache`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_feed_cache`;
 CREATE TABLE `dsb_feed_cache` (
@@ -192,17 +201,17 @@ CREATE TABLE `dsb_feed_cache` (
   PRIMARY KEY  (`module_code`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_feed_cache`
---
+-- 
 
-INSERT INTO `dsb_feed_cache` (`module_code`, `feed_xml`, `update_time`) VALUES (0x646967675f74656368, '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:digg="http://digg.com/docs/diggrss/">\n<channel>\n<title>Digg / Technology</title>\n<language>en-us</language><link>http://digg.com/view/technology</link>\n<description>Digg / Technology</description>\n<item>\n<title>Windows XP apps on your Ubuntu desktop - now with Coherence !</title>\n<link>http://digg.com/linux_unix/Windows_XP_apps_on_your_Ubuntu_desktop_now_with_Coherence</link>\n<description>Run Windows XP apps on Ubuntu without having and have them appear on your normal Gnome or KDE desktop. The tutorial starts with uses KQemu  (now Open Source as of today) but the latter section on coherence can easily be adapted to VMWare Player or Xen.</description>\n<pubDate>Wed, 7 Feb 2007 13:40:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/Windows_XP_apps_on_your_Ubuntu_desktop_now_with_Coherence</guid>\n<digg:diggCount>62</digg:diggCount>\n<digg:submitter><digg:username>nailer</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>2</digg:commentCount>\n</item>\n<item>\n<title>Breaking: Tivo Boxes to Download Amazon Unboxed Videos</title>\n<link>http://digg.com/tech_news/Breaking_Tivo_Boxes_to_Download_Amazon_Unboxed_Videos</link>\n<description>Amazon and TiVo just made me wet my pants with what could be a killer app in the digital video distribution arms race: TiVo Series 3 and 2 set top boxes will be living room conduits for Amazon''s Unbox IP video on demand service. This is the first single box solution that intermingles downloadable broadband video and traditional TV in one place.</description>\n<pubDate>Wed, 7 Feb 2007 13:30:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Breaking_Tivo_Boxes_to_Download_Amazon_Unboxed_Videos</guid>\n<digg:diggCount>85</digg:diggCount>\n<digg:submitter><digg:username>maxaids</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>13</digg:commentCount>\n</item>\n<item>\n<title>New version of Joost available!</title>\n<link>http://digg.com/tech_news/New_version_of_Joost_available</link>\n<description>Version 0.74 of Joost is available to download for beta testers. Improvements include: better coping with certainlocal configurations, better fonts, interface tweaks, added channel numbers in the EPG that are selectable from the keyboard &amp; enabled dual monitor support. If you want a beta invite leave a comment on the blog &amp; I''ll see what I can do</description>\n<pubDate>Wed, 7 Feb 2007 12:20:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/New_version_of_Joost_available</guid>\n<digg:diggCount>172</digg:diggCount>\n<digg:submitter><digg:username>MrSolutions</digg:username><digg:userimage>http://digg.com/userimages/m/r/s/mrsolutions/medium2222.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>43</digg:commentCount>\n</item>\n<item>\n<title>Run Your Existing Windows Installation on Ubuntu with Vmware Player</title>\n<link>http://digg.com/linux_unix/Run_Your_Existing_Windows_Installation_on_Ubuntu_with_Vmware_Player</link>\n<description>Title says it all.</description>\n<pubDate>Wed, 7 Feb 2007 09:00:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/Run_Your_Existing_Windows_Installation_on_Ubuntu_with_Vmware_Player</guid>\n<digg:diggCount>468</digg:diggCount>\n<digg:submitter><digg:username>blackmh</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>51</digg:commentCount>\n</item>\n<item>\n<title>25 things to see at the Googleplex before you die</title>\n<link>http://digg.com/tech_news/25_things_to_see_at_the_Googleplex_before_you_die</link>\n<description>Google''s sprawling, cheerfully dystopian campus at Mountain View may intimidate the first-time visitor. But there''s no need to fear. Enjoy our annotated map of 25 sights to take in across the entire Google campus before you die, and/or are killed by Google''s very understanding but nevertheless lethal security forces.</description>\n<pubDate>Wed, 7 Feb 2007 08:50:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/25_things_to_see_at_the_Googleplex_before_you_die</guid>\n<digg:diggCount>453</digg:diggCount>\n<digg:submitter><digg:username>mklopez</digg:username><digg:userimage>http://digg.com/userimages/mklopez/medium.gif</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>28</digg:commentCount>\n</item>\n<item>\n<title>The Evolution of Apple.com</title>\n<link>http://digg.com/apple/The_Evolution_of_Apple_com</link>\n<description>Over 150 screenshots documenting how apple.com has changed from 1996 to the present.</description>\n<pubDate>Wed, 7 Feb 2007 06:40:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/The_Evolution_of_Apple_com</guid>\n<digg:diggCount>888</digg:diggCount>\n<digg:submitter><digg:username>diggamer</digg:username><digg:userimage>http://digg.com/userimages/d/i/g/diggamer/medium1332.jpg</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>40</digg:commentCount>\n</item>\n<item>\n<title>Traffic Graph of the Core Internet DNS Services Being Attacked This Morning</title>\n<link>http://digg.com/security/Traffic_Graph_of_the_Core_Internet_DNS_Services_Being_Attacked_This_Morning</link>\n<description>If you haven''t heard the story - &quot;Hackers briefly overwhelmed at least three of the most important root domain name servers in the United States yesterday, in one of the most significant attacks against the Internet since 2002.&quot;.  Here is the graph of the traffic levels on the DNS servers.</description>\n<pubDate>Wed, 7 Feb 2007 06:10:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/security/Traffic_Graph_of_the_Core_Internet_DNS_Services_Being_Attacked_This_Morning</guid>\n<digg:diggCount>577</digg:diggCount>\n<digg:submitter><digg:username>marksmayo</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Security</digg:category>\n<digg:commentCount>67</digg:commentCount>\n</item>\n<item>\n<title>Hackers Attack Key Net Traffic Computers</title>\n<link>http://digg.com/security/Hackers_Attack_Key_Net_Traffic_Computers_3</link>\n<description>Hackers briefly overwhelmed at least three of the 13 computers that help manage global computer traffic Tuesday in one of the most significant attacks against the Internet since 2002.</description>\n<pubDate>Wed, 7 Feb 2007 04:20:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/security/Hackers_Attack_Key_Net_Traffic_Computers_3</guid>\n<digg:diggCount>901</digg:diggCount>\n<digg:submitter><digg:username>scoreboard27</digg:username><digg:userimage>http://digg.com/userimages/s/c/o/scoreboard27/medium3301.jpg</digg:userimage></digg:submitter>\n<digg:category>Security</digg:category>\n<digg:commentCount>77</digg:commentCount>\n</item>\n<item>\n<title>Microsoft Increases Support Prices for Windows, Office</title>\n<link>http://digg.com/tech_news/Microsoft_Increases_Support_Prices_for_Windows_Office</link>\n<description>Surprise, surprise... Prices for both Windows Vista and XP support were raised, from $39 to $59 per incident while support prices for Office XP and Office 2007 went from $35 to $49 per incident.</description>\n<pubDate>Wed, 7 Feb 2007 04:20:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Microsoft_Increases_Support_Prices_for_Windows_Office</guid>\n<digg:diggCount>325</digg:diggCount>\n<digg:submitter><digg:username>bonez05</digg:username><digg:userimage>http://digg.com/userimages/b/o/n/bonez05/medium9629.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>49</digg:commentCount>\n</item>\n<item>\n<title>Norway responds to Jobs'' open letter</title>\n<link>http://digg.com/apple/Norway_responds_to_Jobs_open_letter</link>\n<description>Senior advisor Torgeir Waterhouse of the Norwegian Consumer Council has responded to Apple CEO Steve Jobs'' open letter concerning digital rights management and free music, which the executive published earlier today.</description>\n<pubDate>Wed, 7 Feb 2007 04:20:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/Norway_responds_to_Jobs_open_letter</guid>\n<digg:diggCount>588</digg:diggCount>\n<digg:submitter><digg:username>jogrim</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>102</digg:commentCount>\n</item>\n<item>\n<title>New Wal-Mart Download Service 100% Fails in Firefox</title>\n<link>http://digg.com/design/New_Wal_Mart_Download_Service_100_Fails_in_Firefox</link>\n<description>Some design flexibility is OK when doing CSS or Standards-based design.  Degrading without the style sheet is also OK in some instances.  But check out the fancy new Wal-Mart download service that is 100% incompatible with Firefox. Wow.  Oops!</description>\n<pubDate>Wed, 7 Feb 2007 03:40:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/design/New_Wal_Mart_Download_Service_100_Fails_in_Firefox</guid>\n<digg:diggCount>1738</digg:diggCount>\n<digg:submitter><digg:username>erikjernberg</digg:username><digg:userimage>http://digg.com/userimages/erikjernberg/medium2934.jpg</digg:userimage></digg:submitter>\n<digg:category>Design</digg:category>\n<digg:commentCount>241</digg:commentCount>\n</item>\n<item>\n<title>The Coming Internet Traffic Jam</title>\n<link>http://digg.com/tech_news/The_Coming_Internet_Traffic_Jam</link>\n<description>A new assessment from Deloitte &amp; Touche predicts that global traffic will exceed the Internet''s capacity as soon as this year. Why? The rapid growth in the number of global Internet users, combined with the rise of online video services and the lack of investment in new infrastructure.</description>\n<pubDate>Wed, 7 Feb 2007 03:30:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/The_Coming_Internet_Traffic_Jam</guid>\n<digg:diggCount>535</digg:diggCount>\n<digg:submitter><digg:username>spinchange</digg:username><digg:userimage>http://digg.com/userimages/spinchange/medium8749.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>82</digg:commentCount>\n</item>\n<item>\n<title>6 Startup Lessons for the Year 2007</title>\n<link>http://digg.com/software/6_Startup_Lessons_for_the_Year_2007</link>\n<description>Too many niche startups fall into the trap of trying to satisfy everyone''s needs. Companies have a natural tendency to expand their line of goods as they grow. The article argues that what startups need to do, instead, is stop trying to be everybody products and deliberately narrow their reach regardless of their growth or traffic.</description>\n<pubDate>Wed, 7 Feb 2007 03:00:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/software/6_Startup_Lessons_for_the_Year_2007</guid>\n<digg:diggCount>505</digg:diggCount>\n<digg:submitter><digg:username>IvanB</digg:username><digg:userimage>http://digg.com/userimages/ivanb/medium1979.jpg</digg:userimage></digg:submitter>\n<digg:category>Software</digg:category>\n<digg:commentCount>16</digg:commentCount>\n</item>\n<item>\n<title>25 Games Tested in Vista</title>\n<link>http://digg.com/software/25_Games_Tested_in_Vista</link>\n<description>25 popular game titles tested in Vista. Which ones work, which ones don''t.</description>\n<pubDate>Wed, 7 Feb 2007 02:00:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/software/25_Games_Tested_in_Vista</guid>\n<digg:diggCount>976</digg:diggCount>\n<digg:submitter><digg:username>jervana</digg:username><digg:userimage>http://digg.com/userimages/jervana/medium.gif</digg:userimage></digg:submitter>\n<digg:category>Software</digg:category>\n<digg:commentCount>69</digg:commentCount>\n</item>\n<item>\n<title>TransGaming and Nvidia team up for high-end games on the Mac</title>\n<link>http://digg.com/apple/TransGaming_and_Nvidia_team_up_for_high_end_games_on_the_Mac</link>\n<description>TransGaming and Nvidia have &quot;joined forces&quot; to &quot;bring top tier video games to the Intel-based Macintosh platform using TransGaming''s Cider portability engine in conjunction with NVIDIA''s CgFX graphics system.&quot;</description>\n<pubDate>Wed, 7 Feb 2007 01:30:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/TransGaming_and_Nvidia_team_up_for_high_end_games_on_the_Mac</guid>\n<digg:diggCount>566</digg:diggCount>\n<digg:submitter><digg:username>keiths</digg:username><digg:userimage>http://digg.com/userimages/k/e/i/keiths/medium8096.png</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>59</digg:commentCount>\n</item>\n<item>\n<title>BBC slammed for using public funds for Microsoft lock-in</title>\n<link>http://digg.com/linux_unix/BBC_slammed_for_using_public_funds_for_Microsoft_lock_in</link>\n<description>The Open Source Consortium (OSC) has slammed the BBC over plans to lock online TV viewers into Microsoft products. The accusations come after the BBC announced that its new on-demand services will be limited to Microsoft Windows. OSC believes this is anti-competitive, and would be in breach of the broadcaster''s charter.</description>\n<pubDate>Wed, 7 Feb 2007 01:07:56 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/BBC_slammed_for_using_public_funds_for_Microsoft_lock_in</guid>\n<digg:diggCount>757</digg:diggCount>\n<digg:submitter><digg:username>jrepin</digg:username><digg:userimage>http://digg.com/userimages/jrepin/medium.png</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>92</digg:commentCount>\n</item>\n<item>\n<title>Hacking Skype: 25 Tips to Improve Your Skype Experience</title>\n<link>http://digg.com/tech_news/Hacking_Skype_25_Tips_to_Improve_Your_Skype_Experience</link>\n<description>&quot;Skype is the most popular VoIP solution of choice. If you''re just getting into this telephone alternative, you are going to be surprised how much you can do with it. In this article we cover 25 tips, hacks, and extras to help you utilize Skype to its fullest potential.&quot;</description>\n<pubDate>Wed, 7 Feb 2007 00:30:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Hacking_Skype_25_Tips_to_Improve_Your_Skype_Experience</guid>\n<digg:diggCount>1132</digg:diggCount>\n<digg:submitter><digg:username>BoneyB</digg:username><digg:userimage>http://digg.com/userimages/b/o/n/boneyb/medium5683.JPG</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>34</digg:commentCount>\n</item>\n<item>\n<title>Gates “dares anybody” to exploit Vista </title>\n<link>http://digg.com/tech_news/Gates_dares_anybody_to_exploit_Vista</link>\n<description>Microsoft chairman Bill Gates talked with Newsweek magazine''s Steven Levy about the new version of Windows and shared his views on the &quot;I''m a Mac&quot; television commercials. In excerpts from the interview Gates goes on the offensive and claims that the security in Vista is better that the security in the Mac</description>\n<pubDate>Wed, 7 Feb 2007 00:00:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Gates_dares_anybody_to_exploit_Vista</guid>\n<digg:diggCount>2054</digg:diggCount>\n<digg:submitter><digg:username>populist</digg:username><digg:userimage>http://digg.com/userimages/p/o/p/populist/medium6019.gif</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>303</digg:commentCount>\n</item>\n<item>\n<title>Man gives away free iPods because it makes him feel good.</title>\n<link>http://digg.com/apple/Man_gives_away_free_iPods_because_it_makes_him_feel_good</link>\n<description>This guy fixes and gives away iPods because he &quot;gets a real buzz out of knowing I just made someone’s day&quot;. But he''s not the biggest fan of Apple.</description>\n<pubDate>Tue, 6 Feb 2007 23:40:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/Man_gives_away_free_iPods_because_it_makes_him_feel_good</guid>\n<digg:diggCount>1470</digg:diggCount>\n<digg:submitter><digg:username>Hinchcliffe</digg:username><digg:userimage>http://digg.com/userimages/hinchcliffe/medium4585.gif</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>82</digg:commentCount>\n</item>\n<item>\n<title>Use Quicksilver for quick timed reminders</title>\n<link>http://digg.com/apple/Use_Quicksilver_for_quick_timed_reminders</link>\n<description>This tutorial shows you have to setup Quicksilver to display a text message, play a song, go to webpage, etc in a set amount of time. It''s a quick way to give yourself a little reminder.</description>\n<pubDate>Tue, 6 Feb 2007 23:30:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/Use_Quicksilver_for_quick_timed_reminders</guid>\n<digg:diggCount>468</digg:diggCount>\n<digg:submitter><digg:username>RadiantBeing</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>21</digg:commentCount>\n</item>\n<item>\n<title>The Road to KDE 4: Phonon Makes Multimedia Easier (fixed link)</title>\n<link>http://digg.com/linux_unix/The_Road_to_KDE_4_Phonon_Makes_Multimedia_Easier_fixed_link</link>\n<description>Phonon is designed to take some of the complications out of writing multimedia applications in KDE 4, and ensure that these applications will work on a multitude of platforms and sound architectures. Unfortunately, writing about a sound technology produces very few snazzy screenshots, so instead this week has a few more technical details.</description>\n<pubDate>Tue, 6 Feb 2007 23:10:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/The_Road_to_KDE_4_Phonon_Makes_Multimedia_Easier_fixed_link</guid>\n<digg:diggCount>324</digg:diggCount>\n<digg:submitter><digg:username>jrepin</digg:username><digg:userimage>http://digg.com/userimages/jrepin/medium.png</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>19</digg:commentCount>\n</item>\n<item>\n<title>Hack Attack: Getting good with Google Reader</title>\n<link>http://digg.com/software/Hack_Attack_Getting_good_with_Google_Reader</link>\n<description>Today, I''m going to show you the ins and outs of Google''s powerful newsreader, with an emphasis on Reader''s powerful and time-saving keyboard shortcuts. To round things off, I''ll finish up with some of my favorite Google Reader-related tweaks and downloads to get you up to speed with the best newsreader on the planet.</description>\n<pubDate>Tue, 6 Feb 2007 22:01:08 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/software/Hack_Attack_Getting_good_with_Google_Reader</guid>\n<digg:diggCount>628</digg:diggCount>\n<digg:submitter><digg:username>mklopez</digg:username><digg:userimage>http://digg.com/userimages/mklopez/medium.gif</digg:userimage></digg:submitter>\n<digg:category>Software</digg:category>\n<digg:commentCount>18</digg:commentCount>\n</item>\n<item>\n<title>Make a Movie of Your Linux Desktop </title>\n<link>http://digg.com/linux_unix/Make_a_Movie_of_Your_Linux_Desktop</link>\n<description>Want to show off your snazzy 3d desktop, or demonstrate the features of your favourite new program? Make a movie of your desktop to capture all your actions, edit it, then add a soundtrack.</description>\n<pubDate>Tue, 6 Feb 2007 21:10:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/Make_a_Movie_of_Your_Linux_Desktop</guid>\n<digg:diggCount>580</digg:diggCount>\n<digg:submitter><digg:username>bonlebon</digg:username><digg:userimage>http://digg.com/userimages/bonlebon/medium5388.jpg</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>36</digg:commentCount>\n</item>\n<item>\n<title>Multi-Column Layouts Climb Out of the Box</title>\n<link>http://digg.com/design/Multi_Column_Layouts_Climb_Out_of_the_Box</link>\n<description>“Holy Grail,” “One True Layout,” “pain in the @$$”... Alan Pearce presents a cleaner approach to designing multi-column layouts.</description>\n<pubDate>Tue, 6 Feb 2007 21:00:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/design/Multi_Column_Layouts_Climb_Out_of_the_Box</guid>\n<digg:diggCount>789</digg:diggCount>\n<digg:submitter><digg:username>cyberpear</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Design</digg:category>\n<digg:commentCount>60</digg:commentCount>\n</item>\n<item>\n<title>Five ways to make Digg more social</title>\n<link>http://digg.com/tech_news/Five_ways_to_make_Digg_more_social</link>\n<description>When Kevin Rose announced that the top digger list would be no more, he also alluded to plans to add better social networking features to the site. Here are 5 suggestions to make Digg more social.</description>\n<pubDate>Tue, 6 Feb 2007 20:50:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Five_ways_to_make_Digg_more_social</guid>\n<digg:diggCount>738</digg:diggCount>\n<digg:submitter><digg:username>asif786</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>82</digg:commentCount>\n</item>\n<item>\n<title>Itallian Phone to Feature Roll-up, Paper Thin Display</title>\n<link>http://digg.com/gadgets/Itallian_Phone_to_Feature_Roll_up_Paper_Thin_Display</link>\n<description>Telecom Italia and Polymer Vision have joined forces to create a cell phone that features a roll-up e-paper-like display. It''s a grayscale and can''t be read in the dark, but the 5-inch screen represents a significant step forward in terms of incorporating this technology on mobile devices.</description>\n<pubDate>Tue, 6 Feb 2007 20:40:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/gadgets/Itallian_Phone_to_Feature_Roll_up_Paper_Thin_Display</guid>\n<digg:diggCount>641</digg:diggCount>\n<digg:submitter><digg:username>ryland2</digg:username><digg:userimage>http://digg.com/userimages/r/y/l/ryland2/medium8027.jpg</digg:userimage></digg:submitter>\n<digg:category>Gadgets</digg:category>\n<digg:commentCount>44</digg:commentCount>\n</item>\n<item>\n<title>Steve Jobs on Music</title>\n<link>http://digg.com/apple/Steve_Jobs_on_Music</link>\n<description>An interesting column written by Steve Jobs to shout out his thoughts on music. Does he talk about DRM? Yes. &quot;The rub comes from the music Apple sells on its online iTunes Store. Since Apple does not own or control any music itself, it must license the rights to distribute music from others.&quot;Read the whole story it is interesting!</description>\n<pubDate>Tue, 6 Feb 2007 20:00:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/Steve_Jobs_on_Music</guid>\n<digg:diggCount>5044</digg:diggCount>\n<digg:submitter><digg:username>vrikis</digg:username><digg:userimage>http://digg.com/userimages/v/r/i/vrikis/medium3145.JPG</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>401</digg:commentCount>\n</item>\n<item>\n<title>''Tom Cruise'' missile jokester arrested - CNET News.com</title>\n<link>http://digg.com/tech_news/Tom_Cruise_missile_jokester_arrested_CNET_News_com</link>\n<description>Keith Henson, a fugitive since being convicted of interfering with Scientology, faces extradition to California from Arizona.</description>\n<pubDate>Tue, 6 Feb 2007 19:40:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Tom_Cruise_missile_jokester_arrested_CNET_News_com</guid>\n<digg:diggCount>1068</digg:diggCount>\n<digg:submitter><digg:username>desertrain7</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>160</digg:commentCount>\n</item>\n<item>\n<title>Make any Application Fullscreen (Mac Only)</title>\n<link>http://digg.com/apple/Make_any_Application_Fullscreen_Mac_Only</link>\n<description>&quot;Let''s limit our attention to one application--any application--at any time&quot;Because Mac''s desktops can be very distracting, this application is a lifesaver for anyone who really needs to get work done with no distractions.</description>\n<pubDate>Tue, 6 Feb 2007 19:40:01 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/Make_any_Application_Fullscreen_Mac_Only</guid>\n<digg:diggCount>881</digg:diggCount>\n<digg:submitter><digg:username>atomic16</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>89</digg:commentCount>\n</item>\n<item>\n<title>New ''Smart'' Digg This Buttons For Your Website/Blog</title>\n<link>http://digg.com/tech_news/New_Smart_Digg_This_Buttons_For_Your_Website_Blog</link>\n<description>&quot;We’re glad to announce an update to our Digg This button.  You used to need different tools to provide links on your site to submit content to Digg versus buttons to Digg content you’ve already submitted.  Our new Digg This button has finally been given a brain to do both!&quot;</description>\n<pubDate>Tue, 6 Feb 2007 19:10:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/New_Smart_Digg_This_Buttons_For_Your_Website_Blog</guid>\n<digg:diggCount>1686</digg:diggCount>\n<digg:submitter><digg:username>kevinrose</digg:username><digg:userimage>http://digg.com/userimages/kevinrose/medium3094.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>64</digg:commentCount>\n</item>\n<item>\n<title>Don''t be misled by these 10 Windows Vista myths</title>\n<link>http://digg.com/software/Don_t_be_misled_by_these_10_Windows_Vista_myths</link>\n<description>The official consumer launch of Windows Vista has brought with it a great deal of confusion, misinformation, and some fairly ignorant assertions. Windows expert Deb Shinder debunks some of the misconceptions she''s been hearing, from exaggerated cost and hardware requirements to feature limitations and compatibility issues.</description>\n<pubDate>Tue, 6 Feb 2007 18:50:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/software/Don_t_be_misled_by_these_10_Windows_Vista_myths</guid>\n<digg:diggCount>2393</digg:diggCount>\n<digg:submitter><digg:username>msaleem</digg:username><digg:userimage>http://digg.com/userimages/msaleem/medium9502.jpeg</digg:userimage></digg:submitter>\n<digg:category>Software</digg:category>\n<digg:commentCount>293</digg:commentCount>\n</item>\n<item>\n<title>PCI-E x1 Graphics Performance Investigated</title>\n<link>http://digg.com/hardware/PCI_E_x1_Graphics_Performance_Investigated</link>\n<description>PCI-E x1 graphics performance is under the spotlight with Galaxy''s GeForce 7300GT graphics card. We see if there is any difference between it and x16 slots. Is it AGP 4x vs. 8x marketing mumbo gumbo all over again?</description>\n<pubDate>Tue, 6 Feb 2007 18:40:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/hardware/PCI_E_x1_Graphics_Performance_Investigated</guid>\n<digg:diggCount>409</digg:diggCount>\n<digg:submitter><digg:username>TWEAK</digg:username><digg:userimage>http://digg.com/userimages/t/w/e/tweak/medium3854.png</digg:userimage></digg:submitter>\n<digg:category>Hardware</digg:category>\n<digg:commentCount>46</digg:commentCount>\n</item>\n<item>\n<title>Are Social Networks Just A Feature?</title>\n<link>http://digg.com/tech_news/Are_Social_Networks_Just_A_Feature</link>\n<description>It is time to rethink the whole notion of social networking, and start thinking of it as a feature for other online activities. Already, we see companies like Affinity Circles4 and Social Platform5 turning the “social network” into a commodity, by offering turnkey solutions.</description>\n<pubDate>Tue, 6 Feb 2007 18:20:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Are_Social_Networks_Just_A_Feature</guid>\n<digg:diggCount>334</digg:diggCount>\n<digg:submitter><digg:username>scoreboard27</digg:username><digg:userimage>http://digg.com/userimages/s/c/o/scoreboard27/medium3301.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>26</digg:commentCount>\n</item>\n<item>\n<title>Linux Linux Everywhere!!!An entire airplane booting Linux (with pictures)..</title>\n<link>http://digg.com/linux_unix/Linux_Linux_Everywhere_An_entire_airplane_booting_Linux_with_pictures</link>\n<description>After we landed in Orlando I talked the Delta flight crew into rebooting the entire system. I think this is the first time that something Open Source has ended up on a full, frickin'' plane! The flight crew thought I was nuts...but o well. At least the plane won''t ever crash.</description>\n<pubDate>Tue, 6 Feb 2007 18:20:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/Linux_Linux_Everywhere_An_entire_airplane_booting_Linux_with_pictures</guid>\n<digg:diggCount>1393</digg:diggCount>\n<digg:submitter><digg:username>leadstairway</digg:username><digg:userimage>http://digg.com/userimages/l/e/a/leadstairway/medium5763.jpg</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>131</digg:commentCount>\n</item>\n<item>\n<title>WWDC 2007 Officially Announced - June 11-15</title>\n<link>http://digg.com/apple/WWDC_2007_Officially_Announced_June_11_15</link>\n<description>Apple has officially announced the dates of WWDC 2007.</description>\n<pubDate>Tue, 6 Feb 2007 18:10:01 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/apple/WWDC_2007_Officially_Announced_June_11_15</guid>\n<digg:diggCount>746</digg:diggCount>\n<digg:submitter><digg:username>AmazingSyco</digg:username><digg:userimage>http://digg.com/userimages/amazingsyco/medium.jpg</digg:userimage></digg:submitter>\n<digg:category>Apple</digg:category>\n<digg:commentCount>49</digg:commentCount>\n</item>\n<item>\n<title>23 Signs That You''re Becoming a Design Geek</title>\n<link>http://digg.com/design/23_Signs_That_You_re_Becoming_a_Design_Geek</link>\n<description>The world of design can be a ruthless one; you get lured into developing anti-social habits like font-spotting and source-code peeping. Learn to spot the warning signs in time – you know you''re becoming a design geek when...</description>\n<pubDate>Tue, 6 Feb 2007 17:50:04 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/design/23_Signs_That_You_re_Becoming_a_Design_Geek</guid>\n<digg:diggCount>1862</digg:diggCount>\n<digg:submitter><digg:username>andash</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Design</digg:category>\n<digg:commentCount>124</digg:commentCount>\n</item>\n<item>\n<title>The QEMU Accelerator (KQEMU Module) is Open Source!</title>\n<link>http://digg.com/linux_unix/The_QEMU_Accelerator_KQEMU_Module_is_Open_Source</link>\n<description>The KQEMU accelerator component of the open source QEMU emulation solution has been released under the GNU General Public License.</description>\n<pubDate>Tue, 6 Feb 2007 17:50:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/linux_unix/The_QEMU_Accelerator_KQEMU_Module_is_Open_Source</guid>\n<digg:diggCount>446</digg:diggCount>\n<digg:submitter><digg:username>kkubasik</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Linux/Unix</digg:category>\n<digg:commentCount>42</digg:commentCount>\n</item>\n<item>\n<title>Steve Jobs'' Occupational Hazards</title>\n<link>http://digg.com/tech_news/Steve_Jobs_Occupational_Hazards</link>\n<description>With the success of the iPod, Apple CEO Steve Jobs has proven that there are, in fact, second acts in business. Once known primarily for its Macintosh line of computers, Apple is now a digital powerhouse whose shares have risen more than seven times in value over the last five years.</description>\n<pubDate>Tue, 6 Feb 2007 17:40:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/tech_news/Steve_Jobs_Occupational_Hazards</guid>\n<digg:diggCount>535</digg:diggCount>\n<digg:submitter><digg:username>Alexius</digg:username><digg:userimage>http://digg.com/userimages/alexius/medium1140.jpg</digg:userimage></digg:submitter>\n<digg:category>Tech Industry News</digg:category>\n<digg:commentCount>29</digg:commentCount>\n</item>\n<item>\n<title>Kodak Invents Photo Ink That''ll Last 100 Years</title>\n<link>http://digg.com/gadgets/Kodak_Invents_Photo_Ink_That_ll_Last_100_Years</link>\n<description>Kodak''s revolutionary new ink can quickly create prints with an archival life of 100 years, versus standard inkjet photos that go the way of toilet paper after 15. And the ink costs half the price. Half?! We should buy Kodak''s new printers simply because they''re not trying to fuck us on the cartridge sales.</description>\n<pubDate>Tue, 6 Feb 2007 17:10:03 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/gadgets/Kodak_Invents_Photo_Ink_That_ll_Last_100_Years</guid>\n<digg:diggCount>1315</digg:diggCount>\n<digg:submitter><digg:username>BLAM8</digg:username><digg:userimage>http://digg.com/img/user-medium/user-default.png</digg:userimage></digg:submitter>\n<digg:category>Gadgets</digg:category>\n<digg:commentCount>97</digg:commentCount>\n</item>\n<item>\n<title>5 Things You Need to Know About SLR Lenses</title>\n<link>http://digg.com/hardware/5_Things_You_Need_to_Know_About_SLR_Lenses</link>\n<description>If you''re wanting a new lens or two but aren''t sure where to even begin looking, you''re in luck! From the author of &quot;10 Reasons to Buy a DSLR,&quot; (that''s me) comes &quot;5 Things You Need to Know About SLR Lenses.&quot; Get your read on.</description>\n<pubDate>Tue, 6 Feb 2007 17:00:02 GMT</pubDate>\n<guid isPermaLink="true">http://digg.com/hardware/5_Things_You_Need_to_Know_About_SLR_Lenses</guid>\n<digg:diggCount>1024</digg:diggCount>\n<digg:submitter><digg:username>TTLKurtis</digg:username><digg:userimage>http://digg.com/userimages/t/t/l/ttlkurtis/medium8223.jpg</digg:userimage></digg:submitter>\n<digg:category>Hardware</digg:category>\n<digg:commentCount>59</digg:commentCount>\n</item>\n</channel>\n</rss>', '20070207155534');
+INSERT INTO `dsb_feed_cache` (`module_code`, `feed_xml`, `update_time`) VALUES (0x646967675f74656368, '', '20070418183108');
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_flirts`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_flirts`;
 CREATE TABLE `dsb_flirts` (
@@ -213,9 +222,9 @@ CREATE TABLE `dsb_flirts` (
   KEY `flirt_type` (`flirt_type`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_flirts`
---
+-- 
 
 INSERT INTO `dsb_flirts` (`flirt_id`, `flirt_text`, `flirt_type`) VALUES (1, 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', 0),
 (2, 'Aye aye, mate!', 0),
@@ -223,9 +232,9 @@ INSERT INTO `dsb_flirts` (`flirt_id`, `flirt_text`, `flirt_type`) VALUES (1, 'He
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_lang_keys`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_lang_keys`;
 CREATE TABLE `dsb_lang_keys` (
@@ -237,9 +246,9 @@ CREATE TABLE `dsb_lang_keys` (
   KEY `lk_use` (`lk_use`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_lang_keys`
---
+-- 
 
 INSERT INTO `dsb_lang_keys` (`lk_id`, `lk_type`, `lk_diz`, `lk_use`) VALUES (1, 2, 'Category name', 1),
 (2, 2, 'Category name', 1),
@@ -413,9 +422,9 @@ INSERT INTO `dsb_lang_keys` (`lk_id`, `lk_type`, `lk_diz`, `lk_use`) VALUES (1, 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_lang_strings`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_lang_strings`;
 CREATE TABLE `dsb_lang_strings` (
@@ -427,9 +436,9 @@ CREATE TABLE `dsb_lang_strings` (
   UNIQUE KEY `thekey` (`fk_lk_id`,`skin`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_lang_strings`
---
+-- 
 
 INSERT INTO `dsb_lang_strings` (`ls_id`, `fk_lk_id`, `skin`, `lang_value`) VALUES (1, 1, 'skin_def', 'Basic Info'),
 (2, 2, 'skin_def', 'Appearance'),
@@ -603,9 +612,9 @@ INSERT INTO `dsb_lang_strings` (`ls_id`, `fk_lk_id`, `skin`, `lang_value`) VALUE
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_loc_countries`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_loc_countries`;
 CREATE TABLE `dsb_loc_countries` (
@@ -618,9 +627,9 @@ CREATE TABLE `dsb_loc_countries` (
   KEY `iso3166` (`iso3166`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_loc_countries`
---
+-- 
 
 INSERT INTO `dsb_loc_countries` (`country_id`, `iso3166`, `country`, `prefered_input`, `num_states`) VALUES (1, 'AF', 'Afghanistan', 's', 0),
 (2, 'AL', 'Albania', 's', 0),
@@ -854,9 +863,9 @@ INSERT INTO `dsb_loc_countries` (`country_id`, `iso3166`, `country`, `prefered_i
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_locales`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_locales`;
 CREATE TABLE `dsb_locales` (
@@ -866,9 +875,9 @@ CREATE TABLE `dsb_locales` (
   PRIMARY KEY  (`locale_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_locales`
---
+-- 
 
 INSERT INTO `dsb_locales` (`locale_id`, `locale_name`, `codes`) VALUES (1, 'Arabic (Algeria)', 'ar_DZ,arabic'),
 (2, 'Arabic (Saudi Arabia)', 'ar_SA,arabic'),
@@ -924,9 +933,9 @@ INSERT INTO `dsb_locales` (`locale_id`, `locale_name`, `codes`) VALUES (1, 'Arab
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_memberships`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_memberships`;
 CREATE TABLE `dsb_memberships` (
@@ -939,9 +948,9 @@ CREATE TABLE `dsb_memberships` (
   UNIQUE KEY `m_value` (`m_value`)
 ) TYPE=MyISAM PACK_KEYS=0 COMMENT='m_value must be uniq';
 
---
+-- 
 -- Dumping data for table `dsb_memberships`
---
+-- 
 
 INSERT INTO `dsb_memberships` (`m_id`, `m_name`, `m_value`, `is_custom`) VALUES (1, 'Non Members', 1, 0),
 (2, 'Free Members', 2, 0),
@@ -949,9 +958,9 @@ INSERT INTO `dsb_memberships` (`m_id`, `m_name`, `m_value`, `is_custom`) VALUES 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_message_filters`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_message_filters`;
 CREATE TABLE `dsb_message_filters` (
@@ -965,16 +974,16 @@ CREATE TABLE `dsb_message_filters` (
   UNIQUE KEY `filter_type` (`filter_type`,`fk_user_id`,`field_value`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_message_filters`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_modules`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_modules`;
 CREATE TABLE `dsb_modules` (
@@ -987,9 +996,9 @@ CREATE TABLE `dsb_modules` (
   KEY `module_type` (`module_type`)
 ) TYPE=MyISAM COMMENT='0-regular,1-pg,2-fraud,3-widg,4-skin';
 
---
+-- 
 -- Dumping data for table `dsb_modules`
---
+-- 
 
 INSERT INTO `dsb_modules` (`module_code`, `module_name`, `module_diz`, `module_type`, `version`) VALUES (0x636f7265, 'Basic features', '', 0, 1.00),
 (0x636f72655f626c6f67, 'Blogs', '', 0, 1.00),
@@ -998,16 +1007,15 @@ INSERT INTO `dsb_modules` (`module_code`, `module_name`, `module_diz`, `module_t
 (0x74776f636865636b6f7574, '2CheckOut', 'Credit card payments', 1, 1.00),
 (0x617574686f72697a655f6e6574, 'Authorize.net', '', 1, 1.00),
 (0x6d61786d696e64, 'Maxmind', 'Fraud checking module. Compares credit card country with  buyer''s IP country.', 2, 1.00),
-(0x736b696e5f6261736963, 'Basic', 'The first skin of the site', 4, 1.00),
 (0x646967675f74656368, 'Digg Tech Feed', 'Retrieves the latest digg tech stories', 3, 1.00),
 (0x736b696e5f646566, 'Default Skin', 'Official default skin', 4, 0.01),
 (0x6465665f757365725f7072656673, 'Default User Preferences', 'The default user preferences', 0, 1.00);
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_networks`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_networks`;
 CREATE TABLE `dsb_networks` (
@@ -1018,9 +1026,9 @@ CREATE TABLE `dsb_networks` (
   PRIMARY KEY  (`net_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_networks`
---
+-- 
 
 INSERT INTO `dsb_networks` (`net_id`, `network`, `is_bidi`, `max_users`) VALUES (1, 'Friends', 1, 0),
 (2, 'Blocked Members', 0, 0),
@@ -1028,9 +1036,9 @@ INSERT INTO `dsb_networks` (`net_id`, `network`, `is_bidi`, `max_users`) VALUES 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_online`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_online`;
 CREATE TABLE `dsb_online` (
@@ -1041,15 +1049,18 @@ CREATE TABLE `dsb_online` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_online`
---
+-- 
+
+INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (1, '20070419000654', 0x3266363038653037383232653338333632656266346261343336306563643936),
+(0, '20070418210157', 0x6431306631303536393166313736643434336661303834646531626166393831);
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_payments`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_payments`;
 CREATE TABLE `dsb_payments` (
@@ -1079,16 +1090,16 @@ CREATE TABLE `dsb_payments` (
   PRIMARY KEY  (`payment_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_payments`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_photo_comments`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_photo_comments`;
 CREATE TABLE `dsb_photo_comments` (
@@ -1106,15 +1117,23 @@ CREATE TABLE `dsb_photo_comments` (
   KEY `key1` (`fk_photo_id`,`status`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_photo_comments`
---
+-- 
+
+INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_photo_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (1, 1, 6, 'cocacola', 'hi thetr', '2007-04-16 18:54:48', '2007-04-16 18:54:48', 15),
+(2, 1, 9, 'raneglo', 'Hello Mr Watermark', '2007-04-16 19:59:47', '2007-04-16 19:59:47', 15),
+(3, 6, 10, 'strawberries', 'party on, dude!', '2007-04-16 21:12:23', '2007-04-16 21:12:23', 15),
+(4, 1, 11, 'johnboy', 'Hi Maverick, your pic looks cool :)', '2007-04-17 04:46:16', '2007-04-17 04:46:16', 15),
+(5, 5, 11, 'johnboy', 'I wonder if you might be Dan.... are you?', '2007-04-17 04:49:33', '2007-04-17 04:49:33', 15),
+(6, 9, 11, 'johnboy', 'Looks pretty cold there', '2007-04-17 05:35:36', '2007-04-17 05:35:36', 15),
+(7, 9, 13, 'johnboy2', 'YES it is', '2007-04-17 12:29:32', '2007-04-17 12:29:32', 15);
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_photo_ratings`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_photo_ratings`;
 CREATE TABLE `dsb_photo_ratings` (
@@ -1126,15 +1145,23 @@ CREATE TABLE `dsb_photo_ratings` (
   KEY `key1` (`fk_user_id`,`date_voted`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_photo_ratings`
---
+-- 
+
+INSERT INTO `dsb_photo_ratings` (`fk_photo_id`, `fk_user_id`, `vote`, `date_voted`) VALUES (1, 6, 4, '2007-04-16 18:54:40'),
+(5, 1, 5, '2007-04-16 19:45:27'),
+(5, 8, 5, '2007-04-16 20:16:18'),
+(1, 11, 5, '2007-04-17 04:46:33'),
+(5, 11, 5, '2007-04-17 04:49:46'),
+(8, 13, 5, '2007-04-17 05:22:43'),
+(9, 11, 4, '2007-04-17 05:35:43');
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_profile_categories`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_profile_categories`;
 CREATE TABLE `dsb_profile_categories` (
@@ -1145,9 +1172,9 @@ CREATE TABLE `dsb_profile_categories` (
   KEY `access_level` (`access_level`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_profile_categories`
---
+-- 
 
 INSERT INTO `dsb_profile_categories` (`pcat_id`, `fk_lk_id_pcat`, `access_level`) VALUES (1, 1, 7),
 (2, 2, 7),
@@ -1157,9 +1184,9 @@ INSERT INTO `dsb_profile_categories` (`pcat_id`, `fk_lk_id_pcat`, `access_level`
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_profile_fields`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_profile_fields`;
 CREATE TABLE `dsb_profile_fields` (
@@ -1187,17 +1214,17 @@ CREATE TABLE `dsb_profile_fields` (
   PRIMARY KEY  (`pfield_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_profile_fields`
---
+-- 
 
-INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `html_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES (1, 3, 2, 0, 1, 0, 4, 1, 2, 0, 1, 1, 0x6631, 5, 1, 0, '', '', '', '', 5),
+INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `html_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES (1, 3, 4, 0, 1, 0, 4, 1, 2, 0, 1, 1, 0x6631, 5, 1, 0, '', '', '', '', 5),
 (2, 8, 3, 1, 10, 1, 9, 1, 1, 1, 1, 1, 0x6632, 10, 1, 0, '|6|7|', '|0|', '|1|', '', 1),
 (3, 13, 10, 1, 10, 1, 14, 1, 1, 1, 1, 1, 0x6633, 15, 1, 0, '|11|12|', '|1|', '|0|', '', 2),
 (4, 22, 3, 1, 108, 0, 23, 1, 2, 0, 1, 1, 0x6634, 24, 2, 0, '|49|50|51|52|46|47|48|53|54|55|57|58|106|59|60|61|62|63|64|65|66|67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99|100|101|102|103|104|105|', '', '|0|59|', '', 7),
-(5, 25, 103, 1, 108, 1, 26, 1, 3, 0, 1, 1, 0x6635, 27, 1, 0, '|1930|1989|', '', '|18|75|', '', 3),
+(5, 25, 103, 1, 108, 1, 26, 1, 1, 0, 1, 1, 0x6635, 27, 1, 0, '|1930|1989|', '', '|18|75|', '', 3),
 (6, 28, 107, 1, 107, 1, 29, 1, 1, 0, 1, 1, 0x6636, 30, 1, 0, '', '|218|', '', 'update_location', 4),
-(7, 43, 3, 1, 10, 0, 44, 1, 2, 0, 1, 1, 0x6637, 45, 2, 0, '|34|35|36|37|38|39|40|41|42|', '', '|0|', '', 6),
+(7, 43, 3, 1, 10, 0, 44, 1, 2, 0, 1, 1, 0x6637, 45, 2, 0, '|34|35|36|37|38|39|40|41|42|', '', '', '', 6),
 (8, 116, 3, 1, 10, 0, 117, 1, 2, 0, 1, 1, 0x6638, 118, 2, 0, '|107|108|109|110|111|112|113|114|115|', '', '', '', 8),
 (9, 125, 3, 1, 3, 0, 126, 1, 2, 0, 1, 1, 0x6639, 127, 2, 0, '|119|120|121|122|123|124|', '', '', '', 9),
 (10, 137, 3, 1, 10, 0, 138, 1, 2, 0, 1, 1, 0x663130, 139, 2, 0, '|128|129|130|131|132|133|134|135|136|', '', '', '', 10),
@@ -1209,9 +1236,9 @@ INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `html_type`, `s
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_queue_email`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_queue_email`;
 CREATE TABLE `dsb_queue_email` (
@@ -1223,16 +1250,16 @@ CREATE TABLE `dsb_queue_email` (
   PRIMARY KEY  (`mail_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_queue_email`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_queue_message`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_queue_message`;
 CREATE TABLE `dsb_queue_message` (
@@ -1249,14 +1276,16 @@ CREATE TABLE `dsb_queue_message` (
   KEY `to_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_queue_message`
---
+-- 
+
+
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_rate_limiter`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_rate_limiter`;
 CREATE TABLE `dsb_rate_limiter` (
@@ -1270,16 +1299,16 @@ CREATE TABLE `dsb_rate_limiter` (
   KEY `thekey` (`fk_level_id`,`m_value`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_rate_limiter`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_site_bans`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_site_bans`;
 CREATE TABLE `dsb_site_bans` (
@@ -1290,16 +1319,16 @@ CREATE TABLE `dsb_site_bans` (
   PRIMARY KEY  (`ban_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_site_bans`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_site_log`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_site_log`;
 CREATE TABLE `dsb_site_log` (
@@ -1315,16 +1344,16 @@ CREATE TABLE `dsb_site_log` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_site_log`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_site_options3`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_site_options3`;
 CREATE TABLE `dsb_site_options3` (
@@ -1341,13 +1370,13 @@ CREATE TABLE `dsb_site_options3` (
   KEY `fk_module_code` (`fk_module_code`)
 ) TYPE=MyISAM COMMENT='0-n/a,9-chkbox,2-tf,4-ta';
 
---
+-- 
 -- Dumping data for table `dsb_site_options3`
---
+-- 
 
 INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `config_diz`, `option_type`, `fk_module_code`, `per_user`) VALUES (1, 0x64626669656c645f696e646578, '16', 'The last index of the custom profile fields (field_xx)', 0, 0x636f7265, 0),
 (2, 0x7573655f63617074636861, '1', 'Use the dynamic image text (captcha image) to keep spam bots out?', 9, 0x636f7265, 0),
-(3, 0x6d616e75616c5f70726f66696c655f617070726f76616c, '1', 'New profiles or changes to existing profiles require manual approval from an administrator before being displayed on site?', 9, 0x636f7265, 0),
+(3, 0x6d616e75616c5f70726f66696c655f617070726f76616c, '0', 'New profiles or changes to existing profiles require manual approval from an administrator before being displayed on site?', 9, 0x636f7265, 0),
 (4, 0x646174655f666f726d6174, '%m/%d/%Y', 'Default date format', 2, 0x636f7265, 1),
 (5, 0x74315f7769647468, '100', 'The width in pixels of the smalest thumbnail generated for each user photo', 104, 0x636f72655f70686f746f, 0),
 (6, 0x74325f7769647468, '500', 'The width in pixels of the larger thumbnail generated for each user photo', 104, 0x636f72655f70686f746f, 0),
@@ -1363,16 +1392,12 @@ INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `
 (16, 0x736964, '117760', 'Your 2co seller ID', 2, 0x74776f636865636b6f7574, 0),
 (17, 0x64656d6f5f6d6f6465, '1', 'Enable test mode? Don''t enable this on a live site!', 9, 0x74776f636865636b6f7574, 0),
 (18, 0x64656d6f5f6d6f6465, '1', 'Enable test mode? Don''t enable this on a live site!', 9, 0x70617970616c, 0),
-(19, 0x736563726574, 'terebentina', 'The secret word you set in your 2co account', 2, 0x74776f636865636b6f7574, 0),
+(19, 0x736563726574, 'secret_word', 'The secret word you set in your 2co account', 2, 0x74776f636865636b6f7574, 0),
 (20, 0x6c6963656e73655f6b6579, '1234', 'Your Maxmind license key', 2, 0x6d61786d696e64, 0),
 (21, 0x7573655f7175657565, '1', 'Use the message queue (recommended) or send the messages directly?', 9, 0x636f7265, 0),
 (22, 0x6d61696c5f66726f6d, 'dan@rdsct.ro', 'Email address to send emails from', 2, 0x636f7265, 0),
 (23, 0x6262636f64655f70726f66696c65, '1', 'Use BBcode in profile fields? (like about me, about you)', 9, 0x636f7265, 0),
 (24, 0x6262636f64655f636f6d6d656e7473, '1', 'Use BBcode in comments?', 9, 0x636f7265, 0),
-(25, 0x736b696e5f646972, 'basic', 'Skin folder name in the skins folder.', 0, 0x736b696e5f6261736963, 0),
-(26, 0x736b696e5f6e616d65, 'Basic', '', 0, 0x736b696e5f6261736963, 0),
-(27, 0x666b5f6c6f63616c655f6964, '11', '', 0, 0x736b696e5f6261736963, 0),
-(28, 0x69735f64656661756c74, '0', 'Is this skin the default site skin?', 0, 0x736b696e5f6261736963, 0),
 (32, 0x6d696e5f73697a65, '0', 'Minimum photo file size in bytes (use 0 for not limited).', 104, 0x636f72655f70686f746f, 0),
 (33, 0x6d61785f73697a65, '0', 'Maximum photo file size in bytes (use 0 for server default).', 104, 0x636f72655f70686f746f, 0),
 (34, 0x6262636f64655f6d657373616765, '1', 'Allow BBCode in member to member messages?', 9, 0x636f7265, 0),
@@ -1390,13 +1415,14 @@ INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `
 (46, 0x726174655f6d795f70726f66696c65, '1', 'Allow your profile to be rated?', 9, 0x6465665f757365725f7072656673, 1),
 (47, 0x726174655f6d795f70686f746f73, '1', 'Allow your photos to be rated?', 9, 0x6465665f757365725f7072656673, 1),
 (48, 0x70757267655f756e7665726966696564, '7', 'Purge unverified accounts after how many days?', 104, 0x636f7265, 0),
-(50, 0x6e6f746966795f6d65, '1', 'Send me email notifications when I receive messages?', 9, 0x6465665f757365725f7072656673, 1);
+(50, 0x6e6f746966795f6d65, '1', 'Send me email notifications when I receive messages?', 9, 0x6465665f757365725f7072656673, 1),
+(51, 0x6d61696c5f63726c66, '1', 'Check or uncheck this option if you can''t send emails out to members', 9, 0x636f7265, 0);
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_site_searches`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_site_searches`;
 CREATE TABLE `dsb_site_searches` (
@@ -1410,15 +1436,18 @@ CREATE TABLE `dsb_site_searches` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_site_searches`
---
+-- 
+
+INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('7e81e2de7df88ab99c15c4a8971b2b9d', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:3:"new";}', '16,15,14,13,12,11,10,9,8,7,6,5,4,3,2', 1, '20070418184544'),
+('4cd40acb49a545cc090e3988dc5f55b2', 1, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:6:"latest";}', '7,11,5,6,8,13,4,10,2,3,9,12,14,15,16', 1, '20070418210214');
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_subscriptions`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_subscriptions`;
 CREATE TABLE `dsb_subscriptions` (
@@ -1437,9 +1466,9 @@ CREATE TABLE `dsb_subscriptions` (
   KEY `thekey` (`m_value_from`,`is_visible`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_subscriptions`
---
+-- 
 
 INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `price`, `currency`, `is_recurent`, `m_value_from`, `m_value_to`, `duration`, `duration_units`, `is_visible`) VALUES (1, '30$ / month', '', 30.00, 'USD', 0, 2, 4, 30, 'D', 1),
 (3, 'Trial', '', 0.00, 'USD', 0, 2, 4, 5, 'D', 0),
@@ -1448,9 +1477,9 @@ INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `pric
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_subscriptions_auto`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_subscriptions_auto`;
 CREATE TABLE `dsb_subscriptions_auto` (
@@ -1462,16 +1491,16 @@ CREATE TABLE `dsb_subscriptions_auto` (
   PRIMARY KEY  (`asubscr_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_subscriptions_auto`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_accounts`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_accounts`;
 CREATE TABLE `dsb_user_accounts` (
@@ -1490,14 +1519,32 @@ CREATE TABLE `dsb_user_accounts` (
   KEY `email` (`email`)
 ) TYPE=MyISAM COMMENT='membership is m_value';
 
---
+-- 
 -- Dumping data for table `dsb_user_accounts`
---
+-- 
+
+INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x656d6d61, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '02912174c5cc19dedd90bc498af2d9b0', '20070419000654'),
+(2, 0x6b65697468, 0x3166333837306265323734663663343962336533316130633637323839353766, 15, 2, 'newdsb@sco.ro', '', '2fba765ee1b6ade5287073584ec894e4', '20070418125301'),
+(3, 0x73686f6e323035, 0x3037373631303430363739346562326133633736393139396439346131613739, 15, 2, 'newdsb@sco.ro', '', 'b3d7ac7336a79fe5a4b01a88f5727b13', '20070418125301'),
+(4, 0x6d6176657269636b, 0x3839393636303063333130383863366137363436346365333864393635636364, 15, 2, 'newdsb@sco.ro', '', '87a6ce818365e8b3bef125df92826702', '20070418125301'),
+(5, 0x313030343537, 0x3836653236636161363936356531313066666461353936373465373163643264, 15, 2, 'newdsb@sco.ro', '', 'c5cb27f0e77add4c24ffc48562a0706d', '20070418125301'),
+(6, 0x636f6361636f6c61, 0x6361323466306531653366663730316661346633336335336639303566396461, 15, 2, 'newdsb@sco.ro', '', '7f2fe99deb74578bf4f6e5e26dd99ae0', '20070418125301'),
+(7, 0x647261676f6e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '1dc9d7dbc613c521a8efeae0f7706f2e', '20070418125301'),
+(8, 0x616e676b617361, 0x3634383530366161333739666566623930323663376530313664386463626663, 15, 2, 'newdsb@sco.ro', '', '36e12348474821624874994164838526', '20070418125301'),
+(9, 0x72616e65676c6f, 0x3739343063343139653932336166306265373963623835613432663836343964, 15, 2, 'newdsb@sco.ro', '', '83f1200b9f1bdd252e2aebc2dfffe34f', '20070418125301'),
+(10, 0x737472617762657272696573, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '68779ace53ca9ba01a52efa82e53bf86', '20070418125301'),
+(11, 0x6a6f686e626f79, 0x6463613961313066636662396434346365346265393037393965633762623738, 15, 2, 'newdsb@sco.ro', '', '4173da6fd2bf9e455e18cdd70953f0b6', '20070418125301'),
+(12, 0x615f6c5f66, 0x3530393636333531626362373264373463636466636634313038613734613664, 15, 2, 'newdsb@sco.ro', '', 'c846ec67e081e672e99c7a14d167b463', '20070418125301'),
+(13, 0x6a6f686e626f7932, 0x6463613961313066636662396434346365346265393037393965633762623738, 15, 2, 'newdsb@sco.ro', '', 'f446c1ae194fc4ed6309e1b60f177ebb', '20070418125301'),
+(14, 0x7470616e647470, 0x3639336538313066663237363034653664613237346461346337376531333663, 15, 2, 'newdsb@sco.ro', '', '76b41bfad8b909b658e578f08f7a6244', '20070418125301'),
+(15, 0x626c61636b7761746572, 0x6166623332376439386230316537323035383035323233613331313363303563, 15, 2, 'newdsb@sco.ro', '', 'bc217753a490dd732c4e992340db665c', '20070418125301'),
+(16, 0x746573746572, 0x6234663062656231303130343734626564396366303234303231366333313464, 10, 2, 'newdsb@sco.ro', '', 'cf3b1718be2b5af79bf2c189eb0bbedf', '20070418125301');
+
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_blogs`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_blogs`;
 CREATE TABLE `dsb_user_blogs` (
@@ -1512,16 +1559,21 @@ CREATE TABLE `dsb_user_blogs` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_blogs`
---
+-- 
 
+INSERT INTO `dsb_user_blogs` (`blog_id`, `fk_user_id`, `blog_name`, `blog_diz`, `stat_posts`, `blog_skin`, `blog_url`) VALUES (1, 1, 'My first ever blog', 'What can I break today?', 1, '', ''),
+(2, 4, 'Friendy Software', 'Looks good so far!', 0, '', ''),
+(3, 10, 'Fluffy''s Blog', 'The life and times of Fluffy', 1, '', ''),
+(4, 11, 'Testing Testing the Blog', 'Testing Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing', 0, '', ''),
+(5, 7, 'My words of wisdom', '', 1, '', '');
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_cache`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_cache`;
 CREATE TABLE `dsb_user_cache` (
@@ -1532,16 +1584,16 @@ CREATE TABLE `dsb_user_cache` (
   KEY `thekey` (`fk_user_id`,`skin`,`part`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_cache`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_fav_links`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_fav_links`;
 CREATE TABLE `dsb_user_fav_links` (
@@ -1554,16 +1606,16 @@ CREATE TABLE `dsb_user_fav_links` (
   KEY `index1` (`fk_user_id`,`is_private`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_fav_links`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_folders`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_folders`;
 CREATE TABLE `dsb_user_folders` (
@@ -1574,16 +1626,19 @@ CREATE TABLE `dsb_user_folders` (
   UNIQUE KEY `fk_user_id` (`fk_user_id`,`folder`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_folders`
---
+-- 
 
+INSERT INTO `dsb_user_folders` (`folder_id`, `fk_user_id`, `folder`) VALUES (1, 6, 'Test'),
+(2, 11, 'My Sexy Email'),
+(3, 10, 'test folder');
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_inbox`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_inbox`;
 CREATE TABLE `dsb_user_inbox` (
@@ -1603,16 +1658,111 @@ CREATE TABLE `dsb_user_inbox` (
   KEY `key1` (`fk_user_id`,`fk_folder_id`,`del`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_inbox`
---
+-- 
 
+INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES (45, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
+(43, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
+(42, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
+(40, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(41, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
+(36, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
+(37, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
+(38, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
+(39, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(14, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
+(15, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
+(16, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
+(17, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(18, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(19, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
+(20, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
+(21, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
+(22, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
+(23, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
+(50, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(49, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
+(48, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
+(47, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
+(46, 1, 1, 4, 'maverick', 'Connection request from maverick', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 17:53:37', 0, 0, 1),
+(44, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
+(35, 1, 1, 4, 'maverick', 'Connection request from maverick', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 17:53:37', 2, 0, 1),
+(25, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
+(26, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
+(27, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
+(28, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(29, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(30, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
+(31, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
+(32, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
+(33, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
+(34, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
+(51, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(52, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
+(53, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
+(54, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
+(55, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
+(56, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
+(57, 0, 1, 4, 'maverick', 'Connection request from maverick', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 17:53:37', 0, 0, 1),
+(58, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
+(59, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
+(60, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
+(61, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(62, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(63, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
+(64, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
+(65, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
+(66, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
+(67, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
+(68, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
+(69, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
+(70, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
+(71, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(72, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(73, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
+(74, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
+(75, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
+(76, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
+(77, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
+(78, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
+(79, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
+(80, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
+(81, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(82, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(83, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
+(84, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
+(85, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
+(86, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
+(87, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
+(88, 0, 1, 4, 'maverick', 'Connection request from maverick', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 17:53:37', 0, 0, 0),
+(89, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
+(90, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
+(91, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
+(92, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(93, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(94, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
+(95, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
+(96, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
+(97, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
+(98, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
+(99, 0, 1, 4, 'maverick', 'Connection request from maverick', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 17:53:37', 0, 0, 0),
+(100, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
+(101, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
+(102, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
+(103, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(104, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(105, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
+(106, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
+(107, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
+(108, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
+(109, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0);
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_mtpls`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_mtpls`;
 CREATE TABLE `dsb_user_mtpls` (
@@ -1624,16 +1774,16 @@ CREATE TABLE `dsb_user_mtpls` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_mtpls`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_networks`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_networks`;
 CREATE TABLE `dsb_user_networks` (
@@ -1647,15 +1797,27 @@ CREATE TABLE `dsb_user_networks` (
   KEY `index1` (`fk_user_id`,`fk_net_id`,`nconn_status`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_networks`
---
+-- 
+
+INSERT INTO `dsb_user_networks` (`nconn_id`, `fk_user_id`, `fk_net_id`, `fk_user_id_other`, `nconn_status`) VALUES (1, 4, 1, 1, 1),
+(2, 4, 1, 8, 1),
+(3, 1, 1, 7, 1),
+(4, 10, 1, 7, 0),
+(5, 11, 1, 7, 0),
+(6, 10, 3, 10, 1),
+(7, 11, 2, 10, 1),
+(8, 13, 1, 11, 0),
+(9, 11, 3, 13, 1),
+(10, 11, 1, 13, 0),
+(14, 1, 1, 4, 0);
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_outbox`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_outbox`;
 CREATE TABLE `dsb_user_outbox` (
@@ -1673,16 +1835,16 @@ CREATE TABLE `dsb_user_outbox` (
   KEY `user_id_2` (`fk_user_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_outbox`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_photos`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_photos`;
 CREATE TABLE `dsb_user_photos` (
@@ -1715,15 +1877,29 @@ CREATE TABLE `dsb_user_photos` (
   FULLTEXT KEY `caption` (`caption`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_photos`
---
+-- 
+
+INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `allow_rating`, `caption`, `status`, `del`, `flagged`, `reject_reason`, `stat_views`, `stat_votes`, `stat_votes_total`, `stat_comments`, `date_posted`, `last_changed`) VALUES (1, 4, 'maverick', '7/4_11176746548.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 20, 2, 9, 3, '2007-04-16 18:02:29', '2007-04-16 18:08:52'),
+(2, 1, 'emma', '4/1_11176750826.jpg', 0, 0, 1, 1, 'ruuuuun, enemies are coming!!', 15, 0, 0, '', 13, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-16 19:15:28'),
+(3, 1, 'emma', '2/1_21176750826.jpg', 1, 0, 1, 1, 'daddy''s girl', 15, 0, 0, '', 7, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-16 19:15:28'),
+(4, 1, 'emma', '1/1_31176750826.jpg', 0, 0, 1, 1, 'hey, look, I can walk...sort of :)', 15, 0, 0, '', 5, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-16 19:15:28'),
+(5, 7, 'dragon', '0/7_11176751977.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 19, 3, 15, 1, '2007-04-16 19:32:59', '2007-04-16 19:33:32'),
+(6, 10, 'strawberries', '3/10_11176756425.jpg', 1, 0, 1, 1, 'Fluffy, she who must be obeyed', 15, 0, 0, '', 9, 0, 0, 1, '2007-04-16 20:47:07', '2007-04-16 20:48:32'),
+(7, 10, 'strawberries', '3/10_21176756425.jpg', 0, 0, 1, 1, 'Fluffy loves getting her picture taken', 15, 0, 0, '', 6, 0, 0, 0, '2007-04-16 20:47:07', '2007-04-16 20:48:32'),
+(8, 11, 'johnboy', '0/11_11176758735.jpg', 1, 1, 1, 1, '', 15, 0, 0, '', 13, 1, 5, 0, '2007-04-16 21:25:35', '2007-04-17 12:27:01'),
+(9, 13, 'johnboy2', '6/13_11176787947.jpg', 1, 0, 1, 1, 'Out the front of my house', 15, 0, 0, '', 6, 1, 4, 2, '2007-04-17 05:32:29', '2007-04-17 05:33:50'),
+(10, 13, 'johnboy2', '8/13_21176787947.jpg', 0, 0, 1, 1, 'A poor little bird freezing its butt off.', 15, 0, 0, '', 1, 0, 0, 0, '2007-04-17 05:32:29', '2007-04-17 05:33:50'),
+(11, 8, 'angkasa', '2/8_11176790979.jpg', 1, 0, 1, 1, 'fgfgfgfgf', 15, 0, 0, '', 3, 0, 0, 0, '2007-04-17 06:23:02', '2007-04-17 06:24:21'),
+(12, 15, 'blackwater', '1/15_11176795306.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 3, 0, 0, 0, '2007-04-17 07:35:07', '2007-04-17 07:36:26'),
+(13, 12, 'a_l_f', '9/12_11176812224.jpg', 1, 0, 1, 1, 'Here Kitty Kitty', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-17 12:17:04', '2007-04-17 12:17:31');
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_profiles`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_profiles`;
 CREATE TABLE `dsb_user_profiles` (
@@ -1765,15 +1941,32 @@ CREATE TABLE `dsb_user_profiles` (
   KEY `key1` (`status`,`del`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_profiles`
---
+-- 
+
+INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`, `f6_country`, `f6_state`, `f6_city`, `f6_zip`, `f7`, `f8`, `f9`, `f10`, `f11`, `f12`, `f13`, `f14`, `f15`) VALUES (1, 1, 15, 0, '2007-04-16 22:53:50', '2007-04-16 14:42:06', '', 'emma', '2/1_21176750826.jpg', 0.0000000000, 0.0000000000, 0, '', 2, '|1|', 1, '1989-06-05', 165, 0, 0, '', 3, 3, 2, 3, 1, 1, 1, 1, ''),
+(2, 2, 15, 0, '2007-04-16 12:42:01', '2007-04-16 17:09:23', '', 'keith', '', 0.0000000000, 0.0000000000, 0, 'Testing', 1, '|2|', 1, '1976-05-12', 217, 0, 0, '', 3, 1, 1, 1, 1, 1, 1, 1, '|1|4|7|'),
+(3, 3, 15, 0, '2007-04-16 17:29:10', '2007-04-16 17:24:38', '', 'shon205', '', -81.6286010742, 41.4509010315, 0, '', 1, '|2|', 1, '1971-01-06', 218, 41, 1620, '44105', 1, 1, 1, 1, 1, 1, 1, 1, ''),
+(4, 4, 15, 0, '2007-04-16 12:41:49', '2007-04-16 17:46:34', '', 'maverick', '', 0.0000000000, 0.0000000000, 4, '', 1, '|2|', 33, '0000-00-00', 218, 0, 0, '86314', 3, 3, 2, 3, 1, 1, 2, 2, '|1|'),
+(5, 5, 15, 0, '2007-04-16 12:41:45', '2007-04-16 18:26:47', '', '100457', '', 0.0000000000, 0.0000000000, 5, 'cool me', 1, '|2|', 32, '1978-04-07', 218, 0, 0, '49504', 5, 1, 3, 1, 1, 1, 1, 1, '|1|7|'),
+(6, 6, 15, 0, '2007-04-16 12:41:53', '2007-04-16 18:50:27', '', 'cocacola', '', 0.0000000000, 0.0000000000, 5, 'Im cool', 1, '|2|', 38, '1969-01-01', 186, 0, 0, '07631', 3, 1, 1, 1, 1, 1, 1, 1, '|1|'),
+(7, 7, 15, 0, '2007-04-16 12:41:56', '2007-04-16 19:26:41', '', 'dragon', '0/7_11176751977.jpg', 0.0000000000, 0.0000000000, 11, 'oops, this should have been a textarea, not a textfield. Easy to fix!', 1, '|2|', 58, '1976-11-01', 165, 0, 0, '', 3, 5, 2, 5, 1, 2, 4, 1, '|2|'),
+(8, 8, 15, 0, '2007-04-17 06:23:17', '2007-04-16 19:54:09', '', 'angkasa', '2/8_11176790979.jpg', 0.0000000000, 0.0000000000, 5, 'I''m Cool', 1, '|2|', 47, '1980-09-18', 181, 0, 0, '', 2, 3, 1, 2, 3, 2, 5, 3, '|1|7|'),
+(9, 9, 15, 0, '2007-04-16 19:56:29', '2007-04-16 19:55:41', '', 'raneglo', '', 0.0000000000, 0.0000000000, 0, 'I am me!', 1, '|1|', 34, '1961-07-29', 218, 0, 0, '77584', 3, 3, 6, 5, 1, 2, 4, 1, '|4|5|'),
+(10, 10, 15, 0, '2007-04-16 20:48:32', '2007-04-16 20:26:23', '', 'strawberries', '3/10_11176756425.jpg', 0.0000000000, 0.0000000000, 2, '', 1, '|2|', 38, '1964-12-31', 217, 0, 0, '', 3, 3, 2, 5, 1, 2, 3, 1, '|1|'),
+(11, 11, 15, 0, '2007-04-17 04:54:56', '2007-04-16 21:10:00', '', 'johnboy', '0/11_11176758735.jpg', 0.0000000000, 0.0000000000, 10, 'Hello everyone, at last we can see what the new DSB is about, I LIKE IT, very clean.', 1, '|2|', 39, '1958-01-17', 145, 0, 0, '', 3, 1, 2, 9, 3, 2, 2, 2, '|7|'),
+(12, 12, 15, 0, '2007-04-17 12:17:31', '2007-04-17 00:26:40', '', 'a_l_f', '9/12_11176812224.jpg', 0.0000000000, 0.0000000000, 0, 'Computer Junkie that loves kung fu and motor bikes', 1, '|2|', 29, '1959-07-28', 11, 0, 0, '', 3, 3, 6, 2, 3, 2, 3, 1, '|3|'),
+(13, 13, 15, 0, '2007-04-17 12:32:53', '2007-04-17 05:13:27', '', 'johnboy2', '6/13_11176787947.jpg', 0.0000000000, 0.0000000000, 5, 'Testing this out', 1, '|2|', 39, '1958-01-17', 145, 0, 0, '', 3, 1, 2, 9, 3, 2, 2, 2, '|7|'),
+(14, 14, 15, 0, '2007-04-17 05:48:43', '2007-04-17 05:48:17', '', 'tpandtp', '', 0.0000000000, 0.0000000000, 0, '', 1, '|2|', 1, '0000-00-00', 11, 0, 0, '', 3, 1, 1, 1, 1, 1, 1, 1, ''),
+(15, 15, 15, 0, '2007-04-17 07:36:26', '2007-04-17 07:27:52', '', 'blackwater', '1/15_11176795306.jpg', 0.0000000000, 0.0000000000, 0, 'şşşş ğğğğğ ııııı', 1, '|2|', 51, '1977-04-28', 210, 0, 0, '', 3, 3, 1, 2, 2, 2, 3, 1, '|1|7|'),
+(16, 16, 15, 0, '2007-04-17 10:36:09', '2007-04-17 10:35:07', '', 'tester', '', 0.0000000000, 0.0000000000, 0, 'about-me...looking at this softa\\ware', 1, '|2|', 50, '1969-11-30', 186, 0, 0, '', 3, 1, 1, 1, 1, 1, 1, 1, '|4|6|7|');
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_searches`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_searches`;
 CREATE TABLE `dsb_user_searches` (
@@ -1789,16 +1982,16 @@ CREATE TABLE `dsb_user_searches` (
   KEY `alert` (`alert`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_searches`
---
+-- 
 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_settings2`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_settings2`;
 CREATE TABLE `dsb_user_settings2` (
@@ -1812,16 +2005,40 @@ CREATE TABLE `dsb_user_settings2` (
   KEY `fk_module_code` (`fk_module_code`)
 ) TYPE=MyISAM COMMENT='0-n/a,1-chkbox,2-tf,3-ta';
 
---
+-- 
 -- Dumping data for table `dsb_user_settings2`
---
+-- 
 
+INSERT INTO `dsb_user_settings2` (`config_id`, `fk_user_id`, `config_option`, `config_value`, `fk_module_code`) VALUES (1, 10, 0x646174655f666f726d6174, '%m/%d/%Y', 0x636f7265),
+(2, 10, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x636f7265),
+(3, 10, 0x73656e645f616c6572745f696e74657276616c, '2', 0x6465665f757365725f7072656673),
+(4, 10, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
+(5, 10, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
+(6, 10, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
+(7, 11, 0x646174655f666f726d6174, '%d/%m/%Y', 0x636f7265),
+(8, 11, 0x6461746574696d655f666f726d6174, '%d/%m/%Y %r', 0x636f7265),
+(9, 11, 0x73656e645f616c6572745f696e74657276616c, '1', 0x6465665f757365725f7072656673),
+(10, 11, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
+(11, 11, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
+(12, 11, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
+(13, 12, 0x646174655f666f726d6174, '%m/%d/%Y', 0x636f7265),
+(14, 12, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x636f7265),
+(15, 12, 0x73656e645f616c6572745f696e74657276616c, '2', 0x6465665f757365725f7072656673),
+(16, 12, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
+(17, 12, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
+(18, 12, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
+(19, 1, '', '', ''),
+(20, 1, 0x6e6f746966795f6d65, '1', ''),
+(21, 7, '', '', ''),
+(22, 7, 0x6e6f746966795f6d65, '1', ''),
+(23, 13, '', '', ''),
+(24, 13, 0x6e6f746966795f6d65, '1', '');
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_spambox`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_spambox`;
 CREATE TABLE `dsb_user_spambox` (
@@ -1839,16 +2056,18 @@ CREATE TABLE `dsb_user_spambox` (
   KEY `user_id_2` (`fk_user_id`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_spambox`
---
+-- 
 
+INSERT INTO `dsb_user_spambox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (1, 1, 1, 4, 'maverick', 'Connection request from maverick', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 17:53:37', 0),
+(2, 0, 1, 4, 'maverick', 'Connection request from maverick', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 17:53:37', 0);
 
 -- --------------------------------------------------------
 
---
+-- 
 -- Table structure for table `dsb_user_stats`
---
+-- 
 
 DROP TABLE IF EXISTS `dsb_user_stats`;
 CREATE TABLE `dsb_user_stats` (
@@ -1858,7 +2077,26 @@ CREATE TABLE `dsb_user_stats` (
   UNIQUE KEY `thekey` (`fk_user_id`,`stat`)
 ) TYPE=MyISAM;
 
---
+-- 
 -- Dumping data for table `dsb_user_stats`
---
+-- 
 
+INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (2, 'total_photos', 1),
+(1, 'total_photos', 15),
+(1, 'flirts_sent', 1),
+(1, 'blog_posts', 3),
+(3, 'total_photos', 6),
+(2, 'blog_posts', 1),
+(1, 'comments', 1),
+(4, 'total_photos', 3),
+(3, 'pviews', 8),
+(2, 'pviews', 11),
+(15, 'pviews', 1),
+(12, 'pviews', 1),
+(10, 'pviews', 1),
+(13, 'pviews', 1),
+(1, 'total_messages', -4),
+(4, 'pviews', 18),
+(7, 'pviews', 2),
+(1, 'pviews', 1),
+(8, 'pviews', 1);
