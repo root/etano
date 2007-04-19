@@ -44,8 +44,8 @@ class blog_posts_cache {
 				$post=mysql_fetch_assoc($res);
 				$post['title']=sanitize_and_format($post['title'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
 				$post_content_short=substr($post['post_content'],0,strrpos(substr($post['post_content'],0,600),' '));
-				$post_content_short=sanitize_and_format($post_content_short,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
-				$post['post_content']=sanitize_and_format($post['post_content'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
+				$post_content_short=sanitize_and_format($post_content_short,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
+				$post['post_content']=sanitize_and_format($post['post_content'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
 				if (get_site_option('bbcode_blogs','core_blog')) {
 					$post['post_content']=bbcode2html($post['post_content']);
 					$post_content_short=bbcode2html($post_content_short);
@@ -90,8 +90,8 @@ class blog_posts_cache {
 			while ($post=mysql_fetch_assoc($res)) {
 				$post['title']=sanitize_and_format($post['title'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
 				$post_content_short=substr($post['post_content'],0,strrpos(substr($post['post_content'],0,600),' '));
-				$post_content_short=sanitize_and_format($post_content_short,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
-				$post['post_content']=sanitize_and_format($post['post_content'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
+				$post_content_short=sanitize_and_format($post_content_short,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
+				$post['post_content']=sanitize_and_format($post['post_content'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
 				if (get_site_option('bbcode_blogs','core_blog')) {
 					$post['post_content']=bbcode2html($post['post_content']);
 					$post_content_short=bbcode2html($post_content_short);

@@ -144,13 +144,13 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 				if (function_exists($jobs[$i])) {
 					$start_time=time();
 					$jobs[$i]();
-					echo $jobs[$i].': '.(time()-$start_time).' seconds<br>';
+					echo $jobs[$i].': '.(time()-$start_time)." seconds<br>\n";
 					ob_flush();
 					flush();
 				}
 			}
 		}
-		echo count($jobs).' jobs run.';
+		echo count($jobs)." jobs run.\n";
 	}
 }
 ?>

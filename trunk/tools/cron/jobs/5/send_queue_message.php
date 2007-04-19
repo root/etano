@@ -15,6 +15,9 @@ function send_queue_message() {
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$temp['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
 			$temp['_user_other']=$rsrow['_user_other'];
+			if (empty($temp['_user_other']) && $rsrow['message_type']==MESS_SYSTEM) {
+				$temp['_user_other']='SYSTEM';	// translate
+			}
 			$temp['email']=$rsrow['email'];
 			$temp['user']=$rsrow['user'];
 			$mail_ids[]=$rsrow['mail_id'];

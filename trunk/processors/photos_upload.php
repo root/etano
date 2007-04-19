@@ -248,13 +248,33 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		$ids=array();
 		$now=gmdate('YmdHis');
+		$my_settings=get_user_settings($_SESSION['user']['user_id'],'def_user_prefs',array('rate_my_photos'));
+		$force_main=false;
+		if (empty($input['is_private'])) {
+			// if there's no main photo yet, make the first one the main one
+			$query="SELECT `photo_id` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `is_main`=1";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (!mysql_num_rows($res)) {
+				$force_main=true;
+			}
+		}
 		for ($i=1;$i<=6;++$i) {
 			if (!empty($input['file'.$i])) {
-				$query="INSERT INTO `{$dbtable_prefix}user_photos` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`_user`='".$_SESSION['user']['user']."',`photo`='".$input['file'.$i]."',`is_main`=0,`allow_comments`=1,`allow_rating`=1,`is_private`='".$input['is_private']."',`date_posted`='$now',`last_changed`='$now'";
+				$query="INSERT INTO `{$dbtable_prefix}user_photos` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`_user`='".$_SESSION['user']['user']."',`photo`='".$input['file'.$i]."',`allow_comments`=1,`allow_rating`='".$my_settings['rate_my_photos']."',`is_private`='".$input['is_private']."',`date_posted`='$now',`last_changed`='$now'";
 				if ($config['manual_photo_approval']==1) {
 					$query.=",`status`='".STAT_PENDING."'";
 				} else {
 					$query.=",`status`='".STAT_APPROVED."'";
+				}
+				if ($force_main) {
+					$query.=",`is_main`=1";
+					$force_main=false;
+					// unfortunately we have to force _photo in user_profile here instead of in photo_settings
+					// if photo approvals are automatic then we can make this photo the main photo now. Otherwise it will have to be done upon approval!!!
+					if (empty($config['manual_photo_approval'])) {
+						$query2="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='".$input['file'.$i]."',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+						if (!($res=@mysql_query($query2))) {trigger_error(mysql_error(),E_USER_ERROR);}
+					}
 				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$ids[]=mysql_insert_id();

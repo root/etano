@@ -13,7 +13,7 @@ function gen_blogposts_cache() {
 	$interval=(int)$temp[count($temp)-1];	// that's how often we're executed ;)
 
 	$short_blog_chars=600;
-	$config=get_site_option(array('bbcode_blogs'),'core');
+	$config=get_site_option(array('bbcode_blogs'),'core_blog');
 
 	require_once _BASEPATH_.'/includes/classes/modman.class.php';
 	$modman=new modman();
@@ -23,8 +23,8 @@ function gen_blogposts_cache() {
 	while ($blog=mysql_fetch_assoc($res)) {
 		$blog['title']=sanitize_and_format($blog['title'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
 		$post_content_short=substr($blog['post_content'],0,strrpos(substr($blog['post_content'],0,$short_blog_chars),' '));
-		$post_content_short=sanitize_and_format($post_content_short,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
-		$blog['post_content']=sanitize_and_format($blog['post_content'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
+		$post_content_short=sanitize_and_format($post_content_short,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
+		$blog['post_content']=sanitize_and_format($blog['post_content'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
 		if (!empty($config['bbcode_blogs'])) {
 			$blog['post_content']=bbcode2html($blog['post_content']);
 			$post_content_short=bbcode2html($post_content_short);

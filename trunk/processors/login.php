@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$user=mysql_fetch_assoc($res);
 			$user['membership']=(int)$user['membership'];
 			if ($user['status']==ASTAT_ACTIVE) {
-				$user['prefs']=get_user_settings($user['user_id'],1);
+//				$user['prefs']=get_user_settings($user['user_id'],1);
 				if ($user['last_activity']<time()-$score_threshold) {
 					add_member_score($user['user_id'],'login');
 				}

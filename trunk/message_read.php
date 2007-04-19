@@ -137,8 +137,8 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 	redirect2page('mailbox.php');
 }
 
-$tplvars['title']='Read a message';     // translate
-$tplvars['page_title']='Read a message';
+$tplvars['title']='Read message';     // translate
+$tplvars['page_title']='Read message';
 $tplvars['page']='message_read';
 $tplvars['css']='message_read.css';
 if (is_file('message_read_left.php')) {

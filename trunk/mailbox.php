@@ -93,10 +93,10 @@ if (!empty($totalrows)) {
 		$rsrow['date_sent']=strftime($_user_settings['date_format'],$rsrow['date_sent']+$_user_settings['time_offset']);
 		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 		$rsrow['is_read']=(!empty($rsrow['is_read'])) ? 'read' : 'not_read';
-		$rsrow['message_type']=$message_types[$rsrow['message_type']];
 		if ($rsrow['message_type']==MESS_SYSTEM && empty($rsrow['user_other'])) {
 			$rsrow['user_other']='SYSTEM';     // translate
 		}
+		$rsrow['message_type']=$message_types[$rsrow['message_type']];
 		$loop[]=$rsrow;
 	}
 	$tpl->set_var('pager2',pager($totalrows,$o,$r));

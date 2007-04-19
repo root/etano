@@ -1,4 +1,4 @@
-DirectoryIndex index.php
+DirectoryIndex index.html index.php
 Options -Indexes
 php_flag session.use_cookies on
 php_flag register_globals off

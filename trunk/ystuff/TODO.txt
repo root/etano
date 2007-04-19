@@ -42,17 +42,11 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 - welcome message in inbox cand se inregistreaza un membru de tipul MESS_SYSTEM
 
-- blocked users pot fi membri in network-ul 'Blocked Users'
-
 
 
 TODO
-				ADI
-- spambox, block member, queue send/verif de spam
-- clar nu se mai face join pt ID-ul senderului! Ce se intampla daca sender-ul este un admin? (MESS_SYSTEM)
 
-- blog cache + blogs.php
-- la profile.php: user friends, blogs
+- la profile.php: blogs + comments
 - rss feeds
 - auto subscriptions in join.php
 - captcha audio
@@ -65,18 +59,16 @@ TODO
 - js field check
 - site bans
 - modman: ftp low level?
-- processors/login.php: account suspended/unactivated
 - read zip files. extract files from zip archives (pt modmanager).
 - formatare la date of birth
 - create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
 - help texts pentru campurile textarea
 - lungime maxima camp pt textareas
 
-- cautare membri cu poze (poza din profil probabil...)
+- cautare membri cu poze in adv. search
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
 
 - cand se adauga o poza NE-privata in album, daca nu exista poza in profil, sa se faca automat is_main
-- rate this photo
 - profile views
 
 - functie fields_edit_tpl($field_ids)
@@ -88,7 +80,6 @@ TODO
 - scorul la plata corelat cu suma platita?
 - scor cand primeste un mesaj/flirt si poate si cand trimite? (mai mare la primit - inseamna ca e interesant)
 - scor la conturi platitoare pentru vechimea contului (lunar?)
-- in message_read.php linia 106 - ar trebui sa verific lista de blocati, nu filtrul.
 
 - in toate procesoarele tb sa verific cazul de eroare:
 // 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
@@ -104,7 +95,6 @@ TODO
 - admin: stats
 - admin: payment stats. rapoarte pe perioade. procent paid/free/gender
 - admin: latest datemill news
-- admin: adaugat mail_from
 
 - cron: check for and remove orpahned lk_ids
 - affiliates
@@ -115,4 +105,4 @@ TODO
 - news de la admin pt membri (site_news)
 - search membri (search.php) case 'vote',case 'views',case 'comm'
 - search default cu defaultul membrului.
-- favorite photos/blogs/members (membri merge cu networks)
+- favorite photos/blogs

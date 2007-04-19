@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $queue_message_default['defaults']=array('mail_id'=>0,'fk_user_id'=>0,'fk_user_id_other'=>0,'_user_other'=>'','subject'=>'','message_body'=>'','message_type'=>0);
-$queue_message_default['types']=array('mail_id'=>HTML_INT,'fk_user_id'=>HTML_INT,'fk_user_id_other'=>HTML_INT,'_user_other'=>HTML_TEXTFIELD,'subject'=>HTML_TEXTFIELD | FORMAT_HTML2TEXT_FULL,'message_body'=>HTML_TEXTAREA | FORMAT_HTML2TEXT_FULL,'message_type'=>HTML_INT);
+$queue_message_default['types']=array('mail_id'=>HTML_INT,'fk_user_id'=>HTML_INT,'fk_user_id_other'=>HTML_INT,'_user_other'=>HTML_TEXTFIELD,'subject'=>HTML_TEXTFIELD,'message_body'=>HTML_TEXTAREA,'message_type'=>HTML_INT);
