@@ -179,7 +179,7 @@ class payment_twocheckout extends ipayment {
 					new log_error(get_class($this),'Invalid user_id received after payment: '.array2qs($input));
 				}
 			} else {
-				$gateway_text=sprintf('We\'re sorry, but an error occurred when trying to process your Credit Card: %1s (%2s)',$input['x_response_reason_text'],$input['x_response_reason_code']);	// translate this
+				$gateway_text=sprintf('We\'re sorry, but an error occurred when trying to process your Credit Card: %1$s (%2$s)',$input['x_response_reason_text'],$input['x_response_reason_code']);	// translate this
 				require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 				new log_error(get_class($this),'Gateway error: '.$input['x_response_reason_text'].'('.$input['x_response_reason_code'].")\n".array2qs($input));
 			}

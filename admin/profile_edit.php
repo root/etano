@@ -155,6 +155,6 @@ $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 
-$tplvars['title']=sprintf('%1s Member Profile',isset($output['_user']) ? $output['_user'] : '');	// translate
+$tplvars['title']=sprintf('%1$s Member Profile',isset($output['_user']) ? $output['_user'] : '');	// translate
 include 'frame.php';
 ?>

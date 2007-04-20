@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']=sprintf('Membership assigned to %1s members for %2s days',count($input['uids']),$input['duration']);
+		$topass['message']['text']=sprintf('Membership assigned to %1$s members for %2$s days',count($input['uids']),$input['duration']);
 	}
 }
 $nextpage=_BASEURL_.'/admin/member_search.php';

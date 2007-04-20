@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (mysql_num_rows($res)) {
 					$notification['fk_user_id']=mysql_result($res,0,0);
 					$notification['subject']='New comment on one of your blogs';	// translate
-					$notification['message_body']=sprintf('%1s posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=%2s">Click here</a> to view the comment',$_SESSION['user']['user'],$input['fk_post_id']);
+					$notification['message_body']=sprintf('%1$s posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=%2$s">Click here</a> to view the comment',$_SESSION['user']['user'],$input['fk_post_id']);
 					$notification['message_type']=MESS_SYSTEM;
 					queue_or_send_message($notification);
 				}
