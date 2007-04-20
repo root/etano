@@ -137,7 +137,7 @@ $tpl->set_var('return',rawurlencode($return));
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 
-$tplvars['title']=sprintf('%1s Member Profile',$profile['_user']);
+$tplvars['title']=sprintf('%1$s Member Profile',$profile['_user']);
 $tplvars['css']='profile.css';
 include 'frame.php';
 ?>

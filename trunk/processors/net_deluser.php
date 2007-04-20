@@ -67,7 +67,7 @@ if (!$error) {
 			del_message_filter(array('filter_type'=>FILTER_SENDER,'fk_user_id'=>$_SESSION['user']['user_id'],'field_value'=>$input['uid']));
 		}
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']=sprintf('%1s has been removed from your %2s',get_user_by_userid($input['uid']),get_net_name($input['net_id']));     // translate
+		$topass['message']['text']=sprintf('%1$s has been removed from your %2$s',get_user_by_userid($input['uid']),get_net_name($input['net_id']));     // translate
 	}
 }
 

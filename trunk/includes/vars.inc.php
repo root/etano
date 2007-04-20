@@ -113,7 +113,14 @@ $tplvars['sitename']=_SITENAME_;
 $tplvars['baseurl']=_BASEURL_;
 $tplvars['photourl']=_PHOTOURL_;
 if (isset($_SERVER['PHP_SELF'])) {
-	$tplvars['relative_path']=@str_repeat('../',substr_count($_SERVER['PHP_SELF'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
+/*	if ($_SERVER['REQUEST_URI']!=$_SERVER['PHP_SELF']) {
+		$temp=$_SERVER['REQUEST_URI'];
+	} else {
+		$temp=$_SERVER['PHP_SELF'];
+	}
+*/
+	$temp=$_SERVER['PHP_SELF'];
+	$tplvars['relative_path']=@str_repeat('../',substr_count($temp,'/')-(substr_count(_BASEURL_,'/')-2)-1);
 }
 
 //$accepted_months=array($_lang[4],$_lang[7],$_lang[8],$_lang[9],$_lang[10],$_lang[11],$_lang[12],$_lang[13],$_lang[14],$_lang[15],$_lang[16],$_lang[17],$_lang[18]);

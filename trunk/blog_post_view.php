@@ -73,8 +73,8 @@ $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']=sprintf('Blogs - %1s - %2s',$output['blog_name'],$output['title']);
-$tplvars['page_title']=sprintf('%1s : %2s','<a href="blog_view.php?bid='.$output['fk_blog_id'].'">'.$output['blog_name'].'</a>',$output['title']);	// translate this
+$tplvars['title']=sprintf('Blogs - %1$s - %2$s',$output['blog_name'],$output['title']);
+$tplvars['page_title']=sprintf('%1$s : %2$s','<a href="blog_view.php?bid='.$output['fk_blog_id'].'">'.$output['blog_name'].'</a>',$output['title']);	// translate this
 $tplvars['page']='blog_post_view';
 $tplvars['css']='blog_post_view.css';
 if (is_file('blog_post_view_left.php')) {

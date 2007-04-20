@@ -60,14 +60,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				default:
 					$query="UPDATE `{$dbtable_prefix}user_inbox` SET `fk_folder_id`=0,`del`=1 WHERE `mail_id` IN ('".$input['mail_id']."') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-					update_stats($_SESSION['user']['user_id'],'total_messages',-1);
+					update_stats($_SESSION['user']['user_id'],'total_messages',-$num_messages);
 					break;
 
 			}
 		}
 
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']=sprintf('%1s message(s) deleted.',$num_messages);     // translate
+		$topass['message']['text']=sprintf('%1$s message(s) deleted.',$num_messages);     // translate
 	} elseif ($_POST['act']=='move') {
 		$input['fid']=sanitize_and_format_gpc($_POST,'fid',TYPE_INT,0,0);
 		$input['moveto_fid']=sanitize_and_format_gpc($_POST,'moveto_fid',TYPE_INT,0,0);
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				}
 				if ($input['fid']==FOLDER_TRASH && ($input['moveto_fid']>0 || $input['moveto_fid']==FOLDER_INBOX)) {
-					update_stats($_SESSION['user']['user_id'],'total_messages',1);
+					update_stats($_SESSION['user']['user_id'],'total_messages',$num_messages);
 				}
 			} elseif ($input['fid']==FOLDER_SPAMBOX) {
 				if ($input['moveto_fid']>0 || $input['moveto_fid']==FOLDER_INBOX) {	// user_spambox to user_inbox
@@ -92,12 +92,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					$query="DELETE FROM `{$dbtable_prefix}user_spambox` WHERE `mail_id` IN ('".$input['mail_id']."') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-					update_stats($_SESSION['user']['user_id'],'total_messages',1);
+					update_stats($_SESSION['user']['user_id'],'total_messages',$num_messages);
 				}
 			}
 		}
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']=sprintf('%1s message(s) moved',$num_messages);     // translate
+		$topass['message']['text']=sprintf('%1$s message(s) moved',$num_messages);     // translate
 	} elseif ($_POST['act']=='spam') {	// user_inbox to user_spambox
 		$query="INSERT INTO `{$dbtable_prefix}user_spambox` (`is_read`,`fk_user_id`,`fk_user_id_other`,`_user_other`,`subject`,`message_body`,`date_sent`,`message_type`) SELECT `is_read`,`fk_user_id`,`fk_user_id_other`,`_user_other`,`subject`,`message_body`,`date_sent`,`message_type` FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('".$input['mail_id']."') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

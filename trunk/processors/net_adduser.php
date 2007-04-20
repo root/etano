@@ -88,11 +88,11 @@ if (!$error) {
 			$request['fk_user_id_other']=$_SESSION['user']['user_id'];
 			$request['_user_other']=$_SESSION['user']['user'];
 			$request['subject']=sprintf('Connection request from %s',$_SESSION['user']['user']);	// translate
-			$request['message_body']=sprintf('%1s wants to be your friend.<br><a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests',$_SESSION['user']['user']);
+			$request['message_body']=sprintf('%1$s wants to be your friend.<br><a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests',$_SESSION['user']['user']);
 			$request['message_type']=MESS_SYSTEM;
 			queue_or_send_message($request);
 		} else {
-			$topass['message']['text']=sprintf('%1s has been added to your %2s',get_user_by_userid($input['uid']),get_net_name($input['net_id']));     // translate
+			$topass['message']['text']=sprintf('%1$s has been added to your %2$s',get_user_by_userid($input['uid']),get_net_name($input['net_id']));     // translate
 		}
 	}
 }
