@@ -274,6 +274,8 @@ if (!empty($output['totalrows'])) {
 	// set $_GET for the pager.
 	$_GET=array('search'=>$output['search_md5'],'v'=>(isset($_GET['v']) && !empty($_GET['v'])) ? $_GET['v'] : 'l');
 	$output['pager2']=pager($output['totalrows'],$output['o'],$output['r']);
+} else {
+	unset($output['totalrows']);
 }
 
 $tpl->set_file('content','search.html');
