@@ -1,0 +1,8 @@
+#site_news li {
+	border-top: 1px dashed #ccc;
+	padding-top: 10px;
+}
+
+#site_news li.first {
+	border-top: none;
+}

@@ -33,11 +33,6 @@ class widget_osignal_feed extends icontent_widget {
 	}
 
 
-	function _title($title='') {
-		$this->tpl->set_var('widget_title',$title);
-	}
-
-
 	function _content() {
 		global $dbtable_prefix;
 		$query="SELECT `feed_xml` FROM `{$dbtable_prefix}feed_cache` WHERE `module_code`='".$this->module_code."'";
@@ -75,8 +70,9 @@ class widget_osignal_feed extends icontent_widget {
 				$this->tpl->set_file('temp','static/content_widget.html');
 			}
 			$this->tpl->set_var('widget',$widget);
-			$myreturn=$this->tpl->process('','temp',TPL_OPTIONAL);
+			$myreturn=$this->tpl->process('temp','temp',TPL_OPTIONAL);
 			$this->tpl->drop_var('temp');
+			$this->tpl->drop_var('widget.content');
 		}
 		return $myreturn;
 	}
