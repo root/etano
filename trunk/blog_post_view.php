@@ -20,13 +20,12 @@ check_login_member(13);
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $post_id=sanitize_and_format_gpc($_GET,'pid',TYPE_INT,0,0);
-$output=array();
-$output['bbcode_comments']=get_site_option('bbcode_comments','core');
 
+$output=array();
 $loop=array();
 if (!empty($post_id)) {
 	// no need to check the status of the post ( AND `status`='".STAT_APPROVED."')
-	$query="SELECT `allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id' AND `is_public`=1";
+	$query="SELECT `allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$allow_comments=mysql_result($res,0,0);
@@ -37,11 +36,14 @@ if (!empty($post_id)) {
 		$output['date_posted']=strftime($_user_settings['datetime_format'],$output['date_posted']+$_user_settings['time_offset']);
 
 		if (!empty($allow_comments)) {
+			// may I see any comment?
+			$output['show_comments']=true;
+			$config=get_site_option(array('use_captcha','bbcode_comments'),'core');
 			$query="SELECT a.`comment`,a.`fk_user_id`,a.`_user` as `user`,b.`_photo` as `photo` FROM `{$dbtable_prefix}blog_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_post_id`='".$output['post_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`date_posted` ASC";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-				if (!empty($output['bbcode_comments'])) {
+				if (!empty($config['bbcode_comments'])) {
 					$rsrow['comment']=bbcode2html($rsrow['comment']);
 				}
 				if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
@@ -52,6 +54,7 @@ if (!empty($post_id)) {
 				}
 				$loop[]=$rsrow;
 			}
+			// may I post comments please?
 			if (allow_at_level(9,$_SESSION['user']['membership'])) {
 				$output['allow_comments']=true;
 				if (!isset($_SESSION['user']['user_id'])) {
@@ -63,18 +66,21 @@ if (!empty($post_id)) {
 						$output['use_captcha']=true;
 					}
 				}
+				// would you let me use bbcode?
+				if (!empty($config['bbcode_comments'])) {
+					$output['bbcode_comments']=true;
+				}
+			} else {
+				$output['allow_comments']=false;
 			}
 		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='Invalid blog selected';
-		redirect2page('info.php',$topass,'');
+		redirect2page('info.php',$topass);
 	}
 }
 
-if (empty($output['bbcode_comments'])) {
-	unset($output['bbcode_comments']);
-}
 $output['return']='blog_post_view.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
 	$output['return'].='?'.$_SERVER['QUERY_STRING'];

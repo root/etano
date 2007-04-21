@@ -41,6 +41,7 @@ function send_queue_message() {
 			}
 
 			$notify=true;
+			$was_sent=false;	// was sent by a filter?
 			if (!empty($filters[$rsrow['fk_user_id']])) {
 				for ($i=0;isset($filters[$rsrow['fk_user_id']][$i]);++$i) {
 					$filter=$filters[$rsrow['fk_user_id']][$i];
@@ -61,12 +62,14 @@ function send_queue_message() {
 								}
 								$query=substr($query,0,-1);
 								if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+								$was_sent=true;
 							}
 							break 2;	// exit the filters for() too
 
 					}
 				}
-			} else {
+			}
+			if (!$was_sent) {
 				// no filter here - insert directly in inbox
 				$query="INSERT INTO `{$dbtable_prefix}user_inbox` SET ";
 				foreach ($rsrow as $k=>$v) {
