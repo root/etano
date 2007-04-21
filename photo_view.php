@@ -19,11 +19,9 @@ require_once 'includes/user_functions.inc.php';
 check_login_member(13);
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
-
 $photo_id=sanitize_and_format_gpc($_GET,'photo_id',TYPE_INT,0,0);
 
 $tplvars['pic_width']=get_site_option('pic_width','core_photo');
-$tplvars['bbcode_comments']=get_site_option('bbcode_comments','core');
 
 $output=array();
 $loop=array();
@@ -45,11 +43,14 @@ if (!empty($photo_id)) {
 		}
 
 		if (!empty($output['allow_comments'])) {
+			// may I see any comment?
+			$output['show_comments']=true;
+			$config=get_site_option(array('use_captcha','bbcode_comments'),'core');
 			$query="SELECT a.`comment`,a.`fk_user_id`,a.`_user` as `user`,b.`_photo` as `photo` FROM `{$dbtable_prefix}photo_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_photo_id`='".$output['photo_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`date_posted` ASC";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-				if (!empty($tplvars['bbcode_comments'])) {
+				if (!empty($config['bbcode_comments'])) {
 					$rsrow['comment']=bbcode2html($rsrow['comment']);
 				}
 				if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
@@ -60,10 +61,34 @@ if (!empty($photo_id)) {
 				}
 				$loop[]=$rsrow;
 			}
+			// may I post comments please?
 			if (allow_at_level(9,$_SESSION['user']['membership'])) {
-				$tpl->set_var('allow_comments',true);
+				if (!isset($_SESSION['user']['user_id'])) {
+					if ($config['use_captcha']) {
+						require_once 'includes/classes/sco_captcha.class.php';
+						$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
+						$_SESSION['captcha_word']=$c->gen_rnd_string(4);
+						$output['rand']=make_seed();
+						$output['use_captcha']=true;
+					}
+				}
+				// would you let me use bbcode?
+				if (!empty($config['bbcode_comments'])) {
+					$output['bbcode_comments']=true;
+				}
+				// if we came back after an error get what was previously posted
+				if (isset($_SESSION['topass']['input'])) {
+					$output=array_merge($output,$_SESSION['topass']['input']);
+					unset($_SESSION['topass']['input']);
+				}
+			} else {
+				$output['allow_comments']=false;
 			}
 		}
+	} else {
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Invalid photo selected';
+		redirect2page('info.php',$topass);
 	}
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
@@ -74,19 +99,14 @@ if (!empty($photo_id)) {
 $output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 $output['return']=rawurlencode($output['return2']);
 
-if (empty($tplvars['bbcode_comments'])) {
-	unset($tplvars['bbcode_comments']);
+$output['return2me']='photo_view.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','photo_view.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);
-if (isset($_GET['o'])) {
-	$tpl->set_var('o',$_GET['o']);
-}
-if (isset($_GET['r'])) {
-	$tpl->set_var('r',$_GET['r']);
-}
-$tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
 unset($loop);
@@ -100,7 +120,7 @@ if (is_file('photo_view_left.php')) {
 }
 include 'frame.php';
 if (!empty($photo_id) && isset($output['fk_user_id']) && ((isset($_SESSION['user']['user_id']) && $output['fk_user_id']!=$_SESSION['user']['user_id']) || !isset($_SESSION['user']['user_id']))) {
-	$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_views`=`stat_views`+1 WHERE `photo_id`='".$photo_id."'";
+	$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_views`=`stat_views`+1 WHERE `photo_id`='$photo_id'";
 	@mysql_query($query);
 }
 ?>

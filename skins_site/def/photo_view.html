@@ -14,7 +14,7 @@
 <a href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={output.photo_id}','photo',{tplvars.pic_width},{tplvars.pic_width},1)" title="Click to enlarge"><img class="user_photo thumb2" src="{tplvars.photourl}/t2/{output.photo}" alt="{output.user}" /></a>
 <p id="photo_caption">{output.caption}</p>
 
-<opt name="allow_comments">
+<opt name="output.show_comments">
 <loop name="loop">
 <div class="comment {loop.is_online}">
 	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
@@ -23,7 +23,9 @@
 	<div class="clear"></div>
 </div>
 </loop name="loop">
+</opt name="output.show_comments">
 
+<opt name="output.allow_comments">
 <h3>Leave your comment</h3>
 
 <opt name="tplvars.bbcode_comments">
@@ -37,14 +39,28 @@
 <form id="photocomment_form" action="processors/photo_comments.php" method="post">
 <fieldset>
 	<input type="hidden" name="fk_photo_id" value="{output.photo_id}" />
-	<input type="hidden" name="return" value="{output.return}" />
-	<textarea rows="" cols="" id="comment" name="comment" tabindex="1"></textarea>
+	<input type="hidden" name="return" value="{output.return2me}" />
+	<textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea>
 </fieldset>
+<opt name="!tplvars.user_logged">
+<opt name="output.use_captcha">
+<fieldset>
+	<dl class="required">
+		<dt>Verification code:</dt>
+		<dd><img src="show_captcha.php?{output.rand}" /></dd>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><input type="text" name="captcha" id="captcha" size="4" tabindex="50" /> <span class="field-help">Enter the characters from above.</span></dd>
+	</dl>
+</fieldset>
+</opt name="output.use_captcha">
+</opt name="!tplvars.user_logged">
 <fieldset class="controls">
-	<input id="post-button" type="submit" class="button blarge" value="Post comment" />
+	<input class="button blarge" id="post-button" type="submit" value="Post comment" />
 </fieldset>
 </form>
-</opt name="allow_comments">
+</opt name="output.allow_comments">
 
 <div id="bottom_links">
 	<a class="content-link link_previous" href="{output.return2}" title="Back">Back</a>

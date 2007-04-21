@@ -25,17 +25,17 @@ $output=array();
 $loop=array();
 if (!empty($post_id)) {
 	// no need to check the status of the post ( AND `status`='".STAT_APPROVED."')
-	$query="SELECT `allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id'";
+	$query="SELECT `fk_user_id`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$allow_comments=mysql_result($res,0,0);
+		$output=mysql_fetch_assoc($res);
 		require_once _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
 		$blog_posts_cache=new blog_posts_cache();
 		$output=array_merge($output,$blog_posts_cache->get_post($post_id,false));
 		unset($blog_posts_cache);
 		$output['date_posted']=strftime($_user_settings['datetime_format'],$output['date_posted']+$_user_settings['time_offset']);
 
-		if (!empty($allow_comments)) {
+		if (!empty($output['allow_comments'])) {
 			// may I see any comment?
 			$output['show_comments']=true;
 			$config=get_site_option(array('use_captcha','bbcode_comments'),'core');
@@ -56,9 +56,8 @@ if (!empty($post_id)) {
 			}
 			// may I post comments please?
 			if (allow_at_level(9,$_SESSION['user']['membership'])) {
-				$output['allow_comments']=true;
 				if (!isset($_SESSION['user']['user_id'])) {
-					if (get_site_option('use_captcha','core')) {
+					if ($config['use_captcha']) {
 						require_once 'includes/classes/sco_captcha.class.php';
 						$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
 						$_SESSION['captcha_word']=$c->gen_rnd_string(4);
@@ -70,6 +69,11 @@ if (!empty($post_id)) {
 				if (!empty($config['bbcode_comments'])) {
 					$output['bbcode_comments']=true;
 				}
+				// if we came back after an error get what was previously posted
+				if (isset($_SESSION['topass']['input'])) {
+					$output=array_merge($output,$_SESSION['topass']['input']);
+					unset($_SESSION['topass']['input']);
+				}
 			} else {
 				$output['allow_comments']=false;
 			}
@@ -79,13 +83,17 @@ if (!empty($post_id)) {
 		$topass['message']['text']='Invalid blog selected';
 		redirect2page('info.php',$topass);
 	}
+} else {
+	$topass['message']['type']=MESSAGE_ERROR;
+	$topass['message']['text']='Invalid blog selected';
+	redirect2page('info.php',$topass);
 }
 
-$output['return']='blog_post_view.php';
+$output['return2me']='blog_post_view.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
-$output['return']=rawurlencode($output['return']);
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','blog_post_view.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);
@@ -101,4 +109,8 @@ if (is_file('blog_post_view_left.php')) {
 	include 'blog_post_view_left.php';
 }
 include 'frame.php';
+if (!empty($post_id) && isset($output['fk_user_id']) && ((isset($_SESSION['user']['user_id']) && $output['fk_user_id']!=$_SESSION['user']['user_id']) || !isset($_SESSION['user']['user_id']))) {
+	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `stat_views`=`stat_views`+1 WHERE `post_id`='$post_id'";
+	@mysql_query($query);
+}
 ?>
