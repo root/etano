@@ -37,7 +37,7 @@ if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
 $input['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 if (!empty($input['uids'])) {
-	$query="UPDATE `{$dbtable_prefix}user_profiles` SET `status`='".STAT_APPROVED."',`reject_reason`='',`last_changed`=now() WHERE `fk_user_id` IN ('".join("','",$input['uids'])."')";
+	$query="UPDATE `{$dbtable_prefix}user_profiles` SET `status`='".STAT_APPROVED."',`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id` IN ('".join("','",$input['uids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Member(s) approved. They will appear on site as soon as the cache is generated';

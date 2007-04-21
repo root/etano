@@ -78,7 +78,7 @@ class blog_posts_cache {
 					$file=$this->disk_path.'/'.$post_ids[$id]{0}.'/'.$post_ids[$id].'.inc.php';
 				}
 				if (is_file($file)) {
-					include_once $file;
+					include $file;
 					$myreturn[]=$post;
 				}
 			}

@@ -30,7 +30,27 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	foreach ($blog_comments_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$blog_comments_default['defaults'][$k]);
 	}
-	$input['fk_user_id']=$_SESSION['user']['user_id'];
+	$input['fk_user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
+	if (isset($_POST['return']) && !empty($_POST['return'])) {
+		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
+		$nextpage=$input['return'];
+	}
+
+	if (empty($input['comment'])) {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']="Please enter your comment.";
+	}
+	if (!$error && $input['fk_user_id']==0 && get_site_option('use_captcha','core')) {
+		$captcha=sanitize_and_format_gpc($_POST,'captcha',TYPE_STRING,0,'');
+		if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {
+			$error=true;
+			$topass['message']['type']=MESSAGE_ERROR;
+			$topass['message']['text']="The verification code doesn't match. Please enter the new code.";
+			$input['error_captcha']='red_border';
+		}
+	}
+	unset($_SESSION['captcha_word']);
 
 	if (!$error) {
 		$config=get_site_option(array('manual_com_approval'),'core');
@@ -66,6 +86,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
+			if (isset($_SESSION['user']['user_id'])) {
+				update_stats($_SESSION['user']['user_id'],'comments',1);
+			}
 			if (empty($config['manual_com_approval'])) {
 				$query="UPDATE `{$dbtable_prefix}blog_posts` SET `stat_comments`=`stat_comments`+1 WHERE `post_id`='".$input['fk_post_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -83,9 +106,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text']='Comment added but needs to be reviewed first.';	// translate this
 			}
 		}
-		$qs.=$qs_sep.'pid='.$input['fk_post_id'];
-		$qs_sep='&';
+	} else {
+		$input['comment']=addslashes_mq($_POST['comment']);
+		$input['return']=rawurlencode($input['return']);
+		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
+		$topass['input']=$input;
 	}
 }
-redirect2page($nextpage,$topass,$qs);
+$nextpage=_BASEURL_.'/'.$nextpage;
+redirect2page($nextpage,$topass,'',true);
 ?>

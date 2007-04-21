@@ -195,16 +195,17 @@ if ($do_query) {
 				break;
 
 			case HTML_RANGE:
+				$now=gmdate('YmdHis');
 				if (isset($input[$field['dbfield'].'_max'])) {
 					if ($field['html_type']==HTML_DATE) {
-						$where.=" AND a.`".$field['dbfield']."`>=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
+						$where.=" AND a.`".$field['dbfield']."`>=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
 					} elseif ($field['html_type']==HTML_SELECT) {
 						$where.=" AND `".$field['dbfield']."`<=".$input[$field['dbfield'].'_max'];
 					}
 				}
 				if (isset($input[$field['dbfield'].'_min'])) {
 					if ($field['html_type']==HTML_DATE) {
-						$where.=" AND a.`".$field['dbfield']."`<=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
+						$where.=" AND a.`".$field['dbfield']."`<=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
 					} elseif ($field['html_type']==HTML_SELECT) {
 						$where.=" AND `".$field['dbfield']."`>=".$input[$field['dbfield'].'_min'];
 					}

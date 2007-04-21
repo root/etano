@@ -52,13 +52,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		$insert="INSERT INTO `{$dbtable_prefix}user_inbox` (`fk_user_id`,`subject`,`message_body`,`date_sent`,`message_type`) VALUES ";
 		$query=$insert;
+		$now=gmdate('YmdHis');
 		for ($i=0;isset($input['uids'][$i]);++$i) {
 			if (strlen($query)>$query_strlen) {
 				$query=substr($query,0,-1);
 				if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$query=$insert;
 			}
-			$query.="('".$input['uids'][$i]."','".$input['subject']."','".$input['message_body']."',now(),".MESS_SYSTEM."),";
+			$query.="('".$input['uids'][$i]."','".$input['subject']."','".$input['message_body']."','$now',".MESS_SYSTEM."),";
 		}
 		if ($query!=$insert) {
 			$query=substr($query,0,-1);

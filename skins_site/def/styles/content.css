@@ -627,11 +627,8 @@ blockquote {
 	height: 1%;
 }
 .blogs_small {
-	width: 720px;
-	margin-left: -6px;
 	padding: 0 0 5px;
 	list-style-type: none;
-	overflow: hidden;
 }
 
 .blogs_small li {

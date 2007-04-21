@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	foreach ($photo_comments_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$photo_comments_default['defaults'][$k]);
 	}
-	$input['fk_user_id']=$_SESSION['user']['user_id'];
+	$input['fk_user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
 	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
 
 	if (!$error) {
@@ -67,7 +67,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
-			update_stats($_SESSION['user']['user_id'],'comments',1);
+			if (isset($_SESSION['user']['user_id'])) {
+				update_stats($_SESSION['user']['user_id'],'comments',1);
+			}
 			if (empty($config['manual_com_approval'])) {
 				$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_comments`=`stat_comments`+1 WHERE `photo_id`='".$input['fk_photo_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

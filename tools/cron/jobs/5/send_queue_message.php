@@ -39,10 +39,8 @@ function send_queue_message() {
 			if (!isset($notifs[$rsrow['fk_user_id']])) {
 				$notifs[$rsrow['fk_user_id']]=get_user_settings($rsrow['fk_user_id'],'def_user_prefs','notify_me');
 			}
-			if ($notifs[$rsrow['fk_user_id']]) {
-				$emails[]=$temp;
-			}
 
+			$notify=true;
 			if (!empty($filters[$rsrow['fk_user_id']])) {
 				for ($i=0;isset($filters[$rsrow['fk_user_id']][$i]);++$i) {
 					$filter=$filters[$rsrow['fk_user_id']][$i];
@@ -52,6 +50,7 @@ function send_queue_message() {
 							if ($rsrow['fk_user_id_other']==$filter['field_value']) {
 								if ($filter['fk_folder_id']==FOLDER_SPAMBOX) {
 									$into="`{$dbtable_prefix}user_spambox`";
+									$notify=false;
 								} else {
 									$into="`{$dbtable_prefix}user_inbox`";
 									$rsrow['fk_folder_id']=$filter['fk_folder_id'];
@@ -75,6 +74,10 @@ function send_queue_message() {
 				}
 				$query=substr($query,0,-1);
 				if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			}
+
+			if ($notifs[$rsrow['fk_user_id']] && $notify) {
+				$emails[]=$temp;
 			}
 		}
 
