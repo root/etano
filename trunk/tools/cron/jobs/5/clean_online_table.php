@@ -5,7 +5,7 @@ function clean_online_table() {
 	global $dbtable_prefix;
 	$config=get_site_option(array('inactive_time'),'core');
 
-	$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}online` WHERE `last_activity`<=now()-INTERVAL '".$config['inactive_time']."' MINUTE";
+	$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}online` WHERE `last_activity`<='".gmdate('YmdHis')."'-INTERVAL '".$config['inactive_time']."' MINUTE";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$user_ids=array();
 	for ($i=0;$i<mysql_num_rows($res);++$i) {

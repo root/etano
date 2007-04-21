@@ -6,7 +6,7 @@
 	<span class="date_posted"> on {output.date_posted}</span>
 </div>
 
-<opt name="allow_comments">
+<opt name="output.allow_comments">
 <loop name="loop">
 <div class="comment {loop.is_online}">
 	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
@@ -29,14 +29,28 @@
 <form id="blogcomment_form" action="processors/blog_comments.php" method="post">
 <fieldset>
 	<input type="hidden" name="fk_post_id" value="{output.post_id}" />
-	<input type="hidden" name="fk_blog_id" value="{output.fk_blog_id}" />
+	<input type="hidden" name="return" value="{output.return}" />
 	<textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea>
 </fieldset>
+<opt name="!tplvars.user_logged">
+<opt name="output.use_captcha">
+<fieldset>
+	<dl class="required">
+		<dt>Verification code:</dt>
+		<dd><img src="show_captcha.php?{output.rand}" /></dd>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><input type="text" name="captcha" id="captcha" size="4" tabindex="50" /> <span class="field-help">Enter the characters from above.</span></dd>
+	</dl>
+</fieldset>
+</opt name="output.use_captcha">
+</opt name="!tplvars.user_logged">
 <fieldset class="controls">
 	<input class="button blarge" id="post-button" type="submit" value="Post comment" />
 </fieldset>
 </form>
-</opt name="allow_comments">
+</opt name="output.allow_comments">
 
 <script type="text/javascript" src="js/blog_post_view.js"></script>
 <opt name="tplvars.bbcode_comments">

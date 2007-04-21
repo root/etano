@@ -161,9 +161,10 @@ if (!empty($output['search_md5'])) {
 			case HTML_RANGE:
 				$input[$field['dbfield'].'_min']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_min',TYPE_INT,0,0);
 				$input[$field['dbfield'].'_max']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_max',TYPE_INT,0,0);
+				$now=gmdate('YmdHis');
 				if (!empty($input[$field['dbfield'].'_max'])) {
 					if ($field['html_type']==HTML_DATE) {
-						$where.=" AND `".$field['dbfield']."`>=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
+						$where.=" AND `".$field['dbfield']."`>=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
 					} elseif ($field['html_type']==HTML_SELECT) {
 						$where.=" AND `".$field['dbfield']."`<=".$input[$field['dbfield'].'_max'];
 					}
@@ -172,7 +173,7 @@ if (!empty($output['search_md5'])) {
 				}
 				if (!empty($input[$field['dbfield'].'_min'])) {
 					if ($field['html_type']==HTML_DATE) {
-						$where.=" AND `".$field['dbfield']."`<=DATE_SUB(now(),INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
+						$where.=" AND `".$field['dbfield']."`<=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
 					} elseif ($field['html_type']==HTML_SELECT) {
 						$where.=" AND `".$field['dbfield']."`>=".$input[$field['dbfield'].'_min'];
 					}

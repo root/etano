@@ -63,17 +63,18 @@ class feedReader {
 		if (!empty($url)) {
 			$this->setFeedUrl($url);
 		}
+		ini_set('auto_detect_line_endings','1');
 		$url=parse_url($this->feedUrl);
 		$header='GET '.$url['path']." HTTP/1.0\r\n";
 		$header.='Host: '.$url['host']."\r\n";
 		$header.="Connection: close\r\n\r\n";
 		$socket=@fsockopen($url['host'],80,$errno,$errstr,10);
 		if ($socket) {
-			fputs($socket,$header);
+			fwrite($socket,$header);
 			$this->raw_xml='';
 			$headerdone=false;
 			while(!feof($socket)) {
-				$line=fgets($socket);
+				$line=fgets($socket,1024);
 				if (strcmp($line,"\r\n")==0) {
 					// read the header
 					$headerdone=true;

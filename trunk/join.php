@@ -16,7 +16,6 @@ require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
-require_once 'includes/classes/sco_captcha.class.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
@@ -153,6 +152,7 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 if ($page==1) {
 	$output['page1']=true;
 	if (get_site_option('use_captcha','core')) {
+		require_once 'includes/classes/sco_captcha.class.php';
 		$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
 		$_SESSION['captcha_word']=$c->gen_rnd_string(4);
 		$output['rand']=make_seed();

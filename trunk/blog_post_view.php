@@ -53,7 +53,16 @@ if (!empty($post_id)) {
 				$loop[]=$rsrow;
 			}
 			if (allow_at_level(9,$_SESSION['user']['membership'])) {
-				$tpl->set_var('allow_comments',true);
+				$output['allow_comments']=true;
+				if (!isset($_SESSION['user']['user_id'])) {
+					if (get_site_option('use_captcha','core')) {
+						require_once 'includes/classes/sco_captcha.class.php';
+						$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
+						$_SESSION['captcha_word']=$c->gen_rnd_string(4);
+						$output['rand']=make_seed();
+						$output['use_captcha']=true;
+					}
+				}
 			}
 		}
 	} else {
@@ -66,6 +75,11 @@ if (!empty($post_id)) {
 if (empty($output['bbcode_comments'])) {
 	unset($output['bbcode_comments']);
 }
+$output['return']='blog_post_view.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$output['return'].='?'.$_SERVER['QUERY_STRING'];
+}
+$output['return']=rawurlencode($output['return']);
 $tpl->set_file('content','blog_post_view.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);

@@ -13,7 +13,7 @@ Support at:                 http://forum.datemill.com
 
 require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 
-// accepts 'mode','total','area','chars' as parameters
+// accepts 'mode','total','area' as parameters
 
 class widget_blogs extends icontent_widget {
 	var $module_code='blogs';
@@ -54,27 +54,28 @@ class widget_blogs extends icontent_widget {
 		}
 		$query.=" LIMIT ".$this->config['total'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$bbcode_blogs=get_site_option('bbcode_blogs','core_blog');
 		$post_ids=array();
 		for ($i=0;$i<mysql_num_rows($res);++$i) {
 			$post_ids[]=mysql_result($res,$i,0);
 		}
-		require_once _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
-		$blog_posts_cache=new blog_posts_cache();
-		$loop=$blog_posts_cache->get_tpl_array($post_ids);
-		unset($blog_posts_cache);
+		if (!empty($post_ids)) {
+			require_once _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
+			$blog_posts_cache=new blog_posts_cache();
+			$loop=$blog_posts_cache->get_tpl_array($post_ids);
+			unset($blog_posts_cache);
 
-		for ($i=0;isset($loop[$i]);++$i) {
-			$loop[$i]['date_posted']=strftime($GLOBALS['_user_settings']['datetime_format'],$loop[$i]['date_posted']+$GLOBALS['_user_settings']['time_offset']);
-		}
-		if (!empty($loop)) {
-			$loop[0]['class']='first';
-			$loop[count($loop)-1]['class']='last';
-			$this->tpl->set_file('widget.content','widgets/blogs/display.html');
-			$this->tpl->set_loop('loop',$loop);
-			$this->tpl->process('widget.content','widget.content',TPL_LOOP | TPL_OPTLOOP);
-			$this->tpl->drop_loop('loop');
-			unset($loop);
+			for ($i=0;isset($loop[$i]);++$i) {
+				$loop[$i]['date_posted']=strftime($GLOBALS['_user_settings']['datetime_format'],$loop[$i]['date_posted']+$GLOBALS['_user_settings']['time_offset']);
+			}
+			if (!empty($loop)) {
+				$loop[0]['class']='first';
+				$loop[count($loop)-1]['class']='last';
+				$this->tpl->set_file('widget.content','widgets/blogs/display.html');
+				$this->tpl->set_loop('loop',$loop);
+				$this->tpl->process('widget.content','widget.content',TPL_LOOP | TPL_OPTLOOP);
+				$this->tpl->drop_loop('loop');
+				unset($loop);
+			}
 		}
 	}
 

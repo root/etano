@@ -18,6 +18,7 @@ require_once '../../includes/classes/phemplate.class.php';
 require_once '../../includes/admin_functions.inc.php';
 set_error_handler('general_error');
 set_time_limit(0);
+ob_end_flush();
 
 if (isset($_SERVER['REMOTE_ADDR'])) {
 	$lk=sanitize_and_format_gpc($_GET,'lk',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
@@ -34,7 +35,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/5')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
-						include_once(dirname(__FILE__).'/jobs/5/'.$file);
+						include_once dirname(__FILE__).'/jobs/5/'.$file;
 					}
 				}
 				closedir($dh);
@@ -46,7 +47,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/10')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
-						include_once(dirname(__FILE__).'/jobs/10/'.$file);
+						include_once dirname(__FILE__).'/jobs/10/'.$file;
 					}
 				}
 				closedir($dh);
@@ -58,7 +59,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/15')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
-						include_once(dirname(__FILE__).'/jobs/15/'.$file);
+						include_once dirname(__FILE__).'/jobs/15/'.$file;
 					}
 				}
 				closedir($dh);
@@ -70,7 +71,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/30')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
-						include_once(dirname(__FILE__).'/jobs/30/'.$file);
+						include_once dirname(__FILE__).'/jobs/30/'.$file;
 					}
 				}
 				closedir($dh);
@@ -82,7 +83,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/60')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
-						include_once(dirname(__FILE__).'/jobs/60/'.$file);
+						include_once dirname(__FILE__).'/jobs/60/'.$file;
 					}
 				}
 				closedir($dh);
@@ -94,7 +95,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/120')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
-						include_once(dirname(__FILE__).'/jobs/120/'.$file);
+						include_once dirname(__FILE__).'/jobs/120/'.$file;
 					}
 				}
 				closedir($dh);
@@ -106,7 +107,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/1440')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
-						include_once(dirname(__FILE__).'/jobs/1440/'.$file);
+						include_once dirname(__FILE__).'/jobs/1440/'.$file;
 					}
 				}
 				closedir($dh);
@@ -117,7 +118,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/w')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
-						include_once(dirname(__FILE__).'/jobs/w/'.$file);
+						include_once dirname(__FILE__).'/jobs/w/'.$file;
 					}
 				}
 				closedir($dh);
@@ -128,7 +129,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/m')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
-						include_once(dirname(__FILE__).'/jobs/m/'.$file);
+						include_once dirname(__FILE__).'/jobs/m/'.$file;
 					}
 				}
 				closedir($dh);

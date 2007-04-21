@@ -12,12 +12,14 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $tpl->set_file('left_content','photo_search_left.html');
-if (isset($input['uid']) && empty($input['uid'])) {
-	unset($input['uid']);
-} elseif (isset($_SESSION['user']['user_id'])) {
-	require_once 'includes/network_functions.inc.php';
-	if (is_network_member($_SESSION['user']['user_id'],$input['uid'],NET_BLOCK)) {
-		$input['unblock_user']=true;
+if (isset($input['uid'])) {
+	if (empty($input['uid'])) {
+		unset($input['uid']);
+	} elseif (isset($_SESSION['user']['user_id'])) {
+		require_once 'includes/network_functions.inc.php';
+		if (is_network_member($_SESSION['user']['user_id'],$input['uid'],NET_BLOCK)) {
+			$input['unblock_user']=true;
+		}
 	}
 }
 

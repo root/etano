@@ -19,9 +19,10 @@ $config=get_site_option(array('bbcode_profile'),'core');
 $modman=new modman();
 
 $select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`longitude`,`latitude`';
+$now=gmdate('YmdHis');
 foreach ($_pfields as $field_id=>$field) {
 	if ($field['html_type']==HTML_DATE) {
-		$select.=",DATE_FORMAT(NOW(),'%Y')-DATE_FORMAT(`".$field['dbfield']."`,'%Y')-(DATE_FORMAT(NOW(),'%m%d')<DATE_FORMAT(`".$field['dbfield']."`,'%m%d')) as `".$field['dbfield']."`";
+		$select.=",DATE_FORMAT('$now','%Y')-DATE_FORMAT(`".$field['dbfield']."`,'%Y')-(DATE_FORMAT('$now','%m%d')<DATE_FORMAT(`".$field['dbfield']."`,'%m%d')) as `".$field['dbfield']."`";
 	} elseif ($field['html_type']==HTML_LOCATION) {
 		$select.=',`'.$field['dbfield'].'_country`,`'.$field['dbfield'].'_state`,`'.$field['dbfield'].'_city`,`'.$field['dbfield'].'_zip`';
 	} else {

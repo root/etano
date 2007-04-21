@@ -80,7 +80,7 @@ function check_login_member($level_id) {
 	}
 	$user_id=0;
 	if (isset($_SESSION['user']['user_id'])) {
-		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`=now() WHERE `user_id`='".$_SESSION['user']['user_id']."'";
+		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='".gmdate('YmdHis')."' WHERE `user_id`='".$_SESSION['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$user_id=$_SESSION['user']['user_id'];
 	}

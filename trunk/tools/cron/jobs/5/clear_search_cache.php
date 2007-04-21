@@ -12,7 +12,7 @@ function clear_search_cache() {
 	}
 	$interval=(int)$temp[count($temp)-1];	// that's how often we're executed ;)
 
-	$query="DELETE FROM `{$dbtable_prefix}site_searches` WHERE `date_posted`<=now()-INTERVAL '$interval' MINUTE";
+	$query="DELETE FROM `{$dbtable_prefix}site_searches` WHERE `date_posted`<='".gmdate('YmdHis')."'-INTERVAL '$interval' MINUTE";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	return true;
 }
