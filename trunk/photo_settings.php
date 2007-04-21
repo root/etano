@@ -29,8 +29,10 @@ if (isset($_SESSION['topass']['input'])) {
 		$photo_ids=array($photo_ids);
 	}
 }
+$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$output['return']=rawurlencode($output['return2']);
 
-$photos=array();
+$loop=array();
 if (!empty($photo_ids)) {
 	$query="SELECT `photo_id`,`photo`,`caption`,`is_main`,`is_private`,`allow_comments` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -39,21 +41,16 @@ if (!empty($photo_ids)) {
 		$rsrow['is_main']=$rsrow['is_main']==1 ? 'checked="checked"' : '';
 		$rsrow['is_private']=$rsrow['is_private']==1 ? 'checked="checked"' : '';
 		$rsrow['allow_comments']=$rsrow['allow_comments']==1 ? 'checked="checked"' : '';
-		$photos[]=$rsrow;
+		$loop[]=$rsrow;
 	}
 }
 
 $tpl->set_file('content','photo_settings.html');
-$tpl->set_loop('photos',$photos);
-if (isset($_GET['o'])) {
-	$tpl->set_var('o',$_GET['o']);
-}
-if (isset($_GET['r'])) {
-	$tpl->set_var('r',$_GET['r']);
-}
+$tpl->set_var('output',$output);
+$tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP);
-$tpl->drop_loop('photos');
-unset($photos);
+$tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='Add description to my photos';
 $tplvars['page_title']='Photo Settings';

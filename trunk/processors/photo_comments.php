@@ -31,7 +31,28 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$photo_comments_default['defaults'][$k]);
 	}
 	$input['fk_user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
-	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	if (isset($_POST['return']) && !empty($_POST['return'])) {
+		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
+		$nextpage=$input['return'];
+	} else {
+		$input['return']='';
+	}
+
+	if (empty($input['comment'])) {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']="Please enter your comment.";
+	}
+	if (!$error && $input['fk_user_id']==0 && get_site_option('use_captcha','core')) {
+		$captcha=sanitize_and_format_gpc($_POST,'captcha',TYPE_STRING,0,'');
+		if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {
+			$error=true;
+			$topass['message']['type']=MESSAGE_ERROR;
+			$topass['message']['text']="The verification code doesn't match. Please enter the new code.";
+			$input['error_captcha']='red_border';
+		}
+	}
+	unset($_SESSION['captcha_word']);
 
 	if (!$error) {
 		$config=get_site_option(array('manual_com_approval'),'core');
@@ -84,13 +105,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					queue_or_send_message($notification);
 				}
 			} else {
-				$topass['message']['text']='Comment added but needs to be approved first.';	// translate this
+				$topass['message']['text']='Comment added but needs to be reviewed first.';	// translate this
 			}
 		}
-		$qs.=$qs_sep.'photo_id='.$input['fk_photo_id'];
-		$qs_sep='&';
-		$qs.=$qs_sep.'return='.$input['return'];
+	} else {
+		$input['comment']=addslashes_mq($_POST['comment']);
+		$input['return']=rawurlencode($input['return']);
+		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
+		$topass['input']=$input;
 	}
 }
-redirect2page($nextpage,$topass,$qs);
+$nextpage=_BASEURL_.'/'.$nextpage;
+redirect2page($nextpage,$topass,'',true);
 ?>

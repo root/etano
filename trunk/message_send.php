@@ -25,6 +25,7 @@ $output=$user_inbox_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
+	unset($_SESSION['topass']['input']);
 } elseif (isset($_GET['to_id']) && !empty($_GET['to_id'])) {
 	$output['fk_user_id']=(int)$_GET['to_id'];
 	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
