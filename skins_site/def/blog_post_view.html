@@ -6,7 +6,7 @@
 	<span class="date_posted"> on {output.date_posted}</span>
 </div>
 
-<opt name="output.allow_comments">
+<opt name="output.show_comments">
 <loop name="loop">
 <div class="comment {loop.is_online}">
 	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
@@ -15,7 +15,9 @@
 	<div class="clear"></div>
 </div>
 </loop name="loop">
+</opt name="output.show_comments">
 
+<opt name="output.allow_comments">
 <h3>Leave your comment</h3>
 
 <opt name="tplvars.bbcode_comments">
