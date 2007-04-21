@@ -11,15 +11,15 @@
 <p id="rating_stat">Current rating: <span id="rate_num">{output.rate_num}</span> / 5 (<span id="votes_num">{output.stat_votes}</span> votes)</p>
 </opt name="output.allow_rating">
 
-<a href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={output.photo_id}','photo',{tplvars.pic_width},{tplvars.pic_width},1)" title="Click to enlarge"><img class="user_photo thumb2" src="{tplvars.photourl}/t2/{output.photo}" alt="{output.user}" /></a>
+<a href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={output.photo_id}','photo',{output.pic_width},{output.pic_width},1)" title="Click to enlarge"><img class="user_photo thumb2" src="{tplvars.photourl}/t2/{output.photo}" alt="{output.user}" /></a>
 <p id="photo_caption">{output.caption}</p>
 
 <opt name="output.show_comments">
 <loop name="loop">
 <div class="comment {loop.is_online}">
 	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
-	<opt name="loop.fk_user_id"><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id"> said...
-	<p>{loop.comment}</p>
+	<opt name="loop.fk_user_id"><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id"> said... <opt name="loop.editme"><a id="editme_{loop.comment_id}" class="content-link link_change" href="photo_view.php?photo_id={output.photo_id}&amp;return={output.return2me}&amp;edit_comment={loop.comment_id}" title="Edit comment">edit</a></opt name="loop.editme"> <opt name="output.photo_owner"><a class="content-link link_delete" href="processors/photo_comment_delete.php?comment_id={loop.comment_id}&amp;return={output.return2me}" title="Remove comment">delete</a></opt name="output.photo_owner">
+	<p id="comment_{loop.comment_id}">{loop.comment}</p>
 	<div class="clear"></div>
 </div>
 </loop name="loop">
@@ -28,16 +28,17 @@
 <opt name="output.allow_comments">
 <h3>Leave your comment</h3>
 
-<opt name="tplvars.bbcode_comments">
+<opt name="output.bbcode_comments">
 <div id="bb_tools">
 	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',document.getElementById('comment'))">Bold</a>
 	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',document.getElementById('comment'))">Underline</a>
 	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',document.getElementById('comment'))">Hyperlink</a>
 	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',document.getElementById('comment'))">Quote</a>
 </div>
-</opt name="tplvars.bbcode_comments">
+</opt name="output.bbcode_comments">
 <form id="photocomment_form" action="processors/photo_comments.php" method="post">
 <fieldset>
+	<input type="hidden" name="comment_id" value="{output.comment_id}" />
 	<input type="hidden" name="fk_photo_id" value="{output.photo_id}" />
 	<input type="hidden" name="return" value="{output.return2me}" />
 	<textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea>
@@ -67,9 +68,9 @@
 </div>
 
 <script type="text/javascript" src="js/photo_view.js"></script>
-<opt name="tplvars.bbcode_comments">
+<opt name="output.bbcode_comments">
 <script type="text/javascript" src="js/bbcode.js"></script>
-</opt name="tplvars.bbcode_comments">
+</opt name="output.bbcode_comments">
 <opt name="output.allow_rating">
 <script type="text/javascript">
 	photo_id={output.photo_id};

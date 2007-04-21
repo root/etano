@@ -10,7 +10,7 @@
 <loop name="loop">
 <div class="comment {loop.is_online}">
 	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
-	<opt name="loop.fk_user_id"><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id"> said...
+	<opt name="loop.fk_user_id"><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id"> said... <opt name="loop.editme"><a id="editme_{loop.comment_id}" class="content-link link_change" href="blog_post_view.php?post_id={output.post_id}&amp;return={output.return2me}&amp;edit_comment={loop.comment_id}" title="Edit comment">edit</a></opt name="loop.editme"> <opt name="output.post_owner"><a class="content-link link_delete" href="processors/blog_comment_delete.php?comment_id={loop.comment_id}&amp;return={output.return2me}" title="Remove comment">delete</a></opt name="output.post_owner">
 	<p>{loop.comment}</p>
 	<div class="clear"></div>
 </div>
@@ -30,6 +30,7 @@
 </opt name="tplvars.bbcode_comments">
 <form id="blogcomment_form" action="processors/blog_comments.php" method="post">
 <fieldset>
+	<input type="hidden" name="comment_id" value="{output.comment_id}" />
 	<input type="hidden" name="fk_post_id" value="{output.post_id}" />
 	<input type="hidden" name="return" value="{output.return2me}" />
 	<textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea>
