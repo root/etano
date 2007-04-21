@@ -113,8 +113,9 @@ class widget_members extends icontent_widget {
 				$this->tpl->set_file('temp','static/content_widget.html');
 			}
 			$this->tpl->set_var('widget',$widget);
-			$myreturn=$this->tpl->process('','temp',TPL_OPTIONAL);
+			$myreturn=$this->tpl->process('temp','temp',TPL_OPTIONAL);
 			$this->tpl->drop_var('temp');
+			$this->tpl->drop_var('widget.content');
 		}
 		return $myreturn;
 	}

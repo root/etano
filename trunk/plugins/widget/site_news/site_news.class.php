@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       plugins/widget/login/login.class.php
-$Revision$
+File:                       plugins/widget/osignal_feed/osignal_feed.class.php
+$Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -13,10 +13,10 @@ Support at:                 http://forum.datemill.com
 
 require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 
-class widget_login extends icontent_widget {
-	var $module_code='widget_login';
+class widget_site_news extends icontent_widget {
+	var $module_code='site_news';
 
-	function widget_login() {
+	function widget_site_news() {
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -39,7 +39,9 @@ class widget_login extends icontent_widget {
 
 
 	function _content() {
-		$this->tpl->set_file('widget.content','widgets/login/display.html');
+		if (is_file($GLOBALS['tplvars']['tplrelpath'].'/cache/widgets/site_news/display.html')) {
+			$this->tpl->set_file('widget.content','cache/widgets/site_news/display.html');
+		}
 	}
 
 
@@ -47,8 +49,20 @@ class widget_login extends icontent_widget {
 	*	Used to wrap the content in the widget html code
 	*/
 	function _finish_display() {
-		$myreturn=$this->tpl->process('widget.content','widget.content',TPL_OPTIONAL);
-		$this->tpl->drop_var('widget.content');
+		$myreturn='';
+		if ($this->tpl->get_var_silent('widget.content')!='') {
+			$widget['title']='News';	// translate this
+			$widget['id']='site_news';
+			if (isset($this->config['area']) && $this->config['area']=='front') {
+				$this->tpl->set_file('temp','static/front_widget.html');
+			} else {
+				$this->tpl->set_file('temp','static/content_widget.html');
+			}
+			$this->tpl->set_var('widget',$widget);
+			$myreturn=$this->tpl->process('temp','temp',TPL_OPTIONAL);
+			$this->tpl->drop_var('temp');
+			$this->tpl->drop_var('widget.content');
+		}
 		return $myreturn;
 	}
 
@@ -67,6 +81,7 @@ class widget_login extends icontent_widget {
 
 
 	function _init() {
-		$this->config['module_name']='Already a member? Log in';
+		$this->config['module_name']='Site news';
+		$this->config['total']=3;
 	}
 }

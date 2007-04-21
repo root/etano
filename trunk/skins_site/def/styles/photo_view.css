@@ -21,6 +21,10 @@
 	font-size: 13px;
 }
 
+.comment .controls {
+	float: right;
+}
+
 textarea#comment {
 	width: 50%;
 	height: 140px;
