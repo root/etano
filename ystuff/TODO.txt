@@ -65,10 +65,8 @@ TODO
 - help texts pentru campurile textarea
 - lungime maxima camp pt textareas
 
-- cautare membri cu poze in adv. search
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
 
-- cand se adauga o poza NE-privata in album, daca nu exista poza in profil, sa se faca automat is_main
 - profile views
 
 - functie fields_edit_tpl($field_ids)

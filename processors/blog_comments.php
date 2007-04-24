@@ -34,6 +34,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (isset($_POST['return']) && !empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
+	} else {
+		$input['return']='';
 	}
 
 	if (empty($input['comment'])) {
@@ -55,21 +57,28 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		$config=get_site_option(array('manual_com_approval'),'core');
 		if (!empty($input['comment_id'])) {
-			$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='".gmdate('YmdHis')."'";
-			if ($config['manual_com_approval']==1) {
-				$query.=",`status`='".STAT_PENDING."'";
-			} else {
-				$query.=",`status`='".STAT_APPROVED."'";
-			}
-			foreach ($blog_comments_default['defaults'] as $k=>$v) {
-				if (isset($input[$k])) {
-					$query.=",`$k`='".$input[$k]."'";
+			// only members can edit their comments
+			if (isset($_SESSION['user']['user_id'])) {
+				$input['comment'].="\n\nLast edited by ".$_SESSION['user']['user'].' on '.gmdate('Y-m-d H:i:s').' GMT';
+				$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='".gmdate('YmdHis')."'";
+				if ($config['manual_com_approval']==1) {
+					$query.=",`status`='".STAT_PENDING."'";
+				} else {
+					$query.=",`status`='".STAT_APPROVED."'";
 				}
+				foreach ($blog_comments_default['defaults'] as $k=>$v) {
+					if (isset($input[$k])) {
+						$query.=",`$k`='".$input[$k]."'";
+					}
+				}
+				$query.=" WHERE `comment_id`='".$input['comment_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$topass['message']['type']=MESSAGE_INFO;
+				$topass['message']['text']='Comment changed successfully.';
+			} else {
+				$topass['message']['type']=MESSAGE_INFO;
+				$topass['message']['text']='You are not allowed to edit comments';
 			}
-			$query.=" WHERE `comment_id`='".$input['comment_id']."'";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Comment changed successfully.';
 		} else {
 			unset($input['comment_id']);
 			$now=gmdate('YmdHis');
