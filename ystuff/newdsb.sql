@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Apr 21, 2007 at 11:24 PM
+-- Generation Time: Apr 24, 2007 at 05:31 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 -- 
@@ -39,7 +39,7 @@ INSERT INTO `dsb_access_levels` (`level_id`, `level_code`, `level_diz`, `level`,
 (6, 0x666c6972745f72656164, 'Read flirts', 6, 1),
 (7, 0x666c6972745f73656e64, 'Send flirts', 6, 1),
 (8, 0x75706c6f61645f70686f746f73, 'Upload photos', 6, 1),
-(9, 0x77726974655f70686f746f5f636f6d6d656e7473, 'Add comments to photos', 7, 0),
+(9, 0x77726974655f70686f746f5f636f6d6d656e7473, 'Add comments to photos', 6, 0),
 (10, 0x726561645f626c6f6773, 'Read blogs', 7, 0),
 (11, 0x77726974655f626c6f6773, 'Write own blogs', 6, 1),
 (12, 0x766965775f616c62756d, 'Who''s allowed to view the list of photos in a photo album', 7, 0),
@@ -137,13 +137,14 @@ INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_post_id`, `fk_user_id`, `_use
 (9, 8, 7, 'dragon', 'howdy kid?', '2007-04-19 14:49:34', '2007-04-19 14:49:34', 15),
 (11, 7, 10, 'strawberries', 'I wonder what the design resource kit will contain.\r\n\r\n', '2007-04-19 14:53:07', '2007-04-19 14:53:07', 15),
 (12, 6, 10, 'strawberries', 'I hate spammers and the horse they rode in on.', '2007-04-19 14:54:29', '2007-04-19 14:54:29', 15),
+(27, 10, 1, 'emma', 'unu ''     doi\n\nLast edited by emma on 2007-04-24 14:08:43 GMT', '2007-04-24 13:35:12', '2007-04-24 14:08:43', 15),
 (15, 9, 10, 'strawberries', 'excellentae!\r\n\r\nI replied to  a_l_f''s test flirt yesterday morning, but i had an error page.  I''ll resend the message now.\r\n\r\nIt''s great that we now that get notified via email when any posts are made re our pictures or blogs.', '2007-04-19 23:43:46', '2007-04-19 23:43:46', 15),
 (16, 2, 10, 'strawberries', 'test message', '2007-04-20 00:10:19', '2007-04-20 00:10:19', 15),
 (17, 9, 13, 'johnboy2', 'Wow this bits cool, only just discovered it today.:)', '2007-04-20 01:52:19', '2007-04-20 01:52:19', 15),
 (18, 9, 13, 'johnboy2', 'Can a user edit or delete these comments they leave?', '2007-04-20 01:53:10', '2007-04-20 01:53:10', 15),
 (19, 9, 10, 'strawberries', 'no ability to edit that i can see, johnboy\r\n\r\nwonder if possible to see the time/date of posted messages.\r\n', '2007-04-20 02:50:11', '2007-04-20 02:50:11', 15),
 (20, 3, 12, 'a_l_f', 'LOL strawberries\r\n               yes just a wee bug or simple \r\njust not yet ready togo As the crew did say they would work on it each day :-)\r\nWhat would be great is a few simleys for the blog tooo :-)', '2007-04-20 03:35:55', '2007-04-20 03:35:55', 15),
-(21, 10, 7, 'dragon', 'Think of this like user stories with bells and whistles. Instead of having some predefined topics, the user creates his/her topics and keeps talking. Plus others can comment on their posts. In this application, they''re supposed to replace the user stories.', '2007-04-20 12:58:50', '2007-04-20 12:58:50', 15),
+(21, 10, 7, 'dragon', 'Think of this like user stories with bells and whistles. Instead of having some predefined topics, the user creates his/her topics and keeps talking. Plus others can comment on their posts. In this application, they''re supposed to replace the user stories.\n\nLast edited by dragon on 2007-04-21 21:01:44 GMT', '2007-04-20 12:58:50', '2007-04-21 21:01:44', 15),
 (22, 10, 0, 'guest', 'whoa', '2007-04-20 15:57:02', '2007-04-20 15:57:02', 15),
 (23, 10, 0, 'guest', 'rrrr', '2007-04-20 22:07:46', '2007-04-20 22:07:46', 15),
 (24, 10, 0, 'guest', 'tttt', '2007-04-20 22:08:44', '2007-04-20 22:08:44', 15),
@@ -194,7 +195,7 @@ INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `
 (7, '2007-04-19 05:01:39', 12, 'a_l_f', 7, 1, 'A design resource kit', 'I look forward to the design resource kit as i cannot leave things alone :-)\ni wonder how long it will take me to crash the new install when its released :-0', 1, 15, '', 0, 1, '2007-04-19 05:01:39', ''),
 (8, '2007-04-19 09:57:59', 1, 'emma', 1, 1, 'Testing blogs', 'Hello\n\n[quote]everybody[/quote]\n\n[b]how[/b]\n\n[u]are[/u]\n\n[url=http://www.datemill.com/friendy/profile.php?user=emma]you[/url]?', 1, 15, '', 0, 5, '2007-04-19 09:57:59', ''),
 (9, '2007-04-19 21:40:05', 7, 'dragon', 5, 1, 'Today''s update take 2', 'Ok, another update today - we focused on bugs and overall stability but a couple of features were added too.\n- You should be able to send (and receive) messages, flirts, etc.\n- You will receive new message email notifications when you get a new message (if you said you want to receive notifs in your settings)\n- You will also receive message and email notifications when a new comment is made on one of your pictures or blogs.\n- The one and only cron job is active on the demo site.\n', 1, 15, '', 2, 4, '2007-04-19 21:40:05', ''),
-(10, '2007-04-20 02:01:23', 11, 'johnboy', 4, 1, 'Testing this out', 'I''m not very familiar about blogs, so I have no idea what Im doing here, not even sure if this will post in the main blog area. Are blogs just another type of FORUMS?', 1, 15, '', 0, 4, '2007-04-20 02:01:23', '');
+(10, '2007-04-20 02:01:23', 11, 'johnboy', 4, 1, 'Testing this out', 'I''m not very familiar about blogs, so I have no idea what Im doing here, not even sure if this will post in the main blog area. Are blogs just another type of FORUMS?', 1, 15, '', 27, 5, '2007-04-20 02:01:23', '');
 
 -- --------------------------------------------------------
 
@@ -1155,7 +1156,7 @@ INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_photo_id`, `fk_user_id`, `_u
 (5, 5, 11, 'johnboy', 'I wonder if you might be Dan.... are you?', '2007-04-17 04:49:33', '2007-04-17 04:49:33', 15),
 (6, 9, 11, 'johnboy', 'Looks pretty cold there', '2007-04-17 05:35:36', '2007-04-17 05:35:36', 15),
 (7, 9, 13, 'johnboy2', 'YES it is', '2007-04-17 12:29:32', '2007-04-17 12:29:32', 15),
-(8, 5, 1, 'emma', 'bau', '2007-04-19 14:25:46', '2007-04-19 14:25:46', 15),
+(8, 5, 1, 'emma', 'bau ''    uab\n\nLast edited by emma on 2007-04-24 14:17:20 GMT', '2007-04-19 14:25:46', '2007-04-24 14:17:20', 15),
 (13, 18, 1, 'emma', 'asdasd', '2007-04-21 19:07:52', '2007-04-21 19:07:52', 15);
 
 -- --------------------------------------------------------
@@ -1309,13 +1310,6 @@ CREATE TABLE `dsb_queue_message` (
 -- Dumping data for table `dsb_queue_message`
 -- 
 
-INSERT INTO `dsb_queue_message` (`mail_id`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (16397, 1, 0, '', 'New comment on one of your photos', 'emma posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=18">Click here</a> to view the comment', '2007-04-21 19:07:52', 2),
-(16396, 1, 0, '', 'New comment on one of your blogs', 'emma posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=8">Click here</a> to view the comment', '2007-04-21 19:02:07', 2),
-(16395, 1, 0, '', 'New comment on one of your photos', 'emma posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=18">Click here</a> to view the comment', '2007-04-21 17:51:43', 2),
-(16394, 1, 0, '', 'New comment on one of your photos', 'emma posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=18">Click here</a> to view the comment', '2007-04-21 14:12:33', 2),
-(16393, 1, 0, '', 'New comment on one of your photos', 'guest posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=18">Click here</a> to view the comment', '2007-04-21 14:11:42', 2),
-(16391, 11, 0, '', 'New comment on one of your blogs', 'guest posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=10">Click here</a> to view the comment', '2007-04-21 13:20:28', 2),
-(16392, 1, 0, '', 'New comment on one of your photos', 'guest posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=18">Click here</a> to view the comment', '2007-04-21 13:22:28', 2);
 
 -- --------------------------------------------------------
 
@@ -1384,6 +1378,8 @@ CREATE TABLE `dsb_site_log` (
 -- Dumping data for table `dsb_site_log`
 -- 
 
+INSERT INTO `dsb_site_log` (`log_id`, `fk_user_id`, `user`, `m_value`, `fk_level_id`, `ip`, `time`) VALUES (1, 0, 'dragon', 1, 1, 2130706433, '20070421234025'),
+(2, 0, 'emma', 1, 1, 2130706433, '20070424155227');
 
 -- --------------------------------------------------------
 
@@ -1404,6 +1400,8 @@ CREATE TABLE `dsb_site_news` (
 -- Dumping data for table `dsb_site_news`
 -- 
 
+INSERT INTO `dsb_site_news` (`news_id`, `news_title`, `news_body`, `date_posted`) VALUES (1, 'first news', '<p>N<font size="1">e</font><font size="2">w</font><font size="3">s</font> <font size="4">b</font><font size="5">o</font><font size="6">d</font><font size="7">y</font></p>', '0000-00-00 00:00:00'),
+(2, 'second news entry', '<p>This one shows</p>\r\n<ol>\r\n    <li><a href="http://forum.datemill.com">links</a> in posts</li>\r\n    <li>c<font color="#ff6600">o</font><font color="#0000ff">l</font><font color="#00ff00">o</font><font color="#ff00ff">r</font><font color="#ffffff"><span style="background-color: rgb(255, 0, 0);">s</span></font></li>\r\n    <li><font face="Comic Sans MS">different </font><font face="Tahoma">fonts</font></li>\r\n    <li>and <font size="5">sizes</font></li>\r\n    <li>and let''s not forget lists</li>\r\n</ol>', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1577,13 +1575,13 @@ CREATE TABLE `dsb_user_accounts` (
 -- Dumping data for table `dsb_user_accounts`
 -- 
 
-INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x656d6d61, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '02912174c5cc19dedd90bc498af2d9b0', '20070421201317'),
+INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x656d6d61, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '02912174c5cc19dedd90bc498af2d9b0', '20070424142232'),
 (2, 0x6b65697468, 0x3166333837306265323734663663343962336533316130633637323839353766, 15, 2, 'newdsb@sco.ro', '', '2fba765ee1b6ade5287073584ec894e4', '20070418125301'),
 (3, 0x73686f6e323035, 0x3037373631303430363739346562326133633736393139396439346131613739, 15, 2, 'newdsb@sco.ro', '', 'b3d7ac7336a79fe5a4b01a88f5727b13', '20070418125301'),
 (4, 0x6d6176657269636b, 0x3839393636303063333130383863366137363436346365333864393635636364, 15, 2, 'newdsb@sco.ro', '', '87a6ce818365e8b3bef125df92826702', '20070418125301'),
 (5, 0x313030343537, 0x3836653236636161363936356531313066666461353936373465373163643264, 15, 2, 'newdsb@sco.ro', '', 'c5cb27f0e77add4c24ffc48562a0706d', '20070418125301'),
 (6, 0x636f6361636f6c61, 0x6361323466306531653366663730316661346633336335336639303566396461, 15, 2, 'newdsb@sco.ro', '', '7f2fe99deb74578bf4f6e5e26dd99ae0', '20070418125301'),
-(7, 0x647261676f6e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '1dc9d7dbc613c521a8efeae0f7706f2e', '20070421173304'),
+(7, 0x647261676f6e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '1dc9d7dbc613c521a8efeae0f7706f2e', '20070421210144'),
 (8, 0x616e676b617361, 0x3634383530366161333739666566623930323663376530313664386463626663, 15, 2, 'newdsb@sco.ro', '', '36e12348474821624874994164838526', '20070418125301'),
 (9, 0x72616e65676c6f, 0x3739343063343139653932336166306265373963623835613432663836343964, 15, 2, 'newdsb@sco.ro', '', '83f1200b9f1bdd252e2aebc2dfffe34f', '20070418125301'),
 (10, 0x737472617762657272696573, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '68779ace53ca9ba01a52efa82e53bf86', '20070418125301'),
@@ -1949,7 +1947,7 @@ INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_m
 (2, 1, 'emma', '4/1_11176750826.jpg', 0, 0, 1, 1, 'ruuuuun, enemies are coming!!', 15, 0, 0, '', 14, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-21 13:37:40'),
 (3, 1, 'emma', '2/1_21176750826.jpg', 0, 0, 1, 1, 'daddy''s girl', 15, 0, 0, '', 8, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-21 13:37:55'),
 (4, 1, 'emma', '1/1_31176750826.jpg', 0, 0, 1, 1, 'hey, look, I can walk...sort of :)', 15, 0, 0, '', 6, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-21 13:47:02'),
-(5, 7, 'dragon', '0/7_11176751977.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 21, 3, 15, 2, '2007-04-16 19:32:59', '2007-04-16 19:33:32'),
+(5, 7, 'dragon', '0/7_11176751977.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 23, 3, 15, 2, '2007-04-16 19:32:59', '2007-04-16 19:33:32'),
 (6, 10, 'strawberries', '3/10_11176756425.jpg', 1, 0, 1, 1, 'Fluffy, she who must be obeyed', 15, 0, 0, '', 9, 0, 0, 1, '2007-04-16 20:47:07', '2007-04-16 20:48:32'),
 (7, 10, 'strawberries', '3/10_21176756425.jpg', 0, 0, 1, 1, 'Fluffy loves getting her picture taken', 15, 0, 0, '', 6, 0, 0, 0, '2007-04-16 20:47:07', '2007-04-16 20:48:32'),
 (8, 11, 'johnboy', '0/11_11176758735.jpg', 1, 1, 1, 1, '', 15, 0, 0, '', 13, 1, 5, 0, '2007-04-16 21:25:35', '2007-04-17 12:27:01'),
@@ -2016,13 +2014,13 @@ CREATE TABLE `dsb_user_profiles` (
 -- Dumping data for table `dsb_user_profiles`
 -- 
 
-INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`, `f6_country`, `f6_state`, `f6_city`, `f6_zip`, `f7`, `f8`, `f9`, `f10`, `f11`, `f12`, `f13`, `f14`, `f15`) VALUES (1, 1, 15, 0, '2007-04-19 14:08:29', '2007-04-16 14:42:06', '', 'emma', '8/1_21176991707.jpg', 0.0000000000, 0.0000000000, 20, '', 2, '|1|', 1, '1989-06-05', 165, 0, 0, '', 3, 3, 2, 3, 1, 1, 1, 1, ''),
+INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`, `f6_country`, `f6_state`, `f6_city`, `f6_zip`, `f7`, `f8`, `f9`, `f10`, `f11`, `f12`, `f13`, `f14`, `f15`) VALUES (1, 1, 15, 0, '2007-04-19 14:08:29', '2007-04-16 14:42:06', '', 'emma', '8/1_21176991707.jpg', 0.0000000000, 0.0000000000, 21, '', 2, '|1|', 1, '1989-06-05', 165, 0, 0, '', 3, 3, 2, 3, 1, 1, 1, 1, ''),
 (2, 2, 15, 0, '2007-04-16 12:42:01', '2007-04-16 17:09:23', '', 'keith', '', 0.0000000000, 0.0000000000, 0, 'Testing', 1, '|2|', 1, '1976-05-12', 217, 0, 0, '', 3, 1, 1, 1, 1, 1, 1, 1, '|1|4|7|'),
 (3, 3, 15, 0, '2007-04-16 17:29:10', '2007-04-16 17:24:38', '', 'shon205', '', -81.6286010742, 41.4509010315, 0, '', 1, '|2|', 1, '1971-01-06', 218, 41, 1620, '44105', 1, 1, 1, 1, 1, 1, 1, 1, ''),
 (4, 4, 15, 0, '2007-04-16 12:41:49', '2007-04-16 17:46:34', '', 'maverick', '', 0.0000000000, 0.0000000000, 4, '', 1, '|2|', 33, '0000-00-00', 218, 0, 0, '86314', 3, 3, 2, 3, 1, 1, 2, 2, '|1|'),
 (5, 5, 15, 0, '2007-04-16 12:41:45', '2007-04-16 18:26:47', '', '100457', '', 0.0000000000, 0.0000000000, 5, 'cool me', 1, '|2|', 32, '1978-04-07', 218, 0, 0, '49504', 5, 1, 3, 1, 1, 1, 1, 1, '|1|7|'),
 (6, 6, 15, 0, '2007-04-16 12:41:53', '2007-04-16 18:50:27', '', 'cocacola', '', 0.0000000000, 0.0000000000, 5, 'Im cool', 1, '|2|', 38, '1969-01-01', 186, 0, 0, '07631', 3, 1, 1, 1, 1, 1, 1, 1, '|1|'),
-(7, 7, 15, 0, '2007-04-16 12:41:56', '2007-04-16 19:26:41', '', 'dragon', '0/7_11176751977.jpg', 0.0000000000, 0.0000000000, 17, 'oops, this should have been a textarea, not a textfield. Easy to fix!', 1, '|2|', 58, '1976-11-01', 165, 0, 0, '', 3, 5, 2, 5, 1, 2, 4, 1, '|2|'),
+(7, 7, 15, 0, '2007-04-16 12:41:56', '2007-04-16 19:26:41', '', 'dragon', '0/7_11176751977.jpg', 0.0000000000, 0.0000000000, 22, 'oops, this should have been a textarea, not a textfield. Easy to fix!', 1, '|2|', 58, '1976-11-01', 165, 0, 0, '', 3, 5, 2, 5, 1, 2, 4, 1, '|2|'),
 (8, 8, 15, 0, '2007-04-17 06:23:17', '2007-04-16 19:54:09', '', 'angkasa', '2/8_11176790979.jpg', 0.0000000000, 0.0000000000, 5, 'I''m Cool', 1, '|2|', 47, '1980-09-18', 181, 0, 0, '', 2, 3, 1, 2, 3, 2, 5, 3, '|1|7|'),
 (9, 9, 15, 0, '2007-04-16 19:56:29', '2007-04-16 19:55:41', '', 'raneglo', '', 0.0000000000, 0.0000000000, 0, 'I am me!', 1, '|1|', 34, '1961-07-29', 218, 0, 0, '77584', 3, 3, 6, 5, 1, 2, 4, 1, '|4|5|'),
 (10, 10, 15, 0, '2007-04-16 20:48:32', '2007-04-16 20:26:23', '', 'strawberries', '3/10_11176756425.jpg', 0.0000000000, 0.0000000000, 2, '', 1, '|2|', 38, '1964-12-31', 217, 0, 0, '', 3, 3, 2, 5, 1, 2, 3, 1, '|1|'),
@@ -2160,7 +2158,7 @@ INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (2, 'total_p
 (1, 'blog_posts', 3),
 (3, 'total_photos', 6),
 (2, 'blog_posts', 1),
-(1, 'comments', 6),
+(1, 'comments', 7),
 (4, 'total_photos', 3),
 (3, 'pviews', 8),
 (2, 'pviews', 11),

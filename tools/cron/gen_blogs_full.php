@@ -6,7 +6,7 @@ require_once '../../includes/user_functions.inc.php';
 require_once '../../includes/classes/modman.class.php';
 
 $short_blog_chars=400;
-$config=get_site_option(array('bbcode_blogs'),'core_blog');
+$config=get_site_option(array('bbcode_blogs','use_smilies'),'core_blog');
 
 $modman=new modman();
 
@@ -21,6 +21,10 @@ while ($blog=mysql_fetch_assoc($res)) {
 	if (!empty($config['bbcode_blogs'])) {
 		$blog['post_content']=bbcode2html($blog['post_content']);
 		$post_content_short=bbcode2html($post_content_short);
+	}
+	if (!empty($config['use_smilies'])) {
+		$blog['post_content']=text2smilies($blog['post_content']);
+		$post_content_short=text2smilies($post_content_short);
 	}
 	if (empty($blog['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$blog['photo'])) {
 		$blog['photo']='no_photo.gif';

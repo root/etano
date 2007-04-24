@@ -23,7 +23,7 @@ function gen_user_cache() {
 		$skins[]=mysql_result($res,$i,0);
 	}
 
-	$config=get_site_option(array('bbcode_profile'),'core');
+	$config=get_site_option(array('bbcode_profile','use_smilies'),'core');
 
 	require_once '../../includes/classes/modman.class.php';
 	$modman=new modman();
@@ -53,6 +53,9 @@ function gen_user_cache() {
 					$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
 					if ($config['bbcode_profile']) {
 						$profile[$field['dbfield']]=bbcode2html($profile[$field['dbfield']]);
+					}
+					if ($config['use_smilies']) {
+						$profile[$field['dbfield']]=text2smilies($profile[$field['dbfield']]);
 					}
 				} elseif ($field['html_type']==HTML_SELECT) {
 					// if we sanitize here " will be rendered as &quot; which is not what we want

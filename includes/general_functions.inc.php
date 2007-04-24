@@ -277,3 +277,38 @@ function del_message_filter($filter) {
 	}
 	return $myreturn;
 }
+
+
+function text2smilies($str) {
+	$from=array('&gt;:(',':D','o.O','|o','-.-','8)',':~(','&gt;:)',':doh:','&lt;.&lt;',':grr:','^,^',':h:',':huh:',':lol:',':x',':,',':O',':r:',':(',':)',':t:',':P',':u:',':w:',':.',';)',':!:');
+	$to=array('<img src="'._BASEURL_.'/images/emoticons/angry.gif" alt="angry" title="angry" />',
+			'<img src="'._BASEURL_.'/images/emoticons/biggrin.gif" alt="grin" title="grin" />',
+			'<img src="'._BASEURL_.'/images/emoticons/blink.gif" alt="blink" title="blink" />',
+			'<img src="'._BASEURL_.'/images/emoticons/censor.gif" alt="censor" title="censor" />',
+			'<img src="'._BASEURL_.'/images/emoticons/closedeyes.gif" alt="closed eyes" title="closed eyes" />',
+			'<img src="'._BASEURL_.'/images/emoticons/cool.gif" alt="cool" title="cool" />',
+			'<img src="'._BASEURL_.'/images/emoticons/cry.gif" alt="cry" title="cry" />',
+			'<img src="'._BASEURL_.'/images/emoticons/devil.gif" alt="devil" title="devil" />',
+			'<img src="'._BASEURL_.'/images/emoticons/doh.gif" alt="doh" title="doh" />',
+			'<img src="'._BASEURL_.'/images/emoticons/dry.gif" alt="dry" title="dry" />',
+			'<img src="'._BASEURL_.'/images/emoticons/grrrr.gif" alt="grrrr" title="grrrr" />',
+			'<img src="'._BASEURL_.'/images/emoticons/happy.gif" alt="happy" title="happy" />',
+			'<img src="'._BASEURL_.'/images/emoticons/holy.gif" alt="holy" title="holy" />',
+			'<img src="'._BASEURL_.'/images/emoticons/huh.gif" alt="huh" title="huh" />',
+			'<img src="'._BASEURL_.'/images/emoticons/laugh.gif" alt="laugh" title="laugh" />',
+			'<img src="'._BASEURL_.'/images/emoticons/lips.gif" alt="lips" title="lips" />',
+			'<img src="'._BASEURL_.'/images/emoticons/mellow.gif" alt="mellow" title="mellow" />',
+			'<img src="'._BASEURL_.'/images/emoticons/ohmy.gif" alt="ohmy" title="ohmy" />',
+			'<img src="'._BASEURL_.'/images/emoticons/rolleyes.gif" alt="roll eyes" title="roll eyes" />',
+			'<img src="'._BASEURL_.'/images/emoticons/sad.gif" alt="sad" title="sad" />',
+			'<img src="'._BASEURL_.'/images/emoticons/smile.gif" alt="smile" title="smile" />',
+			'<img src="'._BASEURL_.'/images/emoticons/thumbsup.gif" alt="thumbs up" title="thumbs up" />',
+			'<img src="'._BASEURL_.'/images/emoticons/tongue.gif" alt="tongue" title="tongue" />',
+			'<img src="'._BASEURL_.'/images/emoticons/unsure.gif" alt="unsure" title="unsure" />',
+			'<img src="'._BASEURL_.'/images/emoticons/wacko.gif" alt="wacko" title="wacko" />',
+			'<img src="'._BASEURL_.'/images/emoticons/whistling.gif" alt="whistling" title="whistling" />',
+			'<img src="'._BASEURL_.'/images/emoticons/wink.gif" alt="wink" title="wink" />',
+			'<img src="'._BASEURL_.'/images/emoticons/yay.gif" alt="yay" title="yay" />'
+	);
+	return str_replace($from,$to,$str);
+}

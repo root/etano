@@ -29,7 +29,13 @@ if (empty($output['photo'])) {
 }
 $output['date_added']=strftime($_user_settings['date_format'],$output['date_added']+$_user_settings['time_offset']);
 
-$my_stats=get_user_stats($_SESSION['user']['user_id'],array('total_messages','new_messages','total_photos','pviews','num_friends'));
+$my_stats=get_user_stats($_SESSION['user']['user_id'],array('total_photos','pviews','num_friends'));
+$query="SELECT count(*) FROM `{$dbtable_prefix}user_inbox` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$my_stats['total_messages']=mysql_result($res,0,0);
+$query="SELECT count(*) FROM `{$dbtable_prefix}user_inbox` WHERE `is_read`=0 AND `fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$my_stats['new_messages']=mysql_result($res,0,0);
 
 $tpl->set_file('content','home.html');
 $tpl->set_var('output',$output);

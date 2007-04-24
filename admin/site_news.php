@@ -34,7 +34,7 @@ if (!empty($totalrows)) {
 	if ($o>$totalrows) {
 		$o=$totalrows-$r;
 	}
-	$query="SELECT * FROM $from WHERE $where LIMIT $o,$r";
+	$query="SELECT * FROM $from WHERE $where LIMIT $o,$r ORDER BY `news_id` DESC";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['news_title']=sanitize_and_format($rsrow['news_title'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
