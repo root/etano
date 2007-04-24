@@ -106,10 +106,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
 					$notification['fk_user_id']=mysql_result($res,0,0);
-					$notification['subject']='New comment on one of your blogs';	// translate
-					$notification['message_body']=sprintf('%1$s posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=%2$s">Click here</a> to view the comment',$_SESSION['user']['user'],$input['fk_post_id']);
-					$notification['message_type']=MESS_SYSTEM;
-					queue_or_send_message($notification);
+					// send notif only if it's not my blog
+					if (isset($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']!=$notification['fk_user_id']) {
+						$notification['subject']='New comment on one of your blogs';	// translate
+						$notification['message_body']=sprintf('%1$s posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=%2$s#comm%3$s">Click here</a> to view the comment',$_SESSION['user']['user'],$input['fk_post_id'],$input['comment_id']);
+						$notification['message_type']=MESS_SYSTEM;
+						queue_or_send_message($notification);
+					}
 				}
 			} else {
 				$topass['message']['text']='Comment added but needs to be reviewed first.';	// translate this

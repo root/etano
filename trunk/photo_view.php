@@ -49,8 +49,8 @@ if (!empty($photo_id)) {
 		if (!empty($output['allow_comments'])) {
 			// may I see any comment?
 			$output['show_comments']=true;
-			$config=get_site_option(array('use_captcha','bbcode_comments'),'core');
-			$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,b.`_photo` as `photo` FROM `{$dbtable_prefix}photo_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_photo_id`='".$output['photo_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`date_posted` ASC";
+			$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
+			$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}photo_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_photo_id`='".$output['photo_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`date_posted` ASC";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				// if someone has asked to edit his/her comment
@@ -58,9 +58,13 @@ if (!empty($photo_id)) {
 					$output['comment_id']=$rsrow['comment_id'];
 					$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
 				}
+				$rsrow['date_posted']=strftime($_user_settings['datetime_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
 				$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 				if (!empty($config['bbcode_comments'])) {
 					$rsrow['comment']=bbcode2html($rsrow['comment']);
+				}
+				if (!empty($config['smilies_comm'])) {
+					$rsrow['comment']=text2smilies($rsrow['comment']);
 				}
 				// allow showing the edit links to rightfull owners
 				if (isset($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {

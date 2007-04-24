@@ -99,7 +99,7 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 				break;
 
 		}
-		$output['message_body']=bbcode2html($output['message_body']);
+		$output['message_body']=text2smilies(bbcode2html($output['message_body']));
 		if (empty($output['photo'])) {
 			$output['photo']='no_photo.gif';
 		}
@@ -123,7 +123,7 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 		$tpl->set_var('output',$output);
 		$tpl->process('content','content',TPL_OPTIONAL);
 		if ($output['is_read']==0) {
-			$query="UPDATE `{$dbtable_prefix}user_{$mailbox_table}` SET `is_read`=1 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `mail_id`='".$output['mail_id']."'";
+			$query="UPDATE `{$dbtable_prefix}user_{$mailbox_table}` SET `is_read`=1 WHERE `mail_id`='".$output['mail_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	} else {
