@@ -16,19 +16,20 @@ class feedReader {
 	var $node=0;				// número de nós dos items
 	var $channelFlag=false;		// flag
 	var $currentTag='';			// actual tag
-	var $outputData=array();	// results array (notícias formatadas)
+	var $outputData=array();	// results array
 	var $itemFlag=false;		// flag
 	var $imageFlag=false;		// flag
 	var $feedVersion='';		// version of the rss file
 	var $raw_xml='';			// the actual xml string to be parsed
 	var $is_error=false;		//
 	var $error_text='';			// last error encontered
+//	var $url_is_path=false;		// the feedUrl points to a file on our server
 
 
-	function feedReader($url='') { //constructor
+	function feedReader($url='',$url_is_path=false) { //constructor
+		$this->url_is_path=$url_is_path;
 		if (!empty($url)) {
-			$this->setFeedUrl($url);
-			$this->getFeed();
+			$this->getFeed($url,$url_is_path);
 		}
 	}
 
@@ -58,37 +59,46 @@ class feedReader {
 	}
 
 
-	function getFeed($url='') {
+	function getFeed($url='',$url_is_path=false) {
 		$myreturn=true;
+		$this->url_is_path=$url_is_path;
 		if (!empty($url)) {
 			$this->setFeedUrl($url);
 		}
-		ini_set('auto_detect_line_endings','1');
-		$url=parse_url($this->feedUrl);
-		$header='GET '.$url['path']." HTTP/1.0\r\n";
-		$header.='Host: '.$url['host']."\r\n";
-		$header.="Connection: close\r\n\r\n";
-		$socket=@fsockopen($url['host'],80,$errno,$errstr,10);
-		if ($socket) {
-			fwrite($socket,$header);
-			$this->raw_xml='';
-			$headerdone=false;
-			while(!feof($socket)) {
-				$line=fgets($socket,1024);
-				if (strcmp($line,"\r\n")==0) {
-					// read the header
-					$headerdone=true;
-				} elseif ($headerdone) {
-					// header has been read. now read the contents
-					$this->raw_xml.=$line;
-				}
+		if ($this->url_is_path && is_file($this->feedUrl)) {
+			if (!($this->raw_xml=file_get_contents($this->feedUrl))) {
+				$myreturn=false;
+				$this->is_error=true;
+				$this->error_text='Unable to read the feed file';
 			}
-			fclose ($socket);
-			$this->raw_xml=trim($this->raw_xml);
 		} else {
-			$myreturn=false;
-			$this->is_error=true;
-			$this->error_text='Unable to connect to '.$url['host'];
+			ini_set('auto_detect_line_endings','1');
+			$url=parse_url($this->feedUrl);
+			$header='GET '.$url['path']." HTTP/1.0\r\n";
+			$header.='Host: '.$url['host']."\r\n";
+			$header.="Connection: close\r\n\r\n";
+			$socket=@fsockopen($url['host'],80,$errno,$errstr,10);
+			if ($socket) {
+				fwrite($socket,$header);
+				$this->raw_xml='';
+				$headerdone=false;
+				while(!feof($socket)) {
+					$line=fgets($socket,1024);
+					if (strcmp($line,"\r\n")==0) {
+						// read the header
+						$headerdone=true;
+					} elseif ($headerdone) {
+						// header has been read. now read the contents
+						$this->raw_xml.=$line;
+					}
+				}
+				fclose ($socket);
+				$this->raw_xml=trim($this->raw_xml);
+			} else {
+				$myreturn=false;
+				$this->is_error=true;
+				$this->error_text='Unable to connect to '.$url['host'];
+			}
 		}
 		return $myreturn;
 	}

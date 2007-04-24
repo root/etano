@@ -37,13 +37,13 @@ if (!empty($totalrows)) {
 	$query="SELECT * FROM $from WHERE $where LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$rsrow['news_title']=sanitize_and_format($rsrow['news_title'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
 		$loop[]=$rsrow;
 	}
 	$output['pager2']=pager($totalrows,$o,$r);
 }
 
-$output['return2me']='admin/site_news.php';
+$output['return2me']='site_news.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
 	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }

@@ -1,8 +1,14 @@
-#site_news li {
-	border-top: 1px dashed #ccc;
-	padding-top: 10px;
+#site_news_feed h3 {
+	padding-left: 0;
 }
 
-#site_news li.first {
-	border-top: none;
+#site_news_feed ol {
+	margin-left: 20px;
+}
+
+#site_news_feed ol li {
+	border-bottom: none;
+	padding: 0;
+	margin: 0;
+	list-style-type: decimal;
 }

@@ -8,8 +8,8 @@ $(function() {
 						data=data.split('|');
 						if (typeof(data[0])!='undefined') {
 							if (data[0]==0) {
-								$('#blogcomment_form')[0].comment_id.value=unescape(data[1]);
-								$('#blogcomment_form')[0].comment.value=unescape(data[2]);
+								$('#comment_id').val(unescape(data[1]));
+								$('#comment').val(unescape(data[2]));
 								$('#post-button')[0].scrollIntoView(true);
 							} else {
 								alert(data[1]);

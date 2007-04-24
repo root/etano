@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       plugins/widget/site_news/site_news.class.php
+File:                       plugins/widget/site_news_feed/site_news_feed.class.php
 $Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -13,10 +13,10 @@ Support at:                 http://forum.datemill.com
 
 require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 
-class widget_site_news extends icontent_widget {
-	var $module_code='site_news';
+class widget_site_news_feed extends icontent_widget {
+	var $module_code='site_news_feed';
 
-	function widget_site_news() {
+	function widget_site_news_feed() {
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -39,8 +39,23 @@ class widget_site_news extends icontent_widget {
 
 
 	function _content() {
-		if (is_file($GLOBALS['tplvars']['tplrelpath'].'/cache/widgets/site_news/display.html')) {
-			$this->tpl->set_file('widget.content','cache/widgets/site_news/display.html');
+		if (is_file(_BASEPATH_.'/rss/site_news.xml')) {
+			require_once _BASEPATH_.'/includes/classes/feed_reader.class.php';
+			$fr=new feedReader();
+			$fr->getFeed(_BASEPATH_.'/rss/site_news.xml',true);
+			if ($fr->parseFeed()) {
+				$items=$fr->getFeedOutputData();
+
+				if (isset($GLOBALS['_user_settings'])) {
+					for ($i=0;isset($items['item'][$i]);++$i) {
+						$items['item'][$i]['dc:date']=strftime($GLOBALS['_user_settings']['datetime_format'],$items['item'][$i]['dc:date']+$GLOBALS['_user_settings']['time_offset']);
+					}
+				}
+				$this->tpl->set_file('widget.content','widgets/site_news_feed/display.html');
+				$this->tpl->set_loop('loop',array_slice($items['item'],0,$this->config['total']));
+				$this->tpl->process('widget.content','widget.content',TPL_LOOP);
+				$this->tpl->drop_loop('loop');
+			}
 		}
 	}
 
@@ -52,7 +67,7 @@ class widget_site_news extends icontent_widget {
 		$myreturn='';
 		if ($this->tpl->get_var_silent('widget.content')!='') {
 			$widget['title']='News';	// translate this
-			$widget['id']='site_news';
+			$widget['id']='site_news_feed';
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
 			} else {
