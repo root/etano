@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007040901
+File version:				1.2007042401
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -161,6 +161,9 @@ function sanitize_and_format($input,$input_type,$format=0,$empty_value=null) {
 		if ($format&FORMAT_ONELINE) {	// must come before FORMAT_ADDSLASH
 			$input=preg_replace("/\r|\n/m",'',$input);
 		}
+		if ($format&FORMAT_TRIM) {	// must come before FORMAT_ADDSLASH
+			$input=trim($input);
+		}
 		if ($format&FORMAT_ADDSLASH) {	// must come after text2html
 			$input=mysql_real_escape_string($input);	// due to this function there must always be a db_connect() before calling sanitize_and_format
 		}
@@ -188,9 +191,6 @@ function sanitize_and_format($input,$input_type,$format=0,$empty_value=null) {
 // 2 decimals with '.' as the decimal separator
 		if ($format&FORMAT_FLOAT) {
 			$input=number_format($input,2);
-		}
-		if ($format&FORMAT_TRIM) {
-			$input=trim($input);
 		}
 		if ($format&FORMAT_NL2BR) {
 			$input=nl2br($input);
@@ -250,7 +250,7 @@ function htmlspecialchars_uni($value) {
 		$myreturn=str_replace('>','&gt;',$myreturn);
 		$myreturn=str_replace('"','&quot;',$myreturn);
 		$myreturn=str_replace("'",'&#039;',$myreturn);
-		$myreturn=str_replace('  ','&nbsp;&nbsp;',$myreturn);
+		$myreturn=str_replace('  ',' &nbsp;',$myreturn);
 	}
 	return $myreturn;
 }

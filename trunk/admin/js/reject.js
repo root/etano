@@ -2,9 +2,10 @@ $(function() {
 //	get_reason();
 	oFCKeditor=new FCKeditor('reject_reason');
 	oFCKeditor.BasePath=document.location.pathname.substring(0,document.location.pathname.lastIndexOf('reject.php'))+'fckeditor/';
-	oFCKeditor.Height=500;
-	oFCKeditor.ToolbarSet='Basic';
+	oFCKeditor.Config["CustomConfigurationsPath"] = oFCKeditor.BasePath+'../js/fckconfig.js';
 	oFCKeditor.Config['FullPage']=true ;
+	oFCKeditor.ToolbarSet='datemill';
+	oFCKeditor.Height=500;
 	oFCKeditor.ReplaceTextarea();
 
 });

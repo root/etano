@@ -15,7 +15,7 @@ require_once '../../includes/sessions.inc.php';
 require_once '../../includes/vars.inc.php';
 
 $_SESSION['admin']=array();
-session_destroy();
+unset($_SESSION['admin']);
 header('Expires: Mon,26 Jul 1997 05:00:00 GMT');
 header('Last-Modified: '. gmdate('D,d M Y H:i:s').' GMT');
 header('Cache-Control: no-store,no-cache,must-revalidate',false);

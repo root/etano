@@ -9,7 +9,10 @@
 </tr>
 <loop name="loop">
 <tr>
-	<td><a class="item_delete" href="processors/site_news_delete.php?news_id={loop.news_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to delete this news?'))" title="Delete this news">Delete news</a> | <a class="item_edit" href="site_news_addedit.php?news_id={loop.news_id}&amp;return={output.return2me}" title="Change this news">Edit news</a></td>
+	<td>
+		<a class="item_del" href="processors/site_news_delete.php?news_id={loop.news_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to delete this news?'))" title="Delete this news">Delete news</a>
+		<a class="item_edit" href="site_news_addedit.php?news_id={loop.news_id}&amp;return={output.return2me}" title="Change this news">Edit news</a>
+	</td>
 	<td>
 		<strong>{loop.news_title}</strong>
 		{loop.news_body}
