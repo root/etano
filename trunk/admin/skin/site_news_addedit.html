@@ -1,0 +1,34 @@
+<h2>Site News</h2>
+
+<div class="hint">Please enter the news below:</div>
+
+<form action="processors/site_news_addedit.php" method="post" id="site_news_form" class="form_table">
+<input type="hidden" name="news_id" value="{output.news_id}" />
+<input type="hidden" name="return" value="{output.return}" />
+<table id="site_news_addedit" class="form_table">
+<tr>
+	<td class="label"><label for="news_title">Title:</label></td>
+	<td class="field {site_news.error_news_title}">
+		<input type="text" name="news_title" id="news_title" value="{output.news_title}" tabindex="1" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="news_body">News Content:</label></td>
+	<td class="field {site_news.error_news_body}">
+		<textarea cols="" rows="" name="news_body" id="news_body" tabindex="2">{output.news_body}</textarea>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" id="btn_save" tabindex="3" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links"><a class="back" href="{output.return}">Back to list</a></div>
+
+<script type="text/javascript" src="fckeditor/fckeditor.js"></script>
+<script type="text/javascript" src="js/site_news_addedit.js"></script>

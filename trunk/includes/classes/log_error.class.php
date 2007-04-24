@@ -1,16 +1,4 @@
 <?php
-/******************************************************************************
-newdsb
-===============================================================================
-File:                       includes/classes/log_error.class.php
-$Revision$
-Software by:                DateMill (http://www.datemill.com)
-Copyright by:               DateMill (http://www.datemill.com)
-Support at:                 http://forum.datemill.com
-*******************************************************************************
-* See the "softwarelicense.txt" file for license.                             *
-******************************************************************************/
-
 define('_ERRORLOG_DB_',0);
 define('_ERRORLOG_FILE_',1);
 define('_ERRORLOG_STDOUT_',2);
@@ -22,11 +10,11 @@ class log_error {
 	function log_error($module_name,$error) {
 		$this->_init();
 		if ($this->config['log_mode']==_ERRORLOG_DB_) {
-			global $dbtable_prefix;
+			$dbtable_prefix=$GLOBALS['dbtable_prefix'];
 			$query="INSERT IGNORE INTO `{$dbtable_prefix}error_log` SET `module`='$module_name',`error`='".sanitize_and_format($error,TYPE_STRING,FORMAT_ADDSLASH)."'";
 			@mysql_query($query);
 		} elseif ($this->config['log_mode']==_ERRORLOG_FILE_) {
-			error_log(date().': '.$module_name.': '.$error."\n\n",3,$this->config['file_log']);
+			error_log("\n-------\n".date('Y-m-d H:i:s',mktime()).': '.$module_name.': '.$error."\n\n",3,$this->config['file_log']);
 		} elseif ($this->config['log_mode']==_ERRORLOG_STDOUT_) {
 			echo $module_name.': '.$error;
 		}
