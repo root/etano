@@ -24,7 +24,7 @@ $qs_sep='';
 $topass=array();
 $input=array();
 if (isset($_POST['search']) && !empty($_POST['search'])) {
-	$input['search']=sanitize_and_format($_POST['search'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
+	$input['search']=sanitize_and_format($_POST['search'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='".SEARCH_USER."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
@@ -34,8 +34,8 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
 } elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
 	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 }
-$input['act']=sanitize_and_format_gpc($_POST,'act',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
-$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
+$input['act']=sanitize_and_format_gpc($_POST,'act',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 if (!empty($input['uids'])) {
 	switch ($input['act']) {
@@ -49,7 +49,7 @@ if (!empty($input['uids'])) {
 			break;
 
 		case 'skin':
-			$input['skin']=sanitize_and_format_gpc($_POST,'skin',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+			$input['skin']=sanitize_and_format_gpc($_POST,'skin',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `skin`='".$input['skin']."' WHERE `user_id` IN ('".join("','",$input['uids'])."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
@@ -57,7 +57,7 @@ if (!empty($input['uids'])) {
 			break;
 
 		case 'pass':
-			$input['pass']=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+			$input['pass']=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `pass`=md5('".$input['pass']."') WHERE `user_id`='".$input['uids'][0]."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;

@@ -33,12 +33,12 @@ if (isset($_SESSION['topass']['input'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
-		$output['caption']=sanitize_and_format($output['caption'],TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+		$output['caption']=sanitize_and_format($output['caption'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 		$config=get_site_option(array('date_format'),'core');
 		$output['date_posted']=strftime($config['date_format'],$output['date_posted']);
 	}
 	// because of the GET, our 'return' is urldecoded
-	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$output['return']=rawurlencode($output['return2']);
 }
 

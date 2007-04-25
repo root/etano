@@ -28,7 +28,7 @@ $input=array();
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 // get the input we need and sanitize it
 	foreach ($message_filters_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$message_filters_default['defaults'][$k]);
+		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$message_filters_default['defaults'][$k]);
 	}
 	$input['fk_user_id']=$_SESSION['user']['user_id'];
 

@@ -28,9 +28,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	foreach ($admin_accounts_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$admin_accounts_default['defaults'][$k]);
+		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$admin_accounts_default['defaults'][$k]);
 	}
-	$pass2=sanitize_and_format_gpc($_POST,'pass2',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$pass2=sanitize_and_format_gpc($_POST,'pass2',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$input['change_pass']=sanitize_and_format_gpc($_POST,'change_pass',TYPE_INT,0,0);
 
 // check for input errors

@@ -27,8 +27,19 @@ if (isset($_GET['photo_id']) && !empty($_GET['photo_id'])) {
 
 	$query="UPDATE `{$dbtable_prefix}user_photos` SET `status`='".STAT_APPROVED."',`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `photo_id`='".$input['photo_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+
+	// make this photo the main photo if it is_main
+	$query="SELECT `is_main`,`fk_user_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='".$input['photo_id']."'";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		$rsrow=mysql_fetch_assoc($res);
+		if (!empty($rsrow['is_main'])) {
+			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='".$rsrow['photo']."' WHERE `fk_user_id`='".$rsrow['fk_user_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		}
+	}
 	$topass['message']['type']=MESSAGE_INFO;
-	$topass['message']['text']='Photo approved. It will appear on site as soon as the cache for it is generated';
+	$topass['message']['text']='Photo approved.';
 }
 
 if (isset($_GET['o'])) {

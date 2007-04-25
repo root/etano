@@ -16,9 +16,6 @@ not checked. In felul asta userul poate sa isi aleaga ce se afiseaza
 
 - de scos vector2checkboxes_new din admin/profile_categories_addedit si de verif ca merge fara.
 
-- if photo approvals are automatic then we can make this photo the main photo now.
-	Otherwise it will have to be done upon approval!!!	(in processors/photo_settings.php)
-
 - ce se intampla daca sunt mai multe aplicatii create de mine in acelasi domeniu? $_SESSION['user']['user_id'] o
 sa autentifice automat userii dintr-o aplicatie in cealalta...Ar trebui creat un unique id (poate bazat pe
 licenta) a.i. sa avem $_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
@@ -28,8 +25,6 @@ licenta) a.i. sa avem $_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
 - de creat indecsi cand se creaza/modifica campuri in user_details (numai cand un camp este searchable).
 
 - de verif toate check_login_member() ca au id-urile nashpa (networks.php)
-
-- la search tb sa corelez access_level-ul cu campurile cautate.
 
 - generatorul de cache care ruleaza la 10 minute ar trebui sa decida daca sa stearga site_search-ul sau nu.
 	daca nu a adaugat/modificat nici un user nu are rost...
@@ -47,10 +42,7 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 TODO
 
 - la profile.php: blogs + comments
-- rss feeds
 - auto subscriptions in join.php
-- captcha audio
-- scris in poza fara freettf (in captcha si watermark)
 - installer + modman
 - rate limiter in pagini
 - events
@@ -58,19 +50,11 @@ TODO
 - licenta si verificari
 - js field check
 - site bans
-- modman: ftp low level?
-- read zip files. extract files from zip archives (pt modmanager).
 - formatare la date of birth
 - create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
-- help texts pentru campurile textarea
 - lungime maxima camp pt textareas
+- bad words
 
-- about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
-
-- profile views
-
-- functie fields_edit_tpl($field_ids)
-- functie fields_search_tpl($field_ids)
 - scor la blog add doar daca blogul este mai mare de x caractere.
 - scor in functie de rating.
 - scor pe vizualizare pe bloguri/profil/poze/etc (0.1)
@@ -95,12 +79,25 @@ TODO
 - admin: latest datemill news
 
 - cron: check for and remove orpahned lk_ids
-- affiliates
 
 - [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]
-- addon: lightbox (vezi http://beta.zooomr.com)
 
-- news de la admin pt membri (site_news)
 - search membri (search.php) case 'vote',case 'views',case 'comm'
 - search default cu defaultul membrului.
 - favorite photos/blogs
+
+
+---------------------------------------------------------------------
+- modman: ftp low level?
+- read zip files. extract files from zip archives (pt modmanager).
+- help texts (hints) pentru campurile textarea
+- functie fields_edit_tpl($field_ids)
+- functie fields_search_tpl($field_ids)
+- addon: lightbox (vezi http://beta.zooomr.com)
+- affiliates
+- rss feeds
+- captcha audio
+- scris in poza fara freettf (in captcha si watermark)
+- about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
+
+- profile views

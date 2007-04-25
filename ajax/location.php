@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$output.="state\n";											//3
 					$output.='0|'.'Select state';				// translate this
 					while ($rsrow=mysql_fetch_row($res)) {
-						$rsrow[1]=sanitize_and_format($rsrow[1],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+						$rsrow[1]=sanitize_and_format($rsrow[1],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 						$output.="\n".$rsrow[0].'|'.$rsrow[1];
 					}
 				} else {

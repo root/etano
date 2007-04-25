@@ -38,7 +38,7 @@ if (!empty($comment_id)) {
 
 $nextpage='home.php';
 if (isset($_GET['return']) && !empty($_GET['return'])) {
-	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
+	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 	$nextpage=$input['return'];
 }
 $nextpage=_BASEURL_.'/'.$nextpage;

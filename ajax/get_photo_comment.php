@@ -22,7 +22,7 @@ if (isset($_SESSION['user']['user_id']) && isset($_POST['comment_id']) && !empty
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_row($res);
-//		$output=sanitize_and_format($output,TYPE_STRING,$__html2format[TEXT_DB2EDIT] | FORMAT_RUENCODE);
+//		$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2EDIT] | FORMAT_RUENCODE);
 		// don't sanitize it cause it works without
 		$output=sanitize_and_format($output,TYPE_STRING,FORMAT_RUENCODE);
 		$output='0|'.join('|',$output);

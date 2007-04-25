@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	$input['search_id']=sanitize_and_format_gpc($_POST,'search_id',TYPE_INT,0,0);
-	$input['title']=sanitize_and_format_gpc($_POST,'title',TYPE_STRING,HTML_TEXTFIELD,'');
+	$input['title']=sanitize_and_format_gpc($_POST,'title',TYPE_STRING,FIELD_TEXTFIELD,'');
 
 	if (empty($input['title'])) {
 		$error=true;

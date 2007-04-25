@@ -33,7 +33,7 @@ if (!empty($totalrows)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['currency']=isset($accepted_currencies[$rsrow['currency']]) ? $accepted_currencies[$rsrow['currency']] : '';
-		$rsrow['subscr_name']=sanitize_and_format($rsrow['subscr_name'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$rsrow['subscr_name']=sanitize_and_format($rsrow['subscr_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		if (!empty($rsrow['is_recurent'])) {
 			$rsrow['is_recurent']='<img src="skin/images/refresh.gif" title="Recuring" />';
 		} else {

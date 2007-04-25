@@ -28,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	foreach ($profile_categories_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$profile_categories_default['defaults'][$k]);
+		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$profile_categories_default['defaults'][$k]);
 	}
 	$input['access_level']=!empty($input['access_level']) ? array_sum(array_keys($input['access_level'])) : 0;
 
-	$input['pcat_name']=sanitize_and_format_gpc($_POST,'pcat_name',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$input['pcat_name']=sanitize_and_format_gpc($_POST,'pcat_name',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 	// other formatting
 	$input['pcat_name']=ucwords(strtolower($input['pcat_name']));
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Category changed.';
 		} else {
-			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".HTML_TEXTFIELD.",`lk_diz`='Category name',`lk_use`='".LK_FIELD."'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Category name',`lk_use`='".LK_FIELD."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_lk_id_pcat']=mysql_insert_id();
 			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['pcat_name']."',`fk_lk_id`='".$input['fk_lk_id_pcat']."',`skin`='$default_skin_code'";

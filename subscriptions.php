@@ -24,7 +24,7 @@ $query="SELECT a.`module_code`,a.`module_name`,a.`module_diz` FROM `{$dbtable_pr
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $active_gateways=array();
 while ($rsrow=mysql_fetch_assoc($res)) {
-	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$rsrow['module_name']='<strong>'.$rsrow['module_name'].'</strong> '.$rsrow['module_diz'];
 	$active_gateways[$rsrow['module_code']]=$rsrow['module_name'];
 }
@@ -33,7 +33,7 @@ $query="SELECT `subscr_id`,`subscr_name`,`subscr_diz` FROM `{$dbtable_prefix}sub
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $subscriptions=array();
 while ($rsrow=mysql_fetch_assoc($res)) {
-	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$rsrow['subscr_name']='<strong>'.$rsrow['subscr_name'].'</strong> '.$rsrow['subscr_diz'];
 	$subscriptions[$rsrow['subscr_id']]=$rsrow['subscr_name'];
 }

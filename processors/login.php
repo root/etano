@@ -24,8 +24,8 @@ $nextpage='login.php';
 $qs='';
 $qssep='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-	$user=sanitize_and_format_gpc($_POST,'user',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
-	$pass=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$user=sanitize_and_format_gpc($_POST,'user',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$pass=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	if (!empty($user) && !empty($pass)) {
 		$log['level']=1;
 		$log['user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;

@@ -26,18 +26,18 @@ if (isset($_SESSION['topass']['input'])) {
 	$zipcode=$_SESSION['topass']['input'];
 	$query="SELECT a.`city`,b.`state`,c.`country` FROM `{$dbtable_prefix}loc_cities` a,`{$dbtable_prefix}loc_states` b,`{$dbtable_prefix}loc_countries` c WHERE a.`city_id`='".$zipcode['fk_city_id']."' AND a.`fk_state_id`=b.`state_id` AND a.`fk_country_id`=c.`country_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$zipcode['city']=sanitize_and_format(mysql_result($res,0,0),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-	$zipcode['state']=sanitize_and_format(mysql_result($res,0,1),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-	$zipcode['country']=sanitize_and_format(mysql_result($res,0,2),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$zipcode['city']=sanitize_and_format(mysql_result($res,0,0),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+	$zipcode['state']=sanitize_and_format(mysql_result($res,0,1),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+	$zipcode['country']=sanitize_and_format(mysql_result($res,0,2),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 } elseif (isset($_GET['zip_id']) && !empty($_GET['zip_id'])) {
 	$zip_id=(int)$_GET['zip_id'];
 	$query="SELECT a.`zip_id`,a.`zipcode`,a.`latitude`,a.`longitude`,a.`fk_city_id`,a.`fk_state_id`,a.`fk_country_id`,b.`city`,c.`state`,d.`country` FROM `{$dbtable_prefix}loc_zips` a,`{$dbtable_prefix}loc_cities` b,`{$dbtable_prefix}loc_states` c,`{$dbtable_prefix}loc_countries` d WHERE a.`zip_id`='$zip_id' AND a.`fk_city_id`=b.`city_id` AND a.`fk_state_id`=c.`state_id` AND a.`fk_country_id`=d.`country_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$zipcode=mysql_fetch_assoc($res);
-		$zipcode['city']=sanitize_and_format($zipcode['city'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		$zipcode['state']=sanitize_and_format($zipcode['state'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		$zipcode['country']=sanitize_and_format($zipcode['country'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$zipcode['city']=sanitize_and_format($zipcode['city'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+		$zipcode['state']=sanitize_and_format($zipcode['state'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+		$zipcode['country']=sanitize_and_format($zipcode['country'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	}
 } elseif (isset($_GET['city_id']) && !empty($_GET['city_id']) && isset($_GET['state_id']) && !empty($_GET['state_id']) && isset($_GET['country_id']) && !empty($_GET['country_id'])) {
 	$zipcode['fk_city_id']=(int)$_GET['city_id'];
@@ -45,9 +45,9 @@ if (isset($_SESSION['topass']['input'])) {
 	$zipcode['fk_country_id']=(int)$_GET['country_id'];
 	$query="SELECT a.`city`,b.`state`,c.`country` FROM `{$dbtable_prefix}loc_cities` a,`{$dbtable_prefix}loc_states` b,`{$dbtable_prefix}loc_countries` c WHERE a.`city_id`='".$zipcode['fk_city_id']."' AND a.`fk_state_id`=b.`state_id` AND a.`fk_country_id`=c.`country_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$zipcode['city']=sanitize_and_format(mysql_result($res,0,0),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-	$zipcode['state']=sanitize_and_format(mysql_result($res,0,1),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-	$zipcode['country']=sanitize_and_format(mysql_result($res,0,2),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$zipcode['city']=sanitize_and_format(mysql_result($res,0,0),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+	$zipcode['state']=sanitize_and_format(mysql_result($res,0,1),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+	$zipcode['country']=sanitize_and_format(mysql_result($res,0,2),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 }
 
 $tpl->set_file('content','loc_zipcodes_addedit.html');

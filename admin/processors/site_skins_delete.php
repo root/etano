@@ -21,7 +21,7 @@ allow_dept(DEPT_ADMIN);
 $qs='';
 $qs_sep='';
 $topass=array();
-$module_code=sanitize_and_format_gpc($_GET,'module_code',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$module_code=sanitize_and_format_gpc($_GET,'module_code',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $config=get_site_option(array('is_default','skin_dir'),$module_code);
 

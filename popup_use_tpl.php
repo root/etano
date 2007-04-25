@@ -25,7 +25,7 @@ $jsarrays=array();
 $query="SELECT `mtpl_id`,`subject`,`message_body` FROM `{$dbtable_prefix}user_mtpls` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_assoc($res)) {
-	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	$jsrsrow=$rsrow;
 	$jsrsrow['subject']=rawurlencode($rsrow['subject']);
 	$jsrsrow['message_body']=rawurlencode($rsrow['message_body']);

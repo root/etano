@@ -28,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	foreach ($photo_comments_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$photo_comments_default['defaults'][$k]);
+		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$photo_comments_default['defaults'][$k]);
 	}
 	$input['fk_user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
 	if (isset($_POST['return']) && !empty($_POST['return'])) {
-		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
+		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
 	} else {
 		$input['return']='';

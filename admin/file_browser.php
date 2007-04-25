@@ -20,7 +20,7 @@ allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$path=str_replace('..','',preg_replace('~[^a-zA-Z0-9\._/-]~','',sanitize_and_format_gpc($_GET,'path',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'')));
+$path=str_replace('..','',preg_replace('~[^a-zA-Z0-9\._/-]~','',sanitize_and_format_gpc($_GET,'path',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'')));
 if (!empty($path)) {
 	$path=preg_replace("/^(\.|\/)+/",'',$path);
 }

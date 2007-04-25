@@ -50,7 +50,7 @@ if (!empty($state_id) && !empty($country_id)) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$i=0;
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$rsrow['city']=sanitize_and_format($rsrow['city'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			$rsrow['city']=sanitize_and_format($rsrow['city'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			$rsrow['myclass']=($i%2) ? 'odd_item' : 'even_item';
 			$cities[]=$rsrow;
 			++$i;

@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $blog_comments_default['defaults']=array('comment_id'=>0,'fk_post_id'=>0,'fk_user_id'=>0,'comment'=>'');
-$blog_comments_default['types']=array('comment_id'=>HTML_INT,'fk_post_id'=>HTML_INT,'fk_user_id'=>HTML_INT,'comment'=>HTML_TEXTAREA);
+$blog_comments_default['types']=array('comment_id'=>FIELD_INT,'fk_post_id'=>FIELD_INT,'fk_user_id'=>FIELD_INT,'comment'=>FIELD_TEXTAREA);

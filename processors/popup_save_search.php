@@ -26,8 +26,8 @@ $nextpage='popup_save_search.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$input['search']=sanitize_and_format_gpc($_POST,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
-	$input['title']=sanitize_and_format_gpc($_POST,'title',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
+	$input['search']=sanitize_and_format_gpc($_POST,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$input['title']=sanitize_and_format_gpc($_POST,'title',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 	if (empty($input['search'])) {
 		$error=true;

@@ -47,7 +47,7 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 		$loop[]=$rsrow;
 	}
 }
-$loop=sanitize_and_format($loop,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+$loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $output['total']=number_format($output['total'],2);
 
 $tpl->set_file('content','user_payment_history.html');

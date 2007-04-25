@@ -30,20 +30,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		switch ($rsrow['option_type']) {
 
-			case HTML_CHECKBOX:
-				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[HTML_TEXTFIELD],0);
+			case FIELD_CHECKBOX:
+				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD],0);
 				break;
 
-			case HTML_TEXTFIELD:
-				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+			case FIELD_TEXTFIELD:
+				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 				break;
 
-			case HTML_INT:
+			case FIELD_INT:
 				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_INT,0,0);
 				break;
 
-			case HTML_TEXTAREA:
-				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[HTML_TEXTAREA],'');
+			case FIELD_TEXTAREA:
+				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
 				break;
 
 		}

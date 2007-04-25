@@ -37,7 +37,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if (mysql_num_rows($res)) {
 		$output['pcat_name']=mysql_result($res,0,0);
 	}
-	$output=sanitize_and_format($output,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+	$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 }
 
 $query="SELECT `m_value`,`m_name` FROM `{$dbtable_prefix}memberships`";

@@ -25,7 +25,7 @@ $content='';
 if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) {
 	$output=$user_inbox_default['defaults'];
 	$output['mail_id']=(int)$_GET['mail_id'];
-	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$output['return']=rawurlencode($output['return2']);
 
 	$my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'SENT',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
@@ -44,7 +44,7 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 	unset($moveto_folders[FOLDER_OUTBOX]);
 	unset($moveto_folders[$output['fid']]);
 	$output['moveto_folders']=vector2options($moveto_folders);
-	$my_folders=sanitize_and_format($my_folders,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$my_folders=sanitize_and_format($my_folders,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 	$mailbox_table='inbox';
 	$where="a.`fk_user_id`='".$_SESSION['user']['user_id']."' AND a.`mail_id`='".$output['mail_id']."'";
@@ -77,12 +77,12 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
 		$output['date_sent']=strftime($_user_settings['datetime_format'],$output['date_sent']+$_user_settings['time_offset']);
-		$output['subject']=sanitize_and_format($output['subject'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$output['subject']=sanitize_and_format($output['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 		switch ($output['message_type']) {
 
 			case MESS_MESS:
-				$output['message_body']=sanitize_and_format($output['message_body'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				$output['message_body']=sanitize_and_format($output['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 				check_login_member(4);
 				break;
 

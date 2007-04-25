@@ -46,7 +46,7 @@ if (!empty($country_id)) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$i=0;
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$rsrow['state']=sanitize_and_format($rsrow['state'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			$rsrow['state']=sanitize_and_format($rsrow['state'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			$rsrow['myclass']=($i%2) ? 'odd_item' : 'even_item';
 			$states[]=$rsrow;
 			++$i;

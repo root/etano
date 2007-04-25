@@ -22,7 +22,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
-$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $input=array();
 $user_ids=array();
@@ -41,7 +41,7 @@ if (!empty($search_md5)) {
 	}
 } else {
 	// first search here, no cache, must calculate everything
-	$input['user']=sanitize_and_format_gpc($_GET,'user',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$input['user']=sanitize_and_format_gpc($_GET,'user',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	if (empty($input['user'])) {
 		unset($input['user']);
 	}
@@ -71,21 +71,21 @@ if (!empty($search_md5)) {
 		$field=$_pfields[$basic_search_fields[$i]];
 		switch ($field['search_type']) {
 
-			case HTML_SELECT:
+			case FIELD_SELECT:
 				$input[$field['dbfield']]=sanitize_and_format_gpc($_GET,$field['dbfield'],TYPE_INT,0,0);
 				if (empty($input[$field['dbfield']])) {
 					unset($input[$field['dbfield']]);
 				}
 				break;
 
-			case HTML_CHECKBOX_LARGE:
+			case FIELD_CHECKBOX_LARGE:
 				$input[$field['dbfield']]=sanitize_and_format_gpc($_GET,$field['dbfield'],TYPE_INT,0,0);
 				if (empty($input[$field['dbfield']])) {
 					unset($input[$field['dbfield']]);
 				}
 				break;
 
-			case HTML_RANGE:
+			case FIELD_RANGE:
 				$input[$field['dbfield'].'_min']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_min',TYPE_INT,0,0);
 				$input[$field['dbfield'].'_max']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_max',TYPE_INT,0,0);
 				if (empty($input[$field['dbfield'].'_max'])) {
@@ -96,7 +96,7 @@ if (!empty($search_md5)) {
 				}
 				break;
 
-			case HTML_LOCATION:
+			case FIELD_LOCATION:
 				$input[$field['dbfield'].'_country']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_country',TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield'].'_country'])) {
 					$input[$field['dbfield'].'_state']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_state',TYPE_INT,0,0);
@@ -108,7 +108,7 @@ if (!empty($search_md5)) {
 					} else {
 						unset($input[$field['dbfield'].'_state']);
 					}
-					$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_zip',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+					$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_zip',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 					$input[$field['dbfield'].'_dist']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_dist',TYPE_INT,0,0);
 					if (empty($input[$field['dbfield'].'_zip']) || empty($input[$field['dbfield'].'_dist'])) {
 						unset($input[$field['dbfield'].'_zip'],$input[$field['dbfield'].'_dist']);
@@ -160,19 +160,19 @@ if ($do_query) {
 		$field=$_pfields[$basic_search_fields[$i]];
 		switch ($field['search_type']) {
 
-			case HTML_SELECT:
+			case FIELD_SELECT:
 				if (isset($input[$field['dbfield']])) {
-					if ($field['html_type']==HTML_SELECT) {
+					if ($field['html_type']==FIELD_SELECT) {
 						$where.=" AND a.`".$field['dbfield']."`='".$input[$field['dbfield']]."'";
-					} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
+					} elseif ($field['html_type']==FIELD_CHECKBOX_LARGE) {
 						$where.=" AND a.`".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']]."|%'";
 					}
 				}
 				break;
 
-			case HTML_CHECKBOX_LARGE:
+			case FIELD_CHECKBOX_LARGE:
 				if (isset($input[$field['dbfield']])) {
-					if ($field['html_type']==HTML_SELECT) {
+					if ($field['html_type']==FIELD_SELECT) {
 						if (count($input[$field['dbfield']])) {
 							$where.=" AND (";
 							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
@@ -181,7 +181,7 @@ if ($do_query) {
 							$where=substr($where,0,-4);	// substract the last ' OR '
 							$where.=')';
 						}
-					} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
+					} elseif ($field['html_type']==FIELD_CHECKBOX_LARGE) {
 						if (count($input[$field['dbfield']])) {
 							$where.=" AND (";
 							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
@@ -194,25 +194,25 @@ if ($do_query) {
 				}
 				break;
 
-			case HTML_RANGE:
+			case FIELD_RANGE:
 				$now=gmdate('YmdHis');
 				if (isset($input[$field['dbfield'].'_max'])) {
-					if ($field['html_type']==HTML_DATE) {
+					if ($field['html_type']==FIELD_DATE) {
 						$where.=" AND a.`".$field['dbfield']."`>=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
-					} elseif ($field['html_type']==HTML_SELECT) {
+					} elseif ($field['html_type']==FIELD_SELECT) {
 						$where.=" AND `".$field['dbfield']."`<=".$input[$field['dbfield'].'_max'];
 					}
 				}
 				if (isset($input[$field['dbfield'].'_min'])) {
-					if ($field['html_type']==HTML_DATE) {
+					if ($field['html_type']==FIELD_DATE) {
 						$where.=" AND a.`".$field['dbfield']."`<=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
-					} elseif ($field['html_type']==HTML_SELECT) {
+					} elseif ($field['html_type']==FIELD_SELECT) {
 						$where.=" AND `".$field['dbfield']."`>=".$input[$field['dbfield'].'_min'];
 					}
 				}
 				break;
 
-			case HTML_LOCATION:
+			case FIELD_LOCATION:
 				if (isset($input[$field['dbfield'].'_country'])) {
 					$where.=" AND a.`".$field['dbfield']."_country`='".$input[$field['dbfield'].'_country']."'";
 					$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='".$input[$field['dbfield'].'_country']."'";
@@ -286,7 +286,7 @@ if (!empty($totalrows)) {
 		$field=$_pfields[$basic_search_fields[$i]];
 		switch ($field['html_type']) {
 
-			case HTML_LOCATION:
+			case FIELD_LOCATION:
 				$query.=','.$field['dbfield'].'_country,'.$field['dbfield'].'_state,'.$field['dbfield'].'_city,'.$field['dbfield'].'_zip';
 				break;
 
@@ -303,27 +303,27 @@ if (!empty($totalrows)) {
 			$rsrow[$field['dbfield'].'_label']=$field['label'];
 			switch ($field['html_type']) {
 
-				case HTML_TEXTFIELD:
-					$rsrow[$field['dbfield']]=sanitize_and_format($rsrow[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				case FIELD_TEXTFIELD:
+					$rsrow[$field['dbfield']]=sanitize_and_format($rsrow[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case HTML_TEXTAREA:
-					$rsrow[$field['dbfield']]=sanitize_and_format($rsrow[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				case FIELD_TEXTAREA:
+					$rsrow[$field['dbfield']]=sanitize_and_format($rsrow[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case HTML_SELECT:
-					$rsrow[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$rsrow[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				case FIELD_SELECT:
+					$rsrow[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$rsrow[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case HTML_CHECKBOX_LARGE:
-					$rsrow[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$rsrow[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				case FIELD_CHECKBOX_LARGE:
+					$rsrow[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$rsrow[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case HTML_DATE:
-					$rsrow[$field['dbfield']]=sanitize_and_format($rsrow[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				case FIELD_DATE:
+					$rsrow[$field['dbfield']]=sanitize_and_format($rsrow[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case HTML_LOCATION:
+				case FIELD_LOCATION:
 					$rsrow[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$rsrow[$field['dbfield'].'_country'],'-');
 					if (!empty($rsrow[$field['dbfield'].'_state'])) {
 						$rsrow[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$rsrow[$field['dbfield'].'_state'],'-');

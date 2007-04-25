@@ -33,7 +33,7 @@ if (!empty($totalrows)) {
 	// create the $pfields helper array for easier access to fields by dbfield
 	$pfields=array();
 	foreach ($_pfields as $pfield_id=>$pfield) {
-		if ($pfield['html_type']==HTML_SELECT) {
+		if ($pfield['html_type']==FIELD_SELECT) {
 			$pfields[$pfield['dbfield']]['label']=$pfield['label'];
 			$pfields[$pfield['dbfield']]['accepted_values']=$pfield['accepted_values'];
 		}
@@ -43,7 +43,7 @@ if (!empty($totalrows)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['dbfield']=empty($rsrow['dbfield']) ? 'All' : 'Having '.$pfields[$rsrow['dbfield']]['label'].'('.$rsrow['dbfield'].') = '.$pfields[$rsrow['dbfield']]['accepted_values'][$rsrow['field_value']];
-		$rsrow['subscr_name']=sanitize_and_format($rsrow['subscr_name'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$rsrow['subscr_name']=sanitize_and_format($rsrow['subscr_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['date_start']=empty($rsrow['date_start']) ? 'Join' : strftime($date_format,$rsrow['date_start']);
 		$subscriptions_auto[]=$rsrow;
 	}

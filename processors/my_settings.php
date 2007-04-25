@@ -32,20 +32,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$types[$rsrow['fk_module_code']][$rsrow['config_option']]=$rsrow['option_type'];
 		switch ($rsrow['option_type']) {
 
-			case HTML_CHECKBOX:
-				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[HTML_TEXTFIELD],0);
+			case FIELD_CHECKBOX:
+				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD],0);
 				break;
 
-			case HTML_TEXTFIELD:
-				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+			case FIELD_TEXTFIELD:
+				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 				break;
 
-			case HTML_INT:
+			case FIELD_INT:
 				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_INT,0,0);
 				break;
 
-			case HTML_TEXTAREA:
-				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__html2format[HTML_TEXTAREA],'');
+			case FIELD_TEXTAREA:
+				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
 				break;
 
 		}
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		foreach ($v as $config_option=>$config_value) {
 			// with this if() we target date_format because an empty date_format
 			// could break all dates on the site.
-			if ($types[$module_code][$config_option]!=HTML_TEXTFIELD || !empty($config_value)) {
+			if ($types[$module_code][$config_option]!=FIELD_TEXTFIELD || !empty($config_value)) {
 				$query="REPLACE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`config_option`='$config_option',`config_value`='$config_value',`fk_module_code`='$module_code'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}

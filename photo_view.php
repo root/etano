@@ -11,6 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
+define('CACHE_LIMITER','private');
 require_once 'includes/sessions.inc.php';
 require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
@@ -27,82 +28,92 @@ $output['pic_width']=get_site_option('pic_width','core_photo');
 
 $loop=array();
 if (!empty($photo_id)) {
-	$query="SELECT `photo_id`,`photo`,`caption`,`fk_user_id`,`_user` as `user`,`allow_comments`,`allow_rating`,`stat_votes`,`stat_votes_total` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$photo_id' AND `status`='".STAT_APPROVED."'";
+	$query="SELECT `photo_id`,`photo`,`caption`,`fk_user_id`,`_user` as `user`,`status`,`allow_comments`,`allow_rating`,`stat_votes`,`stat_votes_total` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$photo_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
-		$output['caption']=sanitize_and_format($output['caption'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		if (!empty($output['allow_rating'])) {
-			if ($output['stat_votes']>0) {
-				$output['rate_num']=number_format($output['stat_votes_total']/$output['stat_votes'],1);
+		if ($output['status']==STAT_APPROVED || (isset($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id'])) {
+			$output['caption']=sanitize_and_format($output['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			if (!empty($output['allow_rating'])) {
+				if ($output['stat_votes']>0) {
+					$output['rate_num']=number_format($output['stat_votes_total']/$output['stat_votes'],1);
+				} else {
+					$output['rate_num']=0;
+				}
+				$output['rate_percent']=(int)(($output['rate_num']*100)/5);
 			} else {
-				$output['rate_num']=0;
+				unset($output['allow_rating']);
 			}
-			$output['rate_percent']=(int)(($output['rate_num']*100)/5);
-		} else {
-			unset($output['allow_rating']);
-		}
-		if (isset($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id']) {
-			$output['photo_owner']=true;
-		}
-
-		if (!empty($output['allow_comments'])) {
-			// may I see any comment?
-			$output['show_comments']=true;
-			$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
-			$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}photo_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_photo_id`='".$output['photo_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`date_posted` ASC";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			while ($rsrow=mysql_fetch_assoc($res)) {
-				// if someone has asked to edit his/her comment
-				if ($edit_comment==$rsrow['comment_id']) {
-					$output['comment_id']=$rsrow['comment_id'];
-					$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
-				}
-				$rsrow['date_posted']=strftime($_user_settings['datetime_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
-				$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-				if (!empty($config['bbcode_comments'])) {
-					$rsrow['comment']=bbcode2html($rsrow['comment']);
-				}
-				if (!empty($config['smilies_comm'])) {
-					$rsrow['comment']=text2smilies($rsrow['comment']);
-				}
-				// allow showing the edit links to rightfull owners
-				if (isset($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
-					$rsrow['editme']=true;
-				}
-
-				if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
-					unset($rsrow['fk_user_id']);
-				}
-				if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
-					$rsrow['photo']='no_photo.gif';
-				}
-				$loop[]=$rsrow;
+			if (isset($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id']) {
+				$output['photo_owner']=true;
 			}
 
-			// may I post comments please?
-			if (allow_at_level(9,$_SESSION['user']['membership'])) {
-				if (!isset($_SESSION['user']['user_id'])) {
-					if ($config['use_captcha']) {
-						require_once 'includes/classes/sco_captcha.class.php';
-						$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
-						$_SESSION['captcha_word']=$c->gen_rnd_string(4);
-						$output['rand']=make_seed();
-						$output['use_captcha']=true;
+			if (!empty($output['allow_comments'])) {
+				// may I see any comment?
+				$output['show_comments']=true;
+				$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
+				$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}photo_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_photo_id`='".$output['photo_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`date_posted` ASC";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				while ($rsrow=mysql_fetch_assoc($res)) {
+					// if someone has asked to edit his/her comment
+					if ($edit_comment==$rsrow['comment_id']) {
+						$output['comment_id']=$rsrow['comment_id'];
+						$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 					}
+					$rsrow['date_posted']=strftime($_user_settings['datetime_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
+					$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					if (!empty($config['bbcode_comments'])) {
+						$rsrow['comment']=bbcode2html($rsrow['comment']);
+					}
+					if (!empty($config['smilies_comm'])) {
+						$rsrow['comment']=text2smilies($rsrow['comment']);
+					}
+					// allow showing the edit links to rightfull owners
+					if (isset($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
+						$rsrow['editme']=true;
+					}
+
+					if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
+						unset($rsrow['fk_user_id']);
+					}
+					if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
+						$rsrow['photo']='no_photo.gif';
+					}
+					$loop[]=$rsrow;
 				}
-				// would you let me use bbcode?
-				if (!empty($config['bbcode_comments'])) {
-					$output['bbcode_comments']=true;
+
+				if (!empty($loop)) {
+					$output['num_comments']=count($loop);
 				}
-				// if we came back after an error get what was previously posted
-				if (isset($_SESSION['topass']['input'])) {
-					$output=array_merge($output,$_SESSION['topass']['input']);
-					unset($_SESSION['topass']['input']);
+
+				// may I post comments please?
+				if (allow_at_level(9,$_SESSION['user']['membership'])) {
+					if (!isset($_SESSION['user']['user_id'])) {
+						if ($config['use_captcha']) {
+							require_once 'includes/classes/sco_captcha.class.php';
+							$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
+							$_SESSION['captcha_word']=$c->gen_rnd_string(4);
+							$output['rand']=make_seed();
+							$output['use_captcha']=true;
+						}
+					}
+					// would you let me use bbcode?
+					if (!empty($config['bbcode_comments'])) {
+						$output['bbcode_comments']=true;
+					}
+					// if we came back after an error get what was previously posted
+					if (isset($_SESSION['topass']['input'])) {
+						$output=array_merge($output,$_SESSION['topass']['input']);
+						unset($_SESSION['topass']['input']);
+					}
+				} else {
+					$output['allow_comments']=false;
 				}
-			} else {
-				$output['allow_comments']=false;
 			}
+		} else {
+			$topass['message']['type']=MESSAGE_ERROR;
+			$topass['message']['text']='Invalid photo selected';
+			redirect2page('info.php',$topass);
 		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
@@ -124,7 +135,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 $output['return2me']=rawurlencode($output['return2me']);
 
-$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 $output['return']=rawurlencode($output['return2']);
 
 $tpl->set_file('content','photo_view.html');

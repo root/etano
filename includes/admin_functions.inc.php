@@ -39,8 +39,8 @@ define('LK_SITE',0);
 define('LK_FIELD',1);
 define('LK_MESSAGE',2);
 
-$accepted_htmltype=array(HTML_SELECT=>'Select box',HTML_CHECKBOX_LARGE=>'Multi checks',HTML_TEXTFIELD=>'Textfield',HTML_TEXTAREA=>'Textarea',HTML_DATE=>'Date',HTML_LOCATION=>'Location',HTML_RANGE=>'Range');
-$field_dbtypes=array(HTML_TEXTFIELD=>"varchar(100) not null default ''",HTML_SELECT=>'int(5) not null default 0',HTML_FK_SELECT=>'int(10) not null default 0',HTML_TEXTAREA=>"text not null default ''",HTML_CHECKBOX_LARGE=>"text not null default ''",HTML_FILE=>"varchar(64) not null default ''",HTML_DATE=>'date not null',HTML_INT=>'int(5) not null default 0',HTML_FLOAT=>'double not null default 0');
+$accepted_htmltype=array(FIELD_SELECT=>'Select box',FIELD_CHECKBOX_LARGE=>'Multi checks',FIELD_TEXTFIELD=>'Textfield',FIELD_TEXTAREA=>'Textarea',FIELD_DATE=>'Date',FIELD_LOCATION=>'Location',FIELD_RANGE=>'Range');
+$field_dbtypes=array(FIELD_TEXTFIELD=>"varchar(100) not null default ''",FIELD_SELECT=>'int(5) not null default 0',FIELD_FK_SELECT=>'int(10) not null default 0',FIELD_TEXTAREA=>"text not null default ''",FIELD_CHECKBOX_LARGE=>"text not null default ''",FIELD_FILE=>"varchar(64) not null default ''",FIELD_DATE=>'date not null',FIELD_INT=>'int(5) not null default 0',FIELD_FLOAT=>'double not null default 0');
 $accepted_admin_depts=array(DEPT_ADMIN=>'Administrator',DEPT_MODERATOR=>'Moderator');
 $accepted_astats=array(ASTAT_SUSPENDED=>'Suspended',ASTAT_UNVERIFIED=>'Unactivated',ASTAT_ACTIVE=>'Active');
 $accepted_pstats=array(STAT_PENDING=>'Awaiting approval',STAT_EDIT=>'Requires edit',STAT_APPROVED=>'Approved');
@@ -115,7 +115,7 @@ function regenerate_fields_array() {
 	$profile_categs=array();
 	$basic_search_fields=array();
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
+		$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]);
 		$id=$rsrow['order_num'];
 		if (!empty($rsrow['for_basic']) && !empty($rsrow['searchable'])) {
 			$basic_search_fields[]=$id;
@@ -144,8 +144,8 @@ function regenerate_fields_array() {
 
 		switch ($rsrow['html_type']) {
 
-			case HTML_SELECT:
-			case HTML_CHECKBOX_LARGE:
+			case FIELD_SELECT:
+			case FIELD_CHECKBOX_LARGE:
 				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
 					$towrite.="\$_pfields[$id]['accepted_values']=array('-',\$_lang[".str_replace('|',"],\$_lang[",substr($rsrow['accepted_values'],1,-1))."]);\n";
 				} else {
@@ -175,7 +175,7 @@ function regenerate_fields_array() {
 				}
 				break;
 
-			case HTML_DATE:
+			case FIELD_DATE:
 				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
 					$towrite.="\$_pfields[$id]['accepted_values']=array('-','".str_replace('|',"','",substr($rsrow['accepted_values'],1,-1))."');\n";
 				} else {
@@ -189,7 +189,7 @@ function regenerate_fields_array() {
 				}
 				break;
 
-			case HTML_LOCATION:
+			case FIELD_LOCATION:
 				if (!empty($rsrow['default_value']) && $rsrow['default_value']!='||') {
 					$rsrow['default_value']=explode('|',substr($rsrow['default_value'],1,-1));
 					$towrite.="\$_pfields[$id]['default_value']=array('".join("','",$rsrow['default_value'])."');\n";
@@ -204,8 +204,8 @@ function regenerate_fields_array() {
 				}
 				break;
 
-			case HTML_TEXTFIELD:
-			case HTML_TEXTAREA:
+			case FIELD_TEXTFIELD:
+			case FIELD_TEXTAREA:
 				break;
 
 		}
@@ -251,7 +251,7 @@ function regenerate_langstrings_array() {
 		$query="SELECT a.`lk_id`,b.`lang_value` FROM `{$dbtable_prefix}lang_keys` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`lk_id`=b.`fk_lk_id` AND b.`skin`='".$skins[$i]['module_code']."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT] | FORMAT_ADDSLASH,'');
+			$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT] | FORMAT_ADDSLASH,'');
 			$towrite.="\$_lang[".$rsrow['lk_id']."]='".$rsrow['lang_value']."';\n";
 		}
 		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/strings.inc.php',$towrite);
@@ -290,8 +290,8 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 	$config=get_site_option(array('use_queue','mail_from'),'core');
 	$query_len=10000;
 	if (!$force_send && !empty($config['use_queue'])) {
-		$email['subject']=sanitize_and_format($email['subject'],TYPE_STRING,$GLOBALS['__html2format'][HTML_TEXTFIELD]);
-		$email['message_body']=sanitize_and_format($email['message_body'],TYPE_STRING,$GLOBALS['__html2format'][HTML_TEXTAREA]);
+		$email['subject']=sanitize_and_format($email['subject'],TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTFIELD]);
+		$email['message_body']=sanitize_and_format($email['message_body'],TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTAREA]);
 		global $dbtable_prefix;
 		$base="INSERT INTO `{$dbtable_prefix}queue_email` (`to`,`subject`,`message_body`) VALUES ";
 		$query=$base;

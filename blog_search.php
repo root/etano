@@ -23,7 +23,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $output=array();
 $output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $output['r']=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
-$output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $input=array();
 $post_ids=array();
@@ -52,22 +52,34 @@ if (!empty($output['search_md5'])) {
 		switch ($_GET['st']) {
 
 			case 'new':
+				$tplvars['page_title']='Latest Blogs';	// translate
 				//$orderby="a.`date_posted` DESC";	// default
 				break;
 
 			case 'views':
+				$tplvars['page_title']='Most Popular Blogs';	// translate
 				$input['acclevel_id']=17;
 				$orderby="a.`stat_views` DESC";
 				break;
 
 			case 'comm':
+				$tplvars['page_title']='Most Discussed Blogs';	// translate
 				$input['acclevel_id']=17;
 				$orderby="a.`stat_comments` DESC";
 				break;
 
-			case 'tag':
+			case 'uid':
 				$input['acclevel_id']=17;
-				$input['tags']=sanitize_and_format_gpc($_GET,'tags',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+				$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
+				$tplvars['page_title']=sprintf('<a href="profile.php?uid=%1$s">%2$s</a>\'s Blogs',$input['uid'],get_user_by_userid($input['uid']));	// translate
+				$where="a.`fk_user_id`='".$input['uid']."' AND ".$where;
+				$orderby="a.`post_id` DESC";
+				break;
+
+			case 'tag':
+				$tplvars['page_title']='Search Results';
+				$input['acclevel_id']=17;
+				$input['tags']=sanitize_and_format_gpc($_GET,'tags',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 				// remove extra spaces and words with less than 3 chars
 				$input['tags']=trim(preg_replace(array("/['\"%<>\+-]/","/\s\s+/","/\b[^\s]{1,3}\b/"),array(' ',' ',''),$input['tags']));
 				if (!empty($input['tags'])) {
@@ -142,7 +154,6 @@ $tpl->drop_loop('loop');
 unset($loop);
 
 $tplvars['title']='Search Results';
-$tplvars['page_title']='Search Results';
 $tplvars['page']='blog_search';
 $tplvars['css']='blog_search.css';
 if (is_file('blog_search_left.php')) {

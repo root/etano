@@ -17,7 +17,7 @@ if (isset($_SESSION['user']['user_id'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$rsrow['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$my_searches[]=$rsrow;
 	}
 }

@@ -33,22 +33,22 @@ class payment_paypal extends ipayment {
 												'item_number'=>0,
 												'custom'=>0
 											),
-							'types'=>	array(	'residence_country'=>HTML_TEXTFIELD,
-												'first_name'=>HTML_TEXTFIELD,
-												'last_name'=>HTML_TEXTFIELD,
-												'business'=>HTML_TEXTFIELD,
-												'receiver_email'=>HTML_TEXTFIELD,
-												'payer_email'=>HTML_TEXTFIELD,
-												'txn_id'=>HTML_TEXTFIELD,
-												'txn_type'=>HTML_TEXTFIELD,
-												'payment_status'=>HTML_TEXTFIELD,
-												'mc_gross'=>HTML_FLOAT,
-												'mc_currency'=>HTML_TEXTFIELD,
-												'verify_sign'=>HTML_TEXTFIELD,
-												'test_ipn'=>HTML_INT,
-												'recurring'=>HTML_INT,
-												'item_number'=>HTML_INT,
-												'custom'=>HTML_INT
+							'types'=>	array(	'residence_country'=>FIELD_TEXTFIELD,
+												'first_name'=>FIELD_TEXTFIELD,
+												'last_name'=>FIELD_TEXTFIELD,
+												'business'=>FIELD_TEXTFIELD,
+												'receiver_email'=>FIELD_TEXTFIELD,
+												'payer_email'=>FIELD_TEXTFIELD,
+												'txn_id'=>FIELD_TEXTFIELD,
+												'txn_type'=>FIELD_TEXTFIELD,
+												'payment_status'=>FIELD_TEXTFIELD,
+												'mc_gross'=>FIELD_FLOAT,
+												'mc_currency'=>FIELD_TEXTFIELD,
+												'verify_sign'=>FIELD_TEXTFIELD,
+												'test_ipn'=>FIELD_INT,
+												'recurring'=>FIELD_INT,
+												'item_number'=>FIELD_INT,
+												'custom'=>FIELD_INT
 											));
 
 	function payment_paypal() {
@@ -134,7 +134,7 @@ class payment_paypal extends ipayment {
 		global $dbtable_prefix;
 		$input=array();
 		foreach ($this->from_paypal['types'] as $k=>$v) {
-			$input[$k]=sanitize_and_format_gpc($_POST,$k,$GLOBALS['__html2type'][$v],$GLOBALS['__html2format'][$v],$this->from_paypal['defaults'][$k]);
+			$input[$k]=sanitize_and_format_gpc($_POST,$k,$GLOBALS['__field2type'][$v],$GLOBALS['__field2format'][$v],$this->from_paypal['defaults'][$k]);
 		}
 
 		$postipn='cmd=_notify-validate&'.array2qs($_POST,array('p'));

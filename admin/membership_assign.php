@@ -22,7 +22,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 
 $output=array();
 if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
-	$output['search']=sanitize_and_format_gpc($_REQUEST,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$output['search']=sanitize_and_format_gpc($_REQUEST,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search']."' AND `search_type`='".SEARCH_USER."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
@@ -32,7 +32,7 @@ if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
 } elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
 	$output['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 }
-$output['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$output['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 $output['return2']=rawurldecode($output['return']);
 
 if (!empty($output['uids'])) {

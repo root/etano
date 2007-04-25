@@ -21,7 +21,7 @@ set_time_limit(0);
 ob_end_flush();
 
 if (isset($_SERVER['REMOTE_ADDR'])) {
-	$lk=sanitize_and_format_gpc($_GET,'lk',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$lk=sanitize_and_format_gpc($_GET,'lk',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	if ($lk==md5(_LICENSE_KEY_)) {
 		$day=(int)date('d');
 		$weekday=(int)date('w');	//0 for sunday

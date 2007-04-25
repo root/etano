@@ -29,9 +29,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['is_private']=sanitize_and_format_gpc($_POST,'is_private',TYPE_INT,0,0);
 	$input['allow_comments']=sanitize_and_format_gpc($_POST,'allow_comments',TYPE_INT,0,0);
 	$input['is_main']=sanitize_and_format_gpc($_POST,'is_main',TYPE_INT,0,0);
-	$input['caption']=sanitize_and_format_gpc($_POST,'caption',TYPE_STRING,$__html2format[HTML_TEXTFIELD],array());
+	$input['caption']=sanitize_and_format_gpc($_POST,'caption',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],array());
 	if (isset($_POST['return']) && !empty($_POST['return'])) {
-		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
+		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
 	}
 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$photos=array();
 		$statuses=array();
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$old_captions[$rsrow['photo_id']]=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__html2format[TEXT_DB2DB]);
+			$old_captions[$rsrow['photo_id']]=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__field2format[TEXT_DB2DB]);
 			$photos[$rsrow['photo_id']]=$rsrow['photo'];
 			if (!empty($rsrow['is_main'])) {
 				$old_main=$rsrow['photo_id'];

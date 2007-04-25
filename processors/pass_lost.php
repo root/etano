@@ -25,9 +25,9 @@ $nextpage='pass_lost.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$input['email']=strtolower(sanitize_and_format_gpc($_POST,'email',TYPE_STRING,$__html2format[HTML_TEXTFIELD],''));
+	$input['email']=strtolower(sanitize_and_format_gpc($_POST,'email',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],''));
 	if (get_site_option('use_captcha','core')) {
-		$captcha=sanitize_and_format_gpc($_POST,'captcha',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+		$captcha=sanitize_and_format_gpc($_POST,'captcha',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 		if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;

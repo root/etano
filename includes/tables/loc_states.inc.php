@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $states_default['defaults']=array('state_id'=>0,'fk_country_id'=>0,'state'=>'');
-$states_default['types']=array('state_id'=>HTML_INT,'fk_country_id'=>HTML_INT,'state'=>HTML_TEXTFIELD);
+$states_default['types']=array('state_id'=>FIELD_INT,'fk_country_id'=>FIELD_INT,'state'=>FIELD_TEXTFIELD);

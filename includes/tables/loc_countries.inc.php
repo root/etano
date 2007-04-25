@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $countries_default['defaults']=array('country_id'=>0,'iso3166'=>'','country'=>'','prefered_input'=>'');
-$countries_default['types']=array('country_id'=>HTML_INT,'iso3166'=>HTML_TEXTFIELD,'country'=>HTML_TEXTFIELD,'prefered_input'=>HTML_TEXTFIELD);
+$countries_default['types']=array('country_id'=>FIELD_INT,'iso3166'=>FIELD_TEXTFIELD,'country'=>FIELD_TEXTFIELD,'prefered_input'=>FIELD_TEXTFIELD);

@@ -25,7 +25,7 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $prefs=array();
 while ($rsrow=mysql_fetch_assoc($res)) {
 	// we don't sanitize config_diz. Display as is.
-	$rsrow['config_value']=sanitize_and_format($rsrow['config_value'],TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+	$rsrow['config_value']=sanitize_and_format($rsrow['config_value'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	$prefs[$rsrow['fk_module_code']][$rsrow['config_option']]['config_value']=$rsrow['config_value'];
 	$prefs[$rsrow['fk_module_code']][$rsrow['config_option']]['config_diz']=$rsrow['config_diz'];
 	$prefs[$rsrow['fk_module_code']][$rsrow['config_option']]['option_type']=$rsrow['option_type'];
@@ -34,7 +34,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 $query="SELECT `config_option`,`config_value`,`fk_module_code` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_assoc($res)) {
-	$rsrow['config_value']=sanitize_and_format($rsrow['config_value'],TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+	$rsrow['config_value']=sanitize_and_format($rsrow['config_value'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	$prefs[$rsrow['fk_module_code']][$rsrow['config_option']]['config_value']=$rsrow['config_value'];
 }
 
@@ -46,20 +46,20 @@ foreach ($prefs as $module_code=>$v) {
 			$loop[$i]['config_diz']=$kv['config_diz'];
 			switch ($kv['option_type']) {
 
-				case HTML_CHECKBOX:
+				case FIELD_CHECKBOX:
 					$kv['config_value']=($kv['config_value']==1) ? 'checked="checked"' : '';
 					$loop[$i]['field']='<input type="checkbox" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="1" '.$kv['config_value'].' />';
 					break;
 
-				case HTML_TEXTFIELD:
+				case FIELD_TEXTFIELD:
 					$loop[$i]['field']='<input type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" />';
 					break;
 
-				case HTML_INT:
+				case FIELD_INT:
 					$loop[$i]['field']='<input class="number" type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" />';
 					break;
 
-				case HTML_TEXTAREA:
+				case FIELD_TEXTAREA:
 					$loop[$i]['field']='<textarea name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'">'.$kv['config_value'].'</textarea>';
 					break;
 

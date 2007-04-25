@@ -33,25 +33,25 @@ for ($i=0;isset($basic_search_fields[$i]);++$i) {
 	$loop[$s]['dbfield']=$field['dbfield'];
 	switch ($field['search_type']) {
 
-		case HTML_SELECT:
+		case FIELD_SELECT:
 			$loop[$s]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values']).'</select>';
 			break;
 
-		case HTML_CHECKBOX_LARGE:
+		case FIELD_CHECKBOX_LARGE:
 			$loop[$s]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],array(0),2,true,'tabindex="'.($i+4).'"');
 			break;
 
-		case HTML_RANGE:
-			if ($field['html_type']==HTML_DATE) {
+		case FIELD_RANGE:
+			if ($field['html_type']==FIELD_DATE) {
 				$loop[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'"><option value="0">-</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1]).'</select> - ';
 				$loop[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'"><option value="0">-</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1]).'</select>';
-			} elseif ($field['html_type']==HTML_SELECT) {
+			} elseif ($field['html_type']==FIELD_SELECT) {
 				$loop[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0],array(0)).'</select> - ';
 				$loop[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][1],array(0)).'</select>';
 			}
 			break;
 
-		case HTML_LOCATION:
+		case FIELD_LOCATION:
 			$loop[$s]['label']='Country';	// translate this
 			$loop[$s]['dbfield']=$field['dbfield'].'_country';
 			$loop[$s]['field']='<select name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`').'</select>';

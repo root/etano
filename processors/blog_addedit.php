@@ -28,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	foreach ($user_blogs_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$user_blogs_default['defaults'][$k]);
+		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$user_blogs_default['defaults'][$k]);
 	}
 	$input['fk_user_id']=$_SESSION['user']['user_id'];
 	if (isset($_POST['return']) && !empty($_POST['return'])) {
-		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
+		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
 	}
 
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$towrite=array();	// what to write in the cache file
 		if (!empty($input['blog_id'])) {
 			foreach ($input as $k=>$v) {
-				$towrite[$k]=sanitize_and_format_gpc($_POST,$k,TYPE_STRING,$__html2format[TEXT_GPC2DISPLAY],'');
+				$towrite[$k]=sanitize_and_format_gpc($_POST,$k,TYPE_STRING,$__field2format[TEXT_GPC2DISPLAY],'');
 			}
 			$query="UPDATE IGNORE `{$dbtable_prefix}user_blogs` SET ";
 			foreach ($user_blogs_default['defaults'] as $k=>$v) {
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		} else {
 			unset($input['blog_id']);
 			foreach ($input as $k=>$v) {
-				$towrite[$k]=sanitize_and_format_gpc($_POST,$k,TYPE_STRING,$__html2format[TEXT_GPC2DISPLAY],'');
+				$towrite[$k]=sanitize_and_format_gpc($_POST,$k,TYPE_STRING,$__field2format[TEXT_GPC2DISPLAY],'');
 			}
 			$query="INSERT INTO `{$dbtable_prefix}user_blogs` SET ";
 			foreach ($user_blogs_default['defaults'] as $k=>$v) {

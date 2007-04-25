@@ -35,7 +35,7 @@ if (!empty($totalrows)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$i=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['name']=sanitize_and_format($rsrow['name'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$rsrow['name']=sanitize_and_format($rsrow['name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['status']=$accepted_astats[$rsrow['status']];
 		$rsrow['dept_id']=$accepted_admin_depts[$rsrow['dept_id']];
 		$rsrow['myclass']=($i%2) ? 'odd_item' : 'even_item';

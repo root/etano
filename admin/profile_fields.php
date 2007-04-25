@@ -42,8 +42,8 @@ if (!empty($totalrows)) {
 	$i=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$loop[$i]=$rsrow;
-		$loop[$i]=sanitize_and_format($loop[$i],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-		if ($loop[$i]['html_type']==HTML_SELECT || $loop[$i]['html_type']==HTML_CHECKBOX_LARGE) {
+		$loop[$i]=sanitize_and_format($loop[$i],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+		if ($loop[$i]['html_type']==FIELD_SELECT || $loop[$i]['html_type']==FIELD_CHECKBOX_LARGE) {
 			$loop[$i]['accepted_values']=lkids2lks(explode('|',substr($loop[$i]['accepted_values'],1,-1)),$default_skin_code);
 		} else {
 			$loop[$i]['accepted_values']=str_replace('|',', ',substr($loop[$i]['accepted_values'],1,-1));
@@ -60,7 +60,7 @@ if (!empty($totalrows)) {
 	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 }
 $tpl->set_loop('loop',$loop);
-$tpl->set_var('html_type',vector2options($accepted_htmltype,'',array(HTML_RANGE)));
+$tpl->set_var('html_type',vector2options($accepted_htmltype,'',array(FIELD_RANGE)));
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);

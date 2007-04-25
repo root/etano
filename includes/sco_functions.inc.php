@@ -45,28 +45,28 @@ define('FORMAT_UTF_DECODE',65536);
 define('FORMAT_RUDECODE',131072);
 define('FORMAT_RUENCODE',262144);
 
-define('HTML_TEXTFIELD',2);
-define('HTML_SELECT',3);
-define('HTML_TEXTAREA',4);
-define('HTML_CHECKBOX',9);
-define('HTML_CHECKBOX_LARGE',10);
-define('HTML_FILE',101);						//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define('HTML_FK_SELECT',102);
-define('HTML_DATE',103);
-define('HTML_INT',104);
-define('HTML_FLOAT',105);
+define('FIELD_TEXTFIELD',2);
+define('FIELD_SELECT',3);
+define('FIELD_TEXTAREA',4);
+define('FIELD_CHECKBOX',9);
+define('FIELD_CHECKBOX_LARGE',10);
+define('FIELD_FILE',101);						//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define('FIELD_FK_SELECT',102);
+define('FIELD_DATE',103);
+define('FIELD_INT',104);
+define('FIELD_FLOAT',105);
 define('HTML_PIC',106);						//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // 107,108 are reserved
 
-// text sources and destinations: from db or gpc for db or gpc (edit or display)
+// text sources and destinations: from db or gpc for db/edit/display
 define('TEXT_DB2EDIT',200);
 define('TEXT_DB2DISPLAY',201);
 define('TEXT_GPC2EDIT',202);
 define('TEXT_GPC2DISPLAY',203);
 define('TEXT_DB2DB',204);
 
-$__html2type=array(HTML_TEXTFIELD=>TYPE_STRING,HTML_TEXTAREA=>TYPE_STRING,HTML_SELECT=>TYPE_INT,HTML_CHECKBOX=>TYPE_ARRAY_SMALL,HTML_CHECKBOX_LARGE=>TYPE_ARRAY_LARGE,HTML_DATE=>TYPE_STRING,HTML_INT=>TYPE_INT,HTML_FLOAT=>TYPE_FLOAT);
-$__html2format=array(HTML_INT=>0,HTML_FLOAT=>0,HTML_TEXTFIELD=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE | FORMAT_TRIM),HTML_TEXTAREA=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_TRIM),HTML_SELECT=>0,HTML_CHECKBOX=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH),HTML_CHECKBOX_LARGE=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE),HTML_DATE=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE | FORMAT_TRIM), TEXT_DB2EDIT=>(FORMAT_HTML2TEXT_FULL), TEXT_DB2DISPLAY=>(FORMAT_HTML2TEXT_FULL | FORMAT_NL2BR), TEXT_DB2DB=>(FORMAT_ADDSLASH), TEXT_GPC2EDIT=>(FORMAT_STRIP_MQ | FORMAT_HTML2TEXT_FULL), TEXT_GPC2DISPLAY=>(FORMAT_STRIP_MQ | FORMAT_HTML2TEXT_FULL | FORMAT_NL2BR));
+$__field2type=array(FIELD_TEXTFIELD=>TYPE_STRING,FIELD_TEXTAREA=>TYPE_STRING,FIELD_SELECT=>TYPE_INT,FIELD_CHECKBOX=>TYPE_ARRAY_SMALL,FIELD_CHECKBOX_LARGE=>TYPE_ARRAY_LARGE,FIELD_DATE=>TYPE_STRING,FIELD_INT=>TYPE_INT,FIELD_FLOAT=>TYPE_FLOAT);
+$__field2format=array(FIELD_INT=>0,FIELD_FLOAT=>0,FIELD_TEXTFIELD=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE | FORMAT_TRIM),FIELD_TEXTAREA=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_TRIM),FIELD_SELECT=>0,FIELD_CHECKBOX=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH),FIELD_CHECKBOX_LARGE=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE),FIELD_DATE=>(FORMAT_STRIP_MQ | FORMAT_ADDSLASH | FORMAT_ONELINE | FORMAT_TRIM), TEXT_DB2EDIT=>(FORMAT_HTML2TEXT_FULL), TEXT_DB2DISPLAY=>(FORMAT_HTML2TEXT_FULL | FORMAT_NL2BR), TEXT_DB2DB=>(FORMAT_ADDSLASH), TEXT_GPC2EDIT=>(FORMAT_STRIP_MQ | FORMAT_HTML2TEXT_FULL), TEXT_GPC2DISPLAY=>(FORMAT_STRIP_MQ | FORMAT_HTML2TEXT_FULL | FORMAT_NL2BR));
 
 
 function sanitize_and_format_gpc(&$array,$key,$input_type,$format=0,$empty_value='') {
@@ -354,7 +354,7 @@ function dbtable2options($table,$key_field,$value_field,$order_field='',$selecte
 	}
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_row($res)) {
-		$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
+		$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]);
 		$myreturn.='<option value="'.$rsrow[0].'"';
 		if ((!is_array($selected_id) && $rsrow[0]==$selected_id) || (is_array($selected_id) && in_array($rsrow[0],$selected_id))) {
 			$myreturn.=' selected="selected"';
@@ -380,11 +380,11 @@ function vector2options($show_vector,$selected_map_val='',$exclusion_vector=arra
 	$myreturn='';
 	while (list($k,$v)=each($show_vector)) {
 		if (!in_array($k,$exclusion_vector)) {
-			$myreturn.='<option value="'.sanitize_and_format($k,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]).'"';
+			$myreturn.='<option value="'.sanitize_and_format($k,TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]).'"';
 			if ((!is_array($selected_map_val) && $k==$selected_map_val) || (is_array($selected_map_val) && in_array($k,$selected_map_val))) {
 				$myreturn.=' selected="selected"';
 			}
-//			$myreturn.='>'.sanitize_and_format($v,TYPE_STRING,$GLOBALS['__html2format'][TEXT_GPC2EDIT])."</option>\n";
+//			$myreturn.='>'.sanitize_and_format($v,TYPE_STRING,$GLOBALS['__field2format'][TEXT_GPC2EDIT])."</option>\n";
 			$myreturn.=">$v</option>\n";
 		}
 	}

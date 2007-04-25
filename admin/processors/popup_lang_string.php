@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
 		$skins[]=mysql_result($res,$i,0);
 	}
-	$input['lang_strings']=sanitize_and_format_gpc($_POST,'lang_strings',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$input['lang_strings']=sanitize_and_format_gpc($_POST,'lang_strings',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$input['lk_id']=(int)$_POST['lk_id'];
 
 	for ($i=0;isset($skins[$i]);++$i) {

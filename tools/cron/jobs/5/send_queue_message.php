@@ -13,7 +13,7 @@ function send_queue_message() {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$temp['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
+			$temp['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
 			$temp['_user_other']=$rsrow['_user_other'];
 			if (empty($temp['_user_other']) && $rsrow['message_type']==MESS_SYSTEM) {
 				$temp['_user_other']='SYSTEM';	// translate
@@ -22,8 +22,8 @@ function send_queue_message() {
 			$temp['user']=$rsrow['user'];
 			$mail_ids[]=$rsrow['mail_id'];
 			unset($rsrow['mail_id'],$rsrow['email'],$rsrow['user']);
-			$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DB]);
-			$rsrow['message_body']=sanitize_and_format($rsrow['message_body'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DB]);
+			$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DB]);
+			$rsrow['message_body']=sanitize_and_format($rsrow['message_body'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DB]);
 
 			if (!isset($filters[$rsrow['fk_user_id']])) {
 				$query="SELECT `filter_type`,`field`,`field_value`,`fk_folder_id` FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$rsrow['fk_user_id']."'";

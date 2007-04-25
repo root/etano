@@ -2,17 +2,17 @@
 <ul class="table_row gallery_row {loop_rows.class}">
 	<loop name="loop_items">
 	<li class="{loop_items.class}">
-		<p class="caption">
-			<a href="photo_view.php?photo_id={loop_items.photo_id}&amp;return={output.return}" title=""><img class="user_photo thumb1" src="{tplvars.photourl}/t1/{loop_items.photo}" alt="" /></a>
+		<p class="caption {loop_items.status}">
+			<a href="photo_view.php?photo_id={loop_items.photo_id}&amp;return={output.return2me}" title=""><img class="user_photo thumb1" src="{tplvars.photourl}/t1/{loop_items.photo}" alt="" /></a>
 			{loop_items.caption}
 		</p>
 		<div class="photo_details">
 			<p>Uploaded on <strong>{loop_items.date_posted}</strong>.</p>
-			<p>Photo is <strong>{loop_items.is_private}</strong>.</p>
-			<p>{loop_items.stat_views} views | <a class="content-link plain" href="photo_view.php?photo_id={loop_items.photo_id}&amp;return={output.return}" title="Read all comments">{loop_items.stat_comments} comments</a></p>
+			<p>Photo is <strong>{loop_items.is_private}</strong>. <opt name="loop_items.reject_reason"><a class="content-link plain thickbox" href="reject_reason.php?m=photo&amp;id={loop_items.photo_id}&amp;keepThis=true&amp;TB_iframe=true&amp;height=300&amp;width=500" title="Reject Reason">Photo was rejected!</a></opt name="loop_items.reject_reason"></p>
+			<p>{loop_items.stat_views} views | <a class="content-link plain" href="photo_view.php?photo_id={loop_items.photo_id}&amp;return={output.return2me}" title="Read all comments">{loop_items.stat_comments} comments</a></p>
 			<ul>
-				<li><a class="content-link link_change" href="photo_settings.php?photo_ids={loop_items.photo_id}&amp;return={output.return}" title="Change">Change</a></li>
-				<li><a class="content-link link_delete" href="processors/photo_delete.php?photo_id={loop_items.photo_id}&amp;return={output.return}" title="Delete" onclick="return(confirm('Are you sure you want to remove this photo?'))">Delete</a></li>
+				<li><a class="content-link link_change" href="photo_settings.php?photo_ids={loop_items.photo_id}&amp;return={output.return2me}" title="Change">Change</a></li>
+				<li><a class="content-link link_delete" href="processors/photo_delete.php?photo_id={loop_items.photo_id}&amp;return={output.return2me}" title="Delete" onclick="return(confirm('Are you sure you want to remove this photo?'))">Delete</a></li>
 			</ul>
 		</div>
 	</li>
@@ -24,3 +24,5 @@
 </loop name="loop_rows">
 
 {output.pager2}
+
+<script type="text/javascript" src="js/thickbox.js"></script>

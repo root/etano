@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	$input['subscr_id']=isset($_POST['subscr_id']) ? (int)$_POST['subscr_id'] : 0;
-	$input['module_code']=sanitize_and_format_gpc($_POST,'module_code',TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
+	$input['module_code']=sanitize_and_format_gpc($_POST,'module_code',TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 
 	if (empty($input['subscr_id'])) {
 		$error=true;

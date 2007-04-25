@@ -59,7 +59,7 @@ if (!empty($totalrows)) {
 	$i=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$loop[$i]=$rsrow;
-		$loop[$i]=sanitize_and_format($loop[$i],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$loop[$i]=sanitize_and_format($loop[$i],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$loop[$i]['access_level']=get_level_name($loop[$i]['access_level'],$memberships);
 		++$i;
 	}

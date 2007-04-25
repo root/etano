@@ -37,7 +37,7 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $i=0;
 $access_levels=array();
 while ($rsrow=mysql_fetch_assoc($res)) {
-	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$access_levels[$i]['row']='<td>'.$rsrow['level_id']."</td>\n<td><a href=\"access_levels_addedit.php?level_id=".$rsrow['level_id'].'" title="'.$rsrow['level_diz'].'">'.$rsrow['level_code']."</a></td>\n";
 	for ($j=0;isset($memberships[$j]);++$j) {
 		$access_levels[$i]['row'].='<td><input type="checkbox" name="levels['.$rsrow['level_id'].']['.$memberships[$j]['m_value'].']" value="1"';

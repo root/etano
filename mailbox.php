@@ -54,7 +54,7 @@ unset($moveto_folders[FOLDER_SPAMBOX]);
 unset($moveto_folders[FOLDER_OUTBOX]);
 unset($moveto_folders[FOLDER_TRASH]);
 unset($moveto_folders[$fid]);
-$my_folders=sanitize_and_format($my_folders,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+$my_folders=sanitize_and_format($my_folders,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $from="`{$dbtable_prefix}user_inbox`";
 $where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
@@ -91,7 +91,7 @@ if (!empty($totalrows)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['date_sent']=strftime($_user_settings['date_format'],$rsrow['date_sent']+$_user_settings['time_offset']);
-		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['is_read']=(!empty($rsrow['is_read'])) ? 'read' : 'not_read';
 		if ($rsrow['message_type']==MESS_SYSTEM && empty($rsrow['user_other'])) {
 			$rsrow['user_other']='SYSTEM';     // translate

@@ -33,24 +33,24 @@ class payment_twocheckout extends ipayment {
 											'x_response_reason_text'=>'',
 											'subscr_id'=>0,
 											'user_id'=>0),
-						'types'=>	array(	'x_2checked'=>HTML_TEXTFIELD,
-											'x_MD5_Hash'=>HTML_TEXTFIELD,
-											'x_trans_id'=>HTML_TEXTFIELD,
-											'x_amount'=>HTML_FLOAT,
-											'card_holder_name'=>HTML_TEXTFIELD,
-											'x_Country'=>HTML_TEXTFIELD,
-											'x_City'=>HTML_TEXTFIELD,
-											'x_State'=>HTML_TEXTFIELD,
-											'x_Zip'=>HTML_TEXTFIELD,
-											'x_Address'=>HTML_TEXTFIELD,
-											'x_Email'=>HTML_TEXTFIELD,
-											'x_Phone'=>HTML_TEXTFIELD,
-											'demo'=>HTML_TEXTFIELD,
-											'x_response_code'=>HTML_INT,
-											'x_response_reason_code'=>HTML_TEXTFIELD,
-											'x_response_reason_text'=>HTML_TEXTFIELD,
-											'subscr_id'=>HTML_INT,
-											'user_id'=>HTML_INT));
+						'types'=>	array(	'x_2checked'=>FIELD_TEXTFIELD,
+											'x_MD5_Hash'=>FIELD_TEXTFIELD,
+											'x_trans_id'=>FIELD_TEXTFIELD,
+											'x_amount'=>FIELD_FLOAT,
+											'card_holder_name'=>FIELD_TEXTFIELD,
+											'x_Country'=>FIELD_TEXTFIELD,
+											'x_City'=>FIELD_TEXTFIELD,
+											'x_State'=>FIELD_TEXTFIELD,
+											'x_Zip'=>FIELD_TEXTFIELD,
+											'x_Address'=>FIELD_TEXTFIELD,
+											'x_Email'=>FIELD_TEXTFIELD,
+											'x_Phone'=>FIELD_TEXTFIELD,
+											'demo'=>FIELD_TEXTFIELD,
+											'x_response_code'=>FIELD_INT,
+											'x_response_reason_code'=>FIELD_TEXTFIELD,
+											'x_response_reason_text'=>FIELD_TEXTFIELD,
+											'subscr_id'=>FIELD_INT,
+											'user_id'=>FIELD_INT));
 
 	function payment_twocheckout() {
 		$this->ipayment();
@@ -110,7 +110,7 @@ class payment_twocheckout extends ipayment {
 		global $dbtable_prefix;
 		$input=array();
 		foreach ($this->from_tco['types'] as $k=>$v) {
-			$input[$k]=sanitize_and_format_gpc($_POST,$k,$GLOBALS['__html2type'][$v],$GLOBALS['__html2format'][$v],$this->from_tco['defaults'][$k]);
+			$input[$k]=sanitize_and_format_gpc($_POST,$k,$GLOBALS['__field2type'][$v],$GLOBALS['__field2format'][$v],$this->from_tco['defaults'][$k]);
 		}
 		if (strcasecmp($input['x_2checked'],'Y')==0) {
 			if ($this->config['demo_mode']==1 && strcasecmp($input['demo'],'Y')==0) {

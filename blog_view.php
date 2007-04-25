@@ -64,8 +64,8 @@ if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 			if ($is_auth_user && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
 				$rsrow['editable']=true;
 			}
-			$rsrow['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-			$rsrow['post_content']=sanitize_and_format($rsrow['post_content'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			$rsrow['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			$rsrow['post_content']=sanitize_and_format($rsrow['post_content'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			if (!empty($config['bbcode_blogs'])) {
 				$rsrow['post_content']=bbcode2html($rsrow['post_content']);
 			};

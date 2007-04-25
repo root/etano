@@ -21,7 +21,7 @@ allow_dept(DEPT_ADMIN);
 $tpl=new phemplate('skin/','remove_nonjs');
 
 $output=array();
-$output['file']=str_replace('..','',preg_replace('~[^a-zA-Z0-9\._/-]~','',sanitize_and_format_gpc($_GET,'f',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'')));
+$output['file']=str_replace('..','',preg_replace('~[^a-zA-Z0-9\._/-]~','',sanitize_and_format_gpc($_GET,'f',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'')));
 if (!empty($output['file']) && $output['file']{0}=='/') {
 	$output['file']=substr($output['file'],1);
 }
@@ -30,7 +30,7 @@ $file=_BASEPATH_.'/'.$output['file'];
 $mode=isset($_GET['m']) ? (int)$_GET['m'] : 1;
 
 if (is_file($file)) {
-	$output['file_content']=str_replace(array('{','}'),array('&#x007B;','&#x007D;'),sanitize_and_format(file_get_contents($file),TYPE_STRING,$__html2format[TEXT_DB2EDIT]));
+	$output['file_content']=str_replace(array('{','}'),array('&#x007B;','&#x007D;'),sanitize_and_format(file_get_contents($file),TYPE_STRING,$__field2format[TEXT_DB2EDIT]));
 }
 
 $tpl->set_file('content','file_edit.html');

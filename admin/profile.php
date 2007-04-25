@@ -20,7 +20,7 @@ allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 $uid=0;
 if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	$uid=(int)$_GET['uid'];
@@ -61,27 +61,27 @@ if (mysql_num_rows($res)) {
 			$cat_content[$i]['label']=$field['label'];
 			switch ($field['html_type']) {
 
-				case HTML_TEXTFIELD:
-					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				case FIELD_TEXTFIELD:
+					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case HTML_TEXTAREA:
-					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				case FIELD_TEXTAREA:
+					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case HTML_SELECT:
-					$cat_content[$i]['field']=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				case FIELD_SELECT:
+					$cat_content[$i]['field']=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case HTML_CHECKBOX_LARGE:
-					$cat_content[$i]['field']=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				case FIELD_CHECKBOX_LARGE:
+					$cat_content[$i]['field']=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case HTML_DATE:
-					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				case FIELD_DATE:
+					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
-				case HTML_LOCATION:
+				case FIELD_LOCATION:
 					$cat_content[$i]['field']=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$profile[$field['dbfield'].'_country'],'-');
 					if (!empty($profile[$field['dbfield'].'_state'])) {
 						$cat_content[$i]['field'].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$profile[$field['dbfield'].'_state'],'-');
