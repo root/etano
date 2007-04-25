@@ -37,9 +37,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$field=$_pfields[$field_id];
 			switch ($field['html_type']) {
 
-				case HTML_TEXTFIELD:
-				case HTML_TEXTAREA:
-					$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__html2type[$field['html_type']],$__html2format[$field['html_type']],'');
+				case FIELD_TEXTFIELD:
+				case FIELD_TEXTAREA:
+					$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['html_type']],$__field2format[$field['html_type']],'');
 					if (isset($field['fn_on_change'])) {
 						$on_changes[$ch]['fn']=$field['fn_on_change'];
 						$on_changes[$ch]['param2']=$input[$field['dbfield']];
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$texts[]=$field['dbfield'];		// need to know if any TA/TF were changed
 					break;
 
-				case HTML_DATE:
+				case FIELD_DATE:
 					$input[$field['dbfield'].'_month']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_month',TYPE_INT,0,0);
 					$input[$field['dbfield'].'_day']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_day',TYPE_INT,0,0);
 					$input[$field['dbfield'].'_year']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_year',TYPE_INT,0,0);
@@ -64,11 +64,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					}
 					break;
 
-				case HTML_LOCATION:
+				case FIELD_LOCATION:
 					$input[$field['dbfield'].'_country']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_country',TYPE_INT,0,0);
 					$input[$field['dbfield'].'_state']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_state',TYPE_INT,0,0);
 					$input[$field['dbfield'].'_city']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_city',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_zip',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+					$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_zip',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 					if (isset($field['fn_on_change'])) {
 						$on_changes[$ch]['fn']=$field['fn_on_change'];
 						$on_changes[$ch]['param2']=array('country'=>$input[$field['dbfield'].'_country'],'state'=>$input[$field['dbfield'].'_state'],'city'=>$input[$field['dbfield'].'_city'],'zip'=>$input[$field['dbfield'].'_zip']);
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					break;
 
 				default:
-					$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__html2type[$field['html_type']],$__html2format[$field['html_type']],'');
+					$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['html_type']],$__field2format[$field['html_type']],'');
 					if (isset($field['fn_on_change'])) {
 						$on_changes[$ch]['fn']=$field['fn_on_change'];
 						$on_changes[$ch]['param2']=$input[$field['dbfield']];
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 			}
 			// check for input errors
-			if (isset($field['required']) && ((empty($input[$field['dbfield']]) && $field['html_type']!=HTML_LOCATION) || ($field['html_type']==HTML_LOCATION && empty($input[$field['dbfield'].'_country'])))) {
+			if (isset($field['required']) && ((empty($input[$field['dbfield']]) && $field['html_type']!=FIELD_LOCATION) || ($field['html_type']==FIELD_LOCATION && empty($input[$field['dbfield'].'_country'])))) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
 				$topass['message']['text']='The fields outlined below are required and must not be empty.';
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			foreach ($_pcats[$pcat_id]['fields'] as $v) {
-				if ($_pfields[$v]['html_type']==HTML_LOCATION) {
+				if ($_pfields[$v]['html_type']==FIELD_LOCATION) {
 					$query.=",`".$_pfields[$v]['dbfield']."_country`='".$input[$_pfields[$v]['dbfield'].'_country']."',`".$_pfields[$v]['dbfield']."_state`='".$input[$_pfields[$v]['dbfield'].'_state']."',`".$_pfields[$v]['dbfield']."_city`='".$input[$_pfields[$v]['dbfield'].'_city']."',`".$_pfields[$v]['dbfield']."_zip`='".$input[$_pfields[$v]['dbfield'].'_zip']."'";
 				} else {
 					if (isset($input[$_pfields[$v]['dbfield']])) {

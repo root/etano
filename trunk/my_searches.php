@@ -29,7 +29,7 @@ $query="SELECT `search_id`,`title`,`is_default`,`alert` FROM $from WHERE $where 
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['encoded_title']=sanitize_and_format($rsrow['title'],TYPE_STRING,FORMAT_RUENCODE);
-	$rsrow['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$rsrow['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$rsrow['is_default']=(!empty($rsrow['is_default'])) ? 'checked="checked"' : '';
 	$rsrow['alert']=(!empty($rsrow['alert'])) ? 'checked="checked"' : '';
 	$loop[]=$rsrow;

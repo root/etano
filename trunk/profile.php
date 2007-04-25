@@ -11,6 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
+define('CACHE_LIMITER','private');
 require_once 'includes/sessions.inc.php';
 require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
@@ -25,7 +26,7 @@ $uid=0;
 if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	$uid=(string)((int)$_GET['uid']);
 } elseif (isset($_GET['user'])) {
-	$user=sanitize_and_format($_GET['user'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
+	$user=sanitize_and_format($_GET['user'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 	$uid=get_userid_by_user($user);
 } elseif (isset($_SESSION['user']['user_id']) && !empty($_SESSION['user']['user_id'])) {
 	$uid=(string)$_SESSION['user']['user_id'];
@@ -81,8 +82,8 @@ if (!empty($output)) {
 	// maybe we should say something here like "upgrade your membership to view this info"...
 		}
 	}
-
 	$categs[count($categs)-1]['class']='last';
+
 	$tplvars['pic_width']=get_site_option('pic_width','core_photo');
 	$tplvars['title']=sprintf('%s Profile',$output['user']);
 	$tplvars['page_title']=$output['user'];

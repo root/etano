@@ -20,14 +20,14 @@
 <opt name="output.allow_comments">
 <h3>Leave your comment</h3>
 
-<opt name="tplvars.bbcode_comments">
+<opt name="output.bbcode_comments">
 <div id="bb_tools">
 	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#comment')[0])">Bold</a>
 	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#comment')[0])">Underline</a>
 	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#comment')[0])">Hyperlink</a>
 	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#comment')[0])">Quote</a>
 </div>
-</opt name="tplvars.bbcode_comments">
+</opt name="output.bbcode_comments">
 <form id="blogcomment_form" action="processors/blog_comments.php" method="post">
 <fieldset>
 	<input type="hidden" name="comment_id" id="comment_id" value="{output.comment_id}" />
@@ -56,6 +56,6 @@
 </opt name="output.allow_comments">
 
 <script type="text/javascript" src="js/blog_post_view.js"></script>
-<opt name="tplvars.bbcode_comments">
+<opt name="output.bbcode_comments">
 <script type="text/javascript" src="js/bbcode.js"></script>
-</opt name="tplvars.bbcode_comments">
+</opt name="output.bbcode_comments">

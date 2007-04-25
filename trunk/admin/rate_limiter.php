@@ -30,7 +30,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['punishment']=isset($accepted_punishments[$rsrow['punishment']]) ? $accepted_punishments[$rsrow['punishment']] : '?';
 	$rate_limiter[]=$rsrow;
 }
-$rate_limiter=sanitize_and_format($rate_limiter,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+$rate_limiter=sanitize_and_format($rate_limiter,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $tpl->set_loop('rate_limiter',$rate_limiter);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);

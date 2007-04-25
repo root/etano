@@ -11,6 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
+define('CACHE_LIMITER','private');
 require_once 'includes/sessions.inc.php';
 require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
@@ -29,7 +30,7 @@ if (isset($_SESSION['topass']['input'])) {
 		$photo_ids=array($photo_ids);
 	}
 }
-$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 $output['return']=rawurlencode($output['return2']);
 
 $loop=array();
@@ -37,7 +38,7 @@ if (!empty($photo_ids)) {
 	$query="SELECT `photo_id`,`photo`,`caption`,`is_main`,`is_private`,`allow_comments` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 		$rsrow['is_main']=$rsrow['is_main']==1 ? 'checked="checked"' : '';
 		$rsrow['is_private']=$rsrow['is_private']==1 ? 'checked="checked"' : '';
 		$rsrow['allow_comments']=$rsrow['allow_comments']==1 ? 'checked="checked"' : '';

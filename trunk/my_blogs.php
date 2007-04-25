@@ -30,7 +30,7 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$loop[]=$rsrow;
 }
-$loop=sanitize_and_format($loop,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+$loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $output['return']='my_blogs.php';
 if (!empty($_SERVER['QUERY_STRING'])) {

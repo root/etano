@@ -11,6 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
+define('CACHE_LIMITER','private');
 require_once 'includes/sessions.inc.php';
 require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
@@ -50,21 +51,21 @@ if (empty($output)) {
 //print_r($field);
 		switch ($field['html_type']) {
 
-			case HTML_SELECT:
+			case FIELD_SELECT:
 				$output[$field['dbfield']]=isset($field['default_value'][0]) ? $field['default_value'][0] : '';
 				break;
 
-			case HTML_CHECKBOX_LARGE:
+			case FIELD_CHECKBOX_LARGE:
 				$output[$field['dbfield']]=$field['default_value'];
 				break;
 
-			case HTML_DATE:
+			case FIELD_DATE:
 				$output[$field['dbfield'].'_month']='';
 				$output[$field['dbfield'].'_day']='';
 				$output[$field['dbfield'].'_year']='';
 				break;
 
-			case HTML_LOCATION:
+			case FIELD_LOCATION:
 				if (isset($field['default_value'][0])) {
 					$output[$field['dbfield'].'_country']=$field['default_value'][0];
 				}
@@ -94,29 +95,29 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 	}
 	switch ($field['html_type']) {
 
-		case HTML_TEXTFIELD:
+		case FIELD_TEXTFIELD:
 			$loop[$j]['field']='<input type="text" name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" value="'.$output[$field['dbfield']].'" tabindex="'.($i+4).'" />';
 			break;
 
-		case HTML_TEXTAREA:
+		case FIELD_TEXTAREA:
 			$loop[$j]['field']='<textarea name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.$output[$field['dbfield']].'</textarea>';
 			break;
 
-		case HTML_SELECT:
+		case FIELD_SELECT:
 			$loop[$j]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$output[$field['dbfield']],array(0)).'</select>';
 			break;
 
-		case HTML_CHECKBOX_LARGE:
+		case FIELD_CHECKBOX_LARGE:
 			$loop[$j]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],$output[$field['dbfield']],2,true,'tabindex="'.($i+4).'"');
 			break;
 
-		case HTML_DATE:
+		case FIELD_DATE:
 			$loop[$j]['field']='<select name="'.$field['dbfield'].'_month" id="'.$field['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$output[$field['dbfield'].'_month']).'</select>';
 			$loop[$j]['field'].='<select name="'.$field['dbfield'].'_day" id="'.$field['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">day</option>'.interval2options(1,31,$output[$field['dbfield'].'_day']).'</select>';	// translate
 			$loop[$j]['field'].='<select name="'.$field['dbfield'].'_year" id="'.$field['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">year</option>'.interval2options($field['accepted_values'][1],$field['accepted_values'][2],$output[$field['dbfield'].'_year'],array(),1,2).'</select>'; // translate
 			break;
 
-		case HTML_LOCATION:
+		case FIELD_LOCATION:
 			$loop[$j]['label']='Country';	// translate this
 			$loop[$j]['dbfield']=$field['dbfield'].'_country';
 			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output[$field['dbfield'].'_country']).'</select>';

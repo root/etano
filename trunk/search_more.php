@@ -11,6 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
+define('CACHE_LIMITER','private');
 require_once 'includes/sessions.inc.php';
 require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
@@ -21,11 +22,16 @@ check_login_member(17);
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $search_fields=array();
-foreach ($_pfields as $field_id=>$field) {
-	if (isset($field['searchable'])) {
-		$search_fields[]=$field_id;
+foreach ($_pcats as $pcat_id=>$pcat) {
+	if (((int)$pcat['access_level']) & ((int)$_SESSION['user']['membership'])) {
+		for ($i=0;isset($pcat['fields'][$i]);++$i) {
+			if (isset($_pfields[$pcat['fields'][$i]]['searchable'])) {
+				$search_fields[]=$pcat['fields'][$i];
+			}
+		}
 	}
 }
+
 $search=array();
 $s=0;
 for ($i=0;isset($search_fields[$i]);++$i) {
@@ -35,25 +41,25 @@ for ($i=0;isset($search_fields[$i]);++$i) {
 		$search[$s]['dbfield']=$field['dbfield'];
 		switch ($field['search_type']) {
 
-			case HTML_SELECT:
+			case FIELD_SELECT:
 				$search[$s]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],isset($field['default_search'][0]) ? $field['default_search'][0] : 0,array(0)).'</select>';
 				break;
 
-			case HTML_CHECKBOX_LARGE:
+			case FIELD_CHECKBOX_LARGE:
 				$search[$s]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],$field['default_search'],2,true,'tabindex="'.($i+4).'"');
 				break;
 
-			case HTML_RANGE:
-				if ($field['html_type']==HTML_DATE) {
+			case FIELD_RANGE:
+				if ($field['html_type']==FIELD_DATE) {
 					$search[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][0]).'</select> - ';
 					$search[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][1]).'</select>';
-				} elseif ($field['html_type']==HTML_SELECT) {
+				} elseif ($field['html_type']==FIELD_SELECT) {
 					$search[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0],array(0)).'</select> - ';
 					$search[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][1],array(0)).'</select>';
 				}
 				break;
 
-			case HTML_LOCATION:
+			case FIELD_LOCATION:
 				$search[$s]['label']='Country';	// translate this
 				$search[$s]['dbfield']=$field['dbfield'].'_country';
 				$search[$s]['field']='<select name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$field['default_value'][0]).'</select>';

@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $admin_accounts_default['defaults']=array('admin_id'=>0,'user'=>'','pass'=>'','name'=>'','status'=>0,'dept_id'=>0,'email'=>'');
-$admin_accounts_default['types']=array('admin_id'=>HTML_INT,'user'=>HTML_TEXTFIELD,'pass'=>HTML_TEXTFIELD,'name'=>HTML_TEXTFIELD,'status'=>HTML_INT,'dept_id'=>HTML_INT,'email'=>HTML_TEXTFIELD);
+$admin_accounts_default['types']=array('admin_id'=>FIELD_INT,'user'=>FIELD_TEXTFIELD,'pass'=>FIELD_TEXTFIELD,'name'=>FIELD_TEXTFIELD,'status'=>FIELD_INT,'dept_id'=>FIELD_INT,'email'=>FIELD_TEXTFIELD);

@@ -34,7 +34,7 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id'])) {
 		if ($output['message_type']==MESS_SYSTEM || empty($output['fk_user_id_other'])) {
 			unset($output['fk_user_id_other']);
 		}
-		$output=sanitize_and_format($output,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	}
 	$output['message_body']=bbcode2html($output['message_body']);
 

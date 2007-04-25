@@ -43,7 +43,7 @@ if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 			$rsrow['date_posted']=strftime($_user_settings['date_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
 			$loop[]=$rsrow;
 		}
-		$loop=sanitize_and_format($loop,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$output['pager2']=pager($totalrows,$output['o'],$output['r']);
 		$output['blog_name']=$loop[0]['blog_name'];
 	} else {

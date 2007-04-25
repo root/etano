@@ -25,7 +25,7 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 	$output['r']=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 	$output['user']=get_user_by_userid($output['uid']);
-	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 	$where="`fk_user_id`='".$output['uid']."' AND `del`=0";
 	$from="`{$dbtable_prefix}user_inbox`";
@@ -41,8 +41,8 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$i=0;
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$rsrow['_user_other']=sanitize_and_format($rsrow['_user_other'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-			$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			$rsrow['_user_other']=sanitize_and_format($rsrow['_user_other'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			$rsrow['date_sent']=strftime($config['date_format'],$rsrow['date_sent']);
 			$rsrow['myclass']=($i%2) ? 'odd_item' : 'even_item';
 			if ($rsrow['message_type']==MESS_SYSTEM || empty($rsrow['fk_user_id_other'])) {

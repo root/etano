@@ -29,7 +29,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	if ($rsrow['module_code']!=$last_code) {
 		// sanitize previous row
 		if ($i>=0) {
-			$site_skins[$i]=sanitize_and_format($site_skins[$i],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			$site_skins[$i]=sanitize_and_format($site_skins[$i],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			if (!empty($site_skins[$i]['is_default'])) {
 				$site_skins[$i]['is_default']='<img src="skin/images/check.gif" />';
 			} else {
@@ -45,7 +45,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 }
 // one more time for the last row
 if ($i>=0) {
-	$site_skins[$i]=sanitize_and_format($site_skins[$i],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$site_skins[$i]=sanitize_and_format($site_skins[$i],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	if (!empty($site_skins[$i]['is_default'])) {
 		$site_skins[$i]['is_default']='<img src="skin/images/check.gif" />';
 	} else {

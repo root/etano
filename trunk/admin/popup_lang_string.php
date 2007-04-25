@@ -54,7 +54,7 @@ if (isset($_SESSION['topass']['input'])) {
 		}
 	}
 }
-$lang_strings=sanitize_and_format($lang_strings,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+$lang_strings=sanitize_and_format($lang_strings,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 
 $tpl->set_file('content','popup_lang_string.html');
 $tpl->set_var('lk_id',$lk_id);

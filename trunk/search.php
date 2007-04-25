@@ -23,7 +23,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $output=array();
 $output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $output['r']=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
-$output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $input=array();
 $user_ids=array();
@@ -118,12 +118,12 @@ if (!empty($output['search_md5'])) {
 		$field=$_pfields[$search_fields[$i]];
 		switch ($field['search_type']) {
 
-			case HTML_SELECT:
+			case FIELD_SELECT:
 				$input[$field['dbfield']]=sanitize_and_format_gpc($_GET,$field['dbfield'],TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield']])) {
-					if ($field['html_type']==HTML_SELECT) {
+					if ($field['html_type']==FIELD_SELECT) {
 						$where.=" AND `".$field['dbfield']."`='".$input[$field['dbfield']]."'";
-					} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
+					} elseif ($field['html_type']==FIELD_CHECKBOX_LARGE) {
 						$where.=" AND `".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']]."|%'";
 					}
 				} else {
@@ -131,10 +131,10 @@ if (!empty($output['search_md5'])) {
 				}
 				break;
 
-			case HTML_CHECKBOX_LARGE:
+			case FIELD_CHECKBOX_LARGE:
 				$input[$field['dbfield']]=sanitize_and_format_gpc($_GET,$field['dbfield'],TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield']])) {
-					if ($field['html_type']==HTML_SELECT) {
+					if ($field['html_type']==FIELD_SELECT) {
 						if (count($input[$field['dbfield']])) {
 							$where.=" AND (";
 							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
@@ -143,7 +143,7 @@ if (!empty($output['search_md5'])) {
 							$where=substr($where,0,-4);	// substract the last ' OR '
 							$where.=')';
 						}
-					} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
+					} elseif ($field['html_type']==FIELD_CHECKBOX_LARGE) {
 						if (count($input[$field['dbfield']])) {
 							$where.=" AND (";
 							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
@@ -158,23 +158,23 @@ if (!empty($output['search_md5'])) {
 				}
 				break;
 
-			case HTML_RANGE:
+			case FIELD_RANGE:
 				$input[$field['dbfield'].'_min']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_min',TYPE_INT,0,0);
 				$input[$field['dbfield'].'_max']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_max',TYPE_INT,0,0);
 				$now=gmdate('YmdHis');
 				if (!empty($input[$field['dbfield'].'_max'])) {
-					if ($field['html_type']==HTML_DATE) {
+					if ($field['html_type']==FIELD_DATE) {
 						$where.=" AND `".$field['dbfield']."`>=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
-					} elseif ($field['html_type']==HTML_SELECT) {
+					} elseif ($field['html_type']==FIELD_SELECT) {
 						$where.=" AND `".$field['dbfield']."`<=".$input[$field['dbfield'].'_max'];
 					}
 				} else {
 					unset($input[$field['dbfield'].'_max']);
 				}
 				if (!empty($input[$field['dbfield'].'_min'])) {
-					if ($field['html_type']==HTML_DATE) {
+					if ($field['html_type']==FIELD_DATE) {
 						$where.=" AND `".$field['dbfield']."`<=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
-					} elseif ($field['html_type']==HTML_SELECT) {
+					} elseif ($field['html_type']==FIELD_SELECT) {
 						$where.=" AND `".$field['dbfield']."`>=".$input[$field['dbfield'].'_min'];
 					}
 				} else {
@@ -182,7 +182,7 @@ if (!empty($output['search_md5'])) {
 				}
 				break;
 
-			case HTML_LOCATION:
+			case FIELD_LOCATION:
 				$input[$field['dbfield'].'_country']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_country',TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield'].'_country'])) {
 					$where.=" AND `".$field['dbfield']."_country`='".$input[$field['dbfield'].'_country']."'";
@@ -208,7 +208,7 @@ if (!empty($output['search_md5'])) {
 								unset($input[$field['dbfield'].'_state']);
 							}
 						} elseif ($prefered_input=='z') {
-							$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_zip',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+							$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_zip',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 							$input[$field['dbfield'].'_dist']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_dist',TYPE_INT,0,0);
 							if (!empty($input[$field['dbfield'].'_zip']) && !empty($input[$field['dbfield'].'_dist'])) {
 								$query="SELECT RADIANS(`latitude`),RADIANS(`longitude`) FROM `{$dbtable_prefix}loc_zips` WHERE `zipcode`='".$input[$field['dbfield'].'_zip']."'";

@@ -42,10 +42,10 @@ class blog_posts_cache {
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$post=mysql_fetch_assoc($res);
-				$post['title']=sanitize_and_format($post['title'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
+				$post['title']=sanitize_and_format($post['title'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]);
 				$post_content_short=substr($post['post_content'],0,strrpos(substr($post['post_content'],0,600),' '));
-				$post_content_short=sanitize_and_format($post_content_short,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
-				$post['post_content']=sanitize_and_format($post['post_content'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
+				$post_content_short=sanitize_and_format($post_content_short,TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
+				$post['post_content']=sanitize_and_format($post['post_content'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
 				if (get_site_option('bbcode_blogs','core_blog')) {
 					$post['post_content']=bbcode2html($post['post_content']);
 					$post_content_short=bbcode2html($post_content_short);
@@ -88,10 +88,10 @@ class blog_posts_cache {
 			$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user` as `user`,a.`fk_blog_id`,a.`title`,a.`post_content`,b.`_photo` as `photo` FROM `{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`status`='".STAT_APPROVED."' AND a.`post_id` IN ('".join("','",$post_ids)."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			while ($post=mysql_fetch_assoc($res)) {
-				$post['title']=sanitize_and_format($post['title'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2EDIT]);
+				$post['title']=sanitize_and_format($post['title'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]);
 				$post_content_short=substr($post['post_content'],0,strrpos(substr($post['post_content'],0,600),' '));
-				$post_content_short=sanitize_and_format($post_content_short,TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
-				$post['post_content']=sanitize_and_format($post['post_content'],TYPE_STRING,$GLOBALS['__html2format'][TEXT_DB2DISPLAY]);
+				$post_content_short=sanitize_and_format($post_content_short,TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
+				$post['post_content']=sanitize_and_format($post['post_content'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
 				if (get_site_option('bbcode_blogs','core_blog')) {
 					$post['post_content']=bbcode2html($post['post_content']);
 					$post_content_short=bbcode2html($post_content_short);

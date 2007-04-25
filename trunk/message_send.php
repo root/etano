@@ -38,13 +38,13 @@ if (isset($_SESSION['topass']['input'])) {
 		$output['subject']=(substr($output['subject'],0,3)=='Re:') ? $output['subject'] : 'Re: '.$output['subject'];
 		$output['message_body']="\n\n[quote]".$output['message_body'].'[/quote]';
 	}
-	$output=sanitize_and_format($output,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+	$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 } else {
 	trigger_error('No receiver specified',E_USER_ERROR);     // translate
 }
 
 if (!isset($output['return']) && isset($_GET['return'])) {
-	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUENCODE,'');
+	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUENCODE,'');
 }
 
 $tplvars['bbcode_message']=get_site_option('bbcode_message','core');

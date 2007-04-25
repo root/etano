@@ -35,7 +35,7 @@ $totalrows=mysql_result($res,0,0);
 
 $loop_rows=array();
 if (!empty($totalrows)) {
-	$query="SELECT *,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM $from WHERE $where ORDER BY `date_posted` DESC LIMIT $o,$r";
+	$query="SELECT `photo_id`,`photo`,`is_main`,`is_private`,`caption`,`status`,`reject_reason`,`stat_views`,`stat_comments`,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM $from WHERE $where ORDER BY `date_posted` DESC LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$loop_items=array();
 	$i=1;
@@ -43,10 +43,16 @@ if (!empty($totalrows)) {
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['date_posted']=strftime($_user_settings['date_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
 		$rsrow['is_private']=sprintf('%1$s',empty($rsrow['is_private']) ? 'public' : 'private');	// translate this
-		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['class']='';
+		if ($rsrow['status']==STAT_EDIT) {
+			$rsrow['status']='need_edit';
+			$rsrow['reject_reason']=rawurlencode($rsrow['reject_reason']);
+		} else {
+			unset($rsrow['status']);
+		}
 		if ($i%COLUMNS==1) {
-			$rsrow['class'].='first';
+			$rsrow['class'].=' first';
 		}
 		$loop_items[]=$rsrow;
 		if ($i%COLUMNS==0) {
@@ -71,11 +77,11 @@ if (!empty($totalrows)) {
 	$output['pager2']=pager($totalrows,$o,$r);
 }
 
-$output['return']='my_photos.php';
+$output['return2me']='my_photos.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
-$output['return']=rawurlencode($output['return']);
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','my_photos.html');
 $tpl->set_loop('loop_rows',$loop_rows);
 $tpl->set_var('output',$output);

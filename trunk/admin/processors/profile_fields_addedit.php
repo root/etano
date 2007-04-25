@@ -28,14 +28,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	foreach ($profile_fields_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$profile_fields_default['defaults'][$k]);
+		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$profile_fields_default['defaults'][$k]);
 	}
 
-	$input['label']=sanitize_and_format_gpc($_POST,'label',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
-	$input['search_label']=sanitize_and_format_gpc($_POST,'search_label',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
-	$input['help_text']=sanitize_and_format_gpc($_POST,'help_text',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$input['label']=sanitize_and_format_gpc($_POST,'label',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$input['search_label']=sanitize_and_format_gpc($_POST,'search_label',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$input['help_text']=sanitize_and_format_gpc($_POST,'help_text',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
-	if ($input['html_type']==HTML_DATE) {
+	if ($input['html_type']==FIELD_DATE) {
 		$input['year_start']=sanitize_and_format_gpc($_POST,'year_start',TYPE_INT,0,0);
 		$input['year_end']=sanitize_and_format_gpc($_POST,'year_end',TYPE_INT,0,0);
 		$input['def_start']=sanitize_and_format_gpc($_POST,'def_start',TYPE_INT,0,0);
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['error_search_label']='red_border';
 	}
 
-	if (($input['html_type']==HTML_SELECT || $input['html_type']==HTML_CHECKBOX_LARGE) && (empty($input['accepted_values']) || $input['accepted_values']=='||')) {
+	if (($input['html_type']==FIELD_SELECT || $input['html_type']==FIELD_CHECKBOX_LARGE) && (empty($input['accepted_values']) || $input['accepted_values']=='||')) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='You need to add at least one option for this type of field!';
@@ -76,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	switch ($input['html_type']) {
 
-		case HTML_SELECT:
-		case HTML_CHECKBOX_LARGE:
+		case FIELD_SELECT:
+		case FIELD_CHECKBOX_LARGE:
 			if (!empty($input['default_value'])) {
 				unset($input['default_value']['']);
 				$input['default_value']='|'.join('|',$input['default_value']).'|';
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			break;
 
-		case HTML_DATE:
+		case FIELD_DATE:
 			if (!$error && empty($input['year_start']) || empty($input['year_end']) || $input['year_start']<1000 || $input['year_end']<1000) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			break;
 
-		case HTML_LOCATION:
+		case FIELD_LOCATION:
 			$input['default_value']='|'.$input['default_value'].'|';
 			break;
 
@@ -184,13 +184,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$dbfield_index=get_site_option('dbfield_index','core');
 			$input['dbfield']='f'.$dbfield_index;
 // language keys&strings for this field
-			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".HTML_TEXTFIELD.",`lk_diz`='Label for ".$input['dbfield']." field'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Label for ".$input['dbfield']." field'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_lk_id_label']=mysql_insert_id();
-			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".HTML_TEXTFIELD.",`lk_diz`='Search label for ".$input['dbfield']." field'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Search label for ".$input['dbfield']." field'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_lk_id_search']=mysql_insert_id();
-			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".HTML_TEXTAREA.",`lk_diz`='Help text for ".$input['dbfield']." field'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTAREA.",`lk_diz`='Help text for ".$input['dbfield']." field'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_lk_id_help']=mysql_insert_id();
 			$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['label']."',`fk_lk_id`='".$input['fk_lk_id_label']."',`skin`='$default_skin_code'";
@@ -211,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			$query=substr($query,0,-1);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			if ($input['html_type']!=HTML_LOCATION) {
+			if ($input['html_type']!=FIELD_LOCATION) {
 				$query="ALTER TABLE `{$dbtable_prefix}user_profiles` ADD `".$input['dbfield'].'` '.$field_dbtypes[$input['html_type']];
 			} else {
 				$query="ALTER TABLE `{$dbtable_prefix}user_profiles` ADD `".$input['dbfield'].'_country` int(3) not null default 0, ADD `'.$input['dbfield'].'_state` int(10) not null default 0, ADD `'.$input['dbfield'].'_city` int(10) not null default 0, ADD `'.$input['dbfield'].'_zip` varchar(10) not null default \'\'';

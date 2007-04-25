@@ -23,7 +23,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $output=array();
 $output['t']=sanitize_and_format_gpc($_GET,'t',TYPE_INT,0,0);
 $output['id']=sanitize_and_format_gpc($_GET,'id',TYPE_INT,0,0);
-$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 $output['return']=rawurlencode($output['return2']);
 
 $query="SELECT `amtpl_id`,`amtpl_name`,`subject`,`message_body` FROM `{$dbtable_prefix}admin_mtpls` WHERE `amtpl_type`='".$output['t']."'";
@@ -31,7 +31,7 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $amtpls=array();
 $i=0;
 while ($rsrow=mysql_fetch_assoc($res)) {
-	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	$amtpls[$rsrow['amtpl_id']]=$rsrow['amtpl_name'];
 	if ($i==0) {
 		$output['reason_title']=$rsrow['subject'];

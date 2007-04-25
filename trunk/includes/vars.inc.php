@@ -103,10 +103,10 @@ if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=
 
 require_once 'defines.inc.php';
 require_once 'sco_functions.inc.php';
-define('HTML_LOCATION',107);
-$__html2type[HTML_LOCATION]=TYPE_INT;
-$__html2format[HTML_LOCATION]=0;
-define('HTML_RANGE',108);
+define('FIELD_LOCATION',107);
+$__field2type[FIELD_LOCATION]=TYPE_INT;
+$__field2format[FIELD_LOCATION]=0;
+define('FIELD_RANGE',108);
 
 // often used vars in skins
 $tplvars['sitename']=_SITENAME_;

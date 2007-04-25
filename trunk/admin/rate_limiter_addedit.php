@@ -31,7 +31,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$rate_limiter=mysql_fetch_assoc($res);
-		$rate_limiter=sanitize_and_format($rate_limiter,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+		$rate_limiter=sanitize_and_format($rate_limiter,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
 }
 $rate_limiter['m_value']=dbtable2options("`{$dbtable_prefix}memberships`",'`m_value`','`m_name`','`m_value`',$rate_limiter['m_value']);

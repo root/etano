@@ -25,7 +25,7 @@ if (isset($_SESSION['topass']['input'])) {
 	unset($_SESSION['topass']['input']);
 } else {
 	$output['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
-	$output['secret']=sanitize_and_format_gpc($_GET,'secret',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$output['secret']=sanitize_and_format_gpc($_GET,'secret',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 }
 
 if (!empty($output['uid']) && !empty($output['secret'])) {

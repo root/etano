@@ -33,7 +33,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$admin_accounts=mysql_fetch_assoc($res);
-		$admin_accounts['name']=sanitize_and_format($admin_accounts['name'],TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+		$admin_accounts['name']=sanitize_and_format($admin_accounts['name'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
 }
 

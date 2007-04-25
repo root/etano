@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $rate_limiter_default['defaults']=array('rate_id'=>0,'m_value'=>1,'fk_level_id'=>0,'limit'=>0,'interval'=>0,'punishment'=>1);
-$rate_limiter_default['types']=array('rate_id'=>HTML_INT,'m_value'=>HTML_INT,'fk_level_id'=>HTML_INT,'limit'=>HTML_INT,'interval'=>HTML_INT,'punishment'=>HTML_INT);
+$rate_limiter_default['types']=array('rate_id'=>FIELD_INT,'m_value'=>FIELD_INT,'fk_level_id'=>FIELD_INT,'limit'=>FIELD_INT,'interval'=>FIELD_INT,'punishment'=>FIELD_INT);

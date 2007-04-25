@@ -25,7 +25,7 @@ $query="SELECT a.`nconn_id`,a.`fk_user_id`,b.`_user` as `user`,c.`network` FROM 
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $loop=array();
 while ($rsrow=mysql_fetch_assoc($res)) {
-	$rsrow['network']=sanitize_and_format($rsrow['network'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$rsrow['network']=sanitize_and_format($rsrow['network'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$loop[]=$rsrow;
 }
 

@@ -30,7 +30,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$access_levels=mysql_fetch_assoc($res);
-		$access_levels=sanitize_and_format($access_levels,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+		$access_levels=sanitize_and_format($access_levels,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
 }
 

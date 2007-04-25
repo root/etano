@@ -18,7 +18,7 @@ require_once dirname(__FILE__).'/../../includes/classes/phemplate.class.php';
 require_once dirname(__FILE__).'/../../includes/admin_functions.inc.php';
 allow_dept(DEPT_ADMIN);
 
-$path=str_replace('..','',preg_replace('~[^a-zA-Z0-9\._/-]~','',sanitize_and_format_gpc($_POST,'path',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'')));
+$path=str_replace('..','',preg_replace('~[^a-zA-Z0-9\._/-]~','',sanitize_and_format_gpc($_POST,'path',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'')));
 if (!empty($path) && $path{0}=='/') {
 	$path=substr($path,1);
 }

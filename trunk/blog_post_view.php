@@ -49,10 +49,10 @@ if (!empty($post_id)) {
 				// if someone has asked to edit his/her comment
 				if ($edit_comment==$rsrow['comment_id']) {
 					$output['comment_id']=$rsrow['comment_id'];
-					$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+					$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 				}
 				$rsrow['date_posted']=strftime($_user_settings['datetime_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
-				$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+				$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 				if (!empty($config['bbcode_comments'])) {
 					$rsrow['comment']=bbcode2html($rsrow['comment']);
 				}

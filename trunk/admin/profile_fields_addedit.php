@@ -55,7 +55,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if (mysql_num_rows($res)) {
 		$output['help_text']=mysql_result($res,0,0);
 	}
-	$output=sanitize_and_format($output,TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$accepted_values=explode('|',substr($output['accepted_values'],1,-1));
 } elseif (isset($_GET['html_type']) && !empty($_GET['html_type'])) {
 	$output['html_type']=(int)$_GET['html_type'];
@@ -63,7 +63,7 @@ if (isset($_SESSION['topass']['input'])) {
 
 switch ($output['html_type']) {
 
-	case HTML_TEXTFIELD:
+	case FIELD_TEXTFIELD:
 		$output['row_searchable']=true;
 		$output['row_st']='invisible';
 		$output['search_type']='';
@@ -71,7 +71,7 @@ switch ($output['html_type']) {
 		$output['row_accval_checkbox']=false;
 		break;
 
-	case HTML_TEXTAREA:
+	case FIELD_TEXTAREA:
 		$output['row_searchable']=true;
 		$output['row_st']='invisible';
 		$output['search_type']='';
@@ -79,7 +79,7 @@ switch ($output['html_type']) {
 		$output['row_accval_checkbox']=false;
 		break;
 
-	case HTML_SELECT:
+	case FIELD_SELECT:
 		if (!empty($accepted_values)) {
 			$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id` IN ('".join("','",$accepted_values)."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -90,7 +90,7 @@ switch ($output['html_type']) {
 		}
 		$output['row_searchable']=true;
 		$output['row_st']='visible';
-		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION));
+		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_DATE,FIELD_LOCATION));
 		// show the accepted values for selects and checkboxes fields
 		$output['row_accval_selcheck']=true;
 		// revert $accepted_values values to db original and add slashes
@@ -103,7 +103,7 @@ switch ($output['html_type']) {
 		}
 		break;
 
-	case HTML_CHECKBOX_LARGE:
+	case FIELD_CHECKBOX_LARGE:
 		if (!empty($accepted_values)) {
 			$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id` IN ('".join("','",$accepted_values)."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -114,7 +114,7 @@ switch ($output['html_type']) {
 		}
 		$output['row_searchable']=true;
 		$output['row_st']='visible';
-		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_DATE,HTML_LOCATION,HTML_RANGE));
+		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_DATE,FIELD_LOCATION,FIELD_RANGE));
 		$output['row_accval_selcheck']=true;
 		// revert $accepted_values values to db original and add slashes
 		$output['acc_vals_jsarrays']=vector2jsarrays(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
@@ -126,10 +126,10 @@ switch ($output['html_type']) {
 		}
 		break;
 
-	case HTML_DATE:
+	case FIELD_DATE:
 		$output['row_searchable']=true;
 		$output['row_st']='visible';
-		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_LOCATION,HTML_DATE));
+		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_SELECT,FIELD_CHECKBOX_LARGE,FIELD_LOCATION,FIELD_DATE));
 		$output['row_accval_date']=true;
 		$output['year_start']=(isset($accepted_values[0]) && !empty($accepted_values[0])) ? $accepted_values[0] : 0;
 		$output['year_end']=isset($accepted_values[1]) ? $accepted_values[1] : 0;
@@ -138,11 +138,11 @@ switch ($output['html_type']) {
 		$output['def_end']=isset($default_search[1]) ? $default_search[1] : 0;
 		break;
 
-	case HTML_LOCATION:
+	case FIELD_LOCATION:
 		$output['default_value']=substr($output['default_value'],1,-1);
 		$output['row_searchable']=true;
 		$output['row_st']='visible';
-		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(HTML_TEXTFIELD,HTML_TEXTAREA,HTML_SELECT,HTML_CHECKBOX_LARGE,HTML_DATE,HTML_RANGE));
+		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_SELECT,FIELD_CHECKBOX_LARGE,FIELD_DATE,FIELD_RANGE));
 		$output['row_accval_location']=true;
 		$output['default_value']=dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output['default_value']);
 		break;

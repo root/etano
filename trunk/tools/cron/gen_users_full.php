@@ -21,9 +21,9 @@ $modman=new modman();
 $select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`longitude`,`latitude`';
 $now=gmdate('YmdHis');
 foreach ($_pfields as $field_id=>$field) {
-	if ($field['html_type']==HTML_DATE) {
+	if ($field['html_type']==FIELD_DATE) {
 		$select.=",DATE_FORMAT('$now','%Y')-DATE_FORMAT(`".$field['dbfield']."`,'%Y')-(DATE_FORMAT('$now','%m%d')<DATE_FORMAT(`".$field['dbfield']."`,'%m%d')) as `".$field['dbfield']."`";
-	} elseif ($field['html_type']==HTML_LOCATION) {
+	} elseif ($field['html_type']==FIELD_LOCATION) {
 		$select.=',`'.$field['dbfield'].'_country`,`'.$field['dbfield'].'_state`,`'.$field['dbfield'].'_city`,`'.$field['dbfield'].'_zip`';
 	} else {
 		$select.=',`'.$field['dbfield'].'`';
@@ -37,30 +37,30 @@ while ($profile=mysql_fetch_assoc($res)) {
 	foreach ($_pfields as $field_id=>$field) {
 		if ($field['visible']) {
 			$profile[$field['dbfield'].'_label']=$field['label'];
-			if ($field['html_type']==HTML_TEXTFIELD) {
-				$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-			} elseif ($field['html_type']==HTML_TEXTAREA) {
-				$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+			if ($field['html_type']==FIELD_TEXTFIELD) {
+				$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			} elseif ($field['html_type']==FIELD_TEXTAREA) {
+				$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 				if ($config['bbcode_profile']) {
 					$profile[$field['dbfield']]=bbcode2html($profile[$field['dbfield']]);
 				}
 				if ($config['use_smilies']) {
 					$profile[$field['dbfield']]=text2smilies($profile[$field['dbfield']]);
 				}
-			} elseif ($field['html_type']==HTML_SELECT) {
+			} elseif ($field['html_type']==FIELD_SELECT) {
 				// if we sanitize here " will be rendered as &quot; which is not what we want
-//				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+//				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 				$profile[$field['dbfield']]=$field['accepted_values'][$profile[$field['dbfield']]];
-			} elseif ($field['html_type']==HTML_CHECKBOX_LARGE) {
-				$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
-			} elseif ($field['html_type']==HTML_INT || $field['html_type']==HTML_FLOAT) {
+			} elseif ($field['html_type']==FIELD_CHECKBOX_LARGE) {
+				$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			} elseif ($field['html_type']==FIELD_INT || $field['html_type']==FIELD_FLOAT) {
 	//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
-			} elseif ($field['html_type']==HTML_DATE) {
+			} elseif ($field['html_type']==FIELD_DATE) {
 				$profile[$field['dbfield'].'_label']=$field['search_label'];
 				if ($profile[$field['dbfield']]>110) {
 					$profile[$field['dbfield']]='?';
 				}
-			} elseif ($field['html_type']==HTML_LOCATION) {
+			} elseif ($field['html_type']==FIELD_LOCATION) {
 				$profile[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$profile[$field['dbfield'].'_country'],'-');
 				if (!empty($profile[$field['dbfield'].'_state'])) {
 					$profile[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$profile[$field['dbfield'].'_state'],'-');

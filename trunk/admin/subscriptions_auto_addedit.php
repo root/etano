@@ -30,7 +30,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$subscriptions_auto=mysql_fetch_assoc($res);
-		$subscriptions_auto=sanitize_and_format($subscriptions_auto,TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+		$subscriptions_auto=sanitize_and_format($subscriptions_auto,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
 }
 
@@ -42,7 +42,7 @@ if (empty($subscriptions_auto['dbfield'])) {
 }
 $dbfields=array();
 foreach ($_pfields as $pfield_id=>$pfield) {
-	if ($pfield['html_type']==HTML_SELECT) {
+	if ($pfield['html_type']==FIELD_SELECT) {
 		$dbfields[$pfield['dbfield']]=$pfield['label'].' ('.$pfield['dbfield'].')';
 	}
 }

@@ -23,7 +23,7 @@ $qs='';
 $qs_sep='';
 $topass=array();
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-	$skin=sanitize_and_format_gpc($_POST,'skin',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$skin=sanitize_and_format_gpc($_POST,'skin',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 // check for input errors
 	if (empty($skin)) {

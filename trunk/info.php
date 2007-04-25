@@ -46,7 +46,7 @@ switch ($type) {
 		$tplvars['page_title']='Activate your account';
 		$tplvars['page']='info_acctactiv';
 		$output['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
-		$output['email']=sanitize_and_format_gpc($_GET,'email',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+		$output['email']=sanitize_and_format_gpc($_GET,'email',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 		break;
 
 	case 'acctok':	// account confirmed

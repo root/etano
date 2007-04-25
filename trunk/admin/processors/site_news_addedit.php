@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	foreach ($site_news_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__html2type[$v],$__html2format[$v],$site_news_default['defaults'][$k]);
+		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$site_news_default['defaults'][$k]);
 	}
 	if (isset($_POST['return']) && !empty($_POST['return'])) {
-		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
+		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage='admin/'.$input['return'];
 	}
 
@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
+		unset($input['date_posted']);
 		if (!empty($input['news_id'])) {
 			$query="UPDATE `{$dbtable_prefix}site_news` SET ";
 			foreach ($site_news_default['defaults'] as $k=>$v) {

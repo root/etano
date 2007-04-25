@@ -28,7 +28,7 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $loop=array();
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['encoded_folder']=sanitize_and_format($rsrow['folder'],TYPE_STRING,FORMAT_RUENCODE);
-	$rsrow['folder']=sanitize_and_format($rsrow['folder'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+	$rsrow['folder']=sanitize_and_format($rsrow['folder'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$loop[]=$rsrow;
 	$my_folders[$rsrow['folder_id']]=$rsrow['folder'];
 }

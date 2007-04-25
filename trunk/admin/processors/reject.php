@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // get the input we need and sanitize it
 	$input['t']=sanitize_and_format_gpc($_POST,'t',TYPE_INT,0,0);
 	$input['id']=sanitize_and_format_gpc($_POST,'id',TYPE_INT,0,0);
-	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD] | FORMAT_RUDECODE,'');
+	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 	$input['send_email']=sanitize_and_format_gpc($_POST,'send_email',TYPE_INT,0,0);
-	$input['reject_reason']=sanitize_and_format_gpc($_POST,'reject_reason',TYPE_STRING,$__html2format[HTML_TEXTAREA],'');
-	$input['reason_title']=sanitize_and_format_gpc($_POST,'reason_title',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+	$input['reject_reason']=sanitize_and_format_gpc($_POST,'reject_reason',TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
+	$input['reason_title']=sanitize_and_format_gpc($_POST,'reason_title',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 	switch ($input['t']) {
 
@@ -54,11 +54,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		case AMTPL_REJECT_PHOTO:
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `status`='".STAT_EDIT."',`last_changed`='".gmdate('YmdHis')."',`reject_reason`='".$input['reject_reason']."' WHERE `photo_id`='".$input['id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			if (!empty($input['send_email'])) {
-				$query="SELECT b.`email` FROM `{$dbtable_prefix}user_photos` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`user_id` AND a.`photo_id`='".$input['id']."'";
-				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				if (mysql_num_rows($res)) {
-					$ok=queue_or_send_email(array(mysql_result($res,0,0)),array('subject'=>$_POST['reason_title'],'message_body'=>$_POST['reject_reason']));
+			$query="SELECT a.`fk_user_id`,a.`is_main`,b.`email` FROM `{$dbtable_prefix}user_photos` a,".USER_ACCOUNTS_TABLE." b WHERE a.`photo_id`='".$input['id']."' AND a.`fk_user_id`=b.`user_id`";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				$temp=mysql_fetch_assoc($res);
+				if (!empty($temp['is_main'])) {
+					$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='' WHERE `fk_user_id`='".$temp['fk_user_id']."'";
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				}
+				if (!empty($input['send_email'])) {
+					$ok=queue_or_send_email(array($temp['email']),array('subject'=>$_POST['reason_title'],'message_body'=>$_POST['reject_reason']));
 				}
 			}
 			if ($ok) {

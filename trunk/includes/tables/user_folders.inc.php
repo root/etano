@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $user_folders_default['defaults']=array('folder_id'=>0,'fk_user_id'=>0,'folder'=>'');
-$user_folders_default['types']=array('folder_id'=>HTML_INT,'fk_user_id'=>HTML_INT,'folder'=>HTML_TEXTFIELD);
+$user_folders_default['types']=array('folder_id'=>FIELD_INT,'fk_user_id'=>FIELD_INT,'folder'=>FIELD_TEXTFIELD);

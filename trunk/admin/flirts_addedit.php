@@ -30,7 +30,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$flirts=mysql_fetch_assoc($res);
-		$flirts['flirt_text']=sanitize_and_format($flirts['flirt_text'],TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+		$flirts['flirt_text']=sanitize_and_format($flirts['flirt_text'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
 }
 

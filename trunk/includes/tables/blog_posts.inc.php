@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $blog_posts_default['defaults']=array('post_id'=>0,'fk_user_id'=>0,'fk_blog_id'=>0,'is_public'=>1,'title'=>'','post_content'=>'','allow_comments'=>1);
-$blog_posts_default['types']=array('post_id'=>HTML_INT,'fk_user_id'=>HTML_INT,'fk_blog_id'=>HTML_INT,'is_public'=>HTML_INT,'title'=>HTML_TEXTFIELD,'post_content'=>HTML_TEXTAREA,'allow_comments'=>HTML_INT);
+$blog_posts_default['types']=array('post_id'=>FIELD_INT,'fk_user_id'=>FIELD_INT,'fk_blog_id'=>FIELD_INT,'is_public'=>FIELD_INT,'title'=>FIELD_TEXTFIELD,'post_content'=>FIELD_TEXTAREA,'allow_comments'=>FIELD_INT);

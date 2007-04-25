@@ -12,4 +12,4 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 $zipcodes_default['defaults']=array('zip_id'=>0,'zipcode'=>'','fk_country_id'=>0,'fk_state_id'=>0,'fk_city_id'=>0,'latitude'=>0,'longitude'=>0);
-$zipcodes_default['types']=array('zip_id'=>HTML_INT,'zipcode'=>HTML_TEXTFIELD,'fk_country_id'=>HTML_INT,'fk_state_id'=>HTML_INT,'fk_city_id'=>HTML_INT,'latitude'=>HTML_FLOAT,'longitude'=>HTML_FLOAT);
+$zipcodes_default['types']=array('zip_id'=>FIELD_INT,'zipcode'=>FIELD_TEXTFIELD,'fk_country_id'=>FIELD_INT,'fk_state_id'=>FIELD_INT,'fk_city_id'=>FIELD_INT,'latitude'=>FIELD_FLOAT,'longitude'=>FIELD_FLOAT);

@@ -11,6 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
+define('CACHE_LIMITER','private');
 require_once 'includes/sessions.inc.php';
 require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
@@ -76,13 +77,13 @@ if (isset($_GET['st'])) {
 
 		case 'field':
 			$input['acclevel_id']=17;
-			$input['f']=sanitize_and_format_gpc($_GET,'f',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
-			$input['v']=sanitize_and_format_gpc($_GET,'v',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+			$input['f']=sanitize_and_format_gpc($_GET,'f',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+			$input['v']=sanitize_and_format_gpc($_GET,'v',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 			if (!empty($input['f']) && !empty($input['v'])) {
 				$field_ok=false;
 				$fid=0;
 				foreach ($_pfields as $k=>$field) {
-					if ($field['dbfield']==$input['f'] && $field['html_type']==HTML_SELECT) {
+					if ($field['dbfield']==$input['f'] && $field['html_type']==FIELD_SELECT) {
 						$field_ok=true;
 						$fid=$k;
 						break;
@@ -101,7 +102,7 @@ if (isset($_GET['st'])) {
 
 		case 'tag':
 			$input['acclevel_id']=17;
-			$input['tags']=sanitize_and_format_gpc($_GET,'tags',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+			$input['tags']=sanitize_and_format_gpc($_GET,'tags',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 			$tags=$input['tags'];
 			// remove extra spaces and words with less than 3 chars
 			$input['tags']=trim(preg_replace(array("/['\"%<>\+-]/","/\s\s+/","/\b[^\s]{1,3}\b/"),array(' ',' ',''),$input['tags']));
@@ -136,7 +137,7 @@ if (!empty($totalrows)) {
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['date_posted']=strftime($_user_settings['date_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
 		$rsrow['is_private']=sprintf('%1$s',empty($rsrow['is_private']) ? 'public' : 'private');	// translate this
-		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__html2format[TEXT_DB2DISPLAY]);
+		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['class']='';
 		if ($i%COLUMNS==1) {
 			$rsrow['class'].='first';

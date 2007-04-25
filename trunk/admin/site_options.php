@@ -22,7 +22,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 
 $active_module_code='core';
 if (isset($_GET['module_code']) && !empty($_GET['module_code'])) {
-	$active_module_code=sanitize_and_format($_GET['module_code'],TYPE_STRING,$__html2format[HTML_TEXTFIELD]);
+	$active_module_code=sanitize_and_format($_GET['module_code'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 }
 
 $query="SELECT a.*,b.`module_name`,b.`module_type` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b WHERE b.`module_code`=a.`fk_module_code` AND a.`option_type`<>'".OPTION_NA."' ORDER BY b.`module_type` ASC, a.`fk_module_code` ASC";
@@ -66,23 +66,23 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	} else {
 		++$j;
 	}
-	$rsrow['config_value']=sanitize_and_format($rsrow['config_value'],TYPE_STRING,$__html2format[TEXT_DB2EDIT]);
+	$rsrow['config_value']=sanitize_and_format($rsrow['config_value'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	switch ($rsrow['option_type']) {
 
-		case HTML_CHECKBOX:
+		case FIELD_CHECKBOX:
 			$rsrow['config_value']=($rsrow['config_value']==1) ? 'checked="checked"' : '';
 			$rsrow['field']='<input class="input_chk" type="checkbox" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" value="1" '.$rsrow['config_value'].' />';
 			break;
 
-		case HTML_TEXTFIELD:
+		case FIELD_TEXTFIELD:
 			$rsrow['field']='<input class="input_tf" type="text" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" value="'.$rsrow['config_value'].'" />';
 			break;
 
-		case HTML_INT:
+		case FIELD_INT:
 			$rsrow['field']='<input class="number" type="text" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" value="'.$rsrow['config_value'].'" />';
 			break;
 
-		case HTML_TEXTAREA:
+		case FIELD_TEXTAREA:
 			$rsrow['field']='<textarea class="input_ta" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" cols="" rows="">'.$rsrow['config_value'].'</textarea>';
 			break;
 

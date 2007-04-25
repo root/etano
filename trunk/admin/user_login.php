@@ -19,7 +19,7 @@ require_once '../includes/admin_functions.inc.php';
 allow_dept(DEPT_ADMIN | DEPT_MODERATOR);
 
 $output['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
-$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__html2format[HTML_TEXTFIELD],'');
+$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 $tpl=new phemplate('skin/','remove_nonjs');
 
 if (isset($_GET['top'])) {
