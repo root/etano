@@ -37,7 +37,7 @@ if (!empty($totalrows)) {
 	$query="SELECT `word_id`,`word` FROM $from WHERE $where LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['word']=sanitize_and_format($rsrow['word'],TYPE_STRING,$__field2format[]);
+		$rsrow['word']=sanitize_and_format($rsrow['word'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 		$loop[]=$rsrow;
 	}
 	$output['pager2']=pager($totalrows,$o,$r);

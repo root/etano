@@ -52,6 +52,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
+		$input['title']=remove_banned_words($input['title']);
+		$input['post_content']=remove_banned_words($input['post_content']);
 		$config=get_site_option(array('manual_blog_approval'),'core_blog');
 		$towrite=array();	// what to write in the cache file
 		if (!empty($input['post_id'])) {

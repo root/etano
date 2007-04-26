@@ -145,7 +145,25 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 			case FIELD_TEXTAREA:
 				$textareas[]=$field['dbfield'];
-				// no break here, we still need the default behaviour
+				$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['html_type']],$__field2format[$field['html_type']],''));
+				if (isset($field['fn_on_change'])) {
+					$on_changes[$ch]['fn']=$field['fn_on_change'];
+					$on_changes[$ch]['param2']=$input[$field['dbfield']];
+					$on_changes[$ch]['param3']=$field['dbfield'];
+					++$ch;
+				}
+				break;
+
+			case FIELD_TEXTFIELD:
+				$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['html_type']],$__field2format[$field['html_type']],''));
+				if (isset($field['fn_on_change'])) {
+					$on_changes[$ch]['fn']=$field['fn_on_change'];
+					$on_changes[$ch]['param2']=$input[$field['dbfield']];
+					$on_changes[$ch]['param3']=$field['dbfield'];
+					++$ch;
+				}
+				break;
+
 			default:
 				$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['html_type']],$__field2format[$field['html_type']],'');
 				if (isset($field['fn_on_change'])) {
