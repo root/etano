@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 				case FIELD_TEXTFIELD:
 				case FIELD_TEXTAREA:
-					$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['html_type']],$__field2format[$field['html_type']],'');
+					$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['html_type']],$__field2format[$field['html_type']],''));
 					if (isset($field['fn_on_change'])) {
 						$on_changes[$ch]['fn']=$field['fn_on_change'];
 						$on_changes[$ch]['param2']=$input[$field['dbfield']];

@@ -44,6 +44,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
+		$input['blog_name']=remove_banned_words($input['blog_name']);
+		$input['blog_diz']=remove_banned_words($input['blog_diz']);
 		require_once '../includes/classes/modman.class.php';
 		$modman=new modman();
 		$towrite=array();	// what to write in the cache file

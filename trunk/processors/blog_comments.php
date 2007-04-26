@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		$config=get_site_option(array('manual_com_approval'),'core');
+		$input['comment']=remove_banned_words($input['comment']);
 		if (!empty($input['comment_id'])) {
 			// only members can edit their comments
 			if (isset($_SESSION['user']['user_id'])) {

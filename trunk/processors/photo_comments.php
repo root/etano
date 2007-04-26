@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	unset($_SESSION['captcha_word']);
 
 	if (!$error) {
+		$input['comment']=remove_banned_words($input['comment']);
 		$config=get_site_option(array('manual_com_approval'),'core');
 		if (!empty($input['comment_id'])) {
 			// only members can edit their comments

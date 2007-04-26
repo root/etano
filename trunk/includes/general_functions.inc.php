@@ -312,3 +312,12 @@ function text2smilies($str) {
 	);
 	return str_replace($from,$to,$str);
 }
+
+
+function remove_banned_words($str) {
+	include_once _BASEPATH_.'/includes/banned_words.inc.php';
+	if (isset($_banned_words) && !empty($_banned_words)) {
+		$str=str_replace($_banned_words,'#######',$str);
+	}
+	return $str;
+}
