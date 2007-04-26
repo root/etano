@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input['error_email']='red_border';
 		}
 		if (!$error) {
-			$query="SELECT `user_id` FROM ".USER_ACCOUNTS_TABLE." WHERE `email`='".$input['email']."' LIMIT 1";
+			$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." WHERE `email`='".$input['email']."' LIMIT 1";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$error=true;
@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		if ($input['page']==1) {
 			$input['temp_pass']=md5(gen_pass(6));
-			$query="INSERT IGNORE INTO ".USER_ACCOUNTS_TABLE." SET `user`='".$input['user']."',`pass`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`='2',`status`='".ASTAT_UNVERIFIED."',`temp_pass`='".$input['temp_pass']."'";
+			$query="INSERT IGNORE INTO ".USER_ACCOUNTS_TABLE." SET `".USER_ACCOUNT_USER."`='".$input['user']."',`".USER_ACCOUNT_PASS."`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`='2',`status`='".ASTAT_UNVERIFIED."',`temp_pass`='".$input['temp_pass']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$_SESSION['user']['reg_id']=mysql_insert_id();
 			$_SESSION['user']['email']=$input['email'];	// for info_signup.html

@@ -270,7 +270,7 @@ function get_user_by_userid($user_id) {
 	$myreturn='';
 	global $dbtable_prefix;
 	if (!empty($user_id)) {
-		$query="SELECT `user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='$user_id'";
+		$query="SELECT `".USER_ACCOUNT_USER."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='$user_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$myreturn=mysql_result($res,0,0);
