@@ -38,19 +38,22 @@ if (!empty($totalrows)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['word']=sanitize_and_format($rsrow['word'],TYPE_STRING,$__field2format[]);
-		$rsrow['myclass']=($i%2) ? 'odd_item' : 'even_item';
 		$loop[]=$rsrow;
-		++$i;
 	}
-	$tpl->set_var('pager1',pager($totalrows,$o,$r));
-	$tpl->set_var('pager2',pager($totalrows,$o,$r));
+	$output['pager2']=pager($totalrows,$o,$r);
 }
 
+$output['return2me']='site_news.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+}
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','banned_words.html');
 $tpl->set_loop('loop',$loop);
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
+$tpl->drop_var('output.pager2');
 unset($loop);
 
 $tplvars['title']='Banned Words Management';

@@ -133,13 +133,13 @@ if ($do_query) {
 		$where.=" AND a.`status`='".$input['pstat']."'";
 	}
 	if (isset($input['astat'])) {	// account status
-		$where.=" AND a.`fk_user_id`=b.`user_id` AND b.`status`='".$input['astat']."'";
+		$where.=" AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND b.`status`='".$input['astat']."'";
 		$from.=",".USER_ACCOUNTS_TABLE." b";
 	}
 	if (isset($input['membership'])) {
 		$where.=" AND b.`membership`='".$input['membership']."'";
 		if (!isset($input['astatus'])) {
-			$where.=" AND a.`fk_user_id`=b.`user_id`";
+			$where.=" AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."`";
 			$from.=",".USER_ACCOUNTS_TABLE." b";
 		}
 	}

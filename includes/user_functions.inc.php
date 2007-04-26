@@ -32,7 +32,7 @@ if (function_exists('error_handler')) {
 function get_userid_by_user($user) {
 	$myreturn=0;
 	if (!empty($user)) {
-		$query="SELECT `user_id` FROM ".USER_ACCOUNTS_TABLE." WHERE `user`='$user'";
+		$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_USER."`='$user'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$myreturn=mysql_result($res,0,0);
@@ -45,7 +45,7 @@ function get_userid_by_user($user) {
 function get_user_by_userid($user_id) {
 	$myreturn='';
 	if (!empty($user_id)) {
-		$query="SELECT `user` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='$user_id'";
+		$query="SELECT `".USER_ACCOUNT_USER."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='$user_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$myreturn=mysql_result($res,0,0);
@@ -80,7 +80,7 @@ function check_login_member($level_id) {
 	}
 	$user_id=0;
 	if (isset($_SESSION['user']['user_id'])) {
-		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='".gmdate('YmdHis')."' WHERE `user_id`='".$_SESSION['user']['user_id']."'";
+		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`='".$_SESSION['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$user_id=$_SESSION['user']['user_id'];
 	}

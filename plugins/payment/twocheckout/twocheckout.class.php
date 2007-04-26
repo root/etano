@@ -118,7 +118,7 @@ class payment_twocheckout extends ipayment {
 			}
 			if ($input['x_response_code']==1) {	// processed ok
 				if (strcasecmp($input['x_MD5_Hash'],md5($this->config['secret'].$this->config['sid'].$input['x_trans_id'].$input['x_amount']))==0) {
-					$query="SELECT `user_id` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='".$input['user_id']."'";
+					$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='".$input['user_id']."'";
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					if (mysql_num_rows($res)) {
 						$real_user=mysql_fetch_assoc($res);
@@ -149,7 +149,7 @@ class payment_twocheckout extends ipayment {
 									}
 									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 									if (!$this->is_fraud) {
-										$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$real_subscr['m_value_to']."' WHERE `user_id`='".$real_user['user_id']."'";
+										$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$real_subscr['m_value_to']."' WHERE `".USER_ACCOUNT_ID."`='".$real_user['user_id']."'";
 										if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 										$myreturn=true;
 									}

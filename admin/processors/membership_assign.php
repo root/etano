@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$query="SELECT `user_id`,`user`,`membership` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id` IN ('".join("','",$input['uids'])."')";
+		$query="SELECT `".USER_ACCOUNT_ID."`,`".USER_ACCOUNT_USER."`,`membership` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$input['uids'])."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$uids=array();
 		$insert="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`gateway`,`m_value_from`,`m_value_to`,`paid_from`,`paid_until`) VALUES ";
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query=substr($query,0,-1);
 			if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
-		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$input['m_value']."' WHERE `user_id` IN ('".join("','",$input['uids'])."')";
+		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$input['m_value']."' WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$input['uids'])."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$topass['message']['type']=MESSAGE_INFO;

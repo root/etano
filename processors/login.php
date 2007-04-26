@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']="We're sorry but you tried to login too many times. Please wait for a while before trying that again.";
 			redirect2page('info.php',$topass);
 		}
-		$query="SELECT a.`user_id`,a.`user`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity`,a.`email` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`user`='$user' AND a.`pass`=md5('$pass')";
+		$query="SELECT a.`".USER_ACCOUNT_ID."`,a.`".USER_ACCOUNT_USER."`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity`,a.`email` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`".USER_ACCOUNT_USER."`='$user' AND a.`".USER_ACCOUNT_PASS."`=md5('$pass')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$user=mysql_fetch_assoc($res);

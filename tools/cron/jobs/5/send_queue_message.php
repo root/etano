@@ -9,7 +9,7 @@ function send_queue_message() {
 	$notifs=array();
 	$emails=array();
 	$mail_ids=array();
-	$query="SELECT a.`mail_id`,a.`fk_user_id`,a.`fk_user_id_other`,a.`_user_other`,a.`subject`,a.`message_body`,a.`date_sent`,a.`message_type`,b.`email`,b.`user` FROM `{$dbtable_prefix}queue_message` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`user_id` ORDER BY a.`mail_id` ASC LIMIT $limit";
+	$query="SELECT a.`mail_id`,a.`fk_user_id`,a.`fk_user_id_other`,a.`_user_other`,a.`subject`,a.`message_body`,a.`date_sent`,a.`message_type`,b.`email`,b.`".USER_ACCOUNT_USER."` FROM `{$dbtable_prefix}queue_message` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` ORDER BY a.`mail_id` ASC LIMIT $limit";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		while ($rsrow=mysql_fetch_assoc($res)) {

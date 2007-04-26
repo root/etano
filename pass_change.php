@@ -29,7 +29,7 @@ if (isset($_SESSION['topass']['input'])) {
 }
 
 if (!empty($output['uid']) && !empty($output['secret'])) {
-	$query="SELECT `user_id` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`='".$output['uid']."' AND `temp_pass`='".$output['secret']."'";
+	$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='".$output['uid']."' AND `temp_pass`='".$output['secret']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		if (get_site_option('use_captcha','core')) {

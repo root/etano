@@ -38,13 +38,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	unset($_SESSION['captcha_word']);
 
 	if (!$error) {
-		$query="SELECT `user_id`,`user` FROM ".USER_ACCOUNTS_TABLE." WHERE `email`='".$input['email']."' LIMIT 1";
+		$query="SELECT `".USER_ACCOUNT_ID."`,`".USER_ACCOUNT_USER."` FROM ".USER_ACCOUNTS_TABLE." WHERE `email`='".$input['email']."' LIMIT 1";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			list($input['uid'],$input['user'])=mysql_fetch_row($res);
 			$input['temp_pass']=md5(gen_pass(6));
 			$input['ipaddr']=$_SERVER['REMOTE_ADDR'];
-			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `temp_pass`='".$input['temp_pass']."' WHERE `user_id`='".$input['uid']."'";
+			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `temp_pass`='".$input['temp_pass']."' WHERE `".USER_ACCOUNT_ID."`='".$input['uid']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			send_template_email($input['email'],sprintf('%s password reset confirmation',_SITENAME_),'pass_reset.html',get_my_skin(),$input);
 			$topass['message']['type']=MESSAGE_INFO;
