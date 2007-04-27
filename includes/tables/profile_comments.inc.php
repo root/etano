@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       profile_left.php
-$Revision$
+File:                       includes/tables/profile_comments.inc.php
+$Revision: 67 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -11,18 +11,5 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-if (isset($output['uid'])) {
-	$uid=$output['uid'];
-	unset($output);
-	$output['uid']=$uid;
-
-	if (isset($_SESSION['user']['user_id']) && is_network_member($_SESSION['user']['user_id'],$output['uid'],NET_BLOCK)) {
-		$output['unblock_user']=true;
-	}
-}
-
-$tpl->set_file('left_content','profile_left.html');
-$tpl->set_var('output',$output);
-$tpl->set_var('tplvars',$tplvars);
-$tpl->process('left_content','left_content',TPL_OPTIONAL);
-?>
+$profile_comments_default['defaults']=array('comment_id'=>0,'fk_user_id_profile'=>0,'fk_user_id'=>0,'comment'=>'');
+$profile_comments_default['types']=array('comment_id'=>FIELD_INT,'fk_user_id_profile'=>FIELD_INT,'fk_user_id'=>FIELD_INT,'comment'=>FIELD_TEXTAREA);
