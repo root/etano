@@ -10,7 +10,7 @@ $(function() {
 							if (data[0]==0) {
 								$('#photocomment_form')[0].comment_id.value=unescape(data[1]);
 								$('#photocomment_form')[0].comment.value=unescape(data[2]);
-								$('#post-button')[0].scrollIntoView(true);
+								$('#postarea').ScrollTo(800);
 							} else {
 								alert(data[1]);
 							}

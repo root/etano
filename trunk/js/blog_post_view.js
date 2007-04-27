@@ -10,7 +10,7 @@ $(function() {
 							if (data[0]==0) {
 								$('#comment_id').val(unescape(data[1]));
 								$('#comment').val(unescape(data[2]));
-								$('#post-button')[0].scrollIntoView(true);
+								$('#postarea').ScrollTo(800);
 							} else {
 								alert(data[1]);
 							}
@@ -23,3 +23,4 @@ $(function() {
 		return false;
 	});
 });
+

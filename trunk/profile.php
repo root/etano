@@ -38,10 +38,12 @@ if (isset($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']==$uid) {
 	redirect2page('my_profile.php');
 }
 
+$edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
+
 $output=array();
 // we don't care about user status because the cache generator will generate the profile for the user only if status is approved
 // also _photo is set only with approved photos.
-$query="SELECT `fk_user_id` as `uid`,`_user` as `user`,`_photo` as `photo`,`status` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='$uid' AND `del`=0";
+$query="SELECT `fk_user_id` as `uid`,`_user` as `user`,`_photo` as `photo` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='$uid' AND `del`=0";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output=mysql_fetch_assoc($res);
@@ -49,6 +51,7 @@ if (mysql_num_rows($res)) {
 
 $user_photos=array();
 $categs=array();
+$loop_comments=array();
 if (!empty($output)) {
 	// user photos
 	$query="SELECT `photo_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`='".$output['uid']."' AND `is_private`=0 AND `status`='".STAT_APPROVED."' AND `del`=0";
@@ -63,6 +66,7 @@ if (!empty($output)) {
 		$output['num_photos']=mysql_num_rows($res);
 	}
 
+	// get the profile
 	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
 	$user_cache=new user_cache(get_my_skin());
 
@@ -84,21 +88,99 @@ if (!empty($output)) {
 	}
 	$categs[count($categs)-1]['class']='last';
 
+	// get some friends
+	$output['user_friends']=get_network_members($output['uid'],NET_FRIENDS,4);
+	if (!empty($output['user_friends'])) {
+		$output['user_friends']=$user_cache->get_cache_array($output['user_friends'],'result_user');
+		$output['user_friends']=smart_table($output['user_friends'],1,'gallery_view');
+	} else {
+		unset($output['user_friends']);
+	}
+	unset($user_cache);
+
+	// comments
+	if (get_user_settings($output['uid'],'def_user_prefs','profile_comments')) {
+		// may I see any comment?
+		$output['show_comments']=true;
+		$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
+		$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}profile_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_user_id_profile`='".$output['uid']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			// if someone has asked to edit his/her comment
+			if ($edit_comment==$rsrow['comment_id']) {
+				$output['comment_id']=$rsrow['comment_id'];
+				$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
+			}
+			$rsrow['date_posted']=strftime($_user_settings['datetime_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
+			$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			if (!empty($config['bbcode_comments'])) {
+				$rsrow['comment']=bbcode2html($rsrow['comment']);
+			}
+			if (!empty($config['smilies_comm'])) {
+				$rsrow['comment']=text2smilies($rsrow['comment']);
+			}
+			// allow showing the edit links to rightfull owners
+			if (isset($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
+				$rsrow['editme']=true;
+			}
+
+			if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
+				unset($rsrow['fk_user_id']);
+			}
+			if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
+				$rsrow['photo']='no_photo.gif';
+			}
+			$loop_comments[]=$rsrow;
+		}
+
+		if (!empty($loop_comments)) {
+			$output['num_comments']=count($loop_comments);
+		}
+
+		// may I post comments please?
+		if (allow_at_level(9,$_SESSION['user']['membership'])) {
+			$output['allow_comments']=true;
+			if (!isset($_SESSION['user']['user_id'])) {
+				if ($config['use_captcha']) {
+					require_once 'includes/classes/sco_captcha.class.php';
+					$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
+					$_SESSION['captcha_word']=$c->gen_rnd_string(4);
+					$output['rand']=make_seed();
+					$output['use_captcha']=true;
+				}
+			}
+			// would you let me use bbcode?
+			if (!empty($config['bbcode_comments'])) {
+				$output['bbcode_comments']=true;
+			}
+			// if we came back after an error get what was previously posted
+			if (isset($_SESSION['topass']['input'])) {
+				$output=array_merge($output,$_SESSION['topass']['input']);
+				unset($_SESSION['topass']['input']);
+			}
+		}
+	}
+
+
 	$tplvars['pic_width']=get_site_option('pic_width','core_photo');
 	$tplvars['title']=sprintf('%s Profile',$output['user']);
 	$tplvars['page_title']=$output['user'];
 }
 
-$output['return']='profile.php';
+$output['return2me']='profile.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return'].='?'.$_SERVER['QUERY_STRING'];
+	if (!empty($edit_comment)) {
+		$_SERVER['QUERY_STRING']=str_replace('&edit_comment='.$edit_comment,'',$_SERVER['QUERY_STRING']);
+	}
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
-$output['return']=rawurlencode($output['return']);
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','profile.html');
 $tpl->set_loop('categs',$categs);
 $tpl->set_loop('user_photos',$user_photos);
+$tpl->set_loop('loop_comments',$loop_comments);
 $tpl->set_var('output',$output);
-$tpl->process('content','content',TPL_LOOP | TPL_OPTIONAL);
+$tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 $tpl->drop_loop('user_photos');
 unset($categs);
