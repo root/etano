@@ -28,7 +28,7 @@ if (isset($_POST['field']) && !empty($_POST['field'])) {
 	for ($i=0;isset($accepted_values[$i]);++$i) {
 		$output.=$i.'|'.$accepted_values[$i]."\n";
 	}
-	$output=substr($output,0,-1);
+	$output=sanitize_and_format(substr($output,0,-1),TYPE_STRING,FORMAT_TEXT2HTML);
 }
 echo $output;
 ?>
