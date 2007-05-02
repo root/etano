@@ -196,6 +196,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="INSERT IGNORE INTO ".USER_ACCOUNTS_TABLE." SET `".USER_ACCOUNT_USER."`='".$input['user']."',`".USER_ACCOUNT_PASS."`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`='2',`status`='".ASTAT_UNVERIFIED."',`temp_pass`='".$input['temp_pass']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$_SESSION['user']['reg_id']=mysql_insert_id();
+			$_SESSION['user']['user']=$input['user'];	// for `dsb_payments`
 			$_SESSION['user']['email']=$input['email'];	// for info_signup.html
 			$input['uid']=$_SESSION['user']['reg_id'];
 			send_template_email($input['email'],sprintf('%s user registration confirmation',_SITENAME_),'confirm_reg.html',get_my_skin(),$input);
@@ -237,6 +238,23 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				eval($on_changes[$i]['fn'].'($_SESSION[\'user\'][\'reg_id\'],$on_changes[$i][\'param2\'],$on_changes[$i][\'param3\']);');
 			}
 		}
+		// auto subscriptions
+		if (!isset($_GET['nas'])) {
+			$query="SELECT a.`dbfield`,a.`field_value`,b.`subscr_id`,b.`is_recurent`,b.`m_value_to`,b.`duration`,b.`duration_units` FROM `{$dbtable_prefix}subscriptions_auto` a, `{$dbtable_prefix}subscriptions` b WHERE a.`dbfield` IN ('','".join("','",array_keys($input))."') AND a.`fk_subscr_id`=b.`subscr_id` AND a.`date_start`='0000-00-00'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			while ($rsrow=mysql_fetch_assoc($res)) {
+				if ((!empty($rsrow['dbfield']) && $input[$rsrow['dbfield']]==$rsrow['field_value']) || empty($rsrow['dbfield'])) {
+					$qs.=$qs_sep.'nas=1';	// no more auto_subscr checking from now on
+					$qs_sep='&';
+					$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$rsrow['m_value_to']."' WHERE `".USER_ACCOUNT_ID."`='".$_SESSION['user']['reg_id']."'";
+					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+					// save as a payment with amount 0
+					$query="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`fk_subscr_id`,`is_recuring`,`email`,`m_value_from`,`m_value_to`,`paid_from`,`paid_until`) VALUES ('".$_SESSION['user']['reg_id']."','".$_SESSION['user']['user']."','".$rsrow['subscr_id']."','".$rsrow['is_recurent']."','".$_SESSION['user']['email']."','2','".$rsrow['m_value_to']."',now(),now()+INTERVAL ".$rsrow['duration'].' '.$rsrow['duration_units'].")";
+					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+					break;
+				}
+			}
+		}
 
 		ksort($next_join_pages,SORT_NUMERIC);
 		if (!empty($next_join_pages)) {
@@ -245,6 +263,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$qs.=$qs_sep.'p='.$page;
 			$qs_sep='&';
 		} else {
+			unset($_SESSION['user']['auto_subscr']);
 			$nextpage='info.php';
 			$qs.=$qs_sep.'type=signup';
 			$qs_sep='&';

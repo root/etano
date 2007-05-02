@@ -41,19 +41,13 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 TODO
 
-- la profile.php: blogs + comments
 - auto subscriptions in join.php
-- installer + modman
 - rate limiter in pagini
 - events
-- rewritten urls list
-- licenta si verificari
 - js field check
 - site bans
 - formatare la date of birth
-- create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
 - lungime maxima camp pt textareas
-- bad words
 
 - scor la blog add doar daca blogul este mai mare de x caractere.
 - scor in functie de rating.
@@ -85,6 +79,10 @@ TODO
 - search membri (search.php) case 'vote',case 'views',case 'comm'
 - search default cu defaultul membrului.
 - favorite photos/blogs
+- installer + modman
+- rewritten urls list
+- licenta si verificari
+- create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
 
 
 ---------------------------------------------------------------------

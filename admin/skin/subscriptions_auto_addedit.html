@@ -2,7 +2,7 @@
 
 <div class="hint">Please enter the auto subscription info:</div>
 
-<form action="processors/subscriptions_auto_addedit.php" method="post" id="subscriptions_auto_addedit" onsubmit="return(check_form(this))">
+<form action="processors/subscriptions_auto_addedit.php" method="post" id="subscriptions_auto_addedit">
 <input type="hidden" name="asubscr_id" value="{subscriptions_auto.asubscr_id}" />
 <table id="asubscr_addedit" class="form_table">
 <tr>
@@ -10,7 +10,7 @@
 	<td class="field">
 		<table>
 		<tr>
-			<td>Join</td>
+			<td><b>Join</b></td>
 		</tr>
 		</table>
 	</td>
@@ -36,7 +36,7 @@
 			<td>
 				<input type="radio" name="to_members" id="to_members_2" value="2" tabindex="3" {subscriptions_auto.to_members_2} />
 				having field
-				<select name="dbfield" id="dbfield" tabindex="4" onchange="req_field_change(this.value)">
+				<select name="dbfield" id="dbfield" tabindex="4">
 				<option value=""></option>
 				{subscriptions_auto.dbfield}
 				</select> =
