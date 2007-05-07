@@ -83,7 +83,7 @@ if (isset($_GET['st'])) {
 				$field_ok=false;
 				$fid=0;
 				foreach ($_pfields as $k=>$field) {
-					if ($field['dbfield']==$input['f'] && $field['html_type']==FIELD_SELECT) {
+					if ($field['dbfield']==$input['f'] && $field['field_type']==FIELD_SELECT) {
 						$field_ok=true;
 						$fid=$k;
 						break;

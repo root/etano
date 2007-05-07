@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$ch=0;
 	for ($i=0;isset($my_fields[$i]);++$i) {
 		$field=$_pfields[$my_fields[$i]];
-		switch ($field['html_type']) {
+		switch ($field['field_type']) {
 
 			case FIELD_DATE:
 				$input[$field['dbfield'].'_month']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_month',TYPE_INT,0,0);
@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 			case FIELD_TEXTAREA:
 				$textareas[]=$field['dbfield'];
-				$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['html_type']],$__field2format[$field['html_type']],''));
+				$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],''));
 				if (isset($field['fn_on_change'])) {
 					$on_changes[$ch]['fn']=$field['fn_on_change'];
 					$on_changes[$ch]['param2']=$input[$field['dbfield']];
@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				break;
 
 			case FIELD_TEXTFIELD:
-				$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['html_type']],$__field2format[$field['html_type']],''));
+				$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],''));
 				if (isset($field['fn_on_change'])) {
 					$on_changes[$ch]['fn']=$field['fn_on_change'];
 					$on_changes[$ch]['param2']=$input[$field['dbfield']];
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				break;
 
 			default:
-				$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['html_type']],$__field2format[$field['html_type']],'');
+				$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],'');
 				if (isset($field['fn_on_change'])) {
 					$on_changes[$ch]['fn']=$field['fn_on_change'];
 					$on_changes[$ch]['param2']=$input[$field['dbfield']];
@@ -176,12 +176,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}	// switch
 		// check for input errors
 		if (isset($field['required'])) {
-			if (empty($input[$field['dbfield']]) && $field['html_type']!=FIELD_LOCATION) {
+			if (empty($input[$field['dbfield']]) && $field['field_type']!=FIELD_LOCATION) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
 				$topass['message']['text'][]="The fields outlined below are required and must not be empty.";
 				$input['error_'.$field['dbfield']]='red_border';
-			} elseif ($field['html_type']==FIELD_LOCATION && empty($input[$field['dbfield'].'_country'])) {
+			} elseif ($field['field_type']==FIELD_LOCATION && empty($input[$field['dbfield'].'_country'])) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
 				$topass['message']['text'][]='The fields outlined below are required and must not be empty.';
@@ -222,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 		for ($i=0;isset($my_fields[$i]);++$i) {
-			if ($_pfields[$my_fields[$i]]['html_type']==FIELD_LOCATION) {
+			if ($_pfields[$my_fields[$i]]['field_type']==FIELD_LOCATION) {
 				$query.=",`".$_pfields[$my_fields[$i]]['dbfield']."_country`='".$input[$_pfields[$my_fields[$i]]['dbfield'].'_country']."',`".$_pfields[$my_fields[$i]]['dbfield']."_state`='".$input[$_pfields[$my_fields[$i]]['dbfield'].'_state']."',`".$_pfields[$my_fields[$i]]['dbfield']."_city`='".$input[$_pfields[$my_fields[$i]]['dbfield'].'_city']."',`".$_pfields[$my_fields[$i]]['dbfield']."_zip`='".$input[$_pfields[$my_fields[$i]]['dbfield'].'_zip']."'";
 			} else {
 				$query.=",`".$_pfields[$my_fields[$i]]['dbfield']."`='".$input[$_pfields[$my_fields[$i]]['dbfield']]."'";

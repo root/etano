@@ -57,26 +57,23 @@ if (isset($_SESSION['topass']['input'])) {
 	}
 	$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$accepted_values=explode('|',substr($output['accepted_values'],1,-1));
-} elseif (isset($_GET['html_type']) && !empty($_GET['html_type'])) {
-	$output['html_type']=(int)$_GET['html_type'];
+} elseif (isset($_GET['field_type']) && !empty($_GET['field_type'])) {
+	$output['field_type']=(int)$_GET['field_type'];
 }
 
-switch ($output['html_type']) {
+switch ($output['field_type']) {
 
 	case FIELD_TEXTFIELD:
 		$output['row_searchable']=true;
 		$output['row_st']='invisible';
 		$output['search_type']='';
-		$output['row_accval_select']=false;
-		$output['row_accval_checkbox']=false;
 		break;
 
 	case FIELD_TEXTAREA:
 		$output['row_searchable']=true;
 		$output['row_st']='invisible';
 		$output['search_type']='';
-		$output['row_accval_select']=false;
-		$output['row_accval_checkbox']=false;
+		$output['row_accval_textarea']=true;
 		break;
 
 	case FIELD_SELECT:
@@ -90,7 +87,7 @@ switch ($output['html_type']) {
 		}
 		$output['row_searchable']=true;
 		$output['row_st']='visible';
-		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_DATE,FIELD_LOCATION));
+		$output['search_type']=vector2options($accepted_fieldtype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_DATE,FIELD_LOCATION));
 		// show the accepted values for selects and checkboxes fields
 		$output['row_accval_selcheck']=true;
 		// revert $accepted_values values to db original and add slashes
@@ -114,7 +111,7 @@ switch ($output['html_type']) {
 		}
 		$output['row_searchable']=true;
 		$output['row_st']='visible';
-		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_DATE,FIELD_LOCATION,FIELD_RANGE));
+		$output['search_type']=vector2options($accepted_fieldtype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_DATE,FIELD_LOCATION,FIELD_RANGE));
 		$output['row_accval_selcheck']=true;
 		// revert $accepted_values values to db original and add slashes
 		$output['acc_vals_jsarrays']=vector2jsarrays(sanitize_and_format($accepted_values,TYPE_STRING,FORMAT_ADDSLASH | FORMAT_TEXT2HTML));
@@ -129,7 +126,7 @@ switch ($output['html_type']) {
 	case FIELD_DATE:
 		$output['row_searchable']=true;
 		$output['row_st']='visible';
-		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_SELECT,FIELD_CHECKBOX_LARGE,FIELD_LOCATION,FIELD_DATE));
+		$output['search_type']=vector2options($accepted_fieldtype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_SELECT,FIELD_CHECKBOX_LARGE,FIELD_LOCATION,FIELD_DATE));
 		$output['row_accval_date']=true;
 		$output['year_start']=(isset($accepted_values[0]) && !empty($accepted_values[0])) ? $accepted_values[0] : 0;
 		$output['year_end']=isset($accepted_values[1]) ? $accepted_values[1] : 0;
@@ -142,14 +139,14 @@ switch ($output['html_type']) {
 		$output['default_value']=substr($output['default_value'],1,-1);
 		$output['row_searchable']=true;
 		$output['row_st']='visible';
-		$output['search_type']=vector2options($accepted_htmltype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_SELECT,FIELD_CHECKBOX_LARGE,FIELD_DATE,FIELD_RANGE));
+		$output['search_type']=vector2options($accepted_fieldtype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_SELECT,FIELD_CHECKBOX_LARGE,FIELD_DATE,FIELD_RANGE));
 		$output['row_accval_location']=true;
 		$output['default_value']=dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output['default_value']);
 		break;
 
 }
 
-$output['htmltype_text']=$accepted_htmltype[$output['html_type']];
+$output['fieldtype_text']=$accepted_fieldtype[$output['field_type']];
 $output['searchable']=!empty($output['searchable']) ? 'checked="checked"' : '';
 $output['for_basic']=!empty($output['for_basic']) ? 'checked="checked"' : '';
 $output['at_registration']=!empty($output['at_registration']) ? 'checked="checked"' : '';

@@ -23,7 +23,7 @@ $qs_sep='';
 $topass=array();
 $pfield_id=isset($_GET['pfield_id']) ? (int)$_GET['pfield_id'] : 0;
 
-$query="SELECT `html_type`,`dbfield`,`fk_lk_id_label`,`fk_lk_id_search`,`fk_lk_id_help` FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`='$pfield_id'";
+$query="SELECT `field_type`,`dbfield`,`fk_lk_id_label`,`fk_lk_id_search`,`fk_lk_id_help` FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`='$pfield_id'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$rsrow=mysql_fetch_assoc($res);
@@ -33,7 +33,7 @@ if (mysql_num_rows($res)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$query="DELETE FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`='$pfield_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if ($rsrow['html_type']==FIELD_LOCATION) {
+	if ($rsrow['field_type']==FIELD_LOCATION) {
 		$query="ALTER TABLE `{$dbtable_prefix}user_profiles` DROP `".$rsrow['dbfield']."_country`,DROP `".$rsrow['dbfield']."_state`,DROP `".$rsrow['dbfield']."_city`,DROP `".$rsrow['dbfield']."_zip`";
 	} else {
 		$query="ALTER TABLE `{$dbtable_prefix}user_profiles` DROP `".$rsrow['dbfield']."`";

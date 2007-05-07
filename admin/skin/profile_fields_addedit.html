@@ -1,10 +1,10 @@
 <h2>Add / Edit a Profile Field</h2>
 
-<div class="hint">Field type: <b>{output.htmltype_text}</b></div>
+<div class="hint">Field type: <b>{output.fieldtype_text}</b></div>
 
 <form action="processors/profile_fields_addedit.php" method="post" id="profile_fields_addedit">
 <input type="hidden" name="pfield_id" id="pfield_id" value="{output.pfield_id}" />
-<input type="hidden" name="html_type" value="{output.html_type}" />
+<input type="hidden" name="field_type" value="{output.field_type}" />
 <input type="hidden" name="fk_lk_id_label" value="{output.fk_lk_id_label}" />
 <input type="hidden" name="fk_lk_id_search" value="{output.fk_lk_id_search}" />
 <input type="hidden" name="fk_lk_id_help" value="{output.fk_lk_id_help}" />
@@ -165,6 +165,6 @@
 	var default_value=Array({output.default_value_jsarr});
 	var default_search=Array({output.default_search_jsarr});
 	var baseurl='{tplvars.baseurl}';
-	var html_type=parseInt('{output.html_type}');
+	var field_type=parseInt('{output.field_type}');
 </script>
 <script type="text/javascript" src="js/profile_fields_addedit.js"></script>

@@ -24,3 +24,7 @@
 #join-tease li {
 	list-style-type: disc;
 }
+
+.char_counter {
+	text-align: right;
+}

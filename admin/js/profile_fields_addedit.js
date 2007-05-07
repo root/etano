@@ -1,6 +1,6 @@
 $(function() {
 // for selects or checkboxes display the list of values
-	if (html_type==3 || html_type==10) {
+	if (field_type==3 || field_type==10) {
 		update_list();
 	}
 
@@ -78,7 +78,7 @@ function update_list() {
 		}
 		for (i=0;i<accvals.length;i++) {
 			towrite+='<li><ul class="litem_tools"><li><a class="item_edit" href="javascript:;" onclick="addedit_accval(\'edit\','+i+')" title="Edit value">Edit</a></li><li><a class="item_add" href="javascript:;" onclick="addedit_accval(\'add\','+(i+1)+')" title="Add new value after this one">Add new value after this one</a></li><li><a class="item_del" href="javascript:;" onclick="delete_accval('+i+')" title="Delete value">Delete value</a></li>';
-			if (html_type==3) {	// FIELD_SELECT
+			if (field_type==3) {	// FIELD_SELECT
 				towrite+='<li><input type="radio" name="default_value[]" id="default_value_'+i+'" value="'+i+'" title="Default value" onclick="adddel_defval(true,'+i+')"';
 				for (j=0;j<default_value.length;j++) {
 					if (parseInt(default_value[j])==i) {
@@ -87,7 +87,7 @@ function update_list() {
 					}
 				}
 				towrite+=' /></li>';
-			} else if (html_type==10 || html_type==108) {	// FIELD_CHECKBOX_LARGE || FIELD_RANGE
+			} else if (field_type==10 || field_type==108) {	// FIELD_CHECKBOX_LARGE || FIELD_RANGE
 				towrite+='<li><input type="checkbox" name="default_value[]" id="default_value_'+i+'" value="'+i+'" title="Default value" onclick="adddel_defval(this.checked,'+i+')"';
 				for (j=0;j<default_value.length;j++) {
 					if (parseInt(default_value[j])==i) {
@@ -230,7 +230,7 @@ function delete_accval(position) {
 }
 
 function adddel_defval(type,position) {
-	if (html_type==3) {	//FIELD_SELECT
+	if (field_type==3) {	//FIELD_SELECT
 		if (type) {		// add here
 			for (i=0;i<accvals.length;i++) {
 				if (i!=position) {
@@ -241,7 +241,7 @@ function adddel_defval(type,position) {
 		} else {		// del here
 			default_value=new Array();
 		}
-	} else if (html_type==10) { 	//FIELD_CHECKBOX_LARGE
+	} else if (field_type==10) { 	//FIELD_CHECKBOX_LARGE
 		if (type) {	// add here
 			doadd=true;
 			for (i=0;i<default_value.length;i++) {

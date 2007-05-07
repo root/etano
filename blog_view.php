@@ -29,10 +29,6 @@ if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 		include _CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php';
 	}
 
-	$is_auth_user=false;
-	if (isset($_SESSION['user']['user_id'])) {
-		$is_auth_user=true;
-	}
 	$year=sanitize_and_format_gpc($_GET,'y',TYPE_INT,0,0);
 	$month=sanitize_and_format_gpc($_GET,'m',TYPE_INT,0,0);
 	if (empty($year)) {
@@ -51,25 +47,28 @@ if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 	if (!empty($year) && !empty($month)) {
 		$config=get_site_option(array('bbcode_blogs'),'core_blog');
 		$month=str_pad($month,2,'0',STR_PAD_LEFT);
-		$query="SELECT `post_id`,`title`,`post_content`,`_user` as `user`,`fk_user_id`,UNIX_TIMESTAMP(`date_posted`) as `date_posted`,`stat_comments`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' AND `date_posted`>'{$year}{$month}00000000' AND `date_posted`<='{$year}{$month}31235959' AND `status`='".STAT_APPROVED."' ORDER BY `date_posted` DESC";
+		// no need to check the status of the posts ( AND `status`='".STAT_APPROVED."')
+		$query="SELECT `post_id`,`stat_comments`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' AND `date_posted`>'{$year}{$month}00000000' AND `date_posted`<='{$year}{$month}31235959' ORDER BY `post_id` DESC";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		while ($rsrow=mysql_fetch_assoc($res)) {
-			$rsrow['date_posted']=strftime($_user_settings['datetime_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
-			if (empty($rsrow['fk_user_id'])) {
-				unset($rsrow['fk_user_id']);
+		if (mysql_num_rows($res)) {
+			$post_ids=array();
+			$temp=array();
+			while ($rsrow=mysql_fetch_assoc($res)) {
+				$post_ids[]=$rsrow['post_id'];
+				$temp[$rsrow['post_id']]=$rsrow;
 			}
-			if (empty($rsrow['allow_comments'])) {
-				unset($rsrow['allow_comments']);
+			require_once _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
+			$blog_posts_cache=new blog_posts_cache();
+			$loop=$blog_posts_cache->get_tpl_array($post_ids,false);
+			unset($blog_posts_cache);
+			for ($i=0;isset($loop[$i]);++$i) {
+				$loop[$i]['date_posted']=strftime($_user_settings['datetime_format'],$loop[$i]['date_posted']+$_user_settings['time_offset']);
+				if (isset($_SESSION['user']['user_id']) && $loop[$i]['fk_user_id']==$_SESSION['user']['user_id']) {
+					$loop[$i]['editable']=true;
+				}
+				$loop[$i]['stat_comments']=$temp[$loop[$i]['post_id']]['stat_comments'];
+				$loop[$i]['allow_comments']=$temp[$loop[$i]['post_id']]['allow_comments'];
 			}
-			if ($is_auth_user && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
-				$rsrow['editable']=true;
-			}
-			$rsrow['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-			$rsrow['post_content']=sanitize_and_format($rsrow['post_content'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-			if (!empty($config['bbcode_blogs'])) {
-				$rsrow['post_content']=bbcode2html($rsrow['post_content']);
-			};
-			$loop[]=$rsrow;
 		}
 	}
 }

@@ -7,6 +7,7 @@
 </div>
 
 <opt name="output.show_comments">
+<h3>{output.num_comments} comments</h3>
 <loop name="loop">
 <div class="comment {loop.is_online}">
 	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">

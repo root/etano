@@ -162,9 +162,9 @@ if ($do_query) {
 
 			case FIELD_SELECT:
 				if (isset($input[$field['dbfield']])) {
-					if ($field['html_type']==FIELD_SELECT) {
+					if ($field['field_type']==FIELD_SELECT) {
 						$where.=" AND a.`".$field['dbfield']."`='".$input[$field['dbfield']]."'";
-					} elseif ($field['html_type']==FIELD_CHECKBOX_LARGE) {
+					} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
 						$where.=" AND a.`".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']]."|%'";
 					}
 				}
@@ -172,7 +172,7 @@ if ($do_query) {
 
 			case FIELD_CHECKBOX_LARGE:
 				if (isset($input[$field['dbfield']])) {
-					if ($field['html_type']==FIELD_SELECT) {
+					if ($field['field_type']==FIELD_SELECT) {
 						if (count($input[$field['dbfield']])) {
 							$where.=" AND (";
 							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
@@ -181,7 +181,7 @@ if ($do_query) {
 							$where=substr($where,0,-4);	// substract the last ' OR '
 							$where.=')';
 						}
-					} elseif ($field['html_type']==FIELD_CHECKBOX_LARGE) {
+					} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
 						if (count($input[$field['dbfield']])) {
 							$where.=" AND (";
 							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
@@ -197,16 +197,16 @@ if ($do_query) {
 			case FIELD_RANGE:
 				$now=gmdate('YmdHis');
 				if (isset($input[$field['dbfield'].'_max'])) {
-					if ($field['html_type']==FIELD_DATE) {
+					if ($field['field_type']==FIELD_DATE) {
 						$where.=" AND a.`".$field['dbfield']."`>=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
-					} elseif ($field['html_type']==FIELD_SELECT) {
+					} elseif ($field['field_type']==FIELD_SELECT) {
 						$where.=" AND `".$field['dbfield']."`<=".$input[$field['dbfield'].'_max'];
 					}
 				}
 				if (isset($input[$field['dbfield'].'_min'])) {
-					if ($field['html_type']==FIELD_DATE) {
+					if ($field['field_type']==FIELD_DATE) {
 						$where.=" AND a.`".$field['dbfield']."`<=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
-					} elseif ($field['html_type']==FIELD_SELECT) {
+					} elseif ($field['field_type']==FIELD_SELECT) {
 						$where.=" AND `".$field['dbfield']."`>=".$input[$field['dbfield'].'_min'];
 					}
 				}
@@ -284,7 +284,7 @@ if (!empty($totalrows)) {
 	$query="SELECT `fk_user_id`,`_user`,`_photo`,`status`,`del`";
 	for ($i=0;isset($basic_search_fields[$i]);++$i) {
 		$field=$_pfields[$basic_search_fields[$i]];
-		switch ($field['html_type']) {
+		switch ($field['field_type']) {
 
 			case FIELD_LOCATION:
 				$query.=','.$field['dbfield'].'_country,'.$field['dbfield'].'_state,'.$field['dbfield'].'_city,'.$field['dbfield'].'_zip';
@@ -301,7 +301,7 @@ if (!empty($totalrows)) {
 		for ($i=0;isset($basic_search_fields[$i]);++$i) {
 			$field=$_pfields[$basic_search_fields[$i]];
 			$rsrow[$field['dbfield'].'_label']=$field['label'];
-			switch ($field['html_type']) {
+			switch ($field['field_type']) {
 
 				case FIELD_TEXTFIELD:
 					$rsrow[$field['dbfield']]=sanitize_and_format($rsrow[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);

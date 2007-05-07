@@ -33,7 +33,7 @@ if (!empty($totalrows)) {
 	// create the $pfields helper array for easier access to fields by dbfield
 	$pfields=array();
 	foreach ($_pfields as $pfield_id=>$pfield) {
-		if ($pfield['html_type']==FIELD_SELECT) {
+		if ($pfield['field_type']==FIELD_SELECT) {
 			$pfields[$pfield['dbfield']]['label']=$pfield['label'];
 			$pfields[$pfield['dbfield']]['accepted_values']=$pfield['accepted_values'];
 		}

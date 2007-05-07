@@ -43,12 +43,12 @@ if (!empty($totalrows)) {
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$loop[$i]=$rsrow;
 		$loop[$i]=sanitize_and_format($loop[$i],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-		if ($loop[$i]['html_type']==FIELD_SELECT || $loop[$i]['html_type']==FIELD_CHECKBOX_LARGE) {
+		if ($loop[$i]['field_type']==FIELD_SELECT || $loop[$i]['field_type']==FIELD_CHECKBOX_LARGE) {
 			$loop[$i]['accepted_values']=lkids2lks(explode('|',substr($loop[$i]['accepted_values'],1,-1)),$default_skin_code);
 		} else {
 			$loop[$i]['accepted_values']=str_replace('|',', ',substr($loop[$i]['accepted_values'],1,-1));
 		}
-		$loop[$i]['html_type']=$accepted_htmltype[$loop[$i]['html_type']];
+		$loop[$i]['field_type']=$accepted_fieldtype[$loop[$i]['field_type']];
 		$loop[$i]['searchable']=!empty($loop[$i]['searchable']) ? '<img src="skin/images/check.gif" alt="" />' : '';
 		$loop[$i]['at_registration']=!empty($loop[$i]['at_registration']) ? '<img src="skin/images/check.gif" alt="" />' : '';
 		$loop[$i]['required']=!empty($loop[$i]['required']) ? '<img src="skin/images/check.gif" alt="" />' : '';
@@ -60,7 +60,7 @@ if (!empty($totalrows)) {
 	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 }
 $tpl->set_loop('loop',$loop);
-$tpl->set_var('html_type',vector2options($accepted_htmltype,'',array(FIELD_RANGE)));
+$tpl->set_var('field_type',vector2options($accepted_fieldtype,'',array(FIELD_RANGE)));
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);

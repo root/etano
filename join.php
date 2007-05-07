@@ -49,7 +49,7 @@ if (empty($output)) {
 	for ($i=0;isset($my_fields[$i]);++$i) {
 		$field=$_pfields[$my_fields[$i]];
 //print_r($field);
-		switch ($field['html_type']) {
+		switch ($field['field_type']) {
 
 			case FIELD_SELECT:
 				$output[$field['dbfield']]=isset($field['default_value'][0]) ? $field['default_value'][0] : '';
@@ -78,6 +78,7 @@ if (empty($output)) {
 	}	// for()
 }
 
+$config=get_site_option(array('ta_len'),'core');
 $loop=array();
 $j=0;
 for ($i=0;isset($my_fields[$i]);++$i) {
@@ -93,14 +94,17 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 		$loop[$j]['class_error']=$output['error_'.$field['dbfield']];
 		unset($output['error_'.$field['dbfield']]);
 	}
-	switch ($field['html_type']) {
+	switch ($field['field_type']) {
 
 		case FIELD_TEXTFIELD:
 			$loop[$j]['field']='<input type="text" name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" value="'.$output[$field['dbfield']].'" tabindex="'.($i+4).'" />';
 			break;
 
 		case FIELD_TEXTAREA:
-			$loop[$j]['field']='<textarea name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.$output[$field['dbfield']].'</textarea>';
+			$loop[$j]['field']='<textarea name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'" cols="" rows="">'.$output[$field['dbfield']].'</textarea>';
+			if (!empty($config['ta_len'])) {
+				$loop[$j]['field'].='<p class="comment char_counter">Remaining chars: <span id="'.$field['dbfield'].'_chars">'.($config['ta_len']-strlen($output[$field['dbfield']])).'</span></p>'; //translate
+			}
 			break;
 
 		case FIELD_SELECT:
@@ -161,6 +165,7 @@ if ($page==1) {
 	}
 }
 $output['page']=$page;
+$output['ta_len']=$config['ta_len'];
 
 $tpl->set_file('content','join.html');
 $tpl->set_loop('loop',$loop);

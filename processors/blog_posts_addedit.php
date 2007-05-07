@@ -26,6 +26,7 @@ $topass=array();
 $nextpage='my_blog_posts.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
+	$blog_posts_default['defaults']['allow_comments']=0;
 // get the input we need and sanitize it
 	foreach ($blog_posts_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$blog_posts_default['defaults'][$k]);
@@ -59,7 +60,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!empty($input['post_id'])) {
 			$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='".gmdate('YmdHis')."'";
 			if ($config['manual_blog_approval']==1) {
-				$query.=",`status`='".STAT_PENDING."'";
+				// set to pending only if the title or content was changed.
+				$query2="SELECT `title`,`post_content` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='".$input['post_id']."'";
+				if (!($res=@mysql_query($query2))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				if (mysql_num_rows($res)) {
+					$rsrow=sanitize_and_format(mysql_fetch_assoc($res),TYPE_STRING,$__field2format[TEXT_DB2DB]);
+					if (strcmp($rsrow['title'],$input['title'])!=0 || strcmp($rsrow['post_content'],$input['post_content'])!=0) {
+						$query.=",`status`='".STAT_PENDING."'";
+					}
+				}
 			} else {
 				$query.=",`status`='".STAT_APPROVED."'";
 			}
