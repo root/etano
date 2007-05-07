@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['search_label']=sanitize_and_format_gpc($_POST,'search_label',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$input['help_text']=sanitize_and_format_gpc($_POST,'help_text',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
-	if ($input['html_type']==FIELD_DATE) {
+	if ($input['field_type']==FIELD_DATE) {
 		$input['year_start']=sanitize_and_format_gpc($_POST,'year_start',TYPE_INT,0,0);
 		$input['year_end']=sanitize_and_format_gpc($_POST,'year_end',TYPE_INT,0,0);
 		$input['def_start']=sanitize_and_format_gpc($_POST,'def_start',TYPE_INT,0,0);
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['error_search_label']='red_border';
 	}
 
-	if (($input['html_type']==FIELD_SELECT || $input['html_type']==FIELD_CHECKBOX_LARGE) && (empty($input['accepted_values']) || $input['accepted_values']=='||')) {
+	if (($input['field_type']==FIELD_SELECT || $input['field_type']==FIELD_CHECKBOX_LARGE) && (empty($input['accepted_values']) || $input['accepted_values']=='||')) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='You need to add at least one option for this type of field!';
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['error_fk_pcat_id']='red_border';
 	}
 
-	switch ($input['html_type']) {
+	switch ($input['field_type']) {
 
 		case FIELD_SELECT:
 		case FIELD_CHECKBOX_LARGE:
@@ -175,9 +175,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-			regenerate_fields_array();
-			regenerate_langstrings_array();
-
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Field changed.';
 		} else {
@@ -211,20 +208,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			$query=substr($query,0,-1);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			if ($input['html_type']!=FIELD_LOCATION) {
-				$query="ALTER TABLE `{$dbtable_prefix}user_profiles` ADD `".$input['dbfield'].'` '.$field_dbtypes[$input['html_type']];
+			if ($input['field_type']!=FIELD_LOCATION) {
+				$query="ALTER TABLE `{$dbtable_prefix}user_profiles` ADD `".$input['dbfield'].'` '.$field_dbtypes[$input['field_type']];
 			} else {
 				$query="ALTER TABLE `{$dbtable_prefix}user_profiles` ADD `".$input['dbfield'].'_country` int(3) not null default 0, ADD `'.$input['dbfield'].'_state` int(10) not null default 0, ADD `'.$input['dbfield'].'_city` int(10) not null default 0, ADD `'.$input['dbfield'].'_zip` varchar(10) not null default \'\'';
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			set_site_option('dbfield_index','core',$dbfield_index+1);
 
-			regenerate_fields_array();
-			regenerate_langstrings_array();
-
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Field added.';
 		}
+		regenerate_fields_array();
+		regenerate_langstrings_array();
+
 	} else {
 		$nextpage='admin/profile_fields_addedit.php';
 // 		you must re-read all textareas from $_POST like this:

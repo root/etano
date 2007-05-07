@@ -41,7 +41,6 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 TODO
 
-- auto subscriptions in join.php
 - rate limiter in pagini
 - events
 - js field check

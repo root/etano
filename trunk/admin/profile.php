@@ -59,7 +59,7 @@ if (mysql_num_rows($res)) {
 		for ($i=0;isset($pcat['fields'][$i]);++$i) {
 			$field=$_pfields[$pcat['fields'][$i]];
 			$cat_content[$i]['label']=$field['label'];
-			switch ($field['html_type']) {
+			switch ($field['field_type']) {
 
 				case FIELD_TEXTFIELD:
 					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);

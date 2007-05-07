@@ -32,7 +32,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$query='SELECT `fk_user_id`,`_user`';
 	foreach ($_pfields as $field_id=>$field) {
 		if ($field['editable']) {
-			switch ($field['html_type']) {
+			switch ($field['field_type']) {
 
 				case FIELD_DATE:
 					$query.=",YEAR(`".$field['dbfield']."`) as `".$field['dbfield']."_year`,MONTH(`".$field['dbfield']."`) as `".$field['dbfield']."_month`,DAYOFMONTH(`".$field['dbfield']."`) as `".$field['dbfield']."_day`";
@@ -69,7 +69,7 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 	for ($i=0;isset($pcat['fields'][$i]);++$i) {
 		$field=$_pfields[$pcat['fields'][$i]];
 		$cat_content[$i]['label']=$field['label'];
-		switch ($field['html_type']) {
+		switch ($field['field_type']) {
 
 			case FIELD_TEXTFIELD:
 				$cat_content[$i]['field']='<input type="text" name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" value="'.(isset($output[$field['dbfield']]) ? $output[$field['dbfield']] : '').'" tabindex="'.($i+4).'" />';

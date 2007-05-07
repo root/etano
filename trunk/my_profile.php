@@ -28,24 +28,24 @@ $output=mysql_fetch_assoc($res);
 // set all the fields to their real (readable) values
 foreach ($_pfields as $field_id=>$field) {
 	if ($field['visible']) {
-		if ($field['html_type']==FIELD_TEXTFIELD) {
+		if ($field['field_type']==FIELD_TEXTFIELD) {
 			$output[$field['dbfield']]=sanitize_and_format($output[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-		} elseif ($field['html_type']==FIELD_TEXTAREA) {
+		} elseif ($field['field_type']==FIELD_TEXTAREA) {
 			$output[$field['dbfield']]=sanitize_and_format($output[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			if ($config['bbcode_profile']) {
 				$output[$field['dbfield']]=bbcode2html($output[$field['dbfield']]);
 			}
-		} elseif ($field['html_type']==FIELD_SELECT) {
+		} elseif ($field['field_type']==FIELD_SELECT) {
 			// if we sanitize here " will be rendered as &quot; which is not what we want
 //			$output[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$output[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			$output[$field['dbfield']]=$field['accepted_values'][$output[$field['dbfield']]];
-		} elseif ($field['html_type']==FIELD_CHECKBOX_LARGE) {
+		} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
 			$output[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$output[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-		} elseif ($field['html_type']==FIELD_INT || $field['html_type']==FIELD_FLOAT) {
+		} elseif ($field['field_type']==FIELD_INT || $field['field_type']==FIELD_FLOAT) {
 //			$output[$field['dbfield']]=$output[$field['dbfield']];
-		} elseif ($field['html_type']==FIELD_DATE) {
+		} elseif ($field['field_type']==FIELD_DATE) {
 //			$output[$field['dbfield']]=$output[$field['dbfield']];
-		} elseif ($field['html_type']==FIELD_LOCATION) {
+		} elseif ($field['field_type']==FIELD_LOCATION) {
 			$output[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$output[$field['dbfield'].'_country'],'-');
 			if (!empty($output[$field['dbfield'].'_state'])) {
 				$output[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$output[$field['dbfield'].'_state'],'-');

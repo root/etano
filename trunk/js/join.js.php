@@ -2,6 +2,26 @@ $(function() {
 	$('#join_form').bind('submit',function() {
 		return check_form(this);
 	});
+
+	$('#join_form')[0].elements[2].focus();
+
+	$('#join_form textarea').bind('keyup',function() {
+		myid=$(this).attr('id');
+		remaining=ta_len-$(this).val().length;
+		if (remaining<0) {
+			$(this).val($(this).val().substr(0,$(this).val().length+remaining));
+			remaining=0;
+		}
+		$('#'+myid+'_chars').html(remaining.toString());
+	}).bind('blur',function() {
+		myid=$(this).attr('id');
+		remaining=ta_len-$(this).val().length;
+		if (remaining<0) {
+			$(this).val($(this).val().substr(0,$(this).val().length+remaining));
+			remaining=0;
+		}
+		$('#'+myid+'_chars').html(remaining.toString());
+	});
 });
 
 function req_update_location(str_field,val) {

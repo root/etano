@@ -39,13 +39,14 @@ define('LK_SITE',0);
 define('LK_FIELD',1);
 define('LK_MESSAGE',2);
 
-$accepted_htmltype=array(FIELD_SELECT=>'Select box',FIELD_CHECKBOX_LARGE=>'Multi checks',FIELD_TEXTFIELD=>'Textfield',FIELD_TEXTAREA=>'Textarea',FIELD_DATE=>'Date',FIELD_LOCATION=>'Location',FIELD_RANGE=>'Range');
+$accepted_fieldtype=array(FIELD_SELECT=>'Select box',FIELD_CHECKBOX_LARGE=>'Multi checks',FIELD_TEXTFIELD=>'Textfield',FIELD_TEXTAREA=>'Textarea',FIELD_DATE=>'Date',FIELD_LOCATION=>'Location',FIELD_RANGE=>'Range');
 $field_dbtypes=array(FIELD_TEXTFIELD=>"varchar(100) not null default ''",FIELD_SELECT=>'int(5) not null default 0',FIELD_FK_SELECT=>'int(10) not null default 0',FIELD_TEXTAREA=>"text not null default ''",FIELD_CHECKBOX_LARGE=>"text not null default ''",FIELD_FILE=>"varchar(64) not null default ''",FIELD_DATE=>'date not null',FIELD_INT=>'int(5) not null default 0',FIELD_FLOAT=>'double not null default 0');
 $accepted_admin_depts=array(DEPT_ADMIN=>'Administrator',DEPT_MODERATOR=>'Moderator');
 $accepted_astats=array(ASTAT_SUSPENDED=>'Suspended',ASTAT_UNVERIFIED=>'Unactivated',ASTAT_ACTIVE=>'Active');
 $accepted_pstats=array(STAT_PENDING=>'Awaiting approval',STAT_EDIT=>'Requires edit',STAT_APPROVED=>'Approved');
 $accepted_yesno=array(0=>'No',1=>'Yes');
 $country_prefered_input=array('s'=>'state/city selection','z'=>'zip/postal code');
+$inverse_fields=array(2=>'FIELD_TEXTFIELD',3=>'FIELD_SELECT',4=>'FIELD_TEXTAREA',9=>'FIELD_CHECKBOX',10=>'FIELD_CHECKBOX_LARGE',101=>'FIELD_FILE',102=>'FIELD_FK_SELECT',103=>'FIELD_DATE',104=>'FIELD_INT',105=>'FIELD_FLOAT',106=>'HTML_PIC',107=>'FIELD_LOCATION',108=>'FIELD_RANGE');
 
 // you shouldn't call this function directly. Instead set this to set_error_handler() and use the trigger_error method
 function admin_error($errlevel,$text,$file='unset',$line='unset') {
@@ -107,10 +108,10 @@ function regenerate_fields_array() {
 		}
 		$profile_categs[$rsrow['fk_pcat_id']][]=$rsrow['order_num'];
 		$towrite.="\$_pfields[$id]['label']=\$_lang[".$rsrow['fk_lk_id_label']."];\n";
-		$towrite.="\$_pfields[$id]['html_type']=".$rsrow['html_type'].";\n";
+		$towrite.="\$_pfields[$id]['field_type']=".$GLOBALS['inverse_fields'][$rsrow['field_type']].";\n";
 		if (!empty($rsrow['searchable'])) {
 			$towrite.="\$_pfields[$id]['searchable']=true;\n";
-			$towrite.="\$_pfields[$id]['search_type']=".$rsrow['search_type'].";\n";
+			$towrite.="\$_pfields[$id]['search_type']=".$GLOBALS['inverse_fields'][$rsrow['search_type']].";\n";
 			$towrite.="\$_pfields[$id]['search_label']=\$_lang[".$rsrow['fk_lk_id_search']."];\n";
 		}
 		if (!empty($rsrow['at_registration'])) {
@@ -127,7 +128,7 @@ function regenerate_fields_array() {
 			$towrite.="\$_pfields[$id]['fn_on_change']='".$rsrow['fn_on_change']."';\n";
 		}
 
-		switch ($rsrow['html_type']) {
+		switch ($rsrow['field_type']) {
 
 			case FIELD_SELECT:
 			case FIELD_CHECKBOX_LARGE:
@@ -189,8 +190,8 @@ function regenerate_fields_array() {
 				}
 				break;
 
-			case FIELD_TEXTFIELD:
 			case FIELD_TEXTAREA:
+			case FIELD_TEXTFIELD:
 				break;
 
 		}
