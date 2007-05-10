@@ -1,6 +1,6 @@
-<loop name="loop_rows">
+<!--loop name="loop_rows"-->
 <ul class="table_row gallery_row {loop_rows.class}">
-	<loop name="loop_items">
+	<!--loop name="loop_items"-->
 	<li class="{loop_items.class}">
 		<p class="caption {loop_items.status}">
 			<a href="photo_view.php?photo_id={loop_items.photo_id}&amp;return={output.return2me}" title=""><img class="user_photo thumb1" src="{tplvars.photourl}/t1/{loop_items.photo}" alt="" /></a>
@@ -8,7 +8,7 @@
 		</p>
 		<div class="photo_details">
 			<p>Uploaded on <strong>{loop_items.date_posted}</strong>.</p>
-			<p>Photo is <strong>{loop_items.is_private}</strong>. <opt name="loop_items.reject_reason"><a class="content-link plain thickbox" href="reject_reason.php?m=photo&amp;id={loop_items.photo_id}&amp;keepThis=true&amp;TB_iframe=true&amp;height=300&amp;width=500" title="Reject Reason">Photo was rejected!</a></opt name="loop_items.reject_reason"></p>
+			<p>Photo is <strong>{loop_items.is_private}</strong>. <!--opt name="loop_items.reject_reason"--><a class="content-link plain thickbox" href="reject_reason.php?m=photo&amp;id={loop_items.photo_id}&amp;keepThis=true&amp;TB_iframe=true&amp;height=300&amp;width=500" title="Reject Reason">Photo was rejected!</a><!--/opt name="loop_items.reject_reason"--></p>
 			<p>{loop_items.stat_views} views | <a class="content-link plain" href="photo_view.php?photo_id={loop_items.photo_id}&amp;return={output.return2me}" title="Read all comments">{loop_items.stat_comments} comments</a></p>
 			<ul>
 				<li><a class="content-link link_change" href="photo_settings.php?photo_ids={loop_items.photo_id}&amp;return={output.return2me}" title="Change">Change</a></li>
@@ -16,12 +16,12 @@
 			</ul>
 		</div>
 	</li>
-	</loop name="loop_items">
+	<!--/loop name="loop_items"-->
 </ul>
-<noloop name="loop_rows">
+<!--noloop name="loop_rows"-->
 	<p>You have no photos yet. <a class="content-link simple" href="photos_upload.php">Upload a photo now!</a></p>
-</noloop name="loop_rows">
-</loop name="loop_rows">
+<!--/noloop name="loop_rows"-->
+<!--/loop name="loop_rows"-->
 
 {output.pager2}
 

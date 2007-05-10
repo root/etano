@@ -11,7 +11,7 @@
 </form>
 
 <form action="processors/my_searches.php" method="post" id="search_form">
-<loop name="loop">
+<!--loop name="loop"-->
 <div class="row">
 	<div class="control">
 		<a class="content-link link_delete" href="processors/search_delete.php?sid={loop.search_id}&amp;return={output.return}" title="Delete this search" onclick="return(confirm('Are you sure you want to delete this search?'))">Delete</a>
@@ -25,12 +25,12 @@
 		<input type="checkbox" class="check" name="alert[]" id="alert_{loop.search_id}" value="{loop.search_id}" {loop.alert} />
 	</div>
 </div>
-<noloop name="loop">
+<!--noloop name="loop"-->
 <div class="row">
 	<p class="no_result_item">You have no saved searches yet.</p>
 </div>
-</noloop name="loop">
-</loop name="loop">
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
 <div class="controls">
 	<input type="submit" class="button blarge" value="Save changes" />
 </div>

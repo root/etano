@@ -2,13 +2,13 @@
 	<h3>Search Options</h3>
 	<div class="box_content">
 		<ul class="menu">
-			<opt name="output.totalrows">
+			<!--opt name="output.totalrows"-->
 			<li class="first"><a class="content-link gview" id="gview_switch" href="search.php?search={output.search_md5}&amp;v=g">Switch to gallery mode</a></li>
 			<li><a class="content-link lview" id="lview_switch" href="search.php?search={output.search_md5}">Switch to list mode</a></li>
-			</opt name="output.totalrows">
-			<opt name="tplvars.user_logged">
+			<!--/opt name="output.totalrows"-->
+			<!--opt name="tplvars.user_logged"-->
 			<li><a class="content-link link_save" id="save_search" href="#">Save this search</a></li>
-			</opt name="tplvars.user_logged">
+			<!--/opt name="tplvars.user_logged"-->
 		</ul>
 	</div>
 </div>
@@ -16,21 +16,21 @@
 <div id="my_searches" class="content_area small">
 	<h3>My Searches</h3>
 	<div class="box_content">
-		<opt name="tplvars.user_logged">
+		<!--opt name="tplvars.user_logged"-->
 		<ul class="menu">
-			<loop name="my_searches">
+			<!--loop name="my_searches"-->
 			<li><a class="content-link link_search" href="search.php?{my_searches.search_qs}">{my_searches.title}</a></li>
 
-			<noloop name="my_searches">
+			<!--noloop name="my_searches"-->
 			<li>No saved searches yet</li>
-			</noloop name="my_searches">
+			<!--/noloop name="my_searches"-->
 
-			</loop name="my_searches">
+			<!--/loop name="my_searches"-->
 			<li class="controls"><a class="content-link link_view" href="my_searches.php">View All</a></li>
 		</ul>
-		</opt name="tplvars.user_logged">
-		<opt name="!tplvars.user_logged">
+		<!--/opt name="tplvars.user_logged"-->
+		<!--opt name="!tplvars.user_logged"-->
 			<a class="content-link link_simple" href="login.php">Login</a> or <a class="content-link link_simple" href="join.php">sign up</a> to save this search
-		</opt name="!tplvars.user_logged">
+		<!--/opt name="!tplvars.user_logged"-->
 	</div>
 </div>

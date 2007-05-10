@@ -1,27 +1,27 @@
 <div id="photo_area">
-	<opt name="output._photo"><a href="javascript:;" onclick="popWin('popup_photo_view.php?uid={output.fk_user_id}&amp;main=1','photo',{output.pic_width},{output.pic_width},1)"><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/{output._photo}" /></a></opt name="output._photo">
-	<opt name="!output._photo"><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/no_photo.gif" /></opt name="!output._photo">
+	<!--opt name="output._photo"--><a href="javascript:;" onclick="popWin('popup_photo_view.php?uid={output.fk_user_id}&amp;main=1','photo',{output.pic_width},{output.pic_width},1)"><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/{output._photo}" /></a><!--/opt name="output._photo"-->
+	<!--opt name="!output._photo"--><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/no_photo.gif" /><!--/opt name="!output._photo"-->
 
-	<opt name="output.num_photos">
+	<!--opt name="output.num_photos"-->
 	<ul id="user_photos">
-		<loop name="user_photos">
+		<!--loop name="user_photos"-->
 		<li class="{user_photos.class}"><a href="photo_view.php?photo_id={user_photos.photo_id}&amp;return={output.return}"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{user_photos.photo}" /></a></li>
-		</loop name="user_photos">
+		<!--/loop name="user_photos"-->
 		<li class="last"><a class="content-link simple" href="my_photos.php?return={output.return}">View all photos</a>({output.num_photos})</li>
 	</ul>
-	</opt name="output.num_photos">
+	<!--/opt name="output.num_photos"-->
 </div>
 <div class="clear"></div>
 
 <div id="profile_area">
-	<loop name="categs">
+	<!--loop name="categs"-->
 	<div class="profile_cat" id="cat_{categs.pcat_id}">
 		<h3>{categs.pcat_name} <a class="content-link link_change" href="profile_edit.php?cid={categs.pcat_id}" title="Edit this info">edit</a></h3>
 		<ul class="cat_content">
-			<loop name="fields">
+			<!--loop name="fields"-->
 			<li><label>{fields.label}:</label> <p>{fields.field}</p></li>
-			</loop name="fields">
+			<!--/loop name="fields"-->
 		</ul>
 	</div>
-	</loop name="categs">
+	<!--/loop name="categs"-->
 </div>

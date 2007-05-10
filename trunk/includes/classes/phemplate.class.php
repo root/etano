@@ -448,12 +448,12 @@ class phemplate {
 		reset($this->loops);
 		if (!empty($str)) {
 			while (list($loop_name,$loop_ar)=each($this->loops)) {
-				$start_pos=strpos($str,'<loop name="'.$loop_name.'">')+strlen('<loop name="'.$loop_name.'">');
+				$start_pos=strpos($str,'<!--loop name="'.$loop_name.'"-->')+strlen('<!--loop name="'.$loop_name.'"-->');
 				if ($start_pos!==false) {
-					$end_pos=strpos($str,'</loop name="'.$loop_name.'">',$start_pos);
+					$end_pos=strpos($str,'<!--/loop name="'.$loop_name.'"-->',$start_pos);
 					$loop_code=substr($str,$start_pos,$end_pos-$start_pos);
 					$new_code=$this->parse_one_loop($loop_code,$loop_name,$loop_ar,$loop_mode);
-					$str=str_replace('<loop name="'.$loop_name.'">'.$loop_code.'</loop name="'.$loop_name.'">',$new_code,$str);
+					$str=str_replace('<!--loop name="'.$loop_name.'"-->'.$loop_code.'<!--/loop name="'.$loop_name.'"-->',$new_code,$str);
 				}
 			}
 		}
@@ -465,13 +465,13 @@ class phemplate {
 			$new_code='';
 			$noloop_code='';
 			if ($loop_mode & TPL_NOLOOP) {
-				// clean <noloop... statement from loopcode
-				$nl_start_pos=strpos($loop_code,'<noloop name="'.$loop_name.'">');
+				// clean <!--noloop... statement from loopcode
+				$nl_start_pos=strpos($loop_code,'<!--noloop name="'.$loop_name.'"-->');
 				if ($nl_start_pos!==false) {
-					$nl_start_pos=$nl_start_pos+strlen('<noloop name="'.$loop_name.'">');
-					$nl_end_pos=strpos($loop_code, '</noloop name="'.$loop_name.'">');
+					$nl_start_pos=$nl_start_pos+strlen('<!--noloop name="'.$loop_name.'"-->');
+					$nl_end_pos=strpos($loop_code, '<!--/noloop name="'.$loop_name.'"-->');
 					$noloop_code=substr($loop_code, $nl_start_pos, $nl_end_pos - $nl_start_pos);
-					$loop_code=str_replace('<noloop name="'.$loop_name.'">'.$noloop_code.'</noloop name="'.$loop_name.'">','',$loop_code);
+					$loop_code=str_replace('<!--noloop name="'.$loop_name.'"-->'.$noloop_code.'<!--/noloop name="'.$loop_name.'"-->','',$loop_code);
 				}
 			}
 			if (is_array($loop_ar) && !empty($loop_ar)) {
@@ -513,16 +513,16 @@ class phemplate {
 
 	function parse_unknown_loops($str,$loop_ar,$loop_mode) {
 		if (!empty($str)) {
-			while(is_long($start_pos=strpos($str,'<loop name="'))) {
-				$start_pos+=12;
-				$tag_endpos=strpos($str,'">',$start_pos);
+			while(is_long($start_pos=strpos($str,'<!--loop name="'))) {
+				$start_pos+=15;
+				$tag_endpos=strpos($str,'"-->',$start_pos);
 				$loop_name=substr($str,$start_pos,$tag_endpos-$start_pos);
 				if (isset($loop_ar[$loop_name])) {
-					$start_pos+=strlen($loop_name)+2;
-					$endpos=strpos($str,'</loop name="'.$loop_name.'">',$start_pos);
+					$start_pos+=strlen($loop_name)+4;
+					$endpos=strpos($str,'<!--/loop name="'.$loop_name.'"-->',$start_pos);
 					$loop_code=substr($str,$start_pos,$endpos-$start_pos);
 					$new_code=$this->parse_one_loop($loop_code,$loop_name,$loop_ar[$loop_name],$loop_mode);
-					$str=str_replace('<loop name="'.$loop_name.'">'.$loop_code.'</loop name="'.$loop_name.'">', $new_code, $str);
+					$str=str_replace('<!--loop name="'.$loop_name.'"-->'.$loop_code.'<!--/loop name="'.$loop_name.'"-->', $new_code, $str);
 				}
 			}
 		}
@@ -600,13 +600,13 @@ class phemplate {
 			$bl_start = 0;
 
 			// extract and clean them from parent handle
-			while(is_long($bl_start = strpos($str, '<opt name="', $bl_start))) {
-				$pos = $bl_start + 11;
-				$endpos = strpos($str, '">', $pos);
+			while(is_long($bl_start = strpos($str, '<!--opt name="', $bl_start))) {
+				$pos = $bl_start + 14;
+				$endpos = strpos($str, '"-->', $pos);
 				$varname = substr($str, $pos, $endpos-$pos);
 
-				$tag = '<opt name="'.$varname.'">';
-				$endtag = '</opt name="'.$varname.'">';
+				$tag = '<!--opt name="'.$varname.'"-->';
+				$endtag = '<!--/opt name="'.$varname.'"-->';
 
 				$negate=false;
 				if ($varname{0}=='!') {

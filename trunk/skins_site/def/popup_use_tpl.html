@@ -14,10 +14,10 @@
 <script type="text/javascript">
 	subjects=Array();
 	message_bodies=Array();
-	<loop name="jsarrays">
+	<!--loop name="jsarrays"-->
 		subjects[{jsarrays.mtpl_id}]='{jsarrays.subject}';
 		message_bodies[{jsarrays.mtpl_id}]='{jsarrays.message_body}';
-	</loop name="jsarrays">
+	<!--/loop name="jsarrays"-->
 </script>
 </head>
 <body>
@@ -30,15 +30,15 @@
 					<div class="subject">Subject</div>
 					<div class="message_body">Message</div>
 				</div>
-				<loop name="templates">
+				<!--loop name="templates"-->
 				<div class="row">
 					<div class="subject"><a href="javascript:;" title="Select this message template" id="link_{templates.mtpl_id}"><span id="subject_{templates.mtpl_id}">{templates.subject}</span></a></div>
 					<div class="message_body">{templates.message_body}</div>
 				</div>
-				<noloop name="templates">
+				<!--noloop name="templates"-->
 					<p class="no_result_item">You have no message templates yet!</p>
-				</noloop name="templates">
-				</loop name="templates">
+				<!--/noloop name="templates"-->
+				<!--/loop name="templates"-->
 			</div>
 		</div>	<!-- end of content_column1 -->
 	</div>	<!-- end of content -->

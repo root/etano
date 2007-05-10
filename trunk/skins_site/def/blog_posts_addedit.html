@@ -5,14 +5,14 @@
 	<input type="hidden" name="return" value="{output.return}" />
 	<label for="title">Title: </label><input type="text" name="title" id="title" value="{output.title}" tabindex="1" />
 </fieldset>
-<opt name="tplvars.bbcode_blogs">
+<!--opt name="tplvars.bbcode_blogs"-->
 <div id="bb_tools">
 	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#post_content')[0])">Bold</a>
 	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#post_content')[0])">Underline</a>
 	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#post_content')[0])">Hyperlink</a>
 	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#post_content')[0])">Quote</a>
 </div>
-</opt name="tplvars.bbcode_blogs">
+<!--/opt name="tplvars.bbcode_blogs"-->
 <fieldset>
 	<textarea name="post_content" id="post_content" cols="" rows="" tabindex="2">{output.post_content}</textarea>
 </fieldset>
@@ -26,6 +26,6 @@
 </form>
 
 <script type="text/javascript" src="js/blog_posts_addedit.js"></script>
-<opt name="tplvars.bbcode_blogs">
+<!--opt name="tplvars.bbcode_blogs"-->
 <script type="text/javascript" src="js/bbcode.js"></script>
-</opt name="tplvars.bbcode_blogs">
+<!--/opt name="tplvars.bbcode_blogs"-->

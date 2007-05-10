@@ -5,16 +5,16 @@
 	<div class="network">Network</div>
 </div>
 
-<loop name="loop">
+<!--loop name="loop"-->
 <div class="row">
 	<div class="control"><input type="checkbox" class="check" id="nconn_id_{loop.nconn_id}" name="nconn_id[]" value="{loop.nconn_id}" /></div>
 	<div class="who"><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}&amp;return={output.return}">{loop.user}</a></div>
 	<div class="network">{loop.network}</div>
-	<noloop name="loop">
+	<!--noloop name="loop"-->
 	<p class="no_results">You have no requests yet.</p>
-	</noloop name="loop">
+	<!--/noloop name="loop"-->
 </div>
-</loop name="loop">
+<!--/loop name="loop"-->
 
 <div id="controls">
 	<input type="submit" id="btn_accept" name="btn_accept" class="button blarge" value="Accept selected" />

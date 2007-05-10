@@ -1,4 +1,4 @@
-<opt name="output.allow_rating">
+<!--opt name="output.allow_rating"-->
 <span>Rate this photo: </span>
 <ul class="rating">
 	<li class="current_rating" style="width: {output.rate_percent}%">{output.rate_num}/5</li>
@@ -9,34 +9,34 @@
 	<li><a href="ajax/rate_photo.php?photo_id={output.photo_id}&amp;vote=5" class="rate5">5</a></li>
 </ul>
 <p id="rating_stat">Current rating: <span id="rate_num">{output.rate_num}</span> / 5 (<span id="votes_num">{output.stat_votes}</span> votes)</p>
-</opt name="output.allow_rating">
+<!--/opt name="output.allow_rating"-->
 
 <a href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={output.photo_id}','photo',{output.pic_width},{output.pic_width},1)" title="Click to enlarge"><img class="user_photo thumb2" src="{tplvars.photourl}/t2/{output.photo}" alt="{output.user}" /></a>
 <p id="photo_caption">{output.caption}</p>
 
-<opt name="output.show_comments">
+<!--opt name="output.show_comments"-->
 <h3>{output.num_comments} comments</h3>
-<loop name="loop">
+<!--loop name="loop"-->
 <div class="comment {loop.is_online}">
-	<opt name="loop.fk_user_id"><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id">
-	<span class="controls"><opt name="loop.editme"><a id="editme_{loop.comment_id}" class="content-link link_change" href="photo_view.php?photo_id={output.photo_id}&amp;return={output.return2me}&amp;edit_comment={loop.comment_id}#postarea" title="Edit comment">edit</a></opt name="loop.editme"> <opt name="output.photo_owner"><a class="content-link link_delete" href="processors/photo_comment_delete.php?comment_id={loop.comment_id}&amp;return={output.return2me}" title="Remove comment">delete</a></opt name="output.photo_owner"></span> <opt name="loop.fk_user_id"><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"></opt name="loop.fk_user_id">{loop.user}<opt name="loop.fk_user_id"></a></opt name="loop.fk_user_id"> said on {loop.date_posted} :
+	<!--opt name="loop.fk_user_id"--><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"><!--/opt name="loop.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"-->
+	<span class="controls"><!--opt name="loop.editme"--><a id="editme_{loop.comment_id}" class="content-link link_change" href="photo_view.php?photo_id={output.photo_id}&amp;return={output.return2me}&amp;edit_comment={loop.comment_id}#postarea" title="Edit comment">edit</a><!--/opt name="loop.editme"--> <!--opt name="output.photo_owner"--><a class="content-link link_delete" href="processors/photo_comment_delete.php?comment_id={loop.comment_id}&amp;return={output.return2me}" title="Remove comment">delete</a><!--/opt name="output.photo_owner"--></span> <!--opt name="loop.fk_user_id"--><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"><!--/opt name="loop.fk_user_id"-->{loop.user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--> said on {loop.date_posted} :
 	<a name="comm{loop.comment_id}"><p id="comment_{loop.comment_id}">{loop.comment}</p></a>
 	<div class="clear"></div>
 </div>
-</loop name="loop">
-</opt name="output.show_comments">
+<!--/loop name="loop"-->
+<!--/opt name="output.show_comments"-->
 
-<opt name="output.allow_comments">
+<!--opt name="output.allow_comments"-->
 <h3>Leave your comment</h3>
 
-<opt name="output.bbcode_comments">
+<!--opt name="output.bbcode_comments"-->
 <div id="bb_tools">
 	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',document.getElementById('comment'))">Bold</a>
 	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',document.getElementById('comment'))">Underline</a>
 	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',document.getElementById('comment'))">Hyperlink</a>
 	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',document.getElementById('comment'))">Quote</a>
 </div>
-</opt name="output.bbcode_comments">
+<!--/opt name="output.bbcode_comments"-->
 <form id="photocomment_form" action="processors/photo_comments.php" method="post">
 <fieldset>
 	<input type="hidden" name="comment_id" value="{output.comment_id}" />
@@ -44,8 +44,8 @@
 	<input type="hidden" name="return" value="{output.return2me}" />
 	<a name="postarea" id="postarea"><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea></a>
 </fieldset>
-<opt name="!tplvars.user_logged">
-<opt name="output.use_captcha">
+<!--opt name="!tplvars.user_logged"-->
+<!--opt name="output.use_captcha"-->
 <fieldset>
 	<dl class="required">
 		<dt>Verification code:</dt>
@@ -56,13 +56,13 @@
 		<dd><input type="text" name="captcha" id="captcha" size="4" tabindex="50" /> <span class="field-help">Enter the characters from above.</span></dd>
 	</dl>
 </fieldset>
-</opt name="output.use_captcha">
-</opt name="!tplvars.user_logged">
+<!--/opt name="output.use_captcha"-->
+<!--/opt name="!tplvars.user_logged"-->
 <fieldset class="controls">
 	<input class="button blarge" id="post-button" type="submit" value="Post comment" />
 </fieldset>
 </form>
-</opt name="output.allow_comments">
+<!--/opt name="output.allow_comments"-->
 
 <div id="bottom_links">
 	<a class="content-link link_previous" href="{output.return2}" title="Back">Back</a>
@@ -70,12 +70,12 @@
 
 <script type="text/javascript" src="js/scrollto.js"></script>
 <script type="text/javascript" src="js/photo_view.js"></script>
-<opt name="output.bbcode_comments">
+<!--opt name="output.bbcode_comments"-->
 <script type="text/javascript" src="js/bbcode.js"></script>
-</opt name="output.bbcode_comments">
-<opt name="output.allow_rating">
+<!--/opt name="output.bbcode_comments"-->
+<!--opt name="output.allow_rating"-->
 <script type="text/javascript">
 	photo_id={output.photo_id};
 </script>
 <script type="text/javascript" src="js/rating.js"></script>
-</opt name="output.allow_rating">
+<!--/opt name="output.allow_rating"-->
