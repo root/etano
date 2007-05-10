@@ -1,6 +1,6 @@
-<loop name="loop_rows">
+<!--loop name="loop_rows"-->
 <ul class="table_row gallery_row {loop_rows.class}">
-	<loop name="loop_items">
+	<!--loop name="loop_items"-->
 	<li class="{loop_items.class}">
 		<p class="caption">
 			<a href="photo_view.php?photo_id={loop_items.photo_id}&amp;return={output.return}" title=""><img class="user_photo thumb1" src="{tplvars.photourl}/t1/{loop_items.photo}" alt="" /></a>
@@ -12,11 +12,11 @@
 			<p>{loop_items.stat_views} views | <a class="content-link plain" href="photo_view.php?photo_id={loop_items.photo_id}&amp;return={output.return}" title="Read all comments">{loop_items.stat_comments} comments</a></p>
 		</div>
 	</li>
-	</loop name="loop_items">
+	<!--/loop name="loop_items"-->
 </ul>
-<noloop name="loop_rows">
+<!--noloop name="loop_rows"-->
 	<p>No photos found matching your search criteria. Please refine your search and try again</p>
-</noloop name="loop_rows">
-</loop name="loop_rows">
+<!--/noloop name="loop_rows"-->
+<!--/loop name="loop_rows"-->
 
 {output.pager2}

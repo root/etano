@@ -1,9 +1,9 @@
-<opt name="output.reject_member"><h2>Reject profile</h2></opt name="output.reject_member">
-<opt name="output.reject_photo"><h2>Reject photo</h2></opt name="output.reject_photo">
-<opt name="output.reject_blog"><h2>Reject blog post</h2></opt name="output.reject_blog">
+<!--opt name="output.reject_member"--><h2>Reject profile</h2><!--/opt name="output.reject_member"-->
+<!--opt name="output.reject_photo"--><h2>Reject photo</h2><!--/opt name="output.reject_photo"-->
+<!--opt name="output.reject_blog"--><h2>Reject blog post</h2><!--/opt name="output.reject_blog"-->
 
 <h3>Member: <a href="profile.php?uid={output.user_id}">{output.user}</a></h3>
-<opt name="output.reject_photo"><img class="user_photo" src="{tplvars.photourl}/t1/{output.photo}" /></opt name="output.reject_photo">
+<!--opt name="output.reject_photo"--><img class="user_photo" src="{tplvars.photourl}/t1/{output.photo}" /><!--/opt name="output.reject_photo"-->
 
 <form action="processors/reject.php" method="post" id="reject_form" onsubmit="return(check_form(this))">
 <input type="hidden" name="return" id="return" value="{output.return}" />

@@ -168,7 +168,7 @@ function sanitize_and_format($input,$input_type,$format=0,$empty_value=null) {
 			$input=mysql_real_escape_string($input);	// due to this function there must always be a db_connect() before calling sanitize_and_format
 		}
 		if ($format&FORMAT_OLD_ADDSLASH) {	// must come after text2html
-			$input=addslashes($input);	// due to this function there must always be a db_connect() before calling sanitize_and_format
+			$input=addslashes($input);
 		}
 		if ($format&FORMAT_UTF_ENCODE) {
 			$input=utf8_encode($input);

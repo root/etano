@@ -7,7 +7,7 @@
 	<th width="38"></th>
 	<th>Flirt</th>
 </tr>
-<loop name="loop">
+<!--loop name="loop"-->
 <tr class="{loop.myclass}">
 	<td>
 		<a class="item_del" href="processors/flirts_delete.php?flirt_id={loop.flirt_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to delete this flirt?'))" title="Delete this flirt">Delete flirt</a>
@@ -15,12 +15,12 @@
 	</td>
 	<td>{loop.flirt_text}</td>
 </tr>
-<noloop name="loop">
+<!--noloop name="loop"-->
 <tr>
 	<td colspan="2" class="no_result_item">No flirts found!</td>
 </tr>
-</noloop name="loop">
-</loop name="loop">
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
 </table>
 
 {output.pager2}

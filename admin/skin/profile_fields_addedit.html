@@ -17,7 +17,7 @@
 	<td class="comment">Note: the value you enter here is for the default skin ({output.default_skin}) <a class="translate" href="javascript:;" onclick="popWin('popup_lang_string.php?lk_id={output.fk_lk_id_label}','translate',450,300,1,1)">Translate!</a></td>
 </tr>
 
-<opt name="output.row_searchable">
+<!--opt name="output.row_searchable"-->
 <tr>
 	<td class="label"><label for="searchable">Searchable?</label></td>
 	<td class="field {output.error_searchable}"><input class="checkbox" type="checkbox" name="searchable" id="searchable" {output.searchable} value="1" tabindex="2" /></td>
@@ -42,7 +42,7 @@
 	<td class="field {output.error_search_label}"><input class="text fullwidth" type="text" name="search_label" id="search_label" value="{output.search_label}" tabindex="5" /></td>
 	<td class="comment">Note: the value you enter here is for the default skin ({output.default_skin}) <a class="translate" href="javascript:;" onclick="popWin('popup_lang_string.php?lk_id={output.fk_lk_id_search}','translate',450,300,1,1)">Translate!</a></td>
 </tr>
-</opt name="output.row_searchable">
+<!--/opt name="output.row_searchable"-->
 
 <tr>
 	<td class="label"><label for="at_registration">At registration?</label></td>
@@ -95,7 +95,7 @@
 	</td>
 </tr>
 
-<opt name="output.row_accval_selcheck">
+<!--opt name="output.row_accval_selcheck"-->
 <tr>
 	<td class="label">Accepted Values:</td>
 	<td class="field {output.error_accepted_values}">
@@ -110,9 +110,9 @@
 		You must be very careful if you do one of these actions on a live site because it could break member choices for this field.
 	</td>
 </tr>
-</opt name="output.row_accval_selcheck">
+<!--/opt name="output.row_accval_selcheck"-->
 
-<opt name="output.row_accval_date">
+<!--opt name="output.row_accval_date"-->
 <tr>
 	<td class="label">Year from:</td>
 	<td colspan="2" class="field {output.error_accepted_values}">
@@ -131,9 +131,9 @@
 		<span class="comment">Enter here the ages you want preselected in the search box like Age: 18 to 30. Must match the years above.</span>
 	</td>
 </tr>
-</opt name="output.row_accval_date">
+<!--/opt name="output.row_accval_date"-->
 
-<opt name="output.row_accval_location">
+<!--opt name="output.row_accval_location"-->
 <tr>
 	<td class="label">Default Country:</td>
 	<td colspan="2" class="field {output.error_accepted_values}">
@@ -142,7 +142,7 @@
 		</select>
 	</td>
 </tr>
-</opt name="output.row_accval_location">
+<!--/opt name="output.row_accval_location"-->
 
 <tr>
 	<td class="label">OnChange Function:</td>

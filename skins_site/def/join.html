@@ -1,6 +1,6 @@
 <form action="processors/join.php" method="post" id="join_form" class="edit_form">
 <input type="hidden" name="page" value="{output.page}" />
-<opt name="output.page1">
+<!--opt name="output.page1"-->
 <fieldset>
 	<dl class="required {output.error_user}">
 		<dt><label for="user">Choose a Username:</label></dt>
@@ -24,20 +24,20 @@
 		<dd class="field-help">This is needed to make sure you receive the activation email.</dd>
 	</dl>
 </fieldset>
-	</opt name="output.page1">
+	<!--/opt name="output.page1"-->
 
 <fieldset>
-	<loop name="loop">
+	<!--loop name="loop"-->
 	<dl class="{loop.class}" id="row_{loop.dbfield}">
 		<dt>{loop.label}:</dt>
 		<dd>{loop.field}</dd>
 		<dd class="field-help">{loop.help_text}</dd>
 	</dl>
-	</loop name="loop">
+	<!--/loop name="loop"-->
 </fieldset>
 
-<opt name="output.page1">
-<opt name="output.use_captcha">
+<!--opt name="output.page1"-->
+<!--opt name="output.use_captcha"-->
 <fieldset>
 	<dl class="required">
 		<dt>Verify registration:</dt>
@@ -48,14 +48,14 @@
 		<dd><input type="text" name="captcha" id="captcha" size="4" tabindex="50" /> <span class="field-help">Enter the characters from above.</span></dd>
 	</dl>
 </fieldset>
-</opt name="output.use_captcha">
+<!--/opt name="output.use_captcha"-->
 <fieldset id="agree_fs">
 	<dl>
 		<dt>&nbsp;</dt>
 		<dd class="full-width"><input type="checkbox" name="agree" id="agree" value="1" {output.agree} tabindex="51" /> I agree to {tplvars.sitename}'s <a class="content-link simple" target="_blank" href="tos.php">terms of services</a>.</dd>
 	</dl>
 </fieldset>
-</opt name="output.page1">
+<!--/opt name="output.page1"-->
 <fieldset class="controls">
 	<p class="mandatory"><span>* Blue fields</span> are mandatory.</p>
 	<input type="submit" class="button bmedium" value="Save" />

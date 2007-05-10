@@ -6,7 +6,7 @@
 	<div class="date_posted">Date Posted</div>
 </div>
 
-<loop name="loop">
+<!--loop name="loop"-->
 <div class="row">
 	<div class="control">
 		<a class="content-link link_delete" href="processors/blog_posts_delete.php?post_id={loop.post_id}&amp;bid={output.fk_blog_id}&amp;return={output.return}" title="Delete post" onclick="return(confirm('Are you sure you want to permanently delete this post?'))">Delete post</a>
@@ -15,12 +15,12 @@
 	<div class="title">{loop.title}&nbsp;</div>
 	<div class="date_posted">{loop.date_posted}</div>
 </div>
-<noloop name="loop">
+<!--noloop name="loop"-->
 <div class="row">
 	<p class="no_result_item">There are no posts to display.</p>
 </div>
-</noloop name="loop">
-</loop name="loop">
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
 
 {output.pager2}
 

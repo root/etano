@@ -2,16 +2,16 @@
 	<h3>Archives</h3>
 	<div class="box_content">
 		<ul>
-			<loop name="loop">
+			<!--loop name="loop"-->
 			<li class="year {loop.is_current}">
 				<a class="content-link link_simple group_name" id="year_{loop.year}" href="blog_view.php?bid={blog.blog_id}&amp;y={loop.year}">{loop.year}</a> ({loop.num_posts})
 				<ul class="months" id="months_{loop.year}">
-					<loop name="months">
+					<!--loop name="months"-->
 					<li><a class="content-link link_simple" href="blog_view.php?bid={blog.blog_id}&amp;y={loop.year}&amp;m={months.month}">{months.month_name} {loop.year}</a> ({months.num_posts})</li>
-					</loop name="months">
+					<!--/loop name="months"-->
 				</ul>
 			</li>
-			</loop name="loop">
+			<!--/loop name="loop"-->
 		</ul>
 	</div>
 </div>

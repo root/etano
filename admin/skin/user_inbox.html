@@ -11,19 +11,19 @@
 	<th>Subject</th>
 	<th>Date</th>
 </tr>
-<loop name="loop">
+<!--loop name="loop"-->
 <tr align="center" class="{loop.myclass}">
 	<td><input type="checkbox" name="mail_ids[]" value="{loop.mail_id}" /></td>
-	<td><opt name="loop.fk_user_id_other"><a href="profile.php?uid={loop.fk_user_id_other}"></opt name="loop.fk_user_id_other">{loop._user_other}<opt name="loop.link_member"></a></opt name="loop.link_member"></td>
+	<td><!--opt name="loop.fk_user_id_other"--><a href="profile.php?uid={loop.fk_user_id_other}"><!--/opt name="loop.fk_user_id_other"-->{loop._user_other}<!--opt name="loop.link_member"--></a><!--/opt name="loop.link_member"--></td>
 	<td><a href="user_message_read.php?mail_id={loop.mail_id}&amp;o={output.o}&amp;r={output.r}">{loop.subject}</a></td>
 	<td>{loop.date_sent}</td>
 </tr>
-<noloop name="loop">
+<!--noloop name="loop"-->
 <tr>
 	<td colspan="4" class="no_result_item">No messages found!</td>
 </tr>
-</noloop name="loop">
-</loop name="loop">
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
 </table>
 <p><input type="submit" value="Delete" /> selected</p>
 </form>

@@ -3,7 +3,7 @@ define('_DBHOSTNAME_','localhost');// mysql server host name
 define('_DBUSERNAME_','root');// mysql database username
 define('_DBPASSWORD_','rootpass');// mysql database password
 define('_DBNAME_','newdsb');// mysql database name
-define('_SITENAME_','Nexus  /  R i t m o / friendy');// Your site name
+define('_SITENAME_','Nexus / R i t m o / friendy');// Your site name
 define('_BASEURL_','http://dating.sco.ro/newdsb');// protocol required (http:// )
 define('_BASEPATH_','/www/htdocs/newdsb');// path on server to your site
 define('_PHOTOURL_',_BASEURL_.'/media/pics');// protocol required (http:// ). URL to your member photos
@@ -21,7 +21,6 @@ define('USER_ACCOUNT_PASS','pass');
 define('PASSWORD_ENCRIPTION','md5');
 
 define('_LICENSE_KEY_','0917JJ8239HG8S623DFG45'); // md5()=d3074931bf4080bff08a1cc60fff4504
-
 
 $accepted_results_per_page=array(10=>10,5=>5,15=>15,20=>20);
 $accepted_images=array('jpg','jpeg','png');

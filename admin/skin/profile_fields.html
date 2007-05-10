@@ -16,7 +16,7 @@
 	<th class="accvals">Accepted Values</th>
 	<th class="order">Order</th>
 </tr>
-<loop name="loop">
+<!--loop name="loop"-->
 <tr class="result_item {loop.myclass}" align="center">
 	<td class="control">
 		<a class="item_del" href="processors/profile_fields_delete.php?pfield_id={loop.pfield_id}&amp;o={o}&amp;r={r}" onclick="return(confirm('Are you sure you want to remove this field?'))" title="Delete field">Delete field</a>
@@ -34,12 +34,12 @@
 		<a class="item_moveup" href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=u&amp;o={o}&amp;r={r}" title="move up">Move up</a>
 	</td>
 </tr>
-<noloop name="loop">
+<!--noloop name="loop"-->
 <tr>
 	<td colspan="9" class="no_result_item">No fields found!</td>
 </tr>
-</noloop name="loop">
-</loop name="loop">
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
 </table>
 
 {pager2}

@@ -1,7 +1,7 @@
 <h3>Add a description and change various settings to your pictures below:</h3>
 
 <form action="processors/photo_settings.php" method="post" id="photosettings_form" class="edit_form">
-<loop name="loop">
+<!--loop name="loop"-->
 <fieldset class="one_photo">
 	<img class="user_photo thumb2" src="{tplvars.photourl}/t2/{loop.photo}" alt="{loop.caption}" />
 	<dl>
@@ -21,7 +21,7 @@
 		<dd><input type="checkbox" name="allow_comments[{loop.photo_id}]" value="1" id="allow_comments_{loop.photo_id}" {loop.allow_comments} /></dd>
 	</dl>
 </fieldset>
-</loop name="loop">
+<!--/loop name="loop"-->
 <fieldset class="controls">
 	<input type="hidden" name="return" value="{output.return}" />
 	<input type="submit" class="button bmedium" value="Save" />

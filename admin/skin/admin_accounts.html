@@ -11,7 +11,7 @@
 	<th>Accout Type</th>
 	<th>Email</th>
 </tr>
-<loop name="admin_accounts">
+<!--loop name="admin_accounts"-->
 <tr align="center" class="{admin_accounts.myclass}">
 	<td>
 		<a class="item_del" href="processors/admin_accounts_delete.php?admin_id={admin_accounts.admin_id}&amp;o={o}&amp;r={r}" onclick="return(confirm('Are you sure you want to delete this account?'))" title="Delete this account">Delete account</a>
@@ -23,12 +23,12 @@
 	<td>{admin_accounts.dept_id}</td>
 	<td>{admin_accounts.email}</td>
 </tr>
-<noloop name="admin_accounts">
+<!--noloop name="admin_accounts"-->
 <tr>
 	<td colspan="6" class="no_result_item">No accounts found!</td>
 </tr>
-</noloop name="admin_accounts">
-</loop name="admin_accounts">
+<!--/noloop name="admin_accounts"-->
+<!--/loop name="admin_accounts"-->
 </table>
 
 {pager2}

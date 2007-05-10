@@ -11,17 +11,17 @@
 <tr>
 	<th width="1%">ID</th>
 	<th>Level Code</th>
-<loop name="memberships">
+<!--loop name="memberships"-->
 	<th>{memberships.m_name}</th>
-</loop name="memberships">
+<!--/loop name="memberships"-->
 	<th><a href="javascript:;" onclick="add_membership()" title="Add new membership"><img src="skin/images/right.gif" alt="Add new membership" /></a></th>
 </tr>
-<loop name="access_levels">
+<!--loop name="access_levels"-->
 <tr align="center" class="{access_levels.myclass}">
 	{access_levels.row}
 	<td></td>
 </tr>
-</loop name="access_levels">
+<!--/loop name="access_levels"-->
 </table>
 <div id="bottom_links"><span><a class="add" href="access_levels_addedit.php">Add new</a></span> <input type="submit" value="Save" /></div>
 </form>

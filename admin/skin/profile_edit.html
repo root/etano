@@ -3,17 +3,17 @@
 <form action="processors/profile_edit.php" method="post" id="profile_edit_form" onsubmit="return(check_form(this))">
 <input type="hidden" name="uid" value="{output.fk_user_id}" />
 <input type="hidden" name="return" value="{output.return}" />
-<loop name="loop">
+<!--loop name="loop"-->
 <div class="category">
 	<h3>{loop.pcat_name}</h3>
-	<loop name="cat_content">
+	<!--loop name="cat_content"-->
 	<div class="new_row {cat_content.class}" id="row_{cat_content.dbfield}">
 		<label>{cat_content.label}:</label>
 		<span class="field">{cat_content.field}</span>
 	</div>
-	</loop name="cat_content">
+	<!--/loop name="cat_content"-->
 </div>
-</loop name="loop">
+<!--/loop name="loop"-->
 
 <div class="new_row">
 	<div class="label">&nbsp;</div>

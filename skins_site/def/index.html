@@ -70,12 +70,12 @@
 				<form action="search.php" method="get" id="search-form">
 					<fieldset>
 					<input type="hidden" name="st" value="basic" />
-					<loop name="search">
+					<!--loop name="search"-->
 					<dl id="row_{search.dbfield}" class="{search.class}">
 						<dt>{search.label}:</dt>
 						<dd>{search.field}</dd>
 					</dl>
-					</loop name="search">
+					<!--/loop name="search"-->
 					<dl id="row_photo">
 						<dt>With photo?</dt>
 						<dd><input type="checkbox" name="wphoto" value="1" /></dd>

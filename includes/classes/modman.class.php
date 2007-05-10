@@ -423,15 +423,20 @@ class fileop {
 
 
 	function fileop() {
+		$ftp_error=false;
 		if (defined('_FTP_SERVER_') && defined('_FTP_USER_') && defined('_FTP_PASS_') && function_exists('ftp_connect')) {
 			$this->ftp_id=ftp_connect(_FTP_SERVER_);
 			if ($this->ftp_id) {
 				if (@ftp_login($this->ftp_id,_FTP_USER_,_FTP_PASS_)) {
 					$this->op_mode='ftp';
+				} else {
+					$ftp_error=true;
 				}
 			}
+		} else {
+			$ftp_error=true;
 		}
-		if (empty($this->op_mode)) {
+		if ($ftp_error) {
 			$this->op_mode='disk';
 			if ($this->ftp_id) {
 				// invalid credentials
