@@ -29,14 +29,14 @@ $Config['Enabled'] = true;
 
 
 {
-	include dirname(__FILE__).'../../../../../../../../includes/vars.inc.php';
+	include dirname(__FILE__).'/../../../../../../../../includes/vars.inc.php';
 	// Path to user files relative to the document root.
-	$Config['UserFilesPath'] = _BASEPATH_.'/images/emails/' ;
+	$Config['UserFilesPath'] = _BASEURL_.'/images/emails/' ;
 	// Fill the following value it you prefer to specify the absolute path for the
 	// user files directory. Usefull if you are using a virtual directory, symbolic
 	// link or alias. Examples: 'C:\\MySite\\userfiles\\' or '/root/mysite/userfiles/'.
 	// Attention: The above 'UserFilesPath' must point to the same directory.
-	$Config['UserFilesAbsolutePath'] = '' ;
+	$Config['UserFilesAbsolutePath'] = _BASEPATH_.'/images/emails/';
 }
 
 

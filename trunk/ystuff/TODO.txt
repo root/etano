@@ -41,12 +41,12 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 TODO
 
+- profile comments in my_profile
 - rate limiter in pagini
 - events
 - js field check
 - site bans
 - formatare la date of birth
-- lungime maxima camp pt textareas
 
 - scor la blog add doar daca blogul este mai mare de x caractere.
 - scor in functie de rating.

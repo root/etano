@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // get the input we need and sanitize it
 	$pcat_id=sanitize_and_format_gpc($_POST,'pcat_id',TYPE_INT,0,0);
 	if (isset($_pcats[$pcat_id]) && count($_pcats[$pcat_id]['fields'])>0) {
-		$config=get_site_option(array('manual_profile_approval'),'core');
+		$config=get_site_option(array('manual_profile_approval','ta_len'),'core');
 		$on_changes=array();
 		$ch=0;
 		$texts=array();
@@ -38,8 +38,22 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			switch ($field['field_type']) {
 
 				case FIELD_TEXTFIELD:
-				case FIELD_TEXTAREA:
 					$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],''));
+					if (isset($field['fn_on_change'])) {
+						$on_changes[$ch]['fn']=$field['fn_on_change'];
+						$on_changes[$ch]['param2']=$input[$field['dbfield']];
+						$on_changes[$ch]['param3']=$field['dbfield'];
+						++$ch;
+					}
+					$texts[]=$field['dbfield'];		// need to know if any TA/TF were changed
+					break;
+
+				case FIELD_TEXTAREA:
+					$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],'');
+					if (!empty($config['ta_len'])) {
+						$input[$field['dbfield']]=substr($input[$field['dbfield']],0,$config['ta_len']);
+					}
+					$input[$field['dbfield']]=remove_banned_words($input[$field['dbfield']]);
 					if (isset($field['fn_on_change'])) {
 						$on_changes[$ch]['fn']=$field['fn_on_change'];
 						$on_changes[$ch]['param2']=$input[$field['dbfield']];

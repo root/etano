@@ -9,27 +9,27 @@ function toogle_checked() {
 	});
 }
 
-function handle_mass_member() {
-	if ($('#act').val()=='email') {
+function handle_mass_member(sel,act) {
+	if (act.val()=='email') {
 		$('#mass_member_form').attr('action','email_send.php');
 
-	} else if ($('#act').val()=='message') {
+	} else if (act.val()=='message') {
 		$('#mass_member_form').attr('action','message_send.php');
 
-	} else if ($('#act').val()=='membership') {
+	} else if (act.val()=='membership') {
 		$('#mass_member_form').attr('action','membership_assign.php');
 
-	} else if ($('#act').val()=='astat_active') {
+	} else if (act.val()=='astat_active') {
 //ASTAT_ACTIVE
 		$('#mass_member_form').attr('action','processors/account_changes.php');
 		$('#mass_member_form').append('<input type="hidden" name="act" value="status" /><input type="hidden" name="status" value="15" />');
 
-	} else if ($('#act').val()=='astat_suspend') {
+	} else if (act.val()=='astat_suspend') {
 //ASTAT_SUSPENDED
 		$('#mass_member_form').attr('action','processors/account_changes.php');
 		$('#mass_member_form').append('<input type="hidden" name="act" value="status" /><input type="hidden" name="status" value="5" />');
 
-	} else if ($('#act').val()=='del') {
+	} else if (act.val()=='del') {
 		really=confirm('Are you sure you want to delete the selected members?');
 		if (!really) {
 			return false;
@@ -37,7 +37,7 @@ function handle_mass_member() {
 		$('#mass_member_form').attr('action','processors/member_delete.php');
 	}
 
-	if ($('#sel').val()==1) {		// "with selected..."
+	if (sel.val()==1) {		// "with selected..."
 		one_checked=false;
 		$('#mass_member_form input:checkbox').each(function(i) {
 			if (this.checked) {

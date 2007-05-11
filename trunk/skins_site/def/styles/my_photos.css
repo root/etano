@@ -17,8 +17,13 @@ ul.gallery_row {
 		margin-left: 0;
 	}
 
-	ul.gallery_row li p.need_edit {
+	ul.gallery_row li p.stat_edit {
 		background: url('../images/error-bg.gif');
+		margin-left: 0;
+	}
+
+	ul.gallery_row li p.stat_pending {
+		background: url('../images/pending-bg.gif');
 		margin-left: 0;
 	}
 

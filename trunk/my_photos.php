@@ -46,10 +46,14 @@ if (!empty($totalrows)) {
 		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['class']='';
 		if ($rsrow['status']==STAT_EDIT) {
-			$rsrow['status']='need_edit';
+			$rsrow['status']='stat_edit';
 			$rsrow['reject_reason']=rawurlencode($rsrow['reject_reason']);
 		} else {
-			unset($rsrow['status']);
+			unset($rsrow['reject_reason']);
+			if ($rsrow['status']==STAT_PENDING) {
+				$rsrow['status']='stat_pending';
+				$rsrow['stat_pending']=true;
+			}
 		}
 		if ($i%COLUMNS==1) {
 			$rsrow['class'].=' first';

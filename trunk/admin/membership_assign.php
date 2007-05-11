@@ -41,7 +41,7 @@ if (!empty($output['uids'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$output['users']='';
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$output['users'].='<a href="profile.php?user_id='.$rsrow['user_id'].'">'.$rsrow['user'].'</a>, ';
+		$output['users'].='<a href="profile.php?uid='.$rsrow['user_id'].'">'.$rsrow['user'].'</a>, ';
 	}
 	$output['users']=substr($output['users'],0,-2);
 	$output['uids']=join('|',$output['uids']);
