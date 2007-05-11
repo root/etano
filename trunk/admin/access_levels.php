@@ -62,5 +62,6 @@ unset($access_levels);
 unset($memberships);
 
 $tplvars['title']='Define access levels';
+$tplvars['page']='access_levels';
 include 'frame.php';
 ?>

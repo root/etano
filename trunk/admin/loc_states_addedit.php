@@ -60,5 +60,6 @@ if (isset($_GET['r'])) {
 $tpl->process('content','content');
 
 $tplvars['title']='Location Management: States';
+$tplvars['page']='loc_states_addedit';
 include 'frame.php';
 ?>

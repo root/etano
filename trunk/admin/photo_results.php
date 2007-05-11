@@ -147,5 +147,6 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP | TPL_OPTI
 $tpl->drop_loop('photos');
 
 $tplvars['title']='Photo Search Results';
+$tplvars['page']='photo_results';
 include 'frame.php';
 ?>

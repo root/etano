@@ -29,5 +29,6 @@ $tpl->set_var('profile',$profile);
 $tpl->process('content','content',TPL_LOOP);
 
 $tplvars['title']='Search';
+$tplvars['page']='blog_search';
 include 'frame.php';
 ?>

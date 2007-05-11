@@ -79,5 +79,6 @@ if (isset($_GET['r'])) {
 $tpl->process('content','content');
 
 $tplvars['title']='Location Management: Zipcodes';
+$tplvars['page']='loc_zipcodes_addedit';
 include 'frame.php';
 ?>

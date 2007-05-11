@@ -53,5 +53,6 @@ if (isset($_GET['r'])) {
 $tpl->process('content','content');
 
 $tplvars['title']='Admin Accounts';
+$tplvars['page']='admin_accounts_addedit';
 include 'frame.php';
 ?>

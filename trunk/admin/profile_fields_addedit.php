@@ -175,6 +175,7 @@ $tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']='Profile Fields Management';
 $tplvars['css']='profile_fields_addedit.css';
+$tplvars['page']='profile_fields_addedit';
 include 'frame.php';
 
 

@@ -57,5 +57,6 @@ $tpl->drop_var('output.pager2');
 unset($loop);
 
 $tplvars['title']='Flirt Management';
+$tplvars['page']='flirts';
 include 'frame.php';
 ?>

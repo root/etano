@@ -57,5 +57,6 @@ $tpl->drop_var('output.pager2');
 unset($loop);
 
 $tplvars['title']='Banned Words Management';
+$tplvars['page']='banned_words';
 include 'frame.php';
 ?>

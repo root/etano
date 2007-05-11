@@ -52,5 +52,6 @@ $tpl->set_var('output',$output);
 $tpl->process('content','content');
 
 $tplvars['title']='Edit Photo';
+$tplvars['page']='photo_edit';
 include 'frame.php';
 ?>

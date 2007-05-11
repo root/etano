@@ -68,6 +68,7 @@ $tpl->drop_loop('profile_fields');
 
 $tplvars['title']='Profile Fields Management';
 $tplvars['css']='profile_fields.css';
+$tplvars['page']='profile_fields';
 include 'frame.php';
 
 

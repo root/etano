@@ -78,6 +78,7 @@ unset($loop);
 
 $tplvars['title']='Profile Categories Management';
 $tplvars['css']='profile_categories.css';
+$tplvars['page']='profile_categories';
 include 'frame.php';
 
 function get_level_name($binvalue,&$memberships) {

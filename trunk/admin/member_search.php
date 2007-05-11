@@ -86,5 +86,6 @@ $tpl->drop_loop('loop');
 
 $tplvars['title']='Search';
 $tplvars['css']='member_search.css';
+$tplvars['page']='member_search';
 include 'frame.php';
 ?>
