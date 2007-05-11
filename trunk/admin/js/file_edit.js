@@ -1,7 +1,7 @@
 $(function() {
 	if (typeof(richedit)!='undefined' && richedit) {
 		oFCKeditor=new FCKeditor('file_content');
-		oFCKeditor.BasePath=document.location.pathname.substring(0,document.location.pathname.lastIndexOf('file_edit.php'))+'fckeditor/';
+		oFCKeditor.BasePath=document.location.pathname.substring(0,document.location.pathname.lastIndexOf('/'))+'/fckeditor/';
 		oFCKeditor.Config["CustomConfigurationsPath"] = oFCKeditor.BasePath+'../js/fckconfig.js';
 		oFCKeditor.ToolbarSet="Datemill";
 		if (typeof(fullpage)!='undefined' && fullpage) {

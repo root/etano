@@ -1,6 +1,6 @@
 $(function() {
 	oFCKeditor=new FCKeditor('news_body');
-	oFCKeditor.BasePath=document.location.pathname.substring(0,document.location.pathname.lastIndexOf('site_news_addedit.php'))+'fckeditor/';
+	oFCKeditor.BasePath=document.location.pathname.substring(0,document.location.pathname.lastIndexOf('/'))+'/fckeditor/';
 	oFCKeditor.Config["CustomConfigurationsPath"] = oFCKeditor.BasePath+'../js/fckconfig.js';
 	oFCKeditor.Config['FullPage']=false;
 	oFCKeditor.ToolbarSet='datemill';
