@@ -139,5 +139,6 @@ $tpl->drop_loop('categs');
 
 $tplvars['title']=sprintf('%1$s Member Profile',$profile['_user']);
 $tplvars['css']='profile.css';
+$tplvars['page']='profile';
 include 'frame.php';
 ?>

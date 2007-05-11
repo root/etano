@@ -77,5 +77,6 @@ $tpl->drop_loop('cities');
 unset($cities);
 
 $tplvars['title']='Location Management: Cities';
+$tplvars['page']='loc_cities';
 include 'frame.php';
 ?>

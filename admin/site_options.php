@@ -101,5 +101,6 @@ $tpl->process('content','content',TPL_MULTILOOP);
 
 $tplvars['title']='Site Options';
 $tplvars['css']='site_options.css';
+$tplvars['page']='site_options';
 include 'frame.php';
 ?>

@@ -372,5 +372,6 @@ $tpl->drop_loop('profile');
 
 $tplvars['title']='Search Results';
 $tplvars['css']='member_results.css';
+$tplvars['page']='member_results';
 include 'frame.php';
 ?>

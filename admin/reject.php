@@ -74,5 +74,6 @@ $tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']='Reject a member profile';
 $tplvars['css']='reject.css';
+$tplvars['page']='reject';
 include 'frame.php';
 ?>

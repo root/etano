@@ -68,5 +68,6 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('states');
 
 $tplvars['title']='Location Management: States';
+$tplvars['page']='loc_states';
 include 'frame.php';
 ?>

@@ -24,5 +24,6 @@ $tpl->set_var('date',strftime("%c"));
 $tpl->process('content','content');
 
 $tplvars['title']='Your admin control panel';
+$tplvars['page']='cpanel';
 include 'frame.php';
 ?>

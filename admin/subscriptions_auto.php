@@ -56,5 +56,6 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('subscriptions_auto');
 
 $tplvars['title']='Site Auto Subscriptions';
+$tplvars['page']='subscriptions_auto';
 include 'frame.php';
 ?>

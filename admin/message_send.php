@@ -58,5 +58,6 @@ $tpl->set_var('output',$output);
 $tpl->process('content','content');
 
 $tplvars['title']='Send a Message';
+$tplvars['page']='message_send';
 include 'frame.php';
 ?>

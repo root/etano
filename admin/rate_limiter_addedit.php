@@ -43,5 +43,6 @@ $tpl->set_var('rate_limiter',$rate_limiter);
 $tpl->process('content','content');
 
 $tplvars['title']='Limits Management';
+$tplvars['page']='rate_limiter_addedit';
 include 'frame.php';
 ?>

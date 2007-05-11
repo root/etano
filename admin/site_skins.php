@@ -59,5 +59,6 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP);
 $tpl->drop_loop('site_skins');
 
 $tplvars['title']='Skin Settings';
+$tplvars['page']='site_skins';
 include 'frame.php';
 ?>

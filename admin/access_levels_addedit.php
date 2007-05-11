@@ -51,5 +51,6 @@ if (isset($_GET['od'])) {
 $tpl->process('content','content');
 
 $tplvars['title']='Access Levels Management';
+$tplvars['page']='access_levels_addedit';
 include 'frame.php';
 ?>
