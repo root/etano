@@ -273,7 +273,7 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 	if (is_string($email_addrs)) {
 		$email_addrs=array($email_addrs);
 	}
-	$config=get_site_option(array('use_queue','mail_from'),'core');
+	$config=get_site_option(array('use_queue','mail_from','mail_crlf'),'core');
 	$query_len=10000;
 	if (!$force_send && !empty($config['use_queue'])) {
 		$email['subject']=sanitize_and_format($email['subject'],TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTFIELD]);
@@ -306,7 +306,11 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 		$mail->From=$config['mail_from'];
 		$mail->Sender=$config['mail_from'];
 		$mail->FromName=_SITENAME_;
-		$mail->LE="\r\n";
+		if ($config['mail_crlf']) {
+			$mail->LE="\r\n";
+		} else {
+			$mail->LE="\n";
+		}
 		$mail->IsMail();
 		for ($i=0;isset($email_addrs[$i]);++$i) {
 			$mail->ClearAddresses();

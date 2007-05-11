@@ -1,11 +1,11 @@
-#mass_members {
+.mass_members {
 	margin-top: 20px;
 	border: 1px solid #bbb;
 	padding: 10px;
 	padding-top: 5px;
 }
 
-#mass_members h3 {
+.mass_members h3 {
 	margin-bottom: 15px;
 }
 

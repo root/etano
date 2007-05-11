@@ -7,14 +7,18 @@ function send_queue_mail() {
 	$query="SELECT `mail_id`,`to`,`subject`,`message_body` FROM `{$dbtable_prefix}queue_email` ORDER BY `mail_id` ASC";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$config=get_site_option(array('mail_from'),'core');
+		$config=get_site_option(array('mail_from','mail_crlf'),'core');
 		require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
 		$mail=new PHPMailer();
 		$mail->IsHTML(true);
 		$mail->From=$config['mail_from'];
 		$mail->Sender=$config['mail_from'];
 		$mail->FromName=_SITENAME_;
-		$mail->LE="\n";
+		if ($config['mail_crlf']) {
+			$mail->LE="\r\n";
+		} else {
+			$mail->LE="\n";
+		}
 		$mail->IsMail();
 
 		$mail_ids=array();
@@ -25,7 +29,9 @@ function send_queue_mail() {
 			$mail->Subject=$rsrow['subject'];
 			$mail->Body=$rsrow['message_body'];
 			if (!$mail->Send()) {
-				$errors[]=$mail->ErrorInfo;
+				$errors[]='mail_id: '.$rsrow['mail_id'].' error: '.$mail->ErrorInfo;
+			} else {
+				$mail_ids[]=$rsrow['mail_id'];
 			}
 		}
 

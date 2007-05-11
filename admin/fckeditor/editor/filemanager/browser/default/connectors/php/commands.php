@@ -55,7 +55,6 @@ function GetFoldersAndFiles( $resourceType, $currentFolder )
 {
 	// Map the virtual path to the local server path.
 	$sServerDir = ServerMapFolder( $resourceType, $currentFolder ) ;
-
 	// Arrays that will hold the folders and files names.
 	$aFolders	= array() ;
 	$aFiles		= array() ;

@@ -1,5 +1,24 @@
 <h2>Search Results</h2>
 
+<div class="mass_members">
+	<h3>Mass member management</h3>
+	<p>
+		<select name="sel" id="sel1">
+		<option value="1">With selected</option>
+		<option value="2">With all found members</option>
+		</select>
+		<select name="act" id="act1">
+		<option value="email">Send email</option>
+		<option value="message">Send on-site message</option>
+		<option value="membership">Assign membership</option>
+		<option value="astat_active">Activate account</option>
+		<option value="astat_suspend">Suspend account</option>
+		<option value="del">Delete</option>
+		</select>
+		<input type="button" onclick="handle_mass_member($('#sel1'),$('#act1'))" value="Go" />
+	</p>
+</div>
+
 <form action="" method="post" id="mass_member_form">
 <input type="hidden" name="search" id="search" value="{search_md5}" />
 <input type="hidden" name="return" value="{return}" />
@@ -30,7 +49,7 @@
 
 {pager2}
 
-<div id="mass_members">
+<div class="mass_members">
 	<h3>Mass member management</h3>
 	<p>
 		<select name="sel" id="sel">
@@ -45,7 +64,7 @@
 		<option value="astat_suspend">Suspend account</option>
 		<option value="del">Delete</option>
 		</select>
-		<input type="button" onclick="handle_mass_member()" value="Go" />
+		<input type="button" onclick="handle_mass_member($('#sel'),$('#act'))" value="Go" />
 	</p>
 </div>
 
