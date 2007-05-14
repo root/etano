@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       includes/tables/message_filters.inc.php
-$Revision: 25 $
+File:                       mtemplates_left.php
+$Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -11,5 +11,6 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-$message_filters_default['defaults']=array('filter_id'=>0,'filter_type'=>FILTER_SENDER,'fk_user_id'=>0,'field'=>'','field_value'=>'','fk_folder_id'=>0);
-$message_filters_default['types']=array('filter_id'=>FIELD_INT,'filter_type'=>FIELD_INT,'fk_user_id'=>FIELD_INT,'field'=>FIELD_TEXTFIELD,'field_value'=>FIELD_TEXTFIELD,'fk_folder_id'=>FIELD_INT);
+$tpl->set_file('left_content','mtemplates_left.html');
+$tpl->process('left_content','left_content');
+?>
