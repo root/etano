@@ -21,27 +21,25 @@ allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$flirts=$flirts_default['defaults'];
+$output=$flirts_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
-	$flirts=$_SESSION['topass']['input'];
+	$output=$_SESSION['topass']['input'];
 } elseif (isset($_GET['flirt_id']) && !empty($_GET['flirt_id'])) {
 	$flirt_id=(int)$_GET['flirt_id'];
-	$query="SELECT * FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`='$flirt_id'";
+	$query="SELECT `flirt_id`,`flirt_text`,`flirt_type` FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`='$flirt_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$flirts=mysql_fetch_assoc($res);
-		$flirts['flirt_text']=sanitize_and_format($flirts['flirt_text'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
+		$output=mysql_fetch_assoc($res);
+		$output['flirt_text']=sanitize_and_format($output['flirt_text'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
 }
 
+$output['flirt_type']=vector2radios($flirt_types,'flirt_type',$output['flirt_type']);
+
 $tpl->set_file('content','flirts_addedit.html');
-$tpl->set_var('flirts',$flirts);
-if (isset($_GET['o'])) {
-	$tpl->set_var('o',$_GET['o']);
-}
-if (isset($_GET['r'])) {
-	$tpl->set_var('r',$_GET['r']);
-}
+$tpl->set_var('output',$output);
 $tpl->process('content','content');
 
 $tplvars['title']='Flirt Management';

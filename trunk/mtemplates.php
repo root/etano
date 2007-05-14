@@ -24,6 +24,8 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
+$config['bbcode_message']=get_site_option('bbcode_message','core');
+
 $from="`{$dbtable_prefix}user_mtpls`";
 $where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
 
@@ -37,7 +39,10 @@ if (!empty($totalrows)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-		$rsrow['message_body']=text2smilies(bbcode2html(sanitize_and_format($rsrow['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY])));
+		$rsrow['message_body']=sanitize_and_format($rsrow['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+		if ($config['bbcode_message']) {
+			$rsrow['message_body']=bbcode2html($rsrow['message_body']);
+		}
 		$loop[]=$rsrow;
 	}
 

@@ -43,7 +43,7 @@ if (!empty($totalrows)) {
 	$output['pager2']=pager($totalrows,$o,$r);
 }
 
-$output['return2me']='site_news.php';
+$output['return2me']='admin/flirts.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
 	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
