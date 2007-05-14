@@ -25,6 +25,7 @@ $output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2f
 $output['return']=rawurlencode($output['return2']);
 $output['mail_id']=sanitize_and_format_gpc($_GET,'mail_id',TYPE_INT,0,0);
 
+$config['bbcode_message']=get_site_option('bbcode_message','core');
 $templates=array();
 $jsarrays=array();
 $query="SELECT `mtpl_id`,`subject`,`message_body` FROM `{$dbtable_prefix}user_mtpls` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
@@ -35,7 +36,9 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$jsrsrow['subject']=rawurlencode($rsrow['subject']);
 	$jsrsrow['message_body']=rawurlencode($rsrow['message_body']);
 	$jsarrays[]=$jsrsrow;
-	$rsrow['message_body']=bbcode2html($rsrow['message_body']);
+	if ($config['bbcode_message']) {
+		$rsrow['message_body']=bbcode2html($rsrow['message_body']);
+	}
 	$templates[]=$rsrow;
 }
 

@@ -1,3 +1,17 @@
+.form_table {
+	width: 100%;
+}
+
+.form_table .field {
+	width: 90%;
+}
+
+.form_table .field ul li {
+	float: left;
+	list-style-type: none;
+	margin-right: 10px;
+}
+
 .rich_ta_wrapper {
 	border: 2px solid #E1E7B8;
 	background: #F8F8EC;

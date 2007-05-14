@@ -3,15 +3,16 @@
 	<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
 	<input type="hidden" name="return" value="{output.return}" />
 	<label for="subject">Subject: </label><input class="text" type="text" name="subject" id="subject" value="{output.subject}" tabindex="1" />
+	<!--opt name="output.flirt_reply"--><p><a class="content-link link_flirt" href="flirt_send.php?to_id={output.fk_user_id}&amp;ft=1&amp;return={output.return}">Reply with a flirt instead</a></p><!--/opt name="output.flirt_reply"-->
 </fieldset>
-<!--opt name="tplvars.bbcode_message"-->
+<!--opt name="output.bbcode_message"-->
 <div id="bb_tools">
 	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#message_body')[0])">Bold</a>
 	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#message_body')[0])">Underline</a>
 	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#message_body')[0])">Hyperlink</a>
 	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#message_body')[0])">Quote</a>
 </div>
-<!--/opt name="tplvars.bbcode_message"-->
+<!--/opt name="output.bbcode_message"-->
 <fieldset>
 	<textarea name="message_body" id="message_body" cols="" rows="" tabindex="2">{output.message_body}</textarea>
 </fieldset>
@@ -24,6 +25,6 @@
 
 <script type="text/javascript" src="js/thickbox.js"></script>
 <script type="text/javascript" src="js/message_send.js"></script>
-<!--opt name="tplvars.bbcode_message"-->
+<!--opt name="output.bbcode_message"-->
 <script type="text/javascript" src="js/bbcode.js"></script>
-<!--/opt name="tplvars.bbcode_message"-->
+<!--/opt name="output.bbcode_message"-->

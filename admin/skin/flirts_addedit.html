@@ -5,19 +5,33 @@
 <form action="processors/flirts_addedit.php" method="post" id="flirts_form">
 <input type="hidden" name="flirt_id" value="{output.flirt_id}" />
 <input type="hidden" name="return" value="{output.return}" />
-<div class="rich_ta_wrapper">
-	<p class="bb_tools">
-		<a href="javascript:;" onclick="add_bbcode2('b',$('#flirt_text')[0])"><img src="{tplvars.tplrelpath}/images/rich_bold.gif" alt="bold" /></a>
-		<a href="javascript:;" onclick="add_bbcode2('u',$('#flirt_text')[0])"><img src="{tplvars.tplrelpath}/images/rich_underline.gif" alt="underline" /></a>
-		<a href="javascript:;" onclick="add_bbcode2('url',$('#flirt_text')[0])"><img src="{tplvars.tplrelpath}/images/rich_link.gif" alt="link" /></a>
-		<a href="javascript:;" onclick="add_bbcode2('quote',$('#flirt_text')[0])"><img src="{tplvars.tplrelpath}/images/rich_quote.gif" alt="quote" /></a>
-	</p>
-	<textarea name="flirt_text" id="flirt_text" tabindex="1">{output.flirt_text}</textarea>
-</div>
-<p><input type="submit" class="button" value="Save" id="btn_save" tabindex="2" /></p>
+<table id="flirts_addedit" class="form_table">
+<tr>
+	<td class="label">Flirt:</td>
+	<td class="field">
+		<div class="rich_ta_wrapper">
+			<p class="bb_tools">
+				<a href="javascript:;" onclick="add_bbcode2('b',$('#flirt_text')[0])"><img src="skin/images/rich_bold.gif" alt="bold" /></a>
+				<a href="javascript:;" onclick="add_bbcode2('u',$('#flirt_text')[0])"><img src="skin/images/rich_underline.gif" alt="underline" /></a>
+				<a href="javascript:;" onclick="add_bbcode2('url',$('#flirt_text')[0])"><img src="skin/images/rich_link.gif" alt="link" /></a>
+				<a href="javascript:;" onclick="add_bbcode2('quote',$('#flirt_text')[0])"><img src="skin/images/rich_quote.gif" alt="quote" /></a>
+			</p>
+			<textarea name="flirt_text" id="flirt_text" tabindex="1">{output.flirt_text}</textarea>
+		</div>
+	</td>
+</tr>
+<tr>
+	<td class="label">Flirt type:</td>
+	<td class="field">{output.flirt_type}</td>
+</tr>
+<tr>
+	<td class="label">&nbsp;</td>
+	<td class="field"><input type="submit" class="button" value="Save" id="btn_save" tabindex="2" /></td>
+</tr>
+</table>
 </form>
 
-<div id="bottom_links"><a class="back" href="{output.return}">Back to list</a></div>
+<div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
 
 <script type="text/javascript" src="js/flirts_addedit.js"></script>
 <script type="text/javascript" src="../js/bbcode.js"></script>
