@@ -67,7 +67,6 @@ $_pfields[5]['editable']=true;
 $_pfields[5]['visible']=true;
 $_pfields[5]['dbfield']='f1';
 $_pfields[5]['fk_pcat_id']=1;
-$_pfields[5]['accepted_values']=1000;
 $_pfields[5]['help_text']=$_lang[5];
 
 $_pfields[6]['label']=$_lang[43];

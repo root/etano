@@ -7,7 +7,7 @@ $(function() {
 	});
 	$('#name').focus();
 	$('#admin_accounts_addedit').bind('submit',function() {
-		return(check_form($(this)[0]));
+		return(check_form(this));
 	});
 });
 

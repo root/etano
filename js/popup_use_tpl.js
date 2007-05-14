@@ -2,11 +2,14 @@ $(function() {
 	$('a[@id^=link_]').bind('click',function() {
 		myid=$(this).attr('id').substr(5);
 		set_tpl(myid);
+		// thickbox
+		parent.TB_remove();
+		return false;
 	});
 });
 
 function set_tpl(theid) {
-	opener.$('#subject').val(unescape(subjects[theid]));
-	opener.$('#message_body').val(unescape(message_bodies[theid]));
+	parent.$('#subject').val(unescape(subjects[theid]));
+	parent.$('#message_body').val(unescape(message_bodies[theid]));
 	window.close();
 }

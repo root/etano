@@ -116,6 +116,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 						queue_or_send_message($notification);
 					}
 				}
+				$nextpage.='#comm'.$input['comment_id'];
 			} else {
 				$topass['message']['text']='Comment added but needs to be reviewed first.';	// translate this
 			}

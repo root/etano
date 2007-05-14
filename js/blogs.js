@@ -1,6 +1,6 @@
 $(function() {
 	$('#blog_search').bind('submit',function() {
-		return(check_form($(this)[0]));
+		return(check_form(this));
 	});
 });
 

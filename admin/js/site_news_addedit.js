@@ -3,13 +3,13 @@ $(function() {
 	oFCKeditor.BasePath=document.location.pathname.substring(0,document.location.pathname.lastIndexOf('/'))+'/fckeditor/';
 	oFCKeditor.Config["CustomConfigurationsPath"] = oFCKeditor.BasePath+'../js/fckconfig.js';
 	oFCKeditor.Config['FullPage']=false;
-	oFCKeditor.ToolbarSet='datemill';
+	oFCKeditor.ToolbarSet='Datemill';
 	oFCKeditor.Width=600;
 	oFCKeditor.Height=200;
 	oFCKeditor.ReplaceTextarea();
 
 	$('#site_news_form').bind('submit',function() {
-		return check_form($(this)[0]);
+		return check_form(this);
 	});
 	$('#news_title').focus();
 });
