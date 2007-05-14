@@ -38,6 +38,14 @@ if (isset($_SESSION['topass']['input'])) {
 		$output['subject']=(substr($output['subject'],0,3)=='Re:') ? $output['subject'] : 'Re: '.$output['subject'];
 		$output['message_body']="\n\n[quote]".$output['message_body'].'[/quote]';
 	}
+	if (isset($_GET['gettpl'])) {
+		$tpl_id=(int)$_GET['gettpl'];
+		$query="SELECT `subject`,`message_body` FROM `{$dbtable_prefix}user_mtpls` WHERE `mtpl_id`='$tpl_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (mysql_num_rows($res)) {
+			$output=array_merge($output,mysql_fetch_assoc($res));
+		}
+	}
 	$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 } else {
 	trigger_error('No receiver specified',E_USER_ERROR);     // translate

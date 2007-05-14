@@ -4,7 +4,7 @@ $(function() {
 	oFCKeditor.BasePath=document.location.pathname.substring(0,document.location.pathname.lastIndexOf('/'))+'/fckeditor/';
 	oFCKeditor.Config["CustomConfigurationsPath"] = oFCKeditor.BasePath+'../js/fckconfig.js';
 	oFCKeditor.Config['FullPage']=true ;
-	oFCKeditor.ToolbarSet='datemill';
+	oFCKeditor.ToolbarSet='Datemill';
 	oFCKeditor.Height=500;
 	oFCKeditor.ReplaceTextarea();
 

@@ -13,9 +13,7 @@ $(function() {
 		save_as_template();
 		return false;	// important! do not bubble
 	});
-	$('#popup_use_tpl').bind('click',function() {
-		popWin('popup_use_tpl.php','template',760,350,1,1);
-	});
+
 	$('#msend_form').bind('submit',function() {
 		return check_form(this);
 	});

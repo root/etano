@@ -23,7 +23,7 @@
 <body>
 <div id="expandable-container">
 	<div id="content-container">
-		<div class="{tplvars.page} content_area large">
+		<div class="{tplvars.page}">
 			<h2>Select a template</h2>
 			<div class="box_content">
 				<div class="row header">
@@ -32,7 +32,7 @@
 				</div>
 				<!--loop name="templates"-->
 				<div class="row">
-					<div class="subject"><a href="javascript:;" title="Select this message template" id="link_{templates.mtpl_id}"><span id="subject_{templates.mtpl_id}">{templates.subject}</span></a></div>
+					<div class="subject"><a href="message_send.php?mail_id={output.mail_id}&amp;return={output.return}&amp;gettpl={templates.mtpl_id}" title="Select this message template" id="link_{templates.mtpl_id}"><span id="subject_{templates.mtpl_id}">{templates.subject}</span></a></div>
 					<div class="message_body">{templates.message_body}</div>
 				</div>
 				<!--noloop name="templates"-->

@@ -2,7 +2,7 @@ $(function() {
 	$('#fk_subscr_id').focus();
 
 	$('#subscriptions_auto_addedit').bind('submit',function() {
-		return check_form($(this)[0]);
+		return check_form(this);
 	});
 
 	$('#dbfield').bind('change',function() {

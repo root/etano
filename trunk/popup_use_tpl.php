@@ -20,6 +20,11 @@ check_login_member(15);
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
+// just for the non-js solution
+$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+$output['return']=rawurlencode($output['return2']);
+$output['mail_id']=sanitize_and_format_gpc($_GET,'mail_id',TYPE_INT,0,0);
+
 $templates=array();
 $jsarrays=array();
 $query="SELECT `mtpl_id`,`subject`,`message_body` FROM `{$dbtable_prefix}user_mtpls` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
@@ -34,7 +39,9 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$templates[]=$rsrow;
 }
 
+
 $tpl->set_file('content','popup_use_tpl.html');
+$tpl->set_var('output',$output);
 $tpl->set_loop('jsarrays',$jsarrays);
 $tpl->set_loop('templates',$templates);
 $tpl->set_var('tplvars',$tplvars);

@@ -1,7 +1,7 @@
 $(function() {
 	$('#pass_change input:visible:first').focus();
 	$('#pass_change').bind('submit',function() {
-		return check_form($(this)[0]);
+		return check_form(this);
 	});
 });
 
