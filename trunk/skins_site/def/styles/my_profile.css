@@ -1,3 +1,5 @@
+@import url('bbcode.css');
+
 #main_photo {
 	float: left;
 	display: block;
@@ -43,3 +45,33 @@
 #profile_area {
 	width: 400px;
 }
+
+.comment {
+	padding-top: 10px;
+	margin-top: 20px;
+	border-top: 1px dashed #ccc;
+}
+
+.comment .user_photo {
+	float: left;
+	margin: 0 10px 10px 0;
+}
+
+.comment p {
+	font-size: 13px;
+}
+
+textarea#comment {
+	width: 50%;
+	height: 140px;
+}
+
+#blogcomment_form .controls {
+	padding-top: 15px;
+}
+
+.comment .controls {
+	float: right;
+}
+
+

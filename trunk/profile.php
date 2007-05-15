@@ -77,7 +77,7 @@ if (!empty($output)) {
 			if (!empty($temp)) {
 				$categs[$j]['content']=$temp;
 				// if you prefer a custom layout use {profile.categ_1},{profile.categ_2},etc in <skin>/profile.html,
-				// uncomment the line below, remove $tpl->set_loop, remove TPL_LOOP from $tpl->process() below
+				// uncomment the line below, remove $tpl->set_loop,
 //				$output['categ_'.$pcat_id]=$temp;
 				++$j;
 			}
@@ -161,8 +161,7 @@ if (!empty($output)) {
 		}
 	}
 
-
-	$tplvars['pic_width']=get_site_option('pic_width','core_photo');
+	$output['pic_width']=get_site_option('pic_width','core_photo');
 	$tplvars['title']=sprintf('%s Profile',$output['user']);
 	$tplvars['page_title']=$output['user'];
 }

@@ -25,7 +25,7 @@ if (!empty($comment_id)) {
 	$query="SELECT b.`fk_user_id` FROM `{$dbtable_prefix}photo_comments` a,`{$dbtable_prefix}user_photos` b WHERE a.`comment_id`='$comment_id' AND a.`fk_photo_id`=b.`photo_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res) && mysql_result($res,0,0)==$_SESSION['user']['user_id']) {
-		// delete only if I am the owner the original photo this comment's been made on
+		// delete only if I am the owner of the original photo this comment's been made on
 		$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `comment_id`='$comment_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;

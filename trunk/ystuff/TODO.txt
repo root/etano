@@ -35,19 +35,14 @@ depind de $tplvars vor fi sterse pt ca tplvars se proceseaza abea in frame.
 - cand se sterge un user as putea sa fac fk_user_id=0 peste tot pe unde era setat (in special in inbox). In felul
 asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a trimis emailul mai exista sau nu...
 
-- welcome message in inbox cand se inregistreaza un membru de tipul MESS_SYSTEM
-
-
 
 TODO
 
-- profile comments in my_profile
 - rate limiter in pagini
 - events
 - js field check
 - site bans
 - formatare la date of birth
-- bbcode in admin
 
 - scor la blog add doar daca blogul este mai mare de x caractere.
 - scor in functie de rating.
@@ -61,11 +56,11 @@ TODO
 // 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
 //		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
 
-- de facut flirt_reply
 - `stat_comments`=`stat_comments`+1 in admin cand se aproba un photo comment
 - `stat_posts`=`stat_posts`+1 in admin cand se aproba un blog
 - blog/poze: nivel acces: public/private/only people in my XXX network are allowed to see it.
 
+- bbcode in admin
 - admin: blog edit
 - admin: stats
 - admin: payment stats. rapoarte pe perioade. procent paid/free/gender
@@ -77,9 +72,7 @@ TODO
 
 - search membri (search.php) case 'vote',case 'views',case 'comm'
 - search default cu defaultul membrului.
-- favorite photos/blogs
 - installer + modman
-- rewritten urls list
 - licenta si verificari
 - create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
 
@@ -98,3 +91,6 @@ TODO
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
 
 - profile views
+- favorite photos/blogs
+- rewritten urls list
+- welcome message in inbox cand se inregistreaza un membru de tipul MESS_SYSTEM

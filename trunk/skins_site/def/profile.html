@@ -1,5 +1,5 @@
 <div id="photo_area">
-	<!--opt name="output.photo"--><a href="javascript:;" onclick="popWin('popup_photo_view.php?uid={output.uid}&amp;main=1','photo',{tplvars.pic_width},{tplvars.pic_width},1)"><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/{output.photo}" /></a><!--/opt name="output.photo"-->
+	<!--opt name="output.photo"--><a href="javascript:;" onclick="popWin('popup_photo_view.php?uid={output.uid}&amp;main=1','photo',{output.pic_width},{output.pic_width},1)"><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/{output.photo}" /></a><!--/opt name="output.photo"-->
 	<!--opt name="!output.photo"--><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/no_photo.gif" /><!--/opt name="!output.photo"-->
 
 	<!--opt name="output.num_photos"-->
@@ -44,10 +44,10 @@
 
 <!--opt name="output.bbcode_comments"-->
 <div id="bb_tools">
-	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',document.getElementById('comment'))">Bold</a>
-	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',document.getElementById('comment'))">Underline</a>
-	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',document.getElementById('comment'))">Hyperlink</a>
-	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',document.getElementById('comment'))">Quote</a>
+	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#comment')[0])">Bold</a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#comment')[0])">Underline</a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#comment')[0])">Hyperlink</a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#comment')[0])">Quote</a>
 </div>
 <!--/opt name="output.bbcode_comments"-->
 <form action="processors/profile_comments.php" method="post" id="comment_form">

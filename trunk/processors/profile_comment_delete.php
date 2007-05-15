@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       processors/blog_comment_delete.php
+File:                       processors/profile_comment_delete.php
 $Revision: 67 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -22,12 +22,10 @@ $topass=array();
 $comment_id=isset($_GET['comment_id']) ? (int)$_GET['comment_id'] : 0;
 
 if (!empty($comment_id)) {
-	$query="SELECT b.`fk_user_id` FROM `{$dbtable_prefix}blog_comments` a,`{$dbtable_prefix}blog_posts` b WHERE a.`comment_id`='$comment_id' AND a.`fk_post_id`=b.`post_id`";
+	// delete only if I am the owner of the profile this comment's been made on
+	$query="DELETE  FROM `{$dbtable_prefix}profile_comments` WHERE `comment_id`='$comment_id' AND `fk_user_id_profile`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_num_rows($res) && mysql_result($res,0,0)==$_SESSION['user']['user_id']) {
-		// delete only if I am the owner of the original post this comment's been made on
-		$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `comment_id`='$comment_id'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_affected_rows()) {
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Comment deleted.';     // translate
 	} else {
@@ -36,10 +34,11 @@ if (!empty($comment_id)) {
 	}
 }
 
-$nextpage='home.php';
 if (isset($_GET['return']) && !empty($_GET['return'])) {
-	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
+	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$nextpage=$input['return'];
+} else {
+	$nextpage='home.php';
 }
 $nextpage=_BASEURL_.'/'.$nextpage;
 redirect2page($nextpage,$topass,'',true);
