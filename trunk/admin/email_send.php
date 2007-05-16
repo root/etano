@@ -59,5 +59,6 @@ $tpl->process('content','content');
 
 $tplvars['title']='Send an Email';
 $tplvars['page']='email_send';
+$tplvars['css']='email_send.css';
 include 'frame.php';
 ?>

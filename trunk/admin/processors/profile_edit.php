@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	$on_changes=array();
 	$ch=0;
+	$texts=array();
 	foreach ($_pfields as $field_id=>$field) {
 		if ($field['editable']) {
 			switch ($field['field_type']) {
@@ -67,6 +68,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 				default:
 					$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],'');
+					if ($field['field_type']==FIELD_TEXTAREA) {
+						$texts[]=$field['dbfield'];
+					}
 					if (isset($field['fn_on_change'])) {
 						$on_changes[$ch]['fn']=$field['fn_on_change'];
 						$on_changes[$ch]['param2']=$input[$field['dbfield']];
@@ -86,17 +90,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$input['uid']."'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$is_update=false;
-		if (mysql_num_rows($res)) {
-			$is_update=true;
-		}
-		if ($is_update) {
-			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."',`status`='".STAT_APPROVED."'";
-		} else {
-			$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."',`status`='".STAT_APPROVED."'";
-		}
+		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."',`status`='".STAT_APPROVED."'";
 		foreach ($_pfields as $field_id=>$field) {
 			if ($field['editable']) {
 				if ($field['field_type']==FIELD_LOCATION) {
@@ -108,10 +102,22 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 		}
-		if ($is_update) {
-			$query.=" WHERE `fk_user_id`='".$input['uid']."'";
-		}
+		$query.=" WHERE `fk_user_id`='".$input['uid']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (!mysql_affected_rows()) {
+			$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."',`status`='".STAT_APPROVED."'";
+			foreach ($_pfields as $field_id=>$field) {
+				if ($field['editable']) {
+					if ($field['field_type']==FIELD_LOCATION) {
+						$query.=",`".$field['dbfield']."_country`='".$input[$field['dbfield'].'_country']."',`".$field['dbfield']."_state`='".$input[$field['dbfield'].'_state']."',`".$field['dbfield']."_city`='".$input[$field['dbfield'].'_city']."',`".$field['dbfield']."_zip`='".$input[$field['dbfield'].'_zip']."'";
+					} else {
+						if (isset($input[$field['dbfield']])) {
+							$query.=',`'.$field['dbfield']."`='".$input[$field['dbfield']]."'";
+						}
+					}
+				}
+			}
+		}
 
 		for ($i=0;isset($on_changes[$i]);++$i) {
 			if (function_exists($on_changes[$i]['fn'])) {
@@ -125,6 +131,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$nextpage=_BASEURL_.'/admin/profile_edit.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
+		for ($i=0;isset($texts[$i]);++$i) {
+			$input[$texts[$i]]=addslashes_mq($_POST[$texts[$i]]);
+		}
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}

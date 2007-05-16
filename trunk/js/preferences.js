@@ -1,4 +1,4 @@
 $(function() {
-	$('#prefs_form input:first:visible').focus();
+	$('#prefs_form input:visible:first').focus();
 	$('input.number').numeric();
 });

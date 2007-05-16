@@ -35,80 +35,82 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$texts=array();
 		foreach ($_pcats[$pcat_id]['fields'] as $field_id) {
 			$field=$_pfields[$field_id];
-			switch ($field['field_type']) {
+			if ($field['editable']) {
+				switch ($field['field_type']) {
 
-				case FIELD_TEXTFIELD:
-					$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],''));
-					if (isset($field['fn_on_change'])) {
-						$on_changes[$ch]['fn']=$field['fn_on_change'];
-						$on_changes[$ch]['param2']=$input[$field['dbfield']];
-						$on_changes[$ch]['param3']=$field['dbfield'];
-						++$ch;
-					}
-					$texts[]=$field['dbfield'];		// need to know if any TA/TF were changed
-					break;
+					case FIELD_TEXTFIELD:
+						$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],''));
+						if (isset($field['fn_on_change'])) {
+							$on_changes[$ch]['fn']=$field['fn_on_change'];
+							$on_changes[$ch]['param2']=$input[$field['dbfield']];
+							$on_changes[$ch]['param3']=$field['dbfield'];
+							++$ch;
+						}
+						$texts[]=$field['dbfield'];		// need to know if any TA/TF were changed
+						break;
 
-				case FIELD_TEXTAREA:
-					$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],'');
-					if (!empty($config['ta_len'])) {
-						$input[$field['dbfield']]=substr($input[$field['dbfield']],0,$config['ta_len']);
-					}
-					$input[$field['dbfield']]=remove_banned_words($input[$field['dbfield']]);
-					if (isset($field['fn_on_change'])) {
-						$on_changes[$ch]['fn']=$field['fn_on_change'];
-						$on_changes[$ch]['param2']=$input[$field['dbfield']];
-						$on_changes[$ch]['param3']=$field['dbfield'];
-						++$ch;
-					}
-					$texts[]=$field['dbfield'];		// need to know if any TA/TF were changed
-					break;
+					case FIELD_TEXTAREA:
+						$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],'');
+						if (!empty($config['ta_len'])) {
+							$input[$field['dbfield']]=substr($input[$field['dbfield']],0,$config['ta_len']);
+						}
+						$input[$field['dbfield']]=remove_banned_words($input[$field['dbfield']]);
+						if (isset($field['fn_on_change'])) {
+							$on_changes[$ch]['fn']=$field['fn_on_change'];
+							$on_changes[$ch]['param2']=$input[$field['dbfield']];
+							$on_changes[$ch]['param3']=$field['dbfield'];
+							++$ch;
+						}
+						$texts[]=$field['dbfield'];		// need to know if any TA/TF were changed
+						break;
 
-				case FIELD_DATE:
-					$input[$field['dbfield'].'_month']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_month',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_day']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_day',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_year']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_year',TYPE_INT,0,0);
-					if (!empty($input[$field['dbfield'].'_year']) && !empty($input[$field['dbfield'].'_month']) && !empty($input[$field['dbfield'].'_day'])) {
-						$input[$field['dbfield']]=$input[$field['dbfield'].'_year'].'-'.str_pad($input[$field['dbfield'].'_month'],2,'0',STR_PAD_LEFT).'-'.str_pad($input[$field['dbfield'].'_day'],2,'0',STR_PAD_LEFT);
-					}
-					if (isset($field['fn_on_change'])) {
-						$on_changes[$ch]['fn']=$field['fn_on_change'];
-						$on_changes[$ch]['param2']=array('year'=>$input[$field['dbfield'].'_year'],'month'=>$input[$field['dbfield'].'_month'],'day'=>$input[$field['dbfield'].'_day']);
-						$on_changes[$ch]['param3']=$field['dbfield'];
-						++$ch;
-					}
-					break;
+					case FIELD_DATE:
+						$input[$field['dbfield'].'_month']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_month',TYPE_INT,0,0);
+						$input[$field['dbfield'].'_day']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_day',TYPE_INT,0,0);
+						$input[$field['dbfield'].'_year']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_year',TYPE_INT,0,0);
+						if (!empty($input[$field['dbfield'].'_year']) && !empty($input[$field['dbfield'].'_month']) && !empty($input[$field['dbfield'].'_day'])) {
+							$input[$field['dbfield']]=$input[$field['dbfield'].'_year'].'-'.str_pad($input[$field['dbfield'].'_month'],2,'0',STR_PAD_LEFT).'-'.str_pad($input[$field['dbfield'].'_day'],2,'0',STR_PAD_LEFT);
+						}
+						if (isset($field['fn_on_change'])) {
+							$on_changes[$ch]['fn']=$field['fn_on_change'];
+							$on_changes[$ch]['param2']=array('year'=>$input[$field['dbfield'].'_year'],'month'=>$input[$field['dbfield'].'_month'],'day'=>$input[$field['dbfield'].'_day']);
+							$on_changes[$ch]['param3']=$field['dbfield'];
+							++$ch;
+						}
+						break;
 
-				case FIELD_LOCATION:
-					$input[$field['dbfield'].'_country']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_country',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_state']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_state',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_city']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_city',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_zip',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-					if (isset($field['fn_on_change'])) {
-						$on_changes[$ch]['fn']=$field['fn_on_change'];
-						$on_changes[$ch]['param2']=array('country'=>$input[$field['dbfield'].'_country'],'state'=>$input[$field['dbfield'].'_state'],'city'=>$input[$field['dbfield'].'_city'],'zip'=>$input[$field['dbfield'].'_zip']);
-						$on_changes[$ch]['param3']=$field['dbfield'];
-						++$ch;
-					}
-					break;
+					case FIELD_LOCATION:
+						$input[$field['dbfield'].'_country']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_country',TYPE_INT,0,0);
+						$input[$field['dbfield'].'_state']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_state',TYPE_INT,0,0);
+						$input[$field['dbfield'].'_city']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_city',TYPE_INT,0,0);
+						$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_zip',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+						if (isset($field['fn_on_change'])) {
+							$on_changes[$ch]['fn']=$field['fn_on_change'];
+							$on_changes[$ch]['param2']=array('country'=>$input[$field['dbfield'].'_country'],'state'=>$input[$field['dbfield'].'_state'],'city'=>$input[$field['dbfield'].'_city'],'zip'=>$input[$field['dbfield'].'_zip']);
+							$on_changes[$ch]['param3']=$field['dbfield'];
+							++$ch;
+						}
+						break;
 
-				default:
-					$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],'');
-					if (isset($field['fn_on_change'])) {
-						$on_changes[$ch]['fn']=$field['fn_on_change'];
-						$on_changes[$ch]['param2']=$input[$field['dbfield']];
-						$on_changes[$ch]['param3']=$field['dbfield'];
-						++$ch;
-					}
+					default:
+						$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],'');
+						if (isset($field['fn_on_change'])) {
+							$on_changes[$ch]['fn']=$field['fn_on_change'];
+							$on_changes[$ch]['param2']=$input[$field['dbfield']];
+							$on_changes[$ch]['param3']=$field['dbfield'];
+							++$ch;
+						}
 
-			}
-			// check for input errors
-			if (isset($field['required']) && ((empty($input[$field['dbfield']]) && $field['field_type']!=FIELD_LOCATION) || ($field['field_type']==FIELD_LOCATION && empty($input[$field['dbfield'].'_country'])))) {
-				$error=true;
-				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='The fields outlined below are required and must not be empty.';
-				$input['error_'.$field['dbfield']]='red_border';
-			}
-		}
+				}
+				// check for input errors
+				if (isset($field['required']) && ((empty($input[$field['dbfield']]) && $field['field_type']!=FIELD_LOCATION) || ($field['field_type']==FIELD_LOCATION && empty($input[$field['dbfield'].'_country'])))) {
+					$error=true;
+					$topass['message']['type']=MESSAGE_ERROR;
+					$topass['message']['text']='The fields outlined below are required and must not be empty.';
+					$input['error_'.$field['dbfield']]='red_border';
+				}
+			}	// if ($field['editable'])
+		}	// foreach()
 
 		if (!$error) {
 			$query="SELECT `fk_user_id`";
@@ -172,8 +174,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Your profile has been changed.';
 		} else {
 			$nextpage='profile_edit.php';
-// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+//	 		you must re-read all textareas from $_POST like this:
+//			$input['x']=addslashes_mq($_POST['x']);
+			for ($i=0;isset($texts[$i]);++$i) {	// here we get textfields too but we don't bother...
+				$input[$texts[$i]]=addslashes_mq($_POST[$texts[$i]]);
+			}
 			$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 			$input['pcat_id']=$pcat_id;
 			$topass['input']=$input;

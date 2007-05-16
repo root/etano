@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       mtemplates.php
+File:                       responses.php
 $Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -49,24 +49,24 @@ if (!empty($totalrows)) {
 	$output['pager2']=pager($totalrows,$o,$r);
 }
 
-$output['return2me']='mtemplates.php';
+$output['return2me']='responses.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
 	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
-$tpl->set_file('content','mtemplates.html');
+$tpl->set_file('content','responses.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='Manage your message templates';     // translate
-$tplvars['page_title']='Message templates';
-$tplvars['page']='mtemplates';
-$tplvars['css']='mtemplates.css';
-if (is_file('mtemplates_left.php')) {
-	include 'mtemplates_left.php';
+$tplvars['title']='Manage your saved responses';     // translate
+$tplvars['page_title']='Saved Responses';
+$tplvars['page']='responses';
+$tplvars['css']='responses.css';
+if (is_file('responses_left.php')) {
+	include 'responses_left.php';
 }
 include 'frame.php';
 ?>

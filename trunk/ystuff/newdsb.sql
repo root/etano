@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Apr 27, 2007 at 08:16 PM
+-- Generation Time: May 16, 2007 at 03:46 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 -- 
@@ -74,7 +74,8 @@ CREATE TABLE `dsb_admin_accounts` (
 -- Dumping data for table `dsb_admin_accounts`
 -- 
 
-INSERT INTO `dsb_admin_accounts` (`admin_id`, `user`, `pass`, `name`, `status`, `dept_id`, `email`) VALUES (1, 0x61646d696e, 0x3964323763666564386236633738373833616162623534643264393464393331, 'Dan Caragea', 15, 4, 'dan@sco.ro');
+INSERT INTO `dsb_admin_accounts` (`admin_id`, `user`, `pass`, `name`, `status`, `dept_id`, `email`) VALUES (1, 0x61646d696e, 0x3964323763666564386236633738373833616162623534643264393464393331, 'Dan Caragea', 15, 4, 'dan@sco.ro'),
+(0, 0x616469, 0x3362623132633663393066343564343166646633633364343038616537646639, 'adrian chiper', 15, 4, '');
 
 -- --------------------------------------------------------
 
@@ -221,8 +222,8 @@ INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `
 (6, '2007-04-18 23:30:54', 19, 'pkusa', 6, 1, 'About MyOrg, Inc', 'Why Choose Us?\nWhy would someone choose one provider over another?  When it comes to Internet Connectivity, how well does one really know any provider? \n\nRegardless of how many server racks are maintained, or how low the monthly price is for hosting your site, we believe that ultimately, our customers choose us because they have gotten to know us.  They know that we will help them connect to the maze that is the Internet and, should they get lost, they know that we will be there to help them find their way.\n\nWe are dedicated to ensuring that whatever service you choose with us, should it be: Web Hosting Solutions, Domain Names, SSL, Co-Location or Web Development we always are courteous, knowledgeable and quick to respond.\n\nIn order to stay ahead of the competition, MyOrg, Inc. and its family of companies have embarked on providing our consumer and corporate customers with true quality-of-service initiatives, focused on making our customers'' Internet experience the best it can be.\n[b][/b][b][/b][b][/b][b][/b][quote][/quote]', 1, 15, '', 0, 1, '2007-04-18 23:30:54', ''),
 (7, '2007-04-19 05:01:39', 12, 'a_l_f', 7, 1, 'A design resource kit', 'I look forward to the design resource kit as i cannot leave things alone :-)\ni wonder how long it will take me to crash the new install when its released :-0', 1, 15, '', 0, 1, '2007-04-19 05:01:39', ''),
 (8, '2007-04-19 09:57:59', 1, 'emma', 1, 1, 'Testing blogs', 'Hello\n\n[quote]everybody[/quote]\n\n[b]how[/b]\n\n[u]are[/u]\n\n[url=http://www.datemill.com/friendy/profile.php?user=emma]you[/url]?', 1, 15, '', 0, 5, '2007-04-19 09:57:59', ''),
-(9, '2007-04-19 21:40:05', 7, 'dragon', 5, 1, 'Today''s update take 2', 'Ok, another update today - we focused on bugs and overall stability but a couple of features were added too. :)\n- You should be able to send (and receive) messages, flirts, etc.\n- You will receive new message email notifications when you get a new message (if you said you want to receive notifs in your settings)\n- You will also receive message and email notifications when a new comment is made on one of your pictures or blogs.\n- The one and only cron job is active on the demo site.', 1, 15, '', 2, 4, '2007-04-24 17:24:27', ''),
-(10, '2007-04-20 02:01:23', 11, 'johnboy', 4, 1, 'Testing this out', 'I''m not very familiar about blogs, so I have no idea what Im doing here, not even sure if this will post in the main blog area. Are blogs just another type of FORUMS?', 1, 15, '', 70, 7, '2007-04-20 02:01:23', '');
+(9, '2007-04-19 21:40:05', 7, 'dragon', 5, 1, 'Today''s update take 2', 'Ok, another update today - we focused on bugs and overall stability but a couple of features were added too. :)\n- You should be able to send (and receive) messages, flirts, etc.\n- You will receive new message email notifications when you get a new message (if you said you want to receive notifs in your settings)\n- You will also receive message and email notifications when a new comment is made on one of your pictures or blogs.\n- The one and only cron job is active on the demo site.', 1, 15, '', 2, 4, '2007-05-07 11:13:21', ''),
+(10, '2007-04-20 02:01:23', 11, 'johnboy', 4, 1, 'Testing this out', 'I''m not very familiar about blogs, so I have no idea what Im doing here, not even sure if this will post in the main blog area. Are blogs just another type of FORUMS?', 1, 15, '', 73, 7, '2007-04-20 02:01:23', '');
 
 -- --------------------------------------------------------
 
@@ -262,7 +263,6 @@ CREATE TABLE `dsb_feed_cache` (
 -- Dumping data for table `dsb_feed_cache`
 -- 
 
-INSERT INTO `dsb_feed_cache` (`module_code`, `feed_xml`, `update_time`) VALUES (0x6f7369676e616c5f66656564, '<?xml version="1.0" encoding="UTF-8"?>\r\n<?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/rss2full.xsl" type="text/xsl" media="screen"?><?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/itemcontent.css" type="text/css" media="screen"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">\r\n<channel>\r\n	<title>Original Signal - Transmitting Tech</title>\r\n	<link>http://tech.originalsignal.com</link>\r\n	<description>Orginal Signal aggregates the 15 most popular technology sites. The main purpose of the site is to provide \r\na quick glance on what''s happening without using your desktop/web RSS reader. New headlines (since your \r\nlast cookied visit) come in pretty orange, visited ones are grey. All credits go to the authors of these weblogs. \r\nWithout their hard work Original Signal would not exist. Original Signal was inspired by Popurls and the Web 2.0 Workgroup.</description>\r\n	<pubDate>Sat, 21 Apr 2007 11:48:50 CEST</pubDate>\r\n	<language>en</language>\r\n	\r\n	  <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" href="http://feeds.feedburner.com/OriginalSignal/tech" type="application/rss+xml" /><item>\r\n  <title>DD-WRT: Sliding down the slippery slope... (Give ''em hell, Digg users!)</title>\r\n  <link>http://tech.originalsignal.com/article/47044/dd-wrt-sliding-down-the-slippery-slope-give-em-hell-digg-users.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 11:38:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47044/dd-wrt-sliding-down-the-slippery-slope-give-em-hell-digg-users.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  DD-WRT, the firmware for the Linksys WRT54G series of routers is based on Linux.  Despite being based on code licensed under the GPL, the coordinator of the project is claiming he is the primary author and is now currently charging for licenses.  More info here: http://xwrt.blogspot.com/2007/02/dd-wrt-continues-to-exploit-free-open.html  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Microsoft is Sued for Patent Violation over .NET</title>\r\n  <link>http://tech.originalsignal.com/article/47043/microsoft-is-sued-for-patent-violation-over-net.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 11:38:02 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47043/microsoft-is-sued-for-patent-violation-over-net.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  randomErr writes "As reported by Info World, Microsoft was issued a cease and desist order on February 7 of this year by Vertical Computer Systems. The order was for patent infringement by the current implementations of the .NET framework. Both the .NET framework and Vertical Computer Systems'' SiteFlash use XML to create component-based structures that are used to build and operate web sites. Vertical Computer Systems is requesting a full jury trial. If successful fought .NET technology implementations may completely change as we know it and Microsoft would probably have to pay out a hefty sum."Read more of this story at Slashdot.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Why Good Looking Geeks Don''t Get Girls</title>\r\n  <link>http://tech.originalsignal.com/article/47042/why-good-looking-geeks-dont-get-girls.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 11:08:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47042/why-good-looking-geeks-dont-get-girls.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  It all comes down to how one carries himself or herself for that matter.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Weekly Perl 6 mailing list summary for 01-07 April, 2007</title>\r\n  <link>http://tech.originalsignal.com/article/47041/weekly-perl-6-mailing-list-summary-for-01-07-april-2007.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 10:08:33 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47041/weekly-perl-6-mailing-list-summary-for-01-07-april-2007.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  This week on the Perl 6 mailing lists&#8220;developers shouldn&#8217;t live in fear of $^O&#8221;&#8211; Jerry Gay, in &#8216;Use of English pragma&#8217;LanguageSecond Perl 6 Microgrant - Phil Crow on Java to Perl 6 declaration converterLeon Brocard announced that the second Perl 6 microgrant had been awardedto Phil Crow for his proposal to convert Java declarations to Perl 6.More information about his proposal can be found in the grant application text. Details aboutthe microgrant application procedureare available for those interested in submitting a proposal. typoJonathan Lang submitted a patch which corrects a typo in S03. Range SemanticsJonathan Lang suggested a change to S03 which was inspired by the newarray indexing syntax from S09.  This would make Ranges in an arrayindex a natural outgrowth of the standard Range semantics. Negation metaoperatorJonathan Lang had a proposal to generalize the negated relationaloperators to apply to any infix operator which returns a boolean.Larry Wall rejected the suggestion because the relationals Jonathannamed are typed to return Any, not Bool.Parrot Porters Make disassemble useful. Kevin Tew created ticket  with a patch and requestedfeedback&#8230;back in July of 2006.  Paul Cochrane applied it as r17922on April 1st.: Failures in 5 tests during ''make test''; partially patched James Keenan created ticket  to report errors on5 different tests.  Later he closed the ticket because the failingtests were identified as part of ongoing work and the tests were nolonger failing. Run Parrot under Coverity Prevent Paul Cochrane wanted to get Coverity to run Prevent on Parrot.This was ticket .More recently, Paul reported that he&#8217;d received a reply stating thatParrot could certainly be added, but that no date estimate was availableat the moment.Syntax for Constructing new Objects (and classes?)This thread began with Klaas-Jan Stol asking about the syntax forconstructing new objects because he thought that it was going tobe changed.  Allison Randal replied with examples of the two proposalsfor the new syntax.  This led Alek Storm to ask if new() would bea vtable method or a PCCMETHOD.  Jonathan Worthington confirmedthat it is a PCCMETHOD.  Allison elaborated that it is a class method.More recently, Alek replied that he thought that new should be keptan opcode, and new() should be a vtable method which is called frominside the new opcode.  Jonathan Worthington was confused by Alek&#8217;sproposal.  He suggested making BaseClass implement all the vtablevariants of a method, and Class can inherit from it and provide a saneinterface.  Alek thought that Jonathan&#8217;s suggestion was similar toone he had made in  but that Jonathan&#8217;s explanationwas superior.  Allison also added her thoughts to this subthread.In the main thread, Jonathan proposed deprecating the old syntaxin the next release and removing support for it in the following release.Allison agreed to marking it as deprecated now.  Joshua Isom wantedthe dot syntax to still work so that tests wouldn&#8217;t need to be rewritten.Allison explained that there were several reasons to remove constantsfor types and the class registry.compilers/pirc continued&#8230;Klaas-Jan Stol added a vtable to the parser in compilers/pirc.He proposed looking at the bcg project to see if it would fit inwith compilers/pirc.  Allison Randal thought it was worth exploring. r17907 - trunk/docs/pdds/draftA commit by Allison Randal integrated some questions and commentsinto the Objects PDD.  Jonathan Worthington had a few comments,such as noting that resolve is sugar rather than something new,and that comments about offsets should go away.  Allison notedthat resolve is the preferred way of dealing with conflictresolution, and removed references to offsets. Extensive failures in t/compilers/imcc/imcpasm/*.t and t/pmc/sub.t James Keenan posted some failures in make test in ticket.  Paul Cochrane reported that he was unable toreplicate the failures with r17914 and asked James to check hisrevision.  James looked into it further and concluded that the nameof the sandbox was affecting the test results.  He wondered if anyonecould explain why that was happening. r17921 - trunk/docs/pddsA commit by Paul Cochrane noted that Perl code with __END__or __DATA__ blocks should not get an emacs or vim coda.  Shawn MMoore suggested putting the coda at the top of the file, but Paulexplained that this had been attempted but proved to be a poor solutionfor several reasons. Work out how to encourage good editor-independent formatting habits Paul Cochrane created ticket  with the mission&#8220;Figure out how to encourage good formatting habits, without assumingthat everyone uses emacs or vim, and with minimal clutter in oursource code.  Also write a coding standards test to codify this.&#8221; generated files with timezoneless times In ticket , Will Coleda wanted tools which insert messagesinto generated files to include a timezone (which should always be UTC).Paul Cochrane said that generated files are checked for timestamps incodingstd/gmt_utc.t and that config/init/defaults.pm was updatedin r17923 to pass the test. - add a Perl::Critic policy to look for FIXME&#124;TODO&#124;XXX In ticket , Paul Cochrane suggested adding a checkfor &#8216;FIXME&#8217;/''TODO&#8217;/etc for the Perl source files, as there is currentlyonly a check for the C files.  This was done in r17925.Chris Dolan suggested using an existing Perl::Critic policy.  WillColeda asked if Andy Lester would accept a patch which would optionallypermit &#8216;TODO&#8217; comments which included ticket numbers and reject thosewhich don&#8217;t include ticket numbers?  Andy replied that he didn&#8217;t wantto build exceptions, and proposed that people just write &#8216;RT #12345&#8242;instead of &#8216;TODO (#12345)&#8217;.  Paul Cochrane agreed with this suggestion.Link''n''Load on WindowsRon Blaschke reported that he was looking into errors in linking andloading on Windows.  With linking, there were some symbols whichweren&#8217;t exported.  He planned to provide a patch to export them.To solve the loading issue, he wanted to change several files toinclude the full path.Current State of Building Parrot on CygwinRon Blaschke reminded the list that it is necessary to include theabsolute path to blib/lib in the PATH environment variable to buildon Cygwin.  He also explained that some problems could be due to afile having Windows line endings.Eric Hanchrow wondered if it was possible to make Parrot less fussy aboutthe line endings.  Ron wanted to see that happen, but explained thathis suggestions were workarounds until the problem was resolved.Steve Peters said he would be looking at how to improve the process.Ron described his thoughts in more detail in&#8216;Link&#8217;n''Load on Windows.&#8217;  chromatic asked if itwas possible to pass flags to the linker to hint at the path, whichis how the Linux version works.  Ron thought that was handy, but hadn&#8217;tseen something similar for Windows.:  Configure.pl:  refactor options processing functionality In ticket , James Keenan posted a patch which removescommand-line option processing from Configure.pl and puts it in alibrary.  This was done to make testing easier.  The patch was appliedas r17983 and 17984. Borland C++ cleanups In ticket , Steve Peters submitted a patch whichcleans up Parrot for Borland C++ on Windows.  This patch does notcompletely solve compilation issues because it seems to create newissues on Linux.  chromatic applied it as r18134.Hash iteration questionJonathan Worthington showed two examples of iterating through a hash,and noted that in his first example you will only get the first keyin the hash.  He believes that the hash and iterator code are closelytied and isn&#8217;t thread safe.Allison Randal replied that the significant differences are down tothe iterator&#8217;s shift_pmc throwing an exception if the key is -1,while shift_string doesn&#8217;t check.  She agreed that the code wasexcessively mixed and needed review.  Leopold Toetsch added a furtherexplanation on the implementation.PDD15: newclassJonathan Worthington had a comment on PDD 15 and how it describedthe creation of a new class.  He wondered about the implementation.Allison Randal replied that the newclass opcode will be a simpleopcode.  Jonathan implemented what Allison described and createda test for it as well.:  pmc2c.pl:  Does anyone (know how to) use the ''no-body'' option? In ticket , James Keenan noted that nobody had spokenup in favor of retaining the no-body option.  He said that he wouldtake the ticket and assign the revisions to participants of the PerlSeminar Phalanx Phoneix project in NY. Parrot cleanups - part 2 Steve Peters submitted a patch in ticket  whichhad some cleanups to make Parrot work better with different Ccompilers.  It was applied as r17952.Paper on Software Patterns in ParrotKlaas-Jan Stol mentioned that he had recently taken a course onsoftware patterns and co-authored a paper on patterns in Parrot,which he put on the wiki.: Parrot::Pmc2c::PCCMETHOD constants should be autogenerated Jerry Gay noted that lib/Parrot/Pmc2c/PCCMETHOD.pm contains a numberof constants, which should be generated during the configure processand included.  Ticket  discusses this request. MMD needs to be in a PDD Jonathan Worthington wanted multi-method dispatch to be documentedin one of the PDDs or get its own PDD.  The request was made in ticket. modify PCCMETHOD syntax to more closely match PDD03 In ticket , Jerry Gay requested that the PCCMETHODsyntax be modified to put it in line with PDD 03.  chromatic offereda patch. NCI methods now name-mangledJonathan Worthington explained that he was starting to move classfunctionality into vtable methods, but ran into the issue that youcannot have a METHOD or PCCMETHOD with the same name as a vtable method.This is, however, required to implement the interface specified in PDD 15.He made some changes to get Parrot working again, which affected theComplex PMC.Fran&#231;ois PERRADreported that this change breaks Lua.Allison Randal observed the same thing, and asked Jonathan to eitherfix the problem for Lua or revert the change from the trunk.Jonathan apologized for breaking things and said that it was fixedin r17982.Leopold Toetsch suggested that perhaps language maintainers who areusing &#8220;features&#8221; of Parrot could submit core tests for these features,so that this type of problem won&#8217;t occur in the future.  JoshuaIsom thought this could be expanded to anyone using Parrot where a&#8220;feature&#8221; isn&#8217;t tested.  He proposed an open repository for tests.chromatic wondered if it was that difficult to mail in patches.Joshua offered some arguments in favor of it.chromaticparrotcode updates.Will Coleda solicited for suggestions concerning parrotcode.org becausethe current system requires that he do quite a bit of work every timethat directories are moved or files are added.  He proposed having adirectory on the site which is a checked in version of the docs/htmldirectory after a make html.  He also suggested having docs for thelatest release as well as for the &#8217;svn head&#8217;. t/doc/pod.t vs. tools/doc/pod_errors.pl In ticket , Will Coleda suggested removing the scripttools/doc/pod_errors.pl because the functionality is already replicatedin t/doc/pod.t.  Also, the script finds errors which the test doesnot, which requires investigation.Joshua Isom reported that he got a segmentation fault when he tried torun the script.  When he persisted with running it, he found thatit appeared to have a stricter POD checker.  Jerry Gay thought that perhapsthe script and the test were checking different files.Paul Cochrane found that on Gentoo the t/codingstd/c_indent.ttest caused Perl to segfault, but with a new Perl compilation itworked.  He was curious because he wondered if the error was dueto Gentoo Perl.  Joshua replied that he was using Darwin.Paul also remarked that the script reported where the errors werein the file, which the test didn&#8217;t do.  Jerry Gay and Nicholas Clarkcommented on this.James E Keenan reposted a call for hackathons which was publishedfor YAPC::Europe 2007.  He felt that the Chicago Hackathon had beengood for Parrot, and hoped that someone would lead a related Hackathonat Y::E.  More information about the offer can be foundon the Y::E website.Re:  AutoReply: $P symbolic register allocation bugYehoshua Sapir remarked that the code in  workedon OS X. t/pmc/sub.t: test for creation of lex by clone op Yehoshua Sapir submitted ticket  which contains apatch to test the creation of lex by the clone op.:  Configure.pl:  Move STDOUT messages to Parrot::Configure::Messages James Keenan created ticket  to submit a patchwhich makes lib/Parrot/Configure/Messages.pm output messages toSTDOUT (previously this was done by Configure.pl).  This willmake testing easier.  It was applied as r18027. r17987 - in trunk: . docs/pdds docs/pdds/draftAllison Randal made a commit which moved PDD 15 (objects) out ofthe draft directory.Use of English pragmaJames E Keenan noted that Configure.pl uses one of the English variables,namely $OUTPUT_AUTOFLUSH.  He wondered if there was a policy regardingthe use of the named variables instead of their short versions.  JerryGay felt that it was wrong to use the English variables.James said he would convert the variable while refactoring.  He createdticket  to remind him of this task.  Later this wasdone and applied as r18033. PMC documentation guidelines draftJerry Gay remarked that he had committed a draft of PMC documentationguidelines in r17998.  The document is meant to explain the style ofdocumentation which should be used for core PMCs.  Klaas-Jan Stolhad some additions, borrowed from &#8216;Perl Best Practices&#8217;.  Joshua Isomquestioned Klaas-Jan on some of the points, and Klaas-Jan elaborated. src/pmc/os.pmc: bad use of stat(2) and lstat(2) In ticket , the output of t/pmc/os.t which failson Solaris 10 was attached. improper casting to void * in src/dynext.c Ticket  contained a small patch to changeload_func from a void pointer to NULL.  Leopold Toetschexplained that the cast was being used.  Nicholas Clark answeredthat the casting isn&#8217;t allowed under strict ANSI C, but that hepreferred assigning a plain 0 rather than a NULL. Memory leak with String pmc Mehmet Yavuz Selim Soyturk reported a memory leak in some example code.This was mentioned in ticket .vtable cleanup and questionsJonathan Worthington reported that he is adding the new vtableentries required for PDD 15.  He wanted to know if become_parent couldbe removed, or if it needed a standard deprecation cycle.  He alsonoted that the subclass vtable method needed to be removed, but thatit was in use by ParrotClass and ParrotObject.Jonathan also noticed PMC* new_singleton() and PMC* get_anonymous_subclass(), which don&#8217;t appear to be used.  Hewondered if they should be removed.  Finally, he wanted to know ifget_attr and set_attr should be deprecated.Nicholas Clark confirmed that become_parent isn&#8217;t used anywhere.Will Coleda voted for a standard deprecation cycle.  Allison Randalconfirmed this.She also agreed that the subclass vtable method won&#8217;t be needed inthe future, and that get_attr and set_attr could bedeprecated when the full change to PDD 15 is complete.new_singleton() and get_anonymous_subclass()were described as &#8220;a case of being overly prepared for possiblefuture needs.&#8221;Minor notes/suggestions on PDD15Klaas-Jan Stol had some suggestions for PDD 15.  He had some suggestionsfor improving consistency.  Additional comments were on opportunitiesfor syntactic sugar and a proposal that operators such as find_methodhave the option of throwing an exception rather than returning a NULLPMC on failure.  Allison Randal remarked that the exception questionwas under consideration in I/O as well, and that the consistencyissue would be considered when she looked at the Opcodes PDD.Joshua Isom had a few suggestions as well.AcknowledgementsThis summary was prepared usingMail::Summary::Tools,available on CPAN.If you appreciate Perl, consider contributing to the PerlFoundation to help support thedevelopment of Perl.Thank you to everyone who has pointed out mistakes and offeredsuggestions for improving this series.  Comments on this summary can besent to Ann Barcomb, &#107;&#117;&#100;r&#97;&#64;&#x64;&#111;&#109;&#x61;&#x69;&#110;&#x74;&#x6A;&#101;&#46;&#99;&#111;&#x6D;.DistributionThis summary can be found in the following places:use.perl.orgThe Pugs blogThe perl6-announce mailing listONLampSee Also  Perl Foundation activities  Perl 6 Development  Planet Perl Six  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Glow In The Dark Bra Allows U to Find the Goods Easier -</title>\r\n  <link>http://tech.originalsignal.com/article/47040/glow-in-the-dark-bra-allows-u-to-find-the-goods-easier.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 10:08:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47040/glow-in-the-dark-bra-allows-u-to-find-the-goods-easier.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  THIS hot model looks a bit of all bright - posing in the world''s first ever glow-in-the-dark bra.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Apple: A Romance (Leaving Apple)</title>\r\n  <link>http://tech.originalsignal.com/article/47039/apple-a-romance-leaving-apple.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 09:38:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47039/apple-a-romance-leaving-apple.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  "Buzz Andersen has written an emotional and truthful announcement of his departure from Apple." - http://www.red-sweater.com/blog/326/saying-goodbye-to-apple  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Text Messages Used To Monitor Elections</title>\r\n  <link>http://tech.originalsignal.com/article/47038/text-messages-used-to-monitor-elections.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 09:38:03 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47038/text-messages-used-to-monitor-elections.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  InternetVoting writes "The upcoming historic Nigerian elections are going to be defended by an army of observers armed, not with guns, but with text messages. Every one of the observers will be outfitted with a cell phone to report vote tampering. The volunteers are a part of the Network of Mobile Election Monitors, and they use freeware to do what they do. From the article: ''NMEM is using a free system called Frontline SMS, developed by programmer Ken Banks, to keep track of all of the texts. Originally developed for conservationists to keep in touch with communities in National Parks in South Africa, the system allows mass-messaging to mobile phones and crucially the ability to reply to a central computer. It has already been used in countries such as Zimbabwe as a way of bypassing broadcast restrictions and distributing information to rural communities.''"Read more of this story at Slashdot.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Next Motorola Q</title>\r\n  <link>http://tech.originalsignal.com/article/47035/next-motorola-q.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 08:08:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47035/next-motorola-q.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Motorola has changed the designation-preparing for a series of Qs?  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Mac OS X Business Tools: There Are More Than You Think</title>\r\n  <link>http://tech.originalsignal.com/article/47036/mac-os-x-business-tools-there-are-more-than-you-think.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 08:08:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47036/mac-os-x-business-tools-there-are-more-than-you-think.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Macs have never been considered business machines and yet record numbers of small and mid-size businesses are running on Mac OS X today. Ryan Faas illustrates why the idea that Macs aren''t up to the needs of business computing is indeed a myth by pointing out top business tools that exist for Mac users.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Motorola tries Digg and Delicious to launch new product</title>\r\n  <link>http://tech.originalsignal.com/article/47037/motorola-tries-digg-and-delicious-to-launch-new-product.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 08:08:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47037/motorola-tries-digg-and-delicious-to-launch-new-product.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Motorola has decided to try Digg and Delicious to spread news about their new phones. Now their product pages feature "Digg it" and "Save to Delicious " buttons  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>MacBook Hacked In Contest Via Zero-Day Hole in Safari</title>\r\n  <link>http://tech.originalsignal.com/article/47034/macbook-hacked-in-contest-via-zero-day-hole-in-safari.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 08:08:02 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47034/macbook-hacked-in-contest-via-zero-day-hole-in-safari.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  EMB Numbers writes "Shane Macaulay just won a MacBook as a prize for successfully hacking OS X at CanSecWest conference in Vancouver, BC. The hack was based on a Safari vulnerability found by Dai Zovi and written in about 9 hours. CanSecWest organizers actually had to relax the contest rules to make the hack possible, because initially nobody at the event could breach the computers under the original restrictions. ''Dai Zovi plans to apply for a $10,000 bug bounty TippingPoint announced on Thursday if a previously unknown Apple bug was used. "Shane can have the laptop, I want the money," Dai Zovi said in a telephone interview from New York. TippingPoint runs the Zero Day Initiative bug bounty program.''"Read more of this story at Slashdot.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Burning CDs in GNOME</title>\r\n  <link>http://tech.originalsignal.com/article/47032/burning-cds-in-gnome.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 07:08:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47032/burning-cds-in-gnome.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  GNOME applications that make CD burning easy  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>HandBrake 0.8.5b1 Released</title>\r\n  <link>http://tech.originalsignal.com/article/47033/handbrake-0-8-5b1-released.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 07:08:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47033/handbrake-0-8-5b1-released.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  After a 14-month hiatus, a brand new development team, a project forked then unforked, and literally hundreds of revisions… a new (beta) version of HandBrake is available! (HandBrake is an open-source, GPL-licensed, multiplatform, multithreaded DVD to MPEG-4 converter available for MacOS X, Linux, and Windows.)  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Outsource your dry cleaning and dog walking with DoMyStuff</title>\r\n  <link>http://tech.originalsignal.com/article/47031/outsource-your-dry-cleaning-and-dog-walking-with-domystuff.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 06:38:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47031/outsource-your-dry-cleaning-and-dog-walking-with-domystuff.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Kramer from Seinfeld had the right idea when he got an intern for his daily tasks, and DoMyStuff is looking to help busy people find assistants online for any variety of tasks.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Teens Actually Do Protect Their Online Profiles</title>\r\n  <link>http://tech.originalsignal.com/article/47030/teens-actually-do-protect-their-online-profiles.html</link>\r\n  <pubDate>Sat, 21 Apr 2007 06:08:02 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/47030/teens-actually-do-protect-their-online-profiles.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Thib writes "A study from the Pew Internet and American Life Project reveals that the majority of teens pay attention to what they are revealing about themselves in their online social profiles. For instance, while many routinely use their first name or include a picture, ''fewer than a third of teens with profiles use their last names, and a similar number include their e-mail addresses. Only 2 percent list their cell phone numbers.'' The study comes to light just as state legislatures once again begin to mutter about the dangers of online predators. From the article: ''According to Pew, 45 percent of online teens do not have profiles at all, a figure that contradicts widespread perceptions that the nation''s youths are continually on MySpace.''"Read more of this story at Slashdot.  ]]></content:encoded>\r\n  </item>\r\n    	\r\n	</channel>\r\n</rss>', '20070421100257');
 
 -- --------------------------------------------------------
 
@@ -283,9 +283,13 @@ CREATE TABLE `dsb_flirts` (
 -- Dumping data for table `dsb_flirts`
 -- 
 
-INSERT INTO `dsb_flirts` (`flirt_id`, `flirt_text`, `flirt_type`) VALUES (1, 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', 0),
-(2, 'Aye aye, mate!', 0),
-(3, 'Let''s rock and roll!', 0);
+INSERT INTO `dsb_flirts` (`flirt_id`, `flirt_text`, `flirt_type`) VALUES (5, 'Hey sexy!', 0),
+(6, 'Whaaadddup!', 0),
+(4, 'I hope you know CPR, cuz you take my breath away...', 0),
+(7, 'Hello? Hello? Anybody there?', 0),
+(8, 'In your dreams', 1),
+(9, 'Maybe later', 1),
+(10, 'Sure, let''s go', 1);
 
 -- --------------------------------------------------------
 
@@ -1102,7 +1106,8 @@ CREATE TABLE `dsb_online` (
   `fk_user_id` int(10) unsigned NOT NULL default '0',
   `last_activity` timestamp(14) NOT NULL,
   `sess` varchar(32) binary NOT NULL default '',
-  UNIQUE KEY `sess` (`sess`),
+  UNIQUE KEY `key2` (`fk_user_id`,`sess`),
+  UNIQUE KEY `key1` (`sess`),
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
@@ -1110,12 +1115,11 @@ CREATE TABLE `dsb_online` (
 -- Dumping data for table `dsb_online`
 -- 
 
-INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (0, '20070427172400', 0x3532653932346336363763376338326661363238663566306432336666306131),
-(0, '20070427164955', 0x3663666363633731653338306438343630323235346638636535343930343763),
-(0, '20070427165631', 0x3038633435313465633563643332353331303735383164383262326536316238),
-(0, '20070427172420', 0x3534616631656431363132316462323365626138633465646165366563616135),
-(7, '20070427201603', 0x3132343434303039373538643231353063623161663763633961396532663635),
-(7, '20070427195504', 0x6230396537346533623435666438346239353637383664636233373361616238);
+INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (7, '20070516124504', 0x3637363236626330626439303766316532373735653233346233363133636631),
+(5, '20070515170816', 0x6136373438393564656466653066633665383438633962623161383761383265),
+(0, '20070515121617', 0x3265336436363930313839636130613731663635613366643730303738386162),
+(7, '20070514143904', 0x3038303838643330323939336430656634306632646332626231363130343766),
+(1, '20070511152233', 0x3534356238353434366339313136363363653631393438393862303330646538);
 
 -- --------------------------------------------------------
 
@@ -1155,6 +1159,9 @@ CREATE TABLE `dsb_payments` (
 -- Dumping data for table `dsb_payments`
 -- 
 
+INSERT INTO `dsb_payments` (`payment_id`, `fk_user_id`, `_user`, `gateway`, `fk_subscr_id`, `is_recuring`, `gw_txn`, `name`, `country`, `state`, `city`, `zip`, `street_address`, `email`, `phone`, `m_value_from`, `m_value_to`, `amount_paid`, `paid_from`, `paid_until`, `is_suspect`, `suspect_reason`, `date`) VALUES (1, 24, 'ssw33', '', 1, 0, '', '', '', '', '', '', '', 'newdsb9@sco.ro', '', 2, 4, 0.00, '2007-05-02', '2007-06-01', 0, '', '20070502190356'),
+(2, 25, 'ssw333', '', 1, 0, '', '', '', '', '', '', '', 'newdsb10@sco.ro', '', 2, 4, 0.00, '2007-05-02', '2007-06-01', 0, '', '20070502191258'),
+(3, 26, 'testere', '', 1, 0, '', '', '', '', '', '', '', 'testere@sco.ro', '', 2, 4, 0.00, '2007-05-07', '2007-06-06', 0, '', '20070507215648');
 
 -- --------------------------------------------------------
 
@@ -1275,7 +1282,8 @@ CREATE TABLE `dsb_profile_comments` (
 INSERT INTO `dsb_profile_comments` (`comment_id`, `fk_user_id_profile`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (1, 1, 7, 'dragon', 'hi emma', '2007-04-27 16:03:07', '2007-04-27 16:03:07', 15),
 (2, 1, 7, 'dragon', 'hi emma', '2007-04-27 16:20:27', '2007-04-27 16:20:27', 15),
 (3, 1, 7, 'dragon', 'hi emma', '2007-04-27 16:20:47', '2007-04-27 16:20:47', 15),
-(4, 1, 7, 'dragon', 'whoa', '2007-04-27 16:25:29', '2007-04-27 16:25:29', 15);
+(4, 1, 7, 'dragon', 'whoa', '2007-04-27 16:25:29', '2007-04-27 16:25:29', 15),
+(5, 0, 7, 'dragon', 'booboo', '2007-05-15 09:28:36', '2007-05-15 09:28:36', 15);
 
 -- --------------------------------------------------------
 
@@ -1287,7 +1295,7 @@ DROP TABLE IF EXISTS `dsb_profile_fields`;
 CREATE TABLE `dsb_profile_fields` (
   `pfield_id` int(5) unsigned NOT NULL auto_increment,
   `fk_lk_id_label` int(5) unsigned NOT NULL default '0',
-  `html_type` tinyint(2) unsigned NOT NULL default '0',
+  `field_type` tinyint(2) unsigned NOT NULL default '0',
   `searchable` tinyint(1) unsigned NOT NULL default '0',
   `search_type` tinyint(2) unsigned NOT NULL default '0',
   `for_basic` tinyint(1) unsigned NOT NULL default '0',
@@ -1313,7 +1321,7 @@ CREATE TABLE `dsb_profile_fields` (
 -- Dumping data for table `dsb_profile_fields`
 -- 
 
-INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `html_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES (1, 3, 4, 0, 1, 0, 4, 1, 2, 0, 1, 1, 0x6631, 5, 1, 0, '', '', '', '', 5),
+INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `field_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES (1, 3, 4, 0, 1, 0, 4, 1, 2, 0, 1, 1, 0x6631, 5, 1, 0, '1000', '', '', '', 5),
 (2, 8, 3, 1, 10, 1, 9, 1, 1, 1, 1, 1, 0x6632, 10, 1, 0, '|6|7|', '|0|', '|1|', '', 1),
 (3, 13, 10, 1, 10, 1, 14, 1, 1, 1, 1, 1, 0x6633, 15, 1, 0, '|11|12|', '|1|', '|0|', '', 2),
 (4, 22, 3, 1, 108, 0, 23, 1, 2, 0, 1, 1, 0x6634, 24, 2, 0, '|49|50|51|52|46|47|48|53|54|55|57|58|106|59|60|61|62|63|64|65|66|67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99|100|101|102|103|104|105|', '', '|0|59|', '', 7),
@@ -1349,8 +1357,6 @@ CREATE TABLE `dsb_queue_email` (
 -- Dumping data for table `dsb_queue_email`
 -- 
 
-INSERT INTO `dsb_queue_email` (`mail_id`, `to`, `subject`, `message_body`, `date_added`) VALUES (1, 'newdsb@sco.ro', 'Web Application: One of your photos was not approved', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body spellcheck="false">\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Nexus  /  R i t m o / friendy</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', '20070425192948'),
-(2, 'newdsb@sco.ro', 'Web Application: One of your photos was not approved', '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body spellcheck="false">\r\n        <p>Hai sictir</p>\r\n    </body>\r\n</html>', '20070425212636');
 
 -- --------------------------------------------------------
 
@@ -1377,12 +1383,9 @@ CREATE TABLE `dsb_queue_message` (
 -- Dumping data for table `dsb_queue_message`
 -- 
 
-INSERT INTO `dsb_queue_message` (`mail_id`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (1, 1, 0, '', 'New comment on one of your photos', 'dragon posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=18">Click here</a> to view the comment', '2007-04-24 17:19:32', 2),
-(2, 11, 0, '', 'New comment on one of your blogs', 'dragon posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=10">Click here</a> to view the comment', '2007-04-24 17:20:12', 2),
-(3, 11, 0, '', 'New comment on one of your blogs', 'dragon posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=10#comm29">Click here</a> to view the comment', '2007-04-26 18:45:36', 2),
-(4, 1, 0, '', 'New comment on your profile', 'dragon posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm2">Click here</a> to view the comment', '2007-04-27 16:20:27', 2),
-(5, 1, 0, '', 'New comment on your profile', 'dragon posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm3">Click here</a> to view the comment', '2007-04-27 16:20:47', 2),
-(6, 1, 0, '', 'New comment on your profile', 'dragon posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm4">Click here</a> to view the comment', '2007-04-27 16:25:29', 2);
+INSERT INTO `dsb_queue_message` (`mail_id`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (9, 0, 0, '', 'New comment on your profile', 'dragon posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm5">Click here</a> to view the comment', '2007-05-15 09:28:36', 2),
+(7, 11, 7, 'dragon', 'Re: johnboy sent you a flirt', '[quote]Aye aye, mate![/quote]', '2007-05-14 10:34:22', 0),
+(8, 11, 7, 'dragon', 'dragon sent you a flirt', 'Maybe later', '2007-05-14 14:37:30', 1);
 
 -- --------------------------------------------------------
 
@@ -1451,10 +1454,6 @@ CREATE TABLE `dsb_site_log` (
 -- Dumping data for table `dsb_site_log`
 -- 
 
-INSERT INTO `dsb_site_log` (`log_id`, `fk_user_id`, `user`, `m_value`, `fk_level_id`, `ip`, `time`) VALUES (1, 0, 'dragon', 1, 1, 2130706433, '20070427164403'),
-(2, 0, 'dragon', 1, 1, 2130706433, '20070427173638'),
-(3, 0, 'dragon', 1, 1, 2130706433, '20070427185007'),
-(4, 0, 'dragon', 1, 1, 2130706433, '20070427195459');
 
 -- --------------------------------------------------------
 
@@ -1510,7 +1509,7 @@ INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `
 (5, 0x74315f7769647468, '100', 'The width in pixels of the smalest thumbnail generated for each user photo', 104, 0x636f72655f70686f746f, 0),
 (6, 0x74325f7769647468, '500', 'The width in pixels of the larger thumbnail generated for each user photo', 104, 0x636f72655f70686f746f, 0),
 (7, 0x7069635f7769647468, '800', 'The maximum width in pixels of any picture uploaded by a member', 104, 0x636f72655f70686f746f, 0),
-(8, 0x6d616e75616c5f70686f746f5f617070726f76616c, '0', 'New uploaded photos require manual approval before being displayed on the site?', 9, 0x636f72655f70686f746f, 0),
+(8, 0x6d616e75616c5f70686f746f5f617070726f76616c, '1', 'New uploaded photos require manual approval before being displayed on the site?', 9, 0x636f72655f70686f746f, 0),
 (9, 0x6d616e75616c5f626c6f675f617070726f76616c, '0', 'New blog posts or changes to existing posts require manual approval from an administrator before being displayed on site?', 9, 0x636f72655f626c6f67, 0),
 (10, 0x6d616e75616c5f636f6d5f617070726f76616c, '0', 'Comments to profiles, photos, blogs need approval from admin?', 9, 0x636f7265, 0),
 (11, 0x77617465726d61726b5f74657874, 'watermark text', 'The text to stamp the user photos with', 2, 0x636f72655f70686f746f, 0),
@@ -1549,7 +1548,9 @@ INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `
 (52, 0x7573655f736d696c696573, '1', 'Allow smilies in profile fields?', 9, 0x636f7265, 0),
 (53, 0x736d696c6965735f636f6d6d, '1', 'Allow smilies in user comments?', 9, 0x636f7265, 0),
 (54, 0x7573655f736d696c696573, '1', 'Allow smilies in blogs?', 9, 0x636f72655f626c6f67, 0),
-(55, 0x70726f66696c655f636f6d6d656e7473, '1', 'Allow comments on my profile?', 9, 0x6465665f757365725f7072656673, 1);
+(55, 0x70726f66696c655f636f6d6d656e7473, '1', 'Allow comments on my profile?', 9, 0x6465665f757365725f7072656673, 1),
+(56, 0x74615f6c656e, '1000', 'Maximum number of characters users may enter in textareas (use 0 for unlimited)', 104, 0x636f7265, 0),
+(57, 0x616c6c6f775f6e657773, '1', 'Receive periodic news and announcements to your email address?', 9, 0x6465665f757365725f7072656673, 1);
 
 -- --------------------------------------------------------
 
@@ -1573,15 +1574,13 @@ CREATE TABLE `dsb_site_searches` (
 -- Dumping data for table `dsb_site_searches`
 -- 
 
-INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('520c89949ed6f447de06f30f224903f3', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"uid";s:3:"uid";s:1:"1";}', '8,1', 7, '20070427174306'),
-('f137ef4b54ddc91c2b3a984ac05b7206', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"uid";s:3:"uid";s:2:"13";}', '', 7, '20070427174503'),
-('d9c125814e6d01cc042129671cc93b19', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:6:"online";}', '', 7, '20070425102353'),
-('cbe514451b3e7e980d1d4f0d53ed348a', 3, 'a:3:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"uid";s:3:"uid";s:1:"7";}', '9,5,3', 1, '20070425180113'),
-('40cd750bba9870f18aada2478b24840a', 2, 'a:0:{}', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19', 0, '20070425192902'),
-('04a51b8634d9c552baeb60eb5109b481', 2, 'a:1:{s:4:"stat";s:1:"5";}', '', 0, '20070425212034'),
-('2c9d72b084c7ce058d2c28e15c871e08', 2, 'a:1:{s:4:"stat";s:2:"10";}', '18', 0, '20070425212042'),
-('2a6155930fda31f53eed73137039685c', 2, 'a:1:{s:3:"uid";s:1:"1";}', '2,3,4,14,15,16,17,18,19', 0, '20070425212128'),
-('40cd750bba9870f18aada2478b24840a', 1, 'a:0:{}', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', 0, '20070425212445');
+INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('8816b2c8b45df99a22880b00513d7867', 1, 'a:1:{s:5:"pstat";s:1:"5";}', '', 0, '20070511131650'),
+('bb4a7f13ec4e555605029d5ac2147c55', 2, 'a:1:{s:3:"uid";s:1:"8";}', '11', 0, '20070516130705'),
+('80a3584bdda9fbed56913b3a91a5d150', 2, 'a:1:{s:3:"uid";s:1:"5";}', '', 0, '20070515200839'),
+('2350320d5129c25ce7563f8dc7c63d7a', 1, 'a:1:{s:10:"f6_country";s:3:"218";}', '3,4,5,9,22,23,24,25,26', 0, '20070515180311'),
+('d9c125814e6d01cc042129671cc93b19', 1, 'a:2:{s:11:"acclevel_id";i:16;s:2:"st";s:6:"online";}', '1', 7, '20070514165718'),
+('40cd750bba9870f18aada2478b24840a', 2, 'a:0:{}', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19', 0, '20070514125143'),
+('40cd750bba9870f18aada2478b24840a', 1, 'a:0:{}', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26', 0, '20070511135733');
 
 -- --------------------------------------------------------
 
@@ -1600,7 +1599,7 @@ CREATE TABLE `dsb_subscriptions` (
   `m_value_from` int(10) unsigned NOT NULL default '0',
   `m_value_to` int(10) unsigned NOT NULL default '0',
   `duration` int(4) unsigned NOT NULL default '0',
-  `duration_units` enum('D','M','Y') NOT NULL default 'D',
+  `duration_units` enum('DAY','MONTH','YEAR') NOT NULL default 'DAY',
   `is_visible` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`subscr_id`),
   KEY `thekey` (`m_value_from`,`is_visible`)
@@ -1610,10 +1609,10 @@ CREATE TABLE `dsb_subscriptions` (
 -- Dumping data for table `dsb_subscriptions`
 -- 
 
-INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `price`, `currency`, `is_recurent`, `m_value_from`, `m_value_to`, `duration`, `duration_units`, `is_visible`) VALUES (1, '30$ / month', '', 30.00, 'USD', 0, 2, 4, 30, 'D', 1),
-(3, 'Trial', '', 0.00, 'USD', 0, 2, 4, 5, 'D', 0),
-(4, 'gold membership', 'this is the description for the gold membership which gives you unlimited access to all features for a couple of seconds', 100.00, 'USD', 0, 2, 4, 1, 'D', 1),
-(5, 'bronze membership', 'ala bala portocala', 130.00, 'EUR', 0, 2, 4, 365, 'D', 1);
+INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `price`, `currency`, `is_recurent`, `m_value_from`, `m_value_to`, `duration`, `duration_units`, `is_visible`) VALUES (1, '30$ / month', '', 30.00, 'USD', 0, 2, 4, 30, 'DAY', 1),
+(3, 'Trial', '', 0.00, 'USD', 0, 2, 4, 5, 'DAY', 0),
+(4, 'gold membership', 'this is the description for the gold membership which gives you unlimited access to all features for a couple of seconds', 100.00, 'USD', 0, 2, 4, 1, 'DAY', 1),
+(5, 'bronze membership', 'ala bala portocala', 130.00, 'EUR', 0, 2, 4, 365, 'DAY', 1);
 
 -- --------------------------------------------------------
 
@@ -1635,6 +1634,8 @@ CREATE TABLE `dsb_subscriptions_auto` (
 -- Dumping data for table `dsb_subscriptions_auto`
 -- 
 
+INSERT INTO `dsb_subscriptions_auto` (`asubscr_id`, `dbfield`, `field_value`, `fk_subscr_id`, `date_start`) VALUES (1, 'f2', 2, 3, '0000-00-00'),
+(2, '', 0, 1, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -1663,14 +1664,14 @@ CREATE TABLE `dsb_user_accounts` (
 -- Dumping data for table `dsb_user_accounts`
 -- 
 
-INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x656d6d61, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '02912174c5cc19dedd90bc498af2d9b0', '20070425195507'),
+INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x656d6d61, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '02912174c5cc19dedd90bc498af2d9b0', '20070511152233'),
 (2, 0x6b65697468, 0x3166333837306265323734663663343962336533316130633637323839353766, 15, 2, 'newdsb@sco.ro', '', '2fba765ee1b6ade5287073584ec894e4', '20070418125301'),
 (3, 0x73686f6e323035, 0x3037373631303430363739346562326133633736393139396439346131613739, 15, 2, 'newdsb@sco.ro', '', 'b3d7ac7336a79fe5a4b01a88f5727b13', '20070418125301'),
 (4, 0x6d6176657269636b, 0x3839393636303063333130383863366137363436346365333864393635636364, 15, 2, 'newdsb@sco.ro', '', '87a6ce818365e8b3bef125df92826702', '20070418125301'),
-(5, 0x313030343537, 0x3836653236636161363936356531313066666461353936373465373163643264, 15, 2, 'newdsb@sco.ro', '', 'c5cb27f0e77add4c24ffc48562a0706d', '20070418125301'),
+(5, 0x313030343537, 0x3836653236636161363936356531313066666461353936373465373163643264, 15, 2, 'newdsb@sco.ro', '', 'c5cb27f0e77add4c24ffc48562a0706d', '20070515170816'),
 (6, 0x636f6361636f6c61, 0x6361323466306531653366663730316661346633336335336639303566396461, 15, 2, 'newdsb@sco.ro', '', '7f2fe99deb74578bf4f6e5e26dd99ae0', '20070418125301'),
-(7, 0x647261676f6e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '1dc9d7dbc613c521a8efeae0f7706f2e', '20070427171603'),
-(8, 0x616e676b617361, 0x3634383530366161333739666566623930323663376530313664386463626663, 15, 2, 'newdsb@sco.ro', '', '36e12348474821624874994164838526', '20070418125301'),
+(7, 0x647261676f6e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '1dc9d7dbc613c521a8efeae0f7706f2e', '20070516124504'),
+(8, 0x616e676b617361, 0x3634383530366161333739666566623930323663376530313664386463626663, 15, 2, 'newdsb@sco.ro', '', '36e12348474821624874994164838526', '20070516101326'),
 (9, 0x72616e65676c6f, 0x3739343063343139653932336166306265373963623835613432663836343964, 15, 2, 'newdsb@sco.ro', '', '83f1200b9f1bdd252e2aebc2dfffe34f', '20070418125301'),
 (10, 0x737472617762657272696573, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '68779ace53ca9ba01a52efa82e53bf86', '20070418125301'),
 (11, 0x6a6f686e626f79, 0x6463613961313066636662396434346365346265393037393965633762623738, 15, 2, 'newdsb@sco.ro', '', '4173da6fd2bf9e455e18cdd70953f0b6', '20070418125301'),
@@ -1678,7 +1679,17 @@ INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membershi
 (13, 0x6a6f686e626f7932, 0x6463613961313066636662396434346365346265393037393965633762623738, 15, 2, 'newdsb@sco.ro', '', 'f446c1ae194fc4ed6309e1b60f177ebb', '20070418125301'),
 (14, 0x7470616e647470, 0x3639336538313066663237363034653664613237346461346337376531333663, 15, 2, 'newdsb@sco.ro', '', '76b41bfad8b909b658e578f08f7a6244', '20070418125301'),
 (15, 0x626c61636b7761746572, 0x6166623332376439386230316537323035383035323233613331313363303563, 15, 2, 'newdsb@sco.ro', '', 'bc217753a490dd732c4e992340db665c', '20070418125301'),
-(16, 0x746573746572, 0x6234663062656231303130343734626564396366303234303231366333313464, 10, 2, 'newdsb@sco.ro', '', 'cf3b1718be2b5af79bf2c189eb0bbedf', '20070418125301');
+(16, 0x746573746572, 0x6234663062656231303130343734626564396366303234303231366333313464, 10, 2, 'newdsb@sco.ro', '', 'cf3b1718be2b5af79bf2c189eb0bbedf', '20070418125301'),
+(17, 0x776f6d616e, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'newdsb2@sco.ro', '', '21ae80263d622606553cb2fb3d5df086', '20070502183910'),
+(18, 0x7465737477, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'newdsb3@sco.ro', '', '1b50d61ac11ff0146ccec294f111d87e', '20070502184617'),
+(19, 0x746573747777, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'newdsb4@sco.ro', '', '979e19c497d184ebe0d112cc9686a12c', '20070502184720'),
+(20, 0x74657374777777, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'newdsb5@sco.ro', '', 'c7cf65943096e6934bcb209caee3a833', '20070502184900'),
+(21, 0x7465737477777777, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 4, 'newdsb6@sco.ro', '', '2a80a51e86bffebc9f7dd26919230163', '20070502184937'),
+(22, 0x746573747777777777, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'newdsb7@sco.ro', '', '5247ee3f66615fea3b2a5d5bc8188558', '20070502185354'),
+(23, 0x73737733, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 2, 'newdsb8@sco.ro', '', '0b12bf5a64733f77388ed81f5b52f1d8', '20070502190204'),
+(24, 0x7373773333, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 4, 'newdsb9@sco.ro', '', '5e63429a53d8efce4c5d663e523f4d50', '20070502190356'),
+(25, 0x737377333333, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 4, 'newdsb10@sco.ro', '', '3398f59e583769a478d824aedf227a04', '20070502191258'),
+(26, 0x74657374657265, 0x3931383062346461336630633765383039373566616436383566376631333465, 10, 4, 'testere@sco.ro', '', '64bfd4d3f8ef4711896ddcc5836b119b', '20070507215648');
 
 -- --------------------------------------------------------
 
@@ -1766,17 +1777,17 @@ CREATE TABLE `dsb_user_inbox` (
 INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES (45, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
 (43, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
 (42, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
-(40, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(40, 1, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 1),
 (41, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
 (36, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
 (37, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
 (38, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
-(39, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(39, 1, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
 (14, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
 (15, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
 (16, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
-(17, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
-(18, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(17, 1, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(18, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 1),
 (19, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
 (20, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
 (21, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
@@ -1793,13 +1804,13 @@ INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_ot
 (26, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
 (27, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
 (28, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
-(29, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(29, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 1),
 (30, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
 (31, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
 (32, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
 (33, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
 (34, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
-(51, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(51, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 1),
 (52, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
 (53, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
 (54, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
@@ -1810,7 +1821,7 @@ INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_ot
 (59, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
 (60, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
 (61, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
-(62, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(62, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 1),
 (63, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
 (64, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
 (65, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
@@ -1820,7 +1831,7 @@ INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_ot
 (69, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
 (70, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
 (71, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
-(72, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(72, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 1),
 (73, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
 (74, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
 (75, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
@@ -1830,7 +1841,7 @@ INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_ot
 (79, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
 (80, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
 (81, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
-(82, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(82, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 1),
 (83, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
 (84, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
 (85, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
@@ -1841,7 +1852,7 @@ INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_ot
 (90, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
 (91, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
 (92, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
-(93, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(93, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 1),
 (94, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
 (95, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
 (96, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
@@ -1852,18 +1863,24 @@ INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_ot
 (101, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
 (102, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
 (103, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
-(104, 0, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
+(104, 1, 7, 11, 'johnboy', 'johnboy sent you a flirt', 'Aye aye, mate!', '2007-04-16 21:30:01', 1, 0, 0),
 (105, 0, 11, 13, 'johnboy2', 'Connection request from johnboy2', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:25:52', 0, 0, 0),
 (106, 0, 11, 13, 'johnboy2', 'johnboy2 sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-17 05:28:16', 1, 0, 0),
 (107, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
 (108, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
 (109, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
-(110, 0, 7, 1, 'emma', 'frfrfrf', 'asdasd\r\nasd\r\nasd\r\nas\r\nda\r\ndsa\r\nsd', '2007-04-19 10:44:28', 0, 0, 0),
-(111, 1, 7, 0, '', 'New comment on your photos', 'emma posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id= 5">Click here</a> to view the comment', '2007-04-19 14:25:46', 2, 0, 0),
+(110, 0, 7, 1, 'emma', 'frfrfrf', 'asdasd\r\nasd\r\nasd\r\nas\r\nda\r\ndsa\r\nsd', '2007-04-19 10:44:28', 0, 0, 1),
+(111, 1, 7, 0, '', 'New comment on your photos', 'emma posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id= 5">Click here</a> to view the comment', '2007-04-19 14:25:46', 2, 0, 1),
 (112, 0, 12, 1, 'emma', 'xxx', 'yyy', '2007-04-20 15:46:28', 0, 0, 0),
 (113, 0, 12, 1, 'emma', 'emma sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-20 15:46:36', 1, 0, 0),
 (114, 0, 11, 0, '', 'New comment on one of your blogs', 'guest posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=10">Click here</a> to view the comment', '2007-04-20 15:57:02', 2, 0, 0),
-(115, 0, 11, 0, '', 'New comment on one of your blogs', 'guest posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=10">Click here</a> to view the comment', '2007-04-20 22:08:44', 2, 0, 0);
+(115, 0, 11, 0, '', 'New comment on one of your blogs', 'guest posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=10">Click here</a> to view the comment', '2007-04-20 22:08:44', 2, 0, 0),
+(116, 0, 1, 0, '', 'New comment on one of your photos', 'dragon posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=18">Click here</a> to view the comment', '2007-04-24 17:19:32', 2, 0, 0),
+(117, 0, 11, 0, '', 'New comment on one of your blogs', 'dragon posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=10">Click here</a> to view the comment', '2007-04-24 17:20:12', 2, 0, 0),
+(118, 0, 11, 0, '', 'New comment on one of your blogs', 'dragon posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=10#comm29">Click here</a> to view the comment', '2007-04-26 18:45:36', 2, 0, 0),
+(119, 0, 1, 0, '', 'New comment on your profile', 'dragon posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm2">Click here</a> to view the comment', '2007-04-27 16:20:27', 2, 0, 0),
+(120, 0, 1, 0, '', 'New comment on your profile', 'dragon posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm3">Click here</a> to view the comment', '2007-04-27 16:20:47', 2, 0, 0),
+(121, 1, 1, 0, '', 'New comment on your profile', 'dragon posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm4">Click here</a> to view the comment', '2007-04-27 16:25:29', 2, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1947,7 +1964,8 @@ CREATE TABLE `dsb_user_outbox` (
 -- Dumping data for table `dsb_user_outbox`
 -- 
 
-INSERT INTO `dsb_user_outbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (16385, 0, 1, 12, 'a_l_f', 'xxx', 'yyy', '2007-04-20 15:46:28', 0);
+INSERT INTO `dsb_user_outbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (16385, 0, 1, 12, 'a_l_f', 'xxx', 'yyy', '2007-04-20 15:46:28', 0),
+(16386, 0, 7, 11, 'johnboy', 'Re: johnboy sent you a flirt', '[quote]Aye aye, mate![/quote]', '2007-05-14 10:34:22', 0);
 
 -- --------------------------------------------------------
 
@@ -1991,10 +2009,10 @@ CREATE TABLE `dsb_user_photos` (
 -- 
 
 INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `allow_rating`, `caption`, `status`, `del`, `flagged`, `reject_reason`, `stat_views`, `stat_votes`, `stat_votes_total`, `stat_comments`, `date_posted`, `last_changed`) VALUES (1, 4, 'maverick', '7/4_11176746548.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 20, 2, 9, 3, '2007-04-16 18:02:29', '2007-04-16 18:08:52'),
-(2, 1, 'emma', '4/1_11176750826.jpg', 0, 0, 1, 1, 'ruuuuun, enemies are coming!!', 15, 0, 0, '', 15, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-21 13:37:40'),
+(2, 1, 'emma', '4/1_11176750826.jpg', 0, 0, 1, 1, 'ruuuuun, enemies are coming!!', 15, 0, 0, '', 15, 0, 0, 0, '2007-04-16 19:13:53', '2007-05-10 11:10:04'),
 (3, 1, 'emma', '2/1_21176750826.jpg', 0, 0, 1, 1, 'daddy''s girl', 15, 0, 0, '', 8, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-21 13:37:55'),
 (4, 1, 'emma', '1/1_31176750826.jpg', 0, 0, 1, 1, 'hey, look, I can walk...sort of :)', 15, 0, 0, '', 6, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-21 13:47:02'),
-(5, 7, 'dragon', '0/7_11176751977.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 24, 3, 15, 2, '2007-04-16 19:32:59', '2007-04-16 19:33:32'),
+(5, 7, 'dragon', '0/7_11176751977.jpg', 1, 0, 1, 1, 'xxx', 10, 0, 0, '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://dating.sco.ro/newdsb/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body spellcheck="false">\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for joining <a href="http://dating.sco.ro/newdsb">Nexus / R i t m o / friendy</a>.</p>\r\n        <p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest.</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 24, 3, 15, 2, '2007-04-16 19:32:59', '2007-05-14 09:56:03'),
 (6, 10, 'strawberries', '3/10_11176756425.jpg', 1, 0, 1, 1, 'Fluffy, she who must be obeyed', 15, 0, 0, '', 9, 0, 0, 1, '2007-04-16 20:47:07', '2007-04-16 20:48:32'),
 (7, 10, 'strawberries', '3/10_21176756425.jpg', 0, 0, 1, 1, 'Fluffy loves getting her picture taken', 15, 0, 0, '', 6, 0, 0, 0, '2007-04-16 20:47:07', '2007-04-16 20:48:32'),
 (8, 11, 'johnboy', '0/11_11176758735.jpg', 1, 1, 1, 1, '', 15, 0, 0, '', 13, 1, 5, 0, '2007-04-16 21:25:35', '2007-04-17 12:27:01'),
@@ -2030,7 +2048,7 @@ CREATE TABLE `dsb_user_profiles` (
   `longitude` float(20,10) NOT NULL default '0.0000000000',
   `latitude` float(20,10) NOT NULL default '0.0000000000',
   `score` int(5) unsigned NOT NULL default '0',
-  `f1` varchar(100) NOT NULL default '',
+  `f1` text NOT NULL,
   `f2` int(5) NOT NULL default '0',
   `f3` text NOT NULL,
   `f4` int(5) NOT NULL default '0',
@@ -2061,14 +2079,14 @@ CREATE TABLE `dsb_user_profiles` (
 -- Dumping data for table `dsb_user_profiles`
 -- 
 
-INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`, `f6_country`, `f6_state`, `f6_city`, `f6_zip`, `f7`, `f8`, `f9`, `f10`, `f11`, `f12`, `f13`, `f14`, `f15`) VALUES (1, 1, 15, 0, '2007-04-19 14:08:29', '2007-04-16 14:42:06', '', 'emma', '', 0.0000000000, 0.0000000000, 26, '', 2, '|1|', 1, '1989-06-05', 165, 0, 0, '', 3, 3, 2, 3, 1, 1, 1, 1, ''),
+INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`, `f6_country`, `f6_state`, `f6_city`, `f6_zip`, `f7`, `f8`, `f9`, `f10`, `f11`, `f12`, `f13`, `f14`, `f15`) VALUES (1, 1, 15, 0, '2007-04-19 14:08:29', '2007-04-16 14:42:06', '', 'emma', '', 0.0000000000, 0.0000000000, 32, '', 2, '|1|', 1, '1989-06-05', 165, 0, 0, '', 3, 3, 2, 3, 1, 1, 1, 1, ''),
 (2, 2, 15, 0, '2007-04-16 12:42:01', '2007-04-16 17:09:23', '', 'keith', '', 0.0000000000, 0.0000000000, 0, 'Testing', 1, '|2|', 1, '1976-05-12', 217, 0, 0, '', 3, 1, 1, 1, 1, 1, 1, 1, '|1|4|7|'),
 (3, 3, 15, 0, '2007-04-16 17:29:10', '2007-04-16 17:24:38', '', 'shon205', '', -81.6286010742, 41.4509010315, 0, '', 1, '|2|', 1, '1971-01-06', 218, 41, 1620, '44105', 1, 1, 1, 1, 1, 1, 1, 1, ''),
 (4, 4, 15, 0, '2007-04-16 12:41:49', '2007-04-16 17:46:34', '', 'maverick', '', 0.0000000000, 0.0000000000, 4, '', 1, '|2|', 33, '0000-00-00', 218, 0, 0, '86314', 3, 3, 2, 3, 1, 1, 2, 2, '|1|'),
 (5, 5, 15, 0, '2007-04-16 12:41:45', '2007-04-16 18:26:47', '', '100457', '', 0.0000000000, 0.0000000000, 5, 'cool me', 1, '|2|', 32, '1978-04-07', 218, 0, 0, '49504', 5, 1, 3, 1, 1, 1, 1, 1, '|1|7|'),
 (6, 6, 15, 0, '2007-04-16 12:41:53', '2007-04-16 18:50:27', '', 'cocacola', '', 0.0000000000, 0.0000000000, 5, 'Im cool', 1, '|2|', 38, '1969-01-01', 186, 0, 0, '07631', 3, 1, 1, 1, 1, 1, 1, 1, '|1|'),
-(7, 7, 15, 0, '2007-04-16 12:41:56', '2007-04-16 19:26:41', '', 'dragon', '0/7_11176751977.jpg', 0.0000000000, 0.0000000000, 53, 'oops, this should have been a textarea, not a textfield. Easy to fix!', 1, '|2|', 58, '1976-11-01', 165, 0, 0, '', 3, 5, 2, 5, 1, 2, 4, 1, '|2|'),
-(8, 8, 15, 0, '2007-04-17 06:23:17', '2007-04-16 19:54:09', '', 'angkasa', '2/8_11176790979.jpg', 0.0000000000, 0.0000000000, 5, 'I''m Cool', 1, '|2|', 47, '1980-09-18', 181, 0, 0, '', 2, 3, 1, 2, 3, 2, 5, 3, '|1|7|'),
+(7, 7, 15, 0, '2007-05-10 16:00:12', '2007-04-16 19:26:41', '', 'dragon', '', 0.0000000000, 0.0000000000, 89, 'oops, this should have been a textarea, not a textfield. Easy to fix!asdasdoops, this should have beoops, this should have been a textarea, not a textfield. Easy to fix!asdasdoops, this should have beoops, this should have been a textarea, not a textfield. Easy to fix!asdasdoops, this should have beoops, this should have been a textarea, not a textfield. Easy to fix!asdasdoops, this should have beoops, this should have been a textarea, not a textfield. Easy to fix!asdasdoops, this should have beoops, this should have been a textarea, not a textfield. Easy to fix!asdasdoops, this should have beoops, this should have been a textarea, not a textfield. Easy to fix!asdasdoops, this should have beoops, this should have been a textarea, not a textfield. Easy to fix!asdasdoops, this should have beoops, this should have been a textarea, not a textfield. Easy to fix!asdasdoops, this should have beoops, this should have been a textarea, not a textfield. Easy to fix!asdasdoops, this shou0987654321', 1, '|2|', 58, '1976-11-01', 165, 0, 0, '', 3, 5, 2, 5, 1, 2, 4, 1, '|2|'),
+(8, 8, 15, 0, '2007-05-16 11:16:10', '2007-04-16 19:54:09', '', 'angkasa', '2/8_11176790979.jpg', 0.0000000000, 0.0000000000, 5, 'a[b]sdas[/b]dasd[quote]hahah[/quote]', 1, '|2|', 47, '1980-09-18', 181, 0, 0, '', 2, 3, 1, 2, 3, 2, 5, 3, '|1|'),
 (9, 9, 15, 0, '2007-04-16 19:56:29', '2007-04-16 19:55:41', '', 'raneglo', '', 0.0000000000, 0.0000000000, 0, 'I am me!', 1, '|1|', 34, '1961-07-29', 218, 0, 0, '77584', 3, 3, 6, 5, 1, 2, 4, 1, '|4|5|'),
 (10, 10, 15, 0, '2007-04-16 20:48:32', '2007-04-16 20:26:23', '', 'strawberries', '3/10_11176756425.jpg', 0.0000000000, 0.0000000000, 2, '', 1, '|2|', 38, '1964-12-31', 217, 0, 0, '', 3, 3, 2, 5, 1, 2, 3, 1, '|1|'),
 (11, 11, 15, 0, '2007-04-17 04:54:56', '2007-04-16 21:10:00', '', 'johnboy', '0/11_11176758735.jpg', 0.0000000000, 0.0000000000, 10, 'Hello everyone, at last we can see what the new DSB is about, I LIKE IT, very clean.', 1, '|2|', 39, '1958-01-17', 145, 0, 0, '', 3, 1, 2, 9, 3, 2, 2, 2, '|7|'),
@@ -2076,7 +2094,17 @@ INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `l
 (13, 13, 15, 0, '2007-04-17 12:32:53', '2007-04-17 05:13:27', '', 'johnboy2', '6/13_11176787947.jpg', 0.0000000000, 0.0000000000, 5, 'Testing this out', 1, '|2|', 39, '1958-01-17', 145, 0, 0, '', 3, 1, 2, 9, 3, 2, 2, 2, '|7|'),
 (14, 14, 15, 0, '2007-04-17 05:48:43', '2007-04-17 05:48:17', '', 'tpandtp', '', 0.0000000000, 0.0000000000, 0, '', 1, '|2|', 1, '0000-00-00', 11, 0, 0, '', 3, 1, 1, 1, 1, 1, 1, 1, ''),
 (15, 15, 15, 0, '2007-04-17 07:36:26', '2007-04-17 07:27:52', '', 'blackwater', '1/15_11176795306.jpg', 0.0000000000, 0.0000000000, 0, 'şşşş ğğğğğ ııııı', 1, '|2|', 51, '1977-04-28', 210, 0, 0, '', 3, 3, 1, 2, 2, 2, 3, 1, '|1|7|'),
-(16, 16, 15, 0, '2007-04-17 10:36:09', '2007-04-17 10:35:07', '', 'tester', '', 0.0000000000, 0.0000000000, 0, 'about-me...looking at this softa\\ware', 1, '|2|', 50, '1969-11-30', 186, 0, 0, '', 3, 1, 1, 1, 1, 1, 1, 1, '|4|6|7|');
+(16, 16, 15, 0, '2007-04-17 10:36:09', '2007-04-17 10:35:07', '', 'tester', '', 0.0000000000, 0.0000000000, 0, 'about-me...looking at this softa\\ware', 1, '|2|', 50, '1969-11-30', 186, 0, 0, '', 3, 1, 1, 1, 1, 1, 1, 1, '|4|6|7|'),
+(17, 17, 15, 0, '2007-05-02 15:39:49', '2007-05-02 15:39:12', '', 'woman', '', 0.0000000000, 0.0000000000, 0, '', 2, '|1|2|', 1, '0000-00-00', 165, 0, 0, '', 1, 1, 1, 1, 1, 1, 1, 1, ''),
+(18, 18, 15, 0, '2007-05-02 15:46:19', '2007-05-02 15:46:19', '', 'testw', '', 0.0000000000, 0.0000000000, 0, '', 2, '|1|2|', 0, '0000-00-00', 165, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(19, 19, 15, 0, '2007-05-02 15:47:22', '2007-05-02 15:47:22', '', 'testww', '', 0.0000000000, 0.0000000000, 0, '', 2, '|1|2|', 0, '0000-00-00', 165, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(20, 20, 15, 0, '2007-05-02 15:49:01', '2007-05-02 15:49:01', '', 'testwww', '', 0.0000000000, 0.0000000000, 0, '', 2, '|1|2|', 0, '0000-00-00', 165, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(21, 21, 15, 0, '2007-05-02 15:49:37', '2007-05-02 15:49:37', '', 'testwwww', '', 0.0000000000, 0.0000000000, 0, '', 2, '|1|2|', 0, '0000-00-00', 165, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(22, 22, 15, 0, '2007-05-02 15:53:56', '2007-05-02 15:53:56', '', 'testwwwww', '', 0.0000000000, 0.0000000000, 0, '', 2, '|1|2|', 0, '0000-00-00', 218, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(23, 23, 15, 1, '2007-05-02 16:02:06', '2007-05-02 16:02:06', '', 'ssw3', '', 0.0000000000, 0.0000000000, 0, '', 1, '|1|2|', 0, '0000-00-00', 218, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(24, 24, 15, 0, '2007-05-02 16:03:56', '2007-05-02 16:03:56', '', 'ssw33', '', 0.0000000000, 0.0000000000, 0, '', 1, '|1|2|', 0, '0000-00-00', 218, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(25, 25, 15, 0, '2007-05-02 16:12:58', '2007-05-02 16:12:58', '', 'ssw333', '', 0.0000000000, 0.0000000000, 0, '', 1, '|1|2|', 0, '0000-00-00', 218, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(26, 26, 15, 0, '2007-05-07 18:56:48', '2007-05-07 18:56:48', '', 'testere', '', 0.0000000000, 0.0000000000, 0, '', 1, '|2|', 0, '1988-02-02', 218, 0, 0, '12345', 0, 0, 0, 0, 0, 0, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -2143,16 +2171,19 @@ INSERT INTO `dsb_user_settings2` (`config_id`, `fk_user_id`, `config_option`, `c
 (16, 12, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
 (17, 12, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
 (18, 12, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
-(33, 1, 0x73656e645f616c6572745f696e74657276616c, '2', 0x6465665f757365725f7072656673),
-(32, 1, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x636f7265),
-(31, 1, 0x646174655f666f726d6174, '%m/%d/%Y', 0x636f7265),
-(34, 1, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
-(35, 1, 0x726174655f6d795f70686f746f73, '0', 0x6465665f757365725f7072656673),
-(36, 1, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
+(51, 1, 0x73656e645f616c6572745f696e74657276616c, '2', 0x6465665f757365725f7072656673),
+(50, 1, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x636f7265),
+(49, 1, 0x646174655f666f726d6174, '%m/%d/%Y', 0x636f7265),
+(52, 1, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
+(53, 1, 0x726174655f6d795f70686f746f73, '0', 0x6465665f757365725f7072656673),
+(54, 1, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
 (37, 7, '', '', ''),
 (38, 7, 0x6e6f746966795f6d65, '1', ''),
 (39, 1, '', '', ''),
-(40, 1, 0x70726f66696c655f636f6d6d656e7473, '1', '');
+(40, 1, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
+(55, 1, 0x70726f66696c655f636f6d6d656e7473, '1', 0x6465665f757365725f7072656673),
+(56, 1, 0x616c6c6f775f6e657773, '1', 0x6465665f757365725f7072656673),
+(57, 7, 0x70726f66696c655f636f6d6d656e7473, '1', '');
 
 -- --------------------------------------------------------
 
@@ -2218,10 +2249,14 @@ INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (2, 'total_p
 (1, 'total_messages', -4),
 (4, 'pviews', 18),
 (7, 'pviews', 22),
-(1, 'pviews', 28),
+(1, 'pviews', 32),
 (8, 'pviews', 1),
 (1, 'mess_sent', 2),
 (7, 'comments', 4),
 (11, 'pviews', 1),
-(7, 'comments_made', 3),
-(1, 'profile_comments', 3);
+(7, 'comments_made', 7),
+(1, 'profile_comments', 3),
+(7, 'mess_sent', 1),
+(7, 'flirts_sent', 1),
+(0, 'profile_comments', 1),
+(7, 'profile_comments', 3);

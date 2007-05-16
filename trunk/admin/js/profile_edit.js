@@ -3,7 +3,7 @@ $(function() {
 		alert('asd');
 		return false;
 	});
-	$('#profile_edit_form')[0].elements[1].focus();
+	$('#profile_edit_form select:visible:first').focus();
 });
 
 function req_update_location(str_field,val) {

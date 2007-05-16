@@ -1,5 +1,6 @@
 <h2>Search Results</h2>
 
+<!--opt name="output.totalrows"-->
 <div class="mass_members">
 	<h3>Mass member management</h3>
 	<p>
@@ -18,26 +19,29 @@
 		<input type="button" onclick="handle_mass_member($('#sel1'),$('#act1'))" value="Go" />
 	</p>
 </div>
+<!--/opt name="output.totalrows"-->
 
 <form action="" method="post" id="mass_member_form">
-<input type="hidden" name="search" id="search" value="{search_md5}" />
+<input type="hidden" name="search" id="search" value="{output.search_md5}" />
 <input type="hidden" name="return" value="{return}" />
 <!--loop name="loop"-->
-<div class="member_details">
-	<input class="sel_user" type="checkbox" name="uids[]" value="{loop.fk_user_id}" id="uids_{loop.fk_user_id}" />
-	<a class="link_bare" href="profile.php?uid={loop.fk_user_id}&amp;search={search_md5}&amp;o={o}&amp;r={r}"><img class="user_photo" src="{tplvars.photourl}/t1/{loop._photo}" /></a>
-	<p><strong>{loop._user}</strong> (<!--opt name="loop.pending"--><span class="alert_ppending">Needs your approval</span><!--/opt name="loop.pending"--><!--opt name="loop.need_edit"--><span class="alert_pedit">Needs editing</span><!--/opt name="loop.need_edit"--><!--opt name="loop.approved"--><span class="alert_papproved">Approved</span><!--/opt name="loop.approved"-->)</p>
-	<p>{loop.f2_label}: {loop.f2}</p>
-	<p>{loop.f3_label}: {loop.f3}</p>
-	<p>{loop.f4_label}: {loop.f4}</p>
-	<p>{loop.f5_label}: {loop.f5}</p>
-	<div class="actions">
+<dl class="member_details">
+	<dt><input class="sel_user" type="checkbox" name="uids[]" value="{loop.fk_user_id}" id="uids_{loop.fk_user_id}" /></dt>
+	<dd>
+		<a class="link_bare" href="profile.php?uid={loop.fk_user_id}&amp;search={output.search_md5}&amp;return={output.return2me}"><img class="user_photo" src="{tplvars.photourl}/t1/{loop._photo}" /></a>
+		<p><strong>{loop._user}</strong> (<!--opt name="loop.pending"--><span class="alert_ppending">Needs your approval</span><!--/opt name="loop.pending"--><!--opt name="loop.need_edit"--><span class="alert_pedit">Needs editing</span><!--/opt name="loop.need_edit"--><!--opt name="loop.approved"--><span class="alert_papproved">Approved</span><!--/opt name="loop.approved"-->)</p>
+		<p>{loop.f2_label}: {loop.f2}</p>
+		<p>{loop.f3_label}: {loop.f3}</p>
+		<p>{loop.f5_label}: {loop.f5}</p>
+		<p>{loop.f6_label}: {loop.f6}</p>
+	</dd>
+	<dd class="actions">
 		<ul>
-		<li class="first"><a href="profile.php?uid={loop.fk_user_id}&search={search_md5}&amp;o={o}&amp;r={r}">View</a></li>
-		<!--opt name="loop.del"--><li><a href="processors/member_delete.php?act=-1&amp;uids%5B%5D={loop.fk_user_id}&amp;return={return}">Undelete</a></li><!--/opt name="loop.del"-->
+			<li class="first"><a href="profile.php?uid={loop.fk_user_id}&search={output.search_md5}&amp;return={output.return2me}">View</a></li>
+			<!--opt name="loop.del"--><li><a href="processors/member_delete.php?act=-1&amp;uids%5B%5D={loop.fk_user_id}&amp;return={return}">Undelete</a></li><!--/opt name="loop.del"-->
 		</ul>
-	</div>
-</div>
+	</dd>
+</dl>
 <!--noloop name="loop"-->
 <div class="member_details">
 	No members found meeting your search criteria.
@@ -45,10 +49,13 @@
 <!--/noloop name="loop"-->
 <!--/loop name="loop"-->
 </form>
-<p><input type="checkbox" id="dummy" /><label for="dummy">Select all</a>
+<!--opt name="output.totalrows"-->
+<p><input type="checkbox" id="dummy" /><label for="dummy">Select all</a></p>
+<!--/opt name="output.totalrows"-->
 
-{pager2}
+{output.pager2}
 
+<!--opt name="output.totalrows"-->
 <div class="mass_members">
 	<h3>Mass member management</h3>
 	<p>
@@ -67,5 +74,6 @@
 		<input type="button" onclick="handle_mass_member($('#sel'),$('#act'))" value="Go" />
 	</p>
 </div>
+<!--/opt name="output.totalrows"-->
 
 <script type="text/javascript" src="js/member_results.js"></script>

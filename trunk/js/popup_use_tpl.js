@@ -3,7 +3,7 @@ $(function() {
 		myid=$(this).attr('id').substr(5);
 		set_tpl(myid);
 		// thickbox
-		parent.TB_remove();
+		parent.tb_remove();
 		return false;
 	});
 });

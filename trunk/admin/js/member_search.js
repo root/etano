@@ -1,5 +1,5 @@
 $(function() {
-	$('#member_search_form input:first:visible').focus();
+	$('#member_search_form input:visible:first').focus();
 });
 
 function req_update_location(str_field,val) {
