@@ -22,8 +22,10 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
+$input=array();
 if (isset($_GET['photo_id']) && !empty($_GET['photo_id'])) {
 	$input['photo_id']=(int)$_GET['photo_id'];
+	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 	$query="UPDATE `{$dbtable_prefix}user_photos` SET `status`='".STAT_APPROVED."',`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `photo_id`='".$input['photo_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -42,18 +44,9 @@ if (isset($_GET['photo_id']) && !empty($_GET['photo_id'])) {
 	$topass['message']['text']='Photo approved.';
 }
 
-if (isset($_GET['o'])) {
-	$qs.=$qs_sep.'o='.$_GET['o'];
-	$qs_sep='&';
+$nextpage=_BASEURL_.'/admin/photo_search.php';
+if (isset($input['return'])) {
+	$nextpage=_BASEURL_.'/admin/'.$input['return'];
 }
-if (isset($_GET['r'])) {
-	$qs.=$qs_sep.'r='.$_GET['r'];
-	$qs_sep='&';
-}
-if (isset($_GET['search'])) {
-	$qs.=$qs_sep.'search='.$_GET['search'];
-	$qs_sep='&';
-	$qs.=$qs_sep.'refresh=1';
-}
-redirect2page('admin/photo_search.php',$topass,$qs);
+redirect2page($nextpage,$topass,'',true);
 ?>

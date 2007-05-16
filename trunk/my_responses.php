@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       responses.php
+File:                       my_responses.php
 $Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -49,12 +49,12 @@ if (!empty($totalrows)) {
 	$output['pager2']=pager($totalrows,$o,$r);
 }
 
-$output['return2me']='responses.php';
+$output['return2me']='my_responses.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
 	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
-$tpl->set_file('content','responses.html');
+$tpl->set_file('content','my_responses.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
@@ -63,10 +63,10 @@ unset($loop);
 
 $tplvars['title']='Manage your saved responses';     // translate
 $tplvars['page_title']='Saved Responses';
-$tplvars['page']='responses';
-$tplvars['css']='responses.css';
-if (is_file('responses_left.php')) {
-	include 'responses_left.php';
+$tplvars['page']='my_responses';
+$tplvars['css']='my_responses.css';
+if (is_file('my_responses_left.php')) {
+	include 'my_responses_left.php';
 }
 include 'frame.php';
 ?>

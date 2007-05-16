@@ -1,0 +1,31 @@
+#blog_submenu {
+	width: 200px;
+	position: absolute;
+	top: 50px;
+	left: 190px;
+}
+
+.edit_form dl {
+	clear: both;
+}
+
+* html .edit_form dl {
+	height: 1%;
+}
+
+fieldset {
+	margin-left: 200px;
+}
+
+.edit_form dt, .edit_form dd {
+	float: left;
+	margin: 5px 0;
+}
+
+.edit_form dt {
+	width: 130px;
+}
+
+* html .controls {
+	margin: 10px 0 10px 185px;
+}
