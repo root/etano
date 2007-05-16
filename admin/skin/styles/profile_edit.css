@@ -1,5 +1,3 @@
-@import url('thickbox.css');
-
 #profile_menu {
 	width: 200px;
 	position: absolute;
@@ -12,18 +10,6 @@
 		margin-top: 20px;
 	}
 
-#profile_area {
-	margin-left: 210px;
-}
-
-#search_nav {
-	margin-bottom: 20px;
-}
-
-#profile_pic {
-	float: left;
-}
-
 .profile_cat {
 	padding-bottom: 10px;
 }
@@ -31,16 +17,30 @@
 .profile_cat h3 {
 	padding-left: 0;
 	padding-bottom: 5px;
+	margin-bottom: 5px;
 	color: #009FDA;
 	border-bottom: 1px dashed #ccc;
 	font-weight: bold;
 }
 
-.profile_cat li label {
-	font-weight: normal;
+.profile_cat dt,.profile_cat dd {
+	float: left;
 }
 
-.profile_cat li p {
-	display: inline;
+.profile_cat dt {
+	width: 150px;
 }
 
+.profile_cat dl {
+	clear: both;
+	padding: 5px;
+}
+
+* html .profile_cat dl {
+	height: 1%;
+}
+
+.profile_cat textarea {
+	width: 500px;
+	height: 200px;
+}

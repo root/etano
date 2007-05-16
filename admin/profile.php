@@ -18,14 +18,19 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/admin_functions.inc.php';
 allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
+// cleanup after an 'impersonate user' action
+if (isset($_GET['clean_user_session'])) {
+	unset($_SESSION['user']);
+}
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+$output=array();
+$output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 $uid=0;
 if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	$uid=(int)$_GET['uid'];
-	if (!empty($search_md5) && isset($_GET['go']) && ($_GET['go']==1 || $_GET['go']==-1)) {
-		$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='$search_md5'";
+	if (!empty($output['search_md5']) && isset($_GET['go']) && ($_GET['go']==1 || $_GET['go']==-1)) {
+		$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$user_ids=mysql_result($res,0,0);
@@ -42,15 +47,16 @@ if (isset($_GET['uid']) && !empty($_GET['uid'])) {
 	redirect2page('admin/cpanel.php',$topass);
 }
 
+$config=get_site_option(array('bbcode_profile'),'core');
+
 $categs=array();
-$profile=array();
 $account=array();
 $query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='$uid'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
-	$profile=mysql_fetch_assoc($res);
-	if (empty($profile['del'])) {
-		unset($profile['del']);
+	$output=array_merge($output,mysql_fetch_assoc($res));
+	if (empty($output['del'])) {
+		unset($output['del']);
 	}
 	$c=0;
 	foreach ($_pcats as $pcat_id=>$pcat) {
@@ -62,32 +68,40 @@ if (mysql_num_rows($res)) {
 			switch ($field['field_type']) {
 
 				case FIELD_TEXTFIELD:
-					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					$cat_content[$i]['field']=sanitize_and_format($output[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
 				case FIELD_TEXTAREA:
-					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					$cat_content[$i]['field']=sanitize_and_format($output[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					if ($config['bbcode_profile']) {
+						$cat_content[$i]['field']=bbcode2html($cat_content[$i]['field']);
+					}
 					break;
 
 				case FIELD_SELECT:
-					$cat_content[$i]['field']=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					// if we sanitize here " will be rendered as &quot; which is not what we want
+					//$cat_content[$i]['field']=sanitize_and_format($field['accepted_values'][$output[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					$cat_content[$i]['field']=$field['accepted_values'][$output[$field['dbfield']]];
 					break;
 
 				case FIELD_CHECKBOX_LARGE:
-					$cat_content[$i]['field']=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					$cat_content[$i]['field']=sanitize_and_format(vector2string_str($field['accepted_values'],$output[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					break;
 
 				case FIELD_DATE:
-					$cat_content[$i]['field']=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					if ($output[$field['dbfield']]=='0000-00-00') {
+						$output[$field['dbfield']]='?';
+					}
+					$cat_content[$i]['field']=$output[$field['dbfield']];
 					break;
 
 				case FIELD_LOCATION:
-					$cat_content[$i]['field']=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$profile[$field['dbfield'].'_country'],'-');
-					if (!empty($profile[$field['dbfield'].'_state'])) {
-						$cat_content[$i]['field'].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$profile[$field['dbfield'].'_state'],'-');
+					$cat_content[$i]['field']=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$output[$field['dbfield'].'_country'],'-');
+					if (!empty($output[$field['dbfield'].'_state'])) {
+						$cat_content[$i]['field'].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$output[$field['dbfield'].'_state'],'-');
 					}
-					if (!empty($profile[$field['dbfield'].'_city'])) {
-						$cat_content[$i]['field'].=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$profile[$field['dbfield'].'_city'],'-');
+					if (!empty($output[$field['dbfield'].'_city'])) {
+						$cat_content[$i]['field'].=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$output[$field['dbfield'].'_city'],'-');
 					}
 					break;
 
@@ -96,48 +110,48 @@ if (mysql_num_rows($res)) {
 		$categs[$c]['cat_content']=$cat_content;
 		++$c;
 	}
-	if (!empty($profile['_photo']) && is_file(_PHOTOPATH_.'/t1/'.$profile['_photo']) && is_file(_PHOTOPATH_.'/t2/'.$profile['_photo']) && is_file(_PHOTOPATH_.'/'.$profile['_photo'])) {
-		$profile['has_photo']=true;
+	if (!empty($output['_photo']) && is_file(_PHOTOPATH_.'/t1/'.$output['_photo']) && is_file(_PHOTOPATH_.'/t2/'.$output['_photo']) && is_file(_PHOTOPATH_.'/'.$output['_photo'])) {
+		$output['has_photo']=true;
 	}
-	if ($profile['status']==STAT_PENDING) {
-		$profile['pending']=true;
-	} elseif ($profile['status']==STAT_EDIT) {
-		$profile['need_edit']=true;
-	} elseif ($profile['status']==STAT_APPROVED) {
-		$profile['approved']=true;
+	if ($output['status']==STAT_PENDING) {
+		$output['pending']=true;
+	} elseif ($output['status']==STAT_EDIT) {
+		$output['need_edit']=true;
+	} elseif ($output['status']==STAT_APPROVED) {
+		$output['approved']=true;
 	}
 
-	$query="SELECT * FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='$uid'";
+	$query="SELECT `status`,`skin` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='$uid'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$account=mysql_fetch_assoc($res);
 	$account['status']=vector2options($accepted_astats,$account['status']);
 	$account['skin']=dbtable2options("`{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b",'a.`module_code`','b.`config_value`','b.`config_value`',$account['skin'],"a.`module_code`=b.`fk_module_code` AND a.`module_type`='".MODULE_SKIN."' AND b.`config_option`='skin_name'");
 }
 
-$tplvars['pic_width']=get_site_option('pic_width','core_photo');
+$output['pic_width']=get_site_option('pic_width','core_photo');
 
-$tpl->set_file('content','profile.html');
-$tpl->set_loop('categs',$categs);
-$tpl->set_var('profile',$profile);
-$tpl->set_var('account',$account);
-if (!empty($search_md5)) {
-	$tpl->set_var('search_md5',$search_md5);
+if (empty($output['search_md5'])) {
+	unset($output['search_md5']);
 }
 if (isset($_GET['o'])) {
-	$tpl->set_var('o',$_GET['o']);
+	$output['o']=$_GET['o'];
 }
 if (isset($_GET['r'])) {
-	$tpl->set_var('r',$_GET['r']);
+	$output['r']=$_GET['r'];
 }
-$return='profile.php';
+$output['return2me']='profile.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$return.='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
-$tpl->set_var('return',rawurlencode($return));
+$output['return2me']=rawurlencode($output['return2me']);
+$tpl->set_file('content','profile.html');
+$tpl->set_loop('categs',$categs);
+$tpl->set_var('output',$output);
+$tpl->set_var('account',$account);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 
-$tplvars['title']=sprintf('%1$s Member Profile',$profile['_user']);
+$tplvars['title']=sprintf('%1$s Member Profile',$output['_user']);
 $tplvars['css']='profile.css';
 $tplvars['page']='profile';
 include 'frame.php';

@@ -1,5 +1,5 @@
 $(function() {
-	$('#pass_lost input:first:visible').focus();
+	$('#pass_lost input:visible:first').focus();
 	$('#pass_lost').bind('submit',function() {
 		return check_form(this);
 	});

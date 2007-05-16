@@ -6,18 +6,18 @@
 <!--loop name="loop"-->
 <div class="row">
 	<div class="control">
-		<a class="content-link link_delete" href="processors/mtemplates_delete.php?mtpl_id={loop.mtpl_id}&amp;return={output.return2me}" title="Delete template">Delete</a>
+		<a class="content-link link_delete" href="processors/responses_delete.php?mtpl_id={loop.mtpl_id}&amp;return={output.return2me}" title="Delete template">Delete</a>
 	</div>
 	<div class="message_body">
 		<p>{loop.subject}</p>
 		{loop.message_body}
 	</div>
 	<!--noloop name="loop"-->
-	<p class="no_result_item">You have no message templates saved yet.</p>
+	<p class="no_result_item">You have no saved responses yet.</p>
 	<!--/noloop name="loop"-->
 </div>
 <!--/loop name="loop"-->
 
 {output.pager2}
 
-<script type="text/javascript" src="js/mtemplates.js"></script>
+<script type="text/javascript" src="js/responses.js"></script>

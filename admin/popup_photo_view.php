@@ -34,7 +34,6 @@ if (!empty($photo_id)) {
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$photo=mysql_fetch_assoc($res);
-	$photo['user']=sanitize_and_format($photo['user'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 }
 
 $tpl->set_file('content','popup_photo_view.html');

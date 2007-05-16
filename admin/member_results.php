@@ -19,17 +19,18 @@ require_once '../includes/admin_functions.inc.php';
 allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
+$output=array();
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
-$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+$output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $input=array();
 $user_ids=array();
 $do_query=true;
-if (!empty($search_md5)) {
+if (!empty($output['search_md5'])) {
 	// if we have a query cache, retrieve all from cache
-	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='$search_md5' AND `search_type`=".SEARCH_USER;
+	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."' AND `search_type`=".SEARCH_USER;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$user_ids=mysql_result($res,0,0);
@@ -262,8 +263,8 @@ if ($do_query) {
 		$user_ids[]=mysql_result($res,$i,0);
 	}
 	$serialized_input=serialize($input);
-	$search_md5=md5($serialized_input);
-	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='$search_md5',`search_type`=".SEARCH_USER.",`search`='$serialized_input',`results`='".join(',',$user_ids)."'";
+	$output['search_md5']=md5($serialized_input);
+	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='".$output['search_md5']."',`search_type`=".SEARCH_USER.",`search`='$serialized_input',`results`='".join(',',$user_ids)."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 $totalrows=count($user_ids);
@@ -277,7 +278,7 @@ if (!empty($totalrows)) {
 		$key=array_search($uid,$user_ids)+$_GET['go'];
 		if (isset($user_ids[$key])) {
 			$uid=(int)$user_ids[$key];
-			redirect2page('admin/profile.php',array(),'uid='.$uid.'&search='.$search_md5);
+			redirect2page('admin/profile.php',array(),'uid='.$uid.'&search='.$output['search_md5']);
 		}
 	}
 	$user_ids=array_slice($user_ids,$o,$r);
@@ -287,11 +288,11 @@ if (!empty($totalrows)) {
 		switch ($field['field_type']) {
 
 			case FIELD_LOCATION:
-				$query.=','.$field['dbfield'].'_country,'.$field['dbfield'].'_state,'.$field['dbfield'].'_city,'.$field['dbfield'].'_zip';
+				$query.=',`'.$field['dbfield'].'_country`,`'.$field['dbfield'].'_state`,`'.$field['dbfield'].'_city`,`'.$field['dbfield'].'_zip`';
 				break;
 
 			default:
-				$query.=','.$field['dbfield'];
+				$query.=',`'.$field['dbfield'].'`';
 
 		}
 	}
@@ -312,7 +313,9 @@ if (!empty($totalrows)) {
 					break;
 
 				case FIELD_SELECT:
-					$rsrow[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$rsrow[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+				// if we sanitize here " will be rendered as &quot; which is not what we want
+				//	$rsrow[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$rsrow[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					$rsrow[$field['dbfield']]=$field['accepted_values'][$rsrow[$field['dbfield']]];
 					break;
 
 				case FIELD_CHECKBOX_LARGE:
@@ -320,7 +323,9 @@ if (!empty($totalrows)) {
 					break;
 
 				case FIELD_DATE:
-					$rsrow[$field['dbfield']]=sanitize_and_format($rsrow[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					if ($rsrow[$field['dbfield']]=='0000-00-00') {
+						$rsrow[$field['dbfield']]='?';
+					}
 					break;
 
 				case FIELD_LOCATION:
@@ -350,25 +355,24 @@ if (!empty($totalrows)) {
 		$loop[]=$rsrow;
 	}
 
-	$_GET=array('search'=>$search_md5);
-	$tpl->set_var('pager2',pager($totalrows,$o,$r));
-	$tpl->set_var('totalrows',$totalrows);
+	$_GET=array('search'=>$output['search_md5']);
+	$output['pager2']=pager($totalrows,$o,$r);
+	$output['totalrows']=$totalrows;
 }
 
+$output['return2me']='member_results.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+} else {
+	$output['return2me'].='?search='.$output['search_md5'];
+}
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','member_results.html');
 $tpl->set_loop('loop',$loop);
-$tpl->set_var('o',$o);
-$tpl->set_var('r',$r);
-$tpl->set_var('search_md5',$search_md5);
-$return='member_results.php';
-if (!empty($_SERVER['QUERY_STRING'])) {
-	$return.='?'.$_SERVER['QUERY_STRING'];
-} else {
-	$return.='?search='.$search_md5;
-}
-$tpl->set_var('return',rawurlencode($return));
+$tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP | TPL_OPTIONAL);
-$tpl->drop_loop('profile');
+$tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='Search Results';
 $tplvars['css']='member_results.css';

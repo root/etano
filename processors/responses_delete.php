@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       processors/mtemplates_delete.php
+File:                       processors/responses_delete.php
 $Revision: 67 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -25,13 +25,13 @@ $query="DELETE FROM `{$dbtable_prefix}user_mtpls` WHERE `mtpl_id`='$mtpl_id' AND
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;
-$topass['message']['text']='Message template deleted.';     // translate
+$topass['message']['text']='Response deleted.';     // translate
 
 if (isset($_POST['return']) && !empty($_POST['return'])) {
 	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 	$nextpage=$input['return'];
 } else {
-	$nextpage='mtemplates.php';
+	$nextpage='responses.php';
 }
 $nextpage=_BASEURL_.'/'.$nextpage;
 redirect2page($nextpage,$topass,'',true);

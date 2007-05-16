@@ -22,14 +22,14 @@ $tpl=new phemplate('skin/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
-$search_md5=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+$output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $input=array();
 $photo_ids=array();
 $do_query=true;
-if (!empty($search_md5)) {
+if (!empty($output['search_md5'])) {
 	// if we have a query cache, retrieve all from cache
-	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='$search_md5' AND `search_type`=".SEARCH_PHOTO;
+	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."' AND `search_type`=".SEARCH_PHOTO;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$photo_ids=mysql_result($res,0,0);
@@ -99,14 +99,14 @@ if ($do_query) {
 		$photo_ids[]=mysql_result($res,$i,0);
 	}
 	$serialized_input=serialize($input);
-	$search_md5=md5($serialized_input);
-	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='$search_md5',`search_type`=".SEARCH_PHOTO.",`search`='$serialized_input',`results`='".join(',',$photo_ids)."'";
+	$output['search_md5']=md5($serialized_input);
+	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='".$output['search_md5']."',`search_type`=".SEARCH_PHOTO.",`search`='$serialized_input',`results`='".join(',',$photo_ids)."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 $totalrows=count($photo_ids);
 
 // get the details for the found photo_ids...unfortunately that's another query
-$photos=array();
+$loop=array();
 if (!empty($totalrows)) {
 	$photo_ids=array_slice($photo_ids,$o,$r);
 	$query="SELECT *,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
@@ -121,32 +121,32 @@ if (!empty($totalrows)) {
 		} elseif ($rsrow['status']==STAT_APPROVED) {
 			$rsrow['approved']=true;
 		}
-		$photos[]=$rsrow;
+		$loop[]=$rsrow;
 	}
 
-	$_GET=array('search'=>$search_md5);
-	$tpl->set_var('pager2',pager($totalrows,$o,$r));
-	$tpl->set_var('totalrows',$totalrows);
+	$_GET=array('search'=>$output['search_md5']);
+	$output['pager2']=pager($totalrows,$o,$r);
+	$output['totalrows']=$totalrows;
 }
 
-$tplvars['pic_width']=get_site_option('pic_width','core_photo');
-$return='photo_results.php';
+$output['pic_width']=get_site_option('pic_width','core_photo');
+
+$output['return2me']='photo_results.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$return.='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 } else {
-	$return.='?search='.$search_md5;
+	$output['return2me'].='?search='.$output['search_md5'];
 }
-
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','photo_results.html');
-$tpl->set_loop('photos',$photos);
-$tpl->set_var('o',$o);
-$tpl->set_var('r',$r);
-$tpl->set_var('search_md5',$search_md5);
-$tpl->set_var('return',rawurlencode($return));
+$tpl->set_loop('loop',$loop);
+$tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP | TPL_OPTIONAL);
-$tpl->drop_loop('photos');
+$tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='Photo Search Results';
 $tplvars['page']='photo_results';
+$tplvars['css']='photo_results.css';
 include 'frame.php';
 ?>

@@ -8,6 +8,10 @@
 	clear: both;
 }
 
+* html .edit_form dl {
+	height: 1%;
+}
+
 .edit_form dt, .edit_form dd {
 	float: left;
 	margin: 5px 0;
@@ -19,4 +23,8 @@
 
 .controls {
 	margin: 10px 0 10px 360px;
+}
+
+* html .controls {
+	margin: 10px 0 10px 185px;
 }

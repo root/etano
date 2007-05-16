@@ -266,37 +266,8 @@ label.checkbox {
 	width: 99%;
 }
 
-.user_photo {
-	border: 1px solid #CCC;
-}
-
 .thumb1 {
 	margin: 0 10px 10px 0;
-}
-
-.photo_details, .member_details {
- 	border-bottom: 1px dashed #CCC;
- 	margin-bottom: 1em;
-}
-
-.photo_details .user_photo, .member_details .user_photo {
-	float: left;
- 	margin-right: 3px;
-}
-
-.photo_details .actions, .member_details .actions {
-	clear: both;
-}
-
-.photo_details .actions li, .member_details .actions li {
-	display: inline;
-	border-left: 1px solid #ccc;
-	padding: 1px 5px;
-}
-
-.photo_details .actions li.first, .member_details .actions li.first {
-	display: inline;
-	border-left: none;
 }
 
 .alert_ppending {
