@@ -1,7 +1,7 @@
 <h2>Search Blogs</h2>
 
 <div id="blog_submenu" class="menu_box">
-	<h3>Quick links - blogs</h3>
+	<h3>Quick links</h3>
 	<div class="box_content">
 		<ul>
 		<li><a href="blog_results.php">Browse all</a></li>
@@ -10,28 +10,28 @@
 	</div>
 </div>
 
-<form action="blog_results.php" method="get" id="blog_search_form">
+<form action="blog_results.php" method="get" id="blog_search_form" class="edit_form">
 <fieldset>
-<div class="edit_row" id="row_stat_blog">
-	<label class="mainlabel" for="bstat">Blog status:</label>
-	<div class="field">
-		<select name="stat" id="bstat" tabindex="53">
+<dl>
+	<dt><label for="stat">Blog status:</label></dt>
+	<dd>
+		<select name="stat" id="stat" tabindex="1">
 		<option value="0">-</option>
-		{profile.pstat}
+		{output.stat}
 		</select>
-	</div>
-</div>
+	</dd>
+</dl>
+</fieldset>
 
-<div class="edit_row" id="row_submit_blog">
-	<label class="mainlabel">&nbsp;</label>
-	<div class="field"><input type="submit" value="Search" tabindex="54" /></div>
-</div>
+<fieldset class="controls">
+	<input type="submit" value="Search" tabindex="2" />
 </fieldset>
 </form>
 <div class="clear"></div>
-
-<script type="text/javascript">
-	document.getElementById('blog_search_form').elements[0].focus();
-</script>
+<br />
+<br />
+<br />
+<br />
+<br />
 
 <script type="text/javascript" src="js/blog_search.js"></script>

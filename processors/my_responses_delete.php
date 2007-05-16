@@ -31,7 +31,7 @@ if (isset($_POST['return']) && !empty($_POST['return'])) {
 	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 	$nextpage=$input['return'];
 } else {
-	$nextpage='responses.php';
+	$nextpage='my_responses.php';
 }
 $nextpage=_BASEURL_.'/'.$nextpage;
 redirect2page($nextpage,$topass,'',true);

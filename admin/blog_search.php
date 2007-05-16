@@ -20,15 +20,16 @@ allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$profile=array();
-$profile['pstat']=vector2options($accepted_pstats);
+$output=array();
+$output['stat']=vector2options($accepted_pstats);
 
 $tpl->set_file('content','blog_search.html');
-$tpl->set_var('profile',$profile);
+$tpl->set_var('output',$output);
 
 $tpl->process('content','content',TPL_LOOP);
 
 $tplvars['title']='Search';
+$tplvars['css']='blog_search.css';
 $tplvars['page']='blog_search';
 include 'frame.php';
 ?>

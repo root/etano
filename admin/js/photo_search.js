@@ -1,3 +1,3 @@
 $(function() {
-	$('#photo_search_form input:visible:first').focus();
+	$('#photo_search_form select:visible:first').focus();
 });
