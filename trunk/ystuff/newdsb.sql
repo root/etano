@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: May 16, 2007 at 03:46 PM
+-- Generation Time: May 17, 2007 at 06:43 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 -- 
@@ -152,24 +152,13 @@ CREATE TABLE `dsb_blog_comments` (
 -- Dumping data for table `dsb_blog_comments`
 -- 
 
-INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_post_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (1, 1, 10, 'strawberries', 'a reply.\r\n\r\nHi Emma!', '2007-04-16 21:13:30', '2007-04-16 21:13:30', 15),
-(2, 2, 10, 'strawberries', 'welcome to the hairball''s abode.', '2007-04-17 21:46:30', '2007-04-17 21:46:30', 15),
-(3, 3, 10, 'strawberries', 'It looks excellent, Dan.  I love it.  It looks so clean and covers all the bases. \r\n \r\nI''ll be keen to see the rss look.....for me, it will be important to have more content on the index page.  \r\n\r\nI was messing around with the css stylesheet tonight in my firefox browser.  This is a great script.  Great work.', '2007-04-17 21:51:51', '2007-04-17 21:51:51', 15),
-(4, 4, 10, 'strawberries', '''woof woof'' said the big bad wolf', '2007-04-18 14:03:21', '2007-04-18 14:03:21', 15),
-(5, 3, 7, 'dragon', 'after 3 or 4 versions of the skin and lots of fights between the designer and us - the developers, it better be good. We really tried to make everything easy to customize: the php code, the html, css...', '2007-04-18 21:31:08', '2007-04-18 21:31:08', 15),
-(6, 3, 12, 'a_l_f', 'Kewl  \r\n        so now my filrts can have\r\n send \r\n(1) i have the weekend free wanna catch-up\r\n(2) im intrested \r\n(3) lets meet for coffee \r\n\r\nReply \r\n\r\n1. no thanks\r\n2. great im free also\r\n3. Sure lets meet \r\n\r\nLoving it thus far and it can only get better', '2007-04-19 05:13:36', '2007-04-19 05:13:36', 15),
-(7, 3, 10, 'strawberries', 'looking good, Dan, looking good!  And I see you''ve done a fair bit of work yesterday.\r\n\r\na_l_f, thanks for the flirt message.  I was alerted to your flirt via email thi morning.  Though when I clicked on the url link in the email, the webpage came up as an error....404 not found  index.php.\r\n\r\nBut when i went to the friendy site and signed in, i could go to my inbox and see your flirt message.  I guess the problem was to do with me not being signed in.\r\n\r\nJust a wee bug.\r\n', '2007-04-19 07:38:12', '2007-04-19 07:38:12', 15),
-(8, 5, 10, 'strawberries', 'excellent work, Dan.\r\n\r\nIt''s all coming together nicely.  It''s starting to snowball.  \r\n\r\nBTW You can see a small error that i had this morning (see your other blog thread for details).', '2007-04-19 07:40:39', '2007-04-19 07:40:39', 15),
-(9, 8, 7, 'dragon', 'howdy kid?', '2007-04-19 14:49:34', '2007-04-19 14:49:34', 15),
+INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_post_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`) VALUES (9, 8, 7, 'dragon', 'howdy kid?', '2007-04-19 14:49:34', '2007-04-19 14:49:34', 15),
 (11, 7, 10, 'strawberries', 'I wonder what the design resource kit will contain.\r\n\r\n', '2007-04-19 14:53:07', '2007-04-19 14:53:07', 15),
-(12, 6, 10, 'strawberries', 'I hate spammers and the horse they rode in on.', '2007-04-19 14:54:29', '2007-04-19 14:54:29', 15),
 (27, 10, 1, 'emma', 'unu ''     doi\n\nLast edited by emma on 2007-04-24 14:08:43 GMT', '2007-04-24 13:35:12', '2007-04-24 14:08:43', 15),
 (15, 9, 10, 'strawberries', 'excellentae!\r\n\r\nI replied to  a_l_f''s test flirt yesterday morning, but i had an error page.  I''ll resend the message now.\r\n\r\nIt''s great that we now that get notified via email when any posts are made re our pictures or blogs.', '2007-04-19 23:43:46', '2007-04-19 23:43:46', 15),
-(16, 2, 10, 'strawberries', 'test message', '2007-04-20 00:10:19', '2007-04-20 00:10:19', 15),
 (17, 9, 13, 'johnboy2', 'Wow this bits cool, only just discovered it today.:)', '2007-04-20 01:52:19', '2007-04-20 01:52:19', 15),
 (18, 9, 13, 'johnboy2', 'Can a user edit or delete these comments they leave?', '2007-04-20 01:53:10', '2007-04-20 01:53:10', 15),
 (19, 9, 10, 'strawberries', 'no ability to edit that i can see, johnboy\r\n\r\nwonder if possible to see the time/date of posted messages.\r\n', '2007-04-20 02:50:11', '2007-04-20 02:50:11', 15),
-(20, 3, 12, 'a_l_f', 'LOL strawberries\r\n               yes just a wee bug or simple \r\njust not yet ready togo As the crew did say they would work on it each day :-)\r\nWhat would be great is a few simleys for the blog tooo :-)', '2007-04-20 03:35:55', '2007-04-20 03:35:55', 15),
 (21, 10, 7, 'dragon', 'Think of this like user stories with bells and whistles. Instead of having some predefined topics, the user creates his/her topics and keeps talking. Plus others can comment on their posts. In this application, they''re supposed to replace the user stories.\n\nLast edited by dragon on 2007-04-27 17:14:57 GMT', '2007-04-20 12:58:50', '2007-04-27 17:14:57', 15),
 (22, 10, 0, 'guest', 'whoa', '2007-04-20 15:57:02', '2007-04-20 15:57:02', 15),
 (23, 10, 0, 'guest', 'rrrr', '2007-04-20 22:07:46', '2007-04-20 22:07:46', 15),
@@ -214,13 +203,8 @@ CREATE TABLE `dsb_blog_posts` (
 -- Dumping data for table `dsb_blog_posts`
 -- 
 
-INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`) VALUES (1, '2007-04-16 19:20:25', 1, 'emma', 1, 1, 'The Bicentennial Man', 'by Isaac Asimov\n\n[b]The Three Laws of Robotics[/b]\n.\n.\n.\n[quote]A robot may not injure a human being, or, through inaction, allow a human being to come to harm.[/quote]\n\n[quote]A robot must obey the orders given it by human beings except where such orders would conflict with the First Law.[/quote]\n\n[quote]A robot must protect its own existence as long as such protection does not conflict with the First or Second Law.[/quote]\n\nAndrew Martin said, "[u]Thank you[/u]," and took the seat offered him. He didn''t look driven to the last resort, but he had been.\n\nHe didn''t, actually, look anything, for there was a smooth blankness, to his face, except for the sadness one imagined one saw in his eyes. His hair was smooth, light brown, rather fine; and he had no facial hair. He looked freshly and cleanly shaved. His clothes were distinctly old-fashioned, but neat, and predominantly a velvety red-purple in color.\n\nFacing him from behind the desk was the surgeon The nameplate on the desk included a fully identifying series of letters and numbers which Andrew didn''t bother with. To call him Doctor would be quite enough\n\n"When can the operation be carried through, Doctor?" he asked.\n\nSoftly, with that certain inalienable note of respect that a robot always used to a human being, the surgeon said, "I am not certain, sir, that I understand how or upon whom such an operation could be performed."\n\nThere might have been a look of respectful intransigence on the surgeon''s face, if a robot of his sort, in lightly bronzed stainless steel, could have such an expression-or any expression.\n\nAndrew Martin studied the robot''s right hand, his cutting hand, as it lay motionless on the desk. The fingers were long and were shaped into artistically metallic, looping curves so -graceful and appropriate that one could imagine a scalpel fitting them and becoming, temporarily, one piece with them. There would be no hesitation in his work, no stumbling, no quivering, no mistakes. That confidence came with specialization, of course, a specialization so fiercely desired by humanity that few robots were, any longer, independently brained. A surgeon, of course, would have to be. But this one, though brained, was so limited in his capacity that he did not recognize Andrew, had probably never heard of him .\n\n[quote]Have you ever thought you would like to be a man?[/quote] Andrew asked.\n\nThe surgeon hesitated a moment, as though the question fitted nowhere in his allotted positronic pathways. "But I am a robot, sir."\n\n[quote]Would it be better to be a man?[/quote]', 1, 15, '', 0, 1, '2007-04-16 19:24:35', ''),
-(2, '2007-04-16 20:50:21', 10, 'strawberries', 3, 1, 'Fluffy say''s ''Hi''', 'Hi everyone.  Welcome to Fluffy''s blog.', 1, 15, '', 0, 2, '2007-04-18 01:05:21', ''),
-(3, '2007-04-17 12:08:28', 7, 'dragon', 5, 1, 'Now what?', 'Ok, so now that a basic preview is up for you to see and test, we''ll update it daily with whatver we''ll be working on. So stay tuned for more news.\nThere are some things to fix with blogs, we need to finish the friendship connections feature (right now you can only add another member to your favorites network and request to be a friend of another member).\n\nWe need to also finish the flirts...\nAs many of you have requested, you want to be able to reply with a flirt to a flirt and this is now possible.\n\nAs you might have seen, the flirts can include both text and images and even sounds if you want. It''s up to the admin''s imagination to create some creative flirts.\n\nAnother thing that needs to be finished is the news system. There are 2 parts here:\nYou can include news read by a rss reader from any published rss feed and you will also have site news - published by admin for the site members. The news will appear on the home page (the page after login) by default but you can put it anywhere you want in your site, even on the front page.\n', 1, 15, '', 12, 5, '2007-04-17 12:19:12', ''),
-(4, '2007-04-17 21:45:04', 10, 'strawberries', 3, 1, 'Fluffy, fluffy, fluffy', 'The greatest cat in the land.', 1, 15, '', 0, 1, '2007-04-17 21:45:04', ''),
-(5, '2007-04-18 21:26:37', 7, 'dragon', 5, 1, 'Today''s update', '- fixed a bug with account confirmation\n- finished the connection feature\n- finished the friendship requests pages\n- added the list of friends in the profile page - left menu\n- fixed some bugs with edit/delete links in my_folders/my_filters\n- finished the member block/unblock feature\n- fixed 2 bugs with message counting in the left menus of mail related pages\n- fixed some bugs in the crons\n- added the mail_crlf option in site options to select between \\r\\n and \\n line endings in emails\n- fixed some js errors', 1, 15, '', 0, 1, '2007-04-18 21:26:37', ''),
-(6, '2007-04-18 23:30:54', 19, 'pkusa', 6, 1, 'About MyOrg, Inc', 'Why Choose Us?\nWhy would someone choose one provider over another?  When it comes to Internet Connectivity, how well does one really know any provider? \n\nRegardless of how many server racks are maintained, or how low the monthly price is for hosting your site, we believe that ultimately, our customers choose us because they have gotten to know us.  They know that we will help them connect to the maze that is the Internet and, should they get lost, they know that we will be there to help them find their way.\n\nWe are dedicated to ensuring that whatever service you choose with us, should it be: Web Hosting Solutions, Domain Names, SSL, Co-Location or Web Development we always are courteous, knowledgeable and quick to respond.\n\nIn order to stay ahead of the competition, MyOrg, Inc. and its family of companies have embarked on providing our consumer and corporate customers with true quality-of-service initiatives, focused on making our customers'' Internet experience the best it can be.\n[b][/b][b][/b][b][/b][b][/b][quote][/quote]', 1, 15, '', 0, 1, '2007-04-18 23:30:54', ''),
-(7, '2007-04-19 05:01:39', 12, 'a_l_f', 7, 1, 'A design resource kit', 'I look forward to the design resource kit as i cannot leave things alone :-)\ni wonder how long it will take me to crash the new install when its released :-0', 1, 15, '', 0, 1, '2007-04-19 05:01:39', ''),
+INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`) VALUES (6, '2007-04-18 23:30:54', 19, 'pkusa', 6, 1, 'About MyOrg, Inc', 'Why Choose Us?\nWhy would someone choose one provider over another?  When it comes to Internet Connectivity, how well does one really know any provider? \n\nRegardless of how many server racks are maintained, or how low the monthly price is for hosting your site, we believe that ultimately, our customers choose us because they have gotten to know us.  They know that we will help them connect to the maze that is the Internet and, should they get lost, they know that we will be there to help them find their way.\n\nWe are dedicated to ensuring that whatever service you choose with us, should it be: Web Hosting Solutions, Domain Names, SSL, Co-Location or Web Development we always are courteous, knowledgeable and quick to respond.\n\nIn order to stay ahead of the competition, MyOrg, Inc. and its family of companies have embarked on providing our consumer and corporate customers with true quality-of-service initiatives, focused on making our customers'' Internet experience the best it can be.\n[b][/b][b][/b][b][/b][b][/b][quote][/quote]', 1, 15, '', 0, 1, '2007-04-18 23:30:54', ''),
+(7, '2007-04-19 05:01:39', 12, 'a_l_f', 7, 1, 'A design resource kit', 'I look forward to the design resource kit as i cannot leave things alone :-)\ni wonder how long it will take me to crash the new install when its released :-0', 1, 15, '', 1, 1, '2007-04-19 05:01:39', ''),
 (8, '2007-04-19 09:57:59', 1, 'emma', 1, 1, 'Testing blogs', 'Hello\n\n[quote]everybody[/quote]\n\n[b]how[/b]\n\n[u]are[/u]\n\n[url=http://www.datemill.com/friendy/profile.php?user=emma]you[/url]?', 1, 15, '', 0, 5, '2007-04-19 09:57:59', ''),
 (9, '2007-04-19 21:40:05', 7, 'dragon', 5, 1, 'Today''s update take 2', 'Ok, another update today - we focused on bugs and overall stability but a couple of features were added too. :)\n- You should be able to send (and receive) messages, flirts, etc.\n- You will receive new message email notifications when you get a new message (if you said you want to receive notifs in your settings)\n- You will also receive message and email notifications when a new comment is made on one of your pictures or blogs.\n- The one and only cron job is active on the demo site.', 1, 15, '', 2, 4, '2007-05-07 11:13:21', ''),
 (10, '2007-04-20 02:01:23', 11, 'johnboy', 4, 1, 'Testing this out', 'I''m not very familiar about blogs, so I have no idea what Im doing here, not even sure if this will post in the main blog area. Are blogs just another type of FORUMS?', 1, 15, '', 73, 7, '2007-04-20 02:01:23', '');
@@ -1115,7 +1099,8 @@ CREATE TABLE `dsb_online` (
 -- Dumping data for table `dsb_online`
 -- 
 
-INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (7, '20070516124504', 0x3637363236626330626439303766316532373735653233346233363133636631),
+INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES (0, '20070517121506', 0x3233393737663138323235653361663565653430666361363034396137633761),
+(7, '20070516134827', 0x3637363236626330626439303766316532373735653233346233363133636631),
 (5, '20070515170816', 0x6136373438393564656466653066633665383438633962623161383761383265),
 (0, '20070515121617', 0x3265336436363930313839636130613731663635613366643730303738386162),
 (7, '20070514143904', 0x3038303838643330323939336430656634306632646332626231363130343766),
@@ -1574,7 +1559,14 @@ CREATE TABLE `dsb_site_searches` (
 -- Dumping data for table `dsb_site_searches`
 -- 
 
-INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('8816b2c8b45df99a22880b00513d7867', 1, 'a:1:{s:5:"pstat";s:1:"5";}', '', 0, '20070511131650'),
+INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES ('04a51b8634d9c552baeb60eb5109b481', 3, 'a:1:{s:4:"stat";s:1:"5";}', '', 0, '20070517151154'),
+('acb8c4bb0734ccf1bc4d1941e349553d', 3, 'a:1:{s:3:"uid";s:2:"19";}', '6', 0, '20070517151303'),
+('a02a5083e81539264df53de31964da9a', 2, 'a:1:{s:7:"flagged";s:1:"1";}', '', 0, '20070517125841'),
+('40cd750bba9870f18aada2478b24840a', 3, 'a:0:{}', '2,3,4,5,6,7,8,9,10', 0, '20070517140304'),
+('31b8ba2df63d76c2dae7c1d5e7146838', 3, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:5:"views";}', '10,3,9,1,2,4,5,6,7,8', 7, '20070516162825'),
+('8816b2c8b45df99a22880b00513d7867', 1, 'a:1:{s:5:"pstat";s:1:"5";}', '', 0, '20070511131650'),
+('eba15f899a6a6d0596b3b3f1c4af00fe', 3, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"new";}', '10,9,8,7,6,5,4,3,2,1', 7, '20070516162834'),
+('feff091ed1dfafe7304140b433319b11', 3, 'a:2:{s:11:"acclevel_id";i:17;s:2:"st";s:4:"comm";}', '10,3,8,9,2,1,4,5,6,7', 7, '20070516162832'),
 ('bb4a7f13ec4e555605029d5ac2147c55', 2, 'a:1:{s:3:"uid";s:1:"8";}', '11', 0, '20070516130705'),
 ('80a3584bdda9fbed56913b3a91a5d150', 2, 'a:1:{s:3:"uid";s:1:"5";}', '', 0, '20070515200839'),
 ('2350320d5129c25ce7563f8dc7c63d7a', 1, 'a:1:{s:10:"f6_country";s:3:"218";}', '3,4,5,9,22,23,24,25,26', 0, '20070515180311'),
@@ -1670,7 +1662,7 @@ INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membershi
 (4, 0x6d6176657269636b, 0x3839393636303063333130383863366137363436346365333864393635636364, 15, 2, 'newdsb@sco.ro', '', '87a6ce818365e8b3bef125df92826702', '20070418125301'),
 (5, 0x313030343537, 0x3836653236636161363936356531313066666461353936373465373163643264, 15, 2, 'newdsb@sco.ro', '', 'c5cb27f0e77add4c24ffc48562a0706d', '20070515170816'),
 (6, 0x636f6361636f6c61, 0x6361323466306531653366663730316661346633336335336639303566396461, 15, 2, 'newdsb@sco.ro', '', '7f2fe99deb74578bf4f6e5e26dd99ae0', '20070418125301'),
-(7, 0x647261676f6e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '1dc9d7dbc613c521a8efeae0f7706f2e', '20070516124504'),
+(7, 0x647261676f6e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '1dc9d7dbc613c521a8efeae0f7706f2e', '20070516134827'),
 (8, 0x616e676b617361, 0x3634383530366161333739666566623930323663376530313664386463626663, 15, 2, 'newdsb@sco.ro', '', '36e12348474821624874994164838526', '20070516101326'),
 (9, 0x72616e65676c6f, 0x3739343063343139653932336166306265373963623835613432663836343964, 15, 2, 'newdsb@sco.ro', '', '83f1200b9f1bdd252e2aebc2dfffe34f', '20070418125301'),
 (10, 0x737472617762657272696573, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'newdsb@sco.ro', '', '68779ace53ca9ba01a52efa82e53bf86', '20070418125301'),
@@ -1793,7 +1785,7 @@ INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_ot
 (21, 0, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
 (22, 0, 11, 8, 'angkasa', 'angkasa sent you a flirt', 'Aye aye, mate!', '2007-04-17 06:26:57', 1, 0, 0),
 (23, 0, 11, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Let''s rock and roll!', '2007-04-17 12:22:20', 1, 0, 0),
-(50, 0, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
+(50, 1, 7, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:28:34', 0, 0, 0),
 (49, 0, 7, 10, 'strawberries', 'Connection request from strawberries', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 21:09:02', 0, 0, 0),
 (48, 0, 7, 8, 'angkasa', 'angkasa sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-16 19:58:56', 1, 0, 0),
 (47, 0, 7, 1, 'emma', 'Connection request from emma', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 19:37:13', 0, 0, 0),
@@ -1986,7 +1978,7 @@ CREATE TABLE `dsb_user_photos` (
   `caption` varchar(255) NOT NULL default '',
   `status` tinyint(2) unsigned NOT NULL default '0',
   `del` tinyint(1) unsigned NOT NULL default '0',
-  `flagged` tinyint(1) unsigned NOT NULL default '0',
+  `flagged` tinyint(3) unsigned NOT NULL default '0',
   `reject_reason` text NOT NULL,
   `stat_views` int(10) unsigned NOT NULL default '0',
   `stat_votes` int(4) unsigned NOT NULL default '0',
@@ -2018,7 +2010,7 @@ INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_m
 (8, 11, 'johnboy', '0/11_11176758735.jpg', 1, 1, 1, 1, '', 15, 0, 0, '', 13, 1, 5, 0, '2007-04-16 21:25:35', '2007-04-17 12:27:01'),
 (9, 13, 'johnboy2', '6/13_11176787947.jpg', 1, 0, 1, 1, 'Out the front of my house', 15, 0, 0, '', 6, 1, 4, 2, '2007-04-17 05:32:29', '2007-04-17 05:33:50'),
 (10, 13, 'johnboy2', '8/13_21176787947.jpg', 0, 0, 1, 1, 'A poor little bird freezing its butt off.', 15, 0, 0, '', 1, 0, 0, 0, '2007-04-17 05:32:29', '2007-04-17 05:33:50'),
-(11, 8, 'angkasa', '2/8_11176790979.jpg', 1, 0, 1, 1, 'fgfgfgfgf', 15, 0, 0, '', 3, 0, 0, 0, '2007-04-17 06:23:02', '2007-04-17 06:24:21'),
+(11, 8, 'angkasa', '2/8_11176790979.jpg', 1, 0, 1, 1, 'fgfgfgfgf', 15, 0, 0, '', 3, 0, 0, 0, '2007-04-17 06:23:02', '2007-05-16 14:34:13'),
 (12, 15, 'blackwater', '1/15_11176795306.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 3, 0, 0, 0, '2007-04-17 07:35:07', '2007-04-17 07:36:26'),
 (13, 12, 'a_l_f', '9/12_11176812224.jpg', 1, 0, 1, 1, 'Here Kitty Kitty', 15, 0, 0, '', 3, 0, 0, 0, '2007-04-17 12:17:04', '2007-04-17 12:17:31'),
 (14, 1, 'emma', '2/1_11176990562.jpg', 0, 0, 1, 1, '', 15, 0, 0, '', 0, 0, 0, 0, '2007-04-19 13:49:25', '2007-04-19 13:50:02'),
@@ -2249,7 +2241,7 @@ INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (2, 'total_p
 (1, 'total_messages', -4),
 (4, 'pviews', 18),
 (7, 'pviews', 22),
-(1, 'pviews', 32),
+(1, 'pviews', 35),
 (8, 'pviews', 1),
 (1, 'mess_sent', 2),
 (7, 'comments', 4),

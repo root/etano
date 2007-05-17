@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       processors/folders_delete.php
+File:                       processors/blog_delete.php
 $Revision: 67 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -21,14 +21,23 @@ check_login_member(14);
 $topass=array();
 $blog_id=isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="SELECT `post_id` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$post_ids=array();
+for ($i=0;$i<mysql_num_rows($res);++$i) {
+	$post_ids[]=mysql_result($res,$i,0);
+}
+$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_post_id` IN ('".join("','",$post_ids)."')";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+
+$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `fk_blog_id`='$blog_id'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $query="DELETE FROM `{$dbtable_prefix}user_blogs` WHERE `blog_id`='$blog_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;
-$topass['message']['text']='Blog and all posts deleted.';     // translate
+$topass['message']['text']='Blog and all related posts and comments deleted.';     // translate
 
 $nextpage='my_blogs.php';
 if (isset($_POST['return']) && !empty($_POST['return'])) {

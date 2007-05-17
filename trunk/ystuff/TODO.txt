@@ -95,3 +95,4 @@ TODO
 - favorite photos/blogs
 - rewritten urls list
 - welcome message in inbox cand se inregistreaza un membru de tipul MESS_SYSTEM
+- recently viewed members - sa ramana un history cu ce profile/poze/bloguri a vazut membrul lately

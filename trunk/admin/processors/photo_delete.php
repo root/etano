@@ -54,9 +54,10 @@ if (mysql_num_rows($res)) {
 // trigger generate_fields
 }
 
-$nextpage=_BASEURL_.'/admin/photo_search.php';
 if (isset($return) && !empty($return)) {
 	$nextpage=_BASEURL_.'/admin/'.$return;
+} else {
+	$nextpage=_BASEURL_.'/admin/photo_search.php';
 }
-redirect2page($nextpage,$topass,$qs,true);
+redirect2page($nextpage,$topass,'',true);
 ?>

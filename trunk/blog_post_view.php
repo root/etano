@@ -18,6 +18,7 @@ require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
 check_login_member(13);
 
+define('CACHE_LIMITER','private');
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $post_id=sanitize_and_format_gpc($_GET,'pid',TYPE_INT,0,0);
 $edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
