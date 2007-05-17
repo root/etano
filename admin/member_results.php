@@ -361,10 +361,10 @@ if (!empty($totalrows)) {
 }
 
 $output['return2me']='member_results.php';
-if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
-} else {
+if (!empty($output['search_md5'])) {
 	$output['return2me'].='?search='.$output['search_md5'];
+} elseif (!empty($_SERVER['QUERY_STRING'])) {
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','member_results.html');
