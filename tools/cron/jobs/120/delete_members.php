@@ -26,13 +26,10 @@ function delete_members() {
 
 		$query="DELETE FROM `{$dbtable_prefix}queue_message` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$query="UPDATE `{$dbtable_prefix}queue_message` SET `fk_user_id_from`=0 WHERE `fk_user_id_from` IN ('".join("','",$uids)."')";
+		$query="UPDATE `{$dbtable_prefix}queue_message` SET `fk_user_id_other`=0 WHERE `fk_user_id_other` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$query="DELETE FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$uids)."')";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-
-		$query="DELETE FROM `{$dbtable_prefix}user_cache` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$query="DELETE FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
@@ -64,6 +61,7 @@ function delete_members() {
 
 		$query="SELECT `photo_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		require_once _BASEPATH_.'/includes/classes/modman.class.php';
 		$modman=new modman();
 		$photo_ids=array();
 		for ($i=0;$i<mysql_num_rows($res);++$i) {
