@@ -104,17 +104,18 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 
 		// every day
 		if ($hour==23 && $minute==55) {
-			if ($dh=opendir(dirname(__FILE__).'/jobs/1440')) {
+			if ($dh=opendir(dirname(__FILE__).'/jobs/d')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
-						include_once dirname(__FILE__).'/jobs/1440/'.$file;
+						include_once dirname(__FILE__).'/jobs/d/'.$file;
 					}
 				}
 				closedir($dh);
 			}
 		}
 
-		if ($weekday==0 && $hour==23 && $minute==55) {	// once per week: sunday 11:55 PM
+		// once per week: sunday 11:55 PM
+		if ($weekday==0 && $hour==23 && $minute==55) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/w')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
@@ -125,7 +126,8 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 			}
 		}
 
-		if ($day==1 && $hour==0 && $minute==5) {	// once per month: 1st at 12:05 AM
+		// once per month: on 1st at 12:05 AM
+		if ($day==1 && $hour==0 && $minute==5) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/m')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {

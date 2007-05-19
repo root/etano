@@ -161,3 +161,14 @@
 	color: #FFF;
 	text-decoration: underline;
 }
+
+#alpha {
+	position: absolute;
+	top: 0;
+	left: 450px;
+	background: url('../images/alpha_tag.png') no-repeat top left;
+	width: 113px;
+	height: 64px;
+}
+
+#alpha {behavior: url('iepngfix.htc');}

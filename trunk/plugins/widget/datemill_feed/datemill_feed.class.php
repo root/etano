@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       plugins/widget/osignal_feed/osignal_feed.class.php
+File:                       plugins/widget/datemill_feed/datemill_feed.class.php
 $Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -13,10 +13,10 @@ Support at:                 http://forum.datemill.com
 
 require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 
-class widget_osignal_feed extends icontent_widget {
-	var $module_code='osignal_feed';
+class widget_datemill_feed extends icontent_widget {
+	var $module_code='datemill_feed';
 
-	function widget_osignal_feed() {
+	function widget_datemill_feed() {
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -47,7 +47,7 @@ class widget_osignal_feed extends icontent_widget {
 				for ($i=0;isset($items['item'][$i]);++$i) {
 					$items['item'][$i]['content:encoded']=substr($items['item'][$i]['content:encoded'],0,$this->config['num_chars']);
 				}
-				$this->tpl->set_file('widget.content','widgets/osignal_feed/display.html');
+				$this->tpl->set_file('widget.content','widgets/datemill_feed/display.html');
 				$this->tpl->set_loop('loop',array_slice($items['item'],0,$this->config['num_stories']));
 				$this->tpl->process('widget.content','widget.content',TPL_LOOP);
 				$this->tpl->drop_loop('loop');
@@ -62,7 +62,7 @@ class widget_osignal_feed extends icontent_widget {
 	function _finish_display() {
 		$myreturn='';
 		if ($this->tpl->get_var_silent('widget.content')!='') {
-			$widget['title']='Original Signal Tech Feed';	// translate this
+			$widget['title']='Latest Datemill News';	// translate this
 			$widget['id']='os_tech_feed';
 			if (isset($this->config['area'])) {
 				if ($this->config['area']=='admin') {
@@ -98,7 +98,7 @@ class widget_osignal_feed extends icontent_widget {
 
 
 	function _init() {
-		$this->config['module_name']='Latest Original Signal Stories';
+		$this->config['module_name']='Latest Datemill News';
 		$this->config['num_stories']=5;
 		$this->config['refresh_interval']=5;
 		$this->config['num_chars']=400;

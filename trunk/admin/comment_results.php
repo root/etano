@@ -86,7 +86,7 @@ if (isset($input['stat'])) {
 }
 
 $query="SELECT $select,a.`comment_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user`,a.`comment`,a.`status` FROM $from WHERE $where LIMIT $o,$r";
-print $query;
+//print $query;
 //die;
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $loop=array();

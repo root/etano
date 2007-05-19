@@ -13,13 +13,23 @@
 	<div id="container">
 		<div id="header">
 			<div id="logout"><a href="processors/logout.php">logout</a></div>
-			<h1>{tplvars.sitename}</h1>
+			<h1><a class="link_bare" href="cpanel.php">{tplvars.sitename}</a></h1>
 		</div>	<!--header-->
 
-		<div id="bluebar">	</div> <!--bluebar-->
+		<div id="bluebar">	</div>
 
 		<div id="content_holder">
 			<div id="menu">
+				<div id="m_members" class="menu_box">
+					<h3>Administration center</h3>
+					<div class="box_content">
+						<ul>
+							<li><a href="cpanel.php">Home</a></li>
+							<li><a href="stats.php">Statistics</a></li>
+						</ul>
+					</div>
+				</div>
+
 				<div id="m_members" class="menu_box">
 					<h3>Member Management</h3>
 					<div class="box_content">
