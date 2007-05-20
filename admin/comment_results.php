@@ -34,47 +34,41 @@ $input['flagged']=sanitize_and_format_gpc($_GET,'flagged',TYPE_INT,0,0);
 if (empty($input['flagged'])) {
 	unset($input['flagged']);
 }
-$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
+$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);	// who posted the comment
 if (empty($input['uid'])) {
 	unset($input['uid']);
 }
-$input['id']=sanitize_and_format_gpc($_GET,'id',TYPE_INT,0,0);
+$input['id']=sanitize_and_format_gpc($_GET,'id',TYPE_INT,0,0);	// parent of the comment (blog/photo/user)
 if (empty($input['id'])) {
 	unset($input['id']);
 }
 
-$where="1";
+$where='1';
 switch ($input['m']) {
 
 	case 'blog':
-		if (isset($input['id'])) {
-			$where="a.`fk_post_id`='".$input['id']."'";
-		}
-		$where.=" AND a.`fk_post_id`=b.`post_id`";
+		$where.=" AND a.`fk_parent_id`=b.`post_id`";
 		$from="`{$dbtable_prefix}blog_comments` a,`{$dbtable_prefix}blog_posts` b";
 		$select='b.`title` as `select1`';
 		break;
 
 	case 'user':
-		if (isset($input['id'])) {
-			$where="a.`fk_user_id_profile`='".$input['id']."'";
-		}
-		$where.=" AND a.`fk_user_id_profile`=b.`user_id`";
-		$from="`{$dbtable_prefix}profile_comments` a,".USER_ACCOUNTS_TABLE." b";
-		$select='b.`user` as `select1`';
+		$where.=" AND a.`fk_parent_id`=b.`fk_user_id`";
+		$from="`{$dbtable_prefix}profile_comments` a,`{$dbtable_prefix}user_profiles` b";
+		$select='b.`_user` as `select1`';
 		break;
 
 	case 'photo':
-		if (isset($input['id'])) {
-			$where="a.`fk_photo_id`='".$input['id']."'";
-		}
-		$where.=" AND a.`fk_photo_id`=b.`photo_id`";
+		$where.=" AND a.`fk_parent_id`=b.`photo_id`";
 		$from="`{$dbtable_prefix}photo_comments` a,`{$dbtable_prefix}user_photos` b";
 		$select="b.`_user` as `select1`";
 		break;
 
 }
 
+if (isset($input['id'])) {
+	$where.=" AND a.`fk_parent_id`='".$input['id']."'";
+}
 if (isset($input['uid'])) {	// a user's comment
 	$where.=" AND a.`fk_user_id`=".$input['uid'];
 }
@@ -85,7 +79,7 @@ if (isset($input['stat'])) {
 	$where.=" AND a.`status`='".$input['stat']."'";
 }
 
-$query="SELECT $select,a.`comment_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user`,a.`comment`,a.`status` FROM $from WHERE $where LIMIT $o,$r";
+$query="SELECT $select,b.`fk_user_id` as `owner_id`,b.`_user` as `owner_user`,a.`comment_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user`,a.`comment`,a.`status`,a.`fk_parent_id` FROM $from WHERE $where LIMIT $o,$r";
 //print $query;
 //die;
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -100,9 +94,12 @@ if (mysql_num_rows($res)) {
 		} elseif ($rsrow['status']==STAT_APPROVED) {
 			$rsrow['approved']=true;
 		}
+		if (empty($rsrow['fk_user_id'])) {
+			unset($rsrow['fk_user_id']);
+		}
 		if ($input['m']=='blog') {
 			$rsrow['select1']=sanitize_and_format($rsrow['select1'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-			$rsrow['owner']='On post: '.$rsrow['select1'];
+			$rsrow['owner']='On post: <a href="blog_post_view.php?post_id='.$rsrow['fk_parent_id'].'">'.$rsrow['select1'].'</a> by <a href="profile.php?uid='.$rsrow['owner_id'].'">'.$rsrow['owner_user'].'</a>';
 		} elseif ($input['m']=='user') {
 			$rsrow['owner']=sprintf("On %s's profile",$rsrow['select1']);
 		} elseif ($input['m']=='photo') {
@@ -112,6 +109,12 @@ if (mysql_num_rows($res)) {
 	}
 	$totalrows=count($loop);
 	$output['pager2']=pager($totalrows,$o,$r);
+}
+
+if (empty($loop)) {
+	$topass['message']['type']=MESSAGE_INFO;
+	$topass['message']['text']='No comments found meeting your search criteria.';
+	redirect2page('admin/comment_search.php',$topass);
 }
 
 $output['m']=$input['m'];

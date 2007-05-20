@@ -100,7 +100,7 @@ if (get_user_settings($_SESSION['user']['user_id'],'def_user_prefs','profile_com
 	$output['show_comments']=true;
 	$output['uid']=$_SESSION['user']['user_id'];
 	$config=get_site_option(array('bbcode_comments','smilies_comm'),'core');
-	$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}profile_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_user_id_profile`='".$_SESSION['user']['user_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
+	$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}profile_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`='".$_SESSION['user']['user_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		// if someone has asked to edit his/her comment

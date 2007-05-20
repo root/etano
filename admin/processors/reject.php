@@ -88,6 +88,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			break;
 
+		case AMTPL_REJECT_COMM:
+		break;
 	}
 }
 

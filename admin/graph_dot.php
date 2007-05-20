@@ -92,7 +92,6 @@ if (in_array($type,$dot_types)) {
 			$graph->graph();
 			$graph->showGraph(_BASEPATH_.'/tmp/admin/'.$type.$start_date.$end_date.'.png');
 //			$graph->showGraph();
-			$end_date=$max_time;
 		}
 	}
 	redirect2page('tmp/admin/'.$type.$start_date.$end_date.'.png');

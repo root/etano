@@ -32,7 +32,7 @@
 <form id="blogcomment_form" action="processors/blog_comments.php" method="post">
 <fieldset>
 	<input type="hidden" name="comment_id" id="comment_id" value="{output.comment_id}" />
-	<input type="hidden" name="fk_post_id" value="{output.post_id}" />
+	<input type="hidden" name="fk_parent_id" value="{output.post_id}" />
 	<input type="hidden" name="return" value="{output.return2me}" />
 	<a name="postarea" id="postarea"><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea></a>
 </fieldset>

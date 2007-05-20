@@ -29,18 +29,33 @@ $return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD
 switch ($m) {
 
 	case 'blog':
-		$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `comment_id`='$comment_id'";
+		$table="`{$dbtable_prefix}blog_comments`";
+		$parent_table="`{$dbtable_prefix}blog_posts`";
+		$parent_key="`post_id`";
 		break;
 
 	case 'photo':
-		$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `comment_id`='$comment_id'";
+		$table="`{$dbtable_prefix}photo_comments`";
+		$parent_table="`{$dbtable_prefix}user_photos`";
+		$parent_key="`photo_id`";
 		break;
 
 	case 'user':
-		$query="DELETE FROM `{$dbtable_prefix}profile_comments` WHERE `comment_id`='$comment_id'";
+		$table="`{$dbtable_prefix}profile_comments`";
+		$parent_table="`{$dbtable_prefix}user_profiles`";
+		$parent_key="`fk_user_id`";
 		break;
 
 }
+
+$query="SELECT `fk_parent_id` FROM $table WHERE `comment_id`='$comment_id'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$parent_id=mysql_result($res,0,0);
+$query="DELETE FROM $table WHERE `comment_id`='$comment_id'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$query="UPDATE $parent_table SET `stat_comments`=`stat_comments`-1 WHERE $parent_key='$parent_id'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+
 if (!empty($query)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$topass['message']['type']=MESSAGE_INFO;

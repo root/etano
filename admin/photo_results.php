@@ -129,6 +129,12 @@ if (!empty($totalrows)) {
 	$output['totalrows']=$totalrows;
 }
 
+if (empty($loop)) {
+	$topass['message']['type']=MESSAGE_INFO;
+	$topass['message']['text']='No photos found meeting your search criteria.';
+	redirect2page('admin/photo_search.php',$topass);
+}
+
 $output['pic_width']=get_site_option('pic_width','core_photo');
 
 $output['return2me']='photo_results.php';

@@ -98,20 +98,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input['comment_id']=mysql_insert_id();
 			$topass['message']['type']=MESSAGE_INFO;
 			if (isset($_SESSION['user']['user_id'])) {
-				update_stats($_SESSION['user']['user_id'],'comments',1);
+				update_stats($_SESSION['user']['user_id'],'comments_made',1);
 			}
 			if (empty($config['manual_com_approval'])) {
-				$query="UPDATE `{$dbtable_prefix}blog_posts` SET `stat_comments`=`stat_comments`+1 WHERE `post_id`='".$input['fk_post_id']."'";
+				$query="UPDATE `{$dbtable_prefix}blog_posts` SET `stat_comments`=`stat_comments`+1 WHERE `post_id`='".$input['fk_parent_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['text']='Comment added.';	// translate this
-				$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='".$input['fk_post_id']."'";
+				$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='".$input['fk_parent_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
 					$notification['fk_user_id']=mysql_result($res,0,0);
 					// send notif only if it's not my blog
 					if (isset($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']!=$notification['fk_user_id']) {
 						$notification['subject']='New comment on one of your blogs';	// translate
-						$notification['message_body']=sprintf('%1$s posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=%2$s#comm%3$s">Click here</a> to view the comment',$_SESSION['user']['user'],$input['fk_post_id'],$input['comment_id']);
+						$notification['message_body']=sprintf('%1$s posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=%2$s#comm%3$s">Click here</a> to view the comment',$_SESSION['user']['user'],$input['fk_parent_id'],$input['comment_id']);
 						$notification['message_type']=MESS_SYSTEM;
 						queue_or_send_message($notification);
 					}

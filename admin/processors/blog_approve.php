@@ -2,8 +2,8 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       admin/processors/member_approve.php
-$Revision$
+File:                       admin/processors/blog_approve.php
+$Revision: 125 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
@@ -25,19 +25,19 @@ $topass=array();
 $input=array();
 if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
 	$input['search']=sanitize_and_format_gpc($_REQUEST,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='".SEARCH_USER."'";
+	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='".SEARCH_BLOG."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$results=mysql_result($res,0,0);
-		$input['uids']=explode(',',$results);
+		$input['pids']=explode(',',$results);
 	}
-} elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
-	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
+} elseif (isset($_REQUEST['pids']) && !empty($_REQUEST['pids'])) {
+	$input['pids']=sanitize_and_format($_REQUEST['pids'],TYPE_INT,0,array());
 }
 $input['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 
-if (!empty($input['uids'])) {
-	$query="UPDATE `{$dbtable_prefix}user_profiles` SET `status`='".STAT_APPROVED."',`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id` IN ('".join("','",$input['uids'])."')";
+if (!empty($input['pids'])) {
+	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `status`='".STAT_APPROVED."',`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `post_id` IN ('".join("','",$input['pids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Member(s) approved. They will appear on site as soon as the cache is generated';

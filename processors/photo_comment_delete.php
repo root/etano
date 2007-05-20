@@ -22,11 +22,14 @@ $topass=array();
 $comment_id=isset($_GET['comment_id']) ? (int)$_GET['comment_id'] : 0;
 
 if (!empty($comment_id)) {
-	$query="SELECT b.`fk_user_id` FROM `{$dbtable_prefix}photo_comments` a,`{$dbtable_prefix}user_photos` b WHERE a.`comment_id`='$comment_id' AND a.`fk_photo_id`=b.`photo_id`";
+	$query="SELECT b.`fk_user_id`,a.`fk_parent_id` FROM `{$dbtable_prefix}photo_comments` a,`{$dbtable_prefix}user_photos` b WHERE a.`comment_id`='$comment_id' AND a.`fk_parent_id`=b.`photo_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res) && mysql_result($res,0,0)==$_SESSION['user']['user_id']) {
+		$parent_id=mysql_result($res,0,1);
 		// delete only if I am the owner of the original photo this comment's been made on
 		$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `comment_id`='$comment_id'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_comments`=`stat_comments`-1 WHERE `photo_id`='$parent_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Comment deleted.';     // translate

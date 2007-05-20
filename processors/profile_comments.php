@@ -101,9 +101,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				update_stats($_SESSION['user']['user_id'],'comments_made',1);
 			}
 			if (empty($config['manual_com_approval'])) {
-				update_stats($input['fk_user_id_profile'],'profile_comments',1);
+				update_stats($input['fk_parent_id'],'profile_comments',1);
 				$topass['message']['text']='Comment added.';	// translate this
-				$notification['fk_user_id']=$input['fk_user_id_profile'];
+				$notification['fk_user_id']=$input['fk_parent_id'];
 				// send notif only if it's not my blog
 				if (isset($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']!=$notification['fk_user_id']) {
 					$notification['subject']='New comment on your profile';	// translate

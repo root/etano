@@ -1,0 +1,41 @@
+.rich_ta_wrapper {
+	border: 2px solid #E1E7B8;
+	background: #F8F8EC;
+	margin-top: 5px;
+}
+
+	.rich_ta_wrapper .bb_tools {
+		display: block;
+		visibility: visible;
+		margin: .5em 1em .5em 1em;
+	}
+
+	.bb_tools a {
+		border: none;
+		text-decoration: none;
+	}
+
+	.bb_tools a:hover {
+		border: none;
+		background: #DFDFAA;
+		text-decoration: none;
+	}
+
+	.bb_tools a img {
+		border: 1px solid #E1E7B8;
+	}
+
+	.rich_ta_wrapper input.text {
+		width: 70%;
+	}
+
+	.rich_ta_wrapper textarea {
+		width: 99%;
+		margin: 0px;
+		height: 20em;
+		overflow: auto;
+	}
+
+	.rich_ta_wrapper .post_options {
+		margin: .5em 1em .5em 1em;
+	}
