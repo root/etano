@@ -58,6 +58,16 @@ if (mysql_num_rows($res)) {
 	if (empty($output['del'])) {
 		unset($output['del']);
 	}
+	$output=array_merge($output,get_user_stats($output['fk_user_id'],array('profile_comments','blog_posts','total_photos')));
+	if (empty($output['profile_comments'])) {
+		unset($output['profile_comments']);
+	}
+	if (empty($output['blog_posts'])) {
+		unset($output['blog_posts']);
+	}
+	if (empty($output['total_photos'])) {
+		unset($output['total_photos']);
+	}
 	$c=0;
 	foreach ($_pcats as $pcat_id=>$pcat) {
 		$categs[$c]['pcat_name']=$pcat['pcat_name'];

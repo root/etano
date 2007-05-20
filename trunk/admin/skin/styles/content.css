@@ -115,12 +115,13 @@ label.checkbox {
 	border: 1px solid #A6CE39;
 }
 
-.menu_box h3 {
+#menu .menu_box h3, #content .menu_box h3 {
 	background-color: #A6CE39;
 	color: #fff;
 	text-align: center;
 	padding: 5px 0;
 	font-weight: bold;
+	margin: 0;
 }
 
 .menu_box .box_content {

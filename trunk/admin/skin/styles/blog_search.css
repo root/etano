@@ -1,8 +1,5 @@
 #blog_submenu {
 	width: 200px;
-	position: absolute;
-	top: 50px;
-	left: 190px;
 }
 
 .edit_form dl {
@@ -14,7 +11,7 @@
 }
 
 fieldset {
-	margin-left: 200px;
+	margin-left: 10px;
 }
 
 .edit_form dt, .edit_form dd {

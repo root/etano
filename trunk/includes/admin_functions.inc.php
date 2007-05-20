@@ -33,6 +33,7 @@ define('OPTION_NA',0);
 define('AMTPL_REJECT_MEMBER',1);
 define('AMTPL_REJECT_PHOTO',2);
 define('AMTPL_REJECT_BLOG',3);
+define('AMTPL_REJECT_COMM',4);
 
 // language key types
 define('LK_SITE',0);

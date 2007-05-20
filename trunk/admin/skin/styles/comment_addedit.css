@@ -1,0 +1,9 @@
+@import url('bbcode.css');
+
+.form_table .field {
+	width: 80%;
+}
+
+.form_table {
+	width: 99%;
+}

@@ -12,7 +12,15 @@ function delete_members() {
 	}
 
 	if (!empty($uids)) {
-		$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
+		$query="SELECT `post_id` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$post_ids=array();
+		for ($i=0;$i<mysql_num_rows($res);++$i) {
+			$post_ids[]=mysql_result($res,$i,0);
+		}
+		$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_parent_id` IN ('".join("','",$post_ids)."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `post_id` IN ('".join("','",$post_ids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$query="DELETE FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
@@ -71,12 +79,14 @@ function delete_members() {
 			$modman->fileop->delete(_PHOTOPATH_.'/t2/'.$photo);
 			$modman->fileop->delete(_PHOTOPATH_.'/'.$photo);
 		}
-		$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
+		$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_photo_id` IN ('".join("','",$photo_ids)."')";
+		$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_parent_id` IN ('".join("','",$photo_ids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$query="DELETE FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="DELETE FROM `{$dbtable_prefix}profile_comments` WHERE `fk_parent_id` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$query="DELETE FROM `{$dbtable_prefix}user_searches` WHERE `fk_user_id` IN ('".join("','",$uids)."')";

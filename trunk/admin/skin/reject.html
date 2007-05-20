@@ -2,14 +2,27 @@
 <!--opt name="output.reject_photo"--><h2>Reject photo</h2><!--/opt name="output.reject_photo"-->
 <!--opt name="output.reject_blog"--><h2>Reject blog post</h2><!--/opt name="output.reject_blog"-->
 
-<h3>Member: <a href="profile.php?uid={output.user_id}">{output.user}</a></h3>
-<!--opt name="output.reject_photo"--><img class="user_photo" src="{tplvars.photourl}/t1/{output.photo}" /><!--/opt name="output.reject_photo"-->
-
 <form action="processors/reject.php" method="post" id="reject_form" onsubmit="return(check_form(this))">
 <input type="hidden" name="return" id="return" value="{output.return}" />
 <input type="hidden" name="t" id="t" value="{output.t}" />
 <input type="hidden" name="id" value="{output.id}" />
 <table id="reject_table" class="form_table">
+<tr>
+	<td class="label">Member:</td>
+	<td colspan="2" class="field"><a href="profile.php?uid={output.user_id}">{output.user}</a></td>
+</tr>
+<!--opt name="output.reject_photo"-->
+<tr>
+	<td class="label"> </td>
+	<td colspan="2" class="field"><img class="user_photo" src="{tplvars.photourl}/t1/{output.photo}" /></td>
+</tr>
+<!--/opt name="output.reject_photo"-->
+<!--opt name="output.reject_blog"-->
+<tr>
+	<td class="label">Blog Post:</td>
+	<td colspan="2" class="field">{output.title}</td>
+</tr>
+<!--/opt name="output.reject_blog"-->
 <tr>
 	<td class="label"><label for="reason">Predefined reasons:</label></td>
 	<td colspan="2" class="field {profile_fields.error_reason}">

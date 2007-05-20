@@ -27,7 +27,7 @@ $post_ids=array();
 for ($i=0;$i<mysql_num_rows($res);++$i) {
 	$post_ids[]=mysql_result($res,$i,0);
 }
-$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_post_id` IN ('".join("','",$post_ids)."')";
+$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_parent_id` IN ('".join("','",$post_ids)."')";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `fk_blog_id`='$blog_id'";

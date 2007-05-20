@@ -53,7 +53,7 @@
 <form action="processors/profile_comments.php" method="post" id="comment_form">
 <fieldset>
 	<input type="hidden" name="comment_id" value="{output.comment_id}" />
-	<input type="hidden" name="fk_user_id_profile" value="{output.uid}" />
+	<input type="hidden" name="fk_parent_id" value="{output.uid}" />
 	<input type="hidden" name="return" value="{output.return2me}" />
 	<a name="postarea" id="postarea"><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea></a>
 </fieldset>

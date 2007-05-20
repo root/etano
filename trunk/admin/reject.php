@@ -46,6 +46,7 @@ switch ($output['t']) {
 		$output['user_id']=$output['id'];
 		$output['user']=get_user_by_userid($output['id']);
 		$output['reject_member']=true;
+		$tplvars['title']='Reject a member profile';
 		break;
 
 	case AMTPL_REJECT_PHOTO:
@@ -55,24 +56,28 @@ switch ($output['t']) {
 			list($output['user_id'],$output['user'],$output['photo'])=mysql_fetch_row($res);
 		}
 		$output['reject_photo']=true;
+		$tplvars['title']='Reject a photo';
 		break;
 
 	case AMTPL_REJECT_BLOG:
-		$query="SELECT `fk_user_id` as `user_id`,`_user` as `user` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='".$output['id']."'";
+		$query="SELECT `fk_user_id` as `user_id`,`_user` as `user`,`title` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='".$output['id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
-			list($output['user_id'],$output['user'])=mysql_fetch_row($res);
+			$output=array_merge($output,mysql_fetch_assoc($res));
 		}
 		$output['reject_blog']=true;
+		$tplvars['title']='Reject a blog post';
 		break;
 
+	case AMTPL_REJECT_COMM:
+		$tplvars['title']='Reject a comment';
+		break;
 }
 
 $tpl->set_file('content','reject.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);
 
-$tplvars['title']='Reject a member profile';
 $tplvars['css']='reject.css';
 $tplvars['page']='reject';
 include 'frame.php';

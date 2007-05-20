@@ -44,9 +44,10 @@ if (isset($_GET['photo_id']) && !empty($_GET['photo_id'])) {
 	$topass['message']['text']='Photo approved.';
 }
 
-$nextpage=_BASEURL_.'/admin/photo_search.php';
 if (isset($input['return'])) {
 	$nextpage=_BASEURL_.'/admin/'.$input['return'];
+} else {
+	$nextpage=_BASEURL_.'/admin/photo_search.php';
 }
 redirect2page($nextpage,$topass,'',true);
 ?>

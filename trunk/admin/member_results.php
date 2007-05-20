@@ -360,6 +360,12 @@ if (!empty($totalrows)) {
 	$output['totalrows']=$totalrows;
 }
 
+if (empty($loop)) {
+	$topass['message']['type']=MESSAGE_INFO;
+	$topass['message']['text']='No members found meeting your search criteria.';
+	redirect2page('admin/member_search.php',$topass);
+}
+
 $output['return2me']='member_results.php';
 if (!empty($output['search_md5'])) {
 	$output['return2me'].='?search='.$output['search_md5'];

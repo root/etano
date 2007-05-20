@@ -106,6 +106,12 @@ if (!empty($totalrows)) {
 	$output['totalrows']=$totalrows;
 }
 
+if (empty($loop)) {
+	$topass['message']['type']=MESSAGE_INFO;
+	$topass['message']['text']='No blogs found meeting your search criteria.';
+	redirect2page('admin/blog_search.php',$topass);
+}
+
 $output['return2me']='blog_results.php';
 if (!empty($output['search_md5'])) {
 	$output['return2me'].='?search='.$output['search_md5'];

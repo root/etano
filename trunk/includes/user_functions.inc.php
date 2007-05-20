@@ -89,34 +89,6 @@ function check_login_member($level_id) {
 }
 
 
-function get_user_stats($user_id,$stat='') {
-	$myreturn=array();
-	if (is_array($stat)) {
-		for ($i=0;isset($stat[$i]);++$i) {
-			$myreturn[$stat[$i]]=0;
-		}
-	} else {
-		$myreturn[$stat]=0;
-	}
-	global $dbtable_prefix;
-	if (!empty($user_id)) {
-		$query="SELECT `stat`,`value` FROM `{$dbtable_prefix}user_stats` WHERE `fk_user_id`='$user_id'";
-		if (!empty($stat)) {
-			if (is_array($stat)) {
-				$query.=" AND `stat` IN ('".join("','",$stat)."')";
-			} else {
-				$query.=" AND `stat`='$stat'";
-			}
-		}
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		while ($rsrow=mysql_fetch_row($res)) {
-			$myreturn[$rsrow[0]]=$rsrow[1];
-		}
-	}
-	return $myreturn;
-}
-
-
 function update_stats($user_id,$stat,$add_val) {
 	global $dbtable_prefix;
 	$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`='$user_id' AND `stat`='$stat' LIMIT 1";
