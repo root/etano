@@ -22,7 +22,7 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='admin/comment_addedit.php';
+$nextpage='comment_addedit.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$default['defaults'][$k]);
 	}
 	if (isset($_POST['return']) && !empty($_POST['return'])) {
-		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
+		$input['return']=sanitize_and_format($_POST['return'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE);
 		$nextpage=$input['return'];
 	}
 
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Comment added.';
 		}
 	} else {
-		$nextpage='admin/comment_addedit.php';
+		$nextpage='comment_addedit.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
 		$input['flirt_text']=addslashes_mq($_POST['flirt_text']);

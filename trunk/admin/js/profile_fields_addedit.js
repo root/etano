@@ -35,11 +35,7 @@ $(function() {
 	});
 
 // only numbers allowed in these fields
-	$('#reg_page').numeric();
-	$('#year_start').numeric();
-	$('#year_end').numeric();
-	$('#def_start').numeric();
-	$('#def_end').numeric();
+	$('#reg_page,#year_start,#year_end,#def_start,#def_end').numeric();
 
 // tab management
 	$('#label').bind('keydown',function(e) {

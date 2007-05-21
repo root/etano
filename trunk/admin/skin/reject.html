@@ -1,11 +1,13 @@
 <!--opt name="output.reject_member"--><h2>Reject profile</h2><!--/opt name="output.reject_member"-->
 <!--opt name="output.reject_photo"--><h2>Reject photo</h2><!--/opt name="output.reject_photo"-->
 <!--opt name="output.reject_blog"--><h2>Reject blog post</h2><!--/opt name="output.reject_blog"-->
+<!--opt name="output.reject_comment"--><h2>Reject comment</h2><!--/opt name="output.reject_comment"-->
 
 <form action="processors/reject.php" method="post" id="reject_form" onsubmit="return(check_form(this))">
 <input type="hidden" name="return" id="return" value="{output.return}" />
 <input type="hidden" name="t" id="t" value="{output.t}" />
 <input type="hidden" name="id" value="{output.id}" />
+<input type="hidden" name="m" id="m" value="{output.m}" />
 <table id="reject_table" class="form_table">
 <tr>
 	<td class="label">Member:</td>
@@ -23,6 +25,12 @@
 	<td colspan="2" class="field">{output.title}</td>
 </tr>
 <!--/opt name="output.reject_blog"-->
+<!--opt name="output.reject_comment"-->
+<tr>
+	<td class="label">Comment:</td>
+	<td colspan="2" class="field">{output.comment}</td>
+</tr>
+<!--/opt name="output.reject_comment"-->
 <tr>
 	<td class="label"><label for="reason">Predefined reasons:</label></td>
 	<td colspan="2" class="field {profile_fields.error_reason}">

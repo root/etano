@@ -29,9 +29,11 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 		$minute=(int)date('i');
 		$minute=$minute-$minute%5;	// allow 4 minutes and 59 seconds run delay
 
+print "time: $hour:$minute<br>";
+
 		$jobs=array();
 		// every 5 minutes
-		if ($minute/5==(int)($minute/5)) {
+		if ($minute%5==0) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/5')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
@@ -43,7 +45,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 		}
 
 		// every 10 minutes
-		if ($minute/10==(int)($minute/10)) {
+		if ($minute%10==0) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/10')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
@@ -55,7 +57,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 		}
 
 		// every 15 minutes
-		if ($minute/15==(int)($minute/15)) {
+		if ($minute%15==0) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/15')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
@@ -67,7 +69,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 		}
 
 		// every 30 minutes
-		if ($minute/30==(int)($minute/30)) {
+		if ($minute%30==0) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/30')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
@@ -79,7 +81,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 		}
 
 		// every 1 hour
-		if ($minute/60==(int)($minute/60)) {
+		if ($minute==55) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/60')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
@@ -91,7 +93,7 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 		}
 
 		// every 2 hours
-		if ($hour/2==(int)($hour/2)) {
+		if ($hour%2==0 && $minute==55) {
 			if ($dh=opendir(dirname(__FILE__).'/jobs/120')) {
 				while (($file=readdir($dh))!==false) {
 					if ($file{0}!='.' && substr($file,-3)=='php') {
