@@ -37,7 +37,6 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
-
 - approve comment + reject comment
 - edit+view blog/blog post
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
@@ -65,10 +64,8 @@ TODO
 - blog/poze: nivel acces: public/private/only people in my XXX network are allowed to see it.
 
 - bbcode in admin
-- admin: blog edit
 - admin: stats
 - admin: payment stats. rapoarte pe perioade. procent paid/free/gender
-- admin: latest datemill news
 
 - cron: check for and remove orpahned lk_ids
 

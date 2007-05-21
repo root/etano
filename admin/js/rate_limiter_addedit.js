@@ -1,3 +1,8 @@
+$(function() {
+	$('#m_value').focus();
+	$('#limit, #interval').numeric();
+});
+
 function check_form(the) {
 	if (the.limit.value=='' || the.limit.value==0) {
 		alert('Please enter the number of times allowed for this limit.');

@@ -124,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (mysql_num_rows($res)) {
 				$is_update=true;
 				$old_text_values=mysql_fetch_assoc($res);
+				$old_text_values=sanitize_and_format($old_text_values,TYPE_STRING,$__field2format[TEXT_DB2DB]);
 			}
 			if ($is_update) {
 				$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."'";
@@ -139,7 +140,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if ($force_pending) {
 					$query.=",`status`='".STAT_PENDING."'";
 				} else {
-					$query.=",`status`='".STAT_APPROVED."'";
+					//keep it to whatever it was
+					//$query.=",`status`='".STAT_APPROVED."'";
 				}
 			} else {		// insert here
 				$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."'";

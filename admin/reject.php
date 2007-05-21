@@ -20,11 +20,20 @@ allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
+$returned=false;
 $output=array();
-$output['t']=sanitize_and_format_gpc($_GET,'t',TYPE_INT,0,0);
-$output['id']=sanitize_and_format_gpc($_GET,'id',TYPE_INT,0,0);
-$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-$output['return']=rawurlencode($output['return2']);
+if (isset($_SESSION['topass']['input'])) {
+	$output=$_SESSION['topass']['input'];
+	// our 'return' here was decoded in the processor
+	$output['return']=rawurlencode($output['return']);
+	$returned=true;
+} else {
+	$output['t']=sanitize_and_format_gpc($_GET,'t',TYPE_INT,0,0);
+	$output['id']=sanitize_and_format_gpc($_GET,'id',TYPE_INT,0,0);
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
+	$output['m']=sanitize_and_format_gpc($_GET,'m',TYPE_STRING,0,'');
+}
 
 $query="SELECT `amtpl_id`,`amtpl_name`,`subject`,`message_body` FROM `{$dbtable_prefix}admin_mtpls` WHERE `amtpl_type`='".$output['t']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -33,7 +42,7 @@ $i=0;
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	$amtpls[$rsrow['amtpl_id']]=$rsrow['amtpl_name'];
-	if ($i==0) {
+	if ($i==0 && !$returned) {
 		$output['reason_title']=$rsrow['subject'];
 		$output['reject_reason']=$rsrow['message_body'];
 	}
@@ -64,12 +73,35 @@ switch ($output['t']) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$output=array_merge($output,mysql_fetch_assoc($res));
+			$output['title']=sanitize_and_format($output['title'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY],'');
 		}
 		$output['reject_blog']=true;
 		$tplvars['title']='Reject a blog post';
 		break;
 
 	case AMTPL_REJECT_COMM:
+		switch ($output['m']) {
+
+			case 'blog':
+				$table="`{$dbtable_prefix}blog_comments`";
+				break;
+
+			case 'photo':
+				$table="`{$dbtable_prefix}photo_comments`";
+				break;
+
+			case 'user':
+				$table="`{$dbtable_prefix}profile_comments`";
+				break;
+
+		}
+		$query="SELECT `comment` FROM $table WHERE `comment_id`='".$output['id']."'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (mysql_num_rows($res)) {
+			$output=array_merge($output,mysql_fetch_assoc($res));
+			$output['comment']=sanitize_and_format($output['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY],'');
+		}
+		$output['reject_comment']=true;
 		$tplvars['title']='Reject a comment';
 		break;
 }
