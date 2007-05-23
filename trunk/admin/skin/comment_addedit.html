@@ -1,32 +1,31 @@
 <h2>Edit Comment</h2>
 
 <form action="processors/comment_addedit.php" method="post" id="comment_addedit_form">
-<input type="hidden" name="comment_id" value="{output.comment_id}" />
-<input type="hidden" name="m" value="{output.m}" />
-<input type="hidden" name="return" value="{output.return}" />
-<table id="comment_addedit_table" class="form_table">
-<tr>
-	<td class="label"><label for="comment">Comment:</label></td>
-	<td class="field {output.error_comment}">
-		<div class="rich_ta_wrapper">
-			<p class="bb_tools">
-				<a href="javascript:;" onclick="add_bbcode2('b',$('#comment')[0])"><img src="skin/images/rich_bold.gif" alt="bold" /></a>
-				<a href="javascript:;" onclick="add_bbcode2('u',$('#comment')[0])"><img src="skin/images/rich_underline.gif" alt="underline" /></a>
-				<a href="javascript:;" onclick="add_bbcode2('url',$('#comment')[0])"><img src="skin/images/rich_link.gif" alt="link" /></a>
-				<a href="javascript:;" onclick="add_bbcode2('quote',$('#comment')[0])"><img src="skin/images/rich_quote.gif" alt="quote" /></a>
-			</p>
-			<textarea name="comment" id="comment" tabindex="1">{output.comment}</textarea>
-		</div>
-	</td>
-</tr>
-<tr>
-	<td></td>
-	<td><input type="submit" class="button" value="Save" id="btn_save" tabindex="2" /></td>
-</tr>
-</table>
+<fieldset>
+	<input type="hidden" name="comment_id" value="{output.comment_id}" />
+	<input type="hidden" name="m" value="{output.m}" />
+	<input type="hidden" name="fk_parent_id" value="{output.fk_parent_id}" />
+	<input type="hidden" name="return" value="{output.return}" />
+</fieldset>
+<!--opt name="output.bbcode_comments"-->
+<div id="bb_tools">
+	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#comment')[0])">Bold</a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#comment')[0])">Underline</a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#comment')[0])">Hyperlink</a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#comment')[0])">Quote</a>
+</div>
+<!--/opt name="output.bbcode_comments"-->
+<fieldset>
+	<textarea name="comment" id="comment" tabindex="1">{output.comment}</textarea>
+</fieldset>
+<fieldset class="controls">
+	<input class="button" type="submit" value="Save" />
+</fieldset>
 </form>
 
 <div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
 
 <script type="text/javascript" src="js/comment_addedit.js"></script>
+<!--opt name="output.bbcode_comments"-->
 <script type="text/javascript" src="../js/bbcode.js"></script>
+<!--/opt name="output.bbcode_comments"-->

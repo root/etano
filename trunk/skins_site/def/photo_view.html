@@ -15,7 +15,7 @@
 <p id="photo_caption">{output.caption}</p>
 
 <!--opt name="output.show_comments"-->
-<h3>{output.num_comments} comments</h3>
+<!--opt name="output.num_comments"--><h3 class="subtitle">Comments ({output.num_comments})</h3><!--/opt name="output.num_comments"-->
 <!--loop name="loop"-->
 <div class="comment {loop.is_online}">
 	<!--opt name="loop.fk_user_id"--><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"><!--/opt name="loop.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"-->
@@ -27,7 +27,7 @@
 <!--/opt name="output.show_comments"-->
 
 <!--opt name="output.allow_comments"-->
-<h3>Leave your comment</h3>
+<h3 class="subtitle">Leave your comment</h3>
 
 <!--opt name="output.bbcode_comments"-->
 <div id="bb_tools">

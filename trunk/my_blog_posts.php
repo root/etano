@@ -22,8 +22,8 @@ check_login_member(2);
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $output=array();
-$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$output['r']=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
+$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
 $output['blog_name']='';
 if (isset($_GET['bid']) && !empty($_GET['bid'])) {
@@ -37,14 +37,14 @@ if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 
 	$loop=array();
 	if (!empty($totalrows)) {
-		$query="SELECT a.`post_id`,a.`title`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`blog_name`,b.`blog_url` FROM $from WHERE $where ORDER BY a.`date_posted` DESC LIMIT ".$output['o'].','.$output['r'];
+		$query="SELECT a.`post_id`,a.`title`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`blog_name`,b.`blog_url` FROM $from WHERE $where ORDER BY a.`date_posted` DESC LIMIT $o,$r";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$rsrow['date_posted']=strftime($_user_settings['date_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
 			$loop[]=$rsrow;
 		}
 		$loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-		$output['pager2']=pager($totalrows,$output['o'],$output['r']);
+		$output['pager2']=pager($totalrows,$o,$r);
 		$output['blog_name']=$loop[0]['blog_name'];
 	} else {
 		// get just the name of the blog

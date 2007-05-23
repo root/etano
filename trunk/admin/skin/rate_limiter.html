@@ -8,7 +8,7 @@
 
 <table id="rates_list" class="results_table">
 <tr>
-	<th width="40"></th>
+	<th width="50"></th>
 	<th width="15%">Membership</th>
 	<th>Allowed to</th>
 	<th>Times</th>
@@ -16,7 +16,10 @@
 </tr>
 <!--loop name="rate_limiter"-->
 <tr align="center" class="{rate_limiter.myclass}">
-	<td align="center"><a href="processors/rate_limiter_delete.php?rate_id={rate_limiter.rate_id}" onclick="return(confirm('Are you sure you want to delete this limit?'))" title="Delete this limit"><img alt="Delete this limit" src="skin/images/del.gif" /></a> | <a href="rate_limiter_addedit.php?rate_id={rate_limiter.rate_id}" title="Edit this limit"><img src="skin/images/edit.gif" alt="edit" /></a></td>
+	<td align="center">
+		<a class="item_del" href="processors/rate_limiter_delete.php?rate_id={rate_limiter.rate_id}" onclick="return(confirm('Are you sure you want to delete this limit?'))" title="Delete this limit">Delete</a>
+		<a class="item_edit" href="rate_limiter_addedit.php?rate_id={rate_limiter.rate_id}" title="Edit this limit">edit</a>
+	</td>
 	<td>{rate_limiter.m_name}</td>
 	<td>{rate_limiter.level_code}</td>
 	<td>{rate_limiter.limit} in {rate_limiter.interval} mins</td>

@@ -56,9 +56,14 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['return']=rawurlencode($output['return2']);
 }
 
+$output['bbcode_comments']=get_site_option('bbcode_comments','core');
+if (empty($output['bbcode_comments'])) {
+	unset($output['bbcode_comments']);
+}
+
 $tpl->set_file('content','comment_addedit.html');
 $tpl->set_var('output',$output);
-$tpl->process('content','content');
+$tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']='Edit Comment';
 $tplvars['page']='comment_addedit';

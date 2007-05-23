@@ -261,7 +261,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		for ($i=1;$i<=6;++$i) {
 			if (!empty($input['file'.$i])) {
 				$query="INSERT INTO `{$dbtable_prefix}user_photos` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`_user`='".$_SESSION['user']['user']."',`photo`='".$input['file'.$i]."',`allow_comments`=1,`allow_rating`='".$my_settings['rate_my_photos']."',`is_private`='".$input['is_private']."',`date_posted`='$now',`last_changed`='$now'";
-				if ($config['manual_photo_approval']==1) {
+				if ($config['manual_photo_approval']) {
 					$query.=",`status`='".STAT_PENDING."'";
 				} else {
 					$query.=",`status`='".STAT_APPROVED."'";
@@ -282,7 +282,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		if (!empty($ids)) {
 			if (empty($config['manual_photo_approval'])) {
-				update_stats($_SESSION['user']['user_id'],'total_photos',count($ids));
+				on_approve_photo($ids);
 			}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']=sprintf('%1u photos uploaded.',count($ids));

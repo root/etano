@@ -101,8 +101,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				update_stats($_SESSION['user']['user_id'],'comments_made',1);
 			}
 			if (empty($config['manual_com_approval'])) {
-				$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_comments`=`stat_comments`+1 WHERE `photo_id`='".$input['fk_parent_id']."'";
-				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['text']='Comment added.';	// translate this
 				$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='".$input['fk_parent_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -120,6 +118,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			} else {
 				$topass['message']['text']='Comment added but needs to be reviewed first.';	// translate this
 			}
+		}
+		if (empty($config['manual_com_approval'])) {
+			on_approve_comment(array($input['comment_id']),'photo');
 		}
 	} else {
 		$input['comment']=addslashes_mq($_POST['comment']);

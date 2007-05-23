@@ -39,6 +39,8 @@ $input['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field
 if (!empty($input['pids'])) {
 	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `status`='".STAT_APPROVED."',`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `post_id` IN ('".join("','",$input['pids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	on_approve_blog_post($input['pids']);
+
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Blog post(s) approved. They will appear on site as soon as the cache is generated';
 }
@@ -48,5 +50,5 @@ if (isset($input['return']) && !empty($input['return'])) {
 } else {
 	$nextpage=_BASEURL_.'/admin/member_search.php';
 }
-redirect2page($nextpage,$topass,$qs,true);
+redirect2page($nextpage,$topass,'',true);
 ?>

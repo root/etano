@@ -37,7 +37,7 @@ if (isset($_SESSION['topass']['input'])) {
 		$config=get_site_option(array('date_format'),'core');
 		$output['date_posted']=strftime($config['date_format'],$output['date_posted']);
 	}
-	// because of the GET, our 'return' is urldecoded
+	// because of the GET, our 'return' is decoded
 	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$output['return']=rawurlencode($output['return2']);
 }
@@ -53,5 +53,6 @@ $tpl->process('content','content');
 
 $tplvars['title']='Edit Photo';
 $tplvars['page']='photo_edit';
+$tplvars['css']='photo_edit.css';
 include 'frame.php';
 ?>

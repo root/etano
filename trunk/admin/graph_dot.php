@@ -30,7 +30,7 @@ if (empty($end_date)) {
 }
 
 if (in_array($type,$dot_types)) {
-	if (!is_file(_BASEPATH_.'/tmp/admin/'.$type.$start_date.$end_date.'.png')) {
+	if (!is_file(_BASEPATH_.'/tmp/admin/'.$type.$start_date.$end_date.'.png') || isset($_GET['refresh'])) {
 		$query="SELECT `value`,UNIX_TIMESTAMP(`time`) as `time` FROM `{$dbtable_prefix}stats_dot` WHERE `dataset`='$type'";
 		if (!empty($start_date)) {
 			$query.=" AND `time`>='".date('Ymd',$start_date)."'";

@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$now=gmdate('YmdHis');
 			unset($input['post_id']);
 			$query="INSERT INTO `{$dbtable_prefix}blog_posts` SET `_user`='".$_SESSION['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
-			if ($config['manual_blog_approval']==1) {
+			if ($config['manual_blog_approval']) {
 				$query.=",`status`='".STAT_PENDING."'";
 			} else {
 				$query.=",`status`='".STAT_APPROVED."'";
@@ -108,24 +108,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text']='Post added. It will be reviewed and published shortly.';	// translate this
 			}
 
-			// update the blog_archive links now if this is auto approved
 			if (empty($config['manual_blog_approval'])) {
-				update_stats($_SESSION['user']['user_id'],'blog_posts',1);
-
-				require_once '../includes/classes/modman.class.php';
-				$modman=new modman();
-
-				$blog_archive=array();
-				if (is_file(_CACHEPATH_.'/blogs/'.$input['fk_blog_id']{0}.'/'.$input['fk_blog_id'].'/blog_archive.inc.php')) {
-					include _CACHEPATH_.'/blogs/'.$input['fk_blog_id']{0}.'/'.$input['fk_blog_id'].'/blog_archive.inc.php';
-				}
-				if (isset($blog_archive[(int)date('Y')][(int)date('m')])) {
-					++$blog_archive[(int)date('Y')][(int)date('m')];
-				} else {
-					$blog_archive[(int)date('Y')][(int)date('m')]=1;
-				}
-				krsort($blog_archive,SORT_NUMERIC);
-				$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['fk_blog_id']{0}.'/'.$input['fk_blog_id'].'/blog_archive.inc.php','<?php $blog_archive='.var_export($blog_archive,true).';');
+				on_approve_blog_post(array($input['post_id']));
 			}
 		}
 		if (!isset($input['return']) || empty($input['return'])) {
