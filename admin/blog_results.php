@@ -53,6 +53,10 @@ if (!empty($output['search_md5'])) {
 	if (empty($input['uid'])) {
 		unset($input['uid']);
 	}
+	$input['fk_blog_id']=sanitize_and_format_gpc($_GET,'fk_blog_id',TYPE_INT,0,0);
+	if (empty($input['fk_blog_id'])) {
+		unset($input['fk_blog_id']);
+	}
 }
 
 if ($do_query) {
@@ -65,8 +69,11 @@ if ($do_query) {
 	if (isset($input['flagged'])) {
 		$where.=" AND a.`flagged`>0";
 	}
-	if (isset($input['uid'])) {	// a user's blogs
+	if (isset($input['uid'])) {	// a user's blog posts
 		$where.=" AND a.`fk_user_id`=".$input['uid'];
+	}
+	if (isset($input['fk_blog_id'])) {	// a blog's posts
+		$where.=" AND a.`fk_blog_id`=".$input['fk_blog_id'];
 	}
 
 	$query="SELECT a.`post_id` FROM $from WHERE $where";

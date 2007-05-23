@@ -9,15 +9,7 @@
 <tr>
 	<td class="label">Flirt:</td>
 	<td class="field">
-		<div class="rich_ta_wrapper">
-			<p class="bb_tools">
-				<a href="javascript:;" onclick="add_bbcode2('b',$('#flirt_text')[0])"><img src="skin/images/rich_bold.gif" alt="bold" /></a>
-				<a href="javascript:;" onclick="add_bbcode2('u',$('#flirt_text')[0])"><img src="skin/images/rich_underline.gif" alt="underline" /></a>
-				<a href="javascript:;" onclick="add_bbcode2('url',$('#flirt_text')[0])"><img src="skin/images/rich_link.gif" alt="link" /></a>
-				<a href="javascript:;" onclick="add_bbcode2('quote',$('#flirt_text')[0])"><img src="skin/images/rich_quote.gif" alt="quote" /></a>
-			</p>
-			<textarea name="flirt_text" id="flirt_text" tabindex="1">{output.flirt_text}</textarea>
-		</div>
+		<textarea name="flirt_text" id="flirt_text" tabindex="1">{output.flirt_text}</textarea>
 	</td>
 </tr>
 <tr>
@@ -31,7 +23,7 @@
 </table>
 </form>
 
-<div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
+<div id="bottom_links"><a class="back" href="admin/{output.return2}">Back to list</a></div>
 
+<script type="text/javascript" src="fckeditor/fckeditor.js"></script>
 <script type="text/javascript" src="js/flirts_addedit.js"></script>
-<script type="text/javascript" src="../js/bbcode.js"></script>

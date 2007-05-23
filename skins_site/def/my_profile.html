@@ -16,7 +16,7 @@
 <div id="profile_area">
 	<!--loop name="categs"-->
 	<div class="profile_cat" id="cat_{categs.pcat_id}">
-		<h3>{categs.pcat_name} <a class="content-link link_change" href="profile_edit.php?cid={categs.pcat_id}" title="Edit this info">edit</a></h3>
+		<h3 class="subtitle">{categs.pcat_name} <a class="content-link link_change" href="profile_edit.php?cid={categs.pcat_id}" title="Edit this info">edit</a></h3>
 		<ul class="cat_content">
 			<!--loop name="fields"-->
 			<li><label>{fields.label}:</label> <p>{fields.field}</p></li>
@@ -27,7 +27,7 @@
 </div>
 
 <!--opt name="output.show_comments"-->
-<!--opt name="output.num_comments"--><h3>{output.num_comments} comments</h3><!--/opt name="output.num_comments"-->
+<!--opt name="output.num_comments"--><h3 class="subtitle">Comments {output.num_comments}</h3><!--/opt name="output.num_comments"-->
 <!--loop name="loop_comments"-->
 <div class="comment {loop_comments.is_online}">
 	<!--opt name="loop_comments.fk_user_id"--><a href="profile.php?uid={loop_comments.fk_user_id}" title="{loop_comments.user}"><!--/opt name="loop_comments.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop_comments.photo}" alt="{loop_comments.user}" /><!--opt name="loop_comments.fk_user_id"--></a><!--/opt name="loop_comments.fk_user_id"-->
@@ -39,7 +39,7 @@
 <!--/opt name="output.show_comments"-->
 
 <!--opt name="output.allow_comments"-->
-<h3>Leave your comment</h3>
+<h3 class="subtitle">Leave your comment</h3>
 
 <!--opt name="output.bbcode_comments"-->
 <div id="bb_tools">

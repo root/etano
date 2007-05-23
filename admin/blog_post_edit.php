@@ -2,7 +2,7 @@
 /******************************************************************************
 newdsb
 ===============================================================================
-File:                       blog_posts_addedit.php
+File:                       admin/blog_post_edit.php
 $Revision: 21 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -11,24 +11,21 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-require_once 'includes/sessions.inc.php';
-require_once 'includes/vars.inc.php';
+require_once '../includes/sessions.inc.php';
+require_once '../includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
-require_once 'includes/classes/phemplate.class.php';
-require_once 'includes/user_functions.inc.php';
-require_once 'includes/tables/blog_posts.inc.php';
-check_login_member(11);
+require_once '../includes/classes/phemplate.class.php';
+require_once '../includes/admin_functions.inc.php';
+allow_dept(DEPT_ADMIN);
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate('skin/','remove_nonjs');
 
-$output=$blog_posts_default['defaults'];
+$output=array();
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
-} elseif (isset($_GET['bid']) && !empty($_GET['bid'])) {
-	$output['fk_blog_id']=(int)$_GET['bid'];
 } elseif (isset($_GET['post_id']) && !empty($_GET['post_id'])) {
 	$post_id=(int)$_GET['post_id'];
-	$query="SELECT `post_id`,`fk_blog_id`,`title`,`post_content`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+	$query="SELECT `post_id`,`fk_blog_id`,`title`,`post_content`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
@@ -48,18 +45,12 @@ if (empty($output['bbcode_blogs'])) {
 	unset($output['bbcode_blogs']);
 }
 
-$output['fk_blog_id']=(string)$output['fk_blog_id'];
-include _CACHEPATH_.'/blogs/'.$output['fk_blog_id']{0}.'/'.$output['fk_blog_id'].'/blog.inc.php';
-$tpl->set_file('content','blog_posts_addedit.html');
+$tpl->set_file('content','blog_post_edit.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);
 
-$tplvars['title']='Add your post';
-$tplvars['page_title']=sprintf('Add/Edit a Post in %s',$blog['blog_name']);
-$tplvars['page']='blog_posts_addedit';
-$tplvars['css']='blog_posts_addedit.css';
-if (is_file('blog_posts_addedit_left.php')) {
-	include 'blog_posts_addedit_left.php';
-}
+$tplvars['title']='Edit a Blog Post';
+$tplvars['page']='blog_post_edit';
+$tplvars['css']='blog_post_edit.css';
 include 'frame.php';
 ?>

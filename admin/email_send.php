@@ -46,9 +46,10 @@ if (!empty($output['uids'])) {
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
 	$topass['message']['text']='No members selected';
-	$nextpage=_BASEURL_.'/admin/member_search.php';
 	if (!empty($output['return'])) {
 		$nextpage=_BASEURL_.'/admin/'.$output['return'];
+	} else {
+		$nextpage=_BASEURL_.'/admin/member_search.php';
 	}
 	redirect2page($nextpage,$topass,'',true);
 }

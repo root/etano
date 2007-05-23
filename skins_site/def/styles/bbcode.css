@@ -18,17 +18,17 @@
 }
 
 #bb_tools a#bold {
-	background-image: url('../images/link_bold.gif');
+	background-image: url('../images/bbcode_bold.gif');
 }
 
 #bb_tools a#underline {
-	background-image: url('../images/link_underline.gif');
+	background-image: url('../images/bbcode_underline.gif');
 }
 
 #bb_tools a#hyperlink {
-	background-image: url('../images/link_hyperlink.gif');
+	background-image: url('../images/bbcode_hyperlink.gif');
 }
 
 #bb_tools a#quote {
-	background-image: url('../images/link_quote.gif');
+	background-image: url('../images/bbcode_quote.gif');
 }

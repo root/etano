@@ -37,8 +37,6 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
-- approve comment + reject comment
-- edit+view blog/blog post
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
 - membership icon
 - rate limiter in pagini
@@ -59,8 +57,6 @@ TODO
 // 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
 //		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
 
-- `stat_comments`=`stat_comments`+1 in admin cand se aproba un photo comment
-- `stat_posts`=`stat_posts`+1 in admin cand se aproba un blog
 - blog/poze: nivel acces: public/private/only people in my XXX network are allowed to see it.
 
 - bbcode in admin
@@ -98,3 +94,4 @@ TODO
 - recently viewed members - sa ramana un history cu ce profile/poze/bloguri a vazut membrul lately
 - addon stats_dot creator pt orice field: se alege campul si valoarea si se face dot graph pt el.
 - advanced stats_dot - comparatii intre mai multe dot-uri (graph in aceeasi imagine, piecharturi, etc)
+- adaugat ziua in advanced_graph4.php

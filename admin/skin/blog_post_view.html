@@ -1,0 +1,59 @@
+<h2>View Post</h2>
+
+<p><a href="profile.php?uid={output.fk_user_id}">{output._user}</a> &gt; <a href="blog_results.php?fk_blog_id={output.fk_blog_id}">{output.blog_name}</a> &gt; {output.title}</p>
+
+<div class="post_content">
+{output.post_content}
+</div>
+<div class="post_details">
+	<span class="post_by">Posted by <strong>{output._user}</strong></span>
+	<span class="date_posted"> on {output.date_posted}</span>
+</div>
+
+<!--opt name="output.show_comments"-->
+<!--opt name="output.num_comments"--><h3 class="subtitle">Comments ({output.num_comments})</h3><!--/opt name="output.num_comments"-->
+<!--loop name="loop"-->
+<dl class="comment_details">
+	<dd>
+		<!--opt name="loop.fk_user_id"--><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"><!--/opt name="loop.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"-->
+		<!--opt name="loop.fk_user_id"--><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"><!--/opt name="loop.fk_user_id"-->{loop.user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--> said on {loop.date_posted}:
+		<a class="plain" name="comm{loop.comment_id}"><p>{loop.comment}</p></a>
+	</dd>
+	<dd class="actions">
+		<a class="item_del" href="processors/comment_delete.php?m=blog&amp;comment_id={loop.comment_id}&amp;return={output.return2me}" title="Delete" onclick="return(confirm('Are you sure you want to delete this comment?'))">Delete Comment</a>
+		<a class="item_edit" id="editme_{loop.comment_id}" href="blog_post_view.php?pid={output.post_id}&amp;edit_comment={loop.comment_id}#postarea" title="Edit">Edit</a>
+	</dd>
+</dl>
+<!--/loop name="loop"-->
+<!--/opt name="output.show_comments"-->
+
+<!--opt name="output.allow_comments"-->
+<h3 class="subtitle">Leave your comment</h3>
+
+<!--opt name="output.bbcode_comments"-->
+<div id="bb_tools">
+	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#comment')[0])">Bold</a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#comment')[0])">Underline</a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#comment')[0])">Hyperlink</a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#comment')[0])">Quote</a>
+</div>
+<!--/opt name="output.bbcode_comments"-->
+<form id="blogcomment_form" action="processors/comment_addedit.php" method="post">
+<fieldset>
+	<input type="hidden" name="m" id="m" value="blog" />
+	<input type="hidden" name="comment_id" id="comment_id" value="{output.comment_id}" />
+	<input type="hidden" name="fk_parent_id" value="{output.post_id}" />
+	<input type="hidden" name="return" value="{output.return2me}" />
+	<a name="postarea" id="postarea"><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea></a>
+</fieldset>
+<fieldset class="controls">
+	<input class="button blarge" id="post-button" type="submit" value="Post comment" />
+</fieldset>
+</form>
+<!--/opt name="output.allow_comments"-->
+
+<script type="text/javascript" src="js/scrollto.js"></script>
+<script type="text/javascript" src="js/blog_post_view.js"></script>
+<!--opt name="output.bbcode_comments"-->
+<script type="text/javascript" src="js/bbcode.js"></script>
+<!--/opt name="output.bbcode_comments"-->

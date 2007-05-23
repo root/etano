@@ -85,8 +85,15 @@ $query="SELECT $select,b.`fk_user_id` as `owner_id`,b.`_user` as `owner_user`,a.
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $loop=array();
 if (mysql_num_rows($res)) {
+	$config=get_site_option(array('bbcode_comments','smilies_comm'),'core');
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+		if (!empty($config['bbcode_comments'])) {
+			$rsrow['comment']=bbcode2html($rsrow['comment']);
+		}
+		if (!empty($config['smilies_comm'])) {
+			$rsrow['comment']=text2smilies($rsrow['comment']);
+		}
 		if ($rsrow['status']==STAT_PENDING) {
 			$rsrow['pending']=true;
 		} elseif ($rsrow['status']==STAT_EDIT) {

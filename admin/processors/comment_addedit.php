@@ -33,10 +33,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		require_once '../../includes/tables/blog_comments.inc.php';
 		$default=$blog_comments_default;
 		$table="`{$dbtable_prefix}blog_comments`";
+		$parent_table="`{$dbtable_prefix}blog_posts`";
+		$parent_key="`post_id`";
 	} elseif ($input['m']=='photo') {
 		require_once '../../includes/tables/photo_comments.inc.php';
 		$default=$photo_comments_default;
 		$table="`{$dbtable_prefix}photo_comments`";
+		$parent_table="`{$dbtable_prefix}user_photos`";
+		$parent_key="`photo_id`";
 	} elseif ($input['m']=='user') {
 		require_once '../../includes/tables/profile_comments.inc.php';
 		$default=$profile_comments_default;
@@ -59,28 +63,27 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
+		$now=gmdate('YmdHis');
+		$input['comment']=remove_banned_words($input['comment']);
 		if (!empty($input['comment_id'])) {
-			unset($input['fk_parent_id'],$input['fk_user_id']);
-			$input['status']=STAT_APPROVED;
-			$query="UPDATE $table SET ";
+			$query="UPDATE $table SET `last_changed`='$now'";
 			foreach ($default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
-					$query.="`$k`='".$input[$k]."',";
+					$query.=",`$k`='".$input[$k]."'";
 				}
 			}
-			$query=substr($query,0,-1);
 			$query.=" WHERE `comment_id`='".$input['comment_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Comment changed.';
 		} else {
-			$query="INSERT INTO $table SET ";
+			unset($input['comment_id']);
+			$query="INSERT INTO $table SET `_user`='Admin',`date_posted`='$now',`last_changed`='$now',`status`='".STAT_APPROVED."'";
 			foreach ($default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
-					$query.="`$k`='".$input[$k]."',";
+					$query.=",`$k`='".$input[$k]."'";
 				}
 			}
-			$query=substr($query,0,-1);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Comment added.';
@@ -89,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$nextpage='comment_addedit.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
-		$input['flirt_text']=addslashes_mq($_POST['flirt_text']);
+		$input['comment']=addslashes_mq($_POST['comment']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}

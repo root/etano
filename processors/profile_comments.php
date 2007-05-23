@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (isset($_SESSION['user']['user_id'])) {
 				$input['comment'].="\n\nLast edited by ".$_SESSION['user']['user'].' on '.gmdate('Y-m-d H:i:s').' GMT';
 				$query="UPDATE `{$dbtable_prefix}profile_comments` SET `last_changed`='".gmdate('YmdHis')."'";
-				if ($config['manual_com_approval']==1) {
+				if ($config['manual_com_approval']) {
 					$query.=",`status`='".STAT_PENDING."'";
 				} else {
 					$query.=",`status`='".STAT_APPROVED."'";
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			unset($input['comment_id']);
 			$now=gmdate('YmdHis');
 			$query="INSERT INTO `{$dbtable_prefix}profile_comments` SET `_user`='".$_SESSION['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
-			if ($config['manual_com_approval']==1) {
+			if ($config['manual_com_approval']) {
 				$query.=",`status`='".STAT_PENDING."'";
 			} else {
 				$query.=",`status`='".STAT_APPROVED."'";
@@ -97,11 +97,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['comment_id']=mysql_insert_id();
 			$topass['message']['type']=MESSAGE_INFO;
-			if (isset($_SESSION['user']['user_id'])) {
-				update_stats($_SESSION['user']['user_id'],'comments_made',1);
-			}
 			if (empty($config['manual_com_approval'])) {
-				update_stats($input['fk_parent_id'],'profile_comments',1);
 				$topass['message']['text']='Comment added.';	// translate this
 				$notification['fk_user_id']=$input['fk_parent_id'];
 				// send notif only if it's not my blog
@@ -115,6 +111,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			} else {
 				$topass['message']['text']='Comment added but needs to be reviewed first.';	// translate this
 			}
+		}
+		if (empty($config['manual_com_approval'])) {
+			on_approve_comment(array($input['comment_id']),'user');
 		}
 	} else {
 		$input['comment']=addslashes_mq($_POST['comment']);

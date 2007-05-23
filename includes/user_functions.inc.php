@@ -89,17 +89,6 @@ function check_login_member($level_id) {
 }
 
 
-function update_stats($user_id,$stat,$add_val) {
-	global $dbtable_prefix;
-	$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`='$user_id' AND `stat`='$stat' LIMIT 1";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (!mysql_affected_rows()) {
-		$query="INSERT INTO `{$dbtable_prefix}user_stats` SET `fk_user_id`='$user_id',`stat`='$stat',`value`='$add_val'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	}
-}
-
-
 function allow_at_level($level_id,$membership=1) {
 	$myreturn=false;
 	$membership=(int)$membership;

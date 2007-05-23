@@ -11,6 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
+define('CACHE_LIMITER','private');
 require_once 'includes/sessions.inc.php';
 require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
@@ -18,7 +19,6 @@ require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
 check_login_member(13);
 
-define('CACHE_LIMITER','private');
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $post_id=sanitize_and_format_gpc($_GET,'pid',TYPE_INT,0,0);
 $edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);

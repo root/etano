@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (isset($_SESSION['user']['user_id'])) {
 				$input['comment'].="\n\nLast edited by ".$_SESSION['user']['user'].' on '.gmdate('Y-m-d H:i:s').' GMT';
 				$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='".gmdate('YmdHis')."'";
-				if ($config['manual_com_approval']==1) {
+				if ($config['manual_com_approval']) {
 					$query.=",`status`='".STAT_PENDING."'";
 				} else {
 					$query.=",`status`='".STAT_APPROVED."'";
@@ -101,8 +101,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				update_stats($_SESSION['user']['user_id'],'comments_made',1);
 			}
 			if (empty($config['manual_com_approval'])) {
-				$query="UPDATE `{$dbtable_prefix}blog_posts` SET `stat_comments`=`stat_comments`+1 WHERE `post_id`='".$input['fk_parent_id']."'";
-				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['text']='Comment added.';	// translate this
 				$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='".$input['fk_parent_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -120,6 +118,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			} else {
 				$topass['message']['text']='Comment added but needs to be reviewed first.';	// translate this
 			}
+		}
+		if (empty($config['manual_com_approval'])) {
+			on_approve_comment(array($input['comment_id']),'blog');
 		}
 	} else {
 		$input['comment']=addslashes_mq($_POST['comment']);

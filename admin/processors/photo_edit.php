@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Photo info changed.';
 		}
 	} else {
-		$nextpage=_BASEURL_.'/admin/photo_edit.php';
+		$nextpage='photo_edit.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
