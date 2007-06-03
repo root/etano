@@ -4,10 +4,7 @@
 <form action="processors/profile_categories_addedit.php" method="post" id="profile_categories_addedit">
 <input type="hidden" name="pcat_id" value="{output.pcat_id}" />
 <input type="hidden" name="fk_lk_id_pcat" value="{output.fk_lk_id_pcat}" />
-<input type="hidden" name="o" value="{o}" />
-<input type="hidden" name="r" value="{r}" />
-<input type="hidden" name="ob" value="{ob}" />
-<input type="hidden" name="od" value="{od}" />
+<input type="hidden" name="return" value="{output.return}" />
 <table id="pcat_addedit" class="form_table">
 <tr>
 	<td class="label"><label for="pcat_name">Category:</label></td>
@@ -25,7 +22,6 @@
 </tr>
 </table>
 </form>
-
-<div id="bottom_links"><a class="back" href="profile_categories.php?o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}">Back to list</a></div>
+<div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
 
 <script type="text/javascript" src="js/profile_categories_addedit.js"></script>

@@ -23,7 +23,7 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='admin/profile_categories.php';
+$nextpage='profile_categories.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
@@ -31,8 +31,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$profile_categories_default['defaults'][$k]);
 	}
 	$input['access_level']=!empty($input['access_level']) ? array_sum(array_keys($input['access_level'])) : 0;
-
 	$input['pcat_name']=sanitize_and_format_gpc($_POST,'pcat_name',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	if (isset($_POST['return']) && !empty($_POST['return'])) {
+		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
+		$nextpage=$input['return'];
+	}
 
 	// other formatting
 	$input['pcat_name']=ucwords(strtolower($input['pcat_name']));
@@ -93,28 +96,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Category added.';
 		}
 	} else {
-		$nextpage='admin/profile_categories_addedit.php';
+		$nextpage='profile_categories_addedit.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
 	}
-	if (isset($_POST['o'])) {
-		$qs.=$qs_sep.'o='.$_POST['o'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['r'])) {
-		$qs.=$qs_sep.'r='.$_POST['r'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['ob'])) {
-		$qs.=$qs_sep.'ob='.$_POST['ob'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['od'])) {
-		$qs.=$qs_sep.'od='.$_POST['od'];
-		$qs_sep='&';
-	}
 }
-redirect2page($nextpage,$topass,$qs);
+$nextpage=_BASEURL_.'/admin/'.$nextpage;
+redirect2page($nextpage,$topass,'',true);
 ?>

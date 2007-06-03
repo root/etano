@@ -23,7 +23,7 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='admin/flirts.php';
+$nextpage='flirts.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Flirt added.';
 		}
 	} else {
-		$nextpage='admin/flirts_addedit.php';
+		$nextpage='flirts_addedit.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
 		$input['flirt_text']=addslashes_mq($_POST['flirt_text']);
@@ -77,6 +77,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['input']=$input;
 	}
 }
-$nextpage=_BASEURL_.'/'.$nextpage;
+$nextpage=_BASEURL_.'/admin/'.$nextpage;
 redirect2page($nextpage,$topass,'',true);
 ?>

@@ -18,6 +18,10 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 check_login_member(8);
 
+if (is_file(_BASEPATH_.'/events/processors/photo_delete.php')) {
+	include_once _BASEPATH_.'/events/processors/photo_delete.php';
+}
+
 $qs='';
 $qs_sep='';
 $topass=array();
@@ -29,6 +33,11 @@ if (mysql_num_rows($res)) {
 	$input=mysql_fetch_assoc($res);
 	if (!empty($input['photo'])) {
 		$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$photo_id'";
+		if (isset($_on_before_delete)) {
+			for ($i=0;isset($_on_before_delete[$i]);++$i) {
+				eval($_on_before_delete[$i].'();');
+			}
+		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		require_once '../includes/classes/modman.class.php';
@@ -53,6 +62,12 @@ if (mysql_num_rows($res)) {
 	$topass['message']['text']='Photo deleted.';
 
 // trigger generate_fields
+
+	if (isset($_on_after_delete)) {
+		for ($i=0;isset($_on_after_delete[$i]);++$i) {
+			eval($_on_after_delete[$i].'();');
+		}
+	}
 }
 
 $nextpage='my_photos.php';

@@ -19,6 +19,10 @@ require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/queue_message.inc.php';
 check_login_member(5);
 
+if (is_file(_BASEPATH_.'/events/processors/flirt_send.php')) {
+	include_once _BASEPATH_.'/events/processors/flirt_send.php';
+}
+
 $error=false;
 $qs='';
 $qs_sep='';
@@ -69,10 +73,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query.=",`$k`='".$input[$k]."'";
 			}
 		}
+		if (isset($_on_before_insert)) {
+			for ($i=0;isset($_on_before_insert[$i]);++$i) {
+				eval($_on_before_insert[$i].'();');
+			}
+		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		update_stats($_SESSION['user']['user_id'],'flirts_sent',1);
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Flirt sent.';
+		if (isset($_on_after_insert)) {
+			for ($i=0;isset($_on_after_insert[$i]);++$i) {
+				eval($_on_after_insert[$i].'();');
+			}
+		}
 	} else {
 		$nextpage='flirt_send.php';
 // 		you must re-read all textareas from $_POST like this:
@@ -80,6 +94,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['return']=rawurlencode($input['return']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
+		if (isset($_on_error)) {
+			for ($i=0;isset($_on_error[$i]);++$i) {
+				eval($_on_error[$i].'();');
+			}
+		}
 	}
 }
 $nextpage=_BASEURL_.'/'.$nextpage;

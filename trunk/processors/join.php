@@ -17,6 +17,10 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 
+if (is_file(_BASEPATH_.'/events/processors/join.php')) {
+	include_once _BASEPATH_.'/events/processors/join.php';
+}
+
 $error=false;
 $topass=array();
 $nextpage='info.php';
@@ -231,6 +235,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if ($is_update) {
 			$query.=" WHERE `fk_user_id`='".$_SESSION['user']['reg_id']."'";
 		}
+		if (isset($_on_before_insert)) {
+			for ($i=0;isset($_on_before_insert[$i]);++$i) {
+				eval($_on_before_insert[$i].'();');
+			}
+		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		for ($i=0;isset($on_changes[$i]);++$i) {
@@ -268,6 +277,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$qs.=$qs_sep.'type=signup';
 			$qs_sep='&';
 		}
+		if (isset($_on_after_insert)) {
+			for ($i=0;isset($_on_after_insert[$i]);++$i) {
+				eval($_on_after_insert[$i].'();');
+			}
+		}
 	} else {
 		$nextpage='join.php';
 // 		you must re-read all textareas from $_POST like this:
@@ -277,6 +291,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
+		if (isset($_on_error)) {
+			for ($i=0;isset($_on_error[$i]);++$i) {
+				eval($_on_error[$i].'();');
+			}
+		}
 	}
 }
 redirect2page($nextpage,$topass,$qs);

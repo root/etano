@@ -35,7 +35,7 @@ for ($i=0;isset($search_fields[$i]);++$i) {
 		switch ($field['search_type']) {
 
 			case FIELD_SELECT:
-				$search[$s]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0],array(0)).'</select>';
+				$search[$s]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0]).'</select>';
 				break;
 
 			case FIELD_CHECKBOX_LARGE:

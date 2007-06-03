@@ -37,11 +37,11 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
+- mailbox.php in format nou (cu $output)
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
 - membership icon
 - rate limiter in pagini
 - events
-- js field check
 - site bans
 - formatare la date of birth
 

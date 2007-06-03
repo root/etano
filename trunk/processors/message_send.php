@@ -20,6 +20,10 @@ require_once '../includes/tables/queue_message.inc.php';
 require_once '../includes/tables/user_outbox.inc.php';
 check_login_member(5);
 
+if (is_file(_BASEPATH_.'/events/processors/message_send.php')) {
+	include_once _BASEPATH_.'/events/processors/message_send.php';
+}
+
 $error=false;
 $topass=array();
 $nextpage='mailbox.php';
@@ -62,6 +66,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query.=",`$k`='".$input[$k]."'";
 			}
 		}
+		if (isset($_on_before_insert)) {
+			for ($i=0;isset($_on_before_insert[$i]);++$i) {
+				eval($_on_before_insert[$i].'();');
+			}
+		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		// save the message in my outbox
@@ -78,6 +87,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		update_stats($_SESSION['user']['user_id'],'mess_sent',1);
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Message sent.';
+		if (isset($_on_after_insert)) {
+			for ($i=0;isset($_on_after_insert[$i]);++$i) {
+				eval($_on_after_insert[$i].'();');
+			}
+		}
 	} else {
 		$nextpage='message_send.php';
 // 		you must re-read all textareas from $_POST like this:
@@ -86,6 +100,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['return']=rawurlencode($input['return']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
+		if (isset($_on_error)) {
+			for ($i=0;isset($_on_error[$i]);++$i) {
+				eval($_on_error[$i].'();');
+			}
+		}
 	}
 }
 $nextpage=_BASEURL_.'/'.$nextpage;

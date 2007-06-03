@@ -16,6 +16,7 @@ require_once '../../includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../../includes/classes/phemplate.class.php';
 require_once '../../includes/admin_functions.inc.php';
+require_once '../../includes/triggers.inc.php';
 allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 $error=false;

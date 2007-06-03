@@ -17,6 +17,10 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 
+if (is_file(_BASEPATH_.'/events/processors/pass_change.php')) {
+	include_once _BASEPATH_.'/events/processors/pass_change.php';
+}
+
 $error=false;
 $qs='';
 $qs_sep='';
@@ -61,15 +65,30 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `".USER_ACCOUNT_PASS."`=md5('".$input['pass']."') WHERE `".USER_ACCOUNT_ID."`='".$input['uid']."' AND `".USER_ACCOUNT_USER."`='".$input['user']."' AND `temp_pass`='".$input['secret']."'";
+		if (isset($_on_before_update)) {
+			for ($i=0;isset($_on_before_update[$i]);++$i) {
+				eval($_on_before_update[$i].'();');
+			}
+		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Password changed.';     // translate
 		$nextpage='info.php';
+		if (isset($_on_after_update)) {
+			for ($i=0;isset($_on_after_update[$i]);++$i) {
+				eval($_on_after_update[$i].'();');
+			}
+		}
 	} else {
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
+		if (isset($_on_error)) {
+			for ($i=0;isset($_on_error[$i]);++$i) {
+				eval($_on_error[$i].'();');
+			}
+		}
 	}
 }
 redirect2page($nextpage,$topass,$qs);

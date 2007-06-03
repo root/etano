@@ -19,6 +19,10 @@ require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/user_blogs.inc.php';
 check_login_member(11);
 
+if (is_file(_BASEPATH_.'/events/processors/blog_addedit.php')) {
+	include_once _BASEPATH_.'/events/processors/blog_addedit.php';
+}
+
 $error=false;
 $qs='';
 $qs_sep='';
@@ -61,10 +65,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			$query=substr($query,0,-1);
 			$query.=" WHERE `blog_id`='".$input['blog_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			if (isset($_on_before_update)) {
+				for ($i=0;isset($_on_before_update[$i]);++$i) {
+					eval($_on_before_update[$i].'();');
+				}
+			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Blog details changed.';     // translate
 			$input['blog_id']=(string)$input['blog_id'];
+			if (isset($_on_after_update)) {
+				for ($i=0;isset($_on_after_update[$i]);++$i) {
+					eval($_on_after_update[$i].'();');
+				}
+			}
 		} else {
 			unset($input['blog_id']);
 			foreach ($input as $k=>$v) {
@@ -77,6 +91,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
+			if (isset($_on_before_insert)) {
+				for ($i=0;isset($_on_before_insert[$i]);++$i) {
+					eval($_on_before_insert[$i].'();');
+				}
+			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['blog_id']=mysql_insert_id();
 			$towrite['blog_id']=$input['blog_id'];
@@ -89,6 +108,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'].'/blog_archive.inc.php','<?php $blog_archive=array();');
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Blog created.';     // translate
+			if (isset($_on_after_insert)) {
+				for ($i=0;isset($_on_after_insert[$i]);++$i) {
+					eval($_on_after_insert[$i].'();');
+				}
+			}
 		}
 
 		$towrite='<?php $blog='.var_export($towrite,true).';';
@@ -100,6 +124,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['return']=rawurlencode($input['return']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
+		if (isset($_on_error)) {
+			for ($i=0;isset($_on_error[$i]);++$i) {
+				eval($_on_error[$i].'();');
+			}
+		}
 	}
 }
 $nextpage=_BASEURL_.'/'.$nextpage;

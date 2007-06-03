@@ -80,7 +80,9 @@ if (empty($output)) {
 
 $config=get_site_option(array('ta_len'),'core');
 $loop=array();
+$js_loop=array();
 $j=0;
+$js=0;
 for ($i=0;isset($my_fields[$i]);++$i) {
 	$field=$_pfields[$my_fields[$i]];
 	$loop[$j]['label']=$field['label'];
@@ -88,6 +90,10 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 	$loop[$j]['required']=isset($field['required']) ? true : false;
 	if ($loop[$j]['required']) {
 		$loop[$j]['class']='required';
+		$js_loop[$js]['dbfield']=$field['dbfield'];
+		$js_loop[$js]['field_type']=$field['field_type'];
+		$js_loop[$js]['i']=$js;
+		++$js;
 	}
 	$loop[$j]['help_text']=$field['help_text'];
 	if (isset($output['error_'.$field['dbfield']])) {
@@ -169,10 +175,12 @@ $output['ta_len']=$config['ta_len'];
 
 $tpl->set_file('content','join.html');
 $tpl->set_loop('loop',$loop);
+$tpl->set_loop('js_loop',$js_loop);
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
-unset($loop);
+$tpl->drop_loop('js_loop');
+unset($loop,$js_loop);
 
 $tplvars['title']='Registration';
 $tplvars['page_title']='Registration';

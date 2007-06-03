@@ -30,6 +30,9 @@ $default_skin_code=get_default_skin_code();
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 	$accepted_values=explode('|',substr($output['accepted_values'],1,-1));
+	// our 'return' here was decoded in the processor
+	$output['return2']=$output['return'];
+	$output['return']=rawurlencode($output['return']);
 } elseif (isset($_GET['pfield_id']) && !empty($_GET['pfield_id'])) {
 	$pfield_id=(int)$_GET['pfield_id'];
 	$query="SELECT * FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`='$pfield_id'";
@@ -57,8 +60,12 @@ if (isset($_SESSION['topass']['input'])) {
 	}
 	$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$accepted_values=explode('|',substr($output['accepted_values'],1,-1));
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
 } elseif (isset($_GET['field_type']) && !empty($_GET['field_type'])) {
 	$output['field_type']=(int)$_GET['field_type'];
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
 }
 
 switch ($output['field_type']) {
@@ -159,18 +166,6 @@ $output['default_skin']=get_default_skin_name();
 
 $tpl->set_file('content','profile_fields_addedit.html');
 $tpl->set_var('output',$output);
-if (isset($_GET['o'])) {
-	$tpl->set_var('o',$_GET['o']);
-}
-if (isset($_GET['r'])) {
-	$tpl->set_var('r',$_GET['r']);
-}
-if (isset($_GET['ob'])) {
-	$tpl->set_var('ob',$_GET['ob']);
-}
-if (isset($_GET['od'])) {
-	$tpl->set_var('od',$_GET['od']);
-}
 $tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']='Profile Fields Management';

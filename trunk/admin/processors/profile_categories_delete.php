@@ -22,6 +22,8 @@ $qs='';
 $qs_sep='';
 $topass=array();
 $pcat_id=isset($_GET['pcat_id']) ? (int)$_GET['pcat_id'] : 0;
+// no need to urldecode because of the GET
+$return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $query="SELECT `fk_lk_id_pcat` FROM `{$dbtable_prefix}profile_categories` WHERE `pcat_id`='$pcat_id'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -43,21 +45,10 @@ if (mysql_num_rows($res)) {
 // trigger generate_fields
 }
 
-if (isset($_POST['o'])) {
-	$qs.=$qs_sep.'o='.$_POST['o'];
-	$qs_sep='&';
+if (!empty($return)) {
+	$nextpage=_BASEURL_.'/admin/'.$return;
+} else {
+	$nextpage=_BASEURL_.'/admin/profile_categories.php';
 }
-if (isset($_POST['r'])) {
-	$qs.=$qs_sep.'r='.$_POST['r'];
-	$qs_sep='&';
-}
-if (isset($_POST['ob'])) {
-	$qs.=$qs_sep.'ob='.$_POST['ob'];
-	$qs_sep='&';
-}
-if (isset($_POST['od'])) {
-	$qs.=$qs_sep.'od='.$_POST['od'];
-	$qs_sep='&';
-}
-redirect2page('admin/profile_categories.php',$topass,$qs);
+redirect2page($nextpage,$topass,'',true);
 ?>
