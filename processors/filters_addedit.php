@@ -19,6 +19,10 @@ require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/message_filters.inc.php';
 check_login_member(11);
 
+if (is_file(_BASEPATH_.'/events/processors/filters_addedit.php')) {
+	include_once _BASEPATH_.'/events/processors/filters_addedit.php';
+}
+
 $error=false;
 $qs='';
 $qs_sep='';
@@ -69,6 +73,11 @@ if (!$error) {
 		}
 		$query=substr($query,0,-1);
 		$query.=" WHERE `filter_id`='".$input['filter_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+		if (isset($_on_before_update)) {
+			for ($i=0;isset($_on_before_update[$i]);++$i) {
+				eval($_on_before_update[$i].'();');
+			}
+		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_affected_rows()) {
 			$topass['message']['type']=MESSAGE_INFO;
@@ -76,6 +85,11 @@ if (!$error) {
 		} else {
 			$topass['message']['type']=MESSAGE_ERROR;
 			$topass['message']['text']='Filter not changed. A similar filter already exists.';     // translate
+		}
+		if (isset($_on_after_update)) {
+			for ($i=0;isset($_on_after_update[$i]);++$i) {
+				eval($_on_after_update[$i].'();');
+			}
 		}
 	} else {
 		unset($input['filter_id']);
@@ -86,6 +100,11 @@ if (!$error) {
 			}
 		}
 		$query=substr($query,0,-1);
+		if (isset($_on_before_insert)) {
+			for ($i=0;isset($_on_before_insert[$i]);++$i) {
+				eval($_on_before_insert[$i].'();');
+			}
+		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_affected_rows()) {
 			$topass['message']['type']=MESSAGE_INFO;
@@ -94,6 +113,11 @@ if (!$error) {
 			$topass['message']['type']=MESSAGE_ERROR;
 			$topass['message']['text']='Filter not added. A similar filter already exists.';     // translate
 		}
+		if (isset($_on_after_insert)) {
+			for ($i=0;isset($_on_after_insert[$i]);++$i) {
+				eval($_on_after_insert[$i].'();');
+			}
+		}
 	}
 } else {
 	$nextpage='filters_addedit.php';
@@ -101,6 +125,11 @@ if (!$error) {
 //		$input['x']=addslashes_mq($_POST['x']);
 	$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 	$topass['input']=$input;
+	if (isset($_on_error)) {
+		for ($i=0;isset($_on_error[$i]);++$i) {
+			eval($_on_error[$i].'();');
+		}
+	}
 }
 
 if (isset($_GET['mail_id'])) {

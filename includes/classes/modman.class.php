@@ -494,13 +494,13 @@ class fileop {
 	function file_put_contents($myfilename,$mydata) {
 		$myreturn=false;
 		if ($this->op_mode=='disk') {
-			if (!is_writable($myfilename)) {
+			if (is_file($myfilename) && !is_writable($myfilename)) {
 				@chmod($myfilename,0644);
 				if (!is_writable($myfilename)) {
 					@chmod($myfilename,0666);
 				}
 			}
-			if (is_readable($myfilename) && is_writable($myfilename)) {
+			if ((is_file($myfilename) && is_readable($myfilename) && is_writable($myfilename)) || !is_file($myfilename)) {
 				if ($handle=@fopen($myfilename,'wb')) {
 					if (@fwrite($handle,$mydata)) {
 						$myreturn=true;

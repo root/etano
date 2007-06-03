@@ -18,6 +18,10 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 check_login_member(-1);
 
+if (is_file(_BASEPATH_.'/events/processors/photo_comment_delete.php')) {
+	include_once _BASEPATH_.'/events/processors/photo_comment_delete.php';
+}
+
 $topass=array();
 $comment_id=isset($_GET['comment_id']) ? (int)$_GET['comment_id'] : 0;
 
@@ -28,11 +32,21 @@ if (!empty($comment_id)) {
 		$parent_id=mysql_result($res,0,1);
 		// delete only if I am the owner of the original photo this comment's been made on
 		$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `comment_id`='$comment_id'";
+		if (isset($_on_before_delete)) {
+			for ($i=0;isset($_on_before_delete[$i]);++$i) {
+				eval($_on_before_delete[$i].'();');
+			}
+		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_comments`=`stat_comments`-1 WHERE `photo_id`='$parent_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Comment deleted.';     // translate
+		if (isset($_on_after_delete)) {
+			for ($i=0;isset($_on_after_delete[$i]);++$i) {
+				eval($_on_after_delete[$i].'();');
+			}
+		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='You are not allowed to delete this comment.';     // translate

@@ -36,6 +36,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!empty($input['nconn_id'])) {
 			if (isset($_POST['btn_accept'])) {
 				$query="UPDATE `{$dbtable_prefix}user_networks` SET `nconn_status`=1 WHERE `nconn_id` IN ('".join("','",$input['nconn_id'])."')";
+				if (isset($_on_before_insert)) {
+					for ($i=0;isset($_on_before_insert[$i]);++$i) {
+						eval($_on_before_insert[$i].'();');
+					}
+				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$query="SELECT `fk_user_id`,`fk_net_id` FROM `{$dbtable_prefix}user_networks` WHERE `nconn_id` IN ('".join("','",$input['nconn_id'])."')";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -51,11 +56,26 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 				$topass['message']['type']=MESSAGE_INFO;
 				$topass['message']['text']=sprintf('%s connections added',count($input['nconn_id']));     // translate
+				if (isset($_on_after_insert)) {
+					for ($i=0;isset($_on_after_insert[$i]);++$i) {
+						eval($_on_after_insert[$i].'();');
+					}
+				}
 			} elseif (isset($_POST['btn_deny'])) {
 				$query="DELETE FROM `{$dbtable_prefix}user_networks` WHERE `nconn_id` IN ('".join("','",$input['nconn_id'])."')";
+				if (isset($_on_before_delete)) {
+					for ($i=0;isset($_on_before_delete[$i]);++$i) {
+						eval($_on_before_delete[$i].'();');
+					}
+				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['type']=MESSAGE_INFO;
 				$topass['message']['text']=sprintf('%s connections declined',count($input['nconn_id']));     // translate
+				if (isset($_on_after_delete)) {
+					for ($i=0;isset($_on_after_delete[$i]);++$i) {
+						eval($_on_after_delete[$i].'();');
+					}
+				}
 			}
 		}
 	} else {
@@ -64,6 +84,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['return']=rawurlencode($input['return']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
+		if (isset($_on_error)) {
+			for ($i=0;isset($_on_error[$i]);++$i) {
+				eval($_on_error[$i].'();');
+			}
+		}
 	}
 }
 $nextpage=_BASEURL_.'/'.$nextpage;

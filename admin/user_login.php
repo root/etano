@@ -34,11 +34,11 @@ if (isset($_GET['top'])) {
 	}
 	$output['return'].=$qs_sep.'clean_user_session=1';
 	$output['return']=rawurlencode($output['return']);
-	$query="SELECT a.`".USER_ACCOUNT_ID."`,a.`".USER_ACCOUNT_USER."`,a.`status`,a.`membership` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`".USER_ACCOUNT_ID."`='".$output['uid']."'";
+	$query="SELECT a.`".USER_ACCOUNT_ID."` as `user_id`,a.`".USER_ACCOUNT_USER."`,a.`status`,a.`membership` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`".USER_ACCOUNT_ID."`='".$output['uid']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$user=mysql_fetch_assoc($res);
-//		$user['prefs']=get_user_settings($user['user_id'],1);
+		$user['prefs']=get_user_settings($user['user_id'],'def_user_prefs',array('date_format','datetime_format','rate_my_photos','profile_comments'));
 		$_SESSION['user']=$user;
 	}
 }

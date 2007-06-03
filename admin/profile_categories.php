@@ -20,7 +20,6 @@ require_once '../includes/tables/profile_categories.inc.php';
 allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
-$tpl->set_file('content','profile_categories.html');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
@@ -65,11 +64,14 @@ if (!empty($totalrows)) {
 	}
 	$output['pager2']=pager($totalrows,$o,$r);
 }
-$output['o']=$o;
-$output['r']=$r;
-$output['ob']=$ob;
-$output['od']=$od;
 
+$output['return2me']='profile_categories.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+}
+$output['return2me']=rawurlencode($output['return2me']);
+
+$tpl->set_file('content','profile_categories.html');
 $tpl->set_loop('loop',$loop);
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);

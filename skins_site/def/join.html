@@ -24,7 +24,7 @@
 		<dd class="field-help">This is needed to make sure you receive the activation email.</dd>
 	</dl>
 </fieldset>
-	<!--/opt name="output.page1"-->
+<!--/opt name="output.page1"-->
 
 <fieldset>
 	<!--loop name="loop"-->
@@ -56,13 +56,20 @@
 	</dl>
 </fieldset>
 <!--/opt name="output.page1"-->
+
 <fieldset class="controls">
 	<p class="mandatory"><span>* Blue fields</span> are mandatory.</p>
-	<input type="submit" class="button bmedium" value="Save" />
+	<input type="submit" class="button bmedium" value="Save" tabindex="52" />
 </fieldset>
 </form>
 
 <script type="text/javascript" src="js/join.js.php?p={output.page}"></script>
 <script type="text/javascript">
 	var ta_len={output.ta_len};
+	dbfields=Array();
+	fieldtypes=Array();
+	<!--loop name="js_loop"-->
+	dbfields[{js_loop.i}]='{js_loop.dbfield}';
+	fieldtypes[{js_loop.i}]={js_loop.field_type};
+	<!--/loop name="js_loop"-->
 </script>

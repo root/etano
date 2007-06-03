@@ -18,6 +18,10 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 check_login_member(3);
 
+if (is_file(_BASEPATH_.'/events/processors/my_settings.php')) {
+	include_once _BASEPATH_.'/events/processors/my_settings.php';
+}
+
 $error=false;
 $qs='';
 $qs_sep='';
@@ -57,10 +61,26 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			// could break all dates on the site.
 			if ($types[$module_code][$config_option]!=FIELD_TEXTFIELD || !empty($config_value)) {
 				$query="REPLACE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`config_option`='$config_option',`config_value`='$config_value',`fk_module_code`='$module_code'";
+				if (isset($_on_before_update)) {
+					for ($i=0;isset($_on_before_update[$i]);++$i) {
+						eval($_on_before_update[$i].'();');
+					}
+				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				if (isset($_on_after_update)) {
+					for ($i=0;isset($_on_after_update[$i]);++$i) {
+						eval($_on_after_update[$i].'();');
+					}
+				}
 			}
 		}
 	}
+
+	// update the prefs stored in the session
+	$_SESSION['user']['prefs']['date_format']=$input['def_user_prefs']['date_format'];
+	$_SESSION['user']['prefs']['datetime_format']=$input['def_user_prefs']['datetime_format'];
+	$_SESSION['user']['prefs']['rate_my_photos']=$input['def_user_prefs']['rate_my_photos'];
+	$_SESSION['user']['prefs']['profile_comments']=$input['def_user_prefs']['profile_comments'];
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Your preferences were saved.';
 }

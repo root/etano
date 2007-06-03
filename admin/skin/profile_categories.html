@@ -15,8 +15,8 @@
 <!--loop name="loop"-->
 <tr>
 	<td class="control">
-		<a class="item_del" href="processors/profile_categories_delete.php?pcat_id={loop.pcat_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" onclick="return(confirm('Are you sure you want to delete this category?'))" title="Delete this category">Delete category</a>
-		<a class="item_edit" href="profile_categories_addedit.php?pcat_id={loop.pcat_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" title="Edit this category">Edit category</a>
+		<a class="item_del" href="processors/profile_categories_delete.php?pcat_id={loop.pcat_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to delete this category?'))" title="Delete this category">Delete category</a>
+		<a class="item_edit" href="profile_categories_addedit.php?pcat_id={loop.pcat_id}&amp;return={output.return2me}" title="Edit this category">Edit category</a>
 	</td>
 	<td class="pcat_name">{loop.pcat_name}</td>
 	<td class="access_level">{loop.access_level}</td>
@@ -31,4 +31,4 @@
 
 {output.pager2}
 
-<div id="bottom_links"><a class="add" href="profile_categories_addedit.php?o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" title="Add new category">Add new</a></div>
+<div id="bottom_links"><a class="add" href="profile_categories_addedit.php?return={output.return2me}" title="Add new category">Add new</a></div>

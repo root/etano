@@ -18,6 +18,10 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 check_login_member(5);
 
+if (is_file(_BASEPATH_.'/events/processors/filters_delete.php')) {
+	include_once _BASEPATH_.'/events/processors/filters_delete.php';
+}
+
 $qs='';
 $qs_sep='';
 $topass=array();
@@ -26,6 +30,11 @@ $filter_id=isset($_GET['filter_id']) ? (int)$_GET['filter_id'] : 0;
 $where=isset($_GET['uid']) ? "`filter_type`='"._FILTER_USER_."' AND `field_value`='".(int)$_GET['uid']."' AND `fk_folder_id`='".FOLDER_SPAMBOX."'" : "`filter_id`='".$filter_id."'";
 
 $query="DELETE FROM `{$dbtable_prefix}message_filters` WHERE $where AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+if (isset($_on_before_delete)) {
+	for ($i=0;isset($_on_before_delete[$i]);++$i) {
+		eval($_on_before_delete[$i].'();');
+	}
+}
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;
@@ -59,5 +68,10 @@ if (isset($_GET['od'])) {
 	$qs_sep='&';
 }
 
+if (isset($_on_after_delete)) {
+	for ($i=0;isset($_on_after_delete[$i]);++$i) {
+		eval($_on_after_delete[$i].'();');
+	}
+}
 redirect2page($nextpage,$topass,$qs);
 ?>

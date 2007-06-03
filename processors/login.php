@@ -24,7 +24,7 @@ $nextpage='login.php';
 $qs='';
 $qssep='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-	$user=sanitize_and_format_gpc($_POST,'user',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$user=strtolower(sanitize_and_format_gpc($_POST,'user',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],''));
 	$pass=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	if (!empty($user) && !empty($pass)) {
 		$log['level']=1;
@@ -39,13 +39,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']="We're sorry but you tried to login too many times. Please wait for a while before trying that again.";
 			redirect2page('info.php',$topass);
 		}
-		$query="SELECT a.`".USER_ACCOUNT_ID."`,a.`".USER_ACCOUNT_USER."`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity`,a.`email` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`".USER_ACCOUNT_USER."`='$user' AND a.`".USER_ACCOUNT_PASS."`=md5('$pass')";
+		$query="SELECT a.`".USER_ACCOUNT_ID."` as `user_id`,a.`".USER_ACCOUNT_USER."`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity`,a.`email` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`".USER_ACCOUNT_USER."`='$user' AND a.`".USER_ACCOUNT_PASS."`=md5('$pass')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$user=mysql_fetch_assoc($res);
 			$user['membership']=(int)$user['membership'];
 			if ($user['status']==ASTAT_ACTIVE) {
-//				$user['prefs']=get_user_settings($user['user_id'],1);
+				$user['prefs']=get_user_settings($user['user_id'],'def_user_prefs',array('date_format','datetime_format','rate_my_photos','profile_comments'));
 				if ($user['last_activity']<time()-$score_threshold) {
 					add_member_score($user['user_id'],'login');
 				}
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$qssep='&';
 			} elseif ($user['status']==ASTAT_SUSPENDED) {
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='Invalid user name or password. Please try again.';
+				$topass['message']['text']='Your account is suspended.';
 			}
 		} else {
 			$topass['message']['type']=MESSAGE_ERROR;

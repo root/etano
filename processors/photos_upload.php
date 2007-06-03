@@ -18,6 +18,7 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/classes/modman.class.php';
 require_once '../includes/img_functions.inc.php';
+require_once '../includes/triggers.inc.php';
 check_login_member(8);
 set_time_limit(0);
 
@@ -248,7 +249,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		$ids=array();
 		$now=gmdate('YmdHis');
-		$my_settings=get_user_settings($_SESSION['user']['user_id'],'def_user_prefs',array('rate_my_photos'));
 		$force_main=false;
 		if (empty($input['is_private'])) {
 			// if there's no main photo yet, make the first one the main one
@@ -260,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		for ($i=1;$i<=6;++$i) {
 			if (!empty($input['file'.$i])) {
-				$query="INSERT INTO `{$dbtable_prefix}user_photos` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`_user`='".$_SESSION['user']['user']."',`photo`='".$input['file'.$i]."',`allow_comments`=1,`allow_rating`='".$my_settings['rate_my_photos']."',`is_private`='".$input['is_private']."',`date_posted`='$now',`last_changed`='$now'";
+				$query="INSERT INTO `{$dbtable_prefix}user_photos` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`_user`='".$_SESSION['user']['user']."',`photo`='".$input['file'.$i]."',`allow_comments`=1,`allow_rating`='".$_SESSION['user']['prefs']['rate_my_photos']."',`is_private`='".$input['is_private']."',`date_posted`='$now',`last_changed`='$now'";
 				if ($config['manual_photo_approval']) {
 					$query.=",`status`='".STAT_PENDING."'";
 				} else {

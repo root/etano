@@ -95,7 +95,7 @@ $output['pic_width']=get_site_option('pic_width','core_photo');
 // comments
 $edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
 $loop_comments=array();
-if (get_user_settings($_SESSION['user']['user_id'],'def_user_prefs','profile_comments')) {
+if ($_SESSION['user']['prefs']['profile_comments']) {
 	// may I see any comment?
 	$output['show_comments']=true;
 	$output['uid']=$_SESSION['user']['user_id'];

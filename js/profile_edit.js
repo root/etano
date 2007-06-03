@@ -1,6 +1,6 @@
 $(function() {
 	$('#edit_form').bind('submit',function() {
-		return(check_form(this));
+		return check_form(this);
 	});
 
 	$('#edit_form input:visible:first').focus();
@@ -53,5 +53,59 @@ function req_update_location(str_field,val) {
 }
 
 function check_form(theform) {
-	return confirm('Save?');
+	var is_error=false;
+	for (i=0;i<dbfields.length;i++) {
+		error=field_empty(dbfields[i],fieldtypes[i],'join_form');
+		if (error) {
+			is_error=true;
+			$('#row_'+dbfields[i]).addClass('red_border');
+//			$('#'+dbfields[i])[0].focus();
+		}
+	}
+	if (is_error) {
+		alert('The fields outlined below must not be empty');
+	}
+	return !is_error;
+}
+
+function field_empty(dbfield,field_type,form_id) {
+	myreturn=false;
+	if (field_type==2) {	// FIELD_TEXTFIELD
+		if ($('#'+dbfield)[0].value=='') {
+			myreturn=true;
+		}
+	} else if (field_type==3) {	// FIELD_SELECT
+		if ($('#'+dbfield)[0].value=='' || $('#'+dbfield)[0].value==0) {
+			myreturn=true;
+		}
+	} else if (field_type==4) {	// FIELD_TEXTAREA
+		if ($('#'+dbfield)[0].value=='') {
+			myreturn=true;
+		}
+	} else if (field_type==9 || field_type==10) {	// FIELD_CHECKBOX, FIELD_CHECKBOX_LARGE
+		is_empty=true;
+		$('#'+form_id+' input[@type=checkbox][@id^='+dbfield+']').each(function() {
+			if (this.checked) {
+				is_empty=false;
+			}
+		});
+		if (is_empty) {
+			myreturn=true;
+		}
+	} else if (field_type==103) {	// FIELD_DATE
+		if ($('#'+dbfield+'_day')[0].value=='' || $('#'+dbfield+'_day')[0].value==0) {
+			myreturn=true;
+		}
+		if ($('#'+dbfield+'_month')[0].value=='' || $('#'+dbfield+'_month')[0].value==0) {
+			myreturn=true;
+		}
+		if ($('#'+dbfield+'_year')[0].value=='' || $('#'+dbfield+'_year')[0].value==0) {
+			myreturn=true;
+		}
+	} else if (field_type==104 || field_type==105) {	// FIELD_INT,FIELD_FLOAT
+		if ($('#'+dbfield)[0].value==0) {
+			myreturn=true;
+		}
+	}
+	return myreturn;
 }

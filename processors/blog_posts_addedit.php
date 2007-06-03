@@ -17,7 +17,12 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/blog_posts.inc.php';
+require_once '../includes/triggers.inc.php';
 check_login_member(11);
+
+if (is_file(_BASEPATH_.'/events/processors/blog_posts_addedit.php')) {
+	include_once _BASEPATH_.'/events/processors/blog_posts_addedit.php';
+}
 
 $error=false;
 $qs='';
@@ -79,9 +84,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query.=" WHERE `post_id`='".$input['post_id']."'";
+			if (isset($_on_before_update)) {
+				for ($i=0;isset($_on_before_update[$i]);++$i) {
+					eval($_on_before_update[$i].'();');
+				}
+			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Post changed successfully.';
+			if (isset($_on_after_update)) {
+				for ($i=0;isset($_on_after_update[$i]);++$i) {
+					eval($_on_after_update[$i].'();');
+				}
+			}
 		} else {
 			$now=gmdate('YmdHis');
 			unset($input['post_id']);
@@ -97,9 +112,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$towrite[$k]=$input[$k];
 				}
 			}
+			if (isset($_on_before_insert)) {
+				for ($i=0;isset($_on_before_insert[$i]);++$i) {
+					eval($_on_before_insert[$i].'();');
+				}
+			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['post_id']=mysql_insert_id();
 			$topass['message']['type']=MESSAGE_INFO;
+
 			if (empty($config['manual_blog_approval'])) {
 				$query="UPDATE `{$dbtable_prefix}user_blogs` SET `stat_posts`=`stat_posts`+1 WHERE `blog_id`='".$input['fk_blog_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -110,6 +131,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 			if (empty($config['manual_blog_approval'])) {
 				on_approve_blog_post(array($input['post_id']));
+			}
+			if (isset($_on_after_insert)) {
+				for ($i=0;isset($_on_after_insert[$i]);++$i) {
+					eval($_on_after_insert[$i].'();');
+				}
 			}
 		}
 		if (!isset($input['return']) || empty($input['return'])) {
@@ -125,6 +151,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['return']=rawurlencode($input['return']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
+		if (isset($_on_error)) {
+			for ($i=0;isset($_on_error[$i]);++$i) {
+				eval($_on_error[$i].'();');
+			}
+		}
 	}
 }
 $nextpage=_BASEURL_.'/'.$nextpage;

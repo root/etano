@@ -20,7 +20,7 @@ Support at:                 http://forum.datemill.com
 require_once 'general_functions.inc.php';
 $_lang=array();
 $def_skin=isset($_SESSION['admin']['def_skin']) ? $_SESSION['admin']['def_skin'] : get_default_skin_dir();
-require_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/strings.inc.php';
+require_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/strings_field.inc.php';
 $_pfields=array();
 $_pcats=array();
 require_once 'fields.inc.php';
@@ -228,20 +228,34 @@ function regenerate_langstrings_array() {
 		$skins[]=$rsrow;
 	}
 	for ($i=0;isset($skins[$i]);++$i) {
-		$towrite="<?php\n";
+		$towrite_head="<?php\n";
+		$towrite0='';
+		$towrite1='';
+		$towrite2='';
 		$query="SELECT b.`codes` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}locales` b WHERE a.`config_option`='fk_locale_id' AND a.`config_value`=b.`locale_id` AND a.`fk_module_code`='".$skins[$i]['module_code']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$temp=mysql_result($res,0,0);
-			$towrite.="setlocale(LC_TIME,array('".str_replace(',',"','",$temp)."'));\n";
+			$towrite_head.="setlocale(LC_TIME,array('".str_replace(',',"','",$temp)."'));\n";
 		}
-		$query="SELECT a.`lk_id`,b.`lang_value` FROM `{$dbtable_prefix}lang_keys` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`lk_id`=b.`fk_lk_id` AND b.`skin`='".$skins[$i]['module_code']."')";
+		$query="SELECT a.`lk_id`,b.`lang_value`,a.`lk_use` FROM `{$dbtable_prefix}lang_keys` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`lk_id`=b.`fk_lk_id` AND b.`skin`='".$skins[$i]['module_code']."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT] | FORMAT_ADDSLASH,'');
-			$towrite.="\$_lang[".$rsrow['lk_id']."]='".$rsrow['lang_value']."';\n";
+			if ($rsrow['lk_use']==LK_SITE) {
+				$towrite0.="\$_lang[".$rsrow['lk_id']."]='".$rsrow['lang_value']."';\n";
+			} elseif ($rsrow['lk_use']==LK_FIELD) {
+				$towrite1.="\$_lang[".$rsrow['lk_id']."]='".$rsrow['lang_value']."';\n";
+			} elseif ($rsrow['lk_use']==LK_MESSAGE) {
+				$towrite2.="\$_lang[".$rsrow['lk_id']."]='".$rsrow['lang_value']."';\n";
+			}
 		}
-		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/strings.inc.php',$towrite);
+		$towrite0=$towrite_head.$towrite0;
+		$towrite1=$towrite_head.$towrite1;
+		$towrite2=$towrite_head.$towrite2;
+		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/strings_site.inc.php',$towrite0);
+		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/strings_field.inc.php',$towrite1);
+		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/strings_mess.inc.php',$towrite2);
 	}
 }
 

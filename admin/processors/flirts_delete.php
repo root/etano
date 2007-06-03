@@ -22,12 +22,8 @@ $qs='';
 $qs_sep='';
 $topass=array();
 $flirt_id=isset($_GET['flirt_id']) ? (int)$_GET['flirt_id'] : 0;
-
-$nextpage='admin/flirts.php';
-if (isset($_POST['return']) && !empty($_POST['return'])) {
-	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
-	$nextpage=$input['return'];
-}
+// no need to urldecode because of the GET
+$return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $query="DELETE FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`='$flirt_id'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -35,6 +31,10 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Flirt deleted.';
 
-$nextpage=_BASEURL_.'/'.$nextpage;
+if (!empty($return)) {
+	$nextpage=_BASEURL_.'/admin/'.$return;
+} else {
+	$nextpage=_BASEURL_.'/admin/flirts.php';
+}
 redirect2page($nextpage,$topass,'',true);
 ?>
