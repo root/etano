@@ -270,14 +270,14 @@ function get_user_settings($user_id,$module_code,$option='') {
 				if (!empty($option) && !is_array($option)) {
 					$myreturn=array_shift($myreturn);
 				}
-				$query="INSERT IGNORE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='$user_id'";
-				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$query="INSERT IGNORE INTO `{$dbtable_prefix}user_settings2` (`fk_user_id`,`config_option`,`config_value`) VALUES ";
 				if (is_array($myreturn)) {
 					foreach ($myreturn as $k=>$v) {
-						$query.=",`config_option`='$k',`config_value`='$v'";
+						$query.="('$user_id','$k','$v'),";
 					}
+					$query=substr($query,0,-1);
 				} else {
-					$query.=",`config_option`='$option',`config_value`='$myreturn'";
+					$query.="('$user_id','$option','$myreturn')";
 				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}
