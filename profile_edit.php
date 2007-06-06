@@ -21,7 +21,6 @@ check_login_member(1);
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $cid=1;
-$loop=array();
 $user_details=array();
 if (isset($_SESSION['topass']['input'])) {
 	$user_details=$_SESSION['topass']['input'];
@@ -60,7 +59,9 @@ if (isset($_SESSION['topass']['input'])) {
 		$user_details=mysql_fetch_assoc($res);
 		$user_details=sanitize_and_format($user_details,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
-} else {
+}
+
+if (empty($user_details)) {
 	foreach ($_pcats[$cid]['fields'] as $field_id) {
 		switch ($_pfields[$field_id]['field_type']) {
 
@@ -88,6 +89,9 @@ $config=get_site_option(array('ta_len'),'core');
 $tplvars['pcat_name']=$_pcats[$cid]['pcat_name'];
 $tplvars['pcat_id']=$cid;
 $i=0;
+$loop=array();
+$js_loop=array();
+$js=0;
 foreach ($_pcats[$cid]['fields'] as $field_id) {
 	$field=$_pfields[$field_id];
 	$loop[$i]['label']=$field['label'];
@@ -95,6 +99,10 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 	$loop[$i]['required']=isset($field['required']) ? true : false;
 	if ($loop[$i]['required']) {
 		$loop[$i]['class']='required';
+		$js_loop[$js]['dbfield']=$field['dbfield'];
+		$js_loop[$js]['field_type']=$field['field_type'];
+		$js_loop[$js]['i']=$js;
+		++$js;
 	}
 	$loop[$i]['help_text']=$field['help_text'];
 	if (isset($user_details['error_'.$field['dbfield']])) {
@@ -133,7 +141,7 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 			$state_id=$user_details[$field['dbfield'].'_state'];
 			$loop[$i]['label']='Country';	//translate this
 			$loop[$i]['dbfield']=$field['dbfield'].'_country';
-			$loop[$i]['field']='<select name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)" class="full_width"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$user_details[$field['dbfield'].'_country']).'</select>';	// translate this
+			$loop[$i]['field']='<select class="full_width" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$user_details[$field['dbfield'].'_country']).'</select>';	// translate this
 			$prefered_input='s';
 			$num_states=0;
 			$num_cities=0;
@@ -154,16 +162,16 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 			++$i;
 			$loop[$i]['label']='State';	//translate this
 			$loop[$i]['dbfield']=$field['dbfield'].'_state';
-			$loop[$i]['field']='<select name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" class="full_width"><option value="0">Select state</option>';	// translate this
+			$loop[$i]['field']='<select class="full_width" name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option>';	// translate this
 			if (!empty($country_id) && $prefered_input=='s' && !empty($num_states)) {
-				$loop[$i]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$user_details[$field['dbfield'].'_state'],"`fk_country_id`='$country_id'");
+				$loop[$i]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$state_id,"`fk_country_id`='$country_id'");
 			}
 			$loop[$i]['field'].='</select>';
 			$loop[$i]['class']=(!empty($country_id) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
 			++$i;
 			$loop[$i]['label']='City';	//translate this
 			$loop[$i]['dbfield']=$field['dbfield'].'_city';
-			$loop[$i]['field']='<select name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'" class="full_width"><option value="0">Select city</option>';	// translate this
+			$loop[$i]['field']='<select class="full_width" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option>';	// translate this
 			if (!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) {
 				$loop[$i]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$user_details[$field['dbfield'].'_city'],"`fk_state_id`='$state_id'");
 			}
@@ -185,9 +193,11 @@ $tpl->set_file('content','profile_edit.html');
 $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->set_loop('loop',$loop);
+$tpl->set_loop('js_loop',$js_loop);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP);
 $tpl->drop_loop('loop');
-unset($loop);
+$tpl->drop_loop('js_loop');
+unset($loop,$js_loop);
 
 $tplvars['title']=sprintf('Edit My %s',$_pcats[$cid]['pcat_name']);
 $tplvars['page_title']=sprintf('<a href="my_profile.php">My Profile</a> - %s',$_pcats[$cid]['pcat_name']);

@@ -1,8 +1,8 @@
-* html .responses .row {
+* html .my_responses .row {
 	height: 1%;
 }
 
-.responses .row {
+.my_responses .row {
 	overflow: hidden;
 	padding-bottom: 5px;
 	margin-bottom: 5px;
@@ -10,7 +10,7 @@
 	font-size: 14px;
 }
 
-.responses .row div {
+.my_responses .row div {
 	border-left: 1px solid #DEDEDE;
 	float: left;
 	margin: 3px 0;
@@ -18,18 +18,18 @@
 	overflow: hidden;
 }
 
-.responses .header {
+.my_responses .header {
 	font-weight: bold;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #ccc;
 }
 
-.responses .row .control {
+.my_responses .row .control {
 	width: 60px;
 	border-left: 0;
 }
 
-.responses a.link_delete {
+.my_responses a.link_delete {
 	float: left;
 	width: 22px;
 	height: 22px;
@@ -38,7 +38,7 @@
 	text-indent: -9999px;
 }
 
-.responses a.link_change {
+.my_responses a.link_change {
 	float: right;
 	width: 22px;
 	height: 22px;

@@ -13,7 +13,7 @@ Support at:                 http://forum.datemill.com
 
 /* format of output:
 1. first line - the actual field (in the field_12_ format)
-2. second line - what fields of the 4 location fields to show separated by pipe (|). Only the termination (country|state|city|zip)
+2. second line - which one of the 4 location fields to show separated by pipe (|). Only the termination (country|state|city|zip)
 3. third line - the field to update with the options below. Only the termination
 4. all other lines - the options for the field above in the <option_id>|<option_text> format
 */
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (mysql_num_rows($res)) {
 					$output.="{$actual_field}country|{$actual_field}state\n";	//2
 					$output.="state\n";											//3
-					$output.='0|'.'Select state';				// translate this
+					$output.='0|'.'Any';				// translate this
 					while ($rsrow=mysql_fetch_row($res)) {
 						$rsrow[1]=sanitize_and_format($rsrow[1],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 						$output.="\n".$rsrow[0].'|'.$rsrow[1];
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (mysql_num_rows($res)) {
 			$output.="{$actual_field}country|{$actual_field}state|{$actual_field}city\n";	//2
 			$output.="city\n";																//3
-			$output.='0|'.'Select city';				// translate this
+			$output.='0|'.'Any';				// translate this
 			while ($rsrow=mysql_fetch_row($res)) {
 				$output.="\n".$rsrow[0].'|'.$rsrow[1];
 			}

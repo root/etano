@@ -18,3 +18,7 @@
 .char_counter {
 	text-align: right;
 }
+
+.red_border {
+	outline: 1px solid #f00;
+}
