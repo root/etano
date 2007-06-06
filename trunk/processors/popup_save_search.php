@@ -44,9 +44,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$query="SELECT `search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
-			$search=unserialize(mysql_result($res,0,0));
+			$ser_search=mysql_result($res,0,0);
+			$search=unserialize($ser_search);
 			unset($search['acclevel_id']);
-			$query="INSERT INTO `{$dbtable_prefix}user_searches` (`fk_user_id`,`title`,`search_qs`,`alert`) VALUES ('".$_SESSION['user']['user_id']."','".$input['title']."','".array2qs($search)."',1)";
+			$query="INSERT INTO `{$dbtable_prefix}user_searches` (`fk_user_id`,`title`,`search_qs`,`search`,`alert`) VALUES ('".$_SESSION['user']['user_id']."','".$input['title']."','".array2qs($search)."','$ser_search',1)";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Search saved.';
@@ -58,8 +59,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['input']=$input;
 	}
 }
-if (!$error) {
-	if (!isset($_POST['silent'])) {
+
+if (!isset($_POST['silent'])) {
+	if (!$error) {
 		$_SESSION['topass']=$topass;
 		?>
 		<html>
@@ -72,15 +74,10 @@ if (!$error) {
 		</html>
 		<?php
 	} else {
-		echo $topass['message']['text'];
-		die;
+		redirect2page($nextpage,$topass,$qs);
 	}
 } else {
-	if (!isset($_POST['silent'])) {
-		redirect2page($nextpage,$topass,$qs);
-	} else {
-		echo $topass['message']['text'];
-		die;
-	}
+	echo $topass['message']['text'];
+	die;
 }
 ?>

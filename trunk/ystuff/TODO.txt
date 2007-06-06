@@ -37,11 +37,11 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
+- my_searches sa aiba buton de 'search now' la fiecare search
 - mailbox.php in format nou (cu $output)
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
 - membership icon
 - rate limiter in pagini
-- events
 - site bans
 - formatare la date of birth
 
@@ -68,10 +68,8 @@ TODO
 - [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]
 
 - search membri (search.php) case 'vote',case 'views',case 'comm'
-- search default cu defaultul membrului.
 - installer + modman
 - licenta si verificari
-- create fisiere separate de strings pt stringurile pfield-urilor, mesaje de ok/err
 
 
 ---------------------------------------------------------------------

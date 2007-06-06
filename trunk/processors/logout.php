@@ -16,7 +16,7 @@ require_once '../includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 
-if (is_file(_BASEPATH_.'/events/processors/blog_addedit.php')) {
+if (is_file(_BASEPATH_.'/events/processors/logout.php')) {
 	include_once _BASEPATH_.'/events/processors/logout.php';
 }
 
@@ -43,5 +43,5 @@ header('Last-Modified: '. gmdate('D,d M Y H:i:s').' GMT');
 header('Cache-Control: no-store,no-cache,must-revalidate',false);
 header('Cache-Control: post-check=0,pre-check=0',false);
 header('Pragma: no-cache',false);
-header('Location: '._BASEURL_);
+redirect2page('index.php');
 ?>

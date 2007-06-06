@@ -49,7 +49,7 @@ if (!empty($output['search_md5'])) {
 		$where.=" AND a.`fk_user_id`<>'".$_SESSION['user']['user_id']."'";
 	}
 	$where.=' AND a.`status`='.STAT_APPROVED.' AND a.`del`=0';
-	$orderby="a.`score` DESC";
+	$orderby="ORDER BY a.`score` DESC";
 
 	// define here all search types
 	// you can either add fields to be read into $search_fields or build the query directly
@@ -91,7 +91,7 @@ if (!empty($output['search_md5'])) {
 			case 'new':
 				$input['acclevel_id']=16;
 				$continue=true;
-				$orderby="a.`date_added` DESC";
+				$orderby="ORDER BY a.`date_added` DESC";
 				break;
 
 			case 'online':
@@ -99,6 +99,7 @@ if (!empty($output['search_md5'])) {
 				$continue=true;
 				$from="`{$dbtable_prefix}online` b,".$from;
 				$where="b.`fk_user_id`<>0 AND b.`fk_user_id`=a.`fk_user_id` AND ".$where;
+				$orderby="GROUP BY b.`fk_user_id` ".$orderby;
 				break;
 
 			case 'vote':
@@ -236,7 +237,7 @@ if (!empty($output['search_md5'])) {
 		}	//switch ($field['search_type'])
 	} // the for() that constructs the where
 
-	$query="SELECT $select FROM $from WHERE $where ORDER BY $orderby";
+	$query="SELECT $select FROM $from WHERE $where $orderby";
 
 //print $query;
 //die;

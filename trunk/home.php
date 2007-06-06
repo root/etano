@@ -23,11 +23,13 @@ $output=array();
 
 $query="SELECT `_photo` as `photo`,UNIX_TIMESTAMP(`date_added`) as `date_added` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-$output=mysql_fetch_assoc($res);
-if (empty($output['photo'])) {
-	$output['photo']='no_photo.gif';
+if (mysql_num_rows($res)) {
+	$output=mysql_fetch_assoc($res);
+	if (empty($output['photo'])) {
+		$output['photo']='no_photo.gif';
+	}
+	$output['date_added']=strftime($_user_settings['date_format'],$output['date_added']+$_user_settings['time_offset']);
 }
-$output['date_added']=strftime($_user_settings['date_format'],$output['date_added']+$_user_settings['time_offset']);
 
 $my_stats=get_user_stats($_SESSION['user']['user_id'],array('total_photos','pviews','num_friends'));
 $query="SELECT count(*) FROM `{$dbtable_prefix}user_inbox` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
