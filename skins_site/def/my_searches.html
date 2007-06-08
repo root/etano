@@ -3,11 +3,14 @@
 	<div class="title">Search Title</div>
 	<div class="is_default">Default Search</div>
 	<div class="alert">Send Alerts</div>
+	<div class="search_now">Search Now</div>
 </div>
 
 <form action="processors/my_searches_rename.php" method="post" id="renamesearch_form">
+<fieldset>
 <input type="hidden" name="search_id" value="" />
 <input type="hidden" name="title" value="" />
+</fieldset>
 </form>
 
 <form action="processors/my_searches.php" method="post" id="search_form">
@@ -24,6 +27,7 @@
 	<div class="alert">
 		<input type="checkbox" class="check" name="alert[]" id="alert_{loop.search_id}" value="{loop.search_id}" {loop.alert} />
 	</div>
+	<div class="search_now"><a class="content-link link_search_now" href="search.php?{loop.search_qs}">Search Now</a></div>
 </div>
 <!--noloop name="loop"-->
 <div class="row">

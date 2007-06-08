@@ -16,7 +16,7 @@ require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
-check_login_member(11);
+check_login_member('save_searches');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $output=array();
@@ -25,7 +25,7 @@ $from="`{$dbtable_prefix}user_searches`";
 $where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
 
 $loop=array();
-$query="SELECT `search_id`,`title`,`is_default`,`alert` FROM $from WHERE $where ORDER BY `search_id` DESC";
+$query="SELECT `search_id`,`title`,`is_default`,`alert`,`search_qs` FROM $from WHERE $where ORDER BY `search_id` DESC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['encoded_title']=sanitize_and_format($rsrow['title'],TYPE_STRING,FORMAT_RUENCODE);

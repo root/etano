@@ -18,7 +18,7 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/queue_message.inc.php';
 require_once '../includes/tables/user_outbox.inc.php';
-check_login_member(5);
+check_login_member('message_write');
 
 if (is_file(_BASEPATH_.'/events/processors/message_send.php')) {
 	include_once _BASEPATH_.'/events/processors/message_send.php';

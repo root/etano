@@ -18,7 +18,7 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/profile_comments.inc.php';
 require_once '../includes/triggers.inc.php';
-check_login_member(9);
+check_login_member('write_comments');
 
 $error=false;
 $qs='';

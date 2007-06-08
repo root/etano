@@ -35,11 +35,11 @@ if (!empty($output['search_md5'])) {
 		$user_ids=mysql_result($res,0,0);
 		$user_ids=explode(',',$user_ids);
 		$input=unserialize(mysql_result($res,0,1));	// sanitized already
-		check_login_member($input['acclevel_id']);
+		check_login_member($input['acclevel_code']);
 	}
 } else {
 	// first search here, no cache, must calculate everything
-	$input['acclevel_id']=17; // default access level is the one for advanced search!!!!
+	$input['acclevel_code']='search_advanced'; // default access level is the one for advanced search!!!!
 	$search_fields=array();
 	$continue=false;	// for searches not based on search_fields
 	$select="a.`fk_user_id`";
@@ -58,7 +58,7 @@ if (!empty($output['search_md5'])) {
 		switch ($_GET['st']) {
 
 			case 'basic':
-				$input['acclevel_id']=16;
+				$input['acclevel_code']='search_basic';
 				$search_fields=$basic_search_fields;
 				if (isset($_GET['wphoto'])) {
 					$where.=" AND a.`_photo`<>''";
@@ -66,7 +66,7 @@ if (!empty($output['search_md5'])) {
 				break;
 
 			case 'adv':
-				$input['acclevel_id']=17;
+				$input['acclevel_code']='search_advanced';
 				// for advanced search we get all fields
 				foreach ($_pfields as $field_id=>$field) {
 					if (isset($field['searchable'])) {
@@ -79,7 +79,7 @@ if (!empty($output['search_md5'])) {
 				break;
 
 			case 'net':
-				$input['acclevel_id']=16;
+				$input['acclevel_code']='search_basic';
 				$continue=true;
 				$input['fk_user_id']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
 				$input['fk_net_id']=sanitize_and_format_gpc($_GET,'nid',TYPE_INT,0,0);
@@ -89,13 +89,13 @@ if (!empty($output['search_md5'])) {
 				break;
 
 			case 'new':
-				$input['acclevel_id']=16;
+				$input['acclevel_code']='search_basic';
 				$continue=true;
 				$orderby="ORDER BY a.`date_added` DESC";
 				break;
 
 			case 'online':
-				$input['acclevel_id']=16;
+				$input['acclevel_code']='search_basic';
 				$continue=true;
 				$from="`{$dbtable_prefix}online` b,".$from;
 				$where="b.`fk_user_id`<>0 AND b.`fk_user_id`=a.`fk_user_id` AND ".$where;
@@ -113,7 +113,7 @@ if (!empty($output['search_md5'])) {
 
 		}
 	}
-	check_login_member($input['acclevel_id']);
+	check_login_member($input['acclevel_code']);
 
 	for ($i=0;isset($search_fields[$i]);++$i) {
 		$field=$_pfields[$search_fields[$i]];
@@ -127,8 +127,8 @@ if (!empty($output['search_md5'])) {
 					} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
 						$where.=" AND `".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']]."|%'";
 					}
-				} else {
-					unset($input[$field['dbfield']]);
+//				} else {
+//					unset($input[$field['dbfield']]);
 				}
 				break;
 
@@ -201,12 +201,12 @@ if (!empty($output['search_md5'])) {
 									$input[$field['dbfield'].'_city']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_city',TYPE_INT,0,0);
 									if (!empty($input[$field['dbfield'].'_city'])) {
 										$where.=" AND `".$field['dbfield']."_city`='".$input[$field['dbfield'].'_city']."'";
-									} else {
-										unset($input[$field['dbfield'].'_city']);
+//									} else {
+//										unset($input[$field['dbfield'].'_city']);
 									}
 								}
-							} else {
-								unset($input[$field['dbfield'].'_state']);
+//							} else {
+//								unset($input[$field['dbfield'].'_state']);
 							}
 						} elseif ($prefered_input=='z') {
 							$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_zip',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
@@ -224,13 +224,13 @@ if (!empty($output['search_md5'])) {
 								} else {
 // should not return any result or at least warn the member that the zip code was not found.
 								}
-							} else {
-								unset($input[$field['dbfield'].'_zip'],$input[$field['dbfield'].'_dist']);
+//							} else {
+//								unset($input[$field['dbfield'].'_zip'],$input[$field['dbfield'].'_dist']);
 							}
 						}
 					}
-				} else {
-					unset($input[$field['dbfield'].'_country']);
+//				} else {
+//					unset($input[$field['dbfield'].'_country']);
 				}	// if (!empty($input[$field['dbfield'].'_country']))
 				break;
 

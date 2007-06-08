@@ -17,7 +17,7 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/user_inbox.inc.php';
-check_login_member(-1);	// allow every member for now. Finer checking is made below
+check_login_member('auth');	// allow every member for now. Finer checking is made below
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
@@ -83,15 +83,15 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 
 			case MESS_MESS:
 				$output['message_body']=sanitize_and_format($output['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-				check_login_member(4);
+				check_login_member('message_read');
 				break;
 
 			case MESS_FLIRT:
-				check_login_member(6);
+				check_login_member('flirt_read');
 				break;
 
 			case MESS_SYSTEM:
-				// check_login_member(-1); this check was made at the begining
+				// check_login_member('auth'); this check was made at the begining
 				if (empty($output['_user_other'])) {
 					$output['_user_other']='SYSTEM';     // translate
 				}

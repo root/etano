@@ -57,12 +57,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 // save in file
 	require_once _BASEPATH_.'/includes/classes/modman.class.php';
-	global $dbtable_prefix;
-	$query="SELECT `level_id`,`level` FROM `{$dbtable_prefix}access_levels`";
+	$query="SELECT `level_code`,`level` FROM `{$dbtable_prefix}access_levels`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$towrite="<?php\n\$_access_level=array(-1=>65534,0=>65535";
+	$towrite="<?php\n\$_access_level=array('auth'=>65534,'all'=>65535";
 	while ($rsrow=mysql_fetch_row($res)) {
-		$towrite.=','.$rsrow[0].'=>'.$rsrow[1];
+		$towrite.=",'".$rsrow[0]."'=>".$rsrow[1];
 	}
 	$towrite.=");\n";
 	$modman=new modman();

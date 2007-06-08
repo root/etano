@@ -66,8 +66,14 @@ if (empty($output)) {
 				break;
 
 			case FIELD_LOCATION:
+				$output[$field['dbfield'].'_country']=0;
+				$output[$field['dbfield'].'_state']=0;
+				$output[$field['dbfield'].'_city']=0;
+				$output[$field['dbfield'].'_zip']='';
 				if (isset($field['default_value'][0])) {
 					$output[$field['dbfield'].'_country']=$field['default_value'][0];
+				} else {
+					$output[$field['dbfield'].'_country']=0;
 				}
 				break;
 
@@ -157,17 +163,17 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 			if (!empty($country_id) && $prefered_input=='s' && !empty($num_states)) {
 				$loop[$j]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$state_id,"`fk_country_id`='$country_id'");
 			}
-			$loop[$i]['field'].='</select>';
+			$loop[$j]['field'].='</select>';
 			$loop[$j]['class']=(!empty($country_id) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
 			++$j;
 			$loop[$j]['label']='City';	// translate this
 			$loop[$j]['dbfield']=$field['dbfield'].'_city';
 			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option>';	// translate this
 			if (!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) {
-				$loop[$i]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$user_details[$field['dbfield'].'_city'],"`fk_state_id`='$state_id'");
+				$loop[$j]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$user_details[$field['dbfield'].'_city'],"`fk_state_id`='$state_id'");
 			}
-			$loop[$i]['field'].='</select>';
-			$loop[$i]['class']=(!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';
+			$loop[$j]['field'].='</select>';
+			$loop[$j]['class']=(!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';
 			++$j;
 			$loop[$j]['label']='Zip';	// translate this
 			$loop[$j]['dbfield']=$field['dbfield'].'_zip';

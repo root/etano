@@ -16,7 +16,7 @@ require_once '../includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
-check_login_member(14);
+check_login_member('save_searches');
 
 $topass=array();
 $search_id=isset($_GET['sid']) ? (int)$_GET['sid'] : 0;

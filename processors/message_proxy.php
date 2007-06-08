@@ -17,7 +17,7 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/user_spambox.inc.php';
-check_login_member(5);
+check_login_member('message_write');
 
 $error=false;
 $topass=array();

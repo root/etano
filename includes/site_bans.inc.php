@@ -1,2 +1,3 @@
 <?php
-$_bans[_PUNISH_BANUSER_]=array('asd');
+$_bans[_PUNISH_BANUSER_]=array('dragon');
+?>

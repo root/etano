@@ -11,6 +11,9 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 *******************************************************************************/
 
+// _BASEPATH_ must be hardcoded below in order to allow a custom save path for session files.
+// this would solve the 'permanent relogin issue' happening because the /tmp partition is full.
+//ini_set('session.save_path',_BASEPATH_.'/tmp/sessions');
 $cookie_domain='';
 // set the cookie on the whole domain. If this is not desirable simply comment out the if below
 if (isset($_SERVER['HTTP_HOST'])) {

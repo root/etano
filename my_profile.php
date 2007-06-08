@@ -16,7 +16,7 @@ require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
-check_login_member(-1);
+check_login_member('auth');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
@@ -137,7 +137,7 @@ if ($_SESSION['user']['prefs']['profile_comments']) {
 	}
 
 	// may I post comments please?
-	if (allow_at_level(9,$_SESSION['user']['membership'])) {
+	if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
 		$output['allow_comments']=true;
 		// would you let me use bbcode?
 		if (!empty($config['bbcode_comments'])) {

@@ -16,7 +16,7 @@ require_once '../includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
-check_login_member(3);
+check_login_member('auth');
 
 $error=false;
 $qs='';
@@ -74,5 +74,5 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 	}
 }
-redirect2page('folders.php',$topass,$qs);
+redirect2page('home.php',$topass,$qs);
 ?>

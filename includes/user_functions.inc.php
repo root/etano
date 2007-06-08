@@ -55,14 +55,14 @@ function get_user_by_userid($user_id) {
 }
 
 
-function check_login_member($level_id) {
+function check_login_member($level_code) {
 	$topass=array();
 	global $dbtable_prefix;
-	if (!isset($GLOBALS['_access_level'][$level_id])) {
-		$GLOBALS['_access_level'][$level_id]=0;	// no access allowed if level not defined
+	if (!isset($GLOBALS['_access_level'][$level_code])) {
+		$GLOBALS['_access_level'][$level_code]=0;	// no access allowed if level not defined
 	}
 	// ask visitors to login if they land on a page that doesn't allow guests
-	if (!($GLOBALS['_access_level'][$level_id]&1) && (!isset($_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id']))) {
+	if (!($GLOBALS['_access_level'][$level_code]&1) && (!isset($_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id']))) {
 		$mysession=session_id();
 		if (empty($mysession)) {
 			session_start();
@@ -72,7 +72,7 @@ function check_login_member($level_id) {
 	}
 //	unset($_SESSION['timedout']);
 	// members from here on
-	if (($GLOBALS['_access_level'][$level_id]&$_SESSION['user']['membership'])!=$_SESSION['user']['membership']) {
+	if (($GLOBALS['_access_level'][$level_code]&$_SESSION['user']['membership'])!=$_SESSION['user']['membership']) {
 		$topass['message']['type']=MESSAGE_ERROR;
 //		$topass['message']['text']=$GLOBALS['_lang'][3];
 		$topass['message']['text']="We're sorry but you don't have access to this feature. --link to payment--";//translate
@@ -89,10 +89,10 @@ function check_login_member($level_id) {
 }
 
 
-function allow_at_level($level_id,$membership=1) {
+function allow_at_level($level_code,$membership=1) {
 	$myreturn=false;
 	$membership=(int)$membership;
-	if (($GLOBALS['_access_level'][$level_id]&((int)$membership))==$membership) {
+	if (($GLOBALS['_access_level'][$level_code]&((int)$membership))==$membership) {
 		$myreturn=true;
 	}
 	return $myreturn;
