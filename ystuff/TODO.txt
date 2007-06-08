@@ -37,7 +37,6 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
-- my_searches sa aiba buton de 'search now' la fiecare search
 - mailbox.php in format nou (cu $output)
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
 - membership icon
