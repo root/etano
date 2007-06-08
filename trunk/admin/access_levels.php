@@ -20,7 +20,7 @@ allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$query="SELECT * FROM `{$dbtable_prefix}memberships` ORDER BY `m_id`";
+$query="SELECT `m_id`,`m_name`,`m_value`,`is_custom` FROM `{$dbtable_prefix}memberships` ORDER BY `m_id`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $memberships=array();
 $i=0;
@@ -32,13 +32,14 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	++$i;
 }
 
-$query="SELECT * FROM `{$dbtable_prefix}access_levels`";
+$query="SELECT `level_id`,`level_code`,`level_diz`,`level`,`disabled_level` FROM `{$dbtable_prefix}access_levels`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $i=0;
 $access_levels=array();
 while ($rsrow=mysql_fetch_assoc($res)) {
-	$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-	$access_levels[$i]['row']='<td>'.$rsrow['level_id']."</td>\n<td><a href=\"access_levels_addedit.php?level_id=".$rsrow['level_id'].'" title="'.$rsrow['level_diz'].'">'.$rsrow['level_code']."</a></td>\n";
+	$rsrow['level_code']=sanitize_and_format($rsrow['level_code'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+	$rsrow['level_diz']=sanitize_and_format($rsrow['level_diz'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+	$access_levels[$i]['row']='<td><a href="access_levels_addedit.php?level_id='.$rsrow['level_id'].'" title="'.$rsrow['level_diz'].'">'.$rsrow['level_code']."</a></td>\n";
 	for ($j=0;isset($memberships[$j]);++$j) {
 		$access_levels[$i]['row'].='<td><input type="checkbox" name="levels['.$rsrow['level_id'].']['.$memberships[$j]['m_value'].']" value="1"';
 		if (((int)$memberships[$j]['m_value']) & ((int)$rsrow['level'])) {

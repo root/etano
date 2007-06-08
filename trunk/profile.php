@@ -18,7 +18,7 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/network_functions.inc.php';
-check_login_member(2);
+check_login_member('profile_view');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
@@ -138,7 +138,7 @@ if (!empty($output)) {
 		}
 
 		// may I post comments please?
-		if (allow_at_level(9,$_SESSION['user']['membership'])) {
+		if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
 			$output['allow_comments']=true;
 			if (!isset($_SESSION['user']['user_id'])) {
 				if ($config['use_captcha']) {

@@ -17,7 +17,7 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/user_blogs.inc.php';
-check_login_member(11);
+check_login_member('write_blogs');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 

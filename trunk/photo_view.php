@@ -17,7 +17,7 @@ require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
-check_login_member(13);
+check_login_member('view_photo');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $photo_id=sanitize_and_format_gpc($_GET,'photo_id',TYPE_INT,0,0);
@@ -87,7 +87,7 @@ if (!empty($photo_id)) {
 				}
 
 				// may I post comments please?
-				if (allow_at_level(9,$_SESSION['user']['membership'])) {
+				if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
 					if (!isset($_SESSION['user']['user_id'])) {
 						if ($config['use_captcha']) {
 							require_once 'includes/classes/sco_captcha.class.php';

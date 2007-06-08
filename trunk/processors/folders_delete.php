@@ -16,7 +16,7 @@ require_once '../includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
-check_login_member(14);
+check_login_member('manage_folders');
 
 if (is_file(_BASEPATH_.'/events/processors/folders_delete.php')) {
 	include_once _BASEPATH_.'/events/processors/folders_delete.php';

@@ -1,2 +1,2 @@
 <?php
-$_access_level=array(-1=>65534,0=>65535,1=>6,2=>7,3=>6,4=>6,5=>6,6=>6,7=>6,8=>6,9=>6,10=>7,11=>6,12=>7,13=>7,14=>6,15=>6,16=>7,17=>6,18=>6,19=>6);
+$_access_level=array('auth'=>65534,'all'=>65535,'login'=>6,'profile_view'=>7,'search_photo'=>0,'message_read'=>6,'message_write'=>6,'flirt_read'=>6,'flirt_send'=>6,'upload_photos'=>6,'write_comments'=>6,'read_blogs'=>7,'write_blogs'=>6,'view_album'=>7,'view_photo'=>7,'manage_folders'=>6,'saved_messages'=>6,'search_basic'=>7,'search_advanced'=>6,'manage_networks'=>4,'save_searches'=>6,'inbox'=>0,'search_blog'=>0);

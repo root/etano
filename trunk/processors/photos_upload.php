@@ -19,7 +19,7 @@ require_once '../includes/user_functions.inc.php';
 require_once '../includes/classes/modman.class.php';
 require_once '../includes/img_functions.inc.php';
 require_once '../includes/triggers.inc.php';
-check_login_member(8);
+check_login_member('upload_photos');
 set_time_limit(0);
 
 $error=false;

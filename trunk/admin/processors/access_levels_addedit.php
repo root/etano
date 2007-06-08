@@ -39,11 +39,18 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['error_level_code']='red_border';
 	}
 
+	if ($input['level_code']=='auth' || $input['level_code']=='all') {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='The "auth" and "all" level codes are reserved and cannot be used. Please choose another code!';
+		$input['error_level_code']='red_border';
+	}
+
 	unset($input['level']);
 
 	if (!$error) {
 		if (!empty($input['level_id'])) {
-			$query="UPDATE `{$dbtable_prefix}access_levels` SET ";
+			$query="UPDATE IGNORE `{$dbtable_prefix}access_levels` SET ";
 			foreach ($access_levels_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.="`$k`='".$input[$k]."',";
@@ -52,10 +59,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query=substr($query,0,-1);
 			$query.=" WHERE `level_id`='".$input['level_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Level changed.';
+			if (mysql_affected_rows()) {
+				$topass['message']['type']=MESSAGE_INFO;
+				$topass['message']['text']='Level changed.';
+			}
 		} else {
-			$query="INSERT INTO `{$dbtable_prefix}access_levels` SET ";
+			$query="INSERT IGNORE INTO `{$dbtable_prefix}access_levels` SET ";
 			foreach ($access_levels_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.="`$k`='".$input[$k]."',";
@@ -63,31 +72,24 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			$query=substr($query,0,-1);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Level added.';
+			if (mysql_affected_rows()) {
+				$topass['message']['type']=MESSAGE_INFO;
+				$topass['message']['text']='Level added.';
+			} else {
+				$error=true;
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']='This level code already exists. Please enter a unique code!';
+				$input['error_level_code']='red_border';
+			}
 		}
-	} else {
+	}
+
+	if ($error) {
 		$nextpage='admin/access_levels_addedit.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
-	}
-	if (isset($_POST['o'])) {
-		$qs.=$qs_sep.'o='.$_POST['o'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['r'])) {
-		$qs.=$qs_sep.'r='.$_POST['r'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['ob'])) {
-		$qs.=$qs_sep.'ob='.$_POST['ob'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['od'])) {
-		$qs.=$qs_sep.'od='.$_POST['od'];
-		$qs_sep='&';
 	}
 }
 redirect2page($nextpage,$topass,$qs);

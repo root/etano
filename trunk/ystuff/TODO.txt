@@ -69,7 +69,8 @@ TODO
 - search membri (search.php) case 'vote',case 'views',case 'comm'
 - installer + modman
 - licenta si verificari
-
+- today birthdays widget cu cache
+- pviews ar putea fi facut tot cu cache dar mai scurt
 
 ---------------------------------------------------------------------
 - modman: ftp low level?

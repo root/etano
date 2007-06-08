@@ -18,7 +18,7 @@ require_once dirname(__FILE__).'/../includes/user_functions.inc.php';
 
 $output='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-	if (isset($_SESSION['user']['user_id']) && allow_at_level(15,$_SESSION['user']['membership'])) {
+	if (isset($_SESSION['user']['user_id']) && allow_at_level('message_templates',$_SESSION['user']['membership'])) {
 		if (isset($_POST['subject']) && !empty($_POST['subject']) && isset($_POST['message_body']) && !empty($_POST['message_body'])) {
 			$subject=sanitize_and_format($_POST['subject'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE);
 			$message_body=sanitize_and_format($_POST['message_body'],TYPE_STRING,$__field2format[FIELD_TEXTAREA] | FORMAT_RUDECODE);

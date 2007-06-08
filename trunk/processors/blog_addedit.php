@@ -17,7 +17,7 @@ db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/user_blogs.inc.php';
-check_login_member(11);
+check_login_member('write_blogs');
 
 if (is_file(_BASEPATH_.'/events/processors/blog_addedit.php')) {
 	include_once _BASEPATH_.'/events/processors/blog_addedit.php';

@@ -36,11 +36,11 @@ if (!empty($output['search_md5'])) {
 		$post_ids=mysql_result($res,0,0);
 		$post_ids=explode(',',$post_ids);
 		$input=unserialize(mysql_result($res,0,1));	// sanitized already
-		check_login_member($input['acclevel_id']);
+		check_login_member($input['acclevel_code']);
 	}
 } else {
 	// first search here, no cache, must calculate everything
-	$input['acclevel_id']=17; // default access level is the one for advanced search!!!!
+	$input['acclevel_code']='search_blog'; // default access level is the one for advanced search!!!!
 	$select="a.`post_id`";
 	$from="`{$dbtable_prefix}blog_posts` a";
 	$where="a.`is_public`=1 AND a.`status`='".STAT_APPROVED."'";
@@ -58,18 +58,18 @@ if (!empty($output['search_md5'])) {
 
 			case 'views':
 				$tplvars['page_title']='Most Popular Blogs';	// translate
-				$input['acclevel_id']=17;
+				$input['acclevel_code']='search_blog';
 				$orderby="a.`stat_views` DESC";
 				break;
 
 			case 'comm':
 				$tplvars['page_title']='Most Discussed Blogs';	// translate
-				$input['acclevel_id']=17;
+				$input['acclevel_code']='search_blog';
 				$orderby="a.`stat_comments` DESC";
 				break;
 
 			case 'uid':
-				$input['acclevel_id']=17;
+				$input['acclevel_code']='search_blog';
 				$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
 				$tplvars['page_title']=sprintf('<a href="profile.php?uid=%1$s">%2$s</a>\'s Blogs',$input['uid'],get_user_by_userid($input['uid']));	// translate
 				$where="a.`fk_user_id`='".$input['uid']."' AND ".$where;
@@ -78,7 +78,7 @@ if (!empty($output['search_md5'])) {
 
 			case 'tag':
 				$tplvars['page_title']='Search Results';
-				$input['acclevel_id']=17;
+				$input['acclevel_code']='search_blog';
 				$input['tags']=sanitize_and_format_gpc($_GET,'tags',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 				// remove extra spaces and words with less than 3 chars
 				$input['tags']=trim(preg_replace(array("/['\"%<>\+-]/","/\s\s+/","/\b[^\s]{1,3}\b/"),array(' ',' ',''),$input['tags']));
@@ -96,7 +96,7 @@ if (!empty($output['search_md5'])) {
 
 		}
 	}
-	check_login_member($input['acclevel_id']);
+	check_login_member($input['acclevel_code']);
 
 	if (!$error) {
 		$query="SELECT $select FROM $from WHERE $where ORDER BY $orderby";

@@ -18,7 +18,7 @@ require_once '../includes/classes/phemplate.class.php';
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/blog_posts.inc.php';
 require_once '../includes/triggers.inc.php';
-check_login_member(11);
+check_login_member('write_blogs');
 
 if (is_file(_BASEPATH_.'/events/processors/blog_posts_addedit.php')) {
 	include_once _BASEPATH_.'/events/processors/blog_posts_addedit.php';
