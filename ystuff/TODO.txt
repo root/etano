@@ -93,3 +93,8 @@ TODO
 - addon stats_dot creator pt orice field: se alege campul si valoarea si se face dot graph pt el.
 - advanced stats_dot - comparatii intre mai multe dot-uri (graph in aceeasi imagine, piecharturi, etc)
 - adaugat ziua in advanced_graph4.php
+- banned words++: poate si expresii regulate dar in primul rand actiuni per cuvant: inlocuire cu ##### sau
+neaprobare. Ar fi bun in primul rand pentru mesaje: daca un mesaj contine un anumit cuvant sa nu se trimita.
+Ar mai putea fi facut prin filtre generale cu fk_user_id=0
+- vizualizare message/email_queue
+- md5(lk) sa il bag in ENV ca sa poata fi afisat de phpinfo() din version.php :))
