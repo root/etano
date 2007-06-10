@@ -1,3 +1,9 @@
+$(function() {
+	$('#subscr_form').bind('submit',function() {
+		return check_form(this);
+	});
+});
+
 function check_form(theform) {
 	is_checked=false;
 	for (i=0;i<theform.subscr_id.length;i++) {

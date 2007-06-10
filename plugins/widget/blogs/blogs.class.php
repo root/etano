@@ -103,7 +103,7 @@ class widget_blogs extends icontent_widget {
 					break;
 
 			}
-			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_path'].'blog_search.php?st='.$this->config['mode'].'" title="More Blogs">More Blogs</a>';	// translate this
+			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_url'].'blog_search.php?st='.$this->config['mode'].'" title="More Blogs">More Blogs</a>';	// translate this
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
 			} else {

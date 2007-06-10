@@ -120,7 +120,7 @@ class widget_photos extends icontent_widget {
 					break;
 
 			}
-			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_path'].'photo_search.php?st='.$this->config['mode'].'" title="More Photos">More</a>';	// translate this
+			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_url'].'photo_search.php?st='.$this->config['mode'].'" title="More Photos">More</a>';	// translate this
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
 			} else {

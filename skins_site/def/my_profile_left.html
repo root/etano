@@ -3,7 +3,7 @@
 	<div class="box_content">
 		<ul class="menu">
 		<!--loop name="user_views"-->
-		<li><a href="block.php?uid={uid}">Block</a></li>
+		<li><a href="{tplvars.relative_url}block.php?uid={uid}">Block</a></li>
 		<!--noloop name="user_views"-->
 		<li class="first">No views yet</li>
 		<!--/noloop name="user_views"-->
@@ -16,14 +16,14 @@
 	<h3>My Account</h3>
 	<div class="box_content">
 		<ul class="menu">
-			<li class="first"><a class="content-link link_profile" href="my_profile.php">My Profile</a></li>
-			<li><a class="content-link link_photos" href="my_photos.php">My Photos</a></li>
-			<li><a class="content-link link_blogs" href="my_blogs.php">My Blogs</a></li>
-			<li><a class="content-link link_friends" href="my_networks.php">My Connections</a></li>
-			<li><a class="content-link link_mail" href="mailbox.php">My Messages</a></li>
-			<li><a class="content-link link_view" href="my_searches.php">My Saved Searches</a></li>
-			<li><a class="content-link link_mail" href="my_responses.php">My Saved Responses</a></li>
-			<li><a class="content-link link_change" href="my_settings.php">My Settings</a></li>
+			<li class="first"><a class="content-link link_profile" href="{tplvars.relative_url}my_profile.php">My Profile</a></li>
+			<li><a class="content-link link_photos" href="{tplvars.relative_url}my_photos.php">My Photos</a></li>
+			<li><a class="content-link link_blogs" href="{tplvars.relative_url}my_blogs.php">My Blogs</a></li>
+			<li><a class="content-link link_friends" href="{tplvars.relative_url}my_networks.php">My Connections</a></li>
+			<li><a class="content-link link_mail" href="{tplvars.relative_url}mailbox.php">My Messages</a></li>
+			<li><a class="content-link link_view" href="{tplvars.relative_url}my_searches.php">My Saved Searches</a></li>
+			<li><a class="content-link link_mail" href="{tplvars.relative_url}my_responses.php">My Saved Responses</a></li>
+			<li><a class="content-link link_change" href="{tplvars.relative_url}my_settings.php">My Settings</a></li>
 		</ul>
 	</div>
 </div>

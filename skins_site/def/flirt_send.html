@@ -1,5 +1,5 @@
-Select the flirt to send to <a class="content-link member_link" href="profile.php?uid={output.fk_user_id}">{output._user_other}</a>:
-<form action="processors/flirt_send.php" method="post" id="flirt_send_form">
+Select the flirt to send to <a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={output.fk_user_id}">{output._user_other}</a>:
+<form action="{tplvars.relative_url}processors/flirt_send.php" method="post" id="flirt_send_form">
 <fieldset>
 	<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
 	<input type="hidden" name="return" value="{output.return}" />

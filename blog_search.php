@@ -71,7 +71,7 @@ if (!empty($output['search_md5'])) {
 			case 'uid':
 				$input['acclevel_code']='search_blog';
 				$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
-				$tplvars['page_title']=sprintf('<a href="profile.php?uid=%1$s">%2$s</a>\'s Blogs',$input['uid'],get_user_by_userid($input['uid']));	// translate
+				$tplvars['page_title']=sprintf('<a href="'.$tplvars['relative_url'].'profile.php?uid=%1$s">%2$s</a>\'s Blogs',$input['uid'],get_user_by_userid($input['uid']));	// translate
 				$where="a.`fk_user_id`='".$input['uid']."' AND ".$where;
 				$orderby="a.`post_id` DESC";
 				break;

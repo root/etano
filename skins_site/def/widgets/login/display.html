@@ -3,17 +3,17 @@
 	<fieldset>
 		<a href="processors/logout.php" id="logout" title="Sign out">Sign out</a>
 		<span id="hello-message">
-			Hello, <a href="{tplvars.relative_path}my_profile.php" title="{tplvars.myself.user}">{tplvars.myself.user}</a>!
+			Hello, <a href="{tplvars.relative_url}my_profile.php" title="{tplvars.myself.user}">{tplvars.myself.user}</a>!
 		</span>
 	</fieldset>
 </div>
 <!--/opt name="tplvars.user_logged"-->
 <!--opt name="!tplvars.user_logged"-->
-<form id="login-box" action="{tplvars.relative_path}processors/login.php" method="post">
+<form id="login-box" action="{tplvars.relative_url}processors/login.php" method="post">
 	<fieldset>
 		<input type="text" id="username" name="user" />
 		<input type="password" id="password" name="pass" />
-		<input type="image" id="login" alt="Login" src="{tplvars.tplrelpath}/images/btn-login-over.gif" />
+		<input type="image" id="login" alt="Login" src="{tplvars.relative_url}/images/btn-login-over.gif" />
 	</fieldset>
 	<fieldset>
 		<span id="lost-password">

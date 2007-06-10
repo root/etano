@@ -1,4 +1,4 @@
-<form action="processors/friendship_requests.php" method="post" id="requests_form">
+<form action="{tplvars.relative_url}processors/friendship_requests.php" method="post" id="requests_form">
 <div class="row header">
 	<div class="control"><input type="checkbox" name="check_all" id="check_all" /><span>All</span></div>
 	<div class="who">Who?</div>
@@ -8,7 +8,7 @@
 <!--loop name="loop"-->
 <div class="row">
 	<div class="control"><input type="checkbox" class="check" id="nconn_id_{loop.nconn_id}" name="nconn_id[]" value="{loop.nconn_id}" /></div>
-	<div class="who"><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}&amp;return={output.return}">{loop.user}</a></div>
+	<div class="who"><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}&amp;return={output.return}">{loop.user}</a></div>
 	<div class="network">{loop.network}</div>
 	<!--noloop name="loop"-->
 	<p class="no_results">You have no requests yet.</p>
@@ -23,4 +23,4 @@
 </div>
 </form>
 
-<script type="text/javascript" src="js/friendship_requests.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/friendship_requests.js"></script>

@@ -1,5 +1,5 @@
 <div id="login_tease">
-	<p><strong>New to {tplvars.sitename}?</strong> <a class="content-link simple big" href="join.php">Sign up FREE</a></p>
+	<p><strong>New to {tplvars.sitename}?</strong> <a class="content-link simple big" href="{tplvars.relative_url}join.php">Sign up FREE</a></p>
 	<p>As a member, you'll be able to:
 		<ul>
 		<li>Use advanced searches to find someone near you</li>
@@ -12,7 +12,7 @@
 	</p>
 </div>
 
-<form action="processors/login.php" method="post" id="relogin">
+<form action="{tplvars.relative_url}processors/login.php" method="post" id="relogin">
 <fieldset>
 	<dl>
 		<dt><label for="username2">Username:</label></dt>
@@ -25,7 +25,7 @@
 	<dl class="controls">
 		<dt>&nbsp;</dt>
 		<dd><input type="submit" class="button bmedium" id="btn_login" value="Login" />
-			<a class="content-link simple" href="pass_lost.php" title="Lost password?">Lost password?</a>
+			<a class="content-link simple" href="{tplvars.relative_url}pass_lost.php" title="Lost password?">Lost password?</a>
 		</dd>
 	</dl>
 </fieldset>
@@ -33,4 +33,4 @@
 
 <div class="clear"></div>
 
-<script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/login.js"></script>

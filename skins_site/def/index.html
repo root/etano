@@ -19,14 +19,14 @@
 	<div id="header-container">
 		<div id="header-body">
 			<ul id="primary-nav">
-				<li><a class="menu1" href="home.php" title="Home"><span>Home</span></a></li>
-				<li><a class="menu1" href="search_more.php" title="Search"><span>Search</span></a></li>
-				<li><a class="menu1" href="photos.php" title="Member Photos"><span>Photos</span></a></li>
-				<li><a class="menu1" href="blogs.php" title="Member Blogs"><span>Blogs</span></a></li>
-				<li><a class="menu1" href="search.php?st=online" title="Online Members"><span>Who's Online</span></a></li>
+				<li><a class="menu1" href="{tplvars.relative_url}home.php" title="Home"><span>Home</span></a></li>
+				<li><a class="menu1" href="{tplvars.relative_url}search_more.php" title="Search"><span>Search</span></a></li>
+				<li><a class="menu1" href="{tplvars.relative_url}photos.php" title="Member Photos"><span>Photos</span></a></li>
+				<li><a class="menu1" href="{tplvars.relative_url}blogs.php" title="Member Blogs"><span>Blogs</span></a></li>
+				<li><a class="menu1" href="{tplvars.relative_url}search.php?st=online" title="Online Members"><span>Who's Online</span></a></li>
 			</ul>
 			<div id="logo-box">
-				<a href="{tplvars.relative_path}index.php">{tplvars.sitename}</a>
+				<a href="{tplvars.relative_url}index.php">{tplvars.sitename}</a>
 			</div>
 			<!--widget="login"-->
 		</div>
@@ -50,7 +50,7 @@
 						<p>there's nothing like a real date.</p>
 					</li>
 					<li id="description-more" class="description-box">
-						<a href="join.php" id="sign-up-now" title="Sign up now!">Sign up now!</a>
+						<a href="{tplvars.relative_url}join.php" id="sign-up-now" title="Sign up now!">Sign up now!</a>
 						<h4>and a lot more</h4>
 						<p>Flirts, messages, photos, blogs, alerts...</p>
 					</li>
@@ -97,13 +97,13 @@
 		</p>
 		<ul id="secondary-nav">
 			<li class="first">
-				<a href="#" title="Terms &amp; Conditions">Terms &amp; Conditions</a>
+				<a href="{tplvars.relative_url}#" title="Terms &amp; Conditions">Terms &amp; Conditions</a>
 			</li>
 			<li>
-				<a href="#" title="Privacy Statement">Privacy Statement</a>
+				<a href="{tplvars.relative_url}#" title="Privacy Statement">Privacy Statement</a>
 			</li>
 			<li>
-				<a href="#" title="Contact">Contact</a>
+				<a href="{tplvars.relative_url}#" title="Contact">Contact</a>
 			</li>
 		</ul>
 	</div>

@@ -55,6 +55,12 @@ switch ($type) {
 		$tplvars['page']='info_acctok';
 		break;
 
+	case 'access':	// no access to the requested page, show the upgrade options.
+		$template='info_access.html';
+		$tplvars['page_title']='Upgrade your account';
+		$tplvars['page']='info_acctok';
+		break;
+
 	default:
 		$template='info.html';
 		$tplvars['page_title']='Message';

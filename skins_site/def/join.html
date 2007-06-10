@@ -1,4 +1,4 @@
-<form action="processors/join.php" method="post" id="join_form" class="edit_form">
+<form action="{tplvars.relative_url}processors/join.php" method="post" id="join_form" class="edit_form">
 <input type="hidden" name="page" value="{output.page}" />
 <!--opt name="output.page1"-->
 <fieldset>
@@ -41,7 +41,7 @@
 <fieldset>
 	<dl class="required">
 		<dt>Verify registration:</dt>
-		<dd><img src="show_captcha.php?{output.rand}" /></dd>
+		<dd><img src="{tplvars.relative_url}show_captcha.php?{output.rand}" /></dd>
 	</dl>
 	<dl>
 		<dt>&nbsp;</dt>
@@ -52,7 +52,7 @@
 <fieldset id="agree_fs">
 	<dl>
 		<dt>&nbsp;</dt>
-		<dd class="full-width"><input type="checkbox" name="agree" id="agree" value="1" {output.agree} tabindex="51" /> I agree to {tplvars.sitename}'s <a class="content-link simple" target="_blank" href="tos.php">terms of services</a>.</dd>
+		<dd class="full-width"><input type="checkbox" name="agree" id="agree" value="1" {output.agree} tabindex="51" /> I agree to {tplvars.sitename}'s <a class="content-link simple" target="_blank" href="{tplvars.relative_url}tos.php">terms of services</a>.</dd>
 	</dl>
 </fieldset>
 <!--/opt name="output.page1"-->
@@ -63,7 +63,7 @@
 </fieldset>
 </form>
 
-<script type="text/javascript" src="js/join.js.php?p={output.page}"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/join.js.php?p={output.page}"></script>
 <script type="text/javascript">
 	var ta_len={output.ta_len};
 	dbfields=Array();

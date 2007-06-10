@@ -3,12 +3,12 @@
 	<h3>Connect</h3>
 	<div class="box_content">
 		<ul class="menu">
-			<li class="first"><a class="content-link link_bookmark" href="processors/net_adduser.php?uid={output.uid}&amp;net_id=3&amp;return={output.return}">Add to favorites</a></li>
-			<li><a class="content-link link_mail" href="message_send.php?to_id={output.uid}">Send message</a></li>
-			<li><a class="content-link link_flirt" href="flirt_send.php?to_id={output.uid}">Send a flirt</a></li>
+			<li class="first"><a class="content-link link_bookmark" href="{tplvars.relative_url}processors/net_adduser.php?uid={output.uid}&amp;net_id=3&amp;return={output.return}">Add to favorites</a></li>
+			<li><a class="content-link link_mail" href="{tplvars.relative_url}message_send.php?to_id={output.uid}">Send message</a></li>
+			<li><a class="content-link link_flirt" href="{tplvars.relative_url}flirt_send.php?to_id={output.uid}">Send a flirt</a></li>
 			<li>
-				<!--opt name="output.unblock_user"--><a id="link_unblock" class="content-link link_block" href="processors/net_deluser.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Unblock</a><!--/opt name="output.unblock_user"-->
-				<!--opt name="!output.unblock_user"--><a id="link_block" class="content-link link_block" href="processors/net_adduser.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Block</a><!--/opt name="!output.unblock_user"-->
+				<!--opt name="output.unblock_user"--><a id="link_unblock" class="content-link link_block" href="{tplvars.relative_url}processors/net_deluser.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Unblock</a><!--/opt name="output.unblock_user"-->
+				<!--opt name="!output.unblock_user"--><a id="link_block" class="content-link link_block" href="{tplvars.relative_url}processors/net_adduser.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Block</a><!--/opt name="!output.unblock_user"-->
 			</li>
 		</ul>
 	</div>
@@ -19,9 +19,9 @@
 	<h3>Search Photos</h3>
 	<div class="box_content">
 		<ul class="menu">
-			<li class="first"><a class="content-link link_search" href="photo_search.php?st=views">Most Popular</a></li>
-			<li><a class="content-link link_search" href="photo_search.php?st=comm">Most Discussed</a></li>
-			<li><a class="content-link link_search" href="photo_search.php?st=new">Newest Posts</a></li>
+			<li class="first"><a class="content-link link_search" href="{tplvars.relative_url}photo_search.php?st=views">Most Popular</a></li>
+			<li><a class="content-link link_search" href="{tplvars.relative_url}photo_search.php?st=comm">Most Discussed</a></li>
+			<li><a class="content-link link_search" href="{tplvars.relative_url}photo_search.php?st=new">Newest Posts</a></li>
 		</ul>
 	</div>
 </div>

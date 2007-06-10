@@ -43,6 +43,12 @@ $tpl->set_var('subscriptions',vector2radios($subscriptions,'subscr_id'));
 $tpl->set_var('active_gateways',vector2radios($active_gateways,'module_code',4));
 $tpl->process('content','content');
 
-$tplvars['title']='Upgrade your membership';
+$tplvars['title']='Upgrade Your Membership';
+$tplvars['page_title']='Upgrade Your Membership';
+$tplvars['page']='subscriptions';
+$tplvars['css']='subscriptions.css';
+if (is_file('subscriptions_left.php')) {
+	include 'subscriptions_left.php';
+}
 include 'frame.php';
 ?>

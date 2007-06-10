@@ -200,7 +200,7 @@ $tpl->drop_loop('js_loop');
 unset($loop,$js_loop);
 
 $tplvars['title']=sprintf('Edit My %s',$_pcats[$cid]['pcat_name']);
-$tplvars['page_title']=sprintf('<a href="my_profile.php">My Profile</a> - %s',$_pcats[$cid]['pcat_name']);
+$tplvars['page_title']=sprintf('<a href="'.$tplvars['relative_url'].'my_profile.php">My Profile</a> - %s',$_pcats[$cid]['pcat_name']);
 $tplvars['page']='profile_edit';
 $tplvars['css']='profile_edit.css';
 if (is_file('profile_edit_left.php')) {

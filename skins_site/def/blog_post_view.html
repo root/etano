@@ -2,7 +2,7 @@
 {output.post_content}
 </div>
 <div class="post_details">
-	<span class="post_by">Posted by <!--opt name="output.fk_user_id"--><a class="content-link member_link" href="profile.php?uid={output.fk_user_id}"><!--/opt name="output.fk_user_id"-->{output.user}<!--opt name="output.fk_user_id"--></a><!--/opt name="output.fk_user_id"--></span>
+	<span class="post_by">Posted by <!--opt name="output.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={output.fk_user_id}"><!--/opt name="output.fk_user_id"-->{output.user}<!--opt name="output.fk_user_id"--></a><!--/opt name="output.fk_user_id"--></span>
 	<span class="date_posted"> on {output.date_posted}</span>
 </div>
 
@@ -10,8 +10,8 @@
 <!--opt name="output.num_comments"--><h3 class="subtitle">Comments ({output.num_comments})</h3><!--/opt name="output.num_comments"-->
 <!--loop name="loop"-->
 <div class="comment {loop.is_online}">
-	<!--opt name="loop.fk_user_id"--><a href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"><!--/opt name="loop.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"-->
-	<span class="controls"><!--opt name="loop.editme"--><a id="editme_{loop.comment_id}" class="content-link link_change" href="blog_post_view.php?pid={output.post_id}&amp;return={output.return2me}&amp;edit_comment={loop.comment_id}#postarea" title="Edit comment">edit</a><!--/opt name="loop.editme"--> <!--opt name="output.post_owner"--><a class="content-link link_delete" href="processors/blog_comment_delete.php?comment_id={loop.comment_id}&amp;return={output.return2me}" title="Remove comment">delete</a><!--/opt name="output.post_owner"--></span> <!--opt name="loop.fk_user_id"--><a class="content-link member_link" href="profile.php?uid={loop.fk_user_id}" title="{loop.user}"><!--/opt name="loop.fk_user_id"-->{loop.user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--> said on {loop.date_posted} :
+	<!--opt name="loop.fk_user_id"--><a href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user}"><!--/opt name="loop.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user}" /><!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"-->
+	<span class="controls"><!--opt name="loop.editme"--><a id="editme_{loop.comment_id}" class="content-link link_change" href="{tplvars.relative_url}blog_post_view.php?pid={output.post_id}&amp;return={output.return2me}&amp;edit_comment={loop.comment_id}#postarea" title="Edit comment">edit</a><!--/opt name="loop.editme"--> <!--opt name="output.post_owner"--><a class="content-link link_delete" href="{tplvars.relative_url}processors/blog_comment_delete.php?comment_id={loop.comment_id}&amp;return={output.return2me}" title="Remove comment">delete</a><!--/opt name="output.post_owner"--></span> <!--opt name="loop.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user}"><!--/opt name="loop.fk_user_id"-->{loop.user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--> said on {loop.date_posted} :
 	<a name="comm{loop.comment_id}"><p>{loop.comment}</p></a>
 	<div class="clear"></div>
 </div>
@@ -29,7 +29,7 @@
 	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#comment')[0])">Quote</a>
 </div>
 <!--/opt name="output.bbcode_comments"-->
-<form id="blogcomment_form" action="processors/blog_comments.php" method="post">
+<form id="blogcomment_form" action="{tplvars.relative_url}processors/blog_comments.php" method="post">
 <fieldset>
 	<input type="hidden" name="comment_id" id="comment_id" value="{output.comment_id}" />
 	<input type="hidden" name="fk_parent_id" value="{output.post_id}" />
@@ -41,7 +41,7 @@
 <fieldset>
 	<dl class="required">
 		<dt>Verification code:</dt>
-		<dd><img src="show_captcha.php?{output.rand}" /></dd>
+		<dd><img src="{tplvars.relative_url}show_captcha.php?{output.rand}" /></dd>
 	</dl>
 	<dl>
 		<dt>&nbsp;</dt>
@@ -56,8 +56,8 @@
 </form>
 <!--/opt name="output.allow_comments"-->
 
-<script type="text/javascript" src="js/scrollto.js"></script>
-<script type="text/javascript" src="js/blog_post_view.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/scrollto.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/blog_post_view.js"></script>
 <!--opt name="output.bbcode_comments"-->
-<script type="text/javascript" src="js/bbcode.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/bbcode.js"></script>
 <!--/opt name="output.bbcode_comments"-->

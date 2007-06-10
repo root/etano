@@ -1,4 +1,4 @@
-<form action="processors/pass_lost.php" method="post" id="pass_lost" class="edit_form">
+<form action="{tplvars.relative_url}processors/pass_lost.php" method="post" id="pass_lost" class="edit_form">
 <fieldset>
 	<dl>
 		<dt><label for="email">Email:</label></dt>
@@ -14,7 +14,7 @@
 <fieldset>
 	<dl>
 		<dt>Security image:</dt>
-		<dd><img src="show_captcha.php?{output.rand}" /></dd>
+		<dd><img src="{tplvars.relative_url}show_captcha.php?{output.rand}" /></dd>
 	</dl>
 	<dl>
 		<dt>&nbsp;</dt>
@@ -28,4 +28,4 @@
 </fieldset>
 </form>
 
-<script type="text/javascript" src="js/pass_lost.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/pass_lost.js"></script>

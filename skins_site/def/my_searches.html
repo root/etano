@@ -6,18 +6,18 @@
 	<div class="search_now">Search Now</div>
 </div>
 
-<form action="processors/my_searches_rename.php" method="post" id="renamesearch_form">
+<form action="{tplvars.relative_url}processors/my_searches_rename.php" method="post" id="renamesearch_form">
 <fieldset>
 <input type="hidden" name="search_id" value="" />
 <input type="hidden" name="title" value="" />
 </fieldset>
 </form>
 
-<form action="processors/my_searches.php" method="post" id="search_form">
+<form action="{tplvars.relative_url}processors/my_searches.php" method="post" id="search_form">
 <!--loop name="loop"-->
 <div class="row">
 	<div class="control">
-		<a class="content-link link_delete" href="processors/search_delete.php?sid={loop.search_id}&amp;return={output.return}" title="Delete this search" onclick="return(confirm('Are you sure you want to delete this search?'))">Delete</a>
+		<a class="content-link link_delete" href="{tplvars.relative_url}processors/search_delete.php?sid={loop.search_id}&amp;return={output.return}" title="Delete this search" onclick="return(confirm('Are you sure you want to delete this search?'))">Delete</a>
 		<a class="content-link link_change" id="edit_{loop.search_id}" href="#" title="Change search title" onclick="change_title('{loop.search_id}','{loop.encoded_title}')">Change search title</a>
 	</div>
 	<div class="title">{loop.title}</div>
@@ -27,7 +27,7 @@
 	<div class="alert">
 		<input type="checkbox" class="check" name="alert[]" id="alert_{loop.search_id}" value="{loop.search_id}" {loop.alert} />
 	</div>
-	<div class="search_now"><a class="content-link link_search_now" href="search.php?{loop.search_qs}">Search Now</a></div>
+	<div class="search_now"><a class="content-link link_search_now" href="{tplvars.relative_url}search.php?{loop.search_qs}">Search Now</a></div>
 </div>
 <!--noloop name="loop"-->
 <div class="row">
@@ -44,4 +44,4 @@
 </div>
 </form>
 
-<script type="text/javascript" src="js/my_searches.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/my_searches.js"></script>
