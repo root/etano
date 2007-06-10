@@ -1,4 +1,4 @@
-<form action="processors/message_proxy.php" method="post" id="mailbox_form">
+<form action="{tplvars.relative_url}processors/message_proxy.php" method="post" id="mailbox_form">
 <fieldset class="invisible">
 <input type="hidden" name="act" value="" />
 <input type="hidden" name="return" value="{return}" />
@@ -20,7 +20,7 @@
 <div class="row {loop.is_read}">
 	<div class="control {loop.message_type}"><input type="checkbox" class="check" id="mail_id_{loop.mail_id}" name="mail_id[{loop.mail_id}]" value="1" /></div>
 	<div class="sender">{loop.user_other}</div>
-	<div class="subject"><a class="content-link plain" href="message_read.php?mail_id={loop.mail_id}&amp;fid={fid}&amp;return={return}" title="Subject">{loop.subject}</a></div>
+	<div class="subject"><a class="content-link plain" href="{tplvars.relative_url}message_read.php?mail_id={loop.mail_id}&amp;fid={fid}&amp;return={return}" title="Subject">{loop.subject}</a></div>
 	<div class="date">{loop.date_sent}</div>
 	<!--noloop name="loop"-->
 	<p>No messages!</p>
@@ -43,4 +43,4 @@
 	<!--/opt name="!is_outbox"-->
 </div>
 
-<script type="text/javascript" src="js/mailbox.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/mailbox.js"></script>

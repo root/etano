@@ -1,4 +1,4 @@
-<form action="processors/photos_upload.php" method="post" enctype="multipart/form-data" id="photos_upload_form" class="edit_form">
+<form action="{tplvars.relative_url}processors/photos_upload.php" method="post" enctype="multipart/form-data" id="photos_upload_form" class="edit_form">
 <fieldset>
 	<input type="hidden" name="MAX_FILE_SIZE" value="{output.max_file_size}" />
 	<legend>Find the image(s) you want on your computer</legend>
@@ -20,4 +20,4 @@
 </fieldset>
 </form>
 
-<script type="text/javascript" src="js/photos_upload.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/photos_upload.js"></script>

@@ -106,7 +106,7 @@ class widget_members extends icontent_widget {
 					break;
 
 			}
-			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_path'].'search.php?st='.$this->config['mode'].'" title="More Members">More Members</a>';	// translate this
+			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_url'].'search.php?st='.$this->config['mode'].'" title="More Members">More Members</a>';	// translate this
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
 			} else {

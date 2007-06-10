@@ -146,7 +146,7 @@ $tpl->drop_loop('loop');
 unset($loop);
 
 $tplvars['title']='View photos';
-$tplvars['page_title']=sprintf('%s photos','<a href="profile.php?uid='.$output['fk_user_id'].'">'.$output['user'].'</a>');	// translate this
+$tplvars['page_title']=sprintf('%s photos','<a href="'.$tplvars['relative_url'].'profile.php?uid='.$output['fk_user_id'].'">'.$output['user'].'</a>');	// translate this
 $tplvars['page']='photo_view';
 $tplvars['css']='photo_view.css';
 if (is_file('photo_view_left.php')) {

@@ -1,0 +1,25 @@
+<form action="{tplvars.relative_url}processors/subscriptions.php" method="post" id="subscr_form" class="edit_form">
+<fieldset id="m_type">
+<dl>
+	<dt><label>Membership type:</label></dt>
+	<dd>
+		{subscriptions}
+	</dd>
+</dl>
+</fieldset>
+
+<fieldset id="m_type">
+<dl>
+	<dt><label>Payment system:</label></dt>
+	<dd>
+		{active_gateways}
+	</dd>
+</dl>
+</fieldset>
+
+<fieldset class="controls">
+	<input type="submit" class="button bmedium" value="Subscribe" />
+</fieldset>
+</form>
+
+<script type="text/javascript" src="{tplvars.relative_url}js/subscriptions.js"></script>

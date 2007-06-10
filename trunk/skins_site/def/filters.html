@@ -7,8 +7,8 @@
 <!--loop name="loop"-->
 <div class="row">
 	<div class="control">
-		<a class="content-link link_delete" href="processors/filters_delete.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Delete item">Delete</a>
-		<a class="content-link link_change" href="filters_addedit.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Edit filter">Edit</a>
+		<a class="content-link link_delete" href="{tplvars.relative_url}processors/filters_delete.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Delete item">Delete</a>
+		<a class="content-link link_change" href="{tplvars.relative_url}filters_addedit.php?filter_id={loop.filter_id}&amp;o={o}&amp;r={r}" title="Edit filter">Edit</a>
 	</div>
 	<div class="rule">{loop.field_value}</div>
 	<div class="moveto">{loop.fk_folder_id}</div>
@@ -21,7 +21,7 @@
 {pager2}
 
 <div id="controls">
-	<a class="content-link link_add" href="filters_addedit.php?o={o}&amp;r={r}">Add new filter</a>
+	<a class="content-link link_add" href="{tplvars.relative_url}filters_addedit.php?o={o}&amp;r={r}">Add new filter</a>
 </div>
 
-<script type="text/javascript" src="js/filters.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/filters.js"></script>

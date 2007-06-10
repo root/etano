@@ -1,4 +1,4 @@
-<form action="processors/blog_addedit.php" method="post" id="blog_addedit_form" class="edit_form">
+<form action="{tplvars.relative_url}processors/blog_addedit.php" method="post" id="blog_addedit_form" class="edit_form">
 <fieldset>
 <input type="hidden" name="return" value="{output.return}" />
 <input type="hidden" name="blog_id" value="{output.blog_id}" />
@@ -18,7 +18,7 @@
 </form>
 
 <div id="bottom_links">
-	<a class="content-link link_previous" href="my_blogs.php">Back to blogs list</a>
+	<a class="content-link link_previous" href="{tplvars.relative_url}my_blogs.php">Back to blogs list</a>
 </div>
 
-<script type="text/javascript" src="js/blog_addedit.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/blog_addedit.js"></script>

@@ -16,7 +16,7 @@ $_access_level=array();
 require_once 'access_levels.inc.php';
 require_once 'general_functions.inc.php';
 $tplvars['tplurl']=_BASEURL_.'/skins_site/'.get_my_skin();
-$tplvars['tplrelpath']=$tplvars['relative_path'].'skins_site/'.get_my_skin();
+$tplvars['tplrelpath']=$relative_path.'skins_site/'.get_my_skin();
 $_lang=array();
 require_once $tplvars['tplrelpath'].'/lang/strings_field.inc.php';
 $_pfields=array();
@@ -75,8 +75,8 @@ function check_login_member($level_code) {
 	if (($GLOBALS['_access_level'][$level_code]&$_SESSION['user']['membership'])!=$_SESSION['user']['membership']) {
 		$topass['message']['type']=MESSAGE_ERROR;
 //		$topass['message']['text']=$GLOBALS['_lang'][3];
-		$topass['message']['text']="We're sorry but you don't have access to this feature. --link to payment--";//translate
-		redirect2page('info.php',$topass);
+		$topass['message']['text']="We're sorry but you don't have access to this feature.";//translate
+		redirect2page('info.php',$topass,'type=access');
 	}
 	$user_id=0;
 	if (isset($_SESSION['user']['user_id'])) {

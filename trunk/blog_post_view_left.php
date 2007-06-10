@@ -41,7 +41,7 @@ if (!$current_passed && isset($loop[0])) {
 	$loop[0]['is_current']='current';
 }
 
-$tpl->set_file('left_content','blog_view_left.html');
+$tpl->set_file('left_content','blog_post_view_left.html');
 $tpl->set_var('blog',$blog);
 $tpl->set_loop('loop',$loop);
 $tpl->process('left_content','left_content',TPL_MULTILOOP);

@@ -4,10 +4,10 @@
 		<ul>
 			<!--loop name="loop"-->
 			<li class="year {loop.is_current}">
-				<a class="content-link link_simple group_name" id="year_{loop.year}" href="blog_view.php?bid={blog.blog_id}&amp;y={loop.year}">{loop.year}</a> ({loop.num_posts})
+				<a class="content-link link_simple group_name" id="year_{loop.year}" href="{tplvars.relative_url}blog_view.php?bid={blog.blog_id}&amp;y={loop.year}">{loop.year}</a> ({loop.num_posts})
 				<ul class="months" id="months_{loop.year}">
 					<!--loop name="months"-->
-					<li><a class="content-link link_simple" href="blog_view.php?bid={blog.blog_id}&amp;y={loop.year}&amp;m={months.month}">{months.month_name} {loop.year}</a> ({months.num_posts})</li>
+					<li><a class="content-link link_simple" href="{tplvars.relative_url}blog_view.php?bid={blog.blog_id}&amp;y={loop.year}&amp;m={months.month}">{months.month_name} {loop.year}</a> ({months.num_posts})</li>
 					<!--/loop name="months"-->
 				</ul>
 			</li>
@@ -21,17 +21,17 @@
 	<h3>My Account</h3>
 	<div class="box_content">
 		<ul class="menu">
-			<li class="first"><a class="content-link link_profile" href="my_profile.php">My Profile</a></li>
-			<li><a class="content-link link_photos" href="my_photos.php">My Photos</a></li>
-			<li><a class="content-link link_blogs" href="my_blogs.php">My Blogs</a></li>
-			<li><a class="content-link link_friends" href="my_networks.php">My Connections</a></li>
-			<li><a class="content-link link_mail" href="mailbox.php">My Messages</a></li>
-			<li><a class="content-link link_view" href="my_searches.php">My Saved Searches</a></li>
-			<li><a class="content-link link_mail" href="my_responses.php">My Saved Responses</a></li>
-			<li><a class="content-link link_change" href="my_settings.php">My Settings</a></li>
+			<li class="first"><a class="content-link link_profile" href="{tplvars.relative_url}my_profile.php">My Profile</a></li>
+			<li><a class="content-link link_photos" href="{tplvars.relative_url}my_photos.php">My Photos</a></li>
+			<li><a class="content-link link_blogs" href="{tplvars.relative_url}my_blogs.php">My Blogs</a></li>
+			<li><a class="content-link link_friends" href="{tplvars.relative_url}my_networks.php">My Connections</a></li>
+			<li><a class="content-link link_mail" href="{tplvars.relative_url}mailbox.php">My Messages</a></li>
+			<li><a class="content-link link_view" href="{tplvars.relative_url}my_searches.php">My Saved Searches</a></li>
+			<li><a class="content-link link_mail" href="{tplvars.relative_url}my_responses.php">My Saved Responses</a></li>
+			<li><a class="content-link link_change" href="{tplvars.relative_url}my_settings.php">My Settings</a></li>
 		</ul>
 	</div>
 </div>
 <!--/opt name="tplvars.user_logged"-->
 
-<script type="text/javascript" src="js/blog_archive.js"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/blog_archive.js"></script>
