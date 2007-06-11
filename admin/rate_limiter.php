@@ -22,7 +22,7 @@ allow_dept(DEPT_ADMIN);
 $tpl=new phemplate('skin/','remove_nonjs');
 $tpl->set_file('content','rate_limiter.html');
 
-$query="SELECT a.*,b.`m_name`,c.`level_code` FROM `{$dbtable_prefix}rate_limiter` a,`{$dbtable_prefix}memberships` b,`{$dbtable_prefix}access_levels` c WHERE a.`m_value`=b.`m_value` AND a.`fk_level_id`=c.`level_id`";
+$query="SELECT a.*,b.`m_name` FROM `{$dbtable_prefix}rate_limiter` a,`{$dbtable_prefix}memberships` b WHERE a.`m_value`=b.`m_value`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $i=0;
 $rate_limiter=array();
