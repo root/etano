@@ -1,7 +1,7 @@
 <!--opt name="tplvars.user_logged"-->
 <div id="login-box">
 	<fieldset>
-		<a href="processors/logout.php" id="logout" title="Sign out">Sign out</a>
+		<a href="{tplvars.relative_url}processors/logout.php" id="logout" title="Sign out">Sign out</a>
 		<span id="hello-message">
 			Hello, <a href="{tplvars.relative_url}my_profile.php" title="{tplvars.myself.user}">{tplvars.myself.user}</a>!
 		</span>
@@ -13,14 +13,14 @@
 	<fieldset>
 		<input type="text" id="username" name="user" />
 		<input type="password" id="password" name="pass" />
-		<input type="image" id="login" alt="Login" src="{tplvars.relative_url}/images/btn-login-over.gif" />
+		<input type="image" id="login" alt="Login" src="{tplvars.tplurl}/images/btn-login-over.gif" />
 	</fieldset>
 	<fieldset>
 		<span id="lost-password">
-			<a href="pass_lost.php" title="Lost password?">Lost password?</a>
+			<a href="{tplvars.relative_url}pass_lost.php" title="Lost password?">Lost password?</a>
 		</span>
 		<span id="sign-up">
-			Hello guest, please login above or <a href="join.php" title="Sign up">sign up</a>.
+			Hello guest, please login above or <a href="{tplvars.relative_url}join.php" title="Sign up">sign up</a>.
 		</span>
 	</fieldset>
 </form>

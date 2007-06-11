@@ -12,6 +12,7 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 include 'logs.inc.php';
+include 'site_bans.inc.php';
 $_access_level=array();
 require_once 'access_levels.inc.php';
 require_once 'general_functions.inc.php';
@@ -56,7 +57,13 @@ function get_user_by_userid($user_id) {
 
 
 function check_login_member($level_code) {
-	$topass=array();
+	// is this user banned?
+	global $_bans;
+	if (isset($_bans[_PUNISH_BANUSER_]) && in_array($_SESSION['user']['user'],$_bans[_PUNISH_BANUSER_])) {
+		die;
+	} elseif (isset($_bans[_PUNISH_BANIP_]) && in_array(sprintf('%u',ip2long($_SERVER['REMOTE_ADDR'])),$_bans[_PUNISH_BANIP_])) {
+		die;
+	}
 	global $dbtable_prefix;
 	if (!isset($GLOBALS['_access_level'][$level_code])) {
 		$GLOBALS['_access_level'][$level_code]=0;	// no access allowed if level not defined
@@ -71,21 +78,30 @@ function check_login_member($level_code) {
 		redirect2page('login.php');
 	}
 //	unset($_SESSION['timedout']);
-	// members from here on
 	if (($GLOBALS['_access_level'][$level_code]&$_SESSION['user']['membership'])!=$_SESSION['user']['membership']) {
-		$topass['message']['type']=MESSAGE_ERROR;
-//		$topass['message']['text']=$GLOBALS['_lang'][3];
-		$topass['message']['text']="We're sorry but you don't have access to this feature.";//translate
-		redirect2page('info.php',$topass,'type=access');
+		redirect2page('info.php',array(),'type=access');	// no access to this feature
 	}
 	$user_id=0;
+	$now=gmdate('YmdHis');
 	if (isset($_SESSION['user']['user_id'])) {
-		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`='".$_SESSION['user']['user_id']."'";
+		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='$now' WHERE `".USER_ACCOUNT_ID."`='".$_SESSION['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$user_id=$_SESSION['user']['user_id'];
 	}
-	$query="REPLACE INTO `{$dbtable_prefix}online` SET `fk_user_id`='$user_id',`sess`='".session_id()."',`last_activity`='".gmdate('YmdHis')."'";
+	$query="UPDATE `{$dbtable_prefix}online` SET `last_activity`='$now' WHERE `fk_user_id`='$user_id' AND `sess`='".session_id()."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (!mysql_affected_rows()) {
+		$query="INSERT IGNORE INTO `{$dbtable_prefix}online` SET `fk_user_id`='$user_id',`sess`='".session_id()."',`last_activity`='$now'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
+	// log and rate limit
+	$log['level']=$level_code;
+	$log['user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
+	$log['user']=$_SESSION['user']['user'];
+	$log['membership']=$_SESSION['user']['membership'];
+	$log['ip']=$_SERVER['REMOTE_ADDR'];
+	log_user_action($log);
+	rate_limiter($log,"We're sorry but you tried this too many times. Please wait for a while before trying again.");
 }
 
 

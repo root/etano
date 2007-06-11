@@ -41,6 +41,10 @@ TODO
 - href="{output.return2} ????
 - bookmark si report photo ???????
 - popWin la vizualizare poza profil/album? nu era thickbox? (oare are nevoie de {tplvars.relative_url} ?)
+
+- helpul in admin de la datemill cu licenta.
+- error_message in rate_limiter sa fie translatabil
+- site_ban management in admin
 - mailbox.php in format nou (cu $output)
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
 - membership icon

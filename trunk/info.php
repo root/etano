@@ -16,6 +16,7 @@ require_once 'includes/vars.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
+global $tplvars;
 
 $type=isset($_GET['type']) ? $_GET['type'] : '';
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');

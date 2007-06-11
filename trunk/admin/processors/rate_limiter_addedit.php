@@ -39,11 +39,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['text']='Please select a membership!';
 		$input['error_fk_m_id']='red_border';
 	}
-	if (empty($input['fk_level_id'])) {
+	if (empty($input['level_code'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='Please select a level!';
-		$input['error_fk_level_id']='red_border';
+		$input['error_level_code']='red_border';
 	}
 	if (empty($input['limit'])) {
 		$error=true;
@@ -95,22 +95,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 //		$input['x']=addslashes_mq($_POST['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
-	}
-	if (isset($_POST['o'])) {
-		$qs.=$qs_sep.'o='.$_POST['o'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['r'])) {
-		$qs.=$qs_sep.'r='.$_POST['r'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['ob'])) {
-		$qs.=$qs_sep.'ob='.$_POST['ob'];
-		$qs_sep='&';
-	}
-	if (isset($_POST['od'])) {
-		$qs.=$qs_sep.'od='.$_POST['od'];
-		$qs_sep='&';
 	}
 }
 redirect2page($nextpage,$topass,$qs);

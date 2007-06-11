@@ -35,7 +35,7 @@ if (isset($_SESSION['topass']['input'])) {
 	}
 }
 $rate_limiter['m_value']=dbtable2options("`{$dbtable_prefix}memberships`",'`m_value`','`m_name`','`m_value`',$rate_limiter['m_value']);
-$rate_limiter['fk_level_id']=dbtable2options("`{$dbtable_prefix}access_levels`",'`level_id`','`level_code`','`level_id`',$rate_limiter['fk_level_id']);
+$rate_limiter['level_code']=dbtable2options("`{$dbtable_prefix}access_levels`",'`level_code`','`level_code`','`level_id`',$rate_limiter['level_code']);
 $rate_limiter['punishment']=vector2options($accepted_punishments,$rate_limiter['punishment']);
 
 $tpl->set_file('content','rate_limiter_addedit.html');
