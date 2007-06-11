@@ -342,6 +342,18 @@ ul.menu li.first {
 	background-image: url('../images/link_profile.gif');
 }
 
+.content-link.link_blogs {
+	background-image: url('../images/link_blog.gif');
+}
+
+.content-link.link_friends {
+	background-image: url('../images/link_friends.gif');
+}
+
+.content-link.link_filters {
+	background-image: url('../images/link_filters.gif');
+}
+
 .content-link.link_bookmark {
 	background-image: url('../images/link_bookmark.gif');
 }
@@ -388,10 +400,6 @@ ul.menu li.first {
 
 .content-link.link_delete {
 	background-image: url('../images/link_block.gif');
-}
-
-.content-link.link_add {
-	background-image: url('../images/link_add.gif');
 }
 
 .content-link.link_previous {
