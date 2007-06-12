@@ -175,8 +175,8 @@ $tpl->set_loop('loop_rows',$loop_rows);
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTLOOP | TPL_OPTIONAL | TPL_NOLOOP);
 $tpl->drop_loop('loop_rows');
-unset($loop_rows);
 $tpl->drop_var('output.pager2');
+unset($loop_rows);
 
 $tplvars['title']='Photos';
 $tplvars['page']='photo_search';

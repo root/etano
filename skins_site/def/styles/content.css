@@ -1,5 +1,3 @@
-/* Content areas */
-
 .content_area {
 	position: relative;
 	overflow: hidden;
@@ -116,10 +114,8 @@
 }
 
 #content_column2 {
-	position: absolute;
-	top: 0;
-	left: 0;
 	margin: 18px 0;
+	float: left;
 }
 
 
