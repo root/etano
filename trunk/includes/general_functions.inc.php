@@ -114,6 +114,7 @@ function pager($totalrows,$offset,$results) {
 function get_my_skin() {
 	if (isset($_SESSION['user']['skin']) && !empty($_SESSION['user']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_SESSION['user']['skin'])) {
 		$myreturn=$_SESSION['user']['skin'];
+		$_COOKIE['sco_app']['skin']=$myreturn;
 	} elseif (isset($_COOKIE['sco_app']['skin']) && preg_match('/^\w+$/',$_COOKIE['sco_app']['skin']) && !empty($_COOKIE['sco_app']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_COOKIE['sco_app']['skin'])) {
 		$myreturn=$_COOKIE['sco_app']['skin'];
 		// save the option in less expensive places

@@ -23,6 +23,7 @@ if (!empty($message)) {
 	}
 	$tpl->set_var('message',$message);
 }
+$tplvars['lk']=md5(_LICENSE_KEY_);
 $tpl->set_var('tplvars',$tplvars);
 echo $tpl->process('','frame',TPL_FINISH | TPL_OPTIONAL | TPL_INCLUDE);
 if (isset($_SESSION['topass'])) {
