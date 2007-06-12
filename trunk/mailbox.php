@@ -120,14 +120,6 @@ $tplvars['title']='Read your messages';     // translate
 $tplvars['page_title']=$my_folders[$fid];
 $tplvars['page']='mailbox';
 $tplvars['css']='mailbox.css';
-// ugly hack for the default skin. Not needed for other skins
-if (empty($totalrows) || $r<5) {
-	$tplvars['fixlayout']=300;
-} elseif ($totalrows>=5 && $r>=5 && $r<10) {
-	$tplvars['fixlayout']=200;
-} elseif ($totalrows==10 || $r==10) {
-	$tplvars['fixlayout']=100;
-}
 if (is_file('mailbox_left.php')) {
 	include 'mailbox_left.php';
 }
