@@ -32,6 +32,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$rate_limiter_default['defaults'][$k]);
 	}
 
+	$input['error_message']=sanitize_and_format_gpc($_POST,'error_message',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+
 // check for input errors
 	if (empty($input['m_value'])) {
 		$error=true;
@@ -63,8 +65,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['text']='Please select a punishment for when this limit is reached!';
 		$input['error_interval']='red_border';
 	}
+	if (empty($input['error_message'])) {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Please enter the error message for this limit!';
+		$input['error_error_message']='red_border';
+	}
 
 	if (!$error) {
+		$default_skin_code=get_default_skin_code();
 		if (!empty($input['rate_id'])) {
 			$query="UPDATE `{$dbtable_prefix}rate_limiter` SET ";
 			foreach ($rate_limiter_default['defaults'] as $k=>$v) {
@@ -75,9 +84,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query=substr($query,0,-1);
 			$query.=" WHERE `rate_id`='".$input['rate_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$query="REPLACE INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['error_message']."',`fk_lk_id`='".$input['fk_lk_id_error_message']."',`skin`='$default_skin_code'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Limit changed.';
 		} else {
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Error message for a limit',`lk_use`='".LK_SITE."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$input['fk_lk_id_error_message']=mysql_insert_id();
+			$query="INSERT INTO `{$dbtable_prefix}lang_strings` (`lang_value`,`fk_lk_id`,`skin`) VALUES ('".$input['error_message']."','".$input['fk_lk_id_error_message']."','$default_skin_code')";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+
 			$query="INSERT INTO `{$dbtable_prefix}rate_limiter` SET ";
 			foreach ($rate_limiter_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
@@ -89,6 +106,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Limit added.';
 		}
+		regenerate_langstrings_array();
 	} else {
 		$nextpage='admin/rate_limiter_addedit.php';
 // 		you must re-read all textareas from $_POST like this:

@@ -23,6 +23,7 @@ require_once $tplvars['tplrelpath'].'/lang/strings_field.inc.php';
 $_pfields=array();
 $_pcats=array();
 require_once 'fields.inc.php';
+require_once $tplvars['tplrelpath'].'/lang/strings_site.inc.php';
 
 if (function_exists('error_handler')) {
 	set_error_handler('error_handler');
@@ -99,9 +100,11 @@ function check_login_member($level_code) {
 	$log['user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
 	$log['user']=$_SESSION['user']['user'];
 	$log['membership']=$_SESSION['user']['membership'];
-	$log['ip']=$_SERVER['REMOTE_ADDR'];
-	log_user_action($log);
-	rate_limiter($log,"We're sorry but you tried this too many times. Please wait for a while before trying again.");
+	$log['ip']=sprintf('%u',ip2long($_SERVER['REMOTE_ADDR']));
+	if ($level_code!='all') {
+		log_user_action($log);
+	}
+	rate_limiter($log);
 }
 
 

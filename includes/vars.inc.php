@@ -112,6 +112,7 @@ define('FIELD_RANGE',108);
 $tplvars['sitename']=_SITENAME_;
 $tplvars['baseurl']=_BASEURL_;
 $tplvars['photourl']=_PHOTOURL_;
+$_ENV['lk']=md5(_LICENSE_KEY_);
 if (isset($_SERVER['PHP_SELF'])) {
 	$relative_path=@str_repeat('../',substr_count($_SERVER['PHP_SELF'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
 	$tplvars['relative_url']=@str_repeat('../',substr_count($_SERVER['REQUEST_URI'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
