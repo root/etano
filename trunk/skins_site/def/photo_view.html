@@ -11,7 +11,7 @@
 <p id="rating_stat">Current rating: <span id="rate_num">{output.rate_num}</span> / 5 (<span id="votes_num">{output.stat_votes}</span> votes)</p>
 <!--/opt name="output.allow_rating"-->
 
-<a href="javascript:;" onclick="popWin('popup_photo_view.php?photo_id={output.photo_id}','photo',{output.pic_width},{output.pic_width},1)" title="Click to enlarge"><img class="user_photo thumb2" src="{tplvars.photourl}/t2/{output.photo}" alt="{output.user}" /></a>
+<a href="javascript:;" onclick="popWin('{tplvars.relative_url}popup_photo_view.php?photo_id={output.photo_id}','photo',{output.pic_width},{output.pic_width},1)" title="Click to enlarge"><img class="user_photo thumb2" src="{tplvars.photourl}/t2/{output.photo}" alt="{output.user}" /></a>
 <p id="photo_caption">{output.caption}</p>
 
 <!--opt name="output.show_comments"-->
@@ -65,7 +65,7 @@
 <!--/opt name="output.allow_comments"-->
 
 <div id="bottom_links">
-	<a class="content-link link_previous" href="{output.return2}" title="Back">Back</a>
+	<a class="content-link link_previous" href="{tplvars.relative_url}{output.return2}" title="Back">Back</a>
 </div>
 
 <script type="text/javascript" src="{tplvars.relative_url}js/scrollto.js"></script>

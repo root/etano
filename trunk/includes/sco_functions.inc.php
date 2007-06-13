@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007042401
+File version:				1.2007061201
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -830,7 +830,7 @@ function make_seed() {
 function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	mt_srand(make_seed());
 	$radius=4;
-	$phpself=explode('?',$_SERVER['PHP_SELF']);
+	$phpself=explode('?',$_SERVER['REQUEST_URI']);
 	$phpself=$phpself[0];
 	global $accepted_results_per_page;
 	$params=array();
