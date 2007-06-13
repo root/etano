@@ -38,17 +38,11 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 TODO
 - info access page.
-- pager?
-- href="{output.return2} ????
-- bookmark si report photo ???????
 - popWin la vizualizare poza profil/album? nu era thickbox? (oare are nevoie de {tplvars.relative_url} ?)
 
 - tos, privacy, contact
 - site_ban management in admin
-- mailbox.php in format nou (cu $output)
-- clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
 - membership icon
-- formatare la date of birth
 
 - scor la blog add doar daca blogul este mai mare de x caractere.
 - scor in functie de rating.
@@ -61,6 +55,9 @@ TODO
 - in toate procesoarele tb sa verific cazul de eroare:
 // 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
 //		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+- mailbox.php in format nou (cu $output)
+- clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
+- formatare la date of birth
 
 - blog/poze: nivel acces: public/private/only people in my XXX network are allowed to see it.
 
@@ -75,8 +72,6 @@ TODO
 - search membri (search.php) case 'vote',case 'views',case 'comm'
 - installer + modman
 - licenta si verificari
-- today birthdays widget cu cache
-- pviews ar putea fi facut tot cu cache dar mai scurt ca durata
 
 ---------------------------------------------------------------------
 - modman: ftp low level?
@@ -91,6 +86,9 @@ TODO
 - scris in poza fara freettf (in captcha si watermark)
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
 
+- bookmark si report photo ???????
+- today birthdays widget cu cache
+- pviews ar putea fi facut tot cu cache dar mai scurt ca durata
 - profile views
 - favorite photos/blogs
 - rewritten urls list
