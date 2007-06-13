@@ -21,8 +21,8 @@ require_once 'includes/user_functions.inc.php';
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $output=array();
-$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$output['r']=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
+$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
 $output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $input=array();
@@ -258,7 +258,10 @@ $output['totalrows']=count($user_ids);
 
 // get the results from user cache for the found user_ids
 if (!empty($output['totalrows'])) {
-	$user_ids=array_slice($user_ids,$output['o'],$output['r']);
+	if ($o>$output['totalrows']) {
+		$o=$output['totalrows']-$r;
+	}
+	$user_ids=array_slice($user_ids,$o,$r);
 	// how to display the results: in gallery mode or in list mode
 	$rv_mode='list_view';
 	if (isset($_COOKIE['sco_app']['rv_mode']) && $_COOKIE['sco_app']['rv_mode']=='g') {
@@ -275,7 +278,7 @@ if (!empty($output['totalrows'])) {
 
 	// set $_GET for the pager.
 	$_GET=array('search'=>$output['search_md5'],'v'=>(isset($_GET['v']) && !empty($_GET['v'])) ? $_GET['v'] : 'l');
-	$output['pager2']=pager($output['totalrows'],$output['o'],$output['r']);
+	$output['pager2']=pager($output['totalrows'],$o,$r);
 } else {
 	unset($output['totalrows']);
 }

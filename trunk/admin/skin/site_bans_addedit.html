@@ -1,0 +1,39 @@
+<h2>Banned Members</h2>
+
+<div class="hint">Please enter the ban below:
+	<p>Warning: Do not ban the user 'guest' or nobody will be able to access the site anymore!</p>
+</div>
+
+<form action="processors/site_bans_addedit.php" method="post" id="bans_form">
+<input type="hidden" name="ban_id" value="{output.ban_id}" />
+<input type="hidden" name="fk_lk_id_reason" value="{output.fk_lk_id_reason}" />
+<input type="hidden" name="return" value="{output.return}" />
+<table id="bans_addedit" class="form_table">
+<tr>
+	<td class="label">Ban what?</td>
+	<td class="field">
+		{output.ban_type}
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label">Username/address:</td>
+	<td class="field"><input type="text" name="what" id="what" value="{output.what}" tabindex="2" /></td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label">Reason for ban:</td>
+	<td class="field"><input type="text" name="reason" id="reason" value="{output.reason}" tabindex="3" /></td>
+	<td class="comment">Note: the value you enter here is for the default skin ({output.default_skin}) <a class="translate" href="javascript:;" onclick="popWin('popup_lang_string.php?lk_id={output.fk_lk_id_reason}','translate',450,300,1,1)">Translate!</a></td>
+</tr>
+<tr>
+	<td class="label">&nbsp;</td>
+	<td class="field"><input type="submit" class="button" value="Save" id="btn_save" tabindex="4" /></td>
+	<td class="comment"></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
+
+<script type="text/javascript" src="js/site_bans_addedit.js"></script>

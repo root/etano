@@ -272,6 +272,9 @@ $totalrows=count($user_ids);
 // get the details for the found user_ids...unfortunately that's another query
 $loop=array();
 if (!empty($totalrows)) {
+	if ($o>$totalrows) {
+		$o=$totalrows-$r;
+	}
 	// handle prev/next from profile.php
 	if (isset($_GET['uid']) && isset($_GET['go']) && ($_GET['go']==1 || $_GET['go']==-1)) {
 		$uid=(int)$_GET['uid'];

@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text'][]='Invalid user name. Please use only letters and digits.';//translate
 			$input['error_user']='red_border';
 		}
-		if (!$error && get_userid_by_user($input['user'])) {
+		if (!$error && ($input['user']=='guest' || get_userid_by_user($input['user']))) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
 			$topass['message']['text'][]='This account already exists. Please choose another one.';

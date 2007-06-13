@@ -29,6 +29,9 @@ $totalrows=mysql_result($res,0,0);
 
 $subscriptions=array();
 if (!empty($totalrows)) {
+	if ($o>$totalrows) {
+		$o=$totalrows-$r;
+	}
 	$query="SELECT a.*,b.`m_name` as `m_value_from`,c.`m_name` as `m_value_to` FROM $from WHERE $where ORDER BY a.`subscr_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {

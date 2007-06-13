@@ -46,6 +46,9 @@ if (!empty($state_id) && !empty($country_id)) {
 	$totalrows=mysql_result($res,0,0);
 
 	if (!empty($totalrows)) {
+		if ($o>$totalrows) {
+			$o=$totalrows-$r;
+		}
 		$query="SELECT `city_id`,`city`,`latitude`,`longitude` FROM $from WHERE $where ORDER BY `city` ASC LIMIT $o,$r";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$i=0;

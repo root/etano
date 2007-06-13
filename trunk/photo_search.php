@@ -24,8 +24,8 @@ define('COLUMNS',3);
 $accepted_results_per_page=array('6'=>6,'12'=>12,'24'=>24,'48'=>48);
 
 $output=array();
-$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$output['r']=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
+$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
 $input['acclevel_id']=17; // default access level is the one for advanced search!!!!
 $from="`{$dbtable_prefix}user_photos` a";
@@ -129,7 +129,10 @@ if (!$error) {
 
 $loop_rows=array();
 if (!empty($totalrows)) {
-	$query="SELECT a.`photo_id`,a.`fk_user_id`,a.`_user` as `user`,a.`photo`,a.`allow_comments`,a.`caption`,a.`stat_views`,a.`stat_comments`,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM $from WHERE $where ORDER BY $orderby LIMIT ".$output['o'].','.$output['r'];
+	if ($o>$totalrows) {
+		$o=$totalrows-$r;
+	}
+	$query="SELECT a.`photo_id`,a.`fk_user_id`,a.`_user` as `user`,a.`photo`,a.`allow_comments`,a.`caption`,a.`stat_views`,a.`stat_comments`,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM $from WHERE $where ORDER BY $orderby LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$loop_items=array();
 	$i=1;
@@ -162,7 +165,7 @@ if (!empty($totalrows)) {
 	} else {
 		$loop_rows[count($loop_rows)-1]['class']='last';
 	}
-	$output['pager2']=pager($totalrows,$output['o'],$output['r']);
+	$output['pager2']=pager($totalrows,$o,$r);
 }
 
 $output['return']='photo_search.php';

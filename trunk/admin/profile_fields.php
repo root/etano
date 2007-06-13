@@ -36,6 +36,9 @@ $totalrows=mysql_result($res,0,0);
 
 $loop=array();
 if (!empty($totalrows)) {
+	if ($o>$totalrows) {
+		$o=$totalrows-$r;
+	}
 	$query="SELECT a.*,b.`lang_value` as `label`,c.`fk_lk_id_pcat` FROM $from WHERE $where ORDER BY a.`order_num` LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$i=0;

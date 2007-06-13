@@ -30,6 +30,9 @@ $totalrows=mysql_result($res,0,0);
 $date_format=get_site_option('date_format','core');
 $subscriptions_auto=array();
 if (!empty($totalrows)) {
+	if ($o>$totalrows) {
+		$o=$totalrows-$r;
+	}
 	// create the $pfields helper array for easier access to fields by dbfield
 	$pfields=array();
 	foreach ($_pfields as $pfield_id=>$pfield) {

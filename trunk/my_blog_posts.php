@@ -37,6 +37,9 @@ if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 
 	$loop=array();
 	if (!empty($totalrows)) {
+		if ($o>$totalrows) {
+			$o=$totalrows-$r;
+		}
 		$query="SELECT a.`post_id`,a.`title`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`blog_name`,b.`blog_url` FROM $from WHERE $where ORDER BY a.`date_posted` DESC LIMIT $o,$r";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {

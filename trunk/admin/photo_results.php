@@ -108,6 +108,9 @@ $totalrows=count($photo_ids);
 // get the details for the found photo_ids...unfortunately that's another query
 $loop=array();
 if (!empty($totalrows)) {
+	if ($o>$totalrows) {
+		$o=$totalrows-$r;
+	}
 	$photo_ids=array_slice($photo_ids,$o,$r);
 	$query="SELECT *,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
