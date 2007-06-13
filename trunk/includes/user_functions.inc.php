@@ -98,6 +98,7 @@ function check_login_member($level_code) {
 	// log and rate limit
 	$log['level']=$level_code;
 	$log['user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
+	$log['sess']=session_id();
 	$log['user']=$_SESSION['user']['user'];
 	$log['membership']=$_SESSION['user']['membership'];
 	$log['ip']=sprintf('%u',ip2long($_SERVER['REMOTE_ADDR']));

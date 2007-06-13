@@ -1,7 +1,7 @@
 $(function() {
 	// IE hack: hover for buttons
 	if($.browser.msie) {
-		$('input.blarge, input.bmedium, input.bsmall').hover(function() {
+		$('input.large, input.medium, input.small').hover(function() {
 			$(this).css('background-position','bottom');
 		},function() {
 			$(this).css('background-position','top');

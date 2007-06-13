@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!empty($user) && !empty($pass)) {
 		$log['level']='login';
 		$log['user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
+		$log['sess']=session_id();
 		$log['user']=$user;
 		$log['membership']=$_SESSION['user']['membership'];
 		$log['ip']=$_SERVER['REMOTE_ADDR'];
