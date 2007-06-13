@@ -1,0 +1,47 @@
+<form id="contact_form" action="{tplvars.relative_url}processors/contact.php" method="post" class="edit_form">
+<fieldset>
+	<dl class="required">
+		<dt>Subject:</dt>
+		<dd><input type="text" name="subject" id="subject" tabindex="1" value="{output.subject}" /></dd>
+	</dl>
+<!--opt name="!tplvars.user_logged"-->
+	<dl>
+		<dt>Your name:</dt>
+		<dd>
+			<input type="text" name="name" id="name" tabindex="2" value="{output.name}" />
+		</dd>
+	</dl>
+	<dl class="required">
+		<dt>Your email:</dt>
+		<dd>
+			<input type="text" name="email" id="email" tabindex="3" value="{output.email}" />
+			<span class="comment">(needed to contact you back)</span>
+		</dd>
+	</dl>
+<!--/opt name="!tplvars.user_logged"-->
+	<dl class="required">
+		<dt>Your message:</dt>
+		<dd><textarea rows="" cols="" id="message_body" name="message_body" tabindex="4">{output.message_body}</textarea></dd>
+	</dl>
+</fieldset>
+<!--opt name="!tplvars.user_logged"-->
+<!--opt name="output.use_captcha"-->
+<fieldset>
+	<dl class="required">
+		<dt>Verification code:</dt>
+		<dd><img src="{tplvars.relative_url}show_captcha.php?{output.rand}" /></dd>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><input type="text" name="captcha" id="captcha" size="4" tabindex="5" /> <span class="field-help">Enter the characters from above.</span></dd>
+	</dl>
+</fieldset>
+<!--/opt name="output.use_captcha"-->
+<!--/opt name="!tplvars.user_logged"-->
+<fieldset class="controls">
+	<p class="mandatory"><span>* Blue fields</span> are mandatory.</p>
+	<input class="button medium" id="post-button" tabindex="6" type="submit" value="Send" />
+</fieldset>
+</form>
+
+<script type="text/javascript" src="{tplvars.relative_url}js/contact.js"></script>

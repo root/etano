@@ -38,9 +38,7 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 TODO
 - info access page.
-- popWin la vizualizare poza profil/album? nu era thickbox? (oare are nevoie de {tplvars.relative_url} ?)
 
-- tos, privacy, contact
 - site_ban management in admin
 - membership icon
 
@@ -86,6 +84,7 @@ TODO
 - scris in poza fara freettf (in captcha si watermark)
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
 
+- popWin la vizualizare poza profil/album? nu era thickbox?
 - bookmark si report photo ???????
 - today birthdays widget cu cache
 - pviews ar putea fi facut tot cu cache dar mai scurt ca durata

@@ -18,7 +18,7 @@ $accepted_punishments=array(_PUNISH_ERROR_=>'Sorry page',_PUNISH_BANUSER_=>'Ban 
 
 function log_user_action(&$log) {
 	global $dbtable_prefix;
-	$query="INSERT INTO `{$dbtable_prefix}site_log` SET `fk_user_id`='".$log['user_id']."',`user`='".$log['user']."',`m_value`='".$log['membership']."',`level_code`='".$log['level']."',`ip`='".$log['ip']."',`time`='".gmdate('YmdHis')."'";
+	$query="INSERT INTO `{$dbtable_prefix}site_log` SET `fk_user_id`='".$log['user_id']."',`user`='".$log['user']."',`m_value`='".$log['membership']."',`level_code`='".$log['level']."',`ip`='".$log['ip']."',`time`='".gmdate('YmdHis')."',`sess`='".$log['sess']."'";
 	@mysql_query($query);
 }
 
@@ -30,7 +30,7 @@ function rate_limiter(&$log) {
 	if (!empty($log['user_id'])) {
 		$where=" AND `fk_user_id`='".$log['user_id']."'";
 	} else {
-		$where=" AND (`user`='".$log['user']."' OR `ip`='".$log['ip']."')";
+		$where=" AND `ip`='".$log['ip']."' AND `sess`='".$log['sess']."'";
 	}
 	$query="SELECT `limit`,`interval`,`punishment`,`fk_lk_id_error_message` FROM `{$dbtable_prefix}rate_limiter` WHERE `level_code`='".$log['level']."' AND `m_value`='".$log['membership']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

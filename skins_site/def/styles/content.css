@@ -33,41 +33,41 @@
 		background-position: bottom right;
 	}
 
-.content_area.large {
+div.large {
 	width: 742px;
 	background: url('../images/lbox-middle.gif') repeat-y;
 }
-	.content_area.large h1, .content_area.large h2 {
+	div.large h1, div.large h2 {
 		background: url('../images/lbox-top.gif') no-repeat top left;
 	}
-	.content_area.large .box_content {
+	div.large .box_content {
 		background: url('../images/lbox-bottom.gif') no-repeat bottom left;
 	}
 
-.content_area.medium {
+div.medium {
 	width: 706px;
 	background: url('../images/mbox-middle.gif') repeat-y;
 }
-	.content_area.medium h2 {
+	div.medium h2 {
 		background-image: url('../images/mbox-top.gif');
 		font-size: 14px;
 		color: #3969A5;
 	}
-	.content_area.medium .box_content {
+	div.medium .box_content {
 		background: url('../images/mbox-bottom.gif') no-repeat bottom left;
 	}
 
-.content_area.small {
+div.small {
 	width: 206px;
 	background: url('../images/sbox-middle.gif') repeat-y;
 }
-	.content_area.small h2, .small h3 {
+	div.small h2, div.small h3 {
 		background: url('../images/sbox-top.gif') no-repeat top left;
 	}
-	.content_area.small h3 {
+	div.small h3 {
 		padding: 15px 18px 0px 18px;
 	}
-	.content_area.small .box_content {
+	div.small .box_content {
 		background: url('../images/sbox-bottom.gif') no-repeat bottom left;
 	}
 
@@ -548,27 +548,27 @@ blockquote {
 	margin:0px;
 }
 
-.bsmall {
+input.small {
 	background-image: url('../images/btn-blank-small.gif');
 	width: 43px;
 }
 
-.bmedium {
+input.medium {
 	background-image: url('../images/btn-blank-medium.gif');
 	width: 75px;
 }
 
-.blarge {
+input.large {
 	background-image: url('../images/btn-blank-large.gif');
 	width: 119px;
 }
 
-.bsmall:hover, .bmedium:hover, .blarge:hover {
+input.small:hover, input.medium:hover, input.large:hover {
 	background-position: bottom;
 }
 
 /* IE hack: button hover */
-.bsmall_hover, .bmedium_hover, .blarge_hover {
+input.small_hover, input.medium_hover, input.large_hover {
 	background-position: bottom;
 }
 
