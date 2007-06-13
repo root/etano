@@ -94,6 +94,9 @@ $totalrows=count($post_ids);
 // get the details for the found blog_ids...unfortunately that's another query
 $loop=array();
 if (!empty($totalrows)) {
+	if ($o>$totalrows) {
+		$o=$totalrows-$r;
+	}
 	$post_ids=array_slice($post_ids,$o,$r);
 	$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user`,a.`fk_blog_id`,b.`blog_name`,a.`title`,a.`status`,a.`stat_views`,a.`stat_comments` FROM `{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_blogs` b WHERE a.`post_id` IN ('".join("','",$post_ids)."') AND a.`fk_blog_id`=b.`blog_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

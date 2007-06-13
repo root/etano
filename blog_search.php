@@ -21,8 +21,8 @@ require_once 'includes/user_functions.inc.php';
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $output=array();
-$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$output['r']=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
+$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
 $output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $input=array();
@@ -120,7 +120,10 @@ $output['totalrows']=count($post_ids);
 // get the results from user cache for the found post_ids
 $loop=array();
 if (!empty($output['totalrows'])) {
-	$post_ids=array_slice($post_ids,$output['o'],$output['r']);
+	if ($o>$output['totalrows']) {
+		$o=$output['totalrows']-$r;
+	}
+	$post_ids=array_slice($post_ids,$o,$r);
 	require_once _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
 	$blog_posts_cache=new blog_posts_cache();
 	$loop=$blog_posts_cache->get_tpl_array($post_ids);
@@ -143,7 +146,7 @@ if (!empty($output['totalrows'])) {
 
 	// set $_GET for the pager.
 	$_GET=array('search'=>$output['search_md5']);
-	$output['pager2']=pager($output['totalrows'],$output['o'],$output['r']);
+	$output['pager2']=pager($output['totalrows'],$o,$r);
 }
 
 $tpl->set_file('content','blog_search.html');

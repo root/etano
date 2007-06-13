@@ -31,6 +31,9 @@ $totalrows=mysql_result($res,0,0);
 
 $admin_accounts=array();
 if (!empty($totalrows)) {
+	if ($o>$totalrows) {
+		$o=$totalrows-$r;
+	}
 	$query="SELECT * FROM $from WHERE $where ORDER BY `admin_id` ASC LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$i=0;

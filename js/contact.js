@@ -1,7 +1,9 @@
 $(function() {
 	$('#contact_form').bind('submit',function() {
 		return check_form(this);
-	})
+	});
+
+	$('#subject').focus();
 });
 
 function check_form(the) {
