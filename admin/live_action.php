@@ -42,7 +42,7 @@ $tpl->set_loop('loop',$loop);
 $tpl->set_var('last_id',$last_id);
 $tpl->process('content','content',TPL_LOOP);
 
-$tplvars['title']='Live Site Action';
+$tplvars['title']='Live Site Activity';
 $tplvars['css']='live_action.css';
 $tplvars['page']='live_action';
 include 'frame.php';

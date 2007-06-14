@@ -30,11 +30,14 @@ $uri_parts=explode('/',$request_uri);
 if ($uri_parts[0]=='blog' && isset($uri_parts[1])) {
 	$_GET['pid']=$uri_parts[1];
 	require_once 'blog_post_view.php';
+	die;
 } elseif ($uri_parts[0]=='inbox') {
 	require_once 'mailbox.php';
+	die;
 } elseif ($uri_parts[0]=='photo' && isset($uri_parts[1])) {
 	$_GET['photo_id']=$uri_parts[1];
 	require_once 'photo_view.php';
+	die;
 } elseif (!empty($uri_parts[0]) && !isset($uri_parts[1])) {
 	$_GET['user']=$uri_parts[0];
 	require_once 'profile.php';
