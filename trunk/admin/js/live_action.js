@@ -24,7 +24,9 @@ function check_activity() {
 					if (towrite!='') {
 						$('#action_header').after(towrite);
 						allids=allids.substr(0,allids.length-1);
-						$(allids).show(1000);
+						$(allids).show(1000,function() {
+							$('#action li:gt(10)').hide(500);
+						});
 					}
 				}
 	);

@@ -37,8 +37,9 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
+- selecturi in user_settings pt timezone
+- show all payments in admin
 - info access page.
-
 - membership icon
 
 - scor la blog add doar daca blogul este mai mare de x caractere.
@@ -67,7 +68,9 @@ TODO
 - search membri (search.php) case 'vote',case 'views',case 'comm'
 - installer + modman
 - licenta si verificari
-
+- db backup
+- de afisat versiunea curenta in cpanel.php (installed si latest)
+- login or register to post a comment
 ---------------------------------------------------------------------
 - modman: ftp low level?
 - read zip files. extract files from zip archives (pt modmanager).
@@ -81,6 +84,7 @@ TODO
 - scris in poza fara freettf (in captcha si watermark)
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
 
+- max length of comments
 - blog/poze: nivel acces: public/private/only people in my XXX network are allowed to see it.
 - popWin la vizualizare poza profil/album? nu era thickbox?
 - bookmark si report photo ???????

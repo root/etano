@@ -37,9 +37,6 @@ function delete_members() {
 		$query="UPDATE `{$dbtable_prefix}queue_message` SET `fk_user_id_other`=0 WHERE `fk_user_id_other` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-		$query="DELETE FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$uids)."')";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-
 		$query="DELETE FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
@@ -90,6 +87,9 @@ function delete_members() {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$query="DELETE FROM `{$dbtable_prefix}user_searches` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+
+		$query="DELETE FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 	return true;
