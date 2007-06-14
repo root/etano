@@ -39,7 +39,6 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 TODO
 - info access page.
 
-- site_ban management in admin
 - membership icon
 
 - scor la blog add doar daca blogul este mai mare de x caractere.
@@ -56,8 +55,6 @@ TODO
 - mailbox.php in format nou (cu $output)
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
 - formatare la date of birth
-
-- blog/poze: nivel acces: public/private/only people in my XXX network are allowed to see it.
 
 - bbcode in admin
 - admin: stats
@@ -84,6 +81,7 @@ TODO
 - scris in poza fara freettf (in captcha si watermark)
 - about this site (vezi cele 8 pagini de about de la http://beta.zooomr.com/learn_more)
 
+- blog/poze: nivel acces: public/private/only people in my XXX network are allowed to see it.
 - popWin la vizualizare poza profil/album? nu era thickbox?
 - bookmark si report photo ???????
 - today birthdays widget cu cache
