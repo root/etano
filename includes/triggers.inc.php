@@ -88,7 +88,7 @@ function on_approve_photo($photo_ids) {
 	foreach ($user_ids as $uid=>$num) {
 		update_stats($uid,'total_photos',$num);
 	}
-	$query="UPDATE `{$dbtable_prefix}user_photos` SET `processed`=1 WHERE `photo_id` IN ('".join("','",$post_ids)."')";
+	$query="UPDATE `{$dbtable_prefix}user_photos` SET `processed`=1 WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 
