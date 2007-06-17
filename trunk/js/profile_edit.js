@@ -55,11 +55,10 @@ function req_update_location(str_field,val) {
 function check_form(theform) {
 	var is_error=false;
 	for (i=0;i<dbfields.length;i++) {
-		error=field_empty(dbfields[i],fieldtypes[i],'join_form');
-		if (error) {
+		myerror=field_empty(dbfields[i],fieldtypes[i],'join_form');
+		if (myerror) {
 			is_error=true;
 			$('#row_'+dbfields[i]).addClass('red_border');
-//			$('#'+dbfields[i])[0].focus();
 		}
 	}
 	if (is_error) {
@@ -84,7 +83,7 @@ function field_empty(dbfield,field_type,form_id) {
 		}
 	} else if (field_type==9 || field_type==10) {	// FIELD_CHECKBOX, FIELD_CHECKBOX_LARGE
 		is_empty=true;
-		$('input[@type=checkbox][@id^='+dbfield+']').each(function() {
+		$('input[@id^='+dbfield+']').each(function() {
 			if (this.checked) {
 				is_empty=false;
 			}

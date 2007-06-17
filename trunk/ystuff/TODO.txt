@@ -37,6 +37,8 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
+- smilies icon la bbcode
+- edit_profile bug la seeking
 - alertele pe search-urile membrilor
 - prev/next la photo_view cand vin dintr-un search.
 - selecturi in user_settings pt timezone
