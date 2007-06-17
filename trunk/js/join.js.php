@@ -133,7 +133,7 @@ function field_empty(dbfield,field_type,form_id) {
 		}
 	} else if (field_type==9 || field_type==10) {	// FIELD_CHECKBOX, FIELD_CHECKBOX_LARGE
 		is_empty=true;
-		$('#'+form_id+' input[@type=checkbox][@id^='+dbfield+']').each(function() {
+		$('input[@type=checkbox][@id^='+dbfield+']').each(function() {
 			if (this.checked) {
 				is_empty=false;
 			}
