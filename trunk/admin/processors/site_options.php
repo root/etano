@@ -44,6 +44,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
 				break;
 
+			case FIELD_SELECT:
+				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_INT,0,0);
+				break;
+
 		}
 	}
 

@@ -50,6 +50,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
 				break;
 
+			case FIELD_SELECT:
+				$input[$rsrow['fk_module_code']][$rsrow['config_option']]=sanitize_and_format_gpc($_POST,$rsrow['fk_module_code'].'_'.$rsrow['config_option'],TYPE_INT,0,0);
+				break;
+
 		}
 	}
 
@@ -77,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	// update the prefs stored in the session
 	$_SESSION['user']['prefs']['date_format']=$input['def_user_prefs']['date_format'];
 	$_SESSION['user']['prefs']['datetime_format']=$input['def_user_prefs']['datetime_format'];
+	$_SESSION['user']['prefs']['time_offset']=$input['def_user_prefs']['time_offset'];
 	$_SESSION['user']['prefs']['rate_my_photos']=$input['def_user_prefs']['rate_my_photos'];
 	$_SESSION['user']['prefs']['profile_comments']=$input['def_user_prefs']['profile_comments'];
 	$topass['message']['type']=MESSAGE_INFO;

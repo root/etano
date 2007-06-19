@@ -26,7 +26,7 @@ if (mysql_num_rows($res)) {
 	if (empty($output['photo'])) {
 		$output['photo']='no_photo.gif';
 	}
-	$output['date_added']=strftime($_user_settings['date_format'],$output['date_added']+$_user_settings['time_offset']);
+	$output['date_added']=strftime($_SESSION['user']['prefs']['date_format'],$output['date_added']+$_SESSION['user']['prefs']['time_offset']);
 }
 
 $my_stats=get_user_stats($_SESSION['user']['user_id'],array('total_photos','pviews','num_friends'));

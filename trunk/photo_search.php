@@ -136,7 +136,7 @@ if (!empty($totalrows)) {
 	$i=1;
 	$rows=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['date_posted']=strftime($_user_settings['date_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
+		$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['date_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
 		$rsrow['is_private']=sprintf('%1$s',empty($rsrow['is_private']) ? 'public' : 'private');	// translate this
 		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['class']='';

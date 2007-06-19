@@ -65,7 +65,7 @@ class widget_blogs extends icontent_widget {
 			unset($blog_posts_cache);
 
 			for ($i=0;isset($loop[$i]);++$i) {
-				$loop[$i]['date_posted']=strftime($GLOBALS['_user_settings']['datetime_format'],$loop[$i]['date_posted']+$GLOBALS['_user_settings']['time_offset']);
+				$loop[$i]['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$loop[$i]['date_posted']+$_SESSION['user']['prefs']['time_offset']);
 			}
 			if (!empty($loop)) {
 				$loop[0]['class']='first';

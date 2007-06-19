@@ -33,7 +33,7 @@ if (!empty($post_id)) {
 		$blog_posts_cache=new blog_posts_cache();
 		$output=array_merge($output,$blog_posts_cache->get_post($post_id,false));
 		unset($blog_posts_cache);
-		$output['date_posted']=strftime($_user_settings['datetime_format'],$output['date_posted']+$_user_settings['time_offset']);
+		$output['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$output['date_posted']+$_SESSION['user']['prefs']['time_offset']);
 		if (isset($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id']) {
 			$output['post_owner']=true;
 		}
@@ -47,7 +47,7 @@ if (!empty($post_id)) {
 				$output['comment_id']=$rsrow['comment_id'];
 				$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 			}
-			$rsrow['date_posted']=strftime($_user_settings['datetime_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
+			$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
 			$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			if (!empty($config['bbcode_comments'])) {
 				$rsrow['comment']=bbcode2html($rsrow['comment']);
