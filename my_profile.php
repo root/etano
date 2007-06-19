@@ -11,10 +11,8 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-require_once 'includes/sessions.inc.php';
-require_once 'includes/vars.inc.php';
+require_once 'includes/common.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
-require_once 'includes/classes/phemplate.class.php';
 require_once 'includes/user_functions.inc.php';
 check_login_member('auth');
 
@@ -97,45 +95,43 @@ $output['pic_width']=get_site_option('pic_width','core_photo');
 // comments
 $edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
 $loop_comments=array();
-if ($_SESSION['user']['prefs']['profile_comments']) {
-	// may I see any comment?
+$config=get_site_option(array('bbcode_comments','smilies_comm'),'core');
+$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}profile_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`='".$_SESSION['user']['user_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+while ($rsrow=mysql_fetch_assoc($res)) {
+	// if someone has asked to edit his/her comment
+	if ($edit_comment==$rsrow['comment_id']) {
+		$output['comment_id']=$rsrow['comment_id'];
+		$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
+	}
+	$rsrow['date_posted']=strftime($_user_settings['datetime_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
+	$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+	if (!empty($config['bbcode_comments'])) {
+		$rsrow['comment']=bbcode2html($rsrow['comment']);
+	}
+	if (!empty($config['smilies_comm'])) {
+		$rsrow['comment']=text2smilies($rsrow['comment']);
+	}
+	// allow showing the edit links to rightfull owners
+	if ($rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
+		$rsrow['editme']=true;
+	}
+
+	if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
+		unset($rsrow['fk_user_id']);
+	}
+	if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
+		$rsrow['photo']='no_photo.gif';
+	}
+	$loop_comments[]=$rsrow;
+}
+
+if (!empty($loop_comments)) {
+	$output['num_comments']=count($loop_comments);
 	$output['show_comments']=true;
-	$output['uid']=$_SESSION['user']['user_id'];
-	$config=get_site_option(array('bbcode_comments','smilies_comm'),'core');
-	$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}profile_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`='".$_SESSION['user']['user_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	while ($rsrow=mysql_fetch_assoc($res)) {
-		// if someone has asked to edit his/her comment
-		if ($edit_comment==$rsrow['comment_id']) {
-			$output['comment_id']=$rsrow['comment_id'];
-			$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
-		}
-		$rsrow['date_posted']=strftime($_user_settings['datetime_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
-		$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-		if (!empty($config['bbcode_comments'])) {
-			$rsrow['comment']=bbcode2html($rsrow['comment']);
-		}
-		if (!empty($config['smilies_comm'])) {
-			$rsrow['comment']=text2smilies($rsrow['comment']);
-		}
-		// allow showing the edit links to rightfull owners
-		if ($rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
-			$rsrow['editme']=true;
-		}
+}
 
-		if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
-			unset($rsrow['fk_user_id']);
-		}
-		if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
-			$rsrow['photo']='no_photo.gif';
-		}
-		$loop_comments[]=$rsrow;
-	}
-
-	if (!empty($loop_comments)) {
-		$output['num_comments']=count($loop_comments);
-	}
-
+if ($_SESSION['user']['prefs']['profile_comments']) {
 	// may I post comments please?
 	if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
 		$output['allow_comments']=true;

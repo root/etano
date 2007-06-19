@@ -1,4 +1,4 @@
 <?php
-include 'includes/vars.inc.php';
+include 'includes/common.inc.php';
 print phpinfo();
 ?>

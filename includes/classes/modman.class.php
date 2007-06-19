@@ -78,7 +78,7 @@ class modman {
 				$item=$item->nextSibling;	// proceed to the next action (modify,sql,copy)
 			}
 			if (!empty($new_version) && !$critical_error) {
-				$myfilename=$this->template_vars['{$basepath}'].'/includes/vars.inc.php';
+				$myfilename=$this->template_vars['{$basepath}'].'/includes/common.inc.php';
 				$this->fileop->backup_file($myfilename);
 				$mydata=$this->fileop->file_get_contents($myfilename);
 				$mydata=preg_replace("/define\('_INTERNAL_VERSION_',\d{3,}\);/","define('_INTERNAL_VERSION_',$new_version);",$mydata);

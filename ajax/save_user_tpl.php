@@ -11,8 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-require_once dirname(__FILE__).'/../includes/sessions.inc.php';
-require_once dirname(__FILE__).'/../includes/vars.inc.php';
+require_once dirname(__FILE__).'/../includes/common.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 require_once dirname(__FILE__).'/../includes/user_functions.inc.php';
 

@@ -11,8 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-require_once 'includes/sessions.inc.php';
-require_once 'includes/vars.inc.php';
+require_once 'includes/common.inc.php';
 require_once 'includes/classes/sco_captcha.class.php';
 
 $captcha_word=$_SESSION['captcha_word'];

@@ -11,9 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-require_once '../includes/sessions.inc.php';
-require_once '../includes/vars.inc.php';
-require_once '../includes/classes/phemplate.class.php';
+require_once '../includes/common.inc.php';
 
 if (!isset($_SESSION['admin']['admin_id'])) {
 	if (isset($_SESSION['topass']) && !empty($_SESSION['topass'])) {
