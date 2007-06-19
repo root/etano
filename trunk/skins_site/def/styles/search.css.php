@@ -1,6 +1,6 @@
 <?php
 require_once '../../../includes/general_functions.inc.php';
-require_once '../../../includes/vars.inc.php';
+require_once '../../../includes/common.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
 header('Content-Type: text/css');

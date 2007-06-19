@@ -37,6 +37,7 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
+- afisarea timp/data cu strftime
 - smilies icon la bbcode
 - edit_profile bug la seeking
 - alertele pe search-urile membrilor

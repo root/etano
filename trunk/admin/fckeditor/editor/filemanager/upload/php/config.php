@@ -31,7 +31,7 @@ $Config['Enabled'] = true;
 // Ex: /userfiles/image/ or /userfiles/file/
 $Config['UseFileType'] = false ;
 
-include dirname(__FILE__).'/../../../../../../includes/vars.inc.php';
+include dirname(__FILE__).'/../../../../../../includes/common.inc.php';
 // Path to uploaded files relative to the document root.
 $Config['UserFilesPath'] = _BASEURL_.'/images/emails/' ;
 

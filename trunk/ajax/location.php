@@ -18,7 +18,7 @@ Support at:                 http://forum.datemill.com
 4. all other lines - the options for the field above in the <option_id>|<option_text> format
 */
 
-require_once dirname(__FILE__).'/../includes/vars.inc.php';
+require_once dirname(__FILE__).'/../includes/common.inc.php';
 db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
 
 $output='';

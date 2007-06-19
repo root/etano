@@ -11,8 +11,7 @@ Support at:                 http://forum.datemill.com
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-require_once dirname(__FILE__).'/../../includes/sessions.inc.php';
-require_once dirname(__FILE__).'/../../includes/vars.inc.php';
+require_once dirname(__FILE__).'/../../includes/common.inc.php';
 require_once dirname(__FILE__).'/../../includes/admin_functions.inc.php';
 allow_dept(DEPT_ADMIN);
 
