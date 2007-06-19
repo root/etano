@@ -134,7 +134,7 @@ if (!empty($output['totalrows'])) {
 		}
 	}
 	for ($i=0;isset($loop[$i]);++$i) {
-		$loop[$i]['date_posted']=strftime($_user_settings['datetime_format'],$loop[$i]['date_posted']+$_user_settings['time_offset']);
+		$loop[$i]['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$loop[$i]['date_posted']+$_SESSION['user']['prefs']['time_offset']);
 		// fancy word coloring - lightning fast now :)
 		if (isset($input['tags'])) {
 			$loop[$i]['title']=str_replace($search_words,$replace_words,$loop[$i]['title']);

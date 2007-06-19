@@ -60,7 +60,7 @@ if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 			$loop=$blog_posts_cache->get_tpl_array($post_ids,false);
 			unset($blog_posts_cache);
 			for ($i=0;isset($loop[$i]);++$i) {
-				$loop[$i]['date_posted']=strftime($_user_settings['datetime_format'],$loop[$i]['date_posted']+$_user_settings['time_offset']);
+				$loop[$i]['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$loop[$i]['date_posted']+$_SESSION['user']['prefs']['time_offset']);
 				if (isset($_SESSION['user']['user_id']) && $loop[$i]['fk_user_id']==$_SESSION['user']['user_id']) {
 					$loop[$i]['editable']=true;
 				}

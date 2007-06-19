@@ -41,7 +41,7 @@ if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 		$query="SELECT a.`post_id`,a.`title`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`blog_name`,b.`blog_url` FROM $from WHERE $where ORDER BY a.`date_posted` DESC LIMIT $o,$r";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$rsrow['date_posted']=strftime($_user_settings['date_format'],$rsrow['date_posted']+$_user_settings['time_offset']);
+			$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['date_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
 			$loop[]=$rsrow;
 		}
 		$loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);

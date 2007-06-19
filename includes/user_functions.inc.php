@@ -23,6 +23,17 @@ require_once $tplvars['tplrelpath'].'/lang/strings.inc.php';
 $_pfields=array();
 $_pcats=array();
 require_once 'fields.inc.php';
+if (!isset($_SESSION['user']['user_id'])) {
+	$_SESSION['user']['user']='guest';
+	$_SESSION['user']['membership']=1;
+} else {
+	$tplvars['user_logged']=true;
+}
+$tplvars['myself']=$_SESSION['user'];
+
+if (!isset($_SESSION['user']['prefs'])) {
+	$_SESSION['user']['prefs']=get_site_option(array('date_format','datetime_format','time_offset'),'def_user_prefs');
+}
 
 if (function_exists('error_handler')) {
 	set_error_handler('error_handler');

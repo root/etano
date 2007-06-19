@@ -22,7 +22,6 @@ licenta) a.i. sa avem $_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
 
 - cauta "translate" ca sa gasesti toate stringurile de tradus hardcodate in scripts.
 
-- de creat indecsi cand se creaza/modifica campuri in user_details (numai cand un camp este searchable).
 
 - de verif toate check_login_member() ca au id-urile nashpa (networks.php)
 
@@ -37,12 +36,10 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
-- afisarea timp/data cu strftime
+- de creat indecsi cand se creaza/modifica campuri in user_details (numai cand un camp este searchable).
 - smilies icon la bbcode
-- edit_profile bug la seeking
 - alertele pe search-urile membrilor
 - prev/next la photo_view cand vin dintr-un search.
-- selecturi in user_settings pt timezone
 - show all payments in admin
 - info access page.
 - membership icon

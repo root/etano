@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$user=mysql_fetch_assoc($res);
 			$user['membership']=(int)$user['membership'];
 			if ($user['status']==ASTAT_ACTIVE) {
-				$user['prefs']=get_user_settings($user['user_id'],'def_user_prefs',array('date_format','datetime_format','rate_my_photos','profile_comments'));
+				$user['prefs']=get_user_settings($user['user_id'],'def_user_prefs',array('date_format','datetime_format','time_offset','rate_my_photos','profile_comments'));
 				if ($user['last_activity']<time()-$score_threshold) {
 					add_member_score($user['user_id'],'login');
 				}

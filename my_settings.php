@@ -18,7 +18,7 @@ check_login_member('auth');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
-$query="SELECT `config_option`,`config_value`,`config_diz`,`option_type`,`fk_module_code` FROM `{$dbtable_prefix}site_options3` WHERE `per_user`=1 ORDER BY `fk_module_code` ASC";
+$query="SELECT `config_option`,`config_value`,`config_diz`,`option_type`,`choices`,`fk_module_code` FROM `{$dbtable_prefix}site_options3` WHERE `per_user`=1 ORDER BY `fk_module_code` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $prefs=array();
 while ($rsrow=mysql_fetch_assoc($res)) {
@@ -27,6 +27,9 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$prefs[$rsrow['fk_module_code']][$rsrow['config_option']]['config_value']=$rsrow['config_value'];
 	$prefs[$rsrow['fk_module_code']][$rsrow['config_option']]['config_diz']=$rsrow['config_diz'];
 	$prefs[$rsrow['fk_module_code']][$rsrow['config_option']]['option_type']=$rsrow['option_type'];
+	if ($rsrow['option_type']==FIELD_SELECT) {
+		$prefs[$rsrow['fk_module_code']][$rsrow['config_option']]['choices']=unserialize($rsrow['choices']);
+	}
 }
 
 $query="SELECT `config_option`,`config_value`,`fk_module_code` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
@@ -61,14 +64,20 @@ foreach ($prefs as $module_code=>$v) {
 					$loop[$i]['field']='<textarea name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'">'.$kv['config_value'].'</textarea>';
 					break;
 
+				case FIELD_SELECT:
+					$loop[$i]['field']='<select name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'">'.vector2options($kv['choices'],$kv['config_value']).'</select>';
+					break;
+
 			}
 			++$i;
 		}
 	}
 }
 
+$output['gmtime']=gmdate('F d, Y, h:i:s A');
 $tpl->set_file('content','my_settings.html');
 $tpl->set_loop('loop',$loop);
+$tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_LOOP);
 $tpl->drop_loop('loop');
 unset($loop);

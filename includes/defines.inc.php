@@ -24,4 +24,3 @@ define('_LICENSE_KEY_','0917JJ8239HG8S623DFG45'); // md5()=d3074931bf4080bff08a1
 
 $accepted_results_per_page=array(10=>10,5=>5,15=>15,20=>20);
 $accepted_images=array('jpg','jpeg','png');
-$_user_settings=array('date_format'=>'%x','datetime_format'=>'%c','time_offset'=>7200);

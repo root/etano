@@ -74,7 +74,7 @@ if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) 
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
-		$output['date_sent']=strftime($_user_settings['datetime_format'],$output['date_sent']+$_user_settings['time_offset']);
+		$output['date_sent']=strftime($_SESSION['user']['prefs']['datetime_format'],$output['date_sent']+$_SESSION['user']['prefs']['time_offset']);
 		$output['subject']=sanitize_and_format($output['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 		switch ($output['message_type']) {

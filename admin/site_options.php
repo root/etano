@@ -65,6 +65,9 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 		++$j;
 	}
 	$rsrow['config_value']=sanitize_and_format($rsrow['config_value'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
+	if ($rsrow['option_type']==FIELD_SELECT) {
+		$rsrow['choices']=unserialize($rsrow['choices']);
+	}
 	switch ($rsrow['option_type']) {
 
 		case FIELD_CHECKBOX:
@@ -82,6 +85,10 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 
 		case FIELD_TEXTAREA:
 			$rsrow['field']='<textarea class="input_ta" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" cols="" rows="">'.$rsrow['config_value'].'</textarea>';
+			break;
+
+		case FIELD_SELECT:
+			$rsrow['field']='<select name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'">'.vector2options($rsrow['choices'],$rsrow['config_value']).'</select>';
 			break;
 
 	}
