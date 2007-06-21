@@ -79,6 +79,11 @@
 </fieldset>
 </form>
 <!--/opt name="output.allow_comments"-->
+<!--opt name="!output.allow_comments"-->
+	<!--opt name="!tplvars.user_logged"-->
+	<div class="login_tease"><a class="content-link simple big" href="{tplvars.relative_url}login.php">Login</a> or <a class="content-link simple big" href="join.php">register</a> to post comments!</div>
+	<!--/opt name="!tplvars.user_logged"-->
+<!--/opt name="!output.allow_comments"-->
 
 <script type="text/javascript" src="{tplvars.relative_url}js/scrollto.js"></script>
 <script type="text/javascript" src="{tplvars.relative_url}js/profile.js"></script>

@@ -180,6 +180,7 @@ $tpl->set_loop('categs',$categs);
 $tpl->set_loop('user_photos',$user_photos);
 $tpl->set_loop('loop_comments',$loop_comments);
 $tpl->set_var('output',$output);
+$tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 $tpl->drop_loop('user_photos');

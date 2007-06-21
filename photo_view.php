@@ -140,6 +140,7 @@ $output['return']=rawurlencode($output['return2']);
 $tpl->set_file('content','photo_view.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);
+$tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
 unset($loop);
