@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (mysql_num_rows($res)) {
 			$ser_search=mysql_result($res,0,0);
 			$search=unserialize($ser_search);
-			unset($search['acclevel_id']);
+			unset($search['acclevel_code']);
 			$query="INSERT INTO `{$dbtable_prefix}user_searches` (`fk_user_id`,`title`,`search_qs`,`search`,`alert`) VALUES ('".$_SESSION['user']['user_id']."','".$input['title']."','".array2qs($search)."','$ser_search',1)";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;

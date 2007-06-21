@@ -18,7 +18,7 @@ Support at:                 http://forum.datemill.com
 //}
 
 require_once 'general_functions.inc.php';
-$_lang=array();
+$GLOBALS['_lang']=array();
 $def_skin=isset($_SESSION['admin']['def_skin']) ? $_SESSION['admin']['def_skin'] : get_default_skin_dir();
 require_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/strings.inc.php';
 $_pfields=array();
@@ -108,25 +108,25 @@ function regenerate_fields_array() {
 			$basic_search_fields[]=$id;
 		}
 		$profile_categs[$rsrow['fk_pcat_id']][]=$rsrow['order_num'];
-		$towrite.="\$_pfields[$id]['label']=\$_lang[".$rsrow['fk_lk_id_label']."];\n";
-		$towrite.="\$_pfields[$id]['field_type']=".$GLOBALS['inverse_fields'][$rsrow['field_type']].";\n";
+		$towrite.="\$GLOBALS['_pfields'][$id]['label']=\$GLOBALS['_lang'][".$rsrow['fk_lk_id_label']."];\n";
+		$towrite.="\$GLOBALS['_pfields'][$id]['field_type']=".$GLOBALS['inverse_fields'][$rsrow['field_type']].";\n";
 		if (!empty($rsrow['searchable'])) {
-			$towrite.="\$_pfields[$id]['searchable']=true;\n";
-			$towrite.="\$_pfields[$id]['search_type']=".$GLOBALS['inverse_fields'][$rsrow['search_type']].";\n";
-			$towrite.="\$_pfields[$id]['search_label']=\$_lang[".$rsrow['fk_lk_id_search']."];\n";
+			$towrite.="\$GLOBALS['_pfields'][$id]['searchable']=true;\n";
+			$towrite.="\$GLOBALS['_pfields'][$id]['search_type']=".$GLOBALS['inverse_fields'][$rsrow['search_type']].";\n";
+			$towrite.="\$GLOBALS['_pfields'][$id]['search_label']=\$GLOBALS['_lang'][".$rsrow['fk_lk_id_search']."];\n";
 		}
 		if (!empty($rsrow['at_registration'])) {
-			$towrite.="\$_pfields[$id]['reg_page']=".$rsrow['reg_page'].";\n";
+			$towrite.="\$GLOBALS['_pfields'][$id]['reg_page']=".$rsrow['reg_page'].";\n";
 		}
 		if (!empty($rsrow['required'])) {
-			$towrite.="\$_pfields[$id]['required']=true;\n";
+			$towrite.="\$GLOBALS['_pfields'][$id]['required']=true;\n";
 		}
-		$towrite.="\$_pfields[$id]['editable']=".(!empty($rsrow['editable']) ? 'true' : 'false').";\n";
-		$towrite.="\$_pfields[$id]['visible']=".(!empty($rsrow['visible']) ? 'true' : 'false').";\n";
-		$towrite.="\$_pfields[$id]['dbfield']='".$rsrow['dbfield']."';\n";
-		$towrite.="\$_pfields[$id]['fk_pcat_id']=".$rsrow['fk_pcat_id'].";\n";
+		$towrite.="\$GLOBALS['_pfields'][$id]['editable']=".(!empty($rsrow['editable']) ? 'true' : 'false').";\n";
+		$towrite.="\$GLOBALS['_pfields'][$id]['visible']=".(!empty($rsrow['visible']) ? 'true' : 'false').";\n";
+		$towrite.="\$GLOBALS['_pfields'][$id]['dbfield']='".$rsrow['dbfield']."';\n";
+		$towrite.="\$GLOBALS['_pfields'][$id]['fk_pcat_id']=".$rsrow['fk_pcat_id'].";\n";
 		if (!empty($rsrow['fn_on_change'])) {
-			$towrite.="\$_pfields[$id]['fn_on_change']='".$rsrow['fn_on_change']."';\n";
+			$towrite.="\$GLOBALS['_pfields'][$id]['fn_on_change']='".$rsrow['fn_on_change']."';\n";
 		}
 
 		switch ($rsrow['field_type']) {
@@ -134,9 +134,9 @@ function regenerate_fields_array() {
 			case FIELD_SELECT:
 			case FIELD_CHECKBOX_LARGE:
 				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
-					$towrite.="\$_pfields[$id]['accepted_values']=array('-',\$_lang[".str_replace('|',"],\$_lang[",substr($rsrow['accepted_values'],1,-1))."]);\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-',\$GLOBALS['_lang'][".str_replace('|',"],\$GLOBALS['_lang'][",substr($rsrow['accepted_values'],1,-1))."]);\n";
 				} else {
-					$towrite.="\$_pfields[$id]['accepted_values']=array('-');\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-');\n";
 				}
 				if (!empty($rsrow['default_value']) && $rsrow['default_value']!='||') {
 					$rsrow['default_value']=explode('|',substr($rsrow['default_value'],1,-1));
@@ -145,9 +145,9 @@ function regenerate_fields_array() {
 					for ($i=0;isset($rsrow['default_value'][$i]);++$i) {
 						++$rsrow['default_value'][$i];
 					}
-					$towrite.="\$_pfields[$id]['default_value']=array(".join(",",$rsrow['default_value']).");\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['default_value']=array(".join(",",$rsrow['default_value']).");\n";
 				} else {
-					$towrite.="\$_pfields[$id]['default_value']=array();\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['default_value']=array();\n";
 				}
 				if (!empty($rsrow['default_search']) && $rsrow['default_search']!='||') {
 					$rsrow['default_search']=explode('|',substr($rsrow['default_search'],1,-1));
@@ -156,38 +156,38 @@ function regenerate_fields_array() {
 					for ($i=0;isset($rsrow['default_search'][$i]);++$i) {
 						++$rsrow['default_search'][$i];
 					}
-					$towrite.="\$_pfields[$id]['default_search']=array(".join(",",$rsrow['default_search']).");\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['default_search']=array(".join(",",$rsrow['default_search']).");\n";
 				} else {
-					$towrite.="\$_pfields[$id]['default_search']=array();\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['default_search']=array();\n";
 				}
 				break;
 
 			case FIELD_DATE:
 				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
-					$towrite.="\$_pfields[$id]['accepted_values']=array('-','".str_replace('|',"','",substr($rsrow['accepted_values'],1,-1))."');\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-','".str_replace('|',"','",substr($rsrow['accepted_values'],1,-1))."');\n";
 				} else {
-					$towrite.="\$_pfields[$id]['accepted_values']=array('-');\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-');\n";
 				}
 				if (!empty($rsrow['default_search']) && $rsrow['default_search']!='||') {
 					$rsrow['default_search']=explode('|',substr($rsrow['default_search'],1,-1));
-					$towrite.="\$_pfields[$id]['default_search']=array(".join(",",$rsrow['default_search']).");\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['default_search']=array(".join(",",$rsrow['default_search']).");\n";
 				} else {
-					$towrite.="\$_pfields[$id]['default_search']=array();\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['default_search']=array();\n";
 				}
 				break;
 
 			case FIELD_LOCATION:
 				if (!empty($rsrow['default_value']) && $rsrow['default_value']!='||') {
 					$rsrow['default_value']=explode('|',substr($rsrow['default_value'],1,-1));
-					$towrite.="\$_pfields[$id]['default_value']=array('".join("','",$rsrow['default_value'])."');\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['default_value']=array('".join("','",$rsrow['default_value'])."');\n";
 				} else {
-					$towrite.="\$_pfields[$id]['default_value']=array();\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['default_value']=array();\n";
 				}
 				if (!empty($rsrow['default_search']) && $rsrow['default_search']!='||') {
 					$rsrow['default_search']=explode('|',substr($rsrow['default_search'],1,-1));
-					$towrite.="\$_pfields[$id]['default_search']=array('".join("','",$rsrow['default_search'])."');\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['default_search']=array('".join("','",$rsrow['default_search'])."');\n";
 				} else {
-					$towrite.="\$_pfields[$id]['default_search']=array();\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['default_search']=array();\n";
 				}
 				break;
 
@@ -197,7 +197,7 @@ function regenerate_fields_array() {
 
 		}
 
-		$towrite.="\$_pfields[$id]['help_text']=\$_lang[".$rsrow['fk_lk_id_help']."];\n";
+		$towrite.="\$GLOBALS['_pfields'][$id]['help_text']=\$GLOBALS['_lang'][".$rsrow['fk_lk_id_help']."];\n";
 		$towrite.="\n";
 	}
 	$towrite.="\n";
@@ -206,9 +206,9 @@ function regenerate_fields_array() {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		if (isset($profile_categs[$rsrow['pcat_id']])) {
-			$towrite.='$_pcats['.$rsrow['pcat_id']."]['pcat_name']=\$_lang[".$rsrow['fk_lk_id_pcat']."];\n";
-			$towrite.='$_pcats['.$rsrow['pcat_id']."]['access_level']=".$rsrow['access_level'].";\n";
-			$towrite.='$_pcats['.$rsrow['pcat_id']."]['fields']=array(".join(',',$profile_categs[$rsrow['pcat_id']]).");\n";
+			$towrite.="\$GLOBALS['_pcats'][".$rsrow['pcat_id']."]['pcat_name']=\$GLOBALS['_lang'][".$rsrow['fk_lk_id_pcat']."];\n";
+			$towrite.="\$GLOBALS['_pcats'][".$rsrow['pcat_id']."]['access_level']=".$rsrow['access_level'].";\n";
+			$towrite.="\$GLOBALS['_pcats'][".$rsrow['pcat_id']."]['fields']=array(".join(',',$profile_categs[$rsrow['pcat_id']]).");\n";
 		}
 	}
 	$towrite.="\n";
@@ -239,7 +239,7 @@ function regenerate_langstrings_array() {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT] | FORMAT_ADDSLASH,'');
-			$towrite.="\$_lang[".$rsrow['lk_id']."]='".$rsrow['lang_value']."';\n";
+			$towrite.="\$GLOBALS['_lang'][".$rsrow['lk_id']."]='".$rsrow['lang_value']."';\n";
 		}
 		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/strings.inc.php',$towrite);
 	}
@@ -250,20 +250,6 @@ function set_site_option($option,$module_code,$value) {
 	global $dbtable_prefix;
 	$query="UPDATE `{$dbtable_prefix}site_options3` SET `config_value`='$value' WHERE `config_option`='$option' AND `fk_module_code`='$module_code'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-}
-
-
-function get_user_by_userid($user_id) {
-	$myreturn='';
-	global $dbtable_prefix;
-	if (!empty($user_id)) {
-		$query="SELECT `".USER_ACCOUNT_USER."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='$user_id'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		if (mysql_num_rows($res)) {
-			$myreturn=mysql_result($res,0,0);
-		}
-	}
-	return $myreturn;
 }
 
 

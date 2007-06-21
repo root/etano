@@ -25,7 +25,7 @@ $output=array();
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
-$input['acclevel_id']=17; // default access level is the one for advanced search!!!!
+$input['acclevel_code']='search_advanced'; // default access level is the one for advanced search!!!!
 $from="`{$dbtable_prefix}user_photos` a";
 $where="a.`is_private`=0 AND a.`status`='".STAT_APPROVED."' AND a.`del`=0";
 $orderby="a.`date_posted` DESC";
@@ -42,25 +42,25 @@ if (isset($_GET['st'])) {
 			break;
 
 		case 'views':
-			$input['acclevel_id']=17;
+			$input['acclevel_code']='search_advanced';
 			$orderby="a.`stat_views` DESC";
 			$tplvars['page_title']='Browse Most Popular Photos';
 			break;
 
 		case 'vote':
-			$input['acclevel_id']=17;
+			$input['acclevel_code']='search_advanced';
 			$orderby="a.`stat_votes_total` DESC";
 			$tplvars['page_title']='Browse Most Voted Photos';
 			break;
 
 		case 'comm':
-			$input['acclevel_id']=17;
+			$input['acclevel_code']='search_advanced';
 			$orderby="a.`stat_comments` DESC";
 			$tplvars['page_title']='Browse Most Discussed Photos';
 			break;
 
 		case 'user':
-			$input['acclevel_id']=17;
+			$input['acclevel_code']='search_advanced';
 			$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
 			if (isset($_SESSION['user']['user_id']) && $input['uid']==$_SESSION['user']['user_id']) {
 				redirect2page('my_photos.php');
@@ -74,7 +74,7 @@ if (isset($_GET['st'])) {
 			break;
 
 		case 'field':
-			$input['acclevel_id']=17;
+			$input['acclevel_code']='search_advanced';
 			$input['f']=sanitize_and_format_gpc($_GET,'f',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 			$input['v']=sanitize_and_format_gpc($_GET,'v',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 			if (!empty($input['f']) && !empty($input['v'])) {
@@ -99,7 +99,7 @@ if (isset($_GET['st'])) {
 			break;
 
 		case 'tag':
-			$input['acclevel_id']=17;
+			$input['acclevel_code']='search_advanced';
 			$input['tags']=sanitize_and_format_gpc($_GET,'tags',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 			$tags=$input['tags'];
 			// remove extra spaces and words with less than 3 chars

@@ -1,17 +1,23 @@
 a.date-picker {
+	width: 16px;
+	height: 16px;
 	border: none;
+	color: #fff;
 	padding: 0;
 	margin: 0;
 	float: left;
 	overflow: hidden;
 	cursor: pointer;
+	background: url('../images/calendar.png') no-repeat;
 }
-
+a.date-picker span {
+	margin: 0 0 0 -2000px;
+}
 div.date-picker-holder, div.date-picker-holder * {
 	margin: 0;
 	padding: 0;
 }
-div.date-picker-holder {
+div.popup-calendar-wrapper {
 	position: relative;
 }
 div.date-picker-holder input {
@@ -22,7 +28,7 @@ div.popup-calendar {
 	position: absolute;
 	z-index: 2;
 	top: 0;
-	left: -16px; /* value for IE */
+	left: 0; /* value for IE */
 	padding: 4px;
 	border: 2px solid #000;
 	background: #fff;

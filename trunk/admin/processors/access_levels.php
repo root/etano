@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	require_once _BASEPATH_.'/includes/classes/modman.class.php';
 	$query="SELECT `level_code`,`level` FROM `{$dbtable_prefix}access_levels`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$towrite="<?php\n\$_access_level=array('auth'=>65534,'all'=>65535";
+	$towrite="<?php\n\$GLOBALS['_access_level']=array('auth'=>65534,'all'=>65535";
 	while ($rsrow=mysql_fetch_row($res)) {
 		$towrite.=",'".$rsrow[0]."'=>".$rsrow[1];
 	}
