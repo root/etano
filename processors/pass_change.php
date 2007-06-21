@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	unset($_SESSION['captcha_word']);
 
 	if (!$error) {
-		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `".USER_ACCOUNT_PASS."`=md5('".$input['pass']."') WHERE `".USER_ACCOUNT_ID."`='".$input['uid']."' AND `".USER_ACCOUNT_USER."`='".$input['user']."' AND `temp_pass`='".$input['secret']."'";
+		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `".USER_ACCOUNT_PASS."`=".PASSWORD_ENC_FUNC."('".$input['pass']."') WHERE `".USER_ACCOUNT_ID."`='".$input['uid']."' AND `".USER_ACCOUNT_USER."`='".$input['user']."' AND `temp_pass`='".$input['secret']."'";
 		if (isset($_on_before_update)) {
 			for ($i=0;isset($_on_before_update[$i]);++$i) {
 				eval($_on_before_update[$i].'();');
@@ -70,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']='Password changed.';     // translate
-		$nextpage='info.php';
+		$topass['message']['text']='Password changed, please login below.';     // translate
+		$nextpage='login.php';
 		if (isset($_on_after_update)) {
 			for ($i=0;isset($_on_after_update[$i]);++$i) {
 				eval($_on_after_update[$i].'();');

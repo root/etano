@@ -18,7 +18,7 @@ define('USER_ACCOUNTS_TABLE',"`{$dbtable_prefix}user_accounts`");
 define('USER_ACCOUNT_ID','user_id');
 define('USER_ACCOUNT_USER','user');
 define('USER_ACCOUNT_PASS','pass');
-define('PASSWORD_ENCRIPTION','md5');
+define('PASSWORD_ENC_FUNC','md5');
 
 define('_LICENSE_KEY_','0917JJ8239HG8S623DFG45'); // md5()=d3074931bf4080bff08a1cc60fff4504
 

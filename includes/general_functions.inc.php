@@ -167,7 +167,6 @@ function send_template_email($to,$subject,$template,$skin,$output=array()) {
 	global $tplvars;
 	$tpl->set_var('tplvars',$tplvars);
 	$message_body=$tpl->process('temp','temp',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL | TPL_FINISH);
-
 	$config=get_site_option(array('mail_from','mail_crlf'),'core');
 	require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
 	$mail=new PHPMailer();
@@ -229,6 +228,19 @@ function add_member_score($user_ids,$act,$times=1,$points=0) {
 		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `score`=`score`+".$scores[$act]." WHERE `fk_user_id` IN ('".join("','",$user_ids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
+}
+
+
+function get_user_by_userid($user_id) {
+	$myreturn='';
+	if (!empty($user_id)) {
+		$query="SELECT `".USER_ACCOUNT_USER."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='$user_id'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (mysql_num_rows($res)) {
+			$myreturn=mysql_result($res,0,0);
+		}
+	}
+	return $myreturn;
 }
 
 
@@ -405,11 +417,11 @@ function create_search_form($search_fields) {
 						$field['default_search'][1]=$user_defaults[$field['dbfield'].'_max'];
 					}
 					if ($field['field_type']==FIELD_DATE) {
-						$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][0]).'</select> - ';
-						$myreturn[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][1]).'</select>';
+						$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'"><option value="0">Any</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][0]).'</select> - ';	// translate
+						$myreturn[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'"><option value="0">Any</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][1]).'</select>';		// translate
 					} elseif ($field['field_type']==FIELD_SELECT) {
-						$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0],array(0)).'</select> - ';
-						$myreturn[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][1],array(0)).'</select>';
+						$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0]).'</select> - ';
+						$myreturn[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][1]).'</select>';
 					}
 					break;
 

@@ -36,6 +36,7 @@ if (!empty($output['search_md5'])) {
 		check_login_member($input['acclevel_code']);
 	}
 } else {
+	// THIS PART IS DUPLICATED IN CRON/5SEARCH_ALERTS.PHP. IF YOU CHANGE THIS YOU MUST CHANGE THAT TOO.
 	// first search here, no cache, must calculate everything
 	$input['acclevel_code']='search_advanced'; // default access level is the one for advanced search!!!!
 	$search_fields=array();
@@ -236,7 +237,6 @@ if (!empty($output['search_md5'])) {
 	} // the for() that constructs the where
 
 	$query="SELECT $select FROM $from WHERE $where $orderby";
-
 //print $query;
 //die;
 

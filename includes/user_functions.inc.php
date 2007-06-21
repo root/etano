@@ -17,8 +17,8 @@ $_access_level=array();
 require_once 'access_levels.inc.php';
 require_once 'general_functions.inc.php';
 $tplvars['tplurl']=_BASEURL_.'/skins_site/'.get_my_skin();
-$tplvars['tplrelpath']=$relative_path.'skins_site/'.get_my_skin();
-$_lang=array();
+$tplvars['tplrelpath']=$GLOBALS['relative_path'].'skins_site/'.get_my_skin();
+$GLOBALS['_lang']=array();
 require_once $tplvars['tplrelpath'].'/lang/strings.inc.php';
 $_pfields=array();
 $_pcats=array();
@@ -45,19 +45,6 @@ function get_userid_by_user($user) {
 	$myreturn=0;
 	if (!empty($user)) {
 		$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_USER."`='$user'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		if (mysql_num_rows($res)) {
-			$myreturn=mysql_result($res,0,0);
-		}
-	}
-	return $myreturn;
-}
-
-
-function get_user_by_userid($user_id) {
-	$myreturn='';
-	if (!empty($user_id)) {
-		$query="SELECT `".USER_ACCOUNT_USER."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='$user_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$myreturn=mysql_result($res,0,0);
@@ -122,7 +109,7 @@ function check_login_member($level_code) {
 function allow_at_level($level_code,$membership=1) {
 	$myreturn=false;
 	$membership=(int)$membership;
-	if (($GLOBALS['_access_level'][$level_code]&((int)$membership))==$membership) {
+	if (isset($GLOBALS['_access_level'][$level_code]) && ($GLOBALS['_access_level'][$level_code]&$membership)==$membership) {
 		$myreturn=true;
 	}
 	return $myreturn;

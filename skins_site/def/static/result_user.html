@@ -1,6 +1,6 @@
 <div class="result_user {loop.is_online}">
-	<a class="link_bare" href="{tplvars.relative_url}profile.php?uid={profile.fk_user_id}" title="{profile._user}"><img class="user_photo thumb1" src="{tplvars.photourl}/t1/{profile._photo}" alt="{profile._user}" /></a>
-	<a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={profile.fk_user_id}" title="{profile._user}">{profile._user}</a>, {profile.f2}
+	<a class="link_bare" href="{tplvars.baseurl}/profile.php?uid={profile.fk_user_id}" title="{profile._user}"><img class="user_photo thumb1" src="{tplvars.photourl}/t1/{profile._photo}" alt="{profile._user}" /></a>
+	<a class="content-link member_link" href="{tplvars.baseurl}/profile.php?uid={profile.fk_user_id}" title="{profile._user}">{profile._user}</a>, {profile.f2}
 	<p class="info1"><span>{profile.f3_label}</span>: {profile.f3}</p>
 	<p class="info2"><span>{profile.f4_label}</span>: {profile.f4}</p>
 	<p class="info3"><span>{profile.f5_label}</span>: {profile.f5}</p>

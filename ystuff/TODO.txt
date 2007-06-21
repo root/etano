@@ -36,12 +36,13 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
-- de creat indecsi cand se creaza/modifica campuri in user_details (numai cand un camp este searchable).
+- in profile scos bold-ul de la field value. Poate il pun la label sau poate il scot de tot.
+- login or register to post a comment
+- db backup
+- de creat un create_indexes care sa creeze indecsi pe user_profiles. macar pt campurile din basic search daca nu pe toate.
 - smilies icon la bbcode
-- alertele pe search-urile membrilor
 - prev/next la photo_view cand vin dintr-un search.
-- show all payments in admin
-- info access page.
+- info access page + verif payment
 - membership icon
 
 - scor la blog add doar daca blogul este mai mare de x caractere.
@@ -52,28 +53,27 @@ TODO
 - scor cand primeste un mesaj/flirt si poate si cand trimite? (mai mare la primit - inseamna ca e interesant)
 - scor la conturi platitoare pentru vechimea contului (lunar?)
 
-- in toate procesoarele tb sa verific cazul de eroare:
-// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
-- mailbox.php in format nou (cu $output)
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
-- formatare la date of birth
 
 - bbcode in admin
-- admin: stats
-- admin: payment stats. rapoarte pe perioade. procent paid/free/gender
-
-- cron: check for and remove orpahned lk_ids
-
-- [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]
 
 - search membri (search.php) case 'vote',case 'views',case 'comm'
 - installer + modman
 - licenta si verificari
-- db backup
 - de afisat versiunea curenta in cpanel.php (installed si latest)
-- login or register to post a comment
+- in toate procesoarele tb sa verific cazul de eroare:
+// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
+//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+- mailbox.php in format nou (cu $output)
+- formatare la date of birth
+- cron: check for and remove orpahned lk_ids
+- [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]
+
 ---------------------------------------------------------------------
+- admin: stats
+- admin: procent paid/free/gender
+- ca sa nu se stearga un searchmd5 folosit din site_searches, as putea sa fac refresh la searchurile din site_searches in loc sa
+	le sterg. doar ca poate ar trebui sa fac si un contoar cu cat de folosite sunt searchurile ca sa nu le tin degeaba.
 - modman: ftp low level?
 - read zip files. extract files from zip archives (pt modmanager).
 - help texts (hints) pentru campurile textarea
