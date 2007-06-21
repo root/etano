@@ -13,12 +13,15 @@
 	<td class="label"><label for="message_body">Message:</label></td>
 	<td class="field {profile_fields.error_message_body}">
 		<div class="rich_ta_wrapper">
-			<p class="bb_tools">
-				<a href="javascript:;" onclick="add_bbcode2('b',$('#message_body')[0])"><img src="{tplvars.tplrelpath}/images/rich_bold.gif" alt="bold" /></a>
-				<a href="javascript:;" onclick="add_bbcode2('u',$('#message_body')[0])"><img src="{tplvars.tplrelpath}/images/rich_underline.gif" alt="underline" /></a>
-				<a href="javascript:;" onclick="add_bbcode2('url',$('#message_body')[0])"><img src="{tplvars.tplrelpath}/images/rich_link.gif" alt="link" /></a>
-				<a href="javascript:;" onclick="add_bbcode2('quote',$('#message_body')[0])"><img src="{tplvars.tplrelpath}/images/rich_quote.gif" alt="quote" /></a>
-			</p>
+			<div id="bb_tools">
+				<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
+				<a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a>
+				<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a>
+				<a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a>
+				<div id="smileys-wrapper">
+					<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
+				</div>
+			</div>
 			<textarea name="message_body" id="message_body" cols="60" rows="30" wrap="off" tabindex="2">{output.message_body}</textarea>
 		</div>
 	</td>
@@ -35,4 +38,7 @@
 <div id="bottom_links"><a class="back" href="{output.return2}">Back</a></div>
 
 <script type="text/javascript" src="js/message_send.js"></script>
+<script type="text/javascript">
+	bbcode_field_id='#message_body';
+</script>
 <script type="text/javascript" src="../js/bbcode.js"></script>

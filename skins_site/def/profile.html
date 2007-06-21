@@ -44,10 +44,13 @@
 
 <!--opt name="output.bbcode_comments"-->
 <div id="bb_tools">
-	<a href="javascript:;" id="bold" class="bold" title="Bold" onclick="add_bbcode2('b',$('#comment')[0])">Bold</a>
-	<a href="javascript:;" id="underline" class="underline" title="Underline" onclick="add_bbcode2('u',$('#comment')[0])">Underline</a>
-	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink" onclick="add_bbcode2('url',$('#comment')[0])">Hyperlink</a>
-	<a href="javascript:;" id="quote" class="quote" title="Quote" onclick="add_bbcode2('quote',$('#comment')[0])">Quote</a>
+	<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a>
+	<div id="smileys-wrapper">
+		<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
+	</div>
 </div>
 <!--/opt name="output.bbcode_comments"-->
 <form action="{tplvars.relative_url}processors/profile_comments.php" method="post" id="comment_form">
@@ -79,3 +82,9 @@
 
 <script type="text/javascript" src="{tplvars.relative_url}js/scrollto.js"></script>
 <script type="text/javascript" src="{tplvars.relative_url}js/profile.js"></script>
+<!--opt name="output.bbcode_comments"-->
+<script type="text/javascript">
+	bbcode_field_id='#comment';
+</script>
+<script type="text/javascript" src="{tplvars.relative_url}js/bbcode.js"></script>
+<!--/opt name="output.bbcode_comments"-->
