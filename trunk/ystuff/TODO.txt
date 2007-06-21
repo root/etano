@@ -37,10 +37,8 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 TODO
 - in profile scos bold-ul de la field value. Poate il pun la label sau poate il scot de tot.
-- login or register to post a comment
 - db backup
 - de creat un create_indexes care sa creeze indecsi pe user_profiles. macar pt campurile din basic search daca nu pe toate.
-- smilies icon la bbcode
 - prev/next la photo_view cand vin dintr-un search.
 - info access page + verif payment
 - membership icon
@@ -54,8 +52,6 @@ TODO
 - scor la conturi platitoare pentru vechimea contului (lunar?)
 
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
-
-- bbcode in admin
 
 - search membri (search.php) case 'vote',case 'views',case 'comm'
 - installer + modman
