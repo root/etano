@@ -1,23 +1,23 @@
 -- phpMyAdmin SQL Dump
 -- version 2.10.1
 -- http://www.phpmyadmin.net
--- 
+--
 -- Host: localhost
 -- Generation Time: Jun 22, 2007 at 12:15 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
--- 
+--
 -- Database: `newdsb`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_access_levels`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_access_levels`;
 CREATE TABLE `dsb_access_levels` (
@@ -31,11 +31,11 @@ CREATE TABLE `dsb_access_levels` (
   KEY `level_code` (`level_code`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_access_levels`
--- 
+--
 
-INSERT INTO `dsb_access_levels` (`level_id`, `level_code`, `level_diz`, `level`, `disabled_level`) VALUES 
+INSERT INTO `dsb_access_levels` (`level_id`, `level_code`, `level_diz`, `level`, `disabled_level`) VALUES
 (1, 0x6c6f67696e, 'when someone tries to login', 1, 65534),
 (2, 0x70726f66696c655f76696577, 'View a member profile', 7, 0),
 (21, 0x7365617263685f70686f746f, 'Search/browse/latest/most commented on photo feature', 7, 0),
@@ -61,9 +61,9 @@ INSERT INTO `dsb_access_levels` (`level_id`, `level_code`, `level_diz`, `level`,
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_admin_accounts`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_admin_accounts`;
 CREATE TABLE `dsb_admin_accounts` (
@@ -78,18 +78,18 @@ CREATE TABLE `dsb_admin_accounts` (
   UNIQUE KEY `user` (`user`)
 ) TYPE=MyISAM PACK_KEYS=0;
 
--- 
+--
 -- Dumping data for table `dsb_admin_accounts`
--- 
+--
 
-INSERT INTO `dsb_admin_accounts` (`admin_id`, `user`, `pass`, `name`, `status`, `dept_id`, `email`) VALUES 
+INSERT INTO `dsb_admin_accounts` (`admin_id`, `user`, `pass`, `name`, `status`, `dept_id`, `email`) VALUES
 (1, 0x61646d696e, 0x6665303163653261376662616338666166616564376339383261303465323239, 'Adrian', 15, 4, 'adi@sco.ro');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_admin_mtpls`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_admin_mtpls`;
 CREATE TABLE `dsb_admin_mtpls` (
@@ -102,11 +102,11 @@ CREATE TABLE `dsb_admin_mtpls` (
   KEY `amtpl_type` (`amtpl_type`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_admin_mtpls`
--- 
+--
 
-INSERT INTO `dsb_admin_mtpls` (`amtpl_id`, `amtpl_name`, `subject`, `message_body`, `amtpl_type`) VALUES 
+INSERT INTO `dsb_admin_mtpls` (`amtpl_id`, `amtpl_name`, `subject`, `message_body`, `amtpl_type`) VALUES
 (1, 'Reject member profile', 'Your profile was not approved', '<html><head><title>Your profile has not been approved</title>   <link href="{tplvars.baseurl}/skins/def/styles/common.css" media="screen" type="text/css" rel="stylesheet" /> </head><body> <div id="trim"> 	<div id="content"> 		<p>Thank you for joining <a href="{tplvars.baseurl}">{tplvars.sitename}</a>.</p> 		<p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest to other members.</p><p>Please update your profile with relevant information.<br /></p> 	</div> </div> </body></html>', 1),
 (2, 'Reject photo', 'One of your photos was not approved', '<html><head><title>Your photo has not been approved</title>                       <link href="{tplvars.baseurl}/skins/def/styles/common.css" media="screen" type="text/css" rel="stylesheet" />     </head><body spellcheck="false"><p>Unfortunately we are unable to publish your photo on the site yet because</p>         <p>&nbsp;</p>         <p>Regards,<br />{tplvars.sitename} admin</p></body></html>', 2),
 (3, 'Reject blog', 'One of your blog posts was not approved', '<html><head><title>Your blog post has not been approved</title>                       <link rel="stylesheet" type="text/css" media="screen" href="{tplvars.baseurl}/skins/def/styles/common.css" />     </head><body spellcheck="false"><p>Unfortunately we are unable to publish your blog post on the site yet because</p>         <p>&nbsp;</p>         <p>Regards,<br />         {tplvars.sitename} admin</p></body></html>', 3),
@@ -114,9 +114,9 @@ INSERT INTO `dsb_admin_mtpls` (`amtpl_id`, `amtpl_name`, `subject`, `message_bod
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_banned_words`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_banned_words`;
 CREATE TABLE `dsb_banned_words` (
@@ -126,11 +126,11 @@ CREATE TABLE `dsb_banned_words` (
   UNIQUE KEY `word` (`word`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_banned_words`
--- 
+--
 
-INSERT INTO `dsb_banned_words` (`word_id`, `word`) VALUES 
+INSERT INTO `dsb_banned_words` (`word_id`, `word`) VALUES
 (5, 'fuck'),
 (6, 'suck'),
 (7, 'sucks'),
@@ -140,9 +140,9 @@ INSERT INTO `dsb_banned_words` (`word_id`, `word`) VALUES
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_blog_comments`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_blog_comments`;
 CREATE TABLE `dsb_blog_comments` (
@@ -161,11 +161,11 @@ CREATE TABLE `dsb_blog_comments` (
   KEY `key1` (`fk_parent_id`,`status`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_blog_comments`
--- 
+--
 
-INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES 
+INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES
 (1, 1, 10, 'strawberries', 'a reply.\r\n\r\nHi Emma!', '2007-04-16 21:13:30', '2007-04-16 21:13:30', 15, 0),
 (2, 2, 10, 'strawberries', 'welcome to the hairball''s abode.', '2007-04-17 21:46:30', '2007-04-17 21:46:30', 15, 0),
 (3, 3, 10, 'strawberries', 'It looks excellent, Dan.  I love it.  It looks so clean and covers all the bases. \r\n \r\nI''ll be keen to see the rss look.....for me, it will be important to have more content on the index page.  \r\n\r\nI was messing around with the css stylesheet tonight in my firefox browser.  This is a great script.  Great work.', '2007-04-17 21:51:51', '2007-04-17 21:51:51', 15, 0),
@@ -301,7 +301,7 @@ INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_u
 (136, 17, 4, 'maverick', 'Not sure if you have any plans for this or not, but something that shows that a member is a premium member?\r\n\r\nI''ve seen this on a few sites and what I like about it is that it allows members to identify which members have premium status. I believe it also can help in encouraging free members to upgrade, it makes some people feel special or privileged.\r\n\r\nHere''s a screenshot showing an example of what I mean http://desktopmates.com/temp2/screenshot.jpg', '2007-05-15 22:07:42', '2007-05-15 22:07:42', 15, 0),
 (137, 17, 10, 'strawberries', 'Yes, template in this context is a confusing word, maverick.  It makes me scared to tweak or mess with anything, in case I screw up.  \r\n\r\nSomething like ''canned messages'' sounds better.  Tho I admit that ''canned'' must be an american word - i can guess at it;s meaning....but it is not widely known or used in the UK/Europe.', '2007-05-15 22:33:15', '2007-05-15 22:33:15', 15, 0),
 (138, 17, 10, 'strawberries', 'The premium member icon is a very good idea.\r\n\r\nI have seen a similar membership status on another major site - where they have ''gold membership''; ''silver membership'' and ''standard membership''.  \r\n\r\nThey don''t have icons, but you can see on each person''s profile page (and also on search results pages) what status they enjoy on the site. \r\n\r\nI think that is a very good idea.  It encourages you to wonder what extra benefits they get with their status (and to maybe upgrade).', '2007-05-15 22:36:48', '2007-05-15 22:36:48', 15, 0);
-INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES 
+INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES
 (139, 17, 4, 'maverick', 'Never really considered if canned was an American term or not, but it very well could be. I know SMS text message services in North America uses the term canned for stored text messages. I was thinking it should be something generic or universally used as a term for stored messages and assumed "canned" was rather universal. What term do they use for stored or saved text messages in Europe? \r\n\r\nMost online dictionaries define the term "canned" as something that has been produced and conserved and can be released on demand, such as ... canned food, canned music,  canned response, canned air, canned email replies.\r\n\r\nMaybe something like "stored" messages  would also work as well.', '2007-05-15 23:57:31', '2007-05-15 23:57:31', 15, 0),
 (140, 17, 10, 'strawberries', 'I am not a big mobile phone user, thus I am not the best person to ask re the term used for saved text messages. \r\n\r\nI do dust off a mobile phone here that I use when I go on holiday. I don''t know where my charger is at, or i would charge the phone and look up the menu system.  But I bet that it is ''saved'' or ''stored'' that we use here.\r\n\r\nSaved Nessages or Stored Messages is better - but hints at the place where all your old received messages from others are located.  \r\n\r\nI wonder if there is a better term - one that does not conflict with the saved message archive part of that menu system.', '2007-05-16 00:39:03', '2007-05-16 00:39:03', 15, 0),
 (141, 17, 10, 'strawberries', 'thinking out loud here:\r\n\r\nSaved Responses\r\n\r\nStored Responses\r\n\r\nCanned Responses', '2007-05-16 00:41:42', '2007-05-16 00:41:42', 15, 0),
@@ -378,9 +378,9 @@ INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_u
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_blog_posts`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_blog_posts`;
 CREATE TABLE `dsb_blog_posts` (
@@ -408,11 +408,11 @@ CREATE TABLE `dsb_blog_posts` (
   FULLTEXT KEY `text_key` (`title`,`post_content`)
 ) TYPE=MyISAM PACK_KEYS=0;
 
--- 
+--
 -- Dumping data for table `dsb_blog_posts`
--- 
+--
 
-INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`, `processed`) VALUES 
+INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`, `processed`) VALUES
 (1, '2007-04-16 19:20:25', 1, 'emma', 1, 1, 'The Bicentennial Man', 'by Isaac Asimov\n\n[b]The Three Laws of Robotics[/b]\n.\n.\n.\n[quote]A robot may not injure a human being, or, through inaction, allow a human being to come to harm.[/quote]\n\n[quote]A robot must obey the orders given it by human beings except where such orders would conflict with the First Law.[/quote]\n\n[quote]A robot must protect its own existence as long as such protection does not conflict with the First or Second Law.[/quote]\n\nAndrew Martin said, "[u]Thank you[/u]," and took the seat offered him. He didn''t look driven to the last resort, but he had been.\n\nHe didn''t, actually, look anything, for there was a smooth blankness, to his face, except for the sadness one imagined one saw in his eyes. His hair was smooth, light brown, rather fine; and he had no facial hair. He looked freshly and cleanly shaved. His clothes were distinctly old-fashioned, but neat, and predominantly a velvety red-purple in color.\n\nFacing him from behind the desk was the surgeon The nameplate on the desk included a fully identifying series of letters and numbers which Andrew didn''t bother with. To call him Doctor would be quite enough\n\n"When can the operation be carried through, Doctor?" he asked.\n\nSoftly, with that certain inalienable note of respect that a robot always used to a human being, the surgeon said, "I am not certain, sir, that I understand how or upon whom such an operation could be performed."\n\nThere might have been a look of respectful intransigence on the surgeon''s face, if a robot of his sort, in lightly bronzed stainless steel, could have such an expression-or any expression.\n\nAndrew Martin studied the robot''s right hand, his cutting hand, as it lay motionless on the desk. The fingers were long and were shaped into artistically metallic, looping curves so -graceful and appropriate that one could imagine a scalpel fitting them and becoming, temporarily, one piece with them. There would be no hesitation in his work, no stumbling, no quivering, no mistakes. That confidence came with specialization, of course, a specialization so fiercely desired by humanity that few robots were, any longer, independently brained. A surgeon, of course, would have to be. But this one, though brained, was so limited in his capacity that he did not recognize Andrew, had probably never heard of him .\n\n[quote]Have you ever thought you would like to be a man?[/quote] Andrew asked.\n\nThe surgeon hesitated a moment, as though the question fitted nowhere in his allotted positronic pathways. "But I am a robot, sir."\n\n[quote]Would it be better to be a man?[/quote]', 1, 15, '', 2, 1, '2007-04-16 19:24:35', '', 0),
 (2, '2007-04-16 20:50:21', 10, 'strawberries', 3, 1, 'Fluffy say''s ''Hi''', 'Hi everyone.  Welcome to Fluffy''s blog.', 1, 15, '', 2, 4, '2007-04-18 01:05:21', '', 0),
 (3, '2007-04-17 12:08:28', 7, 'dragon', 5, 1, 'Now what?', 'Ok, so now that a basic preview is up for you to see and test, we''ll update it daily with whatver we''ll be working on. So stay tuned for more news.\nThere are some things to fix with blogs, we need to finish the friendship connections feature (right now you can only add another member to your favorites network and request to be a friend of another member).\n\nWe need to also finish the flirts...\nAs many of you have requested, you want to be able to reply with a flirt to a flirt and this is now possible.\n\nAs you might have seen, the flirts can include both text and images and even sounds if you want. It''s up to the admin''s imagination to create some creative flirts.\n\nAnother thing that needs to be finished is the news system. There are 2 parts here:\nYou can include news read by a rss reader from any published rss feed and you will also have site news - published by admin for the site members. The news will appear on the home page (the page after login) by default but you can put it anywhere you want in your site, even on the front page.\n', 1, 15, '', 8, 9, '2007-04-17 12:19:12', '', 0),
@@ -435,9 +435,9 @@ INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_error_log`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_error_log`;
 CREATE TABLE `dsb_error_log` (
@@ -448,16 +448,16 @@ CREATE TABLE `dsb_error_log` (
   PRIMARY KEY  (`log_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_error_log`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_feed_cache`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_feed_cache`;
 CREATE TABLE `dsb_feed_cache` (
@@ -467,19 +467,19 @@ CREATE TABLE `dsb_feed_cache` (
   PRIMARY KEY  (`module_code`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_feed_cache`
--- 
+--
 
-INSERT INTO `dsb_feed_cache` (`module_code`, `feed_xml`, `update_time`) VALUES 
+INSERT INTO `dsb_feed_cache` (`module_code`, `feed_xml`, `update_time`) VALUES
 (0x6f7369676e616c5f66656564, '<?xml version="1.0" encoding="UTF-8"?>\r\n<?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/rss2full.xsl" type="text/xsl" media="screen"?><?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/itemcontent.css" type="text/css" media="screen"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">\r\n<channel>\r\n	<title>Original Signal - Transmitting Tech</title>\r\n	<link>http://tech.originalsignal.com</link>\r\n	<description>Orginal Signal aggregates the 15 most popular technology sites. The main purpose of the site is to provide \r\na quick glance on what''s happening without using your desktop/web RSS reader. New headlines (since your \r\nlast cookied visit) come in pretty orange, visited ones are grey. All credits go to the authors of these weblogs. \r\nWithout their hard work Original Signal would not exist. Original Signal was inspired by Popurls and the Web 2.0 Workgroup.</description>\r\n	<pubDate>Thu, 21 Jun 2007 12:19:35 CEST</pubDate>\r\n	<language>en</language>\r\n	\r\n	  <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" href="http://feeds.feedburner.com/OriginalSignal/tech" type="application/rss+xml" /><item>\r\n  <title>SEC poised to accept IFRS from foreign-based plcs</title>\r\n  <link>http://tech.originalsignal.com/article/57549/sec-poised-to-accept-ifrs-from-foreign-based-plcs.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 12:09:00 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57549/sec-poised-to-accept-ifrs-from-foreign-based-plcs.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Larry Schlesinger, Accountancy Age, Thursday 21 June 2007 at 00:00:00SEC proposal major step towards accepting IFRS statementsA new SEC proposal has paved the way for foreign public companies listed in the US to choose international accounting standards or US rules when filing data with the regulator...&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>DARPA Looking Into Invisible, Shoot-Through, Self-Healing Armor</title>\r\n  <link>http://tech.originalsignal.com/article/57548/darpa-looking-into-invisible-shoot-through-self-healing-armor.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 12:08:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57548/darpa-looking-into-invisible-shoot-through-self-healing-armor.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Yeah, we''re talking armor that soldiers can see and fire through on one side, but is invisible and impenetrable on the other.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Judge Tells RIAA: Irreparable Harm Doesn''t Mean What You Think It Means</title>\r\n  <link>http://tech.originalsignal.com/article/57547/judge-tells-riaa-irreparable-harm-doesnt-mean-what-you-think-it-means.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 10:38:54 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57547/judge-tells-riaa-irreparable-harm-doesnt-mean-what-you-think-it-means.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  The recording industry loves to throw around the term "irreparable harm" in its various lawsuits -- as if someone hearing a song they didn''t pay for will mortally wound the industry.  While some say that this is just standard legalese and we shouldn''t read too much into it, it looks like a judge in New Mexico disagrees.  In denying the RIAA''s request to have the University of Mexico simply hand over info on someone using their network (without letting that individual fight back against the request for info), the judge notes: "While the Court does not dispute that infringement of a copyright results in harm, it requires a Coleridgian ''suspension of disbelief'' to accept that the harm is irreparable, especially when monetary damages can cure any alleged violation."  However, the judge argues, turning over someone''s private info without giving them a chance to defend themselves and protest could cause irreparable harm: "the harm related to disclosure of confidential information in a student or faculty member’s Internet files can be equally harmful."  Nice to see the judge recognize that just because someone may have listened to a song without paying for it, it doesn''t mean that they lose all other rights.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>OS X Leopard Got Pirated...Already!?</title>\r\n  <link>http://tech.originalsignal.com/article/57546/os-x-leopard-got-pirated-already.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 10:38:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57546/os-x-leopard-got-pirated-already.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Oopsie daisy! It looks like that developers build of OS X Leopard has made its way into the grabby hands of Internet pirates. It looks like it, at least. There''s a torrent on a popular private (well, it was) torrent tracker that has a few hundred people pigpiled on.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Microsoft Flip-flopping on Virtualization License</title>\r\n  <link>http://tech.originalsignal.com/article/57545/microsoft-flip-flopping-on-virtualization-license.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 10:38:02 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57545/microsoft-flip-flopping-on-virtualization-license.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Cole writes "Microsoft came within a few hours of reversing its EULA-based ban on the virtualization of Vista Basic and Premium, only to cancel the announcement at the last minute. The company reached out to media and bloggers about the announcement and was ready to celebrate "user choice" before pulling the plug, apparently clinging to security excuses. From the article, "The threat of hypervisor malware affects Ultimate and Business editions just as much as Home Premium and Basic. As such, the only logical explanation is that Microsoft is using pricing to discourage users from virtualizing those OSes. Since when is a price tag an effective means of combating malware?" Something else must be going on here."Read more of this story at Slashdot.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Big Ag Enlists Robots to Pick High-Hanging Fruit</title>\r\n  <link>http://tech.originalsignal.com/article/57544/big-ag-enlists-robots-to-pick-high-hanging-fruit.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 10:08:24 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57544/big-ag-enlists-robots-to-pick-high-hanging-fruit.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  As if the debate over immigration and guest worker programs wasn''t complicated enough, now a couple of robots are rolling into the middle of it.     ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Hyper-Personal Search ''Possible''</title>\r\n  <link>http://tech.originalsignal.com/article/57543/hyper-personal-search-possible.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 08:38:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57543/hyper-personal-search-possible.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Google would consider keeping a user''s search data for longer than 18 months if they had explicitly consented, one of the firm''s key executives has said.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Having Accurate Broadband Data... Will Slow Down Broadband Growth?</title>\r\n  <link>http://tech.originalsignal.com/article/57542/having-accurate-broadband-data-will-slow-down-broadband-growth.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 08:08:51 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57542/having-accurate-broadband-data-will-slow-down-broadband-growth.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Many broadband providers have resisted providing detailed broadband penetration data, since it would suggest that things aren''t as rosy as the FCC insists with its bizarre counting system that everyone knows doesn''t paint an accurate portrait of broadband in the US.  However, with Congress looking to force the collection of more accurate broadband availability data, some broadband providers are protesting.  Apparently, the American Cable Association is claiming that providing such information would harm broadband growth.  Why?  Because collecting that info would take time and effort away from providing more broadband. Of course, that suggests that these providers don''t already know where they provide broadband, which is hard to believe.  It also ignores that one of the suggestions for getting better broadband data is to provide a user-generated mapping tool that won''t require the broadband providers'' involvement at all.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>June 21, 2004: SpaceShipOne Proves (Capitalist) Pigs Can Fly</title>\r\n  <link>http://tech.originalsignal.com/article/57541/june-21-2004-spaceshipone-proves-capitalist-pigs-can-fly.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 08:08:24 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57541/june-21-2004-spaceshipone-proves-capitalist-pigs-can-fly.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  The private sector joins the space community with a successful sub-orbital flight above the Mojave Desert.     ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>How they steal your card AND pin at ATM''s</title>\r\n  <link>http://tech.originalsignal.com/article/57540/how-they-steal-your-card-and-pin-at-atms.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 08:08:12 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57540/how-they-steal-your-card-and-pin-at-atms.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Using black film which blends with the black plastic of an ATM theives can steal your card along and capture your pin number.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>FAA Plans to Clean Up the Skies</title>\r\n  <link>http://tech.originalsignal.com/article/57539/faa-plans-to-clean-up-the-skies.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 08:08:02 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57539/faa-plans-to-clean-up-the-skies.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  coondoggie writes "On top of its recently announced plan to reduce flight delays, Federal Aviation Administration officials today launched what they hope will be pan U.S. and European Union joint action plan to cut greenhouse gas emissions from aircraft. Specifically the group announced the Atlantic Interoperability Initiative to Reduce Emissions or AIRE &mdash; the first large-scale environmental plan aimed at uniting aviation players from both sides of the Atlantic."Read more of this story at Slashdot.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Ex-Torex chairman may be FSA''s iSoft witness</title>\r\n  <link>http://tech.originalsignal.com/article/57537/ex-torex-chairman-may-be-fsas-isoft-witness.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 07:08:45 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57537/ex-torex-chairman-may-be-fsas-isoft-witness.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  AccountancyAge.com, Accountancy Age, Thursday 21 June 2007 at 00:00:00FSA looking to call on Christopher MooreThe Financial Services Authority investigation into accounting irregularities uncovered at iSoft, the NHS software supplier could see Christopher Moore, the former chairman at Torex Retail, being called as a witness....&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Deloitte chief: ''Genuine effort'' needed by governments</title>\r\n  <link>http://tech.originalsignal.com/article/57538/deloitte-chief-genuine-effort-needed-by-governments.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 07:08:45 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57538/deloitte-chief-genuine-effort-needed-by-governments.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  AccountancyAge.com, Accountancy Age, Thursday 21 June 2007 at 00:00:00Deloitte boss comments on SEC announcementGovernments and regulators must continue with genuine efforts to achieve consistency in the development and application of global financial reporting standards to protect investors, Deloitte global CEO James H....&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Blu-ray content protection agency certifies BD+</title>\r\n  <link>http://tech.originalsignal.com/article/57536/blu-ray-content-protection-agency-certifies-bd.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 07:08:24 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57536/blu-ray-content-protection-agency-certifies-bd.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  The company providing the additional BD+ copy protection to Blu-ray discs has just announced the finalization of the BD+ spec.  The announcement opens the door for more movie studios to release content on Blu-ray, but raises many questions about just what the studios plan to do with the power that BD+ provides.Read More...    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>The Pirate Bay Launches Uncensored Image Hosting</title>\r\n  <link>http://tech.originalsignal.com/article/57534/the-pirate-bay-launches-uncensored-image-hosting.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 07:08:06 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57534/the-pirate-bay-launches-uncensored-image-hosting.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  BayImg, an uncensored image hosting service, is the latest side-project from The Pirate Bay folks. The main difference compared to other image hosting services is that they pretty much allow everything on there, freedom of speech above all.  ]]></content:encoded>\r\n  </item>\r\n    	\r\n	</channel>\r\n</rss>', '20070621103354'),
 (0x646174656d696c6c5f66656564, '<?xml version="1.0" encoding="UTF-8"?>\r\n<?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/rss2full.xsl" type="text/xsl" media="screen"?><?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/itemcontent.css" type="text/css" media="screen"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">\r\n<channel>\r\n	<title>Original Signal - Transmitting Tech</title>\r\n	<link>http://tech.originalsignal.com</link>\r\n	<description>Orginal Signal aggregates the 15 most popular technology sites. The main purpose of the site is to provide \r\na quick glance on what''s happening without using your desktop/web RSS reader. New headlines (since your \r\nlast cookied visit) come in pretty orange, visited ones are grey. All credits go to the authors of these weblogs. \r\nWithout their hard work Original Signal would not exist. Original Signal was inspired by Popurls and the Web 2.0 Workgroup.</description>\r\n	<pubDate>Fri, 18 May 2007 11:13:56 CEST</pubDate>\r\n	<language>en</language>\r\n	\r\n	  <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" href="http://feeds.feedburner.com/OriginalSignal/tech" type="application/rss+xml" /><item>\r\n  <title>Politicians'' Latest Grandstanding: Force ISPs To Hide Rogue Internet Pharmacies</title>\r\n  <link>http://tech.originalsignal.com/article/51976/politicians-latest-grandstanding-force-isps-to-hide-rogue-internet-pharmacies.html</link>\r\n  <pubDate>Fri, 18 May 2007 10:38:36 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51976/politicians-latest-grandstanding-force-isps-to-hide-rogue-internet-pharmacies.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  The problem with legislators is that all they know how to do is legislate.  Even if there are perfectly acceptable laws in place, you don''t get re-elected for saying, "you know what, we didn''t need any new laws this time around."  No, you have to propose and support legislation that makes it sound like you''re solving a big problem -- even if the problem isn''t that big and your proposed solution will likely make it worse.  The latest such situation concerns unauthorized internet pharmacies.  Sure, there may be some problems with people getting access to prescription medicine they shouldn''t be able to order, but even the DEA says that they don''t any new laws, as existing laws are perfectly well suited for shutting these pharmacies down.  Of course, that won''t stop the politicians from pushing forward.  However, not only are they proposing more restrictions and penalties for such pharmacies, but also demanding that ISPs and search engines proactively block these sites -- and also block advertisements for these sites.  Yes, despite the fact that courts throw out every attempt by politicians to force ISPs to block sites they don''t like, the politicians insist that this time it won''t violate the Constitution.  Yes, despite the fact that those who really want to access these sites will get around the blocks, politicians insist they''re useful.  Even better, they got a law professor to claim that "It is no burden to (the ISPs). They know how to do it; they can do it in a minute."  Trying telling that to the ISPs who would now be responsible for blocking content.  Once again, the ISPs are simply running connectivity.  They should have no responsibility for what''s done over that connectivity.  If the sites, themselves, are illegal, go after the sites.  If the sites are offshore, then block the shipments through customs.  But, requiring ISPs to waste time, effort, money and resources on putting up ineffective blocks that aren''t needed won''t help the situation.  It''ll just waste time, effort, money and resources so that some politicians can claim they were tough on illegal internet pharmacies during the next election.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Dell unveils Project Hybrid</title>\r\n  <link>http://tech.originalsignal.com/article/51975/dell-unveils-project-hybrid.html</link>\r\n  <pubDate>Fri, 18 May 2007 10:38:32 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51975/dell-unveils-project-hybrid.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Tom Sanders in San Francisco, vnunet.com, Friday 18 May 2007 at 00:00:00Better margins in integrated systems, not 1u boxesDell is preparing to roll out new products and services that will allow the company to sell more complete systems instead of point products.  The server and PC maker used...&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Quick custom text ad placement in WordPress blog categories</title>\r\n  <link>http://tech.originalsignal.com/article/51974/quick-custom-text-ad-placement-in-wordpress-blog-categories.html</link>\r\n  <pubDate>Fri, 18 May 2007 10:38:29 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51974/quick-custom-text-ad-placement-in-wordpress-blog-categories.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  WordPress plugins abound for Google AdSense and other third-party text ad brokers, but what happens when someone wants to buy ad space directly from you, on a specific category page in your blog? You can easily add static HTML text ads to your category search result pages by creating category-specific page templates.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>The First Terabyte Hard Drive--Review</title>\r\n  <link>http://tech.originalsignal.com/article/51973/the-first-terabyte-hard-drive-review.html</link>\r\n  <pubDate>Fri, 18 May 2007 10:38:06 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51973/the-first-terabyte-hard-drive-review.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  The terabyte era arrives, with Hitachi''s 5-platter, 10-head 7K1000 hard drive. ExtremeTech puts Hitachi''s latest hard drive on the bench and let you know how it performs.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>First Pictures of Apple Store in Saigon</title>\r\n  <link>http://tech.originalsignal.com/article/51971/first-pictures-of-apple-store-in-saigon.html</link>\r\n  <pubDate>Fri, 18 May 2007 09:38:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51971/first-pictures-of-apple-store-in-saigon.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Pictures of Apple''s brand new store in Saigon  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Mac Switcher: Three ways to take screenshots</title>\r\n  <link>http://tech.originalsignal.com/article/51972/mac-switcher-three-ways-to-take-screenshots.html</link>\r\n  <pubDate>Fri, 18 May 2007 09:38:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51972/mac-switcher-three-ways-to-take-screenshots.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  One thing you lose  is that Print Screen key; setting up a Mac desktop or notebook will reveal that the key is nowhere to be found, apparently leaving us out in the cold when it comes to capturing that golden moment on your display. Fortunately, this isn''t the case.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>PlayOgg! Now that the music is being set free from DRM...</title>\r\n  <link>http://tech.originalsignal.com/article/51970/playogg-now-that-the-music-is-being-set-free-from-drm.html</link>\r\n  <pubDate>Fri, 18 May 2007 09:08:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51970/playogg-now-that-the-music-is-being-set-free-from-drm.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Both popular music file formats MP3 and AACS are patent encumbered - that means we all end up paying too much for our music one way or another. Time to switch to playing Ogg! Playing Ogg is ethically, legally and technically superior. Download this Ogg friendly media player for Mac and Windows now! (Ogg support comes o''natural for GNU/Linux users)  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Transformers Full Theatrical Trailer Available</title>\r\n  <link>http://tech.originalsignal.com/article/51969/transformers-full-theatrical-trailer-available.html</link>\r\n  <pubDate>Fri, 18 May 2007 08:38:02 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51969/transformers-full-theatrical-trailer-available.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  roelbj writes "The full trailer for Michael Bay''s upcoming Transformers movie is now finally available on Yahoo. Unlike the teaser trailers that have only hinted at what the final effects would deliver, we can at long last get a much better feeling for how the live-action CGI Transformers will look."Read more of this story at Slashdot.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>30 Scripts For Galleries, Slideshows and Lightboxes</title>\r\n  <link>http://tech.originalsignal.com/article/51968/30-scripts-for-galleries-slideshows-and-lightboxes.html</link>\r\n  <pubDate>Fri, 18 May 2007 08:08:03 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51968/30-scripts-for-galleries-slideshows-and-lightboxes.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Family photos, vacation snapshots or creative artistic works: whatever images you have to present, you can present them in a variety of ways. On a big screen, in slide shows or in a thumbnails gallery. However, to convey the message of presented data effectively, it’s important to offer it in an attractive and intuitive way.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>May 18, 1953: Jackie Cochran, First Woman to Break the Sound Barrier</title>\r\n  <link>http://tech.originalsignal.com/article/51967/may-18-1953-jackie-cochran-first-woman-to-break-the-sound-barrier.html</link>\r\n  <pubDate>Fri, 18 May 2007 07:38:19 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51967/may-18-1953-jackie-cochran-first-woman-to-break-the-sound-barrier.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Famed aviatrix averages 652 mph as she streaks across the desert sky over California.     ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Video game sales up 20 percent in April</title>\r\n  <link>http://tech.originalsignal.com/article/51966/video-game-sales-up-20-percent-in-april.html</link>\r\n  <pubDate>Fri, 18 May 2007 07:38:17 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51966/video-game-sales-up-20-percent-in-april.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Strong demand for Nintendo''s Wii console and new Pokemon games for Nintendo''s DS handheld drive sales.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Engadget Responds to yesterday''s Apple news</title>\r\n  <link>http://tech.originalsignal.com/article/51964/engadget-responds-to-yesterdays-apple-news.html</link>\r\n  <pubDate>Fri, 18 May 2007 07:08:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51964/engadget-responds-to-yesterdays-apple-news.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  "The question we faced at that moment was: Do we run with the story without Apple''s comment or not? The answer seemed fairly clear there, too, at the time. We possessed what confirmed Apple employees believed was an internal Apple memo that with absolutely no doubt had also been received by any number of other Apple employees. "  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Amazon offering discounts on old, new MacBook models</title>\r\n  <link>http://tech.originalsignal.com/article/51965/amazon-offering-discounts-on-old-new-macbook-models.html</link>\r\n  <pubDate>Fri, 18 May 2007 07:08:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51965/amazon-offering-discounts-on-old-new-macbook-models.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  One day after Apple Inc. introduced a modest refresh to its MacBook line, the 13-inch notebooks were crowding the upper echelon of Amazon.com''s top seller list, thanks partly to some hefty discounts by the retailer on new and previous generation models.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Want To Search For Online Porn In Korea?  Please Identify Yourself First</title>\r\n  <link>http://tech.originalsignal.com/article/51963/want-to-search-for-online-porn-in-korea-please-identify-yourself-first.html</link>\r\n  <pubDate>Fri, 18 May 2007 06:38:33 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51963/want-to-search-for-online-porn-in-korea-please-identify-yourself-first.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Apparently, Google Korea is going to follow the lead of other Korean search engines introducing what they''re calling an age-verification system for its search engine later this year.  The idea is that "adult-themed" search will require you to be 19 years old or older.  If their searches touch on any of the list of 700 words supplied by the Korean government, users will have to enter their name and national resident registration number (think of it as your porn license!) to be checked against a database to make sure you''re old enough.  Of course, this also means the government (and Google) will have a very detailed record of who is searching for porn.  Or, they would assuming that no one ever finds out the national resident registration number of someone else over the age of 19 and enters that instead of their own information.  Not that that would ever happen...  Also, it''s not clear what words are included in the list, but you have to wonder how such systems handle searches for things like "breast cancer?"  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>AMD''s Next-Generation Mobile Architecture Revealed: Griffin</title>\r\n  <link>http://tech.originalsignal.com/article/51962/amds-next-generation-mobile-architecture-revealed-griffin.html</link>\r\n  <pubDate>Fri, 18 May 2007 06:38:24 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51962/amds-next-generation-mobile-architecture-revealed-griffin.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  AMD is continuing with its disclosure of future plans, this time talking about Griffin and Puma, it''s new mobile architecture and platform.  ]]></content:encoded>\r\n  </item>\r\n    	\r\n	</channel>\r\n</rss>', '20070518091623');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_flirts`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_flirts`;
 CREATE TABLE `dsb_flirts` (
@@ -490,11 +490,11 @@ CREATE TABLE `dsb_flirts` (
   KEY `flirt_type` (`flirt_type`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_flirts`
--- 
+--
 
-INSERT INTO `dsb_flirts` (`flirt_id`, `flirt_text`, `flirt_type`) VALUES 
+INSERT INTO `dsb_flirts` (`flirt_id`, `flirt_text`, `flirt_type`) VALUES
 (5, 'Hey sexy!', 0),
 (6, 'Whaaadddup!', 0),
 (4, 'I hope you know CPR, cuz you take my breath away...', 0),
@@ -505,9 +505,9 @@ INSERT INTO `dsb_flirts` (`flirt_id`, `flirt_text`, `flirt_type`) VALUES
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_lang_keys`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_lang_keys`;
 CREATE TABLE `dsb_lang_keys` (
@@ -519,11 +519,11 @@ CREATE TABLE `dsb_lang_keys` (
   KEY `lk_use` (`lk_use`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_lang_keys`
--- 
+--
 
-INSERT INTO `dsb_lang_keys` (`lk_id`, `lk_type`, `lk_diz`, `lk_use`) VALUES 
+INSERT INTO `dsb_lang_keys` (`lk_id`, `lk_type`, `lk_diz`, `lk_use`) VALUES
 (1, 2, 'Category name', 1),
 (2, 2, 'Category name', 1),
 (3, 2, 'Label for f1 field', 1),
@@ -704,9 +704,9 @@ INSERT INTO `dsb_lang_keys` (`lk_id`, `lk_type`, `lk_diz`, `lk_use`) VALUES
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_lang_strings`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_lang_strings`;
 CREATE TABLE `dsb_lang_strings` (
@@ -718,11 +718,11 @@ CREATE TABLE `dsb_lang_strings` (
   UNIQUE KEY `thekey` (`fk_lk_id`,`skin`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_lang_strings`
--- 
+--
 
-INSERT INTO `dsb_lang_strings` (`ls_id`, `fk_lk_id`, `skin`, `lang_value`) VALUES 
+INSERT INTO `dsb_lang_strings` (`ls_id`, `fk_lk_id`, `skin`, `lang_value`) VALUES
 (1, 1, 'skin_def', 'Basic Info'),
 (2, 2, 'skin_def', 'Appearance'),
 (3, 3, 'skin_def', 'About me'),
@@ -903,9 +903,9 @@ INSERT INTO `dsb_lang_strings` (`ls_id`, `fk_lk_id`, `skin`, `lang_value`) VALUE
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_locales`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_locales`;
 CREATE TABLE `dsb_locales` (
@@ -915,11 +915,11 @@ CREATE TABLE `dsb_locales` (
   PRIMARY KEY  (`locale_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_locales`
--- 
+--
 
-INSERT INTO `dsb_locales` (`locale_id`, `locale_name`, `codes`) VALUES 
+INSERT INTO `dsb_locales` (`locale_id`, `locale_name`, `codes`) VALUES
 (1, 'Arabic (Algeria)', 'ar_DZ,arabic'),
 (2, 'Arabic (Saudi Arabia)', 'ar_SA,arabic'),
 (3, 'Bulgarian (Bulgaria)', 'bg_BG,bulgarian'),
@@ -974,9 +974,9 @@ INSERT INTO `dsb_locales` (`locale_id`, `locale_name`, `codes`) VALUES
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_memberships`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_memberships`;
 CREATE TABLE `dsb_memberships` (
@@ -989,20 +989,20 @@ CREATE TABLE `dsb_memberships` (
   UNIQUE KEY `m_value` (`m_value`)
 ) TYPE=MyISAM PACK_KEYS=0 COMMENT='m_value must be uniq';
 
--- 
+--
 -- Dumping data for table `dsb_memberships`
--- 
+--
 
-INSERT INTO `dsb_memberships` (`m_id`, `m_name`, `m_value`, `is_custom`) VALUES 
+INSERT INTO `dsb_memberships` (`m_id`, `m_name`, `m_value`, `is_custom`) VALUES
 (1, 'Non Members', 1, 0),
 (2, 'Free Members', 2, 0),
 (3, 'Paid Members', 4, 1);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_message_filters`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_message_filters`;
 CREATE TABLE `dsb_message_filters` (
@@ -1016,20 +1016,20 @@ CREATE TABLE `dsb_message_filters` (
   UNIQUE KEY `filter_type` (`filter_type`,`fk_user_id`,`field_value`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_message_filters`
--- 
+--
 
-INSERT INTO `dsb_message_filters` (`filter_id`, `filter_type`, `fk_user_id`, `field`, `field_value`, `fk_folder_id`) VALUES 
+INSERT INTO `dsb_message_filters` (`filter_id`, `filter_type`, `fk_user_id`, `field`, `field_value`, `fk_folder_id`) VALUES
 (2, 1, 23, '', '7', 5),
 (5, 1, 6, '', '16', -3),
 (6, 1, 4, '', '15', -3);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_modules`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_modules`;
 CREATE TABLE `dsb_modules` (
@@ -1042,11 +1042,11 @@ CREATE TABLE `dsb_modules` (
   KEY `module_type` (`module_type`)
 ) TYPE=MyISAM COMMENT='0-regular,1-pg,2-fraud,3-widg,4-skin';
 
--- 
+--
 -- Dumping data for table `dsb_modules`
--- 
+--
 
-INSERT INTO `dsb_modules` (`module_code`, `module_name`, `module_diz`, `module_type`, `version`) VALUES 
+INSERT INTO `dsb_modules` (`module_code`, `module_name`, `module_diz`, `module_type`, `version`) VALUES
 (0x636f7265, 'Basic features', '', 0, 1.00),
 (0x636f72655f626c6f67, 'Blogs', '', 0, 1.00),
 (0x636f72655f70686f746f, 'Photo Album', '', 0, 1.00),
@@ -1061,9 +1061,9 @@ INSERT INTO `dsb_modules` (`module_code`, `module_name`, `module_diz`, `module_t
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_networks`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_networks`;
 CREATE TABLE `dsb_networks` (
@@ -1074,20 +1074,20 @@ CREATE TABLE `dsb_networks` (
   PRIMARY KEY  (`net_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_networks`
--- 
+--
 
-INSERT INTO `dsb_networks` (`net_id`, `network`, `is_bidi`, `max_users`) VALUES 
+INSERT INTO `dsb_networks` (`net_id`, `network`, `is_bidi`, `max_users`) VALUES
 (1, 'Friends', 1, 0),
 (2, 'Blocked Members', 0, 0),
 (3, 'Favorites', 0, 0);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_online`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_online`;
 CREATE TABLE `dsb_online` (
@@ -1099,11 +1099,11 @@ CREATE TABLE `dsb_online` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_online`
--- 
+--
 
-INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES 
+INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES
 (0, '20070621213959', 0x3131326462393263616431316561616263643631326336306662303535353037),
 (0, '20070621201106', 0x6434623833303233333033303638353530656163653161666562396437343735),
 (0, '20070622090932', 0x3238636332353435313037656562363636666165363332666565383166386665),
@@ -1111,9 +1111,9 @@ INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_payments`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_payments`;
 CREATE TABLE `dsb_payments` (
@@ -1145,16 +1145,16 @@ CREATE TABLE `dsb_payments` (
   KEY `date` (`date`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_payments`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_photo_comments`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_photo_comments`;
 CREATE TABLE `dsb_photo_comments` (
@@ -1173,11 +1173,11 @@ CREATE TABLE `dsb_photo_comments` (
   KEY `key1` (`fk_parent_id`,`status`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_photo_comments`
--- 
+--
 
-INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES 
+INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES
 (1, 1, 6, 'cocacola', 'hi thetr', '2007-04-16 18:54:48', '2007-04-16 18:54:48', 15, 0),
 (2, 1, 9, 'raneglo', 'Hello Mr Watermark', '2007-04-16 19:59:47', '2007-04-16 19:59:47', 15, 0),
 (3, 6, 10, 'strawberries', 'party on, dude!', '2007-04-16 21:12:23', '2007-04-16 21:12:23', 15, 0),
@@ -1216,9 +1216,9 @@ INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_photo_ratings`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_photo_ratings`;
 CREATE TABLE `dsb_photo_ratings` (
@@ -1230,11 +1230,11 @@ CREATE TABLE `dsb_photo_ratings` (
   KEY `key1` (`fk_user_id`,`date_voted`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_photo_ratings`
--- 
+--
 
-INSERT INTO `dsb_photo_ratings` (`fk_photo_id`, `fk_user_id`, `vote`, `date_voted`) VALUES 
+INSERT INTO `dsb_photo_ratings` (`fk_photo_id`, `fk_user_id`, `vote`, `date_voted`) VALUES
 (1, 6, 4, '2007-04-16 18:54:40'),
 (5, 1, 5, '2007-04-16 19:45:27'),
 (5, 8, 5, '2007-04-16 20:16:18'),
@@ -1275,9 +1275,9 @@ INSERT INTO `dsb_photo_ratings` (`fk_photo_id`, `fk_user_id`, `vote`, `date_vote
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_profile_categories`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_profile_categories`;
 CREATE TABLE `dsb_profile_categories` (
@@ -1288,11 +1288,11 @@ CREATE TABLE `dsb_profile_categories` (
   KEY `access_level` (`access_level`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_profile_categories`
--- 
+--
 
-INSERT INTO `dsb_profile_categories` (`pcat_id`, `fk_lk_id_pcat`, `access_level`) VALUES 
+INSERT INTO `dsb_profile_categories` (`pcat_id`, `fk_lk_id_pcat`, `access_level`) VALUES
 (1, 1, 7),
 (2, 2, 7),
 (3, 31, 7),
@@ -1301,9 +1301,9 @@ INSERT INTO `dsb_profile_categories` (`pcat_id`, `fk_lk_id_pcat`, `access_level`
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_profile_comments`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_profile_comments`;
 CREATE TABLE `dsb_profile_comments` (
@@ -1322,11 +1322,11 @@ CREATE TABLE `dsb_profile_comments` (
   KEY `key1` (`fk_parent_id`,`status`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_profile_comments`
--- 
+--
 
-INSERT INTO `dsb_profile_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES 
+INSERT INTO `dsb_profile_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES
 (1, 19, 8, 'angkasa', 'Nice pose mate.heheh', '2007-05-13 17:48:27', '2007-05-13 17:48:27', 15, 0),
 (2, 32, 32, 'mervyn', 'test', '2007-05-25 23:57:46', '2007-05-25 23:57:46', 15, 0),
 (3, 10, 10, 'strawberries', 'test', '2007-05-28 11:48:10', '2007-05-28 11:48:10', 15, 0),
@@ -1334,9 +1334,9 @@ INSERT INTO `dsb_profile_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_profile_fields`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_profile_fields`;
 CREATE TABLE `dsb_profile_fields` (
@@ -1364,11 +1364,11 @@ CREATE TABLE `dsb_profile_fields` (
   PRIMARY KEY  (`pfield_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_profile_fields`
--- 
+--
 
-INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `field_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES 
+INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `field_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES
 (1, 3, 4, 0, 1, 0, 4, 1, 2, 0, 1, 1, 0x6631, 5, 1, 0, '1000', '', '', '', 5),
 (2, 8, 3, 1, 10, 1, 9, 1, 1, 1, 1, 1, 0x6632, 10, 1, 0, '|6|7|', '|0|', '|1|', '', 1),
 (3, 13, 10, 1, 10, 1, 14, 1, 1, 1, 1, 1, 0x6633, 15, 1, 0, '|11|12|', '|1|', '|0|', '', 2),
@@ -1387,9 +1387,9 @@ INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `field_type`, `
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_queue_email`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_queue_email`;
 CREATE TABLE `dsb_queue_email` (
@@ -1401,16 +1401,16 @@ CREATE TABLE `dsb_queue_email` (
   PRIMARY KEY  (`mail_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_queue_email`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_queue_message`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_queue_message`;
 CREATE TABLE `dsb_queue_message` (
@@ -1427,18 +1427,18 @@ CREATE TABLE `dsb_queue_message` (
   KEY `to_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_queue_message`
--- 
+--
 
-INSERT INTO `dsb_queue_message` (`mail_id`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES 
+INSERT INTO `dsb_queue_message` (`mail_id`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES
 (9, 0, 0, '', 'New comment on your profile', 'dragon posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm5">Click here</a> to view the comment', '2007-05-15 09:28:36', 2);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_rate_limiter`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_rate_limiter`;
 CREATE TABLE `dsb_rate_limiter` (
@@ -1453,16 +1453,16 @@ CREATE TABLE `dsb_rate_limiter` (
   KEY `thekey` (`level_code`,`m_value`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_rate_limiter`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_site_bans`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_site_bans`;
 CREATE TABLE `dsb_site_bans` (
@@ -1475,18 +1475,18 @@ CREATE TABLE `dsb_site_bans` (
   UNIQUE KEY `key1` (`ban_type`,`what`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_site_bans`
--- 
+--
 
-INSERT INTO `dsb_site_bans` (`ban_id`, `ban_type`, `what`, `fk_lk_id_reason`, `since`) VALUES 
+INSERT INTO `dsb_site_bans` (`ban_id`, `ban_type`, `what`, `fk_lk_id_reason`, `since`) VALUES
 (2, 3, '3232235521', 186, '20070613205155');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_site_log`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_site_log`;
 CREATE TABLE `dsb_site_log` (
@@ -1503,16 +1503,16 @@ CREATE TABLE `dsb_site_log` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_site_log`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_site_news`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_site_news`;
 CREATE TABLE `dsb_site_news` (
@@ -1523,19 +1523,19 @@ CREATE TABLE `dsb_site_news` (
   PRIMARY KEY  (`news_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_site_news`
--- 
+--
 
-INSERT INTO `dsb_site_news` (`news_id`, `news_title`, `news_body`, `date_posted`) VALUES 
+INSERT INTO `dsb_site_news` (`news_id`, `news_title`, `news_body`, `date_posted`) VALUES
 (1, 'first news', '<p>N<font size="1">e</font><font size="2">w</font><font size="3">s</font> <font size="4">b</font><font size="5">o</font><font size="6">d</font><font size="7">y</font></p>', '0000-00-00 00:00:00'),
 (2, 'second news entry', '<p>This one shows</p>\r\n<ol>\r\n    <li><a href="http://forum.datemill.com">links</a> in posts</li>\r\n    <li>c<font color="#ff6600">o</font><font color="#0000ff">l</font><font color="#00ff00">o</font><font color="#ff00ff">r</font><font color="#ffffff"><span style="background-color: rgb(255, 0, 0);">s</span></font></li>\r\n    <li><font face="Comic Sans MS">different </font><font face="Tahoma">fonts</font></li>\r\n    <li>and <font size="5">sizes</font></li>\r\n    <li>and let''s not forget lists</li>\r\n</ol>', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_site_options3`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_site_options3`;
 CREATE TABLE `dsb_site_options3` (
@@ -1553,11 +1553,11 @@ CREATE TABLE `dsb_site_options3` (
   KEY `fk_module_code` (`fk_module_code`)
 ) TYPE=MyISAM COMMENT='0-n/a,9-chkbox,2-tf,4-ta';
 
--- 
+--
 -- Dumping data for table `dsb_site_options3`
--- 
+--
 
-INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `config_diz`, `option_type`, `choices`, `fk_module_code`, `per_user`) VALUES 
+INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `config_diz`, `option_type`, `choices`, `fk_module_code`, `per_user`) VALUES
 (1, 0x64626669656c645f696e646578, '16', 'The last index of the custom profile fields (field_xx)', 0, '', 0x636f7265, 0),
 (2, 0x7573655f63617074636861, '1', 'Use the dynamic image text (captcha image) to keep spam bots out?', 9, '', 0x636f7265, 0),
 (3, 0x6d616e75616c5f70726f66696c655f617070726f76616c, '0', 'New profiles or changes to existing profiles require manual approval from an administrator before being displayed on site?', 9, '', 0x636f7265, 0),
@@ -1615,9 +1615,9 @@ INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_site_searches`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_site_searches`;
 CREATE TABLE `dsb_site_searches` (
@@ -1631,20 +1631,20 @@ CREATE TABLE `dsb_site_searches` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_site_searches`
--- 
+--
 
-INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES 
+INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES
 ('40cd750bba9870f18aada2478b24840a', 1, 'a:0:{}', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,34', 0, '20070622000855'),
 ('8d47520feff17b8632f86ffaec79cfad', 1, 'a:9:{s:13:"acclevel_code";s:15:"search_advanced";s:2:"st";s:3:"adv";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f5_max";s:2:"75";s:10:"f6_country";i:0;s:2:"f9";i:0;s:3:"f13";i:0;s:3:"f14";i:0;}', '1,22', 7, '20070621125946'),
 ('4b7448aab16257e1c55485520b157743', 1, 'a:1:{s:4:"user";s:6:"shadow";}', '17', 0, '20070622105435');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_stats_dot`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_stats_dot`;
 CREATE TABLE `dsb_stats_dot` (
@@ -1657,11 +1657,11 @@ CREATE TABLE `dsb_stats_dot` (
   KEY `dataset` (`dataset`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_stats_dot`
--- 
+--
 
-INSERT INTO `dsb_stats_dot` (`dot_id`, `dataset`, `value`, `time`) VALUES 
+INSERT INTO `dsb_stats_dot` (`dot_id`, `dataset`, `value`, `time`) VALUES
 (780, 'paid_members', 25, 20070520),
 (779, 'paid_members', 25, 20070519),
 (778, 'paid_members', 25, 20070518),
@@ -1818,9 +1818,9 @@ INSERT INTO `dsb_stats_dot` (`dot_id`, `dataset`, `value`, `time`) VALUES
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_subscriptions`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_subscriptions`;
 CREATE TABLE `dsb_subscriptions` (
@@ -1839,11 +1839,11 @@ CREATE TABLE `dsb_subscriptions` (
   KEY `thekey` (`m_value_from`,`is_visible`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_subscriptions`
--- 
+--
 
-INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `price`, `currency`, `is_recurent`, `m_value_from`, `m_value_to`, `duration`, `duration_units`, `is_visible`) VALUES 
+INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `price`, `currency`, `is_recurent`, `m_value_from`, `m_value_to`, `duration`, `duration_units`, `is_visible`) VALUES
 (1, '30$ / month', '', 30.00, 'USD', 0, 2, 4, 30, 'DAY', 1),
 (3, 'Trial', '', 0.00, 'USD', 0, 2, 4, 5, 'DAY', 0),
 (4, 'gold membership', 'this is the description for the gold membership which gives you unlimited access to all features for a couple of seconds', 100.00, 'USD', 0, 2, 4, 1, 'DAY', 1),
@@ -1851,9 +1851,9 @@ INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `pric
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_subscriptions_auto`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_subscriptions_auto`;
 CREATE TABLE `dsb_subscriptions_auto` (
@@ -1865,19 +1865,19 @@ CREATE TABLE `dsb_subscriptions_auto` (
   PRIMARY KEY  (`asubscr_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_subscriptions_auto`
--- 
+--
 
-INSERT INTO `dsb_subscriptions_auto` (`asubscr_id`, `dbfield`, `field_value`, `fk_subscr_id`, `date_start`) VALUES 
+INSERT INTO `dsb_subscriptions_auto` (`asubscr_id`, `dbfield`, `field_value`, `fk_subscr_id`, `date_start`) VALUES
 (1, 'f2', 2, 3, '0000-00-00'),
 (2, '', 0, 1, '0000-00-00');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_accounts`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_accounts`;
 CREATE TABLE `dsb_user_accounts` (
@@ -1896,11 +1896,11 @@ CREATE TABLE `dsb_user_accounts` (
   KEY `email` (`email`)
 ) TYPE=MyISAM COMMENT='membership is m_value';
 
--- 
+--
 -- Dumping data for table `dsb_user_accounts`
--- 
+--
 
-INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES 
+INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES
 (1, 0x656d6d61, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'ema@sco.ro', '', '02912174c5cc19dedd90bc498af2d9b0', '20070614105036'),
 (2, 0x6b65697468, 0x3166333837306265323734663663343962336533316130633637323839353766, 15, 2, 'mr-w@planetnet.karoo.co.uk', '', '2fba765ee1b6ade5287073584ec894e4', '20070420220720'),
 (3, 0x73686f6e323035, 0x3037373631303430363739346562326133633736393139396439346131613739, 15, 2, 'shon205@sbcglobal.net', '', 'b3d7ac7336a79fe5a4b01a88f5727b13', '20070428125929'),
@@ -1938,9 +1938,9 @@ INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membershi
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_blogs`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_blogs`;
 CREATE TABLE `dsb_user_blogs` (
@@ -1955,11 +1955,11 @@ CREATE TABLE `dsb_user_blogs` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_blogs`
--- 
+--
 
-INSERT INTO `dsb_user_blogs` (`blog_id`, `fk_user_id`, `blog_name`, `blog_diz`, `stat_posts`, `blog_skin`, `blog_url`) VALUES 
+INSERT INTO `dsb_user_blogs` (`blog_id`, `fk_user_id`, `blog_name`, `blog_diz`, `stat_posts`, `blog_skin`, `blog_url`) VALUES
 (1, 1, 'My first ever blog', 'What can I break today?', 2, '', ''),
 (3, 10, 'Fluffy''s Blog', 'The life and times of Fluffy', 2, '', ''),
 (4, 11, 'Testing Testing the Blog', 'Testing Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing', 1, '', ''),
@@ -1972,9 +1972,9 @@ INSERT INTO `dsb_user_blogs` (`blog_id`, `fk_user_id`, `blog_name`, `blog_diz`, 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_folders`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_folders`;
 CREATE TABLE `dsb_user_folders` (
@@ -1985,11 +1985,11 @@ CREATE TABLE `dsb_user_folders` (
   UNIQUE KEY `fk_user_id` (`fk_user_id`,`folder`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_folders`
--- 
+--
 
-INSERT INTO `dsb_user_folders` (`folder_id`, `fk_user_id`, `folder`) VALUES 
+INSERT INTO `dsb_user_folders` (`folder_id`, `fk_user_id`, `folder`) VALUES
 (1, 6, 'Test'),
 (2, 11, 'My Sexy Email'),
 (3, 10, 'test folder'),
@@ -2000,9 +2000,9 @@ INSERT INTO `dsb_user_folders` (`folder_id`, `fk_user_id`, `folder`) VALUES
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_inbox`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_inbox`;
 CREATE TABLE `dsb_user_inbox` (
@@ -2022,11 +2022,11 @@ CREATE TABLE `dsb_user_inbox` (
   KEY `key1` (`fk_user_id`,`fk_folder_id`,`del`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_inbox`
--- 
+--
 
-INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES 
+INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES
 (1, 1, 1, 4, 'maverick', 'Connection request from maverick', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 17:53:37', 0, 0, 1),
 (83, 1, 10, 0, '', 'New comment on one of your photos', 'strawberries posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=6">Click here</a> to view the comment', '2007-04-21 14:24:36', 2, 0, 1),
 (84, 1, 10, 0, '', 'New comment on one of your photos', 'strawberries posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=6">Click here</a> to view the comment', '2007-04-21 14:25:32', 2, 0, 1),
@@ -2227,7 +2227,7 @@ INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_ot
 (242, 1, 7, 0, '', 'New comment on one of your blogs', 'shadowmachine posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm185">Click here</a> to view the comment', '2007-05-28 07:55:09', 2, 0, 1),
 (243, 1, 7, 0, '', 'New comment on one of your blogs', 'strawberries posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm186">Click here</a> to view the comment', '2007-05-28 11:51:42', 2, 0, 1),
 (244, 1, 7, 0, '', 'New comment on one of your blogs', 'strawberries posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm187">Click here</a> to view the comment', '2007-05-28 11:57:33', 2, 0, 1);
-INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES 
+INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES
 (245, 0, 7, 0, '', 'New comment on one of your blogs', 'strawberries posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm188">Click here</a> to view the comment', '2007-05-29 20:19:15', 2, 0, 1),
 (246, 0, 7, 0, '', 'New comment on one of your blogs', 'shadowmachine posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm189">Click here</a> to view the comment', '2007-05-30 08:52:55', 2, 0, 1),
 (247, 0, 7, 0, '', 'New comment on one of your blogs', 'alterego posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm190">Click here</a> to view the comment', '2007-05-30 08:58:20', 2, 0, 1),
@@ -2253,9 +2253,9 @@ INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_ot
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_mtpls`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_mtpls`;
 CREATE TABLE `dsb_user_mtpls` (
@@ -2267,11 +2267,11 @@ CREATE TABLE `dsb_user_mtpls` (
   KEY `fk_user_id` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_mtpls`
--- 
+--
 
-INSERT INTO `dsb_user_mtpls` (`mtpl_id`, `fk_user_id`, `subject`, `message_body`) VALUES 
+INSERT INTO `dsb_user_mtpls` (`mtpl_id`, `fk_user_id`, `subject`, `message_body`) VALUES
 (1, 11, 'Testing Messages out', 'This is a template, just testing it out.\nCheers\nJohnboy1'),
 (2, 10, 'Re: zooki sent you a flirt', 'example of saved template'),
 (3, 4, 'Testing Saved Responses', 'Just testing to see how the saved responses works!'),
@@ -2279,9 +2279,9 @@ INSERT INTO `dsb_user_mtpls` (`mtpl_id`, `fk_user_id`, `subject`, `message_body`
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_networks`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_networks`;
 CREATE TABLE `dsb_user_networks` (
@@ -2295,11 +2295,11 @@ CREATE TABLE `dsb_user_networks` (
   KEY `index1` (`fk_user_id`,`fk_net_id`,`nconn_status`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_networks`
--- 
+--
 
-INSERT INTO `dsb_user_networks` (`nconn_id`, `fk_user_id`, `fk_net_id`, `fk_user_id_other`, `nconn_status`) VALUES 
+INSERT INTO `dsb_user_networks` (`nconn_id`, `fk_user_id`, `fk_net_id`, `fk_user_id_other`, `nconn_status`) VALUES
 (1, 4, 1, 1, 1),
 (2, 4, 3, 1, 1),
 (3, 1, 1, 7, 1),
@@ -2353,9 +2353,9 @@ INSERT INTO `dsb_user_networks` (`nconn_id`, `fk_user_id`, `fk_net_id`, `fk_user
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_outbox`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_outbox`;
 CREATE TABLE `dsb_user_outbox` (
@@ -2373,11 +2373,11 @@ CREATE TABLE `dsb_user_outbox` (
   KEY `user_id_2` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_outbox`
--- 
+--
 
-INSERT INTO `dsb_user_outbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES 
+INSERT INTO `dsb_user_outbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES
 (1, 0, 1, 7, 'dragon', 'hi', '[b]hi[/b]', '2007-04-19 09:20:24', 0),
 (16384, 0, 1, 7, 'dragon', 'test confirmation emails', 'test test', '2007-04-19 10:22:41', 255),
 (16385, 0, 1, 7, 'dragon', 'ala bala portocala', 'dada', '2007-04-19 10:51:58', 0),
@@ -2411,9 +2411,9 @@ INSERT INTO `dsb_user_outbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_o
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_photos`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_photos`;
 CREATE TABLE `dsb_user_photos` (
@@ -2447,11 +2447,11 @@ CREATE TABLE `dsb_user_photos` (
   FULLTEXT KEY `caption` (`caption`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_photos`
--- 
+--
 
-INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `allow_rating`, `caption`, `status`, `del`, `flagged`, `reject_reason`, `stat_views`, `stat_votes`, `stat_votes_total`, `stat_comments`, `date_posted`, `last_changed`, `processed`) VALUES 
+INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `allow_rating`, `caption`, `status`, `del`, `flagged`, `reject_reason`, `stat_views`, `stat_votes`, `stat_votes_total`, `stat_comments`, `date_posted`, `last_changed`, `processed`) VALUES
 (1, 4, 'maverick', '7/4_11176746548.jpg', 0, 1, 1, 1, '', 10, 0, 0, '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://www.datemill.com/friendy/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body spellcheck="false">\r\n        <p>Maverick,</p>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for the photo you uploaded on nexus / r i t m o / Friendy.<br />\r\n        Unfortunately we cannot approve it because testing testing</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 29, 3, 13, 3, '2007-04-16 18:02:29', '2007-05-16 00:24:13', 0),
 (2, 1, 'emma', '4/1_11176750826.jpg', 0, 0, 1, 1, 'ruuuuun, enemies are coming!!', 15, 0, 0, '', 17, 0, 0, 0, '2007-04-16 19:13:53', '2007-05-20 09:28:14', 0),
 (3, 1, 'emma', '2/1_21176750826.jpg', 1, 0, 1, 1, 'daddy''s girl', 15, 0, 0, '', 11, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-16 19:15:28', 0),
@@ -2489,9 +2489,9 @@ INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_m
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_profiles`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_profiles`;
 CREATE TABLE `dsb_user_profiles` (
@@ -2533,11 +2533,11 @@ CREATE TABLE `dsb_user_profiles` (
   KEY `key1` (`status`,`del`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_profiles`
--- 
+--
 
-INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`, `f6_country`, `f6_state`, `f6_city`, `f6_zip`, `f7`, `f8`, `f9`, `f10`, `f11`, `f12`, `f13`, `f14`, `f15`) VALUES 
+INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`, `f6_country`, `f6_state`, `f6_city`, `f6_zip`, `f7`, `f8`, `f9`, `f10`, `f11`, `f12`, `f13`, `f14`, `f15`) VALUES
 (1, 1, 15, 0, '2007-04-16 22:53:50', '2007-04-16 14:42:06', '', 'emma', '2/1_21176750826.jpg', 0.0000000000, 0.0000000000, 29, '', 2, '|1|', 1, '1989-06-05', 165, 0, 0, '', 3, 3, 2, 3, 1, 1, 1, 1, ''),
 (2, 2, 15, 0, '2007-04-16 12:42:01', '2007-04-16 17:09:23', '', 'keith', '', 0.0000000000, 0.0000000000, 0, 'Testing', 1, '|2|', 1, '1976-05-12', 217, 0, 0, '', 3, 1, 1, 1, 1, 1, 1, 1, '|1|4|7|'),
 (3, 3, 15, 0, '2007-04-16 17:29:10', '2007-04-16 17:24:38', '', 'shon205', '', -81.6286010742, 41.4509010315, 1, '', 1, '|2|', 1, '1971-01-06', 218, 41, 1620, '44105', 1, 1, 1, 1, 1, 1, 1, 1, ''),
@@ -2574,9 +2574,9 @@ INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `l
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_searches`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_searches`;
 CREATE TABLE `dsb_user_searches` (
@@ -2593,19 +2593,19 @@ CREATE TABLE `dsb_user_searches` (
   KEY `alert` (`alert`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_searches`
--- 
+--
 
-INSERT INTO `dsb_user_searches` (`search_id`, `fk_user_id`, `title`, `is_default`, `search_qs`, `search`, `alert`, `alert_last_id`) VALUES 
+INSERT INTO `dsb_user_searches` (`search_id`, `fk_user_id`, `title`, `is_default`, `search_qs`, `search`, `alert`, `alert_last_id`) VALUES
 (1, 7, 'advdef', 0, 'acclevel_code=search_advanced&st=adv&f2%5B0%5D=2&f3%5B0%5D=1&f5_max=75&f6_country=0&f9=0&f13=0&f14=0', 'a:9:{s:13:"acclevel_code";s:15:"search_advanced";s:2:"st";s:3:"adv";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f5_max";s:2:"75";s:10:"f6_country";i:0;s:2:"f9";i:0;s:3:"f13";i:0;s:3:"f14";i:0;}', 1, 22),
 (2, 7, 'onlines', 0, 'acclevel_code=search_basic&st=online', 'a:2:{s:13:"acclevel_code";s:12:"search_basic";s:2:"st";s:6:"online";}', 1, 0);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_settings2`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_settings2`;
 CREATE TABLE `dsb_user_settings2` (
@@ -2619,11 +2619,11 @@ CREATE TABLE `dsb_user_settings2` (
   KEY `fk_module_code` (`fk_module_code`)
 ) TYPE=MyISAM COMMENT='0-n/a,1-chkbox,2-tf,3-ta';
 
--- 
+--
 -- Dumping data for table `dsb_user_settings2`
--- 
+--
 
-INSERT INTO `dsb_user_settings2` (`config_id`, `fk_user_id`, `config_option`, `config_value`, `fk_module_code`) VALUES 
+INSERT INTO `dsb_user_settings2` (`config_id`, `fk_user_id`, `config_option`, `config_value`, `fk_module_code`) VALUES
 (106, 10, 0x73656e645f616c6572745f696e74657276616c, '2', 0x6465665f757365725f7072656673),
 (107, 10, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
 (108, 10, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
@@ -2675,9 +2675,9 @@ INSERT INTO `dsb_user_settings2` (`config_id`, `fk_user_id`, `config_option`, `c
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_spambox`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_spambox`;
 CREATE TABLE `dsb_user_spambox` (
@@ -2695,18 +2695,18 @@ CREATE TABLE `dsb_user_spambox` (
   KEY `user_id_2` (`fk_user_id`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_spambox`
--- 
+--
 
-INSERT INTO `dsb_user_spambox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES 
+INSERT INTO `dsb_user_spambox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES
 (1, 1, 8, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-19 04:46:42', 1);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `dsb_user_stats`
--- 
+--
 
 DROP TABLE IF EXISTS `dsb_user_stats`;
 CREATE TABLE `dsb_user_stats` (
@@ -2716,11 +2716,11 @@ CREATE TABLE `dsb_user_stats` (
   UNIQUE KEY `thekey` (`fk_user_id`,`stat`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `dsb_user_stats`
--- 
+--
 
-INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES 
+INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES
 (1, 'pviews', 102),
 (4, 'total_photos', 1),
 (4, 'pviews', 46),
