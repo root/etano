@@ -244,9 +244,15 @@ function get_user_by_userid($user_id) {
 }
 
 
+// it returns the defaults for non members
 function get_user_settings($user_id,$module_code,$option='') {
 	$myreturn=array();
 	global $dbtable_prefix;
+	if (is_array($option)) {
+		$remaining=array_flip($option);	// to keep options which are in default but not in user's settings
+	} else {
+		$remaining=array($option=>1);
+	}
 	if (!empty($user_id)) {
 		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`='$user_id'";
 		if (!empty($option)) {
@@ -261,40 +267,33 @@ function get_user_settings($user_id,$module_code,$option='') {
 		if (mysql_num_rows($res)) {
 			while ($rsrow=mysql_fetch_row($res)) {
 				$myreturn[$rsrow[0]]=$rsrow[1];
+				unset($remaining[$rsrow[0]]);
 			}
-			if (!empty($option) && !is_array($option)) {
-				$myreturn=array_shift($myreturn);
+		}
+	}
+
+	if (!empty($remaining)) {
+		$remaining=array_flip($remaining);
+		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE 1";
+		$query.=" AND `config_option` IN ('".join("','",$remaining)."')";
+		$query.=" AND `fk_module_code`='$module_code' AND `per_user`=1";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (mysql_num_rows($res)) {
+			while ($rsrow=mysql_fetch_row($res)) {
+				$myreturn[$rsrow[0]]=$rsrow[1];
 			}
-		} else {
-			$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE 1";
-			if (!empty($option)) {
-				if (is_array($option)) {
-					$query.=" AND `config_option` IN ('".join("','",$option)."')";
-				} else {
-					$query.=" AND `config_option`='$option'";
+			if (!empty($user_id)) {
+				$query="INSERT INTO `{$dbtable_prefix}user_settings2` (`fk_user_id`,`config_option`,`config_value`,`fk_module_code`) VALUES ";
+				foreach ($remaining as $k=>$v) {
+					$query.="('$user_id','$v','".$myreturn[$v]."','$module_code'),";
 				}
-			}
-			$query.=" AND `fk_module_code`='$module_code' AND `per_user`=1";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			if (mysql_num_rows($res)) {
-				while ($rsrow=mysql_fetch_row($res)) {
-					$myreturn[$rsrow[0]]=$rsrow[1];
-				}
-				if (!empty($option) && !is_array($option)) {
-					$myreturn=array_shift($myreturn);
-				}
-				$query="INSERT IGNORE INTO `{$dbtable_prefix}user_settings2` (`fk_user_id`,`config_option`,`config_value`) VALUES ";
-				if (is_array($myreturn)) {
-					foreach ($myreturn as $k=>$v) {
-						$query.="('$user_id','$k','$v'),";
-					}
-					$query=substr($query,0,-1);
-				} else {
-					$query.="('$user_id','$option','$myreturn')";
-				}
+				$query=substr($query,0,-1);
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}
 		}
+	}
+	if (!empty($option) && !is_array($option)) {
+		$myreturn=array_shift($myreturn);
 	}
 	return $myreturn;
 }
