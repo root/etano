@@ -22,6 +22,10 @@ $(function() {
 		}
 		$('#'+myid+'_chars').html(remaining.toString());
 	});
+	$('#check_username').click(function() {
+		req_check_username();
+		return false;
+	});
 });
 
 function req_update_location(str_field,val) {
