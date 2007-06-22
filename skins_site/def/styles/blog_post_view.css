@@ -2,6 +2,7 @@
 
 .post_content {
 	margin-bottom: 10px;
+	text-align: justify;
 }
 
 .post_by {
@@ -27,6 +28,7 @@
 
 .comment p {
 	font-size: 13px;
+	text-align: justify;
 }
 
 textarea#comment {

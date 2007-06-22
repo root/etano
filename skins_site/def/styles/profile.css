@@ -34,6 +34,8 @@
 
 .profile_cat li p {
 	display: inline;
+}
+.profile_cat li label {
 	font-weight: bold;
 }
 

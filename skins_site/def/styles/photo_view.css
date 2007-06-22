@@ -1,6 +1,10 @@
 @import url('bbcode.css');
 @import url('rating.css');
 
+#photo_nav {
+	margin-bottom: 20px;
+}
+
 #photo_caption {
 	margin-bottom: 10px;
 	font-size: 13px;

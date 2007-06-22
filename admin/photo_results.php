@@ -92,7 +92,6 @@ if ($do_query) {
 //print $query;
 //die;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$photo_ids=array();
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
 		$photo_ids[]=mysql_result($res,$i,0);
 	}
