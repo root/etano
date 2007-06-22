@@ -44,7 +44,8 @@ if (!$current_passed && isset($loop[0])) {
 $tpl->set_file('left_content','blog_post_view_left.html');
 $tpl->set_var('blog',$blog);
 $tpl->set_loop('loop',$loop);
-$tpl->process('left_content','left_content',TPL_MULTILOOP);
+$tpl->set_var('tplvars',$tplvars);
+$tpl->process('left_content','left_content',TPL_MULTILOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
 unset($loop);
 ?>

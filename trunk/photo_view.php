@@ -109,6 +109,18 @@ if (!empty($photo_id)) {
 			} else {
 				unset($output['allow_comments']);
 			}
+
+			// prev/next stuff
+			$query="SELECT max(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`<'$photo_id' AND `fk_user_id`='".$output['fk_user_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				$output['previous']=mysql_result($res,0,0);
+			}
+			$query="SELECT min(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`>'$photo_id' AND `fk_user_id`='".$output['fk_user_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				$output['next']=mysql_result($res,0,0);
+			}
 		} else {
 			$topass['message']['type']=MESSAGE_ERROR;
 			$topass['message']['text']='Invalid photo selected';
@@ -146,7 +158,7 @@ $tpl->drop_loop('loop');
 unset($loop);
 
 $tplvars['title']='View photos';
-$tplvars['page_title']=sprintf('%s photos','<a href="'.$tplvars['relative_url'].'profile.php?uid='.$output['fk_user_id'].'">'.$output['user'].'</a>');	// translate this
+$tplvars['page_title']=sprintf('%s photos','<a href="'.$tplvars['relative_url'].'photo_search.php?st=user&amp;uid='.$output['fk_user_id'].'">'.$output['user'].'</a>');	// translate this
 $tplvars['page']='photo_view';
 $tplvars['css']='photo_view.css';
 if (is_file('photo_view_left.php')) {

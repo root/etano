@@ -20,12 +20,14 @@ check_login_member('read_blogs');
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $blog=array();
+$output=array();
 $loop=array();
 if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 	$blog_id=(string)(int)$_GET['bid'];
 	if (is_file(_CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php')) {
 		include _CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php';
 	}
+	$output=&$blog;
 
 	$year=sanitize_and_format_gpc($_GET,'y',TYPE_INT,0,0);
 	$month=sanitize_and_format_gpc($_GET,'m',TYPE_INT,0,0);
@@ -71,8 +73,13 @@ if (isset($_GET['bid']) && !empty($_GET['bid'])) {
 	}
 }
 
+$output['return2me']='blog_view.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+}
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','blog_view.html');
-$tpl->set_var('blog',$blog);
+$tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP);
 $tpl->drop_loop('loop');

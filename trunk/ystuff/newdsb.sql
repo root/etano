@@ -1,11 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 2.8.2
+-- version 2.10.1
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Jun 14, 2007 at 02:33 PM
+-- Generation Time: Jun 22, 2007 at 12:15 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.4.2
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
 -- 
 -- Database: `newdsb`
 -- 
@@ -32,7 +35,8 @@ CREATE TABLE `dsb_access_levels` (
 -- Dumping data for table `dsb_access_levels`
 -- 
 
-INSERT INTO `dsb_access_levels` (`level_id`, `level_code`, `level_diz`, `level`, `disabled_level`) VALUES (1, 0x6c6f67696e, 'when someone tries to login', 1, 65534),
+INSERT INTO `dsb_access_levels` (`level_id`, `level_code`, `level_diz`, `level`, `disabled_level`) VALUES 
+(1, 0x6c6f67696e, 'when someone tries to login', 1, 65534),
 (2, 0x70726f66696c655f76696577, 'View a member profile', 7, 0),
 (21, 0x7365617263685f70686f746f, 'Search/browse/latest/most commented on photo feature', 7, 0),
 (4, 0x6d6573736167655f72656164, 'Read messages', 6, 1),
@@ -78,7 +82,8 @@ CREATE TABLE `dsb_admin_accounts` (
 -- Dumping data for table `dsb_admin_accounts`
 -- 
 
-INSERT INTO `dsb_admin_accounts` (`admin_id`, `user`, `pass`, `name`, `status`, `dept_id`, `email`) VALUES (1, 0x61646d696e, 0x6665303163653261376662616338666166616564376339383261303465323239, 'Adrian', 15, 4, 'adi@sco.ro');
+INSERT INTO `dsb_admin_accounts` (`admin_id`, `user`, `pass`, `name`, `status`, `dept_id`, `email`) VALUES 
+(1, 0x61646d696e, 0x6665303163653261376662616338666166616564376339383261303465323239, 'Adrian', 15, 4, 'adi@sco.ro');
 
 -- --------------------------------------------------------
 
@@ -101,7 +106,8 @@ CREATE TABLE `dsb_admin_mtpls` (
 -- Dumping data for table `dsb_admin_mtpls`
 -- 
 
-INSERT INTO `dsb_admin_mtpls` (`amtpl_id`, `amtpl_name`, `subject`, `message_body`, `amtpl_type`) VALUES (1, 'Reject member profile', 'Your profile was not approved', '<html><head><title>Your profile has not been approved</title>   <link href="{tplvars.baseurl}/skins/def/styles/common.css" media="screen" type="text/css" rel="stylesheet" /> </head><body> <div id="trim"> 	<div id="content"> 		<p>Thank you for joining <a href="{tplvars.baseurl}">{tplvars.sitename}</a>.</p> 		<p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest to other members.</p><p>Please update your profile with relevant information.<br /></p> 	</div> </div> </body></html>', 1),
+INSERT INTO `dsb_admin_mtpls` (`amtpl_id`, `amtpl_name`, `subject`, `message_body`, `amtpl_type`) VALUES 
+(1, 'Reject member profile', 'Your profile was not approved', '<html><head><title>Your profile has not been approved</title>   <link href="{tplvars.baseurl}/skins/def/styles/common.css" media="screen" type="text/css" rel="stylesheet" /> </head><body> <div id="trim"> 	<div id="content"> 		<p>Thank you for joining <a href="{tplvars.baseurl}">{tplvars.sitename}</a>.</p> 		<p>Unfortunately we are unable to publish your profile on the site yet because it doesn''t contain enough information to be of interest to other members.</p><p>Please update your profile with relevant information.<br /></p> 	</div> </div> </body></html>', 1),
 (2, 'Reject photo', 'One of your photos was not approved', '<html><head><title>Your photo has not been approved</title>                       <link href="{tplvars.baseurl}/skins/def/styles/common.css" media="screen" type="text/css" rel="stylesheet" />     </head><body spellcheck="false"><p>Unfortunately we are unable to publish your photo on the site yet because</p>         <p>&nbsp;</p>         <p>Regards,<br />{tplvars.sitename} admin</p></body></html>', 2),
 (3, 'Reject blog', 'One of your blog posts was not approved', '<html><head><title>Your blog post has not been approved</title>                       <link rel="stylesheet" type="text/css" media="screen" href="{tplvars.baseurl}/skins/def/styles/common.css" />     </head><body spellcheck="false"><p>Unfortunately we are unable to publish your blog post on the site yet because</p>         <p>&nbsp;</p>         <p>Regards,<br />         {tplvars.sitename} admin</p></body></html>', 3),
 (4, 'Reject comment', 'One of your comments was not approved', '<html><head><title>Your comment has not been approved</title>                       <link rel="stylesheet" type="text/css" media="screen" href="{tplvars.baseurl}/skins/def/styles/common.css" />     </head><body spellcheck="false"><p>Unfortunately we are unable to publish your comment on the site yet because</p>         <p>&nbsp;</p>         <p>Regards,<br />         {tplvars.sitename} admin</p></body></html>', 4);
@@ -124,7 +130,8 @@ CREATE TABLE `dsb_banned_words` (
 -- Dumping data for table `dsb_banned_words`
 -- 
 
-INSERT INTO `dsb_banned_words` (`word_id`, `word`) VALUES (5, 'fuck'),
+INSERT INTO `dsb_banned_words` (`word_id`, `word`) VALUES 
+(5, 'fuck'),
 (6, 'suck'),
 (7, 'sucks'),
 (8, 'dick'),
@@ -158,7 +165,8 @@ CREATE TABLE `dsb_blog_comments` (
 -- Dumping data for table `dsb_blog_comments`
 -- 
 
-INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES (1, 1, 10, 'strawberries', 'a reply.\r\n\r\nHi Emma!', '2007-04-16 21:13:30', '2007-04-16 21:13:30', 15, 0),
+INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES 
+(1, 1, 10, 'strawberries', 'a reply.\r\n\r\nHi Emma!', '2007-04-16 21:13:30', '2007-04-16 21:13:30', 15, 0),
 (2, 2, 10, 'strawberries', 'welcome to the hairball''s abode.', '2007-04-17 21:46:30', '2007-04-17 21:46:30', 15, 0),
 (3, 3, 10, 'strawberries', 'It looks excellent, Dan.  I love it.  It looks so clean and covers all the bases. \r\n \r\nI''ll be keen to see the rss look.....for me, it will be important to have more content on the index page.  \r\n\r\nI was messing around with the css stylesheet tonight in my firefox browser.  This is a great script.  Great work.', '2007-04-17 21:51:51', '2007-04-17 21:51:51', 15, 0),
 (4, 4, 10, 'strawberries', '''woof woof'' said the big bad wolf', '2007-04-18 14:03:21', '2007-04-18 14:03:21', 15, 0),
@@ -293,7 +301,8 @@ INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_u
 (136, 17, 4, 'maverick', 'Not sure if you have any plans for this or not, but something that shows that a member is a premium member?\r\n\r\nI''ve seen this on a few sites and what I like about it is that it allows members to identify which members have premium status. I believe it also can help in encouraging free members to upgrade, it makes some people feel special or privileged.\r\n\r\nHere''s a screenshot showing an example of what I mean http://desktopmates.com/temp2/screenshot.jpg', '2007-05-15 22:07:42', '2007-05-15 22:07:42', 15, 0),
 (137, 17, 10, 'strawberries', 'Yes, template in this context is a confusing word, maverick.  It makes me scared to tweak or mess with anything, in case I screw up.  \r\n\r\nSomething like ''canned messages'' sounds better.  Tho I admit that ''canned'' must be an american word - i can guess at it;s meaning....but it is not widely known or used in the UK/Europe.', '2007-05-15 22:33:15', '2007-05-15 22:33:15', 15, 0),
 (138, 17, 10, 'strawberries', 'The premium member icon is a very good idea.\r\n\r\nI have seen a similar membership status on another major site - where they have ''gold membership''; ''silver membership'' and ''standard membership''.  \r\n\r\nThey don''t have icons, but you can see on each person''s profile page (and also on search results pages) what status they enjoy on the site. \r\n\r\nI think that is a very good idea.  It encourages you to wonder what extra benefits they get with their status (and to maybe upgrade).', '2007-05-15 22:36:48', '2007-05-15 22:36:48', 15, 0);
-INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES (139, 17, 4, 'maverick', 'Never really considered if canned was an American term or not, but it very well could be. I know SMS text message services in North America uses the term canned for stored text messages. I was thinking it should be something generic or universally used as a term for stored messages and assumed "canned" was rather universal. What term do they use for stored or saved text messages in Europe? \r\n\r\nMost online dictionaries define the term "canned" as something that has been produced and conserved and can be released on demand, such as ... canned food, canned music,  canned response, canned air, canned email replies.\r\n\r\nMaybe something like "stored" messages  would also work as well.', '2007-05-15 23:57:31', '2007-05-15 23:57:31', 15, 0),
+INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES 
+(139, 17, 4, 'maverick', 'Never really considered if canned was an American term or not, but it very well could be. I know SMS text message services in North America uses the term canned for stored text messages. I was thinking it should be something generic or universally used as a term for stored messages and assumed "canned" was rather universal. What term do they use for stored or saved text messages in Europe? \r\n\r\nMost online dictionaries define the term "canned" as something that has been produced and conserved and can be released on demand, such as ... canned food, canned music,  canned response, canned air, canned email replies.\r\n\r\nMaybe something like "stored" messages  would also work as well.', '2007-05-15 23:57:31', '2007-05-15 23:57:31', 15, 0),
 (140, 17, 10, 'strawberries', 'I am not a big mobile phone user, thus I am not the best person to ask re the term used for saved text messages. \r\n\r\nI do dust off a mobile phone here that I use when I go on holiday. I don''t know where my charger is at, or i would charge the phone and look up the menu system.  But I bet that it is ''saved'' or ''stored'' that we use here.\r\n\r\nSaved Nessages or Stored Messages is better - but hints at the place where all your old received messages from others are located.  \r\n\r\nI wonder if there is a better term - one that does not conflict with the saved message archive part of that menu system.', '2007-05-16 00:39:03', '2007-05-16 00:39:03', 15, 0),
 (141, 17, 10, 'strawberries', 'thinking out loud here:\r\n\r\nSaved Responses\r\n\r\nStored Responses\r\n\r\nCanned Responses', '2007-05-16 00:41:42', '2007-05-16 00:41:42', 15, 0),
 (142, 17, 4, 'maverick', 'Either Stored Responses or Canned Responses is probably the best, I think the real key might be in using the word "responses" as it would identify their purpose and separate any confusions with messages being saved or stored in the mail boxes.', '2007-05-16 01:10:12', '2007-05-16 01:10:12', 15, 0),
@@ -362,7 +371,10 @@ INSERT INTO `dsb_blog_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_u
 (206, 18, 10, 'strawberries', 'is this a wind-up!  :))\r\n\r\nI can''t believe those buggers at MS have taken over the one true good thing out there in the browser market. (well ok, I''d never be surprised at anything the evil empire gets up to)\r\n\r\nPlease say it ain''t so, Joe!\r\n\r\nPS - maverick, unsure what is up re messenger....sent messages, but no reply.', '2007-06-01 11:38:13', '2007-06-01 11:38:13', 15, 0),
 (207, 18, 4, 'maverick', 'Ya kind''a funny wasn''t it :)\r\n\r\nBut I think something may be brewing behind closed doors.\r\n\r\nLike the rest of you, even though I''d like to see a standarized browser that was used by the masses, I have my concerns about a total buyout or takeover by MS.', '2007-06-01 11:44:09', '2007-06-01 11:44:09', 15, 0),
 (208, 18, 10, 'strawberries', 'I had fallen for it!  :)\r\n\r\nMS to me is the devil and a bloated inefficient monopoly personified.\r\n\r\nLike google, MS was wonderfully innovative/forward thinking in it''s early days.  But it grew into a monster. \r\n\r\nGoogle has gone the same way (tho I still continue to use it all the time, and have done for over 10 years).\r\n\r\nAh well, tis time here to go get some breakfast....err lunch.', '2007-06-03 12:51:20', '2007-06-03 12:51:20', 15, 0),
-(209, 18, 10, 'strawberries', 'scooby scooby do!!!!!', '2007-06-04 10:47:33', '2007-06-04 10:47:33', 15, 0);
+(209, 18, 10, 'strawberries', 'scooby scooby do!!!!!', '2007-06-04 10:47:33', '2007-06-04 10:47:33', 15, 0),
+(210, 19, 7, 'dragon', 'test', '2007-06-19 17:45:08', '2007-06-19 17:45:08', 15, 1),
+(211, 19, 7, 'dragon', '>:):doh:<.<:lol::w::!:|o', '2007-06-21 20:38:21', '2007-06-21 20:38:21', 15, 1),
+(212, 19, 7, 'dragon', ':!:', '2007-06-21 21:03:15', '2007-06-21 21:03:15', 15, 1);
 
 -- --------------------------------------------------------
 
@@ -400,7 +412,8 @@ CREATE TABLE `dsb_blog_posts` (
 -- Dumping data for table `dsb_blog_posts`
 -- 
 
-INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`, `processed`) VALUES (1, '2007-04-16 19:20:25', 1, 'emma', 1, 1, 'The Bicentennial Man', 'by Isaac Asimov\n\n[b]The Three Laws of Robotics[/b]\n.\n.\n.\n[quote]A robot may not injure a human being, or, through inaction, allow a human being to come to harm.[/quote]\n\n[quote]A robot must obey the orders given it by human beings except where such orders would conflict with the First Law.[/quote]\n\n[quote]A robot must protect its own existence as long as such protection does not conflict with the First or Second Law.[/quote]\n\nAndrew Martin said, "[u]Thank you[/u]," and took the seat offered him. He didn''t look driven to the last resort, but he had been.\n\nHe didn''t, actually, look anything, for there was a smooth blankness, to his face, except for the sadness one imagined one saw in his eyes. His hair was smooth, light brown, rather fine; and he had no facial hair. He looked freshly and cleanly shaved. His clothes were distinctly old-fashioned, but neat, and predominantly a velvety red-purple in color.\n\nFacing him from behind the desk was the surgeon The nameplate on the desk included a fully identifying series of letters and numbers which Andrew didn''t bother with. To call him Doctor would be quite enough\n\n"When can the operation be carried through, Doctor?" he asked.\n\nSoftly, with that certain inalienable note of respect that a robot always used to a human being, the surgeon said, "I am not certain, sir, that I understand how or upon whom such an operation could be performed."\n\nThere might have been a look of respectful intransigence on the surgeon''s face, if a robot of his sort, in lightly bronzed stainless steel, could have such an expression-or any expression.\n\nAndrew Martin studied the robot''s right hand, his cutting hand, as it lay motionless on the desk. The fingers were long and were shaped into artistically metallic, looping curves so -graceful and appropriate that one could imagine a scalpel fitting them and becoming, temporarily, one piece with them. There would be no hesitation in his work, no stumbling, no quivering, no mistakes. That confidence came with specialization, of course, a specialization so fiercely desired by humanity that few robots were, any longer, independently brained. A surgeon, of course, would have to be. But this one, though brained, was so limited in his capacity that he did not recognize Andrew, had probably never heard of him .\n\n[quote]Have you ever thought you would like to be a man?[/quote] Andrew asked.\n\nThe surgeon hesitated a moment, as though the question fitted nowhere in his allotted positronic pathways. "But I am a robot, sir."\n\n[quote]Would it be better to be a man?[/quote]', 1, 15, '', 2, 1, '2007-04-16 19:24:35', '', 0),
+INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `fk_blog_id`, `is_public`, `title`, `post_content`, `allow_comments`, `status`, `post_url`, `stat_views`, `stat_comments`, `last_changed`, `reject_reason`, `processed`) VALUES 
+(1, '2007-04-16 19:20:25', 1, 'emma', 1, 1, 'The Bicentennial Man', 'by Isaac Asimov\n\n[b]The Three Laws of Robotics[/b]\n.\n.\n.\n[quote]A robot may not injure a human being, or, through inaction, allow a human being to come to harm.[/quote]\n\n[quote]A robot must obey the orders given it by human beings except where such orders would conflict with the First Law.[/quote]\n\n[quote]A robot must protect its own existence as long as such protection does not conflict with the First or Second Law.[/quote]\n\nAndrew Martin said, "[u]Thank you[/u]," and took the seat offered him. He didn''t look driven to the last resort, but he had been.\n\nHe didn''t, actually, look anything, for there was a smooth blankness, to his face, except for the sadness one imagined one saw in his eyes. His hair was smooth, light brown, rather fine; and he had no facial hair. He looked freshly and cleanly shaved. His clothes were distinctly old-fashioned, but neat, and predominantly a velvety red-purple in color.\n\nFacing him from behind the desk was the surgeon The nameplate on the desk included a fully identifying series of letters and numbers which Andrew didn''t bother with. To call him Doctor would be quite enough\n\n"When can the operation be carried through, Doctor?" he asked.\n\nSoftly, with that certain inalienable note of respect that a robot always used to a human being, the surgeon said, "I am not certain, sir, that I understand how or upon whom such an operation could be performed."\n\nThere might have been a look of respectful intransigence on the surgeon''s face, if a robot of his sort, in lightly bronzed stainless steel, could have such an expression-or any expression.\n\nAndrew Martin studied the robot''s right hand, his cutting hand, as it lay motionless on the desk. The fingers were long and were shaped into artistically metallic, looping curves so -graceful and appropriate that one could imagine a scalpel fitting them and becoming, temporarily, one piece with them. There would be no hesitation in his work, no stumbling, no quivering, no mistakes. That confidence came with specialization, of course, a specialization so fiercely desired by humanity that few robots were, any longer, independently brained. A surgeon, of course, would have to be. But this one, though brained, was so limited in his capacity that he did not recognize Andrew, had probably never heard of him .\n\n[quote]Have you ever thought you would like to be a man?[/quote] Andrew asked.\n\nThe surgeon hesitated a moment, as though the question fitted nowhere in his allotted positronic pathways. "But I am a robot, sir."\n\n[quote]Would it be better to be a man?[/quote]', 1, 15, '', 2, 1, '2007-04-16 19:24:35', '', 0),
 (2, '2007-04-16 20:50:21', 10, 'strawberries', 3, 1, 'Fluffy say''s ''Hi''', 'Hi everyone.  Welcome to Fluffy''s blog.', 1, 15, '', 2, 4, '2007-04-18 01:05:21', '', 0),
 (3, '2007-04-17 12:08:28', 7, 'dragon', 5, 1, 'Now what?', 'Ok, so now that a basic preview is up for you to see and test, we''ll update it daily with whatver we''ll be working on. So stay tuned for more news.\nThere are some things to fix with blogs, we need to finish the friendship connections feature (right now you can only add another member to your favorites network and request to be a friend of another member).\n\nWe need to also finish the flirts...\nAs many of you have requested, you want to be able to reply with a flirt to a flirt and this is now possible.\n\nAs you might have seen, the flirts can include both text and images and even sounds if you want. It''s up to the admin''s imagination to create some creative flirts.\n\nAnother thing that needs to be finished is the news system. There are 2 parts here:\nYou can include news read by a rss reader from any published rss feed and you will also have site news - published by admin for the site members. The news will appear on the home page (the page after login) by default but you can put it anywhere you want in your site, even on the front page.\n', 1, 15, '', 8, 9, '2007-04-17 12:19:12', '', 0),
 (4, '2007-04-17 21:45:04', 10, 'strawberries', 3, 1, 'Fluffy, fluffy, fluffy', 'The greatest cat in the land.', 1, 15, '', 1, 4, '2007-04-17 21:45:04', '', 0),
@@ -417,8 +430,8 @@ INSERT INTO `dsb_blog_posts` (`post_id`, `date_posted`, `fk_user_id`, `_user`, `
 (15, '2007-04-25 21:18:04', 6, 'cocacola', 9, 1, 'Hello there', 'Wow a blog', 1, 15, '', 27, 3, '2007-04-25 21:18:19', '', 0),
 (16, '2007-05-04 22:56:57', 17, 'shadowmachine', 10, 1, 'Other script is O-U-T out', 'I fumbled around with another script for a few days... not naming any names... I''ll just say it is one of the free ones...\n\nIt worked okay at first... until I uploaded a 20 kiloByte profile picture. Then it kinda went haywire. PHP memory errors = fatality. Site is still dead so...\n\nI have a nice domain name and plenty of web space... I know a little about PHP and HTML... and I am very thorough with an eye for detail (read OBSESSIVE COMPULSIVE).\n\nSo, Dan, when you''re ready I can launch a beta.\n\n10... 9... 8... 7...\n\nNo pressure.', 1, 15, '', 22, 0, '2007-05-04 22:56:57', '', 0),
 (17, '2007-05-11 21:30:09', 7, 'dragon', 5, 1, 'Today I hate programming...', 'It was one of those days when a boring, repetitive task was assigned to me (ok, auto-assigned - someone had to do it) and I would do anything but this. Yeah, programming is like this sometimes. All the joy and fun of creating some uber-script-to-rule-the-world is gone when you have to replace a piece of text with another in 1000000 places.\nWe discovered that some html editors are removing our template-specific tags so we had to replace all tags in all files with something that would look like comments to those editors.\nWe''re not using html editors, we write all the code in a simple text editor but some of you might use dreamweaver/frontpage/etc to add a comma and then boom, nothing would work anymore.\n\nThis was one of the many changes we''ve done lately. Even if you haven''t seen anything new in the member interface, we''ve worked hard on things like this and on the admin interface.\nThe plan is to have a preview version of the admin next week, then soon after - a closed beta, then, while we work on our own site, a public beta. I''m tempted to hang a sign with a big yellow [b]BETA[/b] sign next to the logo :)', 1, 15, '', 251, 41, '2007-05-11 21:30:09', '', 0),
-(18, '2007-05-17 16:40:23', 7, 'dragon', 5, 1, 'Site updated', '1. admin work, admin work, admin work.\n2. message templates -> my saved responses\n3. ''my account'' menu in more pages to keep [url=http://www.datemill.com/friendy/profile.php?uid=10]strawberries[/url] happy :)', 1, 15, '', 384, 39, '2007-05-17 16:40:23', '', 0),
-(19, '2007-06-04 11:37:46', 7, 'dragon', 5, 1, 'tweaks', 'I''ve updated the demo site. We''re moving back to member area this week to finish the pending issues and unfinished features.\nThis update was for admin area too - mostly tweaks, interface improvements and bug fixes.\nWe added event handling in most of the processors - if you know about event based programming you should know that this is a very handy development feature. It allows you to create your own functions to be run when a user does something on the site (comments/updates profile/adds photo/etc) without messing with the rest of the script.\n\nWe created a workaround for the left menu issue - for now it works on the inbox page but we will apply it to all pages with problems.\n\nThe search was also partially fixed - it allows selecting nothing in select boxes but the same fix should be applied to range searches (like height/weight/etc). TODO', 1, 15, '', 216, 0, '2007-06-04 11:37:46', '', 0);
+(18, '2007-05-17 16:40:23', 7, 'dragon', 5, 1, 'Site updated', '1. admin work, admin work, admin work.\n2. message templates -> my saved responses\n3. ''my account'' menu in more pages to keep [url=http://www.datemill.com/friendy/profile.php?uid=10]strawberries[/url] happy :)', 0, 15, '', 394, 39, '2007-06-19 11:24:50', '', 0),
+(19, '2007-06-04 11:37:46', 7, 'dragon', 5, 1, 'tweaks', 'I''ve updated the demo site. We''re moving back to member area this week to finish the pending issues and unfinished features.\nThis update was for admin area too - mostly tweaks, interface improvements and bug fixes.\nWe added event handling in most of the processors - if you know about event based programming you should know that this is a very handy development feature. It allows you to create your own functions to be run when a user does something on the site (comments/updates profile/adds photo/etc) without messing with the rest of the script.\n\nWe created a workaround for the left menu issue - for now it works on the inbox page but we will apply it to all pages with problems.\n\nThe search was also partially fixed - it allows selecting nothing in select boxes but the same fix should be applied to range searches (like height/weight/etc). TODO', 1, 15, '', 227, 3, '2007-06-04 11:37:46', '', 0);
 
 -- --------------------------------------------------------
 
@@ -458,7 +471,8 @@ CREATE TABLE `dsb_feed_cache` (
 -- Dumping data for table `dsb_feed_cache`
 -- 
 
-INSERT INTO `dsb_feed_cache` (`module_code`, `feed_xml`, `update_time`) VALUES (0x6f7369676e616c5f66656564, '<?xml version="1.0" encoding="UTF-8"?>\r\n<?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/rss2full.xsl" type="text/xsl" media="screen"?><?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/itemcontent.css" type="text/css" media="screen"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">\r\n<channel>\r\n	<title>Original Signal - Transmitting Tech</title>\r\n	<link>http://tech.originalsignal.com</link>\r\n	<description>Orginal Signal aggregates the 15 most popular technology sites. The main purpose of the site is to provide \r\na quick glance on what''s happening without using your desktop/web RSS reader. New headlines (since your \r\nlast cookied visit) come in pretty orange, visited ones are grey. All credits go to the authors of these weblogs. \r\nWithout their hard work Original Signal would not exist. Original Signal was inspired by Popurls and the Web 2.0 Workgroup.</description>\r\n	<pubDate>Wed, 23 May 2007 18:58:31 CEST</pubDate>\r\n	<language>en</language>\r\n	\r\n	  <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" href="http://feeds.feedburner.com/OriginalSignal/tech" type="application/rss+xml" /><item>\r\n  <title>BA puts green IT at the top of its agenda</title>\r\n  <link>http://tech.originalsignal.com/article/52856/ba-puts-green-it-at-the-top-of-its-agenda.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:38:47 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52856/ba-puts-green-it-at-the-top-of-its-agenda.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Lisa Kelly and Dave Friedlos , Computing, Thursday 24 May 2007 at 00:00:00Airline lends support to Green Computing campaignBritish Airways (BA) is placing environmental policies and practices at the heart of its strategy this year, and has given its backing to our Green Computing campaign....&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>BT cuts costs automating HR records</title>\r\n  <link>http://tech.originalsignal.com/article/52857/bt-cuts-costs-automating-hr-records.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:38:47 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52857/bt-cuts-costs-automating-hr-records.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Lisa Kelly , Computing, Thursday 24 May 2007 at 00:00:00Compnay replaces manual processesBT has automated the management of employee records to ensure compliance with the Data Protection Act and improve service and efficiency levels....&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Coty uses SOA to speed up integration</title>\r\n  <link>http://tech.originalsignal.com/article/52858/coty-uses-soa-to-speed-up-integration.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:38:47 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52858/coty-uses-soa-to-speed-up-integration.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Lisa Kelly, Computing, Thursday 24 May 2007 at 00:00:00Beauty firm turns to Information BuildersBeauty company Coty has integrated the IT infrastructure of a firm acquired from Unilever using software based on a service-oriented architecture (SOA)....&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Retailers boost IT spending</title>\r\n  <link>http://tech.originalsignal.com/article/52859/retailers-boost-it-spending.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:38:47 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52859/retailers-boost-it-spending.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Dave Friedlos and Lara Williams , Computing, Thursday 24 May 2007 at 00:00:00Marks & Spencer and Sainsbury increase their IT spend to stay competitiveRetailers Marks & Spencer (M& S) and Sainsbury''s have increased their IT investments to improve efficiency and catch up with rivals....&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Brewer''s planning process gains extra clarity</title>\r\n  <link>http://tech.originalsignal.com/article/52860/brewers-planning-process-gains-extra-clarity.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:38:47 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52860/brewers-planning-process-gains-extra-clarity.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Lara Williams, Computing, Thursday 24 May 2007 at 00:00:00Scottish & Newcastle deploys portfolio management tool for greater ITplanning efficiencyBrewer Scottish & Newcastle has reduced the time spent on IT planning by 80 per cent following the introduction of a portfolio management tool....&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>IBA Health takes on iSoft</title>\r\n  <link>http://tech.originalsignal.com/article/52861/iba-health-takes-on-isoft.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:38:47 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52861/iba-health-takes-on-isoft.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Dave Friedlos, Computing, Thursday 24 May 2007 at 00:00:00Deal could create positive opportunities for the NHSBeleaguered NHS software supplier iSoft is to be acquired by rival firm IBA Health, creating the fourth largest healthcare software group in the world....&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>I-SPY with my little eye... a new spyware act</title>\r\n  <link>http://tech.originalsignal.com/article/52855/i-spy-with-my-little-eye-a-new-spyware-act.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:38:36 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52855/i-spy-with-my-little-eye-a-new-spyware-act.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  The House has passed a new bill designed to crack down on spyware, even though most spyware practices are currently illegal.Read More...    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>The Immaculate Conception Exists, at Least Among Sharks</title>\r\n  <link>http://tech.originalsignal.com/article/52854/the-immaculate-conception-exists-at-least-among-sharks.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:38:28 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52854/the-immaculate-conception-exists-at-least-among-sharks.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Who needs a man? Female sharks can fertilize their own eggs with sperm, says a new study being published Wednesday.     ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Hack My Son''s Computer, Please</title>\r\n  <link>http://tech.originalsignal.com/article/52853/hack-my-sons-computer-please.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:38:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52853/hack-my-sons-computer-please.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Can an elderly father give police permission to search a password-protected computer kept in his adult son''s bedroom, without probable cause or a warrant? In April, a three judge panel of the 10th Circuit Court of Appeals said yes.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Female Sharks Can Reproduce Alone</title>\r\n  <link>http://tech.originalsignal.com/article/52852/female-sharks-can-reproduce-alone.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:38:03 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52852/female-sharks-can-reproduce-alone.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  mikesd81 writes "The Washington Post has an article about a team of American and Irish researchers that have discovered that some female sharks can reproduce without having sex, the first time that scientists have found the unusual capacity in such an ancient vertebrate species. Their report concludes that sharks can reproduce asexually through the process known as parthenogenesis (the growth and development of an embryo or seed without fertilization by a male). Scientists started investigating after a female hammerhead shark was mysteriously born at Omaha''s Henry Doorly Zoo in a tank that housed 3 female sharks. It was originally thought one had stored sperm from a male shark before fertilizing an egg. However, baby shark''s genetic makeup perfectly matched one of the females in the tank, with no sign of a male parent."Read more of this story at Slashdot.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Chip scraps feed solar industry''s hunger</title>\r\n  <link>http://tech.originalsignal.com/article/52851/chip-scraps-feed-solar-industrys-hunger.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:08:17 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52851/chip-scraps-feed-solar-industrys-hunger.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Selling unusable silicon wafers to solar cell makers is good for the environment, and companies like TI make money at it too.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Cool Earth Solar: solar farms on the cheap</title>\r\n  <link>http://tech.originalsignal.com/article/52849/cool-earth-solar-solar-farms-on-the-cheap.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:08:15 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52849/cool-earth-solar-solar-farms-on-the-cheap.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Blog: Cool Earth Solar, a company now raising an initial round of outside funding, is looking to prototype a plastic balloon capable of generating electricity in solar farms.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Chip scraps feed solar industry''s hunger</title>\r\n  <link>http://tech.originalsignal.com/article/52850/chip-scraps-feed-solar-industrys-hunger.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:08:15 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52850/chip-scraps-feed-solar-industrys-hunger.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Selling unusable silicon wafers to solar cell makers is good for the environment, and companies like TI make money at it too.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Become your own ISP: The Perfect Server - Mandriva 2007 Spring Free</title>\r\n  <link>http://tech.originalsignal.com/article/52847/become-your-own-isp-the-perfect-server-mandriva-2007-spring-free.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:08:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52847/become-your-own-isp-the-perfect-server-mandriva-2007-spring-free.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  This guide shows how to set up a Mandriva 2007 Spring Free (Mandriva 2007.1) server that offers all services needed by ISPs and hosters: Apache web server (SSL-capable), Postfix mail server with SMTP-AUTH and TLS, BIND DNS server, Proftpd FTP server, MySQL server, Courier POP3/IMAP, Quota, Firewall, etc. With this help, you can be your own ISP.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Google to scan 800,000 manuscripts, books from Indian university</title>\r\n  <link>http://tech.originalsignal.com/article/52848/google-to-scan-800-000-manuscripts-books-from-indian-university.html</link>\r\n  <pubDate>Wed, 23 May 2007 18:08:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/52848/google-to-scan-800-000-manuscripts-books-from-indian-university.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Google''s dream of organizing all the world''s information has come one step closer to reality with the announcement that it will digitize 800,000 Indian books and manuscripts for inclusion in its Google Book Search program.  ]]></content:encoded>\r\n  </item>\r\n    	\r\n	</channel>\r\n</rss>', '20070523170058'),
+INSERT INTO `dsb_feed_cache` (`module_code`, `feed_xml`, `update_time`) VALUES 
+(0x6f7369676e616c5f66656564, '<?xml version="1.0" encoding="UTF-8"?>\r\n<?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/rss2full.xsl" type="text/xsl" media="screen"?><?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/itemcontent.css" type="text/css" media="screen"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">\r\n<channel>\r\n	<title>Original Signal - Transmitting Tech</title>\r\n	<link>http://tech.originalsignal.com</link>\r\n	<description>Orginal Signal aggregates the 15 most popular technology sites. The main purpose of the site is to provide \r\na quick glance on what''s happening without using your desktop/web RSS reader. New headlines (since your \r\nlast cookied visit) come in pretty orange, visited ones are grey. All credits go to the authors of these weblogs. \r\nWithout their hard work Original Signal would not exist. Original Signal was inspired by Popurls and the Web 2.0 Workgroup.</description>\r\n	<pubDate>Thu, 21 Jun 2007 12:19:35 CEST</pubDate>\r\n	<language>en</language>\r\n	\r\n	  <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" href="http://feeds.feedburner.com/OriginalSignal/tech" type="application/rss+xml" /><item>\r\n  <title>SEC poised to accept IFRS from foreign-based plcs</title>\r\n  <link>http://tech.originalsignal.com/article/57549/sec-poised-to-accept-ifrs-from-foreign-based-plcs.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 12:09:00 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57549/sec-poised-to-accept-ifrs-from-foreign-based-plcs.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Larry Schlesinger, Accountancy Age, Thursday 21 June 2007 at 00:00:00SEC proposal major step towards accepting IFRS statementsA new SEC proposal has paved the way for foreign public companies listed in the US to choose international accounting standards or US rules when filing data with the regulator...&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>DARPA Looking Into Invisible, Shoot-Through, Self-Healing Armor</title>\r\n  <link>http://tech.originalsignal.com/article/57548/darpa-looking-into-invisible-shoot-through-self-healing-armor.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 12:08:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57548/darpa-looking-into-invisible-shoot-through-self-healing-armor.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Yeah, we''re talking armor that soldiers can see and fire through on one side, but is invisible and impenetrable on the other.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Judge Tells RIAA: Irreparable Harm Doesn''t Mean What You Think It Means</title>\r\n  <link>http://tech.originalsignal.com/article/57547/judge-tells-riaa-irreparable-harm-doesnt-mean-what-you-think-it-means.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 10:38:54 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57547/judge-tells-riaa-irreparable-harm-doesnt-mean-what-you-think-it-means.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  The recording industry loves to throw around the term "irreparable harm" in its various lawsuits -- as if someone hearing a song they didn''t pay for will mortally wound the industry.  While some say that this is just standard legalese and we shouldn''t read too much into it, it looks like a judge in New Mexico disagrees.  In denying the RIAA''s request to have the University of Mexico simply hand over info on someone using their network (without letting that individual fight back against the request for info), the judge notes: "While the Court does not dispute that infringement of a copyright results in harm, it requires a Coleridgian ''suspension of disbelief'' to accept that the harm is irreparable, especially when monetary damages can cure any alleged violation."  However, the judge argues, turning over someone''s private info without giving them a chance to defend themselves and protest could cause irreparable harm: "the harm related to disclosure of confidential information in a student or faculty member’s Internet files can be equally harmful."  Nice to see the judge recognize that just because someone may have listened to a song without paying for it, it doesn''t mean that they lose all other rights.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>OS X Leopard Got Pirated...Already!?</title>\r\n  <link>http://tech.originalsignal.com/article/57546/os-x-leopard-got-pirated-already.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 10:38:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57546/os-x-leopard-got-pirated-already.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Oopsie daisy! It looks like that developers build of OS X Leopard has made its way into the grabby hands of Internet pirates. It looks like it, at least. There''s a torrent on a popular private (well, it was) torrent tracker that has a few hundred people pigpiled on.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Microsoft Flip-flopping on Virtualization License</title>\r\n  <link>http://tech.originalsignal.com/article/57545/microsoft-flip-flopping-on-virtualization-license.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 10:38:02 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57545/microsoft-flip-flopping-on-virtualization-license.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Cole writes "Microsoft came within a few hours of reversing its EULA-based ban on the virtualization of Vista Basic and Premium, only to cancel the announcement at the last minute. The company reached out to media and bloggers about the announcement and was ready to celebrate "user choice" before pulling the plug, apparently clinging to security excuses. From the article, "The threat of hypervisor malware affects Ultimate and Business editions just as much as Home Premium and Basic. As such, the only logical explanation is that Microsoft is using pricing to discourage users from virtualizing those OSes. Since when is a price tag an effective means of combating malware?" Something else must be going on here."Read more of this story at Slashdot.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Big Ag Enlists Robots to Pick High-Hanging Fruit</title>\r\n  <link>http://tech.originalsignal.com/article/57544/big-ag-enlists-robots-to-pick-high-hanging-fruit.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 10:08:24 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57544/big-ag-enlists-robots-to-pick-high-hanging-fruit.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  As if the debate over immigration and guest worker programs wasn''t complicated enough, now a couple of robots are rolling into the middle of it.     ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Hyper-Personal Search ''Possible''</title>\r\n  <link>http://tech.originalsignal.com/article/57543/hyper-personal-search-possible.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 08:38:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57543/hyper-personal-search-possible.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Google would consider keeping a user''s search data for longer than 18 months if they had explicitly consented, one of the firm''s key executives has said.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Having Accurate Broadband Data... Will Slow Down Broadband Growth?</title>\r\n  <link>http://tech.originalsignal.com/article/57542/having-accurate-broadband-data-will-slow-down-broadband-growth.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 08:08:51 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57542/having-accurate-broadband-data-will-slow-down-broadband-growth.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Many broadband providers have resisted providing detailed broadband penetration data, since it would suggest that things aren''t as rosy as the FCC insists with its bizarre counting system that everyone knows doesn''t paint an accurate portrait of broadband in the US.  However, with Congress looking to force the collection of more accurate broadband availability data, some broadband providers are protesting.  Apparently, the American Cable Association is claiming that providing such information would harm broadband growth.  Why?  Because collecting that info would take time and effort away from providing more broadband. Of course, that suggests that these providers don''t already know where they provide broadband, which is hard to believe.  It also ignores that one of the suggestions for getting better broadband data is to provide a user-generated mapping tool that won''t require the broadband providers'' involvement at all.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>June 21, 2004: SpaceShipOne Proves (Capitalist) Pigs Can Fly</title>\r\n  <link>http://tech.originalsignal.com/article/57541/june-21-2004-spaceshipone-proves-capitalist-pigs-can-fly.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 08:08:24 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57541/june-21-2004-spaceshipone-proves-capitalist-pigs-can-fly.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  The private sector joins the space community with a successful sub-orbital flight above the Mojave Desert.     ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>How they steal your card AND pin at ATM''s</title>\r\n  <link>http://tech.originalsignal.com/article/57540/how-they-steal-your-card-and-pin-at-atms.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 08:08:12 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57540/how-they-steal-your-card-and-pin-at-atms.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Using black film which blends with the black plastic of an ATM theives can steal your card along and capture your pin number.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>FAA Plans to Clean Up the Skies</title>\r\n  <link>http://tech.originalsignal.com/article/57539/faa-plans-to-clean-up-the-skies.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 08:08:02 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57539/faa-plans-to-clean-up-the-skies.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  coondoggie writes "On top of its recently announced plan to reduce flight delays, Federal Aviation Administration officials today launched what they hope will be pan U.S. and European Union joint action plan to cut greenhouse gas emissions from aircraft. Specifically the group announced the Atlantic Interoperability Initiative to Reduce Emissions or AIRE &mdash; the first large-scale environmental plan aimed at uniting aviation players from both sides of the Atlantic."Read more of this story at Slashdot.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Ex-Torex chairman may be FSA''s iSoft witness</title>\r\n  <link>http://tech.originalsignal.com/article/57537/ex-torex-chairman-may-be-fsas-isoft-witness.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 07:08:45 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57537/ex-torex-chairman-may-be-fsas-isoft-witness.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  AccountancyAge.com, Accountancy Age, Thursday 21 June 2007 at 00:00:00FSA looking to call on Christopher MooreThe Financial Services Authority investigation into accounting irregularities uncovered at iSoft, the NHS software supplier could see Christopher Moore, the former chairman at Torex Retail, being called as a witness....&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Deloitte chief: ''Genuine effort'' needed by governments</title>\r\n  <link>http://tech.originalsignal.com/article/57538/deloitte-chief-genuine-effort-needed-by-governments.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 07:08:45 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57538/deloitte-chief-genuine-effort-needed-by-governments.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  AccountancyAge.com, Accountancy Age, Thursday 21 June 2007 at 00:00:00Deloitte boss comments on SEC announcementGovernments and regulators must continue with genuine efforts to achieve consistency in the development and application of global financial reporting standards to protect investors, Deloitte global CEO James H....&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Blu-ray content protection agency certifies BD+</title>\r\n  <link>http://tech.originalsignal.com/article/57536/blu-ray-content-protection-agency-certifies-bd.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 07:08:24 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57536/blu-ray-content-protection-agency-certifies-bd.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  The company providing the additional BD+ copy protection to Blu-ray discs has just announced the finalization of the BD+ spec.  The announcement opens the door for more movie studios to release content on Blu-ray, but raises many questions about just what the studios plan to do with the power that BD+ provides.Read More...    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>The Pirate Bay Launches Uncensored Image Hosting</title>\r\n  <link>http://tech.originalsignal.com/article/57534/the-pirate-bay-launches-uncensored-image-hosting.html</link>\r\n  <pubDate>Thu, 21 Jun 2007 07:08:06 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/57534/the-pirate-bay-launches-uncensored-image-hosting.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  BayImg, an uncensored image hosting service, is the latest side-project from The Pirate Bay folks. The main difference compared to other image hosting services is that they pretty much allow everything on there, freedom of speech above all.  ]]></content:encoded>\r\n  </item>\r\n    	\r\n	</channel>\r\n</rss>', '20070621103354'),
 (0x646174656d696c6c5f66656564, '<?xml version="1.0" encoding="UTF-8"?>\r\n<?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/rss2full.xsl" type="text/xsl" media="screen"?><?xml-stylesheet href="http://feeds.feedburner.com/~d/styles/itemcontent.css" type="text/css" media="screen"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">\r\n<channel>\r\n	<title>Original Signal - Transmitting Tech</title>\r\n	<link>http://tech.originalsignal.com</link>\r\n	<description>Orginal Signal aggregates the 15 most popular technology sites. The main purpose of the site is to provide \r\na quick glance on what''s happening without using your desktop/web RSS reader. New headlines (since your \r\nlast cookied visit) come in pretty orange, visited ones are grey. All credits go to the authors of these weblogs. \r\nWithout their hard work Original Signal would not exist. Original Signal was inspired by Popurls and the Web 2.0 Workgroup.</description>\r\n	<pubDate>Fri, 18 May 2007 11:13:56 CEST</pubDate>\r\n	<language>en</language>\r\n	\r\n	  <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" href="http://feeds.feedburner.com/OriginalSignal/tech" type="application/rss+xml" /><item>\r\n  <title>Politicians'' Latest Grandstanding: Force ISPs To Hide Rogue Internet Pharmacies</title>\r\n  <link>http://tech.originalsignal.com/article/51976/politicians-latest-grandstanding-force-isps-to-hide-rogue-internet-pharmacies.html</link>\r\n  <pubDate>Fri, 18 May 2007 10:38:36 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51976/politicians-latest-grandstanding-force-isps-to-hide-rogue-internet-pharmacies.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  The problem with legislators is that all they know how to do is legislate.  Even if there are perfectly acceptable laws in place, you don''t get re-elected for saying, "you know what, we didn''t need any new laws this time around."  No, you have to propose and support legislation that makes it sound like you''re solving a big problem -- even if the problem isn''t that big and your proposed solution will likely make it worse.  The latest such situation concerns unauthorized internet pharmacies.  Sure, there may be some problems with people getting access to prescription medicine they shouldn''t be able to order, but even the DEA says that they don''t any new laws, as existing laws are perfectly well suited for shutting these pharmacies down.  Of course, that won''t stop the politicians from pushing forward.  However, not only are they proposing more restrictions and penalties for such pharmacies, but also demanding that ISPs and search engines proactively block these sites -- and also block advertisements for these sites.  Yes, despite the fact that courts throw out every attempt by politicians to force ISPs to block sites they don''t like, the politicians insist that this time it won''t violate the Constitution.  Yes, despite the fact that those who really want to access these sites will get around the blocks, politicians insist they''re useful.  Even better, they got a law professor to claim that "It is no burden to (the ISPs). They know how to do it; they can do it in a minute."  Trying telling that to the ISPs who would now be responsible for blocking content.  Once again, the ISPs are simply running connectivity.  They should have no responsibility for what''s done over that connectivity.  If the sites, themselves, are illegal, go after the sites.  If the sites are offshore, then block the shipments through customs.  But, requiring ISPs to waste time, effort, money and resources on putting up ineffective blocks that aren''t needed won''t help the situation.  It''ll just waste time, effort, money and resources so that some politicians can claim they were tough on illegal internet pharmacies during the next election.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Dell unveils Project Hybrid</title>\r\n  <link>http://tech.originalsignal.com/article/51975/dell-unveils-project-hybrid.html</link>\r\n  <pubDate>Fri, 18 May 2007 10:38:32 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51975/dell-unveils-project-hybrid.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Tom Sanders in San Francisco, vnunet.com, Friday 18 May 2007 at 00:00:00Better margins in integrated systems, not 1u boxesDell is preparing to roll out new products and services that will allow the company to sell more complete systems instead of point products.  The server and PC maker used...&gt;&nbsp;Read the full article&nbsp;&nbsp;&nbsp;&nbsp;    ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Quick custom text ad placement in WordPress blog categories</title>\r\n  <link>http://tech.originalsignal.com/article/51974/quick-custom-text-ad-placement-in-wordpress-blog-categories.html</link>\r\n  <pubDate>Fri, 18 May 2007 10:38:29 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51974/quick-custom-text-ad-placement-in-wordpress-blog-categories.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  WordPress plugins abound for Google AdSense and other third-party text ad brokers, but what happens when someone wants to buy ad space directly from you, on a specific category page in your blog? You can easily add static HTML text ads to your category search result pages by creating category-specific page templates.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>The First Terabyte Hard Drive--Review</title>\r\n  <link>http://tech.originalsignal.com/article/51973/the-first-terabyte-hard-drive-review.html</link>\r\n  <pubDate>Fri, 18 May 2007 10:38:06 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51973/the-first-terabyte-hard-drive-review.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  The terabyte era arrives, with Hitachi''s 5-platter, 10-head 7K1000 hard drive. ExtremeTech puts Hitachi''s latest hard drive on the bench and let you know how it performs.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>First Pictures of Apple Store in Saigon</title>\r\n  <link>http://tech.originalsignal.com/article/51971/first-pictures-of-apple-store-in-saigon.html</link>\r\n  <pubDate>Fri, 18 May 2007 09:38:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51971/first-pictures-of-apple-store-in-saigon.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Pictures of Apple''s brand new store in Saigon  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Mac Switcher: Three ways to take screenshots</title>\r\n  <link>http://tech.originalsignal.com/article/51972/mac-switcher-three-ways-to-take-screenshots.html</link>\r\n  <pubDate>Fri, 18 May 2007 09:38:05 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51972/mac-switcher-three-ways-to-take-screenshots.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  One thing you lose  is that Print Screen key; setting up a Mac desktop or notebook will reveal that the key is nowhere to be found, apparently leaving us out in the cold when it comes to capturing that golden moment on your display. Fortunately, this isn''t the case.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>PlayOgg! Now that the music is being set free from DRM...</title>\r\n  <link>http://tech.originalsignal.com/article/51970/playogg-now-that-the-music-is-being-set-free-from-drm.html</link>\r\n  <pubDate>Fri, 18 May 2007 09:08:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51970/playogg-now-that-the-music-is-being-set-free-from-drm.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Both popular music file formats MP3 and AACS are patent encumbered - that means we all end up paying too much for our music one way or another. Time to switch to playing Ogg! Playing Ogg is ethically, legally and technically superior. Download this Ogg friendly media player for Mac and Windows now! (Ogg support comes o''natural for GNU/Linux users)  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Transformers Full Theatrical Trailer Available</title>\r\n  <link>http://tech.originalsignal.com/article/51969/transformers-full-theatrical-trailer-available.html</link>\r\n  <pubDate>Fri, 18 May 2007 08:38:02 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51969/transformers-full-theatrical-trailer-available.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  roelbj writes "The full trailer for Michael Bay''s upcoming Transformers movie is now finally available on Yahoo. Unlike the teaser trailers that have only hinted at what the final effects would deliver, we can at long last get a much better feeling for how the live-action CGI Transformers will look."Read more of this story at Slashdot.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>30 Scripts For Galleries, Slideshows and Lightboxes</title>\r\n  <link>http://tech.originalsignal.com/article/51968/30-scripts-for-galleries-slideshows-and-lightboxes.html</link>\r\n  <pubDate>Fri, 18 May 2007 08:08:03 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51968/30-scripts-for-galleries-slideshows-and-lightboxes.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Family photos, vacation snapshots or creative artistic works: whatever images you have to present, you can present them in a variety of ways. On a big screen, in slide shows or in a thumbnails gallery. However, to convey the message of presented data effectively, it’s important to offer it in an attractive and intuitive way.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>May 18, 1953: Jackie Cochran, First Woman to Break the Sound Barrier</title>\r\n  <link>http://tech.originalsignal.com/article/51967/may-18-1953-jackie-cochran-first-woman-to-break-the-sound-barrier.html</link>\r\n  <pubDate>Fri, 18 May 2007 07:38:19 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51967/may-18-1953-jackie-cochran-first-woman-to-break-the-sound-barrier.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Famed aviatrix averages 652 mph as she streaks across the desert sky over California.     ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Video game sales up 20 percent in April</title>\r\n  <link>http://tech.originalsignal.com/article/51966/video-game-sales-up-20-percent-in-april.html</link>\r\n  <pubDate>Fri, 18 May 2007 07:38:17 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51966/video-game-sales-up-20-percent-in-april.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Strong demand for Nintendo''s Wii console and new Pokemon games for Nintendo''s DS handheld drive sales.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Engadget Responds to yesterday''s Apple news</title>\r\n  <link>http://tech.originalsignal.com/article/51964/engadget-responds-to-yesterdays-apple-news.html</link>\r\n  <pubDate>Fri, 18 May 2007 07:08:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51964/engadget-responds-to-yesterdays-apple-news.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  "The question we faced at that moment was: Do we run with the story without Apple''s comment or not? The answer seemed fairly clear there, too, at the time. We possessed what confirmed Apple employees believed was an internal Apple memo that with absolutely no doubt had also been received by any number of other Apple employees. "  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Amazon offering discounts on old, new MacBook models</title>\r\n  <link>http://tech.originalsignal.com/article/51965/amazon-offering-discounts-on-old-new-macbook-models.html</link>\r\n  <pubDate>Fri, 18 May 2007 07:08:04 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51965/amazon-offering-discounts-on-old-new-macbook-models.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  One day after Apple Inc. introduced a modest refresh to its MacBook line, the 13-inch notebooks were crowding the upper echelon of Amazon.com''s top seller list, thanks partly to some hefty discounts by the retailer on new and previous generation models.  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>Want To Search For Online Porn In Korea?  Please Identify Yourself First</title>\r\n  <link>http://tech.originalsignal.com/article/51963/want-to-search-for-online-porn-in-korea-please-identify-yourself-first.html</link>\r\n  <pubDate>Fri, 18 May 2007 06:38:33 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51963/want-to-search-for-online-porn-in-korea-please-identify-yourself-first.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  Apparently, Google Korea is going to follow the lead of other Korean search engines introducing what they''re calling an age-verification system for its search engine later this year.  The idea is that "adult-themed" search will require you to be 19 years old or older.  If their searches touch on any of the list of 700 words supplied by the Korean government, users will have to enter their name and national resident registration number (think of it as your porn license!) to be checked against a database to make sure you''re old enough.  Of course, this also means the government (and Google) will have a very detailed record of who is searching for porn.  Or, they would assuming that no one ever finds out the national resident registration number of someone else over the age of 19 and enters that instead of their own information.  Not that that would ever happen...  Also, it''s not clear what words are included in the list, but you have to wonder how such systems handle searches for things like "breast cancer?"  ]]></content:encoded>\r\n  </item>\r\n    <item>\r\n  <title>AMD''s Next-Generation Mobile Architecture Revealed: Griffin</title>\r\n  <link>http://tech.originalsignal.com/article/51962/amds-next-generation-mobile-architecture-revealed-griffin.html</link>\r\n  <pubDate>Fri, 18 May 2007 06:38:24 CEST</pubDate>\r\n  <guid isPermaLink="false">http://tech.originalsignal.com/article/51962/amds-next-generation-mobile-architecture-revealed-griffin.html</guid>\r\n  <author />\r\n  <content:encoded><![CDATA[\n  AMD is continuing with its disclosure of future plans, this time talking about Griffin and Puma, it''s new mobile architecture and platform.  ]]></content:encoded>\r\n  </item>\r\n    	\r\n	</channel>\r\n</rss>', '20070518091623');
 
 -- --------------------------------------------------------
@@ -480,7 +494,8 @@ CREATE TABLE `dsb_flirts` (
 -- Dumping data for table `dsb_flirts`
 -- 
 
-INSERT INTO `dsb_flirts` (`flirt_id`, `flirt_text`, `flirt_type`) VALUES (5, 'Hey sexy!', 0),
+INSERT INTO `dsb_flirts` (`flirt_id`, `flirt_text`, `flirt_type`) VALUES 
+(5, 'Hey sexy!', 0),
 (6, 'Whaaadddup!', 0),
 (4, 'I hope you know CPR, cuz you take my breath away...', 0),
 (7, 'Hello? Hello? Anybody there?', 0),
@@ -508,7 +523,8 @@ CREATE TABLE `dsb_lang_keys` (
 -- Dumping data for table `dsb_lang_keys`
 -- 
 
-INSERT INTO `dsb_lang_keys` (`lk_id`, `lk_type`, `lk_diz`, `lk_use`) VALUES (1, 2, 'Category name', 1),
+INSERT INTO `dsb_lang_keys` (`lk_id`, `lk_type`, `lk_diz`, `lk_use`) VALUES 
+(1, 2, 'Category name', 1),
 (2, 2, 'Category name', 1),
 (3, 2, 'Label for f1 field', 1),
 (4, 2, 'Search label for f1 field', 1),
@@ -706,7 +722,8 @@ CREATE TABLE `dsb_lang_strings` (
 -- Dumping data for table `dsb_lang_strings`
 -- 
 
-INSERT INTO `dsb_lang_strings` (`ls_id`, `fk_lk_id`, `skin`, `lang_value`) VALUES (1, 1, 'skin_def', 'Basic Info'),
+INSERT INTO `dsb_lang_strings` (`ls_id`, `fk_lk_id`, `skin`, `lang_value`) VALUES 
+(1, 1, 'skin_def', 'Basic Info'),
 (2, 2, 'skin_def', 'Appearance'),
 (3, 3, 'skin_def', 'About me'),
 (4, 4, 'skin_def', ''),
@@ -902,7 +919,8 @@ CREATE TABLE `dsb_locales` (
 -- Dumping data for table `dsb_locales`
 -- 
 
-INSERT INTO `dsb_locales` (`locale_id`, `locale_name`, `codes`) VALUES (1, 'Arabic (Algeria)', 'ar_DZ,arabic'),
+INSERT INTO `dsb_locales` (`locale_id`, `locale_name`, `codes`) VALUES 
+(1, 'Arabic (Algeria)', 'ar_DZ,arabic'),
 (2, 'Arabic (Saudi Arabia)', 'ar_SA,arabic'),
 (3, 'Bulgarian (Bulgaria)', 'bg_BG,bulgarian'),
 (4, 'Chinese, Simplified (China)', 'zh_CN,chinese'),
@@ -975,7 +993,8 @@ CREATE TABLE `dsb_memberships` (
 -- Dumping data for table `dsb_memberships`
 -- 
 
-INSERT INTO `dsb_memberships` (`m_id`, `m_name`, `m_value`, `is_custom`) VALUES (1, 'Non Members', 1, 0),
+INSERT INTO `dsb_memberships` (`m_id`, `m_name`, `m_value`, `is_custom`) VALUES 
+(1, 'Non Members', 1, 0),
 (2, 'Free Members', 2, 0),
 (3, 'Paid Members', 4, 1);
 
@@ -1001,7 +1020,8 @@ CREATE TABLE `dsb_message_filters` (
 -- Dumping data for table `dsb_message_filters`
 -- 
 
-INSERT INTO `dsb_message_filters` (`filter_id`, `filter_type`, `fk_user_id`, `field`, `field_value`, `fk_folder_id`) VALUES (2, 1, 23, '', '7', 5),
+INSERT INTO `dsb_message_filters` (`filter_id`, `filter_type`, `fk_user_id`, `field`, `field_value`, `fk_folder_id`) VALUES 
+(2, 1, 23, '', '7', 5),
 (5, 1, 6, '', '16', -3),
 (6, 1, 4, '', '15', -3);
 
@@ -1026,7 +1046,8 @@ CREATE TABLE `dsb_modules` (
 -- Dumping data for table `dsb_modules`
 -- 
 
-INSERT INTO `dsb_modules` (`module_code`, `module_name`, `module_diz`, `module_type`, `version`) VALUES (0x636f7265, 'Basic features', '', 0, 1.00),
+INSERT INTO `dsb_modules` (`module_code`, `module_name`, `module_diz`, `module_type`, `version`) VALUES 
+(0x636f7265, 'Basic features', '', 0, 1.00),
 (0x636f72655f626c6f67, 'Blogs', '', 0, 1.00),
 (0x636f72655f70686f746f, 'Photo Album', '', 0, 1.00),
 (0x70617970616c, 'Paypal', '', 1, 1.00),
@@ -1057,7 +1078,8 @@ CREATE TABLE `dsb_networks` (
 -- Dumping data for table `dsb_networks`
 -- 
 
-INSERT INTO `dsb_networks` (`net_id`, `network`, `is_bidi`, `max_users`) VALUES (1, 'Friends', 1, 0),
+INSERT INTO `dsb_networks` (`net_id`, `network`, `is_bidi`, `max_users`) VALUES 
+(1, 'Friends', 1, 0),
 (2, 'Blocked Members', 0, 0),
 (3, 'Favorites', 0, 0);
 
@@ -1081,6 +1103,11 @@ CREATE TABLE `dsb_online` (
 -- Dumping data for table `dsb_online`
 -- 
 
+INSERT INTO `dsb_online` (`fk_user_id`, `last_activity`, `sess`) VALUES 
+(0, '20070621213959', 0x3131326462393263616431316561616263643631326336306662303535353037),
+(0, '20070621201106', 0x6434623833303233333033303638353530656163653161666562396437343735),
+(0, '20070622090932', 0x3238636332353435313037656562363636666165363332666565383166386665),
+(0, '20070621112440', 0x6231353563393831643934353866666164303732303230323332303165333130);
 
 -- --------------------------------------------------------
 
@@ -1108,12 +1135,14 @@ CREATE TABLE `dsb_payments` (
   `m_value_from` int(10) unsigned NOT NULL default '0',
   `m_value_to` int(10) unsigned NOT NULL default '0',
   `amount_paid` float(10,2) unsigned NOT NULL default '0.00',
+  `refunded` float(10,2) NOT NULL default '0.00',
   `paid_from` date NOT NULL default '0000-00-00',
   `paid_until` date NOT NULL default '0000-00-00',
   `is_suspect` tinyint(1) unsigned NOT NULL default '0',
   `suspect_reason` text NOT NULL,
   `date` timestamp(14) NOT NULL,
-  PRIMARY KEY  (`payment_id`)
+  PRIMARY KEY  (`payment_id`),
+  KEY `date` (`date`)
 ) TYPE=MyISAM;
 
 -- 
@@ -1148,7 +1177,8 @@ CREATE TABLE `dsb_photo_comments` (
 -- Dumping data for table `dsb_photo_comments`
 -- 
 
-INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES (1, 1, 6, 'cocacola', 'hi thetr', '2007-04-16 18:54:48', '2007-04-16 18:54:48', 15, 0),
+INSERT INTO `dsb_photo_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES 
+(1, 1, 6, 'cocacola', 'hi thetr', '2007-04-16 18:54:48', '2007-04-16 18:54:48', 15, 0),
 (2, 1, 9, 'raneglo', 'Hello Mr Watermark', '2007-04-16 19:59:47', '2007-04-16 19:59:47', 15, 0),
 (3, 6, 10, 'strawberries', 'party on, dude!', '2007-04-16 21:12:23', '2007-04-16 21:12:23', 15, 0),
 (4, 1, 11, 'johnboy', 'Hi Maverick, your pic looks cool :)', '2007-04-17 04:46:16', '2007-04-17 04:46:16', 15, 0),
@@ -1204,7 +1234,8 @@ CREATE TABLE `dsb_photo_ratings` (
 -- Dumping data for table `dsb_photo_ratings`
 -- 
 
-INSERT INTO `dsb_photo_ratings` (`fk_photo_id`, `fk_user_id`, `vote`, `date_voted`) VALUES (1, 6, 4, '2007-04-16 18:54:40'),
+INSERT INTO `dsb_photo_ratings` (`fk_photo_id`, `fk_user_id`, `vote`, `date_voted`) VALUES 
+(1, 6, 4, '2007-04-16 18:54:40'),
 (5, 1, 5, '2007-04-16 19:45:27'),
 (5, 8, 5, '2007-04-16 20:16:18'),
 (1, 11, 5, '2007-04-17 04:46:33'),
@@ -1261,7 +1292,8 @@ CREATE TABLE `dsb_profile_categories` (
 -- Dumping data for table `dsb_profile_categories`
 -- 
 
-INSERT INTO `dsb_profile_categories` (`pcat_id`, `fk_lk_id_pcat`, `access_level`) VALUES (1, 1, 7),
+INSERT INTO `dsb_profile_categories` (`pcat_id`, `fk_lk_id_pcat`, `access_level`) VALUES 
+(1, 1, 7),
 (2, 2, 7),
 (3, 31, 7),
 (4, 32, 7),
@@ -1294,7 +1326,8 @@ CREATE TABLE `dsb_profile_comments` (
 -- Dumping data for table `dsb_profile_comments`
 -- 
 
-INSERT INTO `dsb_profile_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES (1, 19, 8, 'angkasa', 'Nice pose mate.heheh', '2007-05-13 17:48:27', '2007-05-13 17:48:27', 15, 0),
+INSERT INTO `dsb_profile_comments` (`comment_id`, `fk_parent_id`, `fk_user_id`, `_user`, `comment`, `date_posted`, `last_changed`, `status`, `processed`) VALUES 
+(1, 19, 8, 'angkasa', 'Nice pose mate.heheh', '2007-05-13 17:48:27', '2007-05-13 17:48:27', 15, 0),
 (2, 32, 32, 'mervyn', 'test', '2007-05-25 23:57:46', '2007-05-25 23:57:46', 15, 0),
 (3, 10, 10, 'strawberries', 'test', '2007-05-28 11:48:10', '2007-05-28 11:48:10', 15, 0),
 (4, 7, 33, 'alterego', 'fff', '2007-06-04 14:09:56', '2007-06-04 14:09:56', 15, 1);
@@ -1335,7 +1368,8 @@ CREATE TABLE `dsb_profile_fields` (
 -- Dumping data for table `dsb_profile_fields`
 -- 
 
-INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `field_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES (1, 3, 4, 0, 1, 0, 4, 1, 2, 0, 1, 1, 0x6631, 5, 1, 0, '1000', '', '', '', 5),
+INSERT INTO `dsb_profile_fields` (`pfield_id`, `fk_lk_id_label`, `field_type`, `searchable`, `search_type`, `for_basic`, `fk_lk_id_search`, `at_registration`, `reg_page`, `required`, `editable`, `visible`, `dbfield`, `fk_lk_id_help`, `fk_pcat_id`, `access_level`, `accepted_values`, `default_value`, `default_search`, `fn_on_change`, `order_num`) VALUES 
+(1, 3, 4, 0, 1, 0, 4, 1, 2, 0, 1, 1, 0x6631, 5, 1, 0, '1000', '', '', '', 5),
 (2, 8, 3, 1, 10, 1, 9, 1, 1, 1, 1, 1, 0x6632, 10, 1, 0, '|6|7|', '|0|', '|1|', '', 1),
 (3, 13, 10, 1, 10, 1, 14, 1, 1, 1, 1, 1, 0x6633, 15, 1, 0, '|11|12|', '|1|', '|0|', '', 2),
 (4, 22, 3, 1, 108, 0, 23, 1, 2, 0, 1, 1, 0x6634, 24, 2, 0, '|49|50|51|52|46|47|48|53|54|55|57|58|106|59|60|61|62|63|64|65|66|67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99|100|101|102|103|104|105|', '', '|0|59|', '', 7),
@@ -1397,8 +1431,8 @@ CREATE TABLE `dsb_queue_message` (
 -- Dumping data for table `dsb_queue_message`
 -- 
 
-INSERT INTO `dsb_queue_message` (`mail_id`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (9, 0, 0, '', 'New comment on your profile', 'dragon posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm5">Click here</a> to view the comment', '2007-05-15 09:28:36', 2),
-(22, 7, 0, '', 'New comment on your profile', 'alterego posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm4">Click here</a> to view the comment', '2007-06-04 14:09:56', 2);
+INSERT INTO `dsb_queue_message` (`mail_id`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES 
+(9, 0, 0, '', 'New comment on your profile', 'dragon posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm5">Click here</a> to view the comment', '2007-05-15 09:28:36', 2);
 
 -- --------------------------------------------------------
 
@@ -1445,7 +1479,8 @@ CREATE TABLE `dsb_site_bans` (
 -- Dumping data for table `dsb_site_bans`
 -- 
 
-INSERT INTO `dsb_site_bans` (`ban_id`, `ban_type`, `what`, `fk_lk_id_reason`, `since`) VALUES (2, 3, '3232235521', 186, '20070613205155');
+INSERT INTO `dsb_site_bans` (`ban_id`, `ban_type`, `what`, `fk_lk_id_reason`, `since`) VALUES 
+(2, 3, '3232235521', 186, '20070613205155');
 
 -- --------------------------------------------------------
 
@@ -1492,7 +1527,8 @@ CREATE TABLE `dsb_site_news` (
 -- Dumping data for table `dsb_site_news`
 -- 
 
-INSERT INTO `dsb_site_news` (`news_id`, `news_title`, `news_body`, `date_posted`) VALUES (1, 'first news', '<p>N<font size="1">e</font><font size="2">w</font><font size="3">s</font> <font size="4">b</font><font size="5">o</font><font size="6">d</font><font size="7">y</font></p>', '0000-00-00 00:00:00'),
+INSERT INTO `dsb_site_news` (`news_id`, `news_title`, `news_body`, `date_posted`) VALUES 
+(1, 'first news', '<p>N<font size="1">e</font><font size="2">w</font><font size="3">s</font> <font size="4">b</font><font size="5">o</font><font size="6">d</font><font size="7">y</font></p>', '0000-00-00 00:00:00'),
 (2, 'second news entry', '<p>This one shows</p>\r\n<ol>\r\n    <li><a href="http://forum.datemill.com">links</a> in posts</li>\r\n    <li>c<font color="#ff6600">o</font><font color="#0000ff">l</font><font color="#00ff00">o</font><font color="#ff00ff">r</font><font color="#ffffff"><span style="background-color: rgb(255, 0, 0);">s</span></font></li>\r\n    <li><font face="Comic Sans MS">different </font><font face="Tahoma">fonts</font></li>\r\n    <li>and <font size="5">sizes</font></li>\r\n    <li>and let''s not forget lists</li>\r\n</ol>', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
@@ -1508,6 +1544,7 @@ CREATE TABLE `dsb_site_options3` (
   `config_value` varchar(100) NOT NULL default '',
   `config_diz` text NOT NULL,
   `option_type` tinyint(3) unsigned NOT NULL default '0',
+  `choices` text NOT NULL,
   `fk_module_code` varchar(32) binary NOT NULL default '',
   `per_user` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`config_id`),
@@ -1520,55 +1557,61 @@ CREATE TABLE `dsb_site_options3` (
 -- Dumping data for table `dsb_site_options3`
 -- 
 
-INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `config_diz`, `option_type`, `fk_module_code`, `per_user`) VALUES (1, 0x64626669656c645f696e646578, '16', 'The last index of the custom profile fields (field_xx)', 0, 0x636f7265, 0),
-(2, 0x7573655f63617074636861, '1', 'Use the dynamic image text (captcha image) to keep spam bots out?', 9, 0x636f7265, 0),
-(3, 0x6d616e75616c5f70726f66696c655f617070726f76616c, '0', 'New profiles or changes to existing profiles require manual approval from an administrator before being displayed on site?', 9, 0x636f7265, 0),
-(4, 0x646174655f666f726d6174, '%m/%d/%Y', 'Default date format', 2, 0x6465665f757365725f7072656673, 1),
-(5, 0x74315f7769647468, '100', 'The width in pixels of the smallest thumbnail generated for each user photo', 104, 0x636f72655f70686f746f, 0),
-(6, 0x74325f7769647468, '500', 'The width in pixels of the larger thumbnail generated for each user photo', 104, 0x636f72655f70686f746f, 0),
-(7, 0x7069635f7769647468, '800', 'The maximum width in pixels of any picture uploaded by a member', 104, 0x636f72655f70686f746f, 0),
-(8, 0x6d616e75616c5f70686f746f5f617070726f76616c, '0', 'New uploaded photos require manual approval before being displayed on the site?', 9, 0x636f72655f70686f746f, 0),
-(9, 0x6d616e75616c5f626c6f675f617070726f76616c, '0', 'New blog posts or changes to existing posts require manual approval from an administrator before being displayed on site?', 9, 0x636f72655f626c6f67, 0),
-(10, 0x6d616e75616c5f636f6d5f617070726f76616c, '0', 'Comments to profiles, photos, blogs need approval from admin?', 9, 0x636f7265, 0),
-(11, 0x77617465726d61726b5f74657874, 'watermark text', 'The text to stamp the user photos with', 2, 0x636f72655f70686f746f, 0),
-(12, 0x77617465726d61726b5f746578745f636f6c6f72, 'FFFFFF', 'Color of the text watermark', 2, 0x636f72655f70686f746f, 0),
-(13, 0x6d6f64756c655f616374697665, '1', 'Module active?', 9, 0x70617970616c, 0),
-(14, 0x70617970616c5f656d61696c, 'dan@rdsct.ro', 'Your paypal email address', 2, 0x70617970616c, 0),
-(15, 0x6d6f64756c655f616374697665, '1', 'Is this module active?', 9, 0x74776f636865636b6f7574, 0),
-(16, 0x736964, '117760', 'Your 2co seller ID', 2, 0x74776f636865636b6f7574, 0),
-(17, 0x64656d6f5f6d6f6465, '1', 'Enable test mode? Don''t enable this on a live site!', 9, 0x74776f636865636b6f7574, 0),
-(18, 0x64656d6f5f6d6f6465, '1', 'Enable test mode? Don''t enable this on a live site!', 9, 0x70617970616c, 0),
-(19, 0x736563726574, 'secret_word', 'The secret word you set in your 2co account', 2, 0x74776f636865636b6f7574, 0),
-(20, 0x6c6963656e73655f6b6579, '1234', 'Your Maxmind license key', 2, 0x6d61786d696e64, 0),
-(21, 0x7573655f7175657565, '1', 'Use the message queue (recommended) or send the messages directly?', 9, 0x636f7265, 0),
-(22, 0x6d61696c5f66726f6d, 'support@datemill.com', 'Email address to send emails from', 2, 0x636f7265, 0),
-(23, 0x6262636f64655f70726f66696c65, '1', 'Use BBcode in profile fields? (like about me, about you)', 9, 0x636f7265, 0),
-(24, 0x6262636f64655f636f6d6d656e7473, '1', 'Use BBcode in comments?', 9, 0x636f7265, 0),
-(32, 0x6d696e5f73697a65, '0', 'Minimum photo file size in bytes (use 0 for not limited).', 104, 0x636f72655f70686f746f, 0),
-(33, 0x6d61785f73697a65, '0', 'Maximum photo file size in bytes (use 0 for server default).', 104, 0x636f72655f70686f746f, 0),
-(34, 0x6262636f64655f6d657373616765, '1', 'Allow BBCode in member to member messages?', 9, 0x636f7265, 0),
-(35, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %I:%M %p', 'Date and time format', 2, 0x6465665f757365725f7072656673, 1),
-(36, 0x726f756e645f636f726e657273, '1', 'Use round corners for user photos?', 9, 0x636f72655f70686f746f, 0),
-(37, 0x656e61626c6564, '1', 'Enable this widget?', 9, 0x6f7369676e616c5f66656564, 0),
-(38, 0x666565645f75726c, 'http://feeds.feedburner.com/OriginalSignal/tech', 'The url of the feed', 2, 0x6f7369676e616c5f66656564, 0),
-(39, 0x736b696e5f646972, 'def', '', 0, 0x736b696e5f646566, 0),
-(40, 0x736b696e5f6e616d65, 'Default', '', 0, 0x736b696e5f646566, 0),
-(41, 0x666b5f6c6f63616c655f6964, '11', '', 0, 0x736b696e5f646566, 0),
-(42, 0x69735f64656661756c74, '1', '', 0, 0x736b696e5f646566, 0),
-(43, 0x696e6163746976655f74696d65, '5', 'Time of inactivity in minutes after a member is considered offline', 104, 0x636f7265, 0),
-(44, 0x6262636f64655f626c6f6773, '1', 'Allow bbcode in blog posts?', 9, 0x636f72655f626c6f67, 0),
-(45, 0x73656e645f616c6572745f696e74657276616c, '2', 'How often do you want to receive your search matches? (days)', 104, 0x6465665f757365725f7072656673, 1),
-(46, 0x726174655f6d795f70726f66696c65, '1', 'Allow my profile to be rated?', 9, 0x6465665f757365725f7072656673, 1),
-(47, 0x726174655f6d795f70686f746f73, '1', 'Allow my photos to be rated?', 9, 0x6465665f757365725f7072656673, 1),
-(48, 0x70757267655f756e7665726966696564, '7', 'Purge unverified accounts after how many days?', 104, 0x636f7265, 0),
-(50, 0x6e6f746966795f6d65, '1', 'Send me email notifications when I receive messages?', 9, 0x6465665f757365725f7072656673, 1),
-(51, 0x6d61696c5f63726c66, '1', 'Check or uncheck this option if you can''t send emails out to members', 9, 0x636f7265, 0),
-(52, 0x7573655f736d696c696573, '1', 'Allow smilies in profile fields?', 9, 0x636f7265, 0),
-(53, 0x736d696c6965735f636f6d6d, '1', 'Allow smilies in user comments?', 9, 0x636f7265, 0),
-(54, 0x7573655f736d696c696573, '1', 'Allow smilies in blogs?', 9, 0x636f72655f626c6f67, 0),
-(55, 0x70726f66696c655f636f6d6d656e7473, '1', 'Allow comments on my profile?', 9, 0x6465665f757365725f7072656673, 1),
-(56, 0x74615f6c656e, '1000', 'Maximum number of characters users may enter in textareas (use 0 for unlimited)', 104, 0x636f7265, 0),
-(58, 0x666565645f75726c, 'http://www.datemill.com/remote/feeds/admin.xml', 'The url of the feed', 2, 0x646174656d696c6c5f66656564, 0);
+INSERT INTO `dsb_site_options3` (`config_id`, `config_option`, `config_value`, `config_diz`, `option_type`, `choices`, `fk_module_code`, `per_user`) VALUES 
+(1, 0x64626669656c645f696e646578, '16', 'The last index of the custom profile fields (field_xx)', 0, '', 0x636f7265, 0),
+(2, 0x7573655f63617074636861, '1', 'Use the dynamic image text (captcha image) to keep spam bots out?', 9, '', 0x636f7265, 0),
+(3, 0x6d616e75616c5f70726f66696c655f617070726f76616c, '0', 'New profiles or changes to existing profiles require manual approval from an administrator before being displayed on site?', 9, '', 0x636f7265, 0),
+(4, 0x646174655f666f726d6174, '%m/%d/%Y', 'Default date format', 2, '', 0x6465665f757365725f7072656673, 1),
+(5, 0x74315f7769647468, '100', 'The width in pixels of the smallest thumbnail generated for each user photo', 104, '', 0x636f72655f70686f746f, 0),
+(6, 0x74325f7769647468, '500', 'The width in pixels of the larger thumbnail generated for each user photo', 104, '', 0x636f72655f70686f746f, 0),
+(7, 0x7069635f7769647468, '800', 'The maximum width in pixels of any picture uploaded by a member', 104, '', 0x636f72655f70686f746f, 0),
+(8, 0x6d616e75616c5f70686f746f5f617070726f76616c, '0', 'New uploaded photos require manual approval before being displayed on the site?', 9, '', 0x636f72655f70686f746f, 0),
+(9, 0x6d616e75616c5f626c6f675f617070726f76616c, '0', 'New blog posts or changes to existing posts require manual approval from an administrator before being displayed on site?', 9, '', 0x636f72655f626c6f67, 0),
+(10, 0x6d616e75616c5f636f6d5f617070726f76616c, '0', 'Comments to profiles, photos, blogs need approval from admin?', 9, '', 0x636f7265, 0),
+(11, 0x77617465726d61726b5f74657874, 'watermark text', 'The text to stamp the user photos with', 2, '', 0x636f72655f70686f746f, 0),
+(12, 0x77617465726d61726b5f746578745f636f6c6f72, 'FFFFFF', 'Color of the text watermark', 2, '', 0x636f72655f70686f746f, 0),
+(13, 0x6d6f64756c655f616374697665, '1', 'Module active?', 9, '', 0x70617970616c, 0),
+(14, 0x70617970616c5f656d61696c, 'dan@rdsct.ro', 'Your paypal email address', 2, '', 0x70617970616c, 0),
+(15, 0x6d6f64756c655f616374697665, '1', 'Is this module active?', 9, '', 0x74776f636865636b6f7574, 0),
+(16, 0x736964, '117760', 'Your 2co seller ID', 2, '', 0x74776f636865636b6f7574, 0),
+(17, 0x64656d6f5f6d6f6465, '1', 'Enable test mode? Don''t enable this on a live site!', 9, '', 0x74776f636865636b6f7574, 0),
+(18, 0x64656d6f5f6d6f6465, '1', 'Enable test mode? Don''t enable this on a live site!', 9, '', 0x70617970616c, 0),
+(19, 0x736563726574, 'secret_word', 'The secret word you set in your 2co account', 2, '', 0x74776f636865636b6f7574, 0),
+(20, 0x6c6963656e73655f6b6579, '1234', 'Your Maxmind license key', 2, '', 0x6d61786d696e64, 0),
+(21, 0x7573655f7175657565, '1', 'Use the message queue (recommended) or send the messages directly?', 9, '', 0x636f7265, 0),
+(22, 0x6d61696c5f66726f6d, 'support@datemill.com', 'Email address to send emails from', 2, '', 0x636f7265, 0),
+(23, 0x6262636f64655f70726f66696c65, '1', 'Use BBcode in profile fields? (like about me, about you)', 9, '', 0x636f7265, 0),
+(24, 0x6262636f64655f636f6d6d656e7473, '1', 'Use BBcode in comments?', 9, '', 0x636f7265, 0),
+(32, 0x6d696e5f73697a65, '0', 'Minimum photo file size in bytes (use 0 for not limited).', 104, '', 0x636f72655f70686f746f, 0),
+(33, 0x6d61785f73697a65, '0', 'Maximum photo file size in bytes (use 0 for server default).', 104, '', 0x636f72655f70686f746f, 0),
+(34, 0x6262636f64655f6d657373616765, '1', 'Allow BBCode in member to member messages?', 9, '', 0x636f7265, 0),
+(35, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %I:%M %p', 'Date and time format', 2, '', 0x6465665f757365725f7072656673, 1),
+(36, 0x726f756e645f636f726e657273, '1', 'Use round corners for user photos?', 9, '', 0x636f72655f70686f746f, 0),
+(37, 0x656e61626c6564, '1', 'Enable this widget?', 9, '', 0x6f7369676e616c5f66656564, 0),
+(38, 0x666565645f75726c, 'http://feeds.feedburner.com/OriginalSignal/tech', 'The url of the feed', 2, '', 0x6f7369676e616c5f66656564, 0),
+(39, 0x736b696e5f646972, 'def', '', 0, '', 0x736b696e5f646566, 0),
+(40, 0x736b696e5f6e616d65, 'Default', '', 0, '', 0x736b696e5f646566, 0),
+(41, 0x666b5f6c6f63616c655f6964, '11', '', 0, '', 0x736b696e5f646566, 0),
+(42, 0x69735f64656661756c74, '1', '', 0, '', 0x736b696e5f646566, 0),
+(43, 0x696e6163746976655f74696d65, '5', 'Time of inactivity in minutes after a member is considered offline', 104, '', 0x636f7265, 0),
+(44, 0x6262636f64655f626c6f6773, '1', 'Allow bbcode in blog posts?', 9, '', 0x636f72655f626c6f67, 0),
+(45, 0x73656e645f616c6572745f696e74657276616c, '2', 'How often do you want to receive your search matches? (days)', 104, '', 0x6465665f757365725f7072656673, 1),
+(46, 0x726174655f6d795f70726f66696c65, '1', 'Allow my profile to be rated?', 9, '', 0x6465665f757365725f7072656673, 1),
+(47, 0x726174655f6d795f70686f746f73, '1', 'Allow my photos to be rated?', 9, '', 0x6465665f757365725f7072656673, 1),
+(48, 0x70757267655f756e7665726966696564, '7', 'Purge unverified accounts after how many days?', 104, '', 0x636f7265, 0),
+(50, 0x6e6f746966795f6d65, '1', 'Send me email notifications when I receive messages?', 9, '', 0x6465665f757365725f7072656673, 1),
+(51, 0x6d61696c5f63726c66, '1', 'Check or uncheck this option if you can''t send emails out to members', 9, '', 0x636f7265, 0),
+(52, 0x7573655f736d696c696573, '1', 'Allow smilies in profile fields?', 9, '', 0x636f7265, 0),
+(53, 0x736d696c6965735f636f6d6d, '1', 'Allow smilies in user comments?', 9, '', 0x636f7265, 0),
+(54, 0x7573655f736d696c696573, '1', 'Allow smilies in blogs?', 9, '', 0x636f72655f626c6f67, 0),
+(55, 0x70726f66696c655f636f6d6d656e7473, '1', 'Allow comments on my profile?', 9, '', 0x6465665f757365725f7072656673, 1),
+(56, 0x74615f6c656e, '1000', 'Maximum number of characters users may enter in textareas (use 0 for unlimited)', 104, '', 0x636f7265, 0),
+(58, 0x666565645f75726c, 'http://www.datemill.com/remote/feeds/admin.xml', 'The url of the feed', 2, '', 0x646174656d696c6c5f66656564, 0),
+(59, 0x70757267655f696e626f78, '30', 'Purge old messages from member inboxes after how many days? (0 for never)', 104, '', 0x636f7265, 0),
+(60, 0x70757267655f7472617368, '14', 'Purge old messages from member spam boxes and trash after how many days? (0 for never)', 104, '', 0x636f7265, 0),
+(61, 0x70757267655f666f6c64657273, '30', 'Purge old messages from member personal folders after how many days? (0 for never)', 104, '', 0x636f7265, 0),
+(62, 0x70757267655f6f7574626f78, '7', 'Purge old messages from member outboxes after how many days? (0 for never)', 104, '', 0x636f7265, 0),
+(63, 0x74696d655f6f6666736574, '0', 'Select your timezone (<a href="javascript:;" id="auto_detect_tz">auto detect</a>)', 3, 'a:26:{i:-43200;s:7:"GMT -12";i:-39600;s:7:"GMT -11";i:-36000;s:7:"GMT -10";i:-32400;s:6:"GMT -9";i:-28800;s:6:"GMT -8";i:-25200;s:6:"GMT -7";i:-21600;s:6:"GMT -6";i:-18000;s:6:"GMT -5";i:-14400;s:6:"GMT -4";i:-10800;s:6:"GMT -3";i:-7200;s:6:"GMT -2";i:-3600;s:6:"GMT -1";i:0;s:3:"GMT";i:3600;s:6:"GMT +1";i:7200;s:6:"GMT +2";i:10800;s:6:"GMT +3";i:1440;s:6:"GMT +4";i:18000;s:6:"GMT +5";i:21600;s:6:"GMT +6";i:25200;s:6:"GMT +7";i:28800;s:6:"GMT +8";i:32400;s:6:"GMT +9";i:36000;s:7:"GMT +10";i:39600;s:7:"GMT +11";i:43200;s:7:"GMT +12";i:46800;s:7:"GMT +13";}', 0x6465665f757365725f7072656673, 1);
 
 -- --------------------------------------------------------
 
@@ -1592,6 +1635,10 @@ CREATE TABLE `dsb_site_searches` (
 -- Dumping data for table `dsb_site_searches`
 -- 
 
+INSERT INTO `dsb_site_searches` (`search_md5`, `search_type`, `search`, `results`, `fk_user_id`, `date_posted`) VALUES 
+('40cd750bba9870f18aada2478b24840a', 1, 'a:0:{}', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,34', 0, '20070622000855'),
+('8d47520feff17b8632f86ffaec79cfad', 1, 'a:9:{s:13:"acclevel_code";s:15:"search_advanced";s:2:"st";s:3:"adv";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f5_max";s:2:"75";s:10:"f6_country";i:0;s:2:"f9";i:0;s:3:"f13";i:0;s:3:"f14";i:0;}', '1,22', 7, '20070621125946'),
+('4b7448aab16257e1c55485520b157743', 1, 'a:1:{s:4:"user";s:6:"shadow";}', '17', 0, '20070622105435');
 
 -- --------------------------------------------------------
 
@@ -1614,7 +1661,8 @@ CREATE TABLE `dsb_stats_dot` (
 -- Dumping data for table `dsb_stats_dot`
 -- 
 
-INSERT INTO `dsb_stats_dot` (`dot_id`, `dataset`, `value`, `time`) VALUES (780, 'paid_members', 25, 20070520),
+INSERT INTO `dsb_stats_dot` (`dot_id`, `dataset`, `value`, `time`) VALUES 
+(780, 'paid_members', 25, 20070520),
 (779, 'paid_members', 25, 20070519),
 (778, 'paid_members', 25, 20070518),
 (777, 'paid_members', 22, 20070517),
@@ -1765,7 +1813,8 @@ INSERT INTO `dsb_stats_dot` (`dot_id`, `dataset`, `value`, `time`) VALUES (780, 
 (806, 'num_users', 33, 20070602),
 (807, 'online_users', 1, 20070603),
 (808, 'num_users', 33, 20070603),
-(809, 'online_users', 2, 20070604);
+(809, 'online_users', 2, 20070604),
+(810, 'online_users', 1, 20070621);
 
 -- --------------------------------------------------------
 
@@ -1794,7 +1843,8 @@ CREATE TABLE `dsb_subscriptions` (
 -- Dumping data for table `dsb_subscriptions`
 -- 
 
-INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `price`, `currency`, `is_recurent`, `m_value_from`, `m_value_to`, `duration`, `duration_units`, `is_visible`) VALUES (1, '30$ / month', '', 30.00, 'USD', 0, 2, 4, 30, 'DAY', 1),
+INSERT INTO `dsb_subscriptions` (`subscr_id`, `subscr_name`, `subscr_diz`, `price`, `currency`, `is_recurent`, `m_value_from`, `m_value_to`, `duration`, `duration_units`, `is_visible`) VALUES 
+(1, '30$ / month', '', 30.00, 'USD', 0, 2, 4, 30, 'DAY', 1),
 (3, 'Trial', '', 0.00, 'USD', 0, 2, 4, 5, 'DAY', 0),
 (4, 'gold membership', 'this is the description for the gold membership which gives you unlimited access to all features for a couple of seconds', 100.00, 'USD', 0, 2, 4, 1, 'DAY', 1),
 (5, 'bronze membership', 'ala bala portocala', 130.00, 'EUR', 0, 2, 4, 365, 'DAY', 1);
@@ -1819,7 +1869,8 @@ CREATE TABLE `dsb_subscriptions_auto` (
 -- Dumping data for table `dsb_subscriptions_auto`
 -- 
 
-INSERT INTO `dsb_subscriptions_auto` (`asubscr_id`, `dbfield`, `field_value`, `fk_subscr_id`, `date_start`) VALUES (1, 'f2', 2, 3, '0000-00-00'),
+INSERT INTO `dsb_subscriptions_auto` (`asubscr_id`, `dbfield`, `field_value`, `fk_subscr_id`, `date_start`) VALUES 
+(1, 'f2', 2, 3, '0000-00-00'),
 (2, '', 0, 1, '0000-00-00');
 
 -- --------------------------------------------------------
@@ -1849,13 +1900,14 @@ CREATE TABLE `dsb_user_accounts` (
 -- Dumping data for table `dsb_user_accounts`
 -- 
 
-INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES (1, 0x656d6d61, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'ema@sco.ro', '', '02912174c5cc19dedd90bc498af2d9b0', '20070614105036'),
+INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membership`, `email`, `skin`, `temp_pass`, `last_activity`) VALUES 
+(1, 0x656d6d61, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'ema@sco.ro', '', '02912174c5cc19dedd90bc498af2d9b0', '20070614105036'),
 (2, 0x6b65697468, 0x3166333837306265323734663663343962336533316130633637323839353766, 15, 2, 'mr-w@planetnet.karoo.co.uk', '', '2fba765ee1b6ade5287073584ec894e4', '20070420220720'),
 (3, 0x73686f6e323035, 0x3037373631303430363739346562326133633736393139396439346131613739, 15, 2, 'shon205@sbcglobal.net', '', 'b3d7ac7336a79fe5a4b01a88f5727b13', '20070428125929'),
 (4, 0x6d6176657269636b, 0x3839393636303063333130383863366137363436346365333864393635636364, 15, 2, 'maverick@desktopmates.com', '', '87a6ce818365e8b3bef125df92826702', '20070603075251'),
 (5, 0x313030343537, 0x3436373536623938396231303530613331373235386536643565386539383931, 15, 2, 'rican499@yahoo.com', '', '404e5eff79512807ddbed6602139d841', '20070510064834'),
 (6, 0x636f6361636f6c61, 0x6361323466306531653366663730316661346633336335336639303566396461, 15, 2, 'simcola@hotmail.com', '', '7f2fe99deb74578bf4f6e5e26dd99ae0', '20070430220154'),
-(7, 0x647261676f6e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'dan@sco.ro', '', '1dc9d7dbc613c521a8efeae0f7706f2e', '20070614111836'),
+(7, 0x647261676f6e, 0x3931383062346461336630633765383039373566616436383566376631333465, 15, 2, 'dan@sco.ro', '', '45c95c2d1f50c9e3999316e83fff2893', '20070621213528'),
 (8, 0x616e676b617361, 0x3634383530366161333739666566623930323663376530313664386463626663, 15, 2, 'boboangkasa@hotmail.com', '', '36e12348474821624874994164838526', '20070528120050'),
 (9, 0x72616e65676c6f, 0x3739343063343139653932336166306265373963623835613432663836343964, 15, 2, 'bob@robertangelo.name', '', '83f1200b9f1bdd252e2aebc2dfffe34f', '20070416130815'),
 (10, 0x737472617762657272696573, 0x3665643631643462383062623066383139333762333234313865393861646361, 15, 2, 'love2escape2000@yahoo.com', '', '68779ace53ca9ba01a52efa82e53bf86', '20070604113437'),
@@ -1865,7 +1917,7 @@ INSERT INTO `dsb_user_accounts` (`user_id`, `user`, `pass`, `status`, `membershi
 (14, 0x7470616e647470, 0x3639336538313066663237363034653664613237346461346337376531333663, 15, 2, 'manager@adelaideplaytime.com', '', '76b41bfad8b909b658e578f08f7a6244', '20070531015806'),
 (15, 0x626c61636b7761746572, 0x6166623332376439386230316537323035383035323233613331313363303563, 15, 2, 'yagiz.karasu@vodafone.com', '', 'bc217753a490dd732c4e992340db665c', '20070417003723'),
 (16, 0x746573746572, 0x6234663062656231303130343734626564396366303234303231366333313464, 15, 2, 'clive@phonehome.co.za', '', 'cf3b1718be2b5af79bf2c189eb0bbedf', '20070530195951'),
-(17, 0x736861646f776d616368696e65, 0x3133653065373165393738646338313364613236333630323432383835616364, 15, 2, 'kilbey@bellsouth.net', '', '4b53fc447e46b2c856535a430e581828', '20070601105727'),
+(17, 0x736861646f776d616368696e65, 0x3133653065373165393738646338313364613236333630323432383835616364, 15, 2, 'kilbey@bellsouth.net', '', '4b53fc447e46b2c856535a430e581828', '20070622090934'),
 (18, 0x626f756469656f7a, 0x3432653631326437363530353231363432393466633132346138633363393930, 15, 2, 'aando@iinet.net.au', '', '338aaba691f5a1e118e0838c17c9d9fe', '20070417195645'),
 (19, 0x706b757361, 0x3638613030393962336634353335373739383633396133306335666533313534, 15, 2, 'pkling@cul.net', '', '12305e20c5085f60b221dab4ccea51e9', '20070525134452'),
 (20, 0x636f6f6c6d65313437, 0x3436373536623938396231303530613331373235386536643565386539383931, 15, 2, 'noidle2000@yahoo.com', '', '12a21391d3ab03902820305a505132cb', '20070419235518'),
@@ -1907,7 +1959,8 @@ CREATE TABLE `dsb_user_blogs` (
 -- Dumping data for table `dsb_user_blogs`
 -- 
 
-INSERT INTO `dsb_user_blogs` (`blog_id`, `fk_user_id`, `blog_name`, `blog_diz`, `stat_posts`, `blog_skin`, `blog_url`) VALUES (1, 1, 'My first ever blog', 'What can I break today?', 2, '', ''),
+INSERT INTO `dsb_user_blogs` (`blog_id`, `fk_user_id`, `blog_name`, `blog_diz`, `stat_posts`, `blog_skin`, `blog_url`) VALUES 
+(1, 1, 'My first ever blog', 'What can I break today?', 2, '', ''),
 (3, 10, 'Fluffy''s Blog', 'The life and times of Fluffy', 2, '', ''),
 (4, 11, 'Testing Testing the Blog', 'Testing Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing the BlogTesting Testing', 1, '', ''),
 (5, 7, 'My words of wisdom', '', 8, '', ''),
@@ -1936,7 +1989,8 @@ CREATE TABLE `dsb_user_folders` (
 -- Dumping data for table `dsb_user_folders`
 -- 
 
-INSERT INTO `dsb_user_folders` (`folder_id`, `fk_user_id`, `folder`) VALUES (1, 6, 'Test'),
+INSERT INTO `dsb_user_folders` (`folder_id`, `fk_user_id`, `folder`) VALUES 
+(1, 6, 'Test'),
 (2, 11, 'My Sexy Email'),
 (3, 10, 'test folder'),
 (4, 12, 'intrested'),
@@ -1972,7 +2026,8 @@ CREATE TABLE `dsb_user_inbox` (
 -- Dumping data for table `dsb_user_inbox`
 -- 
 
-INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES (1, 1, 1, 4, 'maverick', 'Connection request from maverick', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 17:53:37', 0, 0, 1),
+INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES 
+(1, 1, 1, 4, 'maverick', 'Connection request from maverick', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-16 17:53:37', 0, 0, 1),
 (83, 1, 10, 0, '', 'New comment on one of your photos', 'strawberries posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=6">Click here</a> to view the comment', '2007-04-21 14:24:36', 2, 0, 1),
 (84, 1, 10, 0, '', 'New comment on one of your photos', 'strawberries posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=6">Click here</a> to view the comment', '2007-04-21 14:25:32', 2, 0, 1),
 (9, 1, 13, 11, 'johnboy', 'Connection request from johnboy', '<a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests', '2007-04-17 05:37:24', 0, 0, 0),
@@ -2172,7 +2227,8 @@ INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_ot
 (242, 1, 7, 0, '', 'New comment on one of your blogs', 'shadowmachine posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm185">Click here</a> to view the comment', '2007-05-28 07:55:09', 2, 0, 1),
 (243, 1, 7, 0, '', 'New comment on one of your blogs', 'strawberries posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm186">Click here</a> to view the comment', '2007-05-28 11:51:42', 2, 0, 1),
 (244, 1, 7, 0, '', 'New comment on one of your blogs', 'strawberries posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm187">Click here</a> to view the comment', '2007-05-28 11:57:33', 2, 0, 1);
-INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES (245, 0, 7, 0, '', 'New comment on one of your blogs', 'strawberries posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm188">Click here</a> to view the comment', '2007-05-29 20:19:15', 2, 0, 1),
+INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`, `fk_folder_id`, `del`) VALUES 
+(245, 0, 7, 0, '', 'New comment on one of your blogs', 'strawberries posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm188">Click here</a> to view the comment', '2007-05-29 20:19:15', 2, 0, 1),
 (246, 0, 7, 0, '', 'New comment on one of your blogs', 'shadowmachine posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm189">Click here</a> to view the comment', '2007-05-30 08:52:55', 2, 0, 1),
 (247, 0, 7, 0, '', 'New comment on one of your blogs', 'alterego posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm190">Click here</a> to view the comment', '2007-05-30 08:58:20', 2, 0, 1),
 (248, 0, 7, 0, '', 'New comment on one of your blogs', 'maverick posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm191">Click here</a> to view the comment', '2007-05-30 11:17:36', 2, 0, 1),
@@ -2192,7 +2248,8 @@ INSERT INTO `dsb_user_inbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_ot
 (262, 0, 7, 0, '', 'New comment on one of your blogs', 'strawberries posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm206">Click here</a> to view the comment', '2007-06-01 11:38:13', 2, 0, 1),
 (263, 0, 7, 0, '', 'New comment on one of your blogs', 'maverick posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm207">Click here</a> to view the comment', '2007-06-01 11:44:09', 2, 0, 1),
 (264, 1, 7, 0, '', 'New comment on one of your blogs', 'strawberries posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm208">Click here</a> to view the comment', '2007-06-03 12:51:20', 2, 0, 1),
-(265, 0, 7, 0, '', 'New comment on one of your blogs', 'strawberries posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm209">Click here</a> to view the comment', '2007-06-04 10:47:33', 2, 0, 1);
+(265, 0, 7, 0, '', 'New comment on one of your blogs', 'strawberries posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=18#comm209">Click here</a> to view the comment', '2007-06-04 10:47:33', 2, 0, 1),
+(266, 0, 7, 0, '', 'New comment on your profile', 'alterego posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm4">Click here</a> to view the comment', '2007-06-04 14:09:56', 2, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -2214,7 +2271,8 @@ CREATE TABLE `dsb_user_mtpls` (
 -- Dumping data for table `dsb_user_mtpls`
 -- 
 
-INSERT INTO `dsb_user_mtpls` (`mtpl_id`, `fk_user_id`, `subject`, `message_body`) VALUES (1, 11, 'Testing Messages out', 'This is a template, just testing it out.\nCheers\nJohnboy1'),
+INSERT INTO `dsb_user_mtpls` (`mtpl_id`, `fk_user_id`, `subject`, `message_body`) VALUES 
+(1, 11, 'Testing Messages out', 'This is a template, just testing it out.\nCheers\nJohnboy1'),
 (2, 10, 'Re: zooki sent you a flirt', 'example of saved template'),
 (3, 4, 'Testing Saved Responses', 'Just testing to see how the saved responses works!'),
 (4, 4, 'Testing Saved Responses', 'Just testing to see how the saved responses works!');
@@ -2241,7 +2299,8 @@ CREATE TABLE `dsb_user_networks` (
 -- Dumping data for table `dsb_user_networks`
 -- 
 
-INSERT INTO `dsb_user_networks` (`nconn_id`, `fk_user_id`, `fk_net_id`, `fk_user_id_other`, `nconn_status`) VALUES (1, 4, 1, 1, 1),
+INSERT INTO `dsb_user_networks` (`nconn_id`, `fk_user_id`, `fk_net_id`, `fk_user_id_other`, `nconn_status`) VALUES 
+(1, 4, 1, 1, 1),
 (2, 4, 3, 1, 1),
 (3, 1, 1, 7, 1),
 (4, 10, 1, 7, 1),
@@ -2318,7 +2377,8 @@ CREATE TABLE `dsb_user_outbox` (
 -- Dumping data for table `dsb_user_outbox`
 -- 
 
-INSERT INTO `dsb_user_outbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (1, 0, 1, 7, 'dragon', 'hi', '[b]hi[/b]', '2007-04-19 09:20:24', 0),
+INSERT INTO `dsb_user_outbox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES 
+(1, 0, 1, 7, 'dragon', 'hi', '[b]hi[/b]', '2007-04-19 09:20:24', 0),
 (16384, 0, 1, 7, 'dragon', 'test confirmation emails', 'test test', '2007-04-19 10:22:41', 255),
 (16385, 0, 1, 7, 'dragon', 'ala bala portocala', 'dada', '2007-04-19 10:51:58', 0),
 (16386, 0, 19, 8, 'angkasa', 'Re: Connection request from angkasa', 'HI There\r\n\r\nHow are you doing?&nbsp;&nbsp; Thanks for sending the request!&nbsp;&nbsp;I&#039;m hoping that we can find every big and little bug for Dan.\r\n\r\n\r\nPeter\r\n----------------\r\n\r\nangkasa wants to be your friend.', '2007-04-19 13:03:34', 0),
@@ -2391,11 +2451,12 @@ CREATE TABLE `dsb_user_photos` (
 -- Dumping data for table `dsb_user_photos`
 -- 
 
-INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `allow_rating`, `caption`, `status`, `del`, `flagged`, `reject_reason`, `stat_views`, `stat_votes`, `stat_votes_total`, `stat_comments`, `date_posted`, `last_changed`, `processed`) VALUES (1, 4, 'maverick', '7/4_11176746548.jpg', 0, 1, 1, 1, '', 10, 0, 0, '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://www.datemill.com/friendy/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body spellcheck="false">\r\n        <p>Maverick,</p>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for the photo you uploaded on nexus / r i t m o / Friendy.<br />\r\n        Unfortunately we cannot approve it because testing testing</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 29, 3, 13, 3, '2007-04-16 18:02:29', '2007-05-16 00:24:13', 0),
+INSERT INTO `dsb_user_photos` (`photo_id`, `fk_user_id`, `_user`, `photo`, `is_main`, `is_private`, `allow_comments`, `allow_rating`, `caption`, `status`, `del`, `flagged`, `reject_reason`, `stat_views`, `stat_votes`, `stat_votes_total`, `stat_comments`, `date_posted`, `last_changed`, `processed`) VALUES 
+(1, 4, 'maverick', '7/4_11176746548.jpg', 0, 1, 1, 1, '', 10, 0, 0, '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://www.datemill.com/friendy/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body spellcheck="false">\r\n        <p>Maverick,</p>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for the photo you uploaded on nexus / r i t m o / Friendy.<br />\r\n        Unfortunately we cannot approve it because testing testing</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 29, 3, 13, 3, '2007-04-16 18:02:29', '2007-05-16 00:24:13', 0),
 (2, 1, 'emma', '4/1_11176750826.jpg', 0, 0, 1, 1, 'ruuuuun, enemies are coming!!', 15, 0, 0, '', 17, 0, 0, 0, '2007-04-16 19:13:53', '2007-05-20 09:28:14', 0),
 (3, 1, 'emma', '2/1_21176750826.jpg', 1, 0, 1, 1, 'daddy''s girl', 15, 0, 0, '', 11, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-16 19:15:28', 0),
 (4, 1, 'emma', '1/1_31176750826.jpg', 0, 0, 1, 1, 'hey, look, I can walk...sort of :)', 15, 0, 0, '', 9, 0, 0, 0, '2007-04-16 19:13:53', '2007-04-16 19:15:28', 0),
-(5, 7, 'dragon', '0/7_11176751977.jpg', 1, 0, 1, 1, '', 15, 0, 0, '', 71, 5, 25, 7, '2007-04-16 19:32:59', '2007-04-16 19:33:32', 0),
+(5, 7, 'dragon', '0/7_11176751977.jpg', 1, 0, 0, 1, '', 15, 0, 0, '', 71, 5, 25, 7, '2007-04-16 19:32:59', '2007-06-19 11:55:32', 0),
 (6, 10, 'strawberries', '3/10_11176756425.jpg', 0, 0, 1, 1, 'Fluffy, she who must be obeyed', 10, 0, 0, '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://www.datemill.com/friendy/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body spellcheck="false">\r\n        <p>Hi,</p>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for the photo you uploaded on nexus / r i t m o / Friendy.<br />\r\n        Unfortunately we cannot approve it because</p>\r\n        <p>you asked what''s new in the latest patch :)</p>\r\n        <p>This is one of the new things that you can see. Also check out your rejected photo and click on the link saying that photo was rejected</p>\r\n        <p>Dan</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 13, 0, 0, 4, '2007-04-16 20:47:07', '2007-05-10 14:17:26', 0),
 (7, 10, 'strawberries', '3/10_21176756425.jpg', 1, 0, 1, 1, 'Fluffy loves getting her picture taken', 15, 0, 0, '', 13, 0, 0, 1, '2007-04-16 20:47:07', '2007-05-10 14:39:48', 0),
 (8, 11, 'johnboy', '0/11_11176758735.jpg', 0, 1, 1, 1, '', 10, 0, 0, '<html>\r\n    <head>\r\n        <title>Your profile has not been approved</title>\r\n        <link href="http://www.datemill.com/friendy/skins/basic/styles/screen.css" media="screen" type="text/css" rel="stylesheet" />\r\n    </head>\r\n    <body spellcheck="false">\r\n        <p>Hi,</p>\r\n        <div id="trim">\r\n        <div id="content">\r\n        <p>Thank you for the photo you uploaded on nexus / r i t m o / Friendy.<br />\r\n        Unfortunately we cannot approve it because</p>\r\n        <p>just playing with the admin interface :)</p>\r\n        <p>Dan</p>\r\n        </div>\r\n        </div>\r\n    </body>\r\n</html>', 13, 1, 5, 0, '2007-04-16 21:25:35', '2007-05-10 21:53:44', 0),
@@ -2476,13 +2537,14 @@ CREATE TABLE `dsb_user_profiles` (
 -- Dumping data for table `dsb_user_profiles`
 -- 
 
-INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`, `f6_country`, `f6_state`, `f6_city`, `f6_zip`, `f7`, `f8`, `f9`, `f10`, `f11`, `f12`, `f13`, `f14`, `f15`) VALUES (1, 1, 15, 0, '2007-04-16 22:53:50', '2007-04-16 14:42:06', '', 'emma', '2/1_21176750826.jpg', 0.0000000000, 0.0000000000, 29, '', 2, '|1|', 1, '1989-06-05', 165, 0, 0, '', 3, 3, 2, 3, 1, 1, 1, 1, ''),
+INSERT INTO `dsb_user_profiles` (`profile_id`, `fk_user_id`, `status`, `del`, `last_changed`, `date_added`, `reject_reason`, `_user`, `_photo`, `longitude`, `latitude`, `score`, `f1`, `f2`, `f3`, `f4`, `f5`, `f6_country`, `f6_state`, `f6_city`, `f6_zip`, `f7`, `f8`, `f9`, `f10`, `f11`, `f12`, `f13`, `f14`, `f15`) VALUES 
+(1, 1, 15, 0, '2007-04-16 22:53:50', '2007-04-16 14:42:06', '', 'emma', '2/1_21176750826.jpg', 0.0000000000, 0.0000000000, 29, '', 2, '|1|', 1, '1989-06-05', 165, 0, 0, '', 3, 3, 2, 3, 1, 1, 1, 1, ''),
 (2, 2, 15, 0, '2007-04-16 12:42:01', '2007-04-16 17:09:23', '', 'keith', '', 0.0000000000, 0.0000000000, 0, 'Testing', 1, '|2|', 1, '1976-05-12', 217, 0, 0, '', 3, 1, 1, 1, 1, 1, 1, 1, '|1|4|7|'),
 (3, 3, 15, 0, '2007-04-16 17:29:10', '2007-04-16 17:24:38', '', 'shon205', '', -81.6286010742, 41.4509010315, 1, '', 1, '|2|', 1, '1971-01-06', 218, 41, 1620, '44105', 1, 1, 1, 1, 1, 1, 1, 1, ''),
 (4, 4, 15, 0, '2007-04-17 21:53:31', '2007-04-16 17:46:34', '', 'maverick', '3/4_11179276378.jpg', 0.0000000000, 0.0000000000, 0, '', 1, '|2|', 33, '0000-00-00', 218, 0, 0, '86314', 3, 3, 2, 3, 1, 1, 2, 2, '|1|'),
 (5, 5, 15, 0, '2007-04-16 12:41:45', '2007-04-16 18:26:47', '', '100457', '', 0.0000000000, 0.0000000000, 0, 'cool me', 1, '|2|', 32, '1978-04-07', 218, 0, 0, '49504', 5, 1, 3, 1, 1, 1, 1, 1, '|1|7|'),
 (6, 6, 15, 0, '2007-04-16 12:41:53', '2007-04-16 18:50:27', '', 'cocacola', '', 0.0000000000, 0.0000000000, 0, 'Im cool', 1, '|2|', 38, '1969-01-01', 186, 0, 0, '07631', 3, 1, 1, 1, 1, 1, 1, 1, '|1|'),
-(7, 7, 15, 0, '2007-04-16 12:41:56', '2007-04-16 19:26:41', '', 'dragon', '0/7_11176751977.jpg', 0.0000000000, 0.0000000000, 60, 'oops, this should have been a textarea, not a textfield. Easy to fix!', 1, '|2|', 58, '1976-11-01', 165, 0, 0, '', 3, 5, 2, 5, 1, 2, 4, 1, '|2|'),
+(7, 7, 15, 0, '2007-06-19 13:22:04', '2007-04-16 19:26:41', '', 'dragon', '0/7_11176751977.jpg', 0.0000000000, 0.0000000000, 81, '', 1, '|2|', 58, '1976-11-01', 218, 0, 0, '', 3, 5, 2, 5, 1, 2, 4, 1, '|2|'),
 (8, 8, 15, 0, '2007-04-17 06:23:17', '2007-04-16 19:54:09', '', 'angkasa', '2/8_11176790979.jpg', 0.0000000000, 0.0000000000, 0, 'I''m Cool', 1, '|2|', 47, '1980-09-18', 181, 0, 0, '', 2, 3, 1, 2, 3, 2, 5, 3, '|1|7|'),
 (9, 9, 15, 0, '2007-04-16 19:56:29', '2007-04-16 19:55:41', '', 'raneglo', '', 0.0000000000, 0.0000000000, 0, 'I am me!', 1, '|1|', 34, '1961-07-29', 218, 0, 0, '77584', 3, 3, 6, 5, 1, 2, 4, 1, '|4|5|'),
 (10, 10, 15, 0, '2007-05-28 22:39:49', '2007-04-16 20:26:23', '', 'strawberries', '3/10_21176756425.jpg', 0.0000000000, 0.0000000000, 0, 'What to say.  Lessee.  I''m an 18 feet tall mad mundane mountain monkey who likes music and movies. And I like to repeat myself. What to say.  Lessee.  I''m an 18 feet tall mad mundane mountain monkey who likes music and movies. And I like to repeat myself.\r\n\r\nWhat to say.  Lessee.  I''m an 18 feet tall mad mundane mountain monkey who likes music and movies. And I like to repeat myself. What to say.  Lessee.  I''m an 18 feet tall mad mundane mountain monkey who likes music and movies. And I like to repeat myself.\r\n\r\nWhat to say.  Lessee.  I''m an 18 feet tall mad mundane mountain monkey who likes music and movies. And I like to repeat myself. What to say.  Lessee.  I''m an 18 feet tall mad mundane mountain monkey who likes music and movies. And I like to repeat myself.\r\n\r\nWhat to say.  Lessee.  I''m an 18 feet tall mad mundane mountain monkey who likes music and movies. And I like to repeat myself. What to say.  Lessee.  I''m an 18 feet tall mad mundane mountain monkey who ', 1, '|2|', 38, '1965-01-01', 217, 0, 0, '', 3, 3, 2, 5, 1, 2, 3, 1, '|1|'),
@@ -2535,12 +2597,9 @@ CREATE TABLE `dsb_user_searches` (
 -- Dumping data for table `dsb_user_searches`
 -- 
 
-INSERT INTO `dsb_user_searches` (`search_id`, `fk_user_id`, `title`, `is_default`, `search_qs`, `search`, `alert`, `alert_last_id`) VALUES (6, 16, 'generalsearch', 0, 'st=adv&f2%5B0%5D=2&f3%5B0%5D=1&f5_min=18&f5_max=75&f6_country=218&f7%5B0%5D=1&f4_min=1&f4_max=60&f9=1&f13=1&f14=1', '', 1, 0),
-(7, 10, 'my new search', 1, 'st=basic&f2%5B0%5D=1&f2%5B1%5D=2&f5_min=18&f5_max=75', '', 1, 0),
-(8, 32, 'Global', 1, 'st=adv&f2%5B0%5D=2&f3%5B0%5D=1&f5_min=18&f5_max=75&f6_country=218&f4_min=1&f4_max=60&f9=1&f13=1&f14=1', '', 0, 0),
-(19, 7, 'loca', 0, 'st=basic&f2%5B0%5D=2&f3%5B0%5D=1&f5_min=18&f5_max=75&f6_country=218&f6_state=16&f6_city=113020', 'a:9:{s:11:"acclevel_id";i:16;s:2:"st";s:5:"basic";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";s:10:"f6_country";s:3:"218";s:8:"f6_state";s:2:"16";s:7:"f6_city";s:6:"113020";}', 1, 0),
-(20, 7, 'any''" country', 0, 'st=adv&f2%5B0%5D=2&f3%5B0%5D=1&f5_min=18&f5_max=75&f4_min=1&f4_max=60', 'a:8:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";s:6:"f4_min";s:1:"1";s:6:"f4_max";s:2:"60";}', 1, 0),
-(21, 7, 'any2', 1, 'st=adv&f2%5B0%5D=2&f3%5B0%5D=1&f5_min=18&f5_max=75&f6_country=0&f4_min=1&f4_max=60&f9=0&f13=0&f14=0', 'a:12:{s:11:"acclevel_id";i:17;s:2:"st";s:3:"adv";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f5_min";s:2:"18";s:6:"f5_max";s:2:"75";s:10:"f6_country";i:0;s:6:"f4_min";s:1:"1";s:6:"f4_max";s:2:"60";s:2:"f9";i:0;s:3:"f13";i:0;s:3:"f14";i:0;}', 1, 0);
+INSERT INTO `dsb_user_searches` (`search_id`, `fk_user_id`, `title`, `is_default`, `search_qs`, `search`, `alert`, `alert_last_id`) VALUES 
+(1, 7, 'advdef', 0, 'acclevel_code=search_advanced&st=adv&f2%5B0%5D=2&f3%5B0%5D=1&f5_max=75&f6_country=0&f9=0&f13=0&f14=0', 'a:9:{s:13:"acclevel_code";s:15:"search_advanced";s:2:"st";s:3:"adv";s:2:"f2";a:1:{i:0;s:1:"2";}s:2:"f3";a:1:{i:0;s:1:"1";}s:6:"f5_max";s:2:"75";s:10:"f6_country";i:0;s:2:"f9";i:0;s:3:"f13";i:0;s:3:"f14";i:0;}', 1, 22),
+(2, 7, 'onlines', 0, 'acclevel_code=search_basic&st=online', 'a:2:{s:13:"acclevel_code";s:12:"search_basic";s:2:"st";s:6:"online";}', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -2564,131 +2623,40 @@ CREATE TABLE `dsb_user_settings2` (
 -- Dumping data for table `dsb_user_settings2`
 -- 
 
-INSERT INTO `dsb_user_settings2` (`config_id`, `fk_user_id`, `config_option`, `config_value`, `fk_module_code`) VALUES (104, 10, 0x646174655f666f726d6174, '%m/%d/%Y', 0x636f7265),
-(105, 10, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x636f7265),
+INSERT INTO `dsb_user_settings2` (`config_id`, `fk_user_id`, `config_option`, `config_value`, `fk_module_code`) VALUES 
 (106, 10, 0x73656e645f616c6572745f696e74657276616c, '2', 0x6465665f757365725f7072656673),
 (107, 10, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
 (108, 10, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
 (109, 10, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
-(7, 11, 0x646174655f666f726d6174, '%d/%m/%Y', 0x636f7265),
-(8, 11, 0x6461746574696d655f666f726d6174, '%d/%m/%Y %r', 0x636f7265),
 (9, 11, 0x73656e645f616c6572745f696e74657276616c, '1', 0x6465665f757365725f7072656673),
 (10, 11, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
 (11, 11, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
 (12, 11, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
-(13, 12, 0x646174655f666f726d6174, '%m/%d/%Y', 0x636f7265),
-(14, 12, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x636f7265),
 (15, 12, 0x73656e645f616c6572745f696e74657276616c, '2', 0x6465665f757365725f7072656673),
 (16, 12, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
 (17, 12, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
 (18, 12, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
-(19, 17, 0x646174655f666f726d6174, '%m/%d/%Y', 0x636f7265),
-(20, 17, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x636f7265),
 (21, 17, 0x73656e645f616c6572745f696e74657276616c, '2', 0x6465665f757365725f7072656673),
 (22, 17, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
 (23, 17, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
 (24, 17, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
-(45, 4, '', '', ''),
-(44, 1, 0x6e6f746966795f6d65, '1', ''),
-(43, 1, '', '', ''),
-(42, 7, 0x6e6f746966795f6d65, '1', ''),
-(33, 19, 0x646174655f666f726d6174, '%m/%d/%Y', 0x636f7265),
-(34, 19, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x636f7265),
+(271, 17, 0x70726f66696c655f636f6d6d656e7473, '1', 0x6465665f757365725f7072656673),
 (35, 19, 0x73656e645f616c6572745f696e74657276616c, '5', 0x6465665f757365725f7072656673),
 (36, 19, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
 (37, 19, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
 (38, 19, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
-(46, 4, 0x6e6f746966795f6d65, '1', ''),
-(41, 7, '', '', ''),
-(47, 13, '', '', ''),
-(48, 13, 0x6e6f746966795f6d65, '1', ''),
-(49, 14, '', '', ''),
-(50, 14, 0x6e6f746966795f6d65, '1', ''),
-(51, 21, 0x646174655f666f726d6174, '%d/%m/%Y', 0x636f7265),
-(52, 21, 0x6461746574696d655f666f726d6174, '%d/%m/%Y %r', 0x636f7265),
+(270, 17, 0x74696d655f6f6666736574, '0', 0x6465665f757365725f7072656673),
 (53, 21, 0x73656e645f616c6572745f696e74657276616c, '5', 0x6465665f757365725f7072656673),
 (54, 21, 0x726174655f6d795f70726f66696c65, '0', 0x6465665f757365725f7072656673),
 (55, 21, 0x726174655f6d795f70686f746f73, '0', 0x6465665f757365725f7072656673),
 (56, 21, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
-(57, 6, '', '', ''),
-(58, 6, 0x6e6f746966795f6d65, '1', ''),
-(59, 6, 0x646174655f666f726d6174, '%m/%d/%Y', 0x636f7265),
-(60, 6, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x636f7265),
+(269, 17, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %I:%M %p', 0x6465665f757365725f7072656673),
+(268, 17, 0x646174655f666f726d6174, '%m/%d/%Y', 0x6465665f757365725f7072656673),
 (61, 6, 0x73656e645f616c6572745f696e74657276616c, '2', 0x6465665f757365725f7072656673),
 (62, 6, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
 (63, 6, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
 (64, 6, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
-(65, 23, '', '', ''),
-(66, 23, 0x726174655f6d795f70686f746f73, '1', ''),
-(67, 23, 0x6e6f746966795f6d65, '1', ''),
-(68, 7, 0x726174655f6d795f70686f746f73, '1', ''),
-(69, 14, 0x726174655f6d795f70686f746f73, '1', ''),
-(70, 8, '', '', ''),
-(71, 8, 0x726174655f6d795f70686f746f73, '1', ''),
-(72, 19, '', '', ''),
-(73, 19, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(74, 17, '', '', ''),
-(75, 17, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(76, 7, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(77, 22, '', '', ''),
-(78, 22, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(79, 14, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(80, 1, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(81, 3, '', '', ''),
-(82, 3, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(83, 27, '', '', ''),
-(84, 27, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(85, 11, '', '', ''),
-(86, 11, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(87, 4, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(88, 28, '', '', ''),
-(89, 28, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(90, 23, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(91, 10, '', '', ''),
-(92, 10, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(93, 29, '', '', ''),
-(94, 29, 0x726174655f6d795f70686f746f73, '1', ''),
-(95, 9, '', '', ''),
-(96, 9, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(97, 8, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(98, 12, '', '', ''),
-(99, 12, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(100, 4, 0x726174655f6d795f70686f746f73, '1', ''),
-(101, 13, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(102, 15, '', '', ''),
-(103, 15, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
 (110, 10, 0x70726f66696c655f636f6d6d656e7473, '1', 0x6465665f757365725f7072656673),
-(111, 18, '', '', ''),
-(112, 18, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(113, 8, 0x6e6f746966795f6d65, '1', ''),
-(114, 32, '', '', ''),
-(115, 32, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(116, 32, 0x726174655f6d795f70686f746f73, '1', ''),
-(117, 22, 0x6e6f746966795f6d65, '1', ''),
-(118, 29, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(119, 34, '', '', ''),
-(120, 34, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(121, 16, '', '', ''),
-(122, 16, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(123, 34, 0x6e6f746966795f6d65, '1', ''),
-(124, 6, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(125, 33, '', '', ''),
-(126, 33, 0x726174655f6d795f70686f746f73, '1', ''),
-(127, 5, '', '', ''),
-(128, 5, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(129, 24, '', '', ''),
-(130, 24, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(131, 25, '', '', ''),
-(132, 25, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(133, 26, '', '', ''),
-(134, 26, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(135, 30, '', '', ''),
-(136, 30, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(137, 31, '', '', ''),
-(138, 31, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
-(139, 33, 0x646174655f666f726d6174, '%m/%d/%Y', ''),
-(140, 33, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', ''),
-(141, 33, 0x70726f66696c655f636f6d6d656e7473, '1', ''),
 (142, 33, 0x646174655f666f726d6174, '%m/%d/%Y', 0x6465665f757365725f7072656673),
 (143, 33, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', 0x6465665f757365725f7072656673),
 (144, 33, 0x73656e645f616c6572745f696e74657276616c, '2', 0x6465665f757365725f7072656673),
@@ -2696,11 +2664,14 @@ INSERT INTO `dsb_user_settings2` (`config_id`, `fk_user_id`, `config_option`, `c
 (146, 33, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
 (147, 33, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
 (148, 33, 0x70726f66696c655f636f6d6d656e7473, '1', 0x6465665f757365725f7072656673),
-(149, 7, 0x646174655f666f726d6174, '%m/%d/%Y', ''),
-(150, 7, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', ''),
-(151, 1, 0x646174655f666f726d6174, '%m/%d/%Y', ''),
-(152, 1, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %r', ''),
-(153, 1, 0x726174655f6d795f70686f746f73, '1', '');
+(257, 7, 0x646174655f666f726d6174, '%m/%d/%Y', 0x6465665f757365725f7072656673),
+(258, 7, 0x6461746574696d655f666f726d6174, '%m/%d/%Y %I:%M %p', 0x6465665f757365725f7072656673),
+(259, 7, 0x73656e645f616c6572745f696e74657276616c, '2', 0x6465665f757365725f7072656673),
+(260, 7, 0x726174655f6d795f70726f66696c65, '1', 0x6465665f757365725f7072656673),
+(261, 7, 0x726174655f6d795f70686f746f73, '1', 0x6465665f757365725f7072656673),
+(262, 7, 0x6e6f746966795f6d65, '1', 0x6465665f757365725f7072656673),
+(263, 7, 0x70726f66696c655f636f6d6d656e7473, '0', 0x6465665f757365725f7072656673),
+(264, 7, 0x74696d655f6f6666736574, '10800', 0x6465665f757365725f7072656673);
 
 -- --------------------------------------------------------
 
@@ -2728,7 +2699,8 @@ CREATE TABLE `dsb_user_spambox` (
 -- Dumping data for table `dsb_user_spambox`
 -- 
 
-INSERT INTO `dsb_user_spambox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES (1, 1, 8, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-19 04:46:42', 1);
+INSERT INTO `dsb_user_spambox` (`mail_id`, `is_read`, `fk_user_id`, `fk_user_id_other`, `_user_other`, `subject`, `message_body`, `date_sent`, `message_type`) VALUES 
+(1, 1, 8, 12, 'a_l_f', 'a_l_f sent you a flirt', 'Hello, baby! <img src="http://forum.datemill.com/Themes/default/images/off.gif" />', '2007-04-19 04:46:42', 1);
 
 -- --------------------------------------------------------
 
@@ -2748,7 +2720,8 @@ CREATE TABLE `dsb_user_stats` (
 -- Dumping data for table `dsb_user_stats`
 -- 
 
-INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (1, 'pviews', 101),
+INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES 
+(1, 'pviews', 102),
 (4, 'total_photos', 1),
 (4, 'pviews', 46),
 (6, 'comments', 2),
@@ -2798,7 +2771,7 @@ INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (1, 'pviews'
 (1, 'flirts_sent', 1),
 (19, 'mess_sent', 1),
 (7, 'total_messages', -14),
-(0, 'pviews', 205),
+(0, 'pviews', 212),
 (7, 'mess_sent', 3),
 (7, 'flirts_sent', 1),
 (10, 'mess_sent', 5),
@@ -2849,7 +2822,7 @@ INSERT INTO `dsb_user_stats` (`fk_user_id`, `stat`, `value`) VALUES (1, 'pviews'
 (11, 'comments_made', 2),
 (4, 'num_friends', 1),
 (10, 'comments_made', 17),
-(7, 'comments_made', 3),
+(7, 'comments_made', 9),
 (4, 'comments_made', 7),
 (32, 'comments_made', 2),
 (32, 'profile_comments', 1),

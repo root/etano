@@ -9,6 +9,7 @@
 			<li><a class="content-link link_mail" href="{tplvars.relative_url}message_send.php?to_id={output.uid}">Send message</a></li>
 			<li><a class="content-link link_flirt" href="{tplvars.relative_url}flirt_send.php?to_id={output.uid}&amp;return={output.return}">Send a flirt</a></li>
 			<li><a class="content-link link_blogs" href="{tplvars.relative_url}blog_search.php?st=uid&amp;uid={output.uid}">Read Blog</a></li>
+			<li><a class="content-link link_photos" href="{tplvars.relative_url}photo_search.php?st=user&amp;uid={output.uid}">View Photos</a></li>
 			<li>
 				<!--opt name="output.unblock_user"--><a id="link_unblock" class="content-link link_block" href="{tplvars.relative_url}processors/net_deluser.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Unblock</a><!--/opt name="output.unblock_user"-->
 				<!--opt name="!output.unblock_user"--><a id="link_block" class="content-link link_block" href="{tplvars.relative_url}processors/net_adduser.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Block</a><!--/opt name="!output.unblock_user"-->
