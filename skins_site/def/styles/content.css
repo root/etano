@@ -188,17 +188,11 @@ a.big:hover {
 	background: url('../images/member-offline-small.gif') no-repeat top left;
 	padding: 0 3px 0 15px;
 }
-.member_link:hover {
-	background-position: bottom left;
+
+.is_online .member_link, .member_online {
+	background: url('../images/member-online-small.gif') no-repeat top left;
 }
 
-.is_online .member_link, .is_online.member_link {
-	background: url('../images/member-online-small.gif') no-repeat top left;
-	padding: 0 3px 0 15px;
-}
-.is_online .member_link:hover, .is_online.member_link:hover {
-	background-position: bottom left;
-}
 
 .visible {
 	visibility: visible;
@@ -564,11 +558,6 @@ input.large {
 }
 
 input.small:hover, input.medium:hover, input.large:hover {
-	background-position: bottom;
-}
-
-/* IE hack: button hover */
-input.small_hover, input.medium_hover, input.large_hover {
 	background-position: bottom;
 }
 

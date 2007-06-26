@@ -11,8 +11,8 @@
 			<li><a class="content-link link_blogs" href="{tplvars.relative_url}blog_search.php?st=uid&amp;uid={output.fk_user_id}">Read Blog</a></li>
 			<li><a class="content-link link_photos" href="{tplvars.relative_url}photo_search.php?st=user&amp;uid={output.fk_user_id}">View Photos</a></li>
 			<li>
-				<!--opt name="output.unblock_user"--><a id="link_unblock" class="content-link link_block" href="{tplvars.relative_url}processors/net_deluser.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Unblock</a><!--/opt name="output.unblock_user"-->
-				<!--opt name="!output.unblock_user"--><a id="link_block" class="content-link link_block" href="{tplvars.relative_url}processors/net_adduser.php?uid={output.uid}&amp;net_id=2&amp;return={output.return}">Block</a><!--/opt name="!output.unblock_user"-->
+				<!--opt name="output.unblock_user"--><a id="link_unblock" class="content-link link_block" href="{tplvars.relative_url}processors/net_deluser.php?uid={output.fk_user_id}&amp;net_id=2&amp;return={output.return}">Unblock</a><!--/opt name="output.unblock_user"-->
+				<!--opt name="!output.unblock_user"--><a id="link_block" class="content-link link_block" href="{tplvars.relative_url}processors/net_adduser.php?uid={output.fk_user_id}&amp;net_id=2&amp;return={output.return}">Block</a><!--/opt name="!output.unblock_user"-->
 			</li>
 		</ul>
 	</div>

@@ -70,6 +70,13 @@ if (!empty($photo_id)) {
 
 				if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
 					unset($rsrow['fk_user_id']);
+				} else {
+					if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
+						$rsrow['is_online']='is_online';
+						$rsrow['user_online_status']='is online';	// translate
+					} else {
+						$rsrow['user_online_status']='is offline';	// translate
+					}
 				}
 				if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
 					$rsrow['photo']='no_photo.gif';
@@ -158,7 +165,7 @@ $tpl->drop_loop('loop');
 unset($loop);
 
 $tplvars['title']='View photos';
-$tplvars['page_title']=sprintf('%s photos','<a href="'.$tplvars['relative_url'].'photo_search.php?st=user&amp;uid='.$output['fk_user_id'].'">'.$output['user'].'</a>');	// translate this
+$tplvars['page_title']=sprintf('%s\'s photos','<a href="'.$tplvars['relative_url'].'photo_search.php?st=user&amp;uid='.$output['fk_user_id'].'">'.$output['user'].'</a>');	// translate this
 $tplvars['page']='photo_view';
 $tplvars['css']='photo_view.css';
 if (is_file('photo_view_left.php')) {

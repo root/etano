@@ -66,6 +66,12 @@ class widget_blogs extends icontent_widget {
 
 			for ($i=0;isset($loop[$i]);++$i) {
 				$loop[$i]['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$loop[$i]['date_posted']+$_SESSION['user']['prefs']['time_offset']);
+				if (isset($GLOBALS['_list_of_online_members'][$loop[$i]['fk_user_id']])) {
+					$loop[$i]['is_online']='is_online';
+					$loop[$i]['user_online_status']='is online';	// translate
+				} else {
+					$loop[$i]['user_online_status']='is offline';	// translate
+				}
 			}
 			if (!empty($loop)) {
 				$loop[0]['class']='first';

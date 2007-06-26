@@ -24,14 +24,6 @@ ul.list_view .result_user .user_photo {
 	margin: 0 10px 10px 0;
 }
 
-ul.list_view .result_user .member_link {
-	font-size: 15px;
-}
-
-ul.list_view .result_user p {
-	font-size: 13px;
-}
-
 ul.gallery_view {
 	margin: 10px 0px;
 	padding-bottom: 15px;

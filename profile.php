@@ -48,9 +48,13 @@ if (mysql_num_rows($res)) {
 }
 
 $user_photos=array();
+$loop_friends=array();
 $categs=array();
 $loop_comments=array();
 if (!empty($output)) {
+	if (!empty($_list_of_online_members[$output['uid']])) {
+		$output['is_online']=true;
+	}
 	// user photos
 	$query="SELECT `photo_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`='".$output['uid']."' AND `is_private`=0 AND `status`='".STAT_APPROVED."' AND `del`=0";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -87,12 +91,9 @@ if (!empty($output)) {
 	$categs[count($categs)-1]['class']='last';
 
 	// get some friends
-	$output['user_friends']=get_network_members($output['uid'],NET_FRIENDS,4);
-	if (!empty($output['user_friends'])) {
-		$output['user_friends']=$user_cache->get_cache_array($output['user_friends'],'result_user');
-		$output['user_friends']=smart_table($output['user_friends'],1,'gallery_view');
-	} else {
-		unset($output['user_friends']);
+	$loop_friends=get_network_members($output['uid'],NET_FRIENDS,4);
+	if (!empty($loop_friends)) {
+		$loop_friends=$user_cache->get_cache_beta($loop_friends,'result_user','tpl',$tpl);
 	}
 	unset($user_cache);
 
@@ -121,6 +122,13 @@ if (!empty($output)) {
 
 		if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
 			unset($rsrow['fk_user_id']);
+		} else {
+			if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
+				$rsrow['is_online']='is_online';
+				$rsrow['user_online_status']='is online';	// translate
+			} else {
+				$rsrow['user_online_status']='is offline';	// translate
+			}
 		}
 		if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
 			$rsrow['photo']='no_photo.gif';
@@ -165,6 +173,10 @@ if (!empty($output)) {
 	$output['pic_width']=get_site_option('pic_width','core_photo');
 	$tplvars['title']=sprintf('%s Profile',$output['user']);
 	$tplvars['page_title']=$output['user'];
+} else {
+	$topass['message']['type']=MESSAGE_ERROR;
+	$topass['message']['text']='Member not found';
+	redirect2page('info.php',$topass);
 }
 
 $output['return2me']='profile.php';
@@ -176,12 +188,13 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','profile.html');
+$tpl->set_var('output',$output);
+$tpl->set_var('tplvars',$tplvars);
 $tpl->set_loop('categs',$categs);
 $tpl->set_loop('user_photos',$user_photos);
 $tpl->set_loop('loop_comments',$loop_comments);
-$tpl->set_var('output',$output);
-$tpl->set_var('tplvars',$tplvars);
-$tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
+$tpl->set_loop('loop_friends',$loop_friends);
+$tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 $tpl->drop_loop('user_photos');
 unset($categs);

@@ -14,6 +14,9 @@
 <div class="clear"></div>
 
 <div id="profile_area">
+	<!--opt name="output.is_online"-->
+	<p id="online_stat">{output.user} is online now!</p>
+	<!--/opt name="output.is_online"-->
 	<!--loop name="categs"-->
 	{categs.content}
 	<!--/loop name="categs"-->
@@ -22,8 +25,14 @@
 <div id="user_friends" class="content_area small">
 	<h3>Friends</h3>
 	<div class="box_content">
-		{output.user_friends}
-		<!--opt name="!output.user_friends"-->No friends yet<!--/opt name="!output.user_friends"-->
+		<ul>
+			<!--loop name="loop_friends"-->
+			<li class="{loop_friends.is_online}">
+			{loop_friends.result_user}
+			<!--noloop name="loop_friends"-->No friends yet<!--/noloop name="loop_friends"-->
+			</li>
+			<!--/loop name="loop_friends"-->
+		</ul>
 	</div>
 </div>
 
@@ -31,8 +40,8 @@
 <!--opt name="output.num_comments"--><h3 class="subtitle">Comments ({output.num_comments})</h3><!--/opt name="output.num_comments"-->
 <!--loop name="loop_comments"-->
 <div class="comment {loop_comments.is_online}">
-	<!--opt name="loop_comments.fk_user_id"--><a href="{tplvars.relative_url}profile.php?uid={loop_comments.fk_user_id}" title="{loop_comments.user}"><!--/opt name="loop_comments.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop_comments.photo}" alt="{loop_comments.user}" /><!--opt name="loop_comments.fk_user_id"--></a><!--/opt name="loop_comments.fk_user_id"-->
-	<span class="controls"><!--opt name="loop_comments.editme"--><a id="editme_{loop_comments.comment_id}" class="content-link link_change" href="{tplvars.relative_url}profile.php?uid={output.uid}&amp;return={output.return2me}&amp;edit_comment={loop_comments.comment_id}#postarea" title="Edit comment">edit</a><!--/opt name="loop_comments.editme"--> <!--opt name="output.photo_owner"--><a class="content-link link_delete" href="{tplvars.relative_url}processors/profile_comment_delete.php?comment_id={loop_comments.comment_id}&amp;return={output.return2me}" title="Remove comment">delete</a><!--/opt name="output.photo_owner"--></span> <!--opt name="loop_comments.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop_comments.fk_user_id}" title="{loop_comments.user}"><!--/opt name="loop_comments.fk_user_id"-->{loop_comments.user}<!--opt name="loop_comments.fk_user_id"--></a><!--/opt name="loop_comments.fk_user_id"--> said on {loop_comments.date_posted} :
+	<!--opt name="loop_comments.fk_user_id"--><a href="{tplvars.relative_url}profile.php?uid={loop_comments.fk_user_id}" title="{loop_comments.user} {loop_comments.user_online_status}"><!--/opt name="loop_comments.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop_comments.photo}" alt="{loop_comments.user} {loop_comments.user_online_status}" /><!--opt name="loop_comments.fk_user_id"--></a><!--/opt name="loop_comments.fk_user_id"-->
+	<span class="controls"><!--opt name="loop_comments.editme"--><a id="editme_{loop_comments.comment_id}" class="content-link link_change" href="{tplvars.relative_url}profile.php?uid={output.uid}&amp;return={output.return2me}&amp;edit_comment={loop_comments.comment_id}#postarea" title="Edit comment">edit</a><!--/opt name="loop_comments.editme"--> <!--opt name="output.photo_owner"--><a class="content-link link_delete" href="{tplvars.relative_url}processors/profile_comment_delete.php?comment_id={loop_comments.comment_id}&amp;return={output.return2me}" title="Remove comment">delete</a><!--/opt name="output.photo_owner"--></span> <!--opt name="loop_comments.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop_comments.fk_user_id}" title="{loop_comments.user} {loop_comments.user_online_status}"><!--/opt name="loop_comments.fk_user_id"-->{loop_comments.user}<!--opt name="loop_comments.fk_user_id"--></a><!--/opt name="loop_comments.fk_user_id"--> said on {loop_comments.date_posted} :
 	<a name="comm{loop_comments.comment_id}"><p id="comment_{loop_comments.comment_id}">{loop_comments.comment}</p></a>
 	<div class="clear"></div>
 </div>
