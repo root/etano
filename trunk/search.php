@@ -272,7 +272,14 @@ if (!empty($output['totalrows'])) {
 	}
 	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
 	$user_cache=new user_cache(get_my_skin());
-	$output['results']=smart_table($user_cache->get_cache_array($user_ids,'result_user'),5,$rv_mode);
+	$cell_css_classes=array();
+	for ($i=0;!empty($user_ids[$i]);++$i) {
+		if (!empty($_list_of_online_members[$user_ids[$i]])) {
+			$cell_css_classes[$i]='is_online';
+		}
+	}
+	$output['results']=smart_table($user_cache->get_cache_array($user_ids,'result_user'),5,$rv_mode,$cell_css_classes);
+	unset($user_cache);
 
 	// set $_GET for the pager.
 	$_GET=array('search'=>$output['search_md5'],'v'=>(isset($_GET['v']) && !empty($_GET['v'])) ? $_GET['v'] : 'l');

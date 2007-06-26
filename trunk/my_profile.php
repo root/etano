@@ -119,6 +119,13 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 
 	if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
 		unset($rsrow['fk_user_id']);
+	} else {
+		if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
+			$rsrow['is_online']='is_online';
+			$rsrow['user_online_status']='is online';	// translate
+		} else {
+			$rsrow['user_online_status']='is offline';	// translate
+		}
 	}
 	if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
 		$rsrow['photo']='no_photo.gif';

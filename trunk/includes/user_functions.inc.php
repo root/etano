@@ -30,6 +30,7 @@ if (!isset($_SESSION['user']['user_id'])) {
 	$tplvars['user_logged']=true;
 }
 $tplvars['myself']=$_SESSION['user'];
+$GLOBALS['_list_of_online_members']=get_online_ids();
 
 if (!isset($_SESSION['user']['prefs'])) {
 	$_SESSION['user']['prefs']=get_site_option(array('date_format','datetime_format','time_offset'),'def_user_prefs');

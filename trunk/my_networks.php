@@ -30,7 +30,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['network']=sanitize_and_format($rsrow['network'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$net_members=get_network_members($_SESSION['user']['user_id'],$rsrow['net_id'],4);
 	if (!empty($net_members)) {
-		$rsrow['members']=$user_cache->get_cache_beta($net_members,array(),'result_user','tpl');
+		$rsrow['members']=$user_cache->get_cache_beta($net_members,'result_user','tpl',$tpl);
 	}
 	if (!empty($rsrow['members'])) {
 		$rsrow['see_all']=true;

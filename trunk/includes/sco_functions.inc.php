@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007061201
+File version:				1.2007062601
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -204,7 +204,7 @@ function sanitize_and_format($input,$input_type,$format=0,$empty_value=null) {
 		} elseif ($input_type==TYPE_ARRAY_LARGE) {
 			$input=vector2binvalue_str($input);
 		} else {
-			while (list($k,$v)=each($input)) {
+			foreach ($input as $k=>$v) {
 				$input[sanitize_and_format($k,$input_type,$format,$empty_value)]=sanitize_and_format($v,$input_type,$format,$empty_value);
 			}
 		}
@@ -256,20 +256,19 @@ function htmlspecialchars_uni($value) {
 }
 
 
-function smart_table($array,$table_cols=1,$css_class='') {
+function smart_table($array,$table_cols=1,$row_css_class='',$cell_css_classes=array()) {
 	$myreturn='';
 	$num_elem=count($array);
 	if (!empty($num_elem)) {
-		$myreturn='<ul class="table_row '.$css_class.' first';
+		$myreturn='<ul class="table_row first '.$row_css_class;
 		if ($table_cols>=$num_elem) {
 			$myreturn.=' last';
 		}
 		$myreturn.="\">\n";
-		$i=1;
-		foreach ($array as $v) {
+		for ($i=1;$i<$num_elem;++$i) {
 			if ($i%$table_cols==1 && $i!=1) {
 				$myreturn.="\n</ul>\n";
-				$myreturn.='<ul class="table_row '.$css_class;
+				$myreturn.='<ul class="table_row '.$row_css_class;
 				if ($i+$table_cols>$num_elem) {
 					$myreturn.=' last';
 				}
@@ -282,8 +281,10 @@ function smart_table($array,$table_cols=1,$css_class='') {
 			if ($i%$table_cols==0 || $i==$num_elem) {
 				$myreturn.=' last';
 			}
-			$myreturn.="\">$v</li>\n";
-			++$i;
+			if (!empty($cell_css_classes[$i-1])) {
+				$myreturn.=' '.$cell_css_classes[$i-1];
+			}
+			$myreturn.='">'.$array[$i-1]."</li>\n";
 		}
 		$myreturn.="</ul>\n";
 	}

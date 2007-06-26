@@ -7,7 +7,7 @@
 			{loop_items.caption}
 		</p>
 		<div class="photo_details">
-			<p>Owner <a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop_items.fk_user_id}&amp;return={output.return}" title="{loop_items.user}">{loop_items.user}</a></p>
+			<p>Owner <a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop_items.fk_user_id}&amp;return={output.return}" title="{loop_items.user} {loop_items.user_online_status}">{loop_items.user}</a></p>
 			<p>Uploaded on <strong>{loop_items.date_posted}</strong>.</p>
 			<p>{loop_items.stat_views} views | <a class="content-link plain" href="{tplvars.relative_url}photo_view.php?photo_id={loop_items.photo_id}&amp;search={output.search_md5}&amp;return={output.return}" title="Read all comments">{loop_items.stat_comments} comments</a></p>
 		</div>

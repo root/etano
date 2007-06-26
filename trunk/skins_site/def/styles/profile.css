@@ -21,6 +21,14 @@
 	padding-top: 30px;
 }
 
+#online_stat {
+	font-weight: bold;
+	font-size: 13px;
+	background: url('../images/member-online-medium-over.gif') no-repeat left center;
+	height: 22px;
+	padding-left: 20px;
+}
+
 .profile_cat {
 	padding-bottom: 10px;
 }

@@ -124,5 +124,4 @@ if (isset($_SERVER['PHP_SELF'])) {
 $accepted_months=array('month','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'); // translate
 $accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
 
-define('_CACHE_MODE_','disk');	// disk or db
 define('_INTERNAL_VERSION_',001);

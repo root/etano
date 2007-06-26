@@ -146,6 +146,12 @@ if (!$error) {
 			if ($i%COLUMNS==1) {
 				$rsrow['class'].='first';
 			}
+			if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
+				$rsrow['class'].=' is_online';
+				$rsrow['user_online_status']='is online';	// translate
+			} else {
+				$rsrow['user_online_status']='is offline';	// translate
+			}
 			$loop_items[]=$rsrow;
 			if ($i%COLUMNS==0) {
 				$loop_items[count($loop_items)-1]['class'].=' last';
@@ -173,9 +179,6 @@ if (!$error) {
 
 $output['return']='photo_search.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	if (strpos($_SERVER['QUERY_STRING'],'search=')===false) {
-		$_SERVER['QUERY_STRING'].='&search='.$output['search_md5'];
-	}
 	$output['return'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return']=rawurlencode($output['return']);
