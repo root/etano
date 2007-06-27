@@ -177,7 +177,7 @@ class payment_paypal extends ipayment {
 											require_once(_BASEPATH_.'/includes/iso3166.inc.php');
 											$input['country']=isset($iso3166[$input['residence_country']]) ? $iso3166[$input['residence_country']] : '';
 											$this->check_fraud($input);
-											$query="SELECT `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`='".$real_user['user_id']."' ORDER BY `paid_until` DESC LIMIT 1";
+											$query="SELECT `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`='".$real_user['user_id']."' AND `refunded`=0 ORDER BY `paid_until` DESC LIMIT 1";
 											if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 											$paid_from=date('Ymd');
 											if (mysql_num_rows($res)) {
@@ -192,6 +192,8 @@ class payment_paypal extends ipayment {
 												$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$real_subscr['m_value_to']."' WHERE `".USER_ACCOUNT_ID."`='".$real_user['user_id']."'";
 												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 												$myreturn=true;
+												require_once _BASEPATH_.'/includes/general_functions.inc.php';
+												add_member_score($real_user['user_id'],'payment');
 											}
 										} else {
 											// a demo transaction when we're not in demo mode

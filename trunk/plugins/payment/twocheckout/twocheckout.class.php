@@ -146,6 +146,7 @@ class payment_twocheckout extends ipayment {
 										if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 										$myreturn=true;
 										$gateway_text='';
+										add_member_score($real_user['user_id'],'payment');
 									}
 								} else {	// a demo transaction when we're not in demo mode
 									$gateway_text='We\'re sorry but there were some problems processing your payment. Please contact us to upgrade your subscription';	// translate this
