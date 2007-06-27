@@ -91,7 +91,7 @@ class payment_paypal extends ipayment {
 		$topass=array(	'cmd'=>'_xclick-subscriptions',
 						'business'=>$this->config['paypal_email'],
 						'return'=>_BASEURL_.'/thankyou.php?p=paypal',
-						'notify_url'=>_BASEURL_.'/processors/ipn.php?p=paypal',
+						'notify_url'=>_BASEURL_.'/processors/ipn.php?p='.$this->module_code,
 						'cancel_return'=>_BASEURL_,
 						'item_name'=>$this->payment['subscr_name'],
 						'item_number'=>$this->payment['subscr_id'],
@@ -120,14 +120,14 @@ class payment_paypal extends ipayment {
 
 
 	function ipn() {
+/*
 		ob_start();
 		print_r($_REQUEST);
 		$debug_text=ob_get_contents();
 		ob_end_clean();
 		$fp=fopen('/tmp/ipn.txt','ab');
 		fwrite($fp,$debug_text."\n-------\n\n");
-		fclose($fp);
-
+*/
 		header('Status: 200 OK');
 		$myreturn=false;
 		$gateway_text='';
@@ -185,14 +185,7 @@ class payment_paypal extends ipayment {
 											}
 											$query="INSERT INTO `{$dbtable_prefix}payments` SET `fk_user_id`='".$real_user['user_id']."',`_user`='".$_SESSION['user']['user']."',`gateway`='paypal',`fk_subscr_id`='".$real_subscr['subscr_id']."',`gw_txn`='".$input['txn_id']."',`name`='".$input['first_name'].' '.$input['last_name']."',`country`='".$input['country']."',`email`='".$input['payer_email']."',`m_value_from`='".$real_subscr['m_value_from']."',`m_value_to`='".$real_subscr['m_value_to']."',`amount_paid`='".$input['mc_gross']."',`is_suspect`='".(int)$this->is_fraud."',`suspect_reason`='".$this->fraud_reason."',`paid_from`='$paid_from'";
 											if (!empty($real_subscr['duration'])) {
-												$query.=",`paid_until`='$paid_from'+INTERVAL ".$real_subscr['duration'];
-												if ($real_subscr['duration_units']=='D') {
-													$query.=' DAY';
-												} elseif ($real_subscr['duration_units']=='M') {
-													$query.=' MONTH';
-												} elseif ($real_subscr['duration_units']=='Y') {
-													$query.=' YEAR';
-												}
+												$query.=",`paid_until`='$paid_from'+INTERVAL ".$real_subscr['duration'].' '.$real_subscr['duration_units'];
 											}
 											if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 											if (!$this->is_fraud) {
@@ -255,6 +248,7 @@ class payment_paypal extends ipayment {
 			require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 			new log_error(get_class($this),'Connection to paypal server failed. '.array2qs($_POST));
 		}
+//fclose($fp);
 	}
 
 

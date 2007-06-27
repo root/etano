@@ -56,8 +56,29 @@ switch ($type) {
 
 	case 'access':	// no access to the requested page, show the upgrade options.
 		$template='info_access.html';
-		$tplvars['page_title']='Upgrade your account';
+		$tplvars['page_title']='Subscribe';
 		$tplvars['page']='info_acctok';
+
+		$query="SELECT a.`module_code`,a.`module_name`,a.`module_diz` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`=".MODULE_PAYMENT." AND b.`fk_module_code`=a.`module_code` AND b.`config_option`='module_active' AND `config_value`=1";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$active_gateways=array();
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			$rsrow['module_name']='<strong>'.$rsrow['module_name'].'</strong> '.$rsrow['module_diz'];
+			$active_gateways[$rsrow['module_code']]=$rsrow['module_name'];
+		}
+
+		$query="SELECT `subscr_id`,`subscr_name`,`subscr_diz` FROM `{$dbtable_prefix}subscriptions` WHERE `is_visible`=1 AND `m_value_from`='".$_SESSION['user']['membership']."'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$subscriptions=array();
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			$rsrow['subscr_name']='<strong>'.$rsrow['subscr_name'].'</strong> '.$rsrow['subscr_diz'];
+			$subscriptions[$rsrow['subscr_id']]=$rsrow['subscr_name'];
+		}
+
+		$output['subscriptions']=vector2radios($subscriptions,'subscr_id');
+		$output['active_gateways']=vector2radios($active_gateways,'module_code',4);
 		break;
 
 	default:
