@@ -36,6 +36,21 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
+- in cazul mai multor paymenturi care se suprapun ar trebui marcat paymentul activ.
+	daca adaug un nou camp 'priority', in momentul platii se poate insera noua plata cu priority=max(priority)+1.
+	La expirare pot sa verific daca plata cu prioritatea cea mai mare a expirat caz in care downgradez userul, altfel nu conteaza.
+	Downgradez userul la paymentul cu prioritatea mai mica daca asta nu a expirat, daca nu, ma uit la prioritate si mai mica, etc.
+- ar trebui sa se poata replati abonamentul curent sau orice alte abonamente cu acelasi m_value_from ca abonamentul curent.
+	in cazul asta abonamentul curent se prelungeste cu noul abonament.
+- ce se intampla daca in cursul unui abonament se plateste un alt abonament? As putea sa intrerup ab. curent, sa il incep pe cel
+	nou, iar cand se termina cel nou sa continui cu ce a ramas din cel vechi. Asta daca nu sunt la fel (acelasi m_from si m_to), caz
+	in care se prelungeste pur si simplu. vezi problema anterioara.
+- de facut cron care sa trimita email cu cateva zile inainte sa expire abonamentele.
+- de verificat si inlocuit
+	$query="SELECT `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`='".$real_user['user_id']."' AND `refunded`=0 ORDER BY `paid_until` DESC LIMIT 1";
+	cu max(paid_until) ?
+- de testat reply la mesaje. da timeout????
+- de verif bbcode cu IE7 - nu stie sa selecteze si pune tagurile la sfarsit?
 - db backup
 - de creat un create_indexes care sa creeze indecsi pe user_profiles. macar pt campurile din basic search daca nu pe toate.
 

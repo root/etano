@@ -52,6 +52,9 @@ if (mysql_num_rows($res)) {
 		if ($input['is_main']==1) {
 			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			add_member_score($uid,'del_main_photo');
+		} else {
+			add_member_score($uid,'del_photo');
 		}
 		update_stats($_SESSION['user']['user_id'],'total_photos',-1);
 	}
