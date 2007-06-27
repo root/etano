@@ -84,18 +84,18 @@ class payment_twocheckout extends ipayment {
 	function redirect2gateway($payment=array()) {
 		$this->_set_payment($payment);
 		$qs=array(	'x_login'=>$this->config['sid'],
-						'fixed'=>'Y',
-						'pay_method'=>'CC',
-						'x_receipt_link_url'=>_BASEURL_.'/thankyou.php?p=twocheckout',
-						'x_invoice_num'=>1,
-						'x_amount'=>$this->payment['price'],
-						'c_prod'=>$this->payment['subscr_id'],
-						'id_type'=>1,
-						'c_name'=>$this->payment['subscr_name'],
-						'c_description'=>$this->payment['subscr_diz'],
-						'c_tangible'=>'N',
-						'subscr_id'=>$this->payment['subscr_id'],
-						'user_id'=>$this->payment['user_id']);
+					'fixed'=>'Y',
+					'pay_method'=>'CC',
+					'x_receipt_link_url'=>_BASEURL_.'/thankyou.php?p=twocheckout',
+					'x_invoice_num'=>1,
+					'x_amount'=>$this->payment['price'],
+					'c_prod'=>$this->payment['subscr_id'],
+					'id_type'=>1,
+					'c_name'=>$this->payment['subscr_name'],
+					'c_description'=>$this->payment['subscr_diz'],
+					'c_tangible'=>'N',
+					'subscr_id'=>$this->payment['subscr_id'],
+					'user_id'=>$this->payment['user_id']);
 		if ($this->config['demo_mode']==1) {
 			$qs['demo']='Y';
 		}
@@ -138,20 +138,14 @@ class payment_twocheckout extends ipayment {
 									}
 									$query="INSERT INTO `{$dbtable_prefix}payments` SET `fk_user_id`='".$real_user['user_id']."',`_user`='".$_SESSION['user']['user']."',`gateway`='twocheckout',`fk_subscr_id`='".$real_subscr['subscr_id']."',`gw_txn`='".$input['x_trans_id']."',`name`='".$input['card_holder_name']."',`country`='".$input['x_Country']."',`state`='".$input['x_State']."',`city`='".$input['x_City']."',`zip`='".$input['x_Zip']."',`street_address`='".$input['x_Address']."',`email`='".$input['x_Email']."',`phone`='".$input['x_Phone']."',`m_value_from`='".$real_subscr['m_value_from']."',`m_value_to`='".$real_subscr['m_value_to']."',`amount_paid`='".$input['x_amount']."',`is_suspect`='".(int)$this->is_fraud."',`suspect_reason`='".$this->fraud_reason."',`paid_from`='$paid_from'";
 									if (!empty($real_subscr['duration'])) {
-										$query.=",`paid_until`='$paid_from'+INTERVAL ".$real_subscr['duration'];
-										if ($real_subscr['duration_units']=='D') {
-											$query.=' DAY';
-										} elseif ($real_subscr['duration_units']=='M') {
-											$query.=' MONTH';
-										} elseif ($real_subscr['duration_units']=='Y') {
-											$query.=' YEAR';
-										}
+										$query.=",`paid_until`='$paid_from'+INTERVAL ".$real_subscr['duration'].' '.$real_subscr['duration_units'];
 									}
 									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 									if (!$this->is_fraud) {
 										$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$real_subscr['m_value_to']."' WHERE `".USER_ACCOUNT_ID."`='".$real_user['user_id']."'";
 										if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 										$myreturn=true;
+										$gateway_text='';
 									}
 								} else {	// a demo transaction when we're not in demo mode
 									$gateway_text='We\'re sorry but there were some problems processing your payment. Please contact us to upgrade your subscription';	// translate this

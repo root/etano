@@ -28,12 +28,15 @@ if (!empty($module_code)) {
 	}
 }
 
-
-print_r($_REQUEST);
 $tpl->set_file('content','thankyou.html');
-//$tpl->set_var('body',$body);
 $tpl->process('content','content');
 
 $tplvars['title']='Thank you for your payment';
+$tplvars['page_title']='Thank you for your payment';
+$tplvars['page']='thankyou';
+$tplvars['css']='thankyou.css';
+if (is_file('thankyou_left.php')) {
+	include 'thankyou_left.php';
+}
 include 'frame.php';
 ?>
