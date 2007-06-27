@@ -41,7 +41,7 @@ if (isset($_SESSION['topass']['input'])) {
 	// our 'return' here was decoded in the processor
 	$output['return2']=$output['return'];
 	$output['return']=rawurlencode($output['return']);
-} elseif (isset($_GET['comment_id']) && !empty($_GET['comment_id'])) {
+} elseif (!empty($_GET['comment_id'])) {
 	$comment_id=(int)$_GET['comment_id'];
 	$query="SELECT `comment_id`,`fk_parent_id`,`fk_user_id`,`_user`,`comment` FROM $table WHERE `comment_id`='$comment_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

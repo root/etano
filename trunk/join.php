@@ -26,7 +26,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if ($page==1 && $output['agree']==1) {
 		$output['agree']='checked="checked"';
 	}
-} elseif (isset($_GET['p']) && !empty($_GET['p'])) {
+} elseif (!empty($_GET['p'])) {
 	$page=(int)$_GET['p'];
 }
 

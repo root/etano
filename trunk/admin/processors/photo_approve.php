@@ -22,7 +22,7 @@ $qs='';
 $qs_sep='';
 $topass=array();
 $input=array();
-if (isset($_GET['photo_id']) && !empty($_GET['photo_id'])) {
+if (!empty($_GET['photo_id'])) {
 	$input['photo_id']=(int)$_GET['photo_id'];
 	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 

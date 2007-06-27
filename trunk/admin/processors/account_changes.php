@@ -21,7 +21,7 @@ $qs='';
 $qs_sep='';
 $topass=array();
 $input=array();
-if (isset($_POST['search']) && !empty($_POST['search'])) {
+if (!empty($_POST['search'])) {
 	$input['search']=sanitize_and_format($_POST['search'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='".SEARCH_USER."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -29,7 +29,7 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
 		$results=mysql_result($res,0,0);
 		$input['uids']=explode(',',$results);
 	}
-} elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
+} elseif (!empty($_REQUEST['uids'])) {
 	$input['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 }
 $input['act']=sanitize_and_format_gpc($_POST,'act',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
@@ -65,7 +65,7 @@ if (!empty($input['uids'])) {
 	}
 }
 if (!isset($_POST['silent'])) {
-	if (isset($input['return']) && !empty($input['return'])) {
+	if (!empty($input['return'])) {
 		$nextpage=_BASEURL_.'/admin/'.$input['return'];
 	} else {
 		$nextpage=_BASEURL_.'/admin/member_search.php';

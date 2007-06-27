@@ -25,7 +25,7 @@ $i=0;
 foreach ($my_folders as $k=>$v) {
 	$loopfolders[$i]['fid']=$k;
 	$loopfolders[$i]['folder']=$v;
-	if (isset($num_messages[$k]) && !empty($num_messages[$k])) {
+	if (!empty($num_messages[$k])) {
 		$loopfolders[$i]['folder'].=' ('.$num_messages[$k].')';
 	}
 	++$i;

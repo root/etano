@@ -31,7 +31,7 @@ if (isset($_SESSION['topass']['input'])) {
 	// our 'return' here was decoded in the processor
 	$output['return2']=$output['return'];
 	$output['return']=rawurlencode($output['return']);
-} elseif (isset($_GET['pfield_id']) && !empty($_GET['pfield_id'])) {
+} elseif (!empty($_GET['pfield_id'])) {
 	$pfield_id=(int)$_GET['pfield_id'];
 	$query="SELECT * FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`='$pfield_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -60,7 +60,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$accepted_values=explode('|',substr($output['accepted_values'],1,-1));
 	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$output['return']=rawurlencode($output['return2']);
-} elseif (isset($_GET['field_type']) && !empty($_GET['field_type'])) {
+} elseif (!empty($_GET['field_type'])) {
 	$output['field_type']=(int)$_GET['field_type'];
 	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$output['return']=rawurlencode($output['return2']);
@@ -133,10 +133,10 @@ switch ($output['field_type']) {
 		$output['row_st']='visible';
 		$output['search_type']=vector2options($accepted_fieldtype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_SELECT,FIELD_CHECKBOX_LARGE,FIELD_LOCATION,FIELD_DATE));
 		$output['row_accval_date']=true;
-		$output['year_start']=(isset($accepted_values[0]) && !empty($accepted_values[0])) ? $accepted_values[0] : 0;
+		$output['year_start']=!empty($accepted_values[0]) ? $accepted_values[0] : 0;
 		$output['year_end']=isset($accepted_values[1]) ? $accepted_values[1] : 0;
 		$default_search=explode('|',substr($output['default_search'],1,-1));
-		$output['def_start']=(isset($default_search[0]) && !empty($default_search[0])) ? $default_search[0] : 0;
+		$output['def_start']=!empty($default_search[0]) ? $default_search[0] : 0;
 		$output['def_end']=isset($default_search[1]) ? $default_search[1] : 0;
 		break;
 

@@ -20,7 +20,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $output=array();
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 $output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $input=array();
@@ -273,8 +273,8 @@ if (!empty($output['totalrows'])) {
 	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
 	$user_cache=new user_cache(get_my_skin());
 	$cell_css_classes=array();
-	for ($i=0;!empty($user_ids[$i]);++$i) {
-		if (!empty($_list_of_online_members[$user_ids[$i]])) {
+	for ($i=0;isset($user_ids[$i]);++$i) {
+		if (isset($_list_of_online_members[$user_ids[$i]])) {
 			$cell_css_classes[$i]='is_online';
 		}
 	}
@@ -282,7 +282,7 @@ if (!empty($output['totalrows'])) {
 	unset($user_cache);
 
 	// set $_GET for the pager.
-	$_GET=array('search'=>$output['search_md5'],'v'=>(isset($_GET['v']) && !empty($_GET['v'])) ? $_GET['v'] : 'l');
+	$_GET=array('search'=>$output['search_md5'],'v'=>!empty($_GET['v']) ? $_GET['v'] : 'l');
 	$output['pager2']=pager($output['totalrows'],$o,$r);
 } else {
 	unset($output['totalrows']);

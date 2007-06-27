@@ -22,7 +22,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $site_skins=$site_skins_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$site_skins=$_SESSION['topass']['input'];
-} elseif (isset($_GET['module_code']) && !empty($_GET['module_code'])) {
+} elseif (!empty($_GET['module_code'])) {
 	$module_code=sanitize_and_format($_GET['module_code'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 	$site_skins=get_site_option(array(),$module_code);
 	$site_skins=sanitize_and_format($site_skins,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);

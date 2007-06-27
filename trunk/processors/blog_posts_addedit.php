@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['post_content']=preg_replace(array('/\\\r\\\n/','/(\\\n\s+\\\n)+/','/(\\\n){3,}/'),array('\n','\n','\n\n'),$input['post_content']);
 
 	$input['fk_user_id']=$_SESSION['user']['user_id'];
-	if (isset($_POST['return']) && !empty($_POST['return'])) {
+	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
 	}

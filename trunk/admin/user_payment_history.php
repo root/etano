@@ -20,7 +20,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 
 $loop=array();
 $output=array();
-if (isset($_GET['uid']) && !empty($_GET['uid'])) {
+if (!empty($_GET['uid'])) {
 	$output['uid']=(int)$_GET['uid'];
 
 	$query="SELECT `m_value`,`m_name` FROM `{$dbtable_prefix}memberships`";

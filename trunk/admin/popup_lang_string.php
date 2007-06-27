@@ -32,7 +32,7 @@ if (isset($_SESSION['topass']['input'])) {
 		$lang_strings[$i]['skin_name']=$rsrow['skin_name'];
 		++$i;
 	}
-} elseif (isset($_GET['lk_id']) && !empty($_GET['lk_id'])) {
+} elseif (!empty($_GET['lk_id'])) {
 	$lk_id=(int)$_GET['lk_id'];
 	// get the existing translations for this lk
 	$query="SELECT a.`lang_value`,a.`skin`,b.`config_value` as `skin_name` FROM `{$dbtable_prefix}lang_strings` a,`{$dbtable_prefix}site_options3` b WHERE a.`skin`=b.`fk_module_code` AND b.`config_option`='skin_name' AND a.`fk_lk_id`='$lk_id'";

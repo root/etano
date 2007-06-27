@@ -25,7 +25,7 @@ if (isset($_SESSION['topass']['input'])) {
 
 	$cid=$user_details['pcat_id'];
 	unset($user_details['pcat_id']);
-} elseif (isset($_GET['cid']) && !empty($_GET['cid'])) {
+} elseif (!empty($_GET['cid'])) {
 	$cid=(int)$_GET['cid'];
 
 	if (!isset($_pcats[$cid])) {

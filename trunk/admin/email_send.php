@@ -24,7 +24,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['return2']=$output['return'];
 	$output['return']=rawurlencode($output['return']);
 } else {
-	if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
+	if (!empty($_REQUEST['search'])) {
 		$output['search']=sanitize_and_format_gpc($_REQUEST,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 		$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search']."' AND `search_type`='".SEARCH_USER."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -32,7 +32,7 @@ if (isset($_SESSION['topass']['input'])) {
 			$results=mysql_result($res,0,0);
 			$output['uids']=explode(',',$results);
 		}
-	} elseif (isset($_REQUEST['uids']) && !empty($_REQUEST['uids'])) {
+	} elseif (!empty($_REQUEST['uids'])) {
 		$output['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 	}
 	$output['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');

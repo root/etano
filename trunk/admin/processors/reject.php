@@ -32,7 +32,7 @@ $input['id']=sanitize_and_format_gpc($_POST,'id',TYPE_INT,0,0);
 $input['send_email']=sanitize_and_format_gpc($_POST,'send_email',TYPE_INT,0,0);
 $input['reject_reason']=sanitize_and_format_gpc($_POST,'reject_reason',TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
 $input['reason_title']=sanitize_and_format_gpc($_POST,'reason_title',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-if (isset($_POST['return']) && !empty($_POST['return'])) {
+if (!empty($_POST['return'])) {
 	$input['return']=sanitize_and_format($_POST['return'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE);
 	$nextpage=$input['return'];
 }

@@ -47,7 +47,7 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Blog and all related posts and comments deleted.';     // translate
 
 $nextpage='my_blogs.php';
-if (isset($_POST['return']) && !empty($_POST['return'])) {
+if (!empty($_POST['return'])) {
 	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 	$nextpage=$input['return'];
 }

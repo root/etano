@@ -66,7 +66,7 @@ class modman {
 			while ($item && !$critical_error) {
 				if (strtolower($item->nodeName)=='if') {
 					$attrs=$item->attributes;
-					if (isset($attrs['cond']) && !empty($attrs['cond']) && function_exists($attrs['cond'])) {
+					if (!empty($attrs['cond']) && function_exists($attrs['cond'])) {
 						eval('$doparse='.$ifattrs['cond'].'();');
 						if ($doparse) {
 							$this->parse_block($item->firstChild);
@@ -112,7 +112,7 @@ class modman {
 					$find=$action->firstChild->nodeValue;
 					$findattrs=$action->attributes;
 					$regexp=false;
-					if (isset($findattrs['regexp']) && !empty($findattrs['regexp'])) {
+					if (!empty($findattrs['regexp'])) {
 						$regexp=true;
 					}
 				} elseif (strtolower($action->nodeName)=='addbefore' && !empty($find)) {		//depends on <find>
@@ -207,7 +207,7 @@ class modman {
 						$findattrs=$action->attributes;
 						if (isset($findattrs['mandatory']) && $findattrs['mandatory']==true) {
 							$regexp=false;
-							if (isset($findattrs['regexp']) && !empty($findattrs['regexp'])) {
+							if (!empty($findattrs['regexp'])) {
 								$pos=true;
 								if (!preg_match("/$find/",$mydata)) {
 									$pos=false;
@@ -222,7 +222,7 @@ class modman {
 								$this->manual_actions[$masize]['from']='Aborting...';
 								$this->manual_actions[$masize]['to']='';
 								$this->manual_actions[$masize]['error']="This mod cannot be installed because file <b>$myfilename</b> is changed.";
-								if (isset($findattrs['info']) && !empty($findattrs['info'])) {
+								if (!empty($findattrs['info'])) {
 									$this->manual_actions[$masize]['error'].='<br>Error info: '.$findattrs['info'];
 								}
 								break 2;

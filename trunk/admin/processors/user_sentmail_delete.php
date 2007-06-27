@@ -30,7 +30,7 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']=sprintf('%s messages sent by this member were deleted',$numrows);
 
 $nextpage=_BASEURL_.'/admin/member_search.php';
-if (isset($return) && !empty($return)) {
+if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/'.$return;
 }
 redirect2page($nextpage,$topass,$qs,true);

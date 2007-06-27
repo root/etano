@@ -25,7 +25,7 @@ if (isset($_SESSION['topass']['input'])) {
 	// our 'return' here was decoded in the processor
 	$output['return2']=$output['return'];
 	$output['return']=rawurlencode($output['return']);
-} elseif (isset($_GET['photo_id']) && !empty($_GET['photo_id'])) {
+} elseif (!empty($_GET['photo_id'])) {
 	$photo_id=(int)$_GET['photo_id'];
 	$query="SELECT *,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$photo_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

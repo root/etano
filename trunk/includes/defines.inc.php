@@ -4,6 +4,7 @@ define('_DBUSERNAME_','root');// mysql database username
 define('_DBPASSWORD_','rootpass');// mysql database password
 define('_DBNAME_','newdsb');// mysql database name
 define('_SITENAME_','Etano Local');// Your site name
+//define('_BASEURL_','http://82.79.235.129/etano');// protocol required (http:// )
 define('_BASEURL_','http://dating.sco.ro/etano');// protocol required (http:// )
 define('_BASEPATH_','/www/htdocs/etano');// path on server to your site
 define('_PHOTOURL_',_BASEURL_.'/media/pics');// protocol required (http:// ). URL to your member photos

@@ -22,7 +22,7 @@ $accepted_results_per_page=array('6'=>6,'12'=>12,'24'=>24,'48'=>48);
 
 $output=array();
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 // no reason to use the cached results because we would have to re-query the db anyway for the rest of the info
 // It will only make sense if we start caching photo data as we do with the profile and blog data.
 $output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');

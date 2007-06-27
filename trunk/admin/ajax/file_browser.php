@@ -73,7 +73,7 @@ for ($j=0;isset($files[$j]);++$j) {
 
 $html_path='<a href="javascript:;" onclick="req_content(\'\')">Home</a>';
 $temp='';
-for ($i=0;isset($path_parts[$i]) && !empty($path_parts[$i]);++$i) {
+for ($i=0;!empty($path_parts[$i]);++$i) {
 	$temp.='/'.$path_parts[$i];
 	$html_path.=' / <a href="javascript:;" onclick="req_content(\''.$temp.'\')">'.$path_parts[$i].'</a>';
 }

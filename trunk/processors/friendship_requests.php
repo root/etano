@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	$input['nconn_id']=sanitize_and_format_gpc($_POST,'nconn_id',TYPE_INT,0,array());
-	if (isset($_POST['return']) && !empty($_POST['return'])) {
+	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
 	}

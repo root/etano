@@ -56,7 +56,7 @@ class widget_photos extends icontent_widget {
 				break;
 
 			case 'user':
-				if (isset($this->config['uid']) && !empty($this->config['uid'])) {
+				if (!empty($this->config['uid'])) {
 					$query.=" AND `fk_user_id`='".$this->config['uid']."' ORDER BY `date_posted` DESC";
 				}
 				break;

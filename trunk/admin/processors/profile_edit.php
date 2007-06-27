@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 if (empty($nextpage)) {
 	$nextpage=_BASEURL_.'/admin/member_search.php';
-	if (isset($input['return']) && !empty($input['return'])) {
+	if (!empty($input['return'])) {
 		$nextpage=_BASEURL_.'/admin/'.$input['return'];
 	}
 }
