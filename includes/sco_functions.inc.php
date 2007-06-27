@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007062601
+File version:				1.2007062701
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -711,7 +711,7 @@ function redirect2page($pagename,$topass=array(),$qstring='',$full_url=false) {
 		} else {
 			$redirect=$pagename;
 		}
-		if (isset($topass) && !empty($topass)) {
+		if (!empty($topass)) {
 			$_SESSION['topass']=$topass;
 		}
 		header('Status: 303 See Other',true);
@@ -782,7 +782,7 @@ function send_email($from,$to,$subject,$message,$html=false,$attachments=array()
 function general_error($errlevel,$message,$file='unset',$line='unset') {
 	$output=$message."\n<br />";
 	if (defined('_DEBUG_') && _DEBUG_!=0) {
-		if (isset($GLOBALS['query']) && !empty($GLOBALS['query'])) {
+		if (!empty($GLOBALS['query'])) {
 			$output.='Last query run: '.$GLOBALS['query']."\n<br />";
 		}
 		if (_DEBUG_==1) {

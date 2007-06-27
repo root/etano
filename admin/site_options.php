@@ -19,7 +19,7 @@ allow_dept(DEPT_ADMIN);
 $tpl=new phemplate('skin/','remove_nonjs');
 
 $active_module_code='core';
-if (isset($_GET['module_code']) && !empty($_GET['module_code'])) {
+if (!empty($_GET['module_code'])) {
 	$active_module_code=sanitize_and_format($_GET['module_code'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 }
 

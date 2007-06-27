@@ -19,7 +19,7 @@ check_login_member('save_searches');
 $search=array();
 if (isset($_SESSION['topass']['input'])) {
 	$search=$_SESSION['topass']['input'];
-} elseif (isset($_GET['search']) && !empty($_GET['search'])) {
+} elseif (!empty($_GET['search'])) {
 	$search['search']=$_GET['search'];
 }
 

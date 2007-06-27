@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 }
 $nextpage=_BASEURL_.'/admin/member_search.php';
-if (isset($input['return']) && !empty($input['return'])) {
+if (!empty($input['return'])) {
 	$nextpage=_BASEURL_.'/admin/'.$input['return'];
 }
 redirect2page($nextpage,$topass,$qs,true);

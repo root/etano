@@ -63,7 +63,7 @@ if (!empty($query)) {
 	$topass['message']['text']='Comment not found.';
 }
 
-if (isset($return) && !empty($return)) {
+if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/'.$return;
 } else {
 	$nextpage=_BASEURL_.'/admin/comment_search.php';

@@ -50,7 +50,7 @@ if (mysql_num_rows($res)) {
 	$topass['message']['text']='Photo deleted.';
 }
 
-if (isset($return) && !empty($return)) {
+if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/'.$return;
 } else {
 	$nextpage=_BASEURL_.'/admin/photo_search.php';

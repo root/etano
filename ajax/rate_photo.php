@@ -20,7 +20,7 @@ $error=false;
 $photo_id=0;
 $topass=array();
 if (isset($_SESSION['user']['user_id'])) {
-	if (isset($_REQUEST['photo_id']) && !empty($_REQUEST['photo_id']) && isset($_REQUEST['vote']) && !empty($_REQUEST['vote'])) {
+	if (!empty($_REQUEST['photo_id']) && !empty($_REQUEST['vote'])) {
 		$photo_id=(int)$_REQUEST['photo_id'];
 		$vote=(int)$_REQUEST['vote'];
 		$query="SELECT UNIX_TIMESTAMP(`date_voted`) FROM `{$dbtable_prefix}photo_ratings` WHERE `fk_photo_id`='$photo_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."' AND `date_voted`>".gmdate('YmdHis')."-INTERVAL 1 DAY";

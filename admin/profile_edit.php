@@ -24,7 +24,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 	$output['return2']=$output['return'];
 	$output['return']=rawurlencode($output['return']);
-} elseif (isset($_GET['uid']) && !empty($_GET['uid'])) {
+} elseif (!empty($_GET['uid'])) {
 	$uid=(int)$_GET['uid'];
 
 	$query='SELECT `fk_user_id`,`_user`';

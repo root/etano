@@ -22,7 +22,7 @@ $accepted_results_per_page=array('6'=>6,'12'=>12,'24'=>24,'48'=>48);
 
 $output=array();
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
 $where="`fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
 $from="`{$dbtable_prefix}user_photos`";

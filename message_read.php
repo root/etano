@@ -20,7 +20,7 @@ check_login_member('auth');	// allow every member for now. Finer checking is mad
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $content='';
-if (isset($_GET['mail_id']) && !empty($_GET['mail_id']) && isset($_GET['fid'])) {
+if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 	$output=$user_inbox_default['defaults'];
 	$output['mail_id']=(int)$_GET['mail_id'];
 	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');

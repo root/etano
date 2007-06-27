@@ -22,7 +22,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $photo_ids=array();
 if (isset($_SESSION['topass']['input'])) {
 	$photo_ids=$_SESSION['topass']['input'];
-} elseif (isset($_GET['photo_ids']) && !empty($_GET['photo_ids'])) {
+} elseif (!empty($_GET['photo_ids'])) {
 	$photo_ids=sanitize_and_format($_GET['photo_ids'],TYPE_INT,0,0);
 	if (is_numeric($photo_ids)) {
 		$photo_ids=array($photo_ids);

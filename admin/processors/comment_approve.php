@@ -50,7 +50,7 @@ if (!empty($input['cids']) && !empty($input['m'])) {
 	$topass['message']['text']='Comment(s) approved.';
 }
 
-if (isset($input['return']) && !empty($input['return'])) {
+if (!empty($input['return'])) {
 	$nextpage=_BASEURL_.'/admin/'.$input['return'];
 } else {
 	$nextpage=_BASEURL_.'/admin/comment_search.php';

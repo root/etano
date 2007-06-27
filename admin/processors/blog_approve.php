@@ -22,7 +22,7 @@ $qs='';
 $qs_sep='';
 $topass=array();
 $input=array();
-if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
+if (!empty($_REQUEST['search'])) {
 	$input['search']=sanitize_and_format_gpc($_REQUEST,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='".SEARCH_BLOG."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -30,7 +30,7 @@ if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
 		$results=mysql_result($res,0,0);
 		$input['pids']=explode(',',$results);
 	}
-} elseif (isset($_REQUEST['pids']) && !empty($_REQUEST['pids'])) {
+} elseif (!empty($_REQUEST['pids'])) {
 	$input['pids']=sanitize_and_format($_REQUEST['pids'],TYPE_INT,0,array());
 }
 $input['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
@@ -44,7 +44,7 @@ if (!empty($input['pids'])) {
 	$topass['message']['text']='Blog post(s) approved. They will appear on site as soon as the cache is generated';
 }
 
-if (isset($input['return']) && !empty($input['return'])) {
+if (!empty($input['return'])) {
 	$nextpage=_BASEURL_.'/admin/'.$input['return'];
 } else {
 	$nextpage=_BASEURL_.'/admin/member_search.php';

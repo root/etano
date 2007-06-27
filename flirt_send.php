@@ -22,7 +22,7 @@ $output=array();
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
-} elseif (isset($_GET['to_id']) && !empty($_GET['to_id'])) {
+} elseif (!empty($_GET['to_id'])) {
 	$output['fk_user_id']=(int)$_GET['to_id'];
 	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
 } else {

@@ -38,7 +38,6 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 TODO
 - db backup
 - de creat un create_indexes care sa creeze indecsi pe user_profiles. macar pt campurile din basic search daca nu pe toate.
-- info access page + verif payment
 
 - scor la blog add doar daca blogul este mai mare de x caractere.
 - scor in functie de rating.
@@ -50,19 +49,19 @@ TODO
 
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
 
-- search membri (search.php) case 'vote',case 'views',case 'comm'
 - installer + modman
 - licenta si verificari
 - de afisat versiunea curenta in cpanel.php (installed si latest)
 - in toate procesoarele tb sa verific cazul de eroare:
 // 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
 //		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
+
+---------------------------------------------------------------------
 - mailbox.php in format nou (cu $output)
 - formatare la date of birth
 - cron: check for and remove orpahned lk_ids
 - [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]
-
----------------------------------------------------------------------
+- search membri (search.php) case 'vote',case 'views',case 'comm'
 - subscriptions si info_access cu tabela cu toate preturile/descrierile si 1click button/link pt fiecare pret*gateway ca la
 	http://www.rapidshare.com/en/premium.html
 - admin: stats

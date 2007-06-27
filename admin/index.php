@@ -14,7 +14,7 @@ Support at:                 http://forum.datemill.com
 require_once '../includes/common.inc.php';
 
 if (!isset($_SESSION['admin']['admin_id'])) {
-	if (isset($_SESSION['topass']) && !empty($_SESSION['topass'])) {
+	if (!empty($_SESSION['topass'])) {
 		$topass=$_SESSION['topass'];
 		$_SESSION['topass']=array();
 	}

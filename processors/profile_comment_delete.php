@@ -33,7 +33,7 @@ if (!empty($comment_id)) {
 	}
 }
 
-if (isset($_GET['return']) && !empty($_GET['return'])) {
+if (!empty($_GET['return'])) {
 	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$nextpage=$input['return'];
 } else {

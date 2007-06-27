@@ -16,7 +16,7 @@ require_once dirname(__FILE__).'/../../includes/admin_functions.inc.php';
 allow_dept(DEPT_ADMIN);
 
 $output='';
-if (isset($_POST['field']) && !empty($_POST['field'])) {
+if (!empty($_POST['field'])) {
 	$dbfield=$_POST['field'];
 	$accepted_values=array();
 	foreach ($_pfields as $pfield_id=>$pfield) {

@@ -18,7 +18,7 @@ allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-if (isset($_GET['uid']) && !empty($_GET['uid'])) {
+if (!empty($_GET['uid'])) {
 	$output['uid']=(int)$_GET['uid'];
 	$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 	$output['r']=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);

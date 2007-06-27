@@ -22,7 +22,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $output=$site_news_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
-} elseif (isset($_GET['news_id']) && !empty($_GET['news_id'])) {
+} elseif (!empty($_GET['news_id'])) {
 	$news_id=(int)$_GET['news_id'];
 	$query="SELECT * FROM `{$dbtable_prefix}site_news` WHERE `news_id`='$news_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

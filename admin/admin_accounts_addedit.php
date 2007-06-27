@@ -25,7 +25,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if (!empty($admin_accounts['change_pass'])) {
 		$admin_accounts['change_pass']='checked="checked"';
 	}
-} elseif (isset($_GET['admin_id']) && !empty($_GET['admin_id'])) {
+} elseif (!empty($_GET['admin_id'])) {
 	$admin_id=(int)$_GET['admin_id'];
 	$query="SELECT `admin_id`,`user`,`name`,`status`,`dept_id`,`email` FROM `{$dbtable_prefix}admin_accounts` WHERE `admin_id`='$admin_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

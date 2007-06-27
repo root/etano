@@ -25,7 +25,7 @@ if (isset($_SESSION['topass']['input'])) {
 	// our 'return' here was decoded in the processor
 	$output['return2']=$output['return'];
 	$output['return']=rawurlencode($output['return']);
-} elseif (isset($_GET['flirt_id']) && !empty($_GET['flirt_id'])) {
+} elseif (!empty($_GET['flirt_id'])) {
 	$flirt_id=(int)$_GET['flirt_id'];
 	$query="SELECT `flirt_id`,`flirt_text`,`flirt_type` FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`='$flirt_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

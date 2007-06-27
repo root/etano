@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 	$input['access_level']=!empty($input['access_level']) ? array_sum(array_keys($input['access_level'])) : 0;
 	$input['pcat_name']=sanitize_and_format_gpc($_POST,'pcat_name',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	if (isset($_POST['return']) && !empty($_POST['return'])) {
+	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
 	}

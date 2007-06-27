@@ -20,7 +20,7 @@ check_login_member('manage_folders');
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
 $my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'SENT',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
 $query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
@@ -52,7 +52,7 @@ if (!empty($totalrows)) {
 	}
 
 	$filtered_senders=array();
-	if (isset($field_values[FILTER_SENDER]['value']) && !empty($field_values[FILTER_SENDER]['value'])) {
+	if (!empty($field_values[FILTER_SENDER]['value'])) {
 		$query="SELECT `".USER_ACCOUNT_ID."` as `user_id`,`".USER_ACCOUNT_USER."` as `user` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$field_values[FILTER_SENDER]['value'])."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_row($res)) {
@@ -61,7 +61,7 @@ if (!empty($totalrows)) {
 	}
 
 	$filtered_sender_profiles=array();
-	if (isset($field_values[FILTER_SENDER_PROFILE]['value']) && !empty($field_values[FILTER_SENDER_PROFILE]['value'])) {
+	if (!empty($field_values[FILTER_SENDER_PROFILE]['value'])) {
 		for ($i=0;isset($field_values[FILTER_SENDER_PROFILE]['value'][$i]);++$i) {
 			foreach ($_pfields as $k=>$field) {
 				if ($field['dbfield']==$field_values[FILTER_SENDER_PROFILE]['field'][$i]) {

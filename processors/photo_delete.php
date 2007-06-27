@@ -69,7 +69,7 @@ if (mysql_num_rows($res)) {
 }
 
 $nextpage='my_photos.php';
-if (isset($_POST['return']) && !empty($_POST['return'])) {
+if (!empty($_POST['return'])) {
 	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 	$nextpage=$input['return'];
 }

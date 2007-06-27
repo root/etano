@@ -26,7 +26,7 @@ $input=array();
 // get the input we need and sanitize it
 $input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
 $input['net_id']=sanitize_and_format_gpc($_GET,'net_id',TYPE_INT,0,0);
-if (isset($_GET['return']) && !empty($_GET['return'])) {
+if (!empty($_GET['return'])) {
 	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 	$nextpage=$input['return'];
 }

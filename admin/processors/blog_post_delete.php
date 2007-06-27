@@ -32,7 +32,7 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Post and all related comments deleted.';     // translate
 
-if (isset($return) && !empty($return)) {
+if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/'.$return;
 } else {
 	$nextpage=_BASEURL_.'/admin/blog_search.php';

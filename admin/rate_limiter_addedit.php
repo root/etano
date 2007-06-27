@@ -23,7 +23,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $output=$rate_limiter_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
-} elseif (isset($_GET['rate_id']) && !empty($_GET['rate_id'])) {
+} elseif (!empty($_GET['rate_id'])) {
 	$rate_id=(int)$_GET['rate_id'];
 	$query="SELECT * FROM `{$dbtable_prefix}rate_limiter` WHERE `rate_id`='$rate_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

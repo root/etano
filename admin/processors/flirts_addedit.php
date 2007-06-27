@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	foreach ($flirts_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$flirts_default['defaults'][$k]);
 	}
-	if (isset($_POST['return']) && !empty($_POST['return'])) {
+	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
 	}

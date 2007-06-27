@@ -20,7 +20,7 @@ check_login_member('saved_messages');
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
 $config['bbcode_message']=get_site_option('bbcode_message','core');
 

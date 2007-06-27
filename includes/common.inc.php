@@ -23,7 +23,6 @@ if (_DEBUG_!=0) {
 } else {
 	ini_set('display_errors',0);
 }
-require_once 'sessions.inc.php';
 
 // account status
 define('ASTAT_SUSPENDED',5);
@@ -77,7 +76,7 @@ define('NET_FRIENDS',1);
 define('NET_BLOCK',2);
 define('NET_FAVES',3);
 
-// Unset globally registered vars
+// Unset globally registered vars. this should protect us agains any remote file inclusion attack
 function _unset_vars(&$var) {
 	$temp=array_keys($var);
 	for ($i=0;isset($temp[$i]);++$i) {
@@ -102,6 +101,7 @@ if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=
 	}
 }
 
+require_once 'sessions.inc.php';
 require_once 'defines.inc.php';
 require_once 'sco_functions.inc.php';
 define('FIELD_LOCATION',107);

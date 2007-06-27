@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['allow_comments']=sanitize_and_format_gpc($_POST,'allow_comments',TYPE_INT,0,0);
 	$input['is_main']=sanitize_and_format_gpc($_POST,'is_main',TYPE_INT,0,0);
 	$input['caption']=sanitize_and_format_gpc($_POST,'caption',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],array());
-	if (isset($_POST['return']) && !empty($_POST['return'])) {
+	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
 	}

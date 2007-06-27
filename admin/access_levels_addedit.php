@@ -22,7 +22,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $access_levels=$access_levels_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$access_levels=$_SESSION['topass']['input'];
-} elseif (isset($_GET['level_id']) && !empty($_GET['level_id'])) {
+} elseif (!empty($_GET['level_id'])) {
 	$level_id=(int)$_GET['level_id'];
 	$query="SELECT * FROM `{$dbtable_prefix}access_levels` WHERE `level_id`='$level_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

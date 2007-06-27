@@ -21,7 +21,7 @@ $qs_sep='';
 $topass=array();
 $nextpage='admin/site_news.php';
 $news_id=isset($_GET['news_id']) ? (int)$_GET['news_id'] : 0;
-if (isset($_GET['return']) && !empty($_GET['return'])) {
+if (!empty($_GET['return'])) {
 	$nextpage='admin/'.sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 }
 

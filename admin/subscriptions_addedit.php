@@ -22,7 +22,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $subscriptions=$subscriptions_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$subscriptions=$_SESSION['topass']['input'];
-} elseif (isset($_GET['subscr_id']) && !empty($_GET['subscr_id'])) {
+} elseif (!empty($_GET['subscr_id'])) {
 	$subscr_id=(int)$_GET['subscr_id'];
 	$query="SELECT * FROM `{$dbtable_prefix}subscriptions` WHERE `subscr_id`='$subscr_id'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

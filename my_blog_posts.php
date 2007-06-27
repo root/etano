@@ -21,10 +21,10 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $output=array();
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
 $output['blog_name']='';
-if (isset($_GET['bid']) && !empty($_GET['bid'])) {
+if (!empty($_GET['bid'])) {
 	$output['fk_blog_id']=(int)$_GET['bid'];
 	$where="a.`fk_user_id`='".$_SESSION['user']['user_id']."' AND a.`fk_blog_id`='".$output['fk_blog_id']."' AND a.`fk_blog_id`=b.`blog_id`";
 	$from="`{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_blogs` b";

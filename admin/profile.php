@@ -25,7 +25,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $output=array();
 $output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 $uid=0;
-if (isset($_GET['uid']) && !empty($_GET['uid'])) {
+if (!empty($_GET['uid'])) {
 	$uid=(int)$_GET['uid'];
 	if (!empty($output['search_md5']) && isset($_GET['go']) && ($_GET['go']==1 || $_GET['go']==-1)) {
 		$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."'";

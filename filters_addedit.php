@@ -19,7 +19,7 @@ check_login_member('manage_folders');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-$r=(isset($_GET['r']) && !empty($_GET['r'])) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
 $output=$message_filters_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
@@ -27,7 +27,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if (isset($_SESSION['topass']['input'])) {
 		$output=$_SESSION['topass']['input'];
 	}
-} elseif (isset($_GET['filter_id']) && !empty($_GET['filter_id'])) {
+} elseif (!empty($_GET['filter_id'])) {
 	$filter_id=(int)$_GET['filter_id'];
 	$query="SELECT * FROM `{$dbtable_prefix}message_filters` WHERE `filter_id`='$filter_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

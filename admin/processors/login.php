@@ -21,7 +21,7 @@ $qs_sep='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$user=sanitize_and_format($_POST['username'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$pass=sanitize_and_format($_POST['password'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	if (isset($user) && !empty($user) && isset($pass) && !empty($pass)) {
+	if (!empty($user) && !empty($pass)) {
 		$query="SELECT `admin_id`,`name`,`dept_id`,`status` FROM `{$dbtable_prefix}admin_accounts` WHERE `user`='$user' AND `pass`=md5('$pass')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {

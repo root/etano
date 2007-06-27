@@ -24,10 +24,10 @@ if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
 	unset($_SESSION['topass']['input']);
-} elseif (isset($_GET['to_id']) && !empty($_GET['to_id'])) {
+} elseif (!empty($_GET['to_id'])) {
 	$output['fk_user_id']=(int)$_GET['to_id'];
 	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
-} elseif (isset($_GET['mail_id']) && !empty($_GET['mail_id'])) {
+} elseif (!empty($_GET['mail_id'])) {
 	$mail_id=(int)$_GET['mail_id'];
 	$query="SELECT `mail_id`,`fk_user_id_other` as `fk_user_id`,`subject`,`message_body`,`_user_other`,`message_type` FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id`='$mail_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

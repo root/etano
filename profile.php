@@ -21,12 +21,12 @@ check_login_member('profile_view');
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $uid=0;
-if (isset($_GET['uid']) && !empty($_GET['uid'])) {
+if (!empty($_GET['uid'])) {
 	$uid=(string)((int)$_GET['uid']);
 } elseif (isset($_GET['user'])) {
 	$user=sanitize_and_format($_GET['user'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 	$uid=get_userid_by_user($user);
-} elseif (isset($_SESSION['user']['user_id']) && !empty($_SESSION['user']['user_id'])) {
+} elseif (!empty($_SESSION['user']['user_id'])) {
 	$uid=(string)$_SESSION['user']['user_id'];
 } else {
 	redirect2page('index.php');
