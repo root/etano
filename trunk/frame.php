@@ -24,7 +24,11 @@ if (!empty($message)) {
 	$tpl->set_var('message',$message);
 }
 $tpl->set_var('tplvars',$tplvars);
-echo $tpl->process('','frame',TPL_FINISH | TPL_OPTIONAL | TPL_INCLUDE);
+if (!empty($page_last_modified_time)) {
+	header('Expires: '. gmdate('D,d M Y H:i:s',mktime()+1209600).' GMT',true);	// +14 days
+	header('Last-Modified: '. gmdate('D,d M Y H:i:s',$page_last_modified_time).' GMT',true);
+}
+echo $tpl->process('frame','frame',TPL_FINISH | TPL_OPTIONAL | TPL_INCLUDE);
 if (isset($_SESSION['topass'])) {
 	unset($_SESSION['topass']);
 }

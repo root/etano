@@ -37,7 +37,8 @@ class widget_blogs extends icontent_widget {
 
 	function _content() {
 		global $dbtable_prefix;
-		$query="SELECT a.`post_id` FROM `{$dbtable_prefix}blog_posts` a WHERE a.`is_public`=1 AND a.`status`='".STAT_APPROVED."'";
+		global $page_last_modified_time;
+		$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}blog_posts` a WHERE a.`is_public`=1 AND a.`status`='".STAT_APPROVED."'";
 		switch ($this->config['mode']) {
 			case 'new':
 				$query.=" ORDER BY a.`date_posted` DESC";
@@ -55,8 +56,11 @@ class widget_blogs extends icontent_widget {
 		$query.=" LIMIT ".$this->config['total'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$post_ids=array();
-		for ($i=0;$i<mysql_num_rows($res);++$i) {
-			$post_ids[]=mysql_result($res,$i,0);
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$post_ids[]=$rsrow['post_id'];
+			if ($page_last_modified_time<$rsrow['last_changed']) {
+				$page_last_modified_time=$rsrow['last_changed'];
+			}
 		}
 		if (!empty($post_ids)) {
 			require_once _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
