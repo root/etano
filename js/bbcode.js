@@ -96,18 +96,22 @@ function add_bbcode2(tag,ta,smil) {
 		tagStart=smil;
 		$('#smiley_set').hide();
 	}
-	if (typeof(ta.caretPos)!='undefined' && ta.createTextRange) {
-		caretPos=ta.caretPos;
-		caretPos.text=tagStart+caretPos.text+tagEnd;
-		caretPos.select();
-	} else if (typeof(ta.selectionStart)!='undefined') {
+	if (document.selection && document.selection.createRange) {		// IE
+		ta.focus();
+		var range=document.selection.createRange();
+		var range_copy=range.duplicate();
+		range_copy.moveToElementText(ta);
+		range_copy.setEndPoint( 'EndToEnd', range );
+		ta.selectionStart=range_copy.text.length - range.text.length;
+		ta.selectionEnd = ta.selectionStart + range.text.length;
+	}
+	if (typeof(ta.selectionStart)!='undefined') {
 		before=ta.value.substr(0,ta.selectionStart);
 		selection=ta.value.substr(ta.selectionStart,ta.selectionEnd-ta.selectionStart);
 		after=ta.value.substr(ta.selectionEnd);
 		newCursorPos=ta.selectionStart;
 		scrollPos=ta.scrollTop;
 		ta.value=before+tagStart+selection+tagEnd+after;
-
 		if (ta.setSelectionRange) {
 			if (selection.length==0) {
 				ta.setSelectionRange(newCursorPos+tagStart.length,newCursorPos+tagStart.length);
@@ -116,9 +120,32 @@ function add_bbcode2(tag,ta,smil) {
 			}
 			ta.focus();
 		}
+		if (document.selection && document.selection.createRange) {		// IE again - move the cursor after the closing tag
+			var range=document.selection.createRange();
+			range.moveToElementText(ta);
+			range.move('character',ta.selectionEnd+tagStart.length+tagEnd.length);
+			range.select();
+		}
 		ta.scrollTop = scrollPos;
 	} else {
 		ta.value+=tagStart+tagEnd;
-		ta.focus(ta.value.length-1);
+		ta.focus(ta.value.length-tagEnd.length);
 	}
+}
+
+
+function get_ie_caret_pos(ta) {
+	var current_pos = Math.abs(document.selection.createRange().moveEnd("character", -1000000));
+	/* Moving cursor position to zero */
+	var textRange = ta.createTextRange();
+	textRange.move("character", 0);
+	textRange.select();
+	/* identifying the position at zero index */
+	var start_caret_pos = Math.abs(document.selection.createRange().moveEnd("character", -1000000));
+
+	/* actual caret position should be difference between current position and start_position*/
+	var caret_pos = current_pos - start_caret_pos;
+	textRange.move("character", caret_pos);
+
+	textRange.select();
 }

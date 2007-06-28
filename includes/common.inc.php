@@ -125,3 +125,4 @@ $accepted_months=array('month','jan','feb','mar','apr','may','jun','jul','aug','
 $accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
 
 define('_INTERNAL_VERSION_',001);
+$tplvars['js_lib_v']=1;	// change this when you update any .js file. This should force a reload of the js scripts.

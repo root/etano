@@ -37,21 +37,22 @@ class widget_members extends icontent_widget {
 
 	function _content() {
 		global $dbtable_prefix;
+		global $page_last_modified_time;
 		switch ($this->config['mode']) {
 			case 'new':
-				$query="SELECT a.`fk_user_id` FROM `{$dbtable_prefix}user_profiles` a WHERE a.`_photo`<>'' AND a.`del`=0 AND a.`status`='".STAT_APPROVED."' ORDER BY a.`date_added` DESC";
+				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(a.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_profiles` a WHERE a.`_photo`<>'' AND a.`del`=0 AND a.`status`='".STAT_APPROVED."' ORDER BY a.`date_added` DESC";
 				break;
 
 			case 'vote':
-				$query="SELECT a.`fk_user_id` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='vote_score' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
+				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(b.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='vote_score' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
 				break;
 
 			case 'views':
-				$query="SELECT a.`fk_user_id` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='total_views' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
+				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(b.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='total_views' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
 				break;
 
 			case 'comm':
-				$query="SELECT a.`fk_user_id` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='total_comments' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
+				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(b.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='total_comments' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
 				break;
 
 		}
@@ -60,11 +61,15 @@ class widget_members extends icontent_widget {
 		$user_ids=array();
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$user_ids[]=$rsrow['fk_user_id'];
+			if ($page_last_modified_time<$rsrow['last_changed']) {
+				$page_last_modified_time=$rsrow['last_changed'];
+			}
 		}
 		if (!empty($user_ids)) {
 			require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
 			$user_cache=new user_cache(get_my_skin());
 			$loop=$user_cache->get_cache_beta($user_ids,'result_user','tpl');
+			unset($user_cache);
 			if (!empty($loop)) {
 				$loop[0]['class']='first';
 				$loop=array_slice($loop,0,$this->config['total']);

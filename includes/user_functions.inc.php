@@ -31,6 +31,7 @@ if (!isset($_SESSION['user']['user_id'])) {
 }
 $tplvars['myself']=$_SESSION['user'];
 $GLOBALS['_list_of_online_members']=get_online_ids();
+$GLOBALS['page_last_modified_time']=0;	// need this for cache control - the Last-Modified header
 
 if (!isset($_SESSION['user']['prefs'])) {
 	$_SESSION['user']['prefs']=get_site_option(array('date_format','datetime_format','time_offset'),'def_user_prefs');
@@ -90,7 +91,7 @@ function check_login_member($level_code) {
 	$query="UPDATE `{$dbtable_prefix}online` SET `last_activity`='$now' WHERE `fk_user_id`='$user_id' AND `sess`='".session_id()."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (!mysql_affected_rows()) {
-		$query="INSERT IGNORE INTO `{$dbtable_prefix}online` SET `fk_user_id`='$user_id',`sess`='".session_id()."',`last_activity`='$now'";
+		$query="REPLACE INTO `{$dbtable_prefix}online` SET `fk_user_id`='$user_id',`sess`='".session_id()."',`last_activity`='$now'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 	// log and rate limit
