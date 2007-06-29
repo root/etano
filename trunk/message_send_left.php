@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       message_send_left.php
-$Revision: 64 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

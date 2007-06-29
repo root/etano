@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       includes/common.inc.php
-$Revision: 157 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

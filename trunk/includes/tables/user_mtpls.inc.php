@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       includes/tables/user_mtpls.inc.php
-$Revision: 25 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

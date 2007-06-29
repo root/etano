@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       admin/membership_assign.php
-$Revision: 29 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       processors/resend_activation.php
-$Revision: 94 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       includes/tables/user_blogs.inc.php
-$Revision: 67 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

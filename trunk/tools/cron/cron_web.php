@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       tools/crons/cron_web.php
-$Revision: 36 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
