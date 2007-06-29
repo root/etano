@@ -78,6 +78,7 @@ if (!$error) {
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		} elseif ($input['net_id']==NET_BLOCK) {
 			add_message_filter(array('filter_type'=>FILTER_SENDER,'fk_user_id'=>$_SESSION['user']['user_id'],'field_value'=>$input['uid'],'fk_folder_id'=>FOLDER_SPAMBOX));
+			add_member_score($input['uid'],'block_member');
 		}
 		$topass['message']['type']=MESSAGE_INFO;
 		if (!empty($is_bidi) && empty($force_connect)) {

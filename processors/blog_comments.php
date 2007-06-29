@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!empty($input['comment_id'])) {
 			// only members can edit their comments
 			if (isset($_SESSION['user']['user_id'])) {
-				$input['comment'].="\n\nLast edited by ".$_SESSION['user']['user'].' on '.gmdate('Y-m-d H:i:s').' GMT';
+				$input['comment'].="\n\nLast edited by ".$_SESSION['user']['user'].' on '.gmdate('Y-m-d H:i').' GMT';	// translate
 				$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='".gmdate('YmdHis')."'";
 				if ($config['manual_com_approval']) {
 					$query.=",`status`='".STAT_PENDING."'";

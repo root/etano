@@ -26,7 +26,6 @@ function purges() {
 		$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `date_sent`<DATE_SUB('$now',INTERVAL ".$config['purge_trash']." DAY) AND `del`=1";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
-print $query;
 	if (!empty($config['purge_folders'])) {
 		$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `date_sent`<DATE_SUB('$now',INTERVAL ".$config['purge_folders']." DAY) AND `del`=0 AND `fk_folder_id`<>0";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

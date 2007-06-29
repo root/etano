@@ -29,15 +29,18 @@ function on_approve_comment($comment_ids,$type) {
 
 		case 'user':
 			$table="`{$dbtable_prefix}profile_comments`";
+			$parent_table="`{$dbtable_prefix}user_profiles`";
+			$parent_key="`fk_user_id`";
 			break;
 
 	}
 
-	$query="SELECT `comment_id`,`fk_parent_id`,`fk_user_id` FROM $table WHERE `comment_id` IN ('".join("','",$comment_ids)."') AND `processed`=0";
+	$query="SELECT a.`comment_id`,a.`fk_parent_id`,a.`fk_user_id`,b.`fk_user_id` as `fk_parent_owner_id` FROM $table a,$parent_table b WHERE a.`comment_id` IN ('".join("','",$comment_ids)."') AND a.`fk_parent_id`=b.$parent_key AND a.`processed`=0";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$comment_ids=array();	// yup
 	$parent_ids=array();
 	$user_ids=array();
+	$parent_owner_ids=array();
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$comment_ids[]=$rsrow['comment_id'];	// get only the not processed ones
 		if (isset($parent_ids[$rsrow['fk_parent_id']])) {
@@ -50,6 +53,11 @@ function on_approve_comment($comment_ids,$type) {
 		} else {
 			$user_ids[$rsrow['fk_user_id']]=1;
 		}
+		if (isset($parent_owner_ids[$rsrow['fk_parent_owner_id']])) {
+			++$parent_owner_ids[$rsrow['fk_parent_owner_id']];
+		} else {
+			$parent_owner_ids[$rsrow['fk_parent_owner_id']]=1;
+		}
 	}
 	if ($type!='user') {
 		foreach ($parent_ids as $pid=>$num) {
@@ -61,9 +69,9 @@ function on_approve_comment($comment_ids,$type) {
 			update_stats($pid,'profile_comments',$num);
 		}
 	}
-	foreach ($user_ids as $uid=>$num) {
-		if (!empty($uid)) {
-			update_stats($uid,'comments_made',$num);
+	foreach ($parent_owner_ids as $uid=>$num) {
+		if (!empty($uid) && (!isset($_SESSION['user']['user_id']) || $_SESSION['user']['user_id']!=$uid)) {
+			add_member_score($uid,'received_comment',$num);
 		}
 	}
 	$query="UPDATE $table SET `processed`=1 WHERE `comment_id` IN ('".join("','",$comment_ids)."')";

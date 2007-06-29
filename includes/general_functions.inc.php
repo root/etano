@@ -216,18 +216,25 @@ function queue_or_send_message($mess_array,$force_send=false) {
 }
 
 
-function add_member_score($user_ids,$act,$times=1,$points=0) {
-	if (!is_array($user_ids)) {
-		$user_ids=array($user_ids);
+function add_member_score($user_ids,$act,$times=1,$just_read_value=false,$points=0) {
+	$myreturn=0;
+	$scores=array('force'=>0,'login'=>5,'logout'=>-4,'approved'=>10,'rejected'=>-10,'add_main_photo'=>10,'del_main_photo'=>-10,'add_photo'=>2,'del_photo'=>-2,'add_blog'=>5,'payment'=>50,'unpayment'=>-50,'received_comment'=>0.4,'removed_comment'=>-0.4,'pview'=>0.1,'block_member'=>-5,'unblock_member'=>5,'join'=>40,'inactivity'=>-2);
+	if (!$just_read_value) {
+		if (!is_array($user_ids)) {
+			$user_ids=array($user_ids);
+		}
+		global $dbtable_prefix;
+		$scores['force']+=$points;
+		if (isset($scores[$act]) && !empty($user_ids)) {
+			$scores[$act]*=$times;
+			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `score`=`score`+".$scores[$act]." WHERE `fk_user_id` IN ('".join("','",$user_ids)."')";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		}
 	}
-	global $dbtable_prefix;
-	$scores=array('force'=>0,'login'=>5,'logout'=>-4,'approved'=>10,'rejected'=>-10,'add_main_photo'=>10,'del_main_photo'=>-10,'add_photo'=>2,'del_photo'=>-2,'add_blog'=>5,'payment'=>50,'unpayment'=>-50,);
-	$scores['force']+=$points;
-	if (isset($scores[$act]) && !empty($user_ids)) {
-		$scores[$act]*=$times;
-		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `score`=`score`+".$scores[$act]." WHERE `fk_user_id` IN ('".join("','",$user_ids)."')";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (isset($scores[$act])) {
+		$myreturn=$scores[$act];
 	}
+	return $myreturn;
 }
 
 
