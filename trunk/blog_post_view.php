@@ -23,7 +23,6 @@ $edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
 
 $output=array();
 $loop=array();
-$page_last_modified_time=0;
 if (!empty($post_id)) {
 	// no need to check the status of the post ( AND `status`='".STAT_APPROVED."')
 	$query="SELECT `fk_user_id`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id'";
@@ -34,7 +33,9 @@ if (!empty($post_id)) {
 		$blog_posts_cache=new blog_posts_cache();
 		$output=array_merge($output,$blog_posts_cache->get_post($post_id,false));
 		unset($blog_posts_cache);
-		$page_last_modified_time=$output['date_posted'];
+		if ($output['date_posted']>$page_last_modified_time) {
+			$page_last_modified_time=$output['date_posted'];
+		}
 		$output['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$output['date_posted']+$_SESSION['user']['prefs']['time_offset']);
 		if (isset($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id']) {
 			$output['post_owner']=true;

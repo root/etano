@@ -9,6 +9,7 @@ function send_queue_message() {
 	$notifs=array();
 	$emails=array();
 	$mail_ids=array();
+	$receivers=array();
 	$query="SELECT a.`mail_id`,a.`fk_user_id`,a.`fk_user_id_other`,a.`_user_other`,a.`subject`,a.`message_body`,a.`date_sent`,a.`message_type`,b.`email`,b.`".USER_ACCOUNT_USER."` as `user` FROM `{$dbtable_prefix}queue_message` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` ORDER BY a.`mail_id` ASC LIMIT $limit";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
@@ -21,6 +22,11 @@ function send_queue_message() {
 			$temp['email']=$rsrow['email'];
 			$temp['user']=$rsrow['user'];
 			$mail_ids[]=$rsrow['mail_id'];
+			if (isset($receivers[$rsrow['fk_user_id']])) {
+				++$receivers[$rsrow['fk_user_id']];
+			} else {
+				$receivers[$rsrow['fk_user_id']]=1;
+			}
 			unset($rsrow['mail_id'],$rsrow['email'],$rsrow['user']);
 			$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DB]);
 			$rsrow['message_body']=sanitize_and_format($rsrow['message_body'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DB]);
@@ -87,6 +93,21 @@ function send_queue_message() {
 		if (!empty($mail_ids)) {
 			$query="DELETE FROM `{$dbtable_prefix}queue_message` WHERE `mail_id` IN ('".join("','",$mail_ids)."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		}
+	}
+
+	if (!empty($receivers)) {
+		$uids=array();	// we build an array like array(num_messages1=>array(uid1,uid2,..),num_messages2=>array(uid3,uid4...),...)
+						// this way we can add score for more users at once, saving some processing time
+		foreach ($receivers as $uid=>$num) {
+			if (isset($uids[$num])) {
+				$uids[$num][]=$uid;
+			} else {
+				$uids[$num]=array($uid);
+			}
+		}
+		foreach ($uids as $num=>$nuids) {
+			add_member_score($nuids,'new_message',$num);
 		}
 	}
 
