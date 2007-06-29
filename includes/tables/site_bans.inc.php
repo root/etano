@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       includes/tables/site_bans.inc.php
-$Revision: 21 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

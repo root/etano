@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       processors/net_deluser.php
-$Revision: 91 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

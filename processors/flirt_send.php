@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       processors/flirt_send.php
-$Revision: 25 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

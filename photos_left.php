@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       photos_left.php
-$Revision: 77 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

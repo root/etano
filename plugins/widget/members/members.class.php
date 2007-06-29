@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       plugins/widget/members/members.class.php
-$Revision: 21 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com

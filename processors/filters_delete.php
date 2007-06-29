@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       processors/filters_delete.php
-$Revision: 0 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://forum.datemill.com
