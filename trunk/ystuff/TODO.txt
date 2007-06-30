@@ -37,13 +37,12 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 TODO
 
-- de adaugat linkul in db pt seo blog post
+- user inbox.php + read message cu link in el in admin. back de la read message -> eroare
+- adaugat is_read la inboxu userului din admin
 - delete faves. delete friends
 - de verificat si inlocuit
 	$query="SELECT `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`='".$real_user['user_id']."' AND `refunded`=0 ORDER BY `paid_until` DESC LIMIT 1";
 	cu max(paid_until) ?
-- de testat reply la mesaje. da timeout????
-- de verif bbcode cu IE7 - nu stie sa selecteze si pune tagurile la sfarsit?
 - db backup
 - de creat un create_indexes care sa creeze indecsi pe user_profiles. macar pt campurile din basic search daca nu pe toate.
 
@@ -55,28 +54,9 @@ TODO
 - in toate procesoarele tb sa verific cazul de eroare:
 	// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
 	//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
-- keepalive in js cand se editeaza ceva? adaugare comment, edit profile, send message, etc.
-	// Keep the session alive - always!
-	373var lastKeepAliveCheck = new Date().getTime();
-	374function smf_sessionKeepAlive()
-	375{
-	376 var curTime = new Date().getTime();
-	377
-	378 // Prevent a Firefox bug from hammering the server.
-	379 if (smf_scripturl && curTime - lastKeepAliveCheck > 900000)
-	380 {
-	381 var tempImage = new Image();
-	382 tempImage.src = smf_scripturl + (smf_scripturl.indexOf("?") == -1 ? "?" : "&") + "action=keepalive;" + curTime;
-	383 lastKeepAliveCheck = curTime;
-	384 }
-	385
-	386 window.setTimeout("smf_sessionKeepAlive();", 1200000);
-	387}
-	388window.setTimeout("smf_sessionKeepAlive();", 1200000);
-	389
-	as putea sa fac ceva de genul: onfocus(camp important: add comment) {keepalive=true}
-	onblur(acelasi camp) { daca a scris ceva in camp keepalive=true, altfel keepalive=false}
-	iar la keepalive=true sa execut functia de keepalive
+
+- PAYMENTURILE: UN UPGRADE DE LA UN AB A->B E CA SI O INTRERUPERE DE ABONAMENT A SI INCEPUT DE ABONAMENT FREE->B
+
 - in cazul mai multor paymenturi care se suprapun ar trebui marcat paymentul activ.
 	daca adaug un nou camp 'priority', in momentul platii se poate insera noua plata cu priority=max(priority)+1.
 	La expirare pot sa verific daca plata cu prioritatea cea mai mare a expirat caz in care downgradez userul, altfel nu conteaza.
@@ -87,7 +67,20 @@ TODO
 	nou, iar cand se termina cel nou sa continui cu ce a ramas din cel vechi. Asta daca nu sunt la fel (acelasi m_from si m_to), caz
 	in care se prelungeste pur si simplu. vezi problema anterioara.
 - de facut cron care sa trimita email cu cateva zile inainte sa expire abonamentele.
+
+
+
 ---------------------------------------------------------------------
+
+
+- intr-un trigger pt blog post addedit
+function set_seolink() {
+	global $query,$input;
+	$temp=explode(' WHERE',$query);
+	$temp[0].=",`post_url`='"._BASEURL_.'/blog/'.$input['post_id'].'/'.strtolower(preg_replace(array('/[^a-zA-Z0-9]/','/--+/'),array('-',''),$input['title'])).".html'";
+	$query=$temp[0].' WHERE'.$temp[1];
+}
+
 - mailbox.php in format nou (cu $output)
 - formatare la date of birth
 - cron: check for and remove orpahned lk_ids

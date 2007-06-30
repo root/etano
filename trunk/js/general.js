@@ -7,7 +7,20 @@ $(function() {
 			$(this).css('background-position','top');
 		});
 	}
+
+	last_ka_check=new Date().getTime();
+	window.setTimeout("keep_alive();",180000);
 });
+
+function keep_alive() {
+	var cur_time=new Date().getTime();
+	if (baseurl && cur_time-last_ka_check>150000) {
+		var tempImage=new Image();
+		tempImage.src=baseurl+"/ajax/keepalive.php?"+cur_time;
+		last_ka_check=cur_time;
+	}
+	window.setTimeout("keep_alive();",180000);
+}
 
 /*
  * Allows only numbers to be entered into input boxes.
