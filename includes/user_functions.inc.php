@@ -103,8 +103,8 @@ function check_login_member($level_code) {
 	$log['ip']=sprintf('%u',ip2long($_SERVER['REMOTE_ADDR']));
 	if ($level_code!='all') {
 		log_user_action($log);
+		rate_limiter($log);
 	}
-	rate_limiter($log);
 }
 
 

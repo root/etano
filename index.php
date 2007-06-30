@@ -28,6 +28,8 @@ $tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_OPTIONAL | TPL_LOOP | TPL_INCLUDE);
 if (!empty($GLOBALS['page_last_modified_time'])) {
 //	header('Expires: '. gmdate('D,d M Y H:i:s',mktime()+1209600).' GMT',true);	// +14 days
+//	header('Expires: -1',true);
+	header('Cache-Control: private, max-age=0',true);
 	header('Last-Modified: '. gmdate('D,d M Y H:i:s',$page_last_modified_time).' GMT',true);
 }
 echo $tpl->process('content','content',TPL_FINISH);
