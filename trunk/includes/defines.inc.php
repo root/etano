@@ -4,13 +4,12 @@ define('_DBUSERNAME_','root');// mysql database username
 define('_DBPASSWORD_','rootpass');// mysql database password
 define('_DBNAME_','newdsb');// mysql database name
 define('_SITENAME_','Etano Local');// Your site name
-//define('_BASEURL_','http://82.79.235.129/etano');// protocol required (http:// )
 define('_BASEURL_','http://dating.sco.ro/etano');// protocol required (http:// )
 define('_BASEPATH_','/www/htdocs/etano');// path on server to your site
 define('_PHOTOURL_',_BASEURL_.'/media/pics');// protocol required (http:// ). URL to your member photos
 define('_PHOTOPATH_',_BASEPATH_.'/media/pics');// path on server to your member photos
 define('_CACHEPATH_',_BASEPATH_.'/cache');// path on server to the cache folder
-//define('_FTP_SERVER_','localhost');
+define('_FTP_SERVER_','localhost');
 define('_FTPPATH_','/etano');
 define('_FTP_USER_','newdsb');
 define('_FTP_PASS_','test132');
