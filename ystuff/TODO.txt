@@ -37,8 +37,11 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 TODO
 
+- goto top link in blogs/photos/profile la comentarii
+- data la blog post si comentarii in admin/blog_post_view
+- baseurl is not defined in keep_alive()
+- scos alpha din design-ul final si css-ul si js-ul.
 - de verif de ce nu se vede poza la alerte search si de ce vin asa multe match-uri.
-- de adaugat linkul in db pt seo blog post
 - tb sa verific interfata de admin si in IE si in opera (mai ales pfields view si addedit).
 - time last login (sau last seen online).
 - in profil sa se vada cine e premium (poate si in search results)
