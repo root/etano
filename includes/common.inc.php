@@ -14,11 +14,13 @@ Support at:                 http://forum.datemill.com
 ob_start();
 ini_set('include_path','.');
 ini_set('session.use_cookies',1);
+ini_set('date.timezone','America/Denver');	// temporary fix for the php 5.1+ TZ compatibility
+ini_set('error_reporting',2047);
+
 setlocale(LC_CTYPE,'C');
 setlocale(LC_COLLATE,'C');
 define('_DEBUG_',2);// Set to 0 for production! 0-No,1-Yes,2-Verbose. Used for debug in case of errors.
 if (_DEBUG_!=0) {
-	ini_set('error_reporting',2047);
 	ini_set('display_errors',1);
 } else {
 	ini_set('display_errors',0);
@@ -124,5 +126,4 @@ if (isset($_SERVER['PHP_SELF'])) {
 $accepted_months=array('month','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'); // translate
 $accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
 
-define('_INTERNAL_VERSION_',001);
 $tplvars['js_lib_v']=1;	// change this when you update any .js file. This should force a reload of the js scripts.

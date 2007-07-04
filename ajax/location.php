@@ -19,7 +19,7 @@ Support at:                 http://forum.datemill.com
 */
 
 require_once dirname(__FILE__).'/../includes/common.inc.php';
-db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
+db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 
 $output='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
