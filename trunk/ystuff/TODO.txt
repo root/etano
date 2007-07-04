@@ -80,7 +80,7 @@ TODO
 
 
 ---------------------------------------------------------------------
-
+- digg button: <span style="float: left"><script src="http://digg.com/tools/diggthis.js" type="text/javascript"></script></span>
 
 - intr-un trigger pt blog post addedit
 function set_seolink() {

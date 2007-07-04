@@ -302,8 +302,8 @@ class modman {
 	function connect2db() {
 		$myreturn=false;
 		if (empty($this->dblink)) {
-			if (defined('_DBHOSTNAME_') || defined('_DBUSERNAME_') || defined('_DBPASSWORD_') || defined('_DBNAME_')) {
-				$this->dblink=@mysql_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_);
+			if (defined('_DBHOST_') || defined('_DBUSER_') || defined('_DBPASS_') || defined('_DBNAME_')) {
+				$this->dblink=@mysql_connect(_DBHOST_,_DBUSER_,_DBPASS_);
 				if (empty($this->dblink)) {
 					$myreturn=false;
 					$this->errmessage='Wrong database credentials or host name';
@@ -424,10 +424,10 @@ class fileop {
 
 	function fileop() {
 		$ftp_error=false;
-		if (defined('_FTP_SERVER_') && defined('_FTP_USER_') && defined('_FTP_PASS_') && function_exists('ftp_connect')) {
-			$this->ftp_id=ftp_connect(_FTP_SERVER_);
+		if (defined('_FTPHOST_') && defined('_FTPUSER_') && defined('_FTPPASS_') && function_exists('ftp_connect')) {
+			$this->ftp_id=ftp_connect(_FTPHOST_);
 			if ($this->ftp_id) {
-				if (@ftp_login($this->ftp_id,_FTP_USER_,_FTP_PASS_)) {
+				if (@ftp_login($this->ftp_id,_FTPUSER_,_FTPPASS_)) {
 					$this->op_mode='ftp';
 				} else {
 					$ftp_error=true;

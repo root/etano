@@ -12,7 +12,7 @@ Support at:                 http://forum.datemill.com
 ******************************************************************************/
 
 require_once '../includes/common.inc.php';
-db_connect(_DBHOSTNAME_,_DBUSERNAME_,_DBPASSWORD_,_DBNAME_);
+db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/network_functions.inc.php';
 check_login_member('manage_networks');
