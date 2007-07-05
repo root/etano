@@ -6,7 +6,7 @@ File:                       plugins/widget/osignal_feed/osignal_feed.class.php
 $Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
-Support at:                 http://forum.datemill.com
+Support at:                 http://www.datemill.com/forum
 *******************************************************************************
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
