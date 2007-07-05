@@ -434,6 +434,8 @@ function create_search_form($search_fields) {
 				case FIELD_LOCATION:
 					if (isset($user_defaults[$field['dbfield'].'_country'])) {
 						$field['default_value'][0]=$user_defaults[$field['dbfield'].'_country'];
+					} elseif (!isset($field['default_value'][0])) {
+						$field['default_value'][0]=0;
 					}
 					if (isset($user_defaults[$field['dbfield'].'_state'])) {
 						$field['default_value'][1]=$user_defaults[$field['dbfield'].'_state'];

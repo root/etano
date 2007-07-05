@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       install/processors/install.php
+File:                       install/processors/write_defines.php
 $Revision: 192 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -152,6 +152,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		require_once '../../includes/classes/modman.class.php';
 		$modman=new modman();
 		$modman->fileop->file_put_contents('../../includes/defines.inc.php',$towrite);
+		$_SESSION['install']['input']=$input;
 	} else {
 		$nextpage='install/step2.php';
 // 		you must re-read all textareas from $_POST like this:
