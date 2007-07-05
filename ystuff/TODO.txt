@@ -36,7 +36,8 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
-
+- cronu care sterge din onlines tb sa scada scorul. cred ca tot asta ar trebui sa modifice si last_login.
+	asta si poate si processors/login.php
 - goto top link in blogs/photos/profile la comentarii
 - data la blog post si comentarii in admin/blog_post_view
 - baseurl is not defined in keep_alive()
