@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 				unset($user['last_activity'],$user['email']);
 				$_SESSION['user']=$user;
-				$_SESSION['user']['loginout']=mktime();
+				$_SESSION['user']['loginout']=time();
 				if (isset($_SESSION['timedout']['url'])) {
 					$next=$_SESSION['timedout'];
 					unset($_SESSION['timedout']);

@@ -104,8 +104,8 @@ function on_approve_photo($photo_ids) {
 
 function on_approve_blog_post($post_ids) {
 	global $dbtable_prefix;
-	require_once 'classes/modman.class.php';
-	$modman=new modman();
+	require_once 'classes/fileop.class.php';
+	$fileop=new fileop();
 	$query="SELECT `post_id`,`fk_blog_id`,`fk_user_id` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id` IN ('".join("','",$post_ids)."') AND `processed`=0";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$post_ids=array();	// yup
@@ -143,7 +143,7 @@ function on_approve_blog_post($post_ids) {
 			$blog_archive[$year][$month]=$num;
 		}
 		krsort($blog_archive,SORT_NUMERIC);
-		$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$bid{0}.'/'.$bid.'/blog_archive.inc.php','<?php $blog_archive='.var_export($blog_archive,true).';');
+		$fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$bid{0}.'/'.$bid.'/blog_archive.inc.php','<?php $blog_archive='.var_export($blog_archive,true).';');
 	}
 
 	foreach ($user_ids as $uid=>$num) {

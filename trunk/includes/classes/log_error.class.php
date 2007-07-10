@@ -14,7 +14,7 @@ class log_error {
 			$query="INSERT IGNORE INTO `{$dbtable_prefix}error_log` SET `module`='$module_name',`error`='".sanitize_and_format($error,TYPE_STRING,FORMAT_ADDSLASH)."'";
 			@mysql_query($query);
 		} elseif ($this->config['log_mode']==_ERRORLOG_FILE_) {
-			error_log("\n-------\n".date('Y-m-d H:i:s',mktime()).': '.$module_name.': '.$error."\n\n",3,$this->config['file_log']);
+			error_log("\n-------\n".date('Y-m-d H:i:s',time()).': '.$module_name.': '.$error."\n\n",3,$this->config['file_log']);
 		} elseif ($this->config['log_mode']==_ERRORLOG_STDOUT_) {
 			echo $module_name.': '.$error;
 		}

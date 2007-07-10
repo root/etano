@@ -11,7 +11,7 @@ Support at:                 http://www.datemill.com/forum
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
-define('CACHE_LIMITER','private');
+//define('CACHE_LIMITER','private');
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';

@@ -3,12 +3,12 @@ require_once '../../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../../includes/classes/phemplate.class.php';
 require_once '../../includes/user_functions.inc.php';
-require_once '../../includes/classes/modman.class.php';
+require_once '../../includes/classes/fileop.class.php';
 
 $short_blog_chars=400;
 $config=get_site_option(array('bbcode_blogs','use_smilies'),'core_blog');
 
-$modman=new modman();
+$fileop=new fileop();
 
 $query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user` as `user`,a.`fk_blog_id`,a.`title`,a.`post_content`,b.`_photo` as `photo`,c.`blog_name` FROM `{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_profiles` b,`{$dbtable_prefix}user_blogs` c WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`fk_blog_id`=c.`blog_id` AND a.`status`='".STAT_APPROVED."'";
 //$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user` as `user`,a.`fk_blog_id`,a.`title`,a.`post_content`,b.`_photo` as `photo` FROM `{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`status`='".STAT_APPROVED."' AND a.`last_changed`>=DATE_SUB('".gmdate('YmdHis')."',INTERVAL 12 MINUTE)";
@@ -36,10 +36,10 @@ while ($blog=mysql_fetch_assoc($res)) {
 	}
 
 	$towrite='<?php $post='.var_export($blog,true).';';
-	$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/posts/'.$blog['post_id']{0}.'/'.$blog['post_id'].'.inc.php',$towrite);
+	$fileop->file_put_contents(_CACHEPATH_.'/blogs/posts/'.$blog['post_id']{0}.'/'.$blog['post_id'].'.inc.php',$towrite);
 
 	$blog['post_content']=$post_content_short;
 	$towrite='<?php $post='.var_export($blog,true).';';
-	$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/posts/'.$blog['post_id']{0}.'/'.$blog['post_id'].'_short.inc.php',$towrite);
+	$fileop->file_put_contents(_CACHEPATH_.'/blogs/posts/'.$blog['post_id']{0}.'/'.$blog['post_id'].'_short.inc.php',$towrite);
 }
 ?>

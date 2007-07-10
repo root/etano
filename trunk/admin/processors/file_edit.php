@@ -38,9 +38,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		require_once '../../includes/classes/modman.class.php';
-		$modman=new modman();
-		$modman->fileop->file_put_contents(_BASEPATH_.'/'.$input['file'],$input['file_content']);
+		require_once '../../includes/classes/fileop.class.php';
+		$fileop=new fileop();
+		$fileop->file_put_contents(_BASEPATH_.'/'.$input['file'],$input['file_content']);
 
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='File saved successfully';

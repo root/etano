@@ -14,7 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
-require_once '../includes/classes/modman.class.php';
+require_once '../includes/classes/fileop.class.php';
 require_once '../includes/img_functions.inc.php';
 require_once '../includes/triggers.inc.php';
 check_login_member('upload_photos');
@@ -33,9 +33,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$config=get_site_option(array('round_corners','watermark_text','watermark_text_color','t1_width','t2_width','pic_width','manual_photo_approval','min_size','max_size'),'core_photo');
 	$config2=$config;
 	unset($config['round_corners']);
-	$curtime=mktime();
+	$curtime=time();
 
-	$modman=new modman();
+	$fileop=new fileop();
 
 	if (!isset($_FILES) || empty($_FILES)) {
 		$error=true;
@@ -65,9 +65,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file1']);
 				$input['file1']=$rand.'/'.$filename.'.jpg';
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file1']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file1']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file1']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file1']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file1']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file1']);
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
@@ -98,9 +98,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file2']);
 				$input['file2']=$rand.'/'.$filename.'.jpg';
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file2']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file2']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file2']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file2']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file2']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file2']);
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
@@ -132,9 +132,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file3']);
 				$input['file3']=$rand.'/'.$filename.'.jpg';
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file3']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file3']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file3']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file3']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file3']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file3']);
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
@@ -165,9 +165,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file4']);
 				$input['file4']=$rand.'/'.$filename.'.jpg';
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file4']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file4']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file4']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file4']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file4']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file4']);
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
@@ -198,9 +198,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file5']);
 				$input['file5']=$rand.'/'.$filename.'.jpg';
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file5']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file5']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file5']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file5']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file5']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file5']);
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
@@ -231,9 +231,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file6']);
 				$input['file6']=$rand.'/'.$filename.'.jpg';
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file6']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file6']);
-				$modman->fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file6']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file6']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file6']);
+				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file6']);
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
 				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');

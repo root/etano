@@ -94,7 +94,7 @@ function allow_dept($levels=DEPT_ADMIN) {
 
 
 function regenerate_fields_array() {
-	require_once _BASEPATH_.'/includes/classes/modman.class.php';
+	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
 	global $dbtable_prefix;
 	$query="SELECT * FROM `{$dbtable_prefix}profile_fields` ORDER BY `order_num` ASC";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -213,15 +213,15 @@ function regenerate_fields_array() {
 	}
 	$towrite.="\n";
 	$towrite.='$basic_search_fields=array('.join(',',$basic_search_fields).");\n";
-	$modman=new modman();
-	$modman->fileop->file_put_contents(_BASEPATH_.'/includes/fields.inc.php',$towrite);
+	$fileop=new fileop();
+	$fileop->file_put_contents(_BASEPATH_.'/includes/fields.inc.php',$towrite);
 }
 
 
 function regenerate_langstrings_array() {
-	require_once _BASEPATH_.'/includes/classes/modman.class.php';
+	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
 	global $dbtable_prefix;
-	$modman=new modman();
+	$fileop=new fileop();
 	$query="SELECT a.`module_code`,b.`config_value` as `skin_dir` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='".MODULE_SKIN."' AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_dir'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
@@ -241,7 +241,7 @@ function regenerate_langstrings_array() {
 			$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT] | FORMAT_ADDSLASH,'');
 			$towrite.="\$GLOBALS['_lang'][".$rsrow['lk_id']."]='".$rsrow['lang_value']."';\n";
 		}
-		$modman->fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/strings.inc.php',$towrite);
+		$fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/strings.inc.php',$towrite);
 	}
 }
 

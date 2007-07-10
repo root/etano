@@ -48,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		$input['blog_name']=remove_banned_words($input['blog_name']);
 		$input['blog_diz']=remove_banned_words($input['blog_diz']);
-		require_once '../includes/classes/modman.class.php';
-		$modman=new modman();
+		require_once '../includes/classes/fileop.class.php';
+		$fileop=new fileop();
 		$towrite=array();	// what to write in the cache file
 		if (!empty($input['blog_id'])) {
 			foreach ($input as $k=>$v) {
@@ -101,9 +101,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 			// create the blog cache folder if it doesn't exist
 			if (!is_dir(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'])) {
-				$modman->fileop->mkdir(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id']);
+				$fileop->mkdir(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id']);
 			}
-			$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'].'/blog_archive.inc.php','<?php $blog_archive=array();');
+			$fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'].'/blog_archive.inc.php','<?php $blog_archive=array();');
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Blog created.';     // translate
 			if (isset($_on_after_insert)) {
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 
 		$towrite='<?php $blog='.var_export($towrite,true).';';
-		$modman->fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'].'/blog.inc.php',$towrite);
+		$fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'].'/blog.inc.php',$towrite);
 	} else {
 		$nextpage='blog_addedit.php';
 // 		you must re-read all textareas from $_POST like this:

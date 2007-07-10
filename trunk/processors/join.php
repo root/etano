@@ -265,7 +265,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 		ksort($next_join_pages,SORT_NUMERIC);
 		if (!empty($next_join_pages)) {
-			$page=array_shift(array_keys($next_join_pages));
+			$temp=array_keys($next_join_pages);
+			$page=array_shift($temp);
 			$nextpage='join.php';
 			$qs.=$qs_sep.'p='.$page;
 			$qs_sep='&';

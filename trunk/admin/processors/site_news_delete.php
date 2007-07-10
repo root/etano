@@ -53,9 +53,9 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$rss_writer_object->additem($properties);
 }
 if ($rss_writer_object->writerss($towrite)) {
-	require_once _BASEPATH_.'/includes/classes/modman.class.php';
-	$modman=new modman();
-	$modman->fileop->file_put_contents(_BASEPATH_.'/rss/site_news.xml',$towrite);
+	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
+	$fileop=new fileop();
+	$fileop->file_put_contents(_BASEPATH_.'/rss/site_news.xml',$towrite);
 } else {
 	$error=true;
 	$topass['message']['type']=MESSAGE_ERROR;
