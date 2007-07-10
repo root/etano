@@ -78,7 +78,7 @@ class fileop {
 			if (is_dir($source) && substr($source,-1)!='/') {
 				$source.='/';
 			}
-			$source=str_replace(_BASEPATH_,_FTPPATH_,$source);
+			$source=str_replace(_BASEPATH_.'/',_FTPPATH_,$source);
 			$myreturn=$this->_ftp_delete($source);
 		}
 		return $myreturn;
