@@ -66,15 +66,15 @@ function delete_members() {
 
 		$query="SELECT `photo_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id` IN ('".join("','",$uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		require_once _BASEPATH_.'/includes/classes/modman.class.php';
-		$modman=new modman();
+		require_once _BASEPATH_.'/includes/classes/fileop.class.php';
+		$fileop=new fileop();
 		$photo_ids=array();
 		for ($i=0;$i<mysql_num_rows($res);++$i) {
 			$photo=mysql_result($res,$i,1);
 			$photo_ids[]=mysql_result($res,$i,0);
-			$modman->fileop->delete(_PHOTOPATH_.'/t1/'.$photo);
-			$modman->fileop->delete(_PHOTOPATH_.'/t2/'.$photo);
-			$modman->fileop->delete(_PHOTOPATH_.'/'.$photo);
+			$fileop->delete(_PHOTOPATH_.'/t1/'.$photo);
+			$fileop->delete(_PHOTOPATH_.'/t2/'.$photo);
+			$fileop->delete(_PHOTOPATH_.'/'.$photo);
 		}
 		$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

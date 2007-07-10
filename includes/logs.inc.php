@@ -64,7 +64,7 @@ function rate_limiter(&$log) {
 
 
 function regenerate_ban_array() {
-	require_once _BASEPATH_.'/includes/classes/modman.class.php';
+	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
 	global $dbtable_prefix;
 	$query="SELECT `ban_type`,`what` FROM `{$dbtable_prefix}site_bans` GROUP BY `what`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -79,6 +79,6 @@ function regenerate_ban_array() {
 	if (!empty($_bans[_PUNISH_BANUSER_])) {
 		$towrite.='$_bans[_PUNISH_BANUSER_]=array(\''.join("','",$_bans[_PUNISH_BANUSER_])."');\n";
 	}
-	$modman=new modman();
-	$modman->fileop->file_put_contents(_BASEPATH_.'/includes/site_bans.inc.php',$towrite);
+	$fileop=new fileop();
+	$fileop->file_put_contents(_BASEPATH_.'/includes/site_bans.inc.php',$towrite);
 }

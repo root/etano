@@ -9,6 +9,7 @@ define('_BASEPATH_','{input.basepath}');// path on server to your site
 define('_PHOTOURL_',_BASEURL_.'/media/pics');// protocol required (http:// ). URL to your member photos
 define('_PHOTOPATH_',_BASEPATH_.'/media/pics');// path on server to your member photos
 define('_CACHEPATH_',_BASEPATH_.'/cache');// path on server to the cache folder
+define('_FILEOP_MODE_','{input.fileop_mode}');
 define('_FTPHOST_','{input.ftphost}');
 define('_FTPPATH_','{input.ftppath}');
 define('_FTPUSER_','{input.ftpuser}');

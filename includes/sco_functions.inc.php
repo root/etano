@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007062701
+File version:				1.2007071001
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -731,8 +731,8 @@ function unix2dos($mystring) {
 
 
 function send_email($from,$to,$subject,$message,$html=false,$attachments=array(),$bcc='') {
-	$separator='Next.Part.331925W0RdH3R3'.mktime();
-	$att_separator='NextPart.is_a_file9817298743'.mktime();
+	$separator='Next.Part.331925W0RdH3R3'.time();
+	$att_separator='NextPart.is_a_file9817298743'.time();
 	$headers="From: $from\n";
 	$headers.="MIME-Version: 1.0\n";
 	if (!empty($bcc)) {

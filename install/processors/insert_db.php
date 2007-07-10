@@ -20,6 +20,7 @@ $topass=array();
 $nextpage='install/step4.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (isset($_SESSION['install']['input'])) {
+		$input=$_SESSION['install']['input'];
 		if (function_exists('mysql_connect')) {
 			$link=mysql_connect($input['dbhost'],$input['dbuser'],$input['dbpass']);
 			if ($link) {
@@ -43,6 +44,18 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text'][]='Server configuration does not allow db connections.';
+	}
+
+	if (!$error) {
+			define('_DBHOST_',$_SESSION['install']['input']['dbhost']);
+			define('_DBUSER_',$_SESSION['install']['input']['dbuser']);
+			define('_DBPASS_',$_SESSION['install']['input']['dbpass']);
+			define('_DBNAME_',$_SESSION['install']['input']['dbname']);
+			require_once '../../includes/classes/modman.class.php';
+			$modman=new modman();
+			$modman->db_insert_file(dirname(__FILE__).'/../sql/db.sql');
+	} else {
+		$nextpage='install/step3.php';
 	}
 }
 $my_url=str_replace('/install/processors/insert_db.php','',$_SERVER['PHP_SELF']);

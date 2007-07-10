@@ -24,6 +24,9 @@ $topass=array();
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 	$output['dbtable_prefix']='dsb_';
+} elseif (isset($_SESSION['install']['input'])) {
+	$output=$_SESSION['install']['input'];
+	$output['dbtable_prefix']='dsb_';
 } else {
 	$my_url=str_replace('/install/step2.php','',$_SERVER['PHP_SELF']);
 	$output['baseurl']=((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$my_url;

@@ -143,15 +143,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
+		$input['fileop_mode']=$_SESSION['install']['write']==2 ? 'ftp' : 'disk';
 		$input['license_key_md5']=md5($input['license_key']);
 		$tpl=new phemplate('../skin/','remove_nonjs');
 		$tpl->set_file('content','defines.inc.php');
 		$tpl->set_var('input',$input);
 		$towrite=$tpl->process('content','content',TPL_FINISH);
 
-		require_once '../../includes/classes/modman.class.php';
-		$modman=new modman();
-		$modman->fileop->file_put_contents('../../includes/defines.inc.php',$towrite);
+		require_once '../../includes/classes/fileop.class.php';
+		$fileop=new fileop();
+		$fileop->file_put_contents('../../includes/defines.inc.php',$towrite);
 		$_SESSION['install']['input']=$input;
 	} else {
 		$nextpage='install/step2.php';

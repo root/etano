@@ -38,11 +38,11 @@ if (mysql_num_rows($res)) {
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-		require_once '../includes/classes/modman.class.php';
-		$modman=new modman();
-		$modman->fileop->delete(_PHOTOPATH_.'/t1/'.$input['photo']);
-		$modman->fileop->delete(_PHOTOPATH_.'/t2/'.$input['photo']);
-		$modman->fileop->delete(_PHOTOPATH_.'/'.$input['photo']);
+		require_once '../includes/classes/fileop.class.php';
+		$fileop=new fileop();
+		$fileop->delete(_PHOTOPATH_.'/t1/'.$input['photo']);
+		$fileop->delete(_PHOTOPATH_.'/t2/'.$input['photo']);
+		$fileop->delete(_PHOTOPATH_.'/'.$input['photo']);
 
 		$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_parent_id`='$photo_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

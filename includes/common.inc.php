@@ -11,10 +11,13 @@ Support at:                 http://www.datemill.com/forum
 * See the "softwarelicense.txt" file for license.                             *
 *******************************************************************************/
 
+if (is_dir(dirname(__FILE__).'/../install')) {
+	die('Please remove the install folder.');
+}
 ob_start();
 ini_set('include_path','.');
 ini_set('session.use_cookies',1);
-ini_set('date.timezone','America/Denver');	// temporary fix for the php 5.1+ TZ compatibility
+ini_set('date.timezone','GMT');	// temporary fix for the php 5.1+ TZ compatibility
 ini_set('error_reporting',2047);
 
 setlocale(LC_CTYPE,'C');

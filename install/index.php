@@ -171,6 +171,63 @@ if ($temp=='777') {
 	$output['tmpadmin_perm']='<img src="skin/images/del.gif" alt="not ok" />';
 }
 
+// check if we can use any exec function to find out where php-cli and mysql binaries are
+$temp='';
+if (function_exists('exec')) {
+	$temp=@exec('which php');
+	if (!empty($temp) && $temp{0}=='/') {
+		$_SESSION['install']['phpbin']=$temp;
+		$_SESSION['install']['exec']='exec';
+	}
+	$temp=@exec('which mysql');
+	if (!empty($temp) && $temp{0}=='/') {
+		$_SESSION['install']['mysqlbin']=$temp;
+		$_SESSION['install']['exec']='exec';
+	}
+}
+if (empty($temp) && function_exists('shell_exec')) {
+	$temp=@shell_exec('which php');
+	if (!empty($temp) && $temp{0}=='/') {
+		$_SESSION['install']['phpbin']=$temp;
+		$_SESSION['install']['exec']='shell_exec';
+	}
+	$temp=@shell_exec('which mysql');
+	if (!empty($temp) && $temp{0}=='/') {
+		$_SESSION['install']['mysqlbin']=$temp;
+		$_SESSION['install']['exec']='shell_exec';
+	}
+}
+if (empty($temp) && function_exists('system')) {
+	$temp=@system('which php');
+	if (!empty($temp) && $temp{0}=='/') {
+		$_SESSION['install']['phpbin']=$temp;
+		$_SESSION['install']['exec']='system';
+	}
+	$temp=@system('which mysql');
+	if (!empty($temp) && $temp{0}=='/') {
+		$_SESSION['install']['mysqlbin']=$temp;
+		$_SESSION['install']['exec']='system';
+	}
+}
+if (empty($temp) && function_exists('popen')) {
+	$fp=@popen('which php','r');
+	if ($fp) {
+		$temp=fgets($fp);
+		if (!empty($temp) && $temp{0}=='/') {
+			$_SESSION['install']['phpbin']=trim($temp);
+			$_SESSION['install']['exec']='popen';
+		}
+		@pclose($fp);
+		$fp=@popen('which mysql','r');
+		$temp=fgets($fp);
+		if (!empty($temp) && $temp{0}=='/') {
+			$_SESSION['install']['mysqlbin']=trim($temp);
+			$_SESSION['install']['exec']='popen';
+		}
+		@pclose($fp);
+	}
+}
+
 if (!$error) {
 	$output['continue']=true;
 }

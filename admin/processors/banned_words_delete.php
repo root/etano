@@ -27,15 +27,15 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 if (!$error) {
 	// save in file
-	require_once _BASEPATH_.'/includes/classes/modman.class.php';
+	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
 	$query="SELECT `word` FROM `{$dbtable_prefix}banned_words`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
 		$towrite[]=mysql_result($res,$i,0);
 	}
 	$towrite='<?php $_banned_words='.var_export($towrite,true).';';
-	$modman=new modman();
-	$modman->fileop->file_put_contents(_BASEPATH_.'/includes/banned_words.inc.php',$towrite);
+	$fileop=new fileop();
+	$fileop->file_put_contents(_BASEPATH_.'/includes/banned_words.inc.php',$towrite);
 }
 
 $topass['message']['type']=MESSAGE_INFO;
