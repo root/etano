@@ -259,7 +259,7 @@ class modman {
 			$query='';
 			while (!feof($fp)) {
 				$line=trim(fgets($fp));
-				if (substr($line,0,2)=='--') {
+				if (empty($line) || substr($line,0,2)=='--') {
 					continue;
 				} elseif (substr($line,-1)!=';') {
 					$query.=$line;

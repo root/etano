@@ -11,9 +11,6 @@ Support at:                 http://www.datemill.com/forum
 * See the "softwarelicense.txt" file for license.                             *
 *******************************************************************************/
 
-if (is_dir(dirname(__FILE__).'/../install')) {
-	die('Please remove the install folder.');
-}
 ob_start();
 ini_set('include_path','.');
 ini_set('session.use_cookies',1);
@@ -114,6 +111,9 @@ $__field2type[FIELD_LOCATION]=TYPE_INT;
 $__field2format[FIELD_LOCATION]=0;
 define('FIELD_RANGE',108);
 require_once 'classes/phemplate.class.php';
+if (is_dir(dirname(__FILE__).'/../install')) {
+	die('Please remove the install folder.');
+}
 
 // often used vars in skins
 $tplvars['sitename']=_SITENAME_;
