@@ -17,18 +17,26 @@ set_time_limit(0);
 
 $error=false;
 $topass=array();
-$nextpage='info.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
+	define('_BASEPATH_',$_SESSION['install']['input']['basepath']);
 	define('_FILEOP_MODE_',$_SESSION['install']['write']==2 ? 'ftp' : 'disk');
+	define('_FTPHOST_',$_SESSION['install']['input']['ftphost']);
+	define('_FTPUSER_',$_SESSION['install']['input']['ftpuser']);
+	define('_FTPPASS_',$_SESSION['install']['input']['ftppass']);
+	define('_FTPPATH_',$_SESSION['install']['input']['ftppath']);
 
 	require_once '../../includes/classes/fileop.class.php';
 	$fileop=new fileop();
-	$fileop->delete(dirname(__FILE__).'/../../install2/');
-
-	$topass['message']['type']=MESSAGE_INFO;
-	$topass['message']['text'][]='The install folder has been removed succesfully. Please proceed to <a class="content-link simple" href="admin/index.php">admin panel</a> to configure your site.';
+	$mt='';
+	if ($fileop->delete(dirname(__FILE__).'/../../install2/')) {
+		$mt=MESSAGE_INFO;
+	} else {
+		$mt=MESSAGE_ERROR;
+	}
 }
-$my_url=str_replace('/install/processors/cleanup.php','',$_SERVER['PHP_SELF']);
-define('_BASEURL_',((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$my_url);
-redirect2page($nextpage,$topass,$qs);
+$nextpage='http://www.datemill.com/rpc/finish.php?lk='.md5(_LICENSE_KEY_).'&v='._INTERNAL_VERSION_.'&mt='.$mt.'&bu='.base64_encode(_BASEURL_);
+if (!empty($_SESSION['install']['phpbin'])) {
+	$nextpage.='&p='.base64_encode($_SESSION['install']['phpbin']);
+}
+redirect2page($nextpage,$topass,'',true);
 ?>
