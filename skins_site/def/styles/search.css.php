@@ -51,11 +51,11 @@ ul.gallery_view p {
 
 /* LEFT MENU */
 
-.content-link.gview {
+a.gview {
 	background-image: url('../images/menu_gallery_view.gif');
 }
 
-.content-link.lview {
+a.lview {
 	background-image: url('../images/menu_list_view.gif');
 }
 

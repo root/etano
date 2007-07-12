@@ -36,6 +36,8 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
+- nu exista blog_post_delete
+- cronul de cleanup ar trebui sa stearga si din dsb_error_log
 - cronu care sterge din onlines tb sa scada scorul. cred ca tot asta ar trebui sa modifice si last_login.
 	asta si poate si processors/login.php
 - goto top link in blogs/photos/profile la comentarii
@@ -58,7 +60,6 @@ TODO
 
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
 
-- installer + modman
 - licenta si verificari
 - de afisat versiunea curenta in cpanel.php (installed si latest)
 - in toate procesoarele tb sa verific cazul de eroare:

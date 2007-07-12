@@ -69,13 +69,13 @@ if (isset($_SESSION['topass']['input'])) {
 switch ($output['field_type']) {
 
 	case FIELD_TEXTFIELD:
-		$output['row_searchable']=true;
+		$output['row_searchable']=false;
 		$output['row_st']='invisible';
 		$output['search_type']='';
 		break;
 
 	case FIELD_TEXTAREA:
-		$output['row_searchable']=true;
+		$output['row_searchable']=false;
 		$output['row_st']='invisible';
 		$output['search_type']='';
 		$output['row_accval_textarea']=true;

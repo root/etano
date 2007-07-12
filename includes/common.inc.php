@@ -103,7 +103,9 @@ if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=
 	}
 }
 
-require_once 'sessions.inc.php';
+if (!defined('NO_SESSION')) {
+	require_once 'sessions.inc.php';
+}
 require_once 'defines.inc.php';
 require_once 'sco_functions.inc.php';
 define('FIELD_LOCATION',107);
