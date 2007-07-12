@@ -71,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		} else {
 			unset($input['pass']);
 		}
+		$input['user']=strtolower($input['user']);
 		if (!empty($input['admin_id'])) {
 			$query="UPDATE `{$dbtable_prefix}admin_accounts` SET ";
 			foreach ($admin_accounts_default['defaults'] as $k=>$v) {

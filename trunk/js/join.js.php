@@ -5,23 +5,25 @@ $(function() {
 
 	$('#join_form')[0].elements[2].focus();
 
-	$('#join_form textarea').bind('keyup',function() {
-		myid=$(this).attr('id');
-		remaining=ta_len-$(this).val().length;
-		if (remaining<0) {
-			$(this).val($(this).val().substr(0,$(this).val().length+remaining));
-			remaining=0;
-		}
-		$('#'+myid+'_chars').html(remaining.toString());
-	}).bind('blur',function() {
-		myid=$(this).attr('id');
-		remaining=ta_len-$(this).val().length;
-		if (remaining<0) {
-			$(this).val($(this).val().substr(0,$(this).val().length+remaining));
-			remaining=0;
-		}
-		$('#'+myid+'_chars').html(remaining.toString());
-	});
+	if (ta_len>0) {
+		$('#join_form textarea').bind('keyup',function() {
+			myid=$(this).attr('id');
+			remaining=ta_len-$(this).val().length;
+			if (remaining<0) {
+				$(this).val($(this).val().substr(0,$(this).val().length+remaining));
+				remaining=0;
+			}
+			$('#'+myid+'_chars').html(remaining.toString());
+		}).bind('blur',function() {
+			myid=$(this).attr('id');
+			remaining=ta_len-$(this).val().length;
+			if (remaining<0) {
+				$(this).val($(this).val().substr(0,$(this).val().length+remaining));
+				remaining=0;
+			}
+			$('#'+myid+'_chars').html(remaining.toString());
+		});
+	}
 	$('#check_username').click(function() {
 		req_check_username();
 		return false;

@@ -19,7 +19,7 @@ $topass=array();
 $qs='';
 $qs_sep='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-	$user=sanitize_and_format($_POST['username'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$user=strtolower(sanitize_and_format($_POST['username'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD],''));
 	$pass=sanitize_and_format($_POST['password'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	if (!empty($user) && !empty($pass)) {
 		$query="SELECT `admin_id`,`name`,`dept_id`,`status` FROM `{$dbtable_prefix}admin_accounts` WHERE `user`='$user' AND `pass`=md5('$pass')";

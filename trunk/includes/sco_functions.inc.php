@@ -1,9 +1,9 @@
-<?
+<?php
 /******************************************************************************
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007071001
+File version:				1.2007071201
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 

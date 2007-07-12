@@ -118,6 +118,12 @@ if (function_exists('mysql_connect')) {
 	$output['mysql']='<img src="skin/images/del.gif" alt="not ok" />';
 }
 
+if (php_sapi_name()=='apache') {
+	$output['sapi']='<img src="skin/images/check.gif" alt="ok" />';
+} else {
+	$output['sapi']='<img src="skin/images/warning.gif" alt="not ok" />';
+}
+
 $fp=@fopen(dirname(__FILE__).'/write_test.txt','wb');
 if ($fp) {
 	$temp=@fwrite($fp,'test');
