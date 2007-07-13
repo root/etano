@@ -46,4 +46,3 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Skin deleted.';
 
 redirect2page('admin/site_skins.php',$topass,$qs);
-?>

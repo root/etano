@@ -29,4 +29,3 @@ if (is_file('photos_left.php')) {
 	include 'photos_left.php';
 }
 include 'frame.php';
-?>

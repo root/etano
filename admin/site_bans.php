@@ -64,4 +64,3 @@ unset($loop);
 $tplvars['title']='Banned Members Management';
 $tplvars['page']='site_bans';
 include 'frame.php';
-?>

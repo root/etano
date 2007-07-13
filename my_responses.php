@@ -70,4 +70,3 @@ if (is_file('my_responses_left.php')) {
 	include 'my_responses_left.php';
 }
 include 'frame.php';
-?>

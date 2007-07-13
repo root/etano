@@ -150,4 +150,3 @@ if (!isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['argc'])) {
 	}
 //	echo count($jobs)." jobs run.\n";
 }
-?>

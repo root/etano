@@ -2176,4 +2176,3 @@ class EvalMathStack {
 function createGraph($data, $w=400, $h=200, $prop="", $random=false){ // for legacy support, safe to remove
 	return $this->createGraph($data, $w, $h, $prop, $random);
 }
-?>

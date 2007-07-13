@@ -61,4 +61,3 @@ $tpl->process('content','content');
 $tplvars['title']='Membership assignment';
 $tplvars['page']='membership_assign';
 include 'frame.php';
-?>

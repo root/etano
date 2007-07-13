@@ -139,4 +139,3 @@ $tplvars['title']='Comments Search Results';
 $tplvars['page']='comment_results';
 $tplvars['css']='comment_results.css';
 include 'frame.php';
-?>

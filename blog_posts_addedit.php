@@ -61,4 +61,3 @@ if (is_file('blog_posts_addedit_left.php')) {
 	include 'blog_posts_addedit_left.php';
 }
 include 'frame.php';
-?>

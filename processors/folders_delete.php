@@ -51,4 +51,3 @@ if (isset($_on_after_delete)) {
 	}
 }
 redirect2page('folders.php',$topass,$qs);
-?>

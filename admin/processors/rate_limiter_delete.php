@@ -29,4 +29,3 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Limit removed successfully.';
 
 redirect2page('admin/rate_limiter.php',$topass,$qs);
-?>

@@ -55,4 +55,3 @@ if (is_file('my_networks_left.php')) {
 	include 'my_networks_left.php';
 }
 include 'frame.php';
-?>

@@ -52,4 +52,3 @@ if (isset($_GET['cr'])) {
 }
 $qs.=$qs_sep.'country_id='.$country_id;
 redirect2page('admin/loc_states.php',$topass,$qs);
-?>

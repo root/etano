@@ -73,4 +73,3 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 }
 redirect2page('home.php',$topass,$qs);
-?>

@@ -158,4 +158,3 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 }
 $nextpage=_BASEURL_.'/'.$nextpage;
 redirect2page($nextpage,$topass,'',true);
-?>

@@ -25,4 +25,3 @@ $tpl->set_file('left_content','profile_left.html');
 $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('left_content','left_content',TPL_OPTIONAL);
-?>

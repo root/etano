@@ -64,4 +64,3 @@ if (!empty($message)) {
 }
 echo $tpl->process('','content',TPL_FINISH | TPL_LOOP | TPL_OPTIONAL);
 unset($_SESSION['topass']);
-?>

@@ -138,4 +138,3 @@ $tplvars['title']='Blog Search Results';
 $tplvars['page']='blog_results';
 $tplvars['css']='blog_results.css';
 include 'frame.php';
-?>

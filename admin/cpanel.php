@@ -71,4 +71,3 @@ $tplvars['title']='Your admin control panel';
 $tplvars['page']='cpanel';
 $tplvars['css']='cpanel.css';
 include 'frame.php';
-?>

@@ -57,4 +57,3 @@ unset($loop);
 $tplvars['title']='Flirt Management';
 $tplvars['page']='flirts';
 include 'frame.php';
-?>

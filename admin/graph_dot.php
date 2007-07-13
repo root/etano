@@ -94,4 +94,3 @@ if (in_array($type,$dot_types)) {
 	}
 	redirect2page('tmp/admin/'.$type.$start_date.$end_date.'.png');
 }
-?>

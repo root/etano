@@ -25,4 +25,3 @@ $tplvars['page_title']='Terms of Service';
 $tplvars['page']='tos';
 $tplvars['css']='tos.css';
 include 'frame.php';
-?>

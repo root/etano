@@ -156,4 +156,3 @@ print "time: $hour:$minute<br>";
 		echo count($jobs)." jobs run.\n";
 	}
 }
-?>

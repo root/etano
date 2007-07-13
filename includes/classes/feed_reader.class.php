@@ -74,7 +74,11 @@ class feedReader {
 		} else {
 			ini_set('auto_detect_line_endings','1');
 			$url=parse_url($this->feedUrl);
-			$header='GET '.$url['path']." HTTP/1.0\r\n";
+			$header='GET '.$url['path'];
+			if (!empty($url['query'])) {
+				$header.='?'.$url['query'];
+			}
+			$header.=" HTTP/1.0\r\n";
 			$header.='Host: '.$url['host']."\r\n";
 			$header.="Connection: close\r\n\r\n";
 			$socket=@fsockopen($url['host'],80,$errno,$errstr,10);

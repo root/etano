@@ -68,4 +68,3 @@ $tplvars['title']='Payment History';
 $tplvars['page']='payment_history';
 $tplvars['css']='payment_history.css';
 include 'frame.php';
-?>

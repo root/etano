@@ -50,4 +50,3 @@ if (is_file('my_blogs_left.php')) {
 	include 'my_blogs_left.php';
 }
 include 'frame.php';
-?>

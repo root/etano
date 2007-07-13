@@ -103,4 +103,3 @@ if (is_file('blog_view_left.php')) {
 	include 'blog_view_left.php';
 }
 include 'frame.php';
-?>

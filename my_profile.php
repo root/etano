@@ -180,4 +180,3 @@ if (is_file('my_profile_left.php')) {
 	include 'my_profile_left.php';
 }
 include 'frame.php';
-?>

@@ -52,4 +52,3 @@ $tplvars['title']='Banned Members Management';
 $tplvars['css']='site_bans_addedit.css';
 $tplvars['page']='site_bans_addedit';
 include 'frame.php';
-?>

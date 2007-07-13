@@ -244,4 +244,3 @@ $iso3166['ZA']='South Africa';
 $iso3166['ZM']='Zambia';
 $iso3166['ZR']='Zaire';
 $iso3166['ZW']='Zimbabwe';
-?>

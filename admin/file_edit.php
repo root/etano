@@ -52,4 +52,3 @@ $tplvars['title']='File editor';
 $tplvars['css']='file_edit.css';
 $tplvars['page']='file_edit';
 include 'frame.php';
-?>

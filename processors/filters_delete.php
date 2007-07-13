@@ -72,4 +72,3 @@ if (isset($_on_after_delete)) {
 	}
 }
 redirect2page($nextpage,$topass,$qs);
-?>

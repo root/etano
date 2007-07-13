@@ -47,4 +47,3 @@ $tpl->set_loop('jsarrays',$jsarrays);
 $tpl->set_loop('templates',$templates);
 $tpl->set_var('tplvars',$tplvars);
 echo $tpl->process('','content',TPL_FINISH | TPL_LOOP | TPL_NOLOOP);
-?>

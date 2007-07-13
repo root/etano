@@ -159,4 +159,3 @@ if (!empty($post_id) && isset($output['fk_user_id']) && ((isset($_SESSION['user'
 	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `stat_views`=`stat_views`+1 WHERE `post_id`='$post_id'";
 	@mysql_query($query);
 }
-?>

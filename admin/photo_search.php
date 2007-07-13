@@ -30,4 +30,3 @@ $tplvars['title']='Search';
 $tplvars['css']='photo_search.css';
 $tplvars['page']='photo_search';
 include 'frame.php';
-?>

@@ -26,4 +26,3 @@ if (isset($_SESSION['user']['user_id'])) {
 $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('left_content','left_content',TPL_OPTIONAL);
-?>

@@ -83,4 +83,3 @@ $tpl->set_file('content','file_browser_content.html');
 $tpl->set_loop('server_content',$folders);
 $tpl->set_var('path',$html_path);
 echo $tpl->process('','content',TPL_LOOP);
-?>

@@ -68,4 +68,3 @@ if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/profile_fields.php';
 }
 redirect2page($nextpage,$topass,'',true);
-?>

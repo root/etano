@@ -54,4 +54,3 @@ $tplvars['page_title']='Change Password';
 $tplvars['page']='pass_change';
 $tplvars['css']='pass_change.css';
 include 'frame.php';
-?>

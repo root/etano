@@ -18,4 +18,3 @@ $captcha_word=$_SESSION['captcha_word'];
 $c=new sco_captcha(_BASEPATH_.'/includes/fonts',4,true,13,14,10,true);
 header('Content-type: image/jpeg');
 $c->make_captcha($captcha_word);
-?>

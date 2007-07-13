@@ -47,4 +47,3 @@ if (is_file('friendship_requests_left.php')) {
 	include 'friendship_requests_left.php';
 }
 include 'frame.php';
-?>

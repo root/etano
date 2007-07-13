@@ -127,4 +127,3 @@ if (!$error) {
 
 $nextpage=_BASEURL_.'/admin/'.$nextpage;
 redirect2page($nextpage,$topass,'',true);
-?>

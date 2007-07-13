@@ -78,4 +78,3 @@ if (!isset($_POST['silent'])) {
 	echo $topass['message']['text'];
 	die;
 }
-?>

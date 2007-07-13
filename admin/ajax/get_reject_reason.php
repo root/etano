@@ -28,4 +28,3 @@ if (mysql_num_rows($res)) {
 
 header('Content-type: text/xml');
 echo '<result>'.$output.'</result>';
-?>

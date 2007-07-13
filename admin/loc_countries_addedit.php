@@ -47,4 +47,3 @@ $tpl->process('content','content');
 $tplvars['title']='Location Management: Countries';
 $tplvars['page']='loc_countries_addedit';
 include 'frame.php';
-?>

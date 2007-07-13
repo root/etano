@@ -47,4 +47,3 @@ $tplvars['title']='Flirt Management';
 $tplvars['css']='flirts_addedit.css';
 $tplvars['page']='flirts_addedit';
 include 'frame.php';
-?>

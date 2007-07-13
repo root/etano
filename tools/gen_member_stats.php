@@ -66,4 +66,3 @@ for ($i=$days;$i>=0;--$i) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 print 'done';
-?>

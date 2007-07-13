@@ -115,4 +115,3 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 }
 //redirect2page('admin/db_backup.php',$topass,$qs);
-?>

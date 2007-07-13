@@ -57,4 +57,3 @@ unset($loop);
 $tplvars['title']='Site news';
 $tplvars['page']='site_news';
 include 'frame.php';
-?>

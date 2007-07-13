@@ -29,4 +29,3 @@ if (!empty($uid)) {
 	}
 }
 redirect2page('info.php',array(),$qs);
-?>

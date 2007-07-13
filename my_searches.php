@@ -53,4 +53,3 @@ if (is_file('my_searches_left.php')) {
 	include 'my_searches_left.php';
 }
 include 'frame.php';
-?>

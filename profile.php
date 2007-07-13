@@ -208,4 +208,3 @@ if (is_file('profile_left.php')) {
 include 'frame.php';
 update_stats($uid,'pviews',1);
 add_member_score($uid,'pview');
-?>

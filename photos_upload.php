@@ -40,4 +40,3 @@ if (is_file('photos_upload_left.php')) {
 	include 'photos_upload_left.php';
 }
 include 'frame.php';
-?>

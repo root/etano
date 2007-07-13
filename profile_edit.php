@@ -205,4 +205,3 @@ if (is_file('profile_edit_left.php')) {
 	include 'profile_edit_left.php';
 }
 include 'frame.php';
-?>

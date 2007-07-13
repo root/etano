@@ -39,4 +39,3 @@ if (!empty($_POST['dbhost']) && !empty($_POST['dbuser']) && !empty($_POST['dbpas
 	$output='You must fill in all parameters (DB host, user, password, name)';
 }
 echo $output;
-?>

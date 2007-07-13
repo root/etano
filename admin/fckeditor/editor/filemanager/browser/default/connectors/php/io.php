@@ -100,4 +100,3 @@ function GetRootPath()
 
 	return substr( $sRealPath, 0, strlen( $sRealPath ) - strlen( $sSelfPath ) ) ;
 }
-?>

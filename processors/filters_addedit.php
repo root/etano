@@ -155,4 +155,3 @@ if (isset($_POST['od'])) {
 	$qs_sep='&';
 }
 redirect2page($nextpage,$topass,$qs);
-?>

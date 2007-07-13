@@ -50,4 +50,3 @@ if (!empty($input['return'])) {
 	$nextpage=_BASEURL_.'/admin/member_search.php';
 }
 redirect2page($nextpage,$topass,'',true);
-?>

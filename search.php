@@ -303,4 +303,3 @@ if (is_file('search_left.php')) {
 	include 'search_left.php';
 }
 include 'frame.php';
-?>

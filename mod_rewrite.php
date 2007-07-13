@@ -44,4 +44,3 @@ if ($uri_parts[0]=='blog' && isset($uri_parts[1])) {
 } else {
 	redirect2page('index.php');
 }
-?>

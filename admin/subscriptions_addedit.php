@@ -54,4 +54,3 @@ $tplvars['title']='Subscriptions Management';
 $tplvars['css']='subscriptions_addedit.css';
 $tplvars['page']='subscriptions_addedit';
 include 'frame.php';
-?>

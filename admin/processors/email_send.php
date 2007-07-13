@@ -83,4 +83,3 @@ if (empty($nextpage)) {
 	}
 }
 redirect2page($nextpage,$topass,$qs,true);
-?>

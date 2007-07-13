@@ -53,4 +53,3 @@ if (isset($_GET['s'])) {
 $tplvars['title']='Language Strings';
 $tplvars['page']='lang_strings';
 include 'frame.php';
-?>

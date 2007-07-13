@@ -44,4 +44,3 @@ $tplvars['title']='Site News Management';
 $tplvars['css']='site_news_addedit.css';
 $tplvars['page']='site_news_addedit';
 include 'frame.php';
-?>

@@ -29,4 +29,3 @@ if (!isset($_SESSION['admin']['admin_id'])) {
 } else {
 	redirect2page('admin/cpanel.php');
 }
-?>

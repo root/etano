@@ -28,4 +28,3 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Account removed successfully.';
 
 redirect2page('admin/admin_accounts.php',$topass,$qs);
-?>

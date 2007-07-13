@@ -42,4 +42,3 @@ $tpl->process('content','content',TPL_OPTIONAL);
 $tplvars['title']='Your admin control panel';
 $tplvars['page']='stats';
 include 'frame.php';
-?>

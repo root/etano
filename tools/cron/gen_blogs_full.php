@@ -42,4 +42,3 @@ while ($blog=mysql_fetch_assoc($res)) {
 	$towrite='<?php $post='.var_export($blog,true).';';
 	$fileop->file_put_contents(_CACHEPATH_.'/blogs/posts/'.$blog['post_id']{0}.'/'.$blog['post_id'].'_short.inc.php',$towrite);
 }
-?>

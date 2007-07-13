@@ -67,4 +67,3 @@ if (!empty($input['return'])) {
 	$nextpage=_BASEURL_.'/admin/'.$input['return'];
 }
 redirect2page($nextpage,$topass,$qs,true);
-?>

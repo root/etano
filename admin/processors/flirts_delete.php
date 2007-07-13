@@ -35,4 +35,3 @@ if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/flirts.php';
 }
 redirect2page($nextpage,$topass,'',true);
-?>

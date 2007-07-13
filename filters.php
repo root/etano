@@ -117,4 +117,3 @@ if (is_file('filters_left.php')) {
 	include 'filters_left.php';
 }
 include 'frame.php';
-?>

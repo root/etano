@@ -90,4 +90,3 @@ $tplvars['title']=sprintf('View a blog post');
 $tplvars['page']='blog_post_view';
 $tplvars['css']='blog_post_view.css';
 include 'frame.php';
-?>

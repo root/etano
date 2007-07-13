@@ -42,4 +42,3 @@ if (isset($_GET['r'])) {
 	$qs_sep='&';
 }
 redirect2page('admin/loc_countries.php',$topass,$qs);
-?>

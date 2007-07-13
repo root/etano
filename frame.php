@@ -33,4 +33,3 @@ if (isset($_SESSION['topass'])) {
 	unset($_SESSION['topass']);
 }
 ob_end_flush();
-?>

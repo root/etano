@@ -49,4 +49,3 @@ if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/profile_categories.php';
 }
 redirect2page($nextpage,$topass,'',true);
-?>

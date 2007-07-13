@@ -60,4 +60,3 @@ $tplvars['title']='Send a Message';
 $tplvars['page']='message_send';
 $tplvars['css']='message_send.css';
 include 'frame.php';
-?>

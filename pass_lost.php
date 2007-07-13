@@ -37,4 +37,3 @@ $tplvars['page_title']='Lost Password';
 $tplvars['page']='pass_lost';
 $tplvars['css']='pass_lost.css';
 include 'frame.php';
-?>

@@ -58,4 +58,3 @@ unset($admin_accounts);
 $tplvars['title']='Admin Accounts';
 $tplvars['page']='admin_accounts';
 include 'frame.php';
-?>

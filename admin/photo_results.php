@@ -155,4 +155,3 @@ $tplvars['title']='Photo Search Results';
 $tplvars['page']='photo_results';
 $tplvars['css']='photo_results.css';
 include 'frame.php';
-?>

@@ -84,4 +84,3 @@ if (is_file('filters_addedit_left.php')) {
 	include 'filters_addedit_left.php';
 }
 include 'frame.php';
-?>

@@ -143,4 +143,3 @@ if (is_file('message_read_left.php')) {
 	include 'message_read_left.php';
 }
 include 'frame.php';
-?>

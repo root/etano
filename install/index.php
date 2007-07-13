@@ -247,4 +247,3 @@ $tpl->set_var('tplvars',$tplvars);
 $tpl->set_loop('rw_files',$rw_files);
 $tpl->process('content','content',TPL_OPTIONAL | TPL_LOOP);
 include 'frame.php';
-?>

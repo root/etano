@@ -44,4 +44,3 @@ $tplvars['page_title']='Contact Us';
 $tplvars['page']='contact';
 $tplvars['css']='contact.css';
 include 'frame.php';
-?>

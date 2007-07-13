@@ -59,4 +59,3 @@ if (is_file('photo_settings_left.php')) {
 	include 'photo_settings_left.php';
 }
 include 'frame.php';
-?>
