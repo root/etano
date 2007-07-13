@@ -141,14 +141,14 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 			$num_states=0;
 			$num_cities=0;
 			if (!empty($country_id)) {
-				$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='$country_id'";
+				$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=$country_id";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
 					list($prefered_input,$num_states)=mysql_fetch_row($res);
 				}
 			}
 			if (!empty($state_id)) {
-				$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`='$state_id'";
+				$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`=$state_id";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
 					$num_cities=mysql_result($res,0,0);
@@ -159,7 +159,7 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 			$loop[$j]['dbfield']=$field['dbfield'].'_state';
 			$loop[$j]['field']='<select name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option>';	// translate this
 			if (!empty($country_id) && $prefered_input=='s' && !empty($num_states)) {
-				$loop[$j]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$state_id,"`fk_country_id`='$country_id'");
+				$loop[$j]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$state_id,"`fk_country_id`=$country_id");
 			}
 			$loop[$j]['field'].='</select>';
 			$loop[$j]['class']=(!empty($country_id) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
@@ -168,7 +168,7 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 			$loop[$j]['dbfield']=$field['dbfield'].'_city';
 			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option>';	// translate this
 			if (!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) {
-				$loop[$j]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$user_details[$field['dbfield'].'_city'],"`fk_state_id`='$state_id'");
+				$loop[$j]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$user_details[$field['dbfield'].'_city'],"`fk_state_id`=$state_id");
 			}
 			$loop[$j]['field'].='</select>';
 			$loop[$j]['class']=(!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';

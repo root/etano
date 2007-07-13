@@ -25,7 +25,7 @@ $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 $config['bbcode_message']=get_site_option('bbcode_message','core');
 
 $from="`{$dbtable_prefix}user_mtpls`";
-$where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
+$where="`fk_user_id`=".$_SESSION['user']['user_id'];
 
 $query="SELECT count(*) FROM $from WHERE $where";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007071201
+File version:				1.2007071301
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -265,7 +265,7 @@ function smart_table($array,$table_cols=1,$row_css_class='',$cell_css_classes=ar
 			$myreturn.=' last';
 		}
 		$myreturn.="\">\n";
-		for ($i=1;$i<$num_elem;++$i) {
+		for ($i=1;$i<=$num_elem;++$i) {
 			if ($i%$table_cols==1 && $i!=1) {
 				$myreturn.="\n</ul>\n";
 				$myreturn.='<ul class="table_row '.$row_css_class;

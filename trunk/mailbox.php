@@ -37,7 +37,7 @@ if ($ob>=0) {
 }
 
 $my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'SENT',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
-$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' ORDER BY `folder` ASC";
+$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`=".$_SESSION['user']['user_id']." ORDER BY `folder` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
 	$my_folders[$rsrow[0]]=$rsrow[1];
@@ -55,7 +55,7 @@ unset($moveto_folders[$fid]);
 $my_folders=sanitize_and_format($my_folders,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $from="`{$dbtable_prefix}user_inbox`";
-$where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
+$where="`fk_user_id`=".$_SESSION['user']['user_id'];
 
 switch ($fid) {
 
@@ -74,7 +74,7 @@ switch ($fid) {
 
 	case FOLDER_INBOX:
 	default:
-		$where.=" AND `fk_folder_id`='$fid' AND `del`=0";
+		$where.=" AND `fk_folder_id`=$fid AND `del`=0";
 		break;
 
 }

@@ -27,7 +27,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 	$output['return']=rawurlencode($output['return2']);
 
 	$my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'SENT',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
-	$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+	$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`=".$_SESSION['user']['user_id'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_row($res)) {
 		$my_folders[$rsrow[0]]=$rsrow[1];
@@ -45,7 +45,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 	$my_folders=sanitize_and_format($my_folders,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 	$mailbox_table='inbox';
-	$where="a.`fk_user_id`='".$_SESSION['user']['user_id']."' AND a.`mail_id`='".$output['mail_id']."'";
+	$where="a.`fk_user_id`=".$_SESSION['user']['user_id']." AND a.`mail_id`=".$output['mail_id'];
 
 	switch ($output['fid']) {
 		case FOLDER_INBOX:
@@ -121,7 +121,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 		$tpl->set_var('output',$output);
 		$tpl->process('content','content',TPL_OPTIONAL);
 		if ($output['is_read']==0) {
-			$query="UPDATE `{$dbtable_prefix}user_{$mailbox_table}` SET `is_read`=1 WHERE `mail_id`='".$output['mail_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query="UPDATE `{$dbtable_prefix}user_{$mailbox_table}` SET `is_read`=1 WHERE `mail_id`=".$output['mail_id']." AND `fk_user_id`=".$_SESSION['user']['user_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	} else {
