@@ -37,4 +37,3 @@ if (!empty($message)) {
 	$tpl->set_var('message',$message['text']);
 }
 echo $tpl->process('','content',TPL_FINISH);
-?>

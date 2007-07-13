@@ -43,4 +43,3 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 }
 redirect2page('admin/site_skins.php',$topass,$qs);
-?>

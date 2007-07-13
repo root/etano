@@ -88,4 +88,3 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$topass['message']['text']='Your preferences were saved.';
 }
 redirect2page('my_settings.php',$topass,$qs);
-?>

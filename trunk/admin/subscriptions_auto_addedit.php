@@ -63,4 +63,3 @@ $tplvars['title']='Auto Subscriptions Management';
 $tplvars['css']='subscriptions_auto_addedit.css';
 $tplvars['page']='subscriptions_auto_addedit';
 include 'frame.php';
-?>

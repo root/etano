@@ -38,4 +38,3 @@ $tpl->process('content','content');
 $tplvars['title']='Site Skins';
 $tplvars['page']='site_skins_addedit';
 include 'frame.php';
-?>

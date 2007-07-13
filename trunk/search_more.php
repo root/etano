@@ -46,4 +46,3 @@ if (is_file('search_more_left.php')) {
 	include 'search_more_left.php';
 }
 include 'frame.php';
-?>

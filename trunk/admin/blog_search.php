@@ -29,4 +29,3 @@ $tplvars['title']='Search';
 $tplvars['css']='blog_search.css';
 $tplvars['page']='blog_search';
 include 'frame.php';
-?>

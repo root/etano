@@ -37,4 +37,3 @@ $tpl->drop_loop('rate_limiter');
 $tplvars['title']='Rate Limiter';
 $tplvars['page']='rate_limiter';
 include 'frame.php';
-?>

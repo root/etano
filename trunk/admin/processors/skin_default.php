@@ -36,4 +36,3 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Skin updated.';
 
 redirect2page('admin/site_skins.php',$topass,$qs);
-?>

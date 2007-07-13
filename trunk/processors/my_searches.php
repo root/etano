@@ -72,4 +72,3 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 }
 redirect2page($nextpage,$topass,$qs);
-?>

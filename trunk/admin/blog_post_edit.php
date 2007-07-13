@@ -51,4 +51,3 @@ $tplvars['title']='Edit a Blog Post';
 $tplvars['page']='blog_post_edit';
 $tplvars['css']='blog_post_edit.css';
 include 'frame.php';
-?>

@@ -77,4 +77,3 @@ if (is_file('my_blog_posts_left.php')) {
 	include 'my_blog_posts_left.php';
 }
 include 'frame.php';
-?>

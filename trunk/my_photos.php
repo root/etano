@@ -103,4 +103,3 @@ if (is_file('my_photos_left.php')) {
 	include 'my_photos_left.php';
 }
 include 'frame.php';
-?>

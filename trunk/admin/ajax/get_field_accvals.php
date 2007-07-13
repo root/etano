@@ -30,4 +30,3 @@ if (!empty($_POST['field'])) {
 	$output=sanitize_and_format(substr($output,0,-1),TYPE_STRING,FORMAT_TEXT2HTML);
 }
 echo $output;
-?>

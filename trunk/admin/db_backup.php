@@ -25,4 +25,3 @@ $tplvars['title']='Backup Database';
 $tplvars['page']='db_backup';
 $tplvars['css']='db_backup.css';
 include 'frame.php';
-?>

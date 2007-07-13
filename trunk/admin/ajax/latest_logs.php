@@ -42,4 +42,3 @@ if (mysql_num_rows($res)) {
 }
 
 echo '{'.$output.'}';
-?>

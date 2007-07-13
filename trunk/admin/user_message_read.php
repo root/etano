@@ -44,4 +44,3 @@ if (!empty($_GET['mail_id'])) {
 $tplvars['title']='Read User Message';
 $tplvars['page']='user_message_read';
 include 'frame.php';
-?>

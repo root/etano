@@ -71,4 +71,3 @@ $tpl->drop_loop('states');
 $tplvars['title']='Location Management: States';
 $tplvars['page']='loc_states';
 include 'frame.php';
-?>

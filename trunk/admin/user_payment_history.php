@@ -58,4 +58,3 @@ if (!empty($message)) {
 }
 echo $tpl->process('','content',TPL_FINISH | TPL_LOOP);
 unset($_SESSION['topass']);
-?>

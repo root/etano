@@ -46,4 +46,3 @@ $tpl->set_var('tplvars',$tplvars);
 $tpl->process('left_content','left_content',TPL_MULTILOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
 unset($loop);
-?>

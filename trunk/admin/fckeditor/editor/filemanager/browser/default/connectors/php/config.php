@@ -55,5 +55,3 @@ $Config['DeniedExtensions']['Flash']	= array() ;
 
 $Config['AllowedExtensions']['Media']	= array('swf','fla','jpg','gif','jpeg','png','avi','mpg','mpeg') ;
 $Config['DeniedExtensions']['Media']	= array() ;
-
-?>

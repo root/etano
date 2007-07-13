@@ -26,4 +26,3 @@ if (isset($input['uid'])) {
 $tpl->set_var('output',$input);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('left_content','left_content',TPL_OPTIONAL);
-?>

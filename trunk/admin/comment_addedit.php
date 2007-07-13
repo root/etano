@@ -67,4 +67,3 @@ $tplvars['title']='Edit Comment';
 $tplvars['page']='comment_addedit';
 $tplvars['css']='comment_addedit.css';
 include 'frame.php';
-?>

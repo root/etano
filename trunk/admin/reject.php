@@ -111,4 +111,3 @@ $tpl->process('content','content',TPL_OPTIONAL);
 $tplvars['css']='reject.css';
 $tplvars['page']='reject';
 include 'frame.php';
-?>

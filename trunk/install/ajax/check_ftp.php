@@ -43,4 +43,3 @@ if (!empty($_POST['ftphost']) && !empty($_POST['ftpuser']) && !empty($_POST['ftp
 	$output='You must fill in all parameters (FTP host, user, password)';
 }
 echo $output;
-?>

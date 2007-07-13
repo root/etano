@@ -13,4 +13,3 @@ Support at:                 http://www.datemill.com/forum
 
 $tpl->set_file('left_content','photos_upload_left.html');
 $tpl->process('left_content','left_content');
-?>

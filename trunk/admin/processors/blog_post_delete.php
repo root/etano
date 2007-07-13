@@ -38,4 +38,3 @@ if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/blog_search.php';
 }
 redirect2page($nextpage,$topass,'',true);
-?>

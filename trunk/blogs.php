@@ -29,4 +29,3 @@ if (is_file('blogs_left.php')) {
 	include 'blogs_left.php';
 }
 include 'frame.php';
-?>

@@ -18,4 +18,3 @@ require_once dirname(__FILE__).'/../includes/user_functions.inc.php';
 if (isset($_SESSION['user']['user_id'])) {
 	check_login_member('all');
 }
-?>

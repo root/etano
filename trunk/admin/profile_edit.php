@@ -162,4 +162,3 @@ $tplvars['title']=sprintf('%1$s Member Profile',isset($output['_user']) ? $outpu
 $tplvars['page']='profile_edit';
 $tplvars['css']='profile_edit.css';
 include 'frame.php';
-?>

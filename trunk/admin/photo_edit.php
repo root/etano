@@ -53,4 +53,3 @@ $tplvars['title']='Edit Photo';
 $tplvars['page']='photo_edit';
 $tplvars['css']='photo_edit.css';
 include 'frame.php';
-?>

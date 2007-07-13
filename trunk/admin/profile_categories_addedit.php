@@ -94,4 +94,3 @@ function vector2checkboxes_new($show_vector,$excluded_keys_vector,$checkname,$bi
 	$myreturn.="</table>\n";
 	return $myreturn;
 }
-?>

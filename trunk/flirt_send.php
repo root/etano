@@ -54,4 +54,3 @@ if (is_file('flirt_send_left.php')) {
 	include 'flirt_send_left.php';
 }
 include 'frame.php';
-?>

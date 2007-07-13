@@ -24,4 +24,3 @@ if (!empty($module_code)) {
 		$pay->ipn();
 	}
 }
-?>

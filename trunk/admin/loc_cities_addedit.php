@@ -70,4 +70,3 @@ $tpl->process('content','content');
 $tplvars['title']='Location Management: Cities';
 $tplvars['page']='loc_cities_addedit';
 include 'frame.php';
-?>

@@ -32,4 +32,3 @@ if (!empty($uid) && !empty($secret)) {
 		redirect2page('info.php',$topass);
 	}
 }
-?>

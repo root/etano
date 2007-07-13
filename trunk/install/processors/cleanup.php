@@ -34,4 +34,3 @@ if (!empty($_SESSION['install']['phpbin'])) {
 	$nextpage.='&p='.rawurlencode(base64_encode($_SESSION['install']['phpbin']));
 }
 redirect2page($nextpage,$topass,'',true);
-?>

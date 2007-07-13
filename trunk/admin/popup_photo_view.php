@@ -38,4 +38,3 @@ $tpl->set_file('content','popup_photo_view.html');
 $tpl->set_var('photo',$photo);
 $tpl->set_var('tplvars',$tplvars);
 echo $tpl->process('','content',TPL_FINISH);
-?>

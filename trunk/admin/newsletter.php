@@ -35,4 +35,3 @@ $tpl->process('content','content');
 $tplvars['title']='Send Newsletter';
 $tplvars['page']='newsletter';
 include 'frame.php';
-?>

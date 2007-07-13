@@ -56,4 +56,3 @@ $tpl->drop_loop('countries');
 $tplvars['title']='Location Management: Countries';
 $tplvars['page']='loc_countries';
 include 'frame.php';
-?>

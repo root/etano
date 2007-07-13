@@ -25,4 +25,3 @@ $tplvars['page_title']='Login to continue...';
 $tplvars['page']='login';
 $tplvars['css']='login.css';
 include 'frame.php';
-?>

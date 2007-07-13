@@ -163,4 +163,3 @@ $tplvars['title']=sprintf('%1$s Member Profile',$output['_user']);
 $tplvars['css']='profile.css';
 $tplvars['page']='profile';
 include 'frame.php';
-?>

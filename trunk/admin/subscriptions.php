@@ -55,4 +55,3 @@ $tpl->drop_loop('subscriptions');
 $tplvars['title']='Site Subscriptions';
 $tplvars['page']='subscriptions';
 include 'frame.php';
-?>

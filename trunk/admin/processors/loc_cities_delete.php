@@ -54,4 +54,3 @@ if (isset($_GET['cr'])) {
 	$qs.=$qs_sep.'cr='.$_GET['cr'];
 }
 redirect2page('admin/loc_cities.php',$topass,$qs);
-?>

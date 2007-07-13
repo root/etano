@@ -27,4 +27,3 @@ $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content');
 include 'frame.php';
-?>

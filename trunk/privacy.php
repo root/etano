@@ -25,4 +25,3 @@ $tplvars['page_title']='Privacy';
 $tplvars['page']='privacy';
 $tplvars['css']='privacy.css';
 include 'frame.php';
-?>

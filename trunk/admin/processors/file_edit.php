@@ -52,4 +52,3 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 }
 redirect2page('admin/file_browser.php',$topass,$qs);
-?>

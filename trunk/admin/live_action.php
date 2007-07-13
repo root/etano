@@ -44,4 +44,3 @@ $tplvars['title']='Live Site Activity';
 $tplvars['css']='live_action.css';
 $tplvars['page']='live_action';
 include 'frame.php';
-?>

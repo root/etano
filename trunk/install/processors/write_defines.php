@@ -165,4 +165,3 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 $my_url=str_replace('/install/processors/write_defines.php','',$_SERVER['PHP_SELF']);
 define('_BASEURL_',((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$my_url);
 redirect2page($nextpage,$topass,$qs);
-?>

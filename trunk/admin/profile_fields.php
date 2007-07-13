@@ -91,4 +91,3 @@ function lkids2lks($lk_ids,$skin) {
 	}
 	return $myreturn;
 }
-?>

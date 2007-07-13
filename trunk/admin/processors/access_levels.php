@@ -69,4 +69,3 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$topass['message']['text']='Access levels changed.';
 }
 redirect2page('admin/access_levels.php',$topass,$qs);
-?>

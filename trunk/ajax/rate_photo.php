@@ -72,4 +72,3 @@ if (isset($_REQUEST['silent'])) {
 	$qs='photo_id='.$photo_id;
 	redirect2page('photo_view.php',$topass,$qs);
 }
-?>

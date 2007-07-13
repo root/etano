@@ -176,4 +176,3 @@ if (!empty($photo_id) && isset($output['fk_user_id']) && ((isset($_SESSION['user
 	$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_views`=`stat_views`+1 WHERE `photo_id`='$photo_id'";
 	@mysql_query($query);
 }
-?>

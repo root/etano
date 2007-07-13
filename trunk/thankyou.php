@@ -39,4 +39,3 @@ if (is_file('thankyou_left.php')) {
 	include 'thankyou_left.php';
 }
 include 'frame.php';
-?>

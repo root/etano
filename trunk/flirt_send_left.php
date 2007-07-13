@@ -41,4 +41,3 @@ $tpl->set_loop('loopfolders',$loopfolders);
 $tpl->process('left_content','left_content',TPL_LOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loopfolders');
 unset($loopfolders);
-?>

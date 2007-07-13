@@ -75,4 +75,3 @@ if (is_file('message_send_left.php')) {
 	include 'message_send_left.php';
 }
 include 'frame.php';
-?>

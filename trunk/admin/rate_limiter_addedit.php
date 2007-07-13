@@ -51,4 +51,3 @@ $tplvars['title']='Limits Management';
 $tplvars['page']='rate_limiter_addedit';
 $tplvars['css']='rate_limiter_addedit.css';
 include 'frame.php';
-?>

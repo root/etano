@@ -31,4 +31,3 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Limit removed successfully.';
 
 redirect2page('admin/site_bans.php',$topass,$qs);
-?>

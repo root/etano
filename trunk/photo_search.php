@@ -197,4 +197,3 @@ if (is_file('photo_search_left.php')) {
 	include 'photo_search_left.php';
 }
 include 'frame.php';
-?>

@@ -97,4 +97,3 @@ function get_level_name($binvalue,&$memberships) {
 	}
 	return $myreturn;
 }
-?>

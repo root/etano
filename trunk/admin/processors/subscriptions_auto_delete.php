@@ -28,4 +28,3 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Subscription assignment deleted.';
 
 redirect2page('admin/subscriptions_auto.php',$topass,$qs);
-?>

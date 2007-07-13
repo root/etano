@@ -75,4 +75,3 @@ if (!isset($_POST['silent'])) {
 // for ajax password change.
 	echo $topass['message']['text'];
 }
-?>

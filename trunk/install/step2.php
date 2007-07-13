@@ -75,4 +75,3 @@ $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_OPTIONAL);
 include 'frame.php';
-?>

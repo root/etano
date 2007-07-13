@@ -116,4 +116,3 @@ while ($profile=mysql_fetch_assoc($res)) {
 	}
 	$tpl->drop_var('user');
 }
-?>

@@ -23,4 +23,3 @@ if (!empty($_POST['user'])) {
 	}
 }
 echo $output;
-?>

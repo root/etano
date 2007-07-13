@@ -69,4 +69,3 @@ if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/comment_search.php';
 }
 redirect2page($nextpage,$topass,'',true);
-?>

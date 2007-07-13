@@ -41,4 +41,3 @@ if (!$error) {
 $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Word deleted.';
 redirect2page('admin/banned_words.php',$topass,$qs);
-?>

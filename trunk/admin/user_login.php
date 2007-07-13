@@ -44,4 +44,3 @@ if (isset($_GET['top'])) {
 $tpl->set_file('content',$content_file);
 $tpl->set_var('output',$output);
 echo $tpl->process('','content');
-?>

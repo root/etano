@@ -41,4 +41,3 @@ if (!empty($_GET['return'])) {
 }
 $nextpage=_BASEURL_.'/'.$nextpage;
 redirect2page($nextpage,$topass,'',true);
-?>

@@ -34,4 +34,3 @@ if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/'.$return;
 }
 redirect2page($nextpage,$topass,$qs,true);
-?>

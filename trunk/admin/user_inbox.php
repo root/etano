@@ -63,4 +63,3 @@ if (!empty($_GET['uid'])) {
 $tplvars['title']='User Inbox';
 $tplvars['page']='user_inbox';
 include 'frame.php';
-?>

@@ -90,4 +90,3 @@ if (is_file('my_settings_left.php')) {
 	include 'my_settings_left.php';
 }
 include 'frame.php';
-?>

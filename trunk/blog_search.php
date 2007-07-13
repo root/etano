@@ -167,4 +167,3 @@ if (is_file('blog_search_left.php')) {
 	include 'blog_search_left.php';
 }
 include 'frame.php';
-?>

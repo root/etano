@@ -64,4 +64,3 @@ if ($rss_writer_object->writerss($towrite)) {
 
 $nextpage=_BASEURL_.'/'.$nextpage;
 redirect2page($nextpage,$topass,'',true);
-?>

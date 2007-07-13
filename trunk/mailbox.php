@@ -125,4 +125,3 @@ if (is_file('mailbox_left.php')) {
 	include 'mailbox_left.php';
 }
 include 'frame.php';
-?>

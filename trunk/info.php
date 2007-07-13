@@ -97,4 +97,3 @@ if (is_file('info_left.php')) {
 	include 'info_left.php';
 }
 include 'frame.php';
-?>

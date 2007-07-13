@@ -45,4 +45,3 @@ if (is_file('folders_left.php')) {
 	include 'folders_left.php';
 }
 include 'frame.php';
-?>

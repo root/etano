@@ -50,4 +50,3 @@ if (is_file('home_left.php')) {
 	include 'home_left.php';
 }
 include 'frame.php';
-?>

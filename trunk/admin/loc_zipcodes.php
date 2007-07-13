@@ -86,4 +86,3 @@ $tpl->drop_loop('zipcodes');
 $tplvars['title']='Location Management: Zipcodes';
 $tplvars['page']='loc_zipcodes';
 include 'frame.php';
-?>

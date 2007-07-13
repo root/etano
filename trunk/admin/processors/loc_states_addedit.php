@@ -90,4 +90,3 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$qs.=$qs_sep.'country_id='.$input['fk_country_id'];
 }
 redirect2page($nextpage,$topass,$qs);
-?>

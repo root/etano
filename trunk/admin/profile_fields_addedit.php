@@ -185,4 +185,3 @@ function vector2jsarrays($myarray=array()) {
 	$myreturn.=");\n";
 	return $myreturn;
 }
-?>
