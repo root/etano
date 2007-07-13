@@ -11,6 +11,8 @@ Support at:                 http://www.datemill.com/forum
 * See the "softwarelicense.txt" file for license.                             *
 ******************************************************************************/
 
+/* TODO: it would be awsome if we could see which are the most popular searches and refresh them from cron */
+
 //define('CACHE_LIMITER','private');
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
@@ -25,17 +27,24 @@ $output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__fiel
 
 $input=array();
 $user_ids=array();
+$got_from_cache=false;	// this flag is used to tell if we went thru the query cache or not.
+$skip_cache=false;	// we want to retrieve the most up to date results. Obviously this refers to the second cache lookup, not to the
+					// one here. We don't cache these results either.
+
 if (!empty($output['search_md5'])) {
 	// if we have a query cache, retrieve all from cache
 	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."' AND `search_type`=".SEARCH_USER;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
+		$got_from_cache=true;
 		$user_ids=mysql_result($res,0,0);
 		$user_ids=explode(',',$user_ids);
 		$input=unserialize(mysql_result($res,0,1));	// sanitized already
 		check_login_member($input['acclevel_code']);
 	}
-} else {
+}
+
+if (!$got_from_cache) {
 	// THIS PART IS DUPLICATED IN CRON/5SEARCH_ALERTS.PHP. IF YOU CHANGE THIS YOU MUST CHANGE THAT TOO.
 	// first search here, no cache, must calculate everything
 	$input['acclevel_code']='search_advanced'; // default access level is the one for advanced search!!!!
@@ -44,9 +53,9 @@ if (!empty($output['search_md5'])) {
 	$select="a.`fk_user_id`";
 	$from="`{$dbtable_prefix}user_profiles` a";
 	$where='1';
-	if (isset($_SESSION['user']['user_id'])) {
-		$where.=" AND a.`fk_user_id`<>'".$_SESSION['user']['user_id']."'";
-	}
+//	if (isset($_SESSION['user']['user_id'])) {
+//		$where.=" AND a.`fk_user_id`<>'".$_SESSION['user']['user_id']."'";
+//	}
 	$where.=' AND a.`status`='.STAT_APPROVED.' AND a.`del`=0';
 	$orderby="ORDER BY a.`score` DESC";
 
@@ -84,7 +93,7 @@ if (!empty($output['search_md5'])) {
 				$input['fk_net_id']=sanitize_and_format_gpc($_GET,'nid',TYPE_INT,0,0);
 				$select="b.`fk_user_id_other`";
 				$from="`{$dbtable_prefix}user_networks` b,".$from;
-				$where="b.`fk_user_id`='".$input['fk_user_id']."' AND b.`fk_net_id`='".$input['fk_net_id']."' AND b.`nconn_status`=1 AND b.`fk_user_id_other`=a.`fk_user_id` AND ".$where;
+				$where="b.`fk_user_id`=".$input['fk_user_id']." AND b.`fk_net_id`=".$input['fk_net_id']." AND b.`nconn_status`=1 AND b.`fk_user_id_other`=a.`fk_user_id` AND ".$where;
 				break;
 
 			case 'new':
@@ -96,9 +105,8 @@ if (!empty($output['search_md5'])) {
 			case 'online':
 				$input['acclevel_code']='search_basic';
 				$continue=true;
-				$from="`{$dbtable_prefix}online` b,".$from;
-				$where="b.`fk_user_id`<>0 AND b.`fk_user_id`=a.`fk_user_id` AND ".$where;
-				$orderby="GROUP BY b.`fk_user_id` ".$orderby;
+				$where=" a.`fk_user_id` IN ('".join("','",array_keys($_list_of_online_members))."') AND ".$where;
+				$skip_cache=true;
 				break;
 
 			case 'vote':
@@ -122,7 +130,7 @@ if (!empty($output['search_md5'])) {
 				$input[$field['dbfield']]=sanitize_and_format_gpc($_GET,$field['dbfield'],TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield']])) {
 					if ($field['field_type']==FIELD_SELECT) {
-						$where.=" AND `".$field['dbfield']."`='".$input[$field['dbfield']]."'";
+						$where.=" AND `".$field['dbfield']."`=".$input[$field['dbfield']];
 					} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
 						$where.=" AND `".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']]."|%'";
 					}
@@ -138,7 +146,7 @@ if (!empty($output['search_md5'])) {
 						if (count($input[$field['dbfield']])) {
 							$where.=" AND (";
 							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
-								$where.="`".$field['dbfield']."`='".$input[$field['dbfield']][$j]."' OR ";
+								$where.="`".$field['dbfield']."`=".$input[$field['dbfield']][$j]." OR ";
 							}
 							$where=substr($where,0,-4);	// substract the last ' OR '
 							$where.=')';
@@ -185,21 +193,21 @@ if (!empty($output['search_md5'])) {
 			case FIELD_LOCATION:
 				$input[$field['dbfield'].'_country']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_country',TYPE_INT,0,0);
 				if (!empty($input[$field['dbfield'].'_country'])) {
-					$where.=" AND `".$field['dbfield']."_country`='".$input[$field['dbfield'].'_country']."'";
-					$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='".$input[$field['dbfield'].'_country']."'";
+					$where.=" AND `".$field['dbfield']."_country`=".$input[$field['dbfield'].'_country'];
+					$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=".$input[$field['dbfield'].'_country'];
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					if (mysql_num_rows($res)) {
 						list($prefered_input,$num_states)=mysql_fetch_row($res);
 						if ($prefered_input=='s' && !empty($num_states)) {
 							$input[$field['dbfield'].'_state']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_state',TYPE_INT,0,0);
 							if (!empty($input[$field['dbfield'].'_state'])) {
-								$where.=" AND `".$field['dbfield']."_state`='".$input[$field['dbfield'].'_state']."'";
-								$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`='".$input[$field['dbfield'].'_state']."'";
+								$where.=" AND `".$field['dbfield']."_state`=".$input[$field['dbfield'].'_state'];
+								$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`=".$input[$field['dbfield'].'_state'];
 								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 								if (mysql_num_rows($res)) {
 									$input[$field['dbfield'].'_city']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_city',TYPE_INT,0,0);
 									if (!empty($input[$field['dbfield'].'_city'])) {
-										$where.=" AND `".$field['dbfield']."_city`='".$input[$field['dbfield'].'_city']."'";
+										$where.=" AND `".$field['dbfield']."_city`=".$input[$field['dbfield'].'_city'];
 //									} else {
 //										unset($input[$field['dbfield'].'_city']);
 									}
@@ -211,15 +219,16 @@ if (!empty($output['search_md5'])) {
 							$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_zip',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 							$input[$field['dbfield'].'_dist']=sanitize_and_format_gpc($_GET,$field['dbfield'].'_dist',TYPE_INT,0,0);
 							if (!empty($input[$field['dbfield'].'_zip']) && !empty($input[$field['dbfield'].'_dist'])) {
-								$query="SELECT RADIANS(`latitude`),RADIANS(`longitude`) FROM `{$dbtable_prefix}loc_zips` WHERE `zipcode`='".$input[$field['dbfield'].'_zip']."'";
+								$query="SELECT `rad_latitude`,`rad_longitude` FROM `{$dbtable_prefix}loc_zips` WHERE `zipcode`='".$input[$field['dbfield'].'_zip']."'";
 								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 								if (mysql_num_rows($res)) {
-									list($latitude,$longitude)=mysql_fetch_row($res);
+									list($rad_latitude,$rad_longitude)=mysql_fetch_row($res);
+									// WE USE ONLY MILES HERE. IF YOU WANT KM YOU NEED TO CONVERT MILES TO KM
 									// earth radius=3956 miles =6367 km; 3956*2=7912
 									// Haversine Formula: (more exact for small distances)
-									$where.=" AND (`latitude`+`longitude`)<>0 AND (7912*asin(sqrt(pow(sin((".(float)$latitude."-RADIANS(`latitude`))/2),2)+cos(".(float)$latitude.")*cos(RADIANS(`latitude`))*pow(sin((".(float)$longitude."-RADIANS(`longitude`))/2),2))))<=".(int)$input[$field['dbfield'].'_dist'];
+									$where.=" AND a.`latitude`<>-a.`longitude` AND asin(sqrt(pow(sin((".(float)$rad_latitude."-a.`rad_latitude`)/2),2)+cos(".(float)$rad_latitude.")*cos(a.`rad_latitude`)*pow(sin((".(float)$rad_longitude."-a.`rad_longitude`)/2),2)))<=".(((int)$input[$field['dbfield'].'_dist'])/7912);
 									// Law of Cosines for Spherical Trigonometry; 60*1.1515=69.09; 1.1515 miles in a degree
-//										$where.=" AND (69.09*DEGREES(ACOS(SIN(".(float)$latitude.")*SIN(RADIANS(`latitude`))+COS(".(float)$latitude.")*COS(RADIANS(`latitude`))*COS(".(float)$longitude."-RADIANS(`longitude`)))))<=".(int)$input[$field['dbfield'].'_dist'];
+//										$where.=" AND (69.09*DEGREES(ACOS(SIN(".(float)$rad_latitude.")*SIN(a.`rad_latitude`)+COS(".(float)$rad_latitude.")*COS(a.`rad_latitude`)*COS(".(float)$rad_longitude."-a.`rad_longitude`))))<=".(int)$input[$field['dbfield'].'_dist'];
 								} else {
 // should not return any result or at least warn the member that the zip code was not found.
 								}
@@ -236,21 +245,31 @@ if (!empty($output['search_md5'])) {
 		}	//switch ($field['search_type'])
 	} // the for() that constructs the where
 
-	$query="SELECT $select FROM $from WHERE $where $orderby";
-//print $query;
-//die;
-
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	for ($i=0;$i<mysql_num_rows($res);++$i) {
-		$user_ids[]=mysql_result($res,$i,0);
-	}
 	$serialized_input=serialize($input);
 	$output['search_md5']=md5($serialized_input);
-	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='".$output['search_md5']."',`search_type`=".SEARCH_USER.",`search`='$serialized_input',`results`='".join(',',$user_ids)."'";
-	if (isset($_SESSION['user']['user_id'])) {
-		$query.=",`fk_user_id`='".$_SESSION['user']['user_id']."'";
+	if (!$skip_cache) {
+		// let's give the cache one more chance. This is useful for the first page of results when we don't know the search_md5
+		$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."' AND `search_type`=".SEARCH_USER;
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (mysql_num_rows($res)) {
+			$user_ids=mysql_result($res,0,0);
+			$user_ids=explode(',',$user_ids);
+			$got_from_cache=true;
+		}
 	}
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (!$got_from_cache) {	// this is where we absolutely must search the users...it's the most expensive search
+		$query="SELECT $select FROM $from WHERE $where $orderby";
+		//print $query;die;
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		for ($i=0;$i<mysql_num_rows($res);++$i) {
+			$user_ids[]=mysql_result($res,$i,0);
+		}
+		$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='".$output['search_md5']."',`search_type`=".SEARCH_USER.",`search`='$serialized_input',`results`='".join(',',$user_ids)."'";
+		if (isset($_SESSION['user']['user_id'])) {
+			$query.=",`fk_user_id`=".$_SESSION['user']['user_id'];
+		}
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
 }
 $output['totalrows']=count($user_ids);
 
@@ -281,8 +300,10 @@ if (!empty($output['totalrows'])) {
 	$output['results']=smart_table($user_cache->get_cache_array($user_ids,'result_user'),5,$rv_mode,$cell_css_classes);
 	unset($user_cache);
 
-	// set $_GET for the pager.
-	$_GET=array('search'=>$output['search_md5'],'v'=>!empty($_GET['v']) ? $_GET['v'] : 'l');
+	if (!$skip_cache) {
+		// set $_GET for the pager.
+		$_GET=array('search'=>$output['search_md5'],'v'=>!empty($_GET['v']) ? $_GET['v'] : 'l');
+	}
 	$output['pager2']=pager($output['totalrows'],$o,$r);
 } else {
 	unset($output['totalrows']);

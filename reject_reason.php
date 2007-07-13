@@ -23,17 +23,17 @@ if (isset($_GET['m'])) {
 	switch ($_GET['m']) {
 
 		case 'photo':
-			$query="SELECT `reject_reason` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query="SELECT `reject_reason` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$id AND `fk_user_id`=".$_SESSION['user']['user_id'];
 			$continue=true;
 			break;
 
 		case 'profile':
-			$query="SELECT `reject_reason` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query="SELECT `reject_reason` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=".$_SESSION['user']['user_id'];
 			$continue=true;
 			break;
 
 		case 'blog':
-			$query="SELECT `reject_reason` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query="SELECT `reject_reason` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$id AND `fk_user_id`=".$_SESSION['user']['user_id'];
 			$continue=true;
 			break;
 	}

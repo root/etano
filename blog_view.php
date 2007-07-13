@@ -32,13 +32,13 @@ if (!empty($_GET['bid'])) {
 	$year=sanitize_and_format_gpc($_GET,'y',TYPE_INT,0,0);
 	$month=sanitize_and_format_gpc($_GET,'m',TYPE_INT,0,0);
 	if (empty($year)) {
-		$query="SELECT YEAR(`date_posted`),MONTH(`date_posted`) FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' ORDER BY `date_posted` DESC LIMIT 1";
+		$query="SELECT YEAR(`date_posted`),MONTH(`date_posted`) FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`=$blog_id ORDER BY `date_posted` DESC LIMIT 1";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			list($year,$month)=mysql_fetch_row($res);
 		}
 	} elseif (empty($month)) {
-		$query="SELECT YEAR(`date_posted`),MONTH(`date_posted`) FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' AND YEAR(`date_posted`)='$year' ORDER BY `date_posted` DESC LIMIT 1";
+		$query="SELECT YEAR(`date_posted`),MONTH(`date_posted`) FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`=$blog_id AND YEAR(`date_posted`)='$year' ORDER BY `date_posted` DESC LIMIT 1";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			list($year,$month)=mysql_fetch_row($res);
@@ -47,8 +47,8 @@ if (!empty($_GET['bid'])) {
 	if (!empty($year) && !empty($month)) {
 		$config=get_site_option(array('bbcode_blogs'),'core_blog');
 		$month=str_pad($month,2,'0',STR_PAD_LEFT);
-		// no need to check the status of the posts ( AND `status`='".STAT_APPROVED."')
-		$query="SELECT `post_id`,`stat_comments`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' AND `date_posted`>'{$year}{$month}00000000' AND `date_posted`<='{$year}{$month}31235959' ORDER BY `post_id` DESC";
+		// no need to check the status of the posts ( AND `status`=".STAT_APPROVED)
+		$query="SELECT `post_id`,`stat_comments`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`=$blog_id AND `date_posted`>'{$year}{$month}00000000' AND `date_posted`<='{$year}{$month}31235959' ORDER BY `post_id` DESC";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$post_ids=array();

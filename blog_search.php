@@ -41,7 +41,7 @@ if (!empty($output['search_md5'])) {
 	$input['acclevel_code']='search_blog'; // default access level is the one for advanced search!!!!
 	$select="a.`post_id`";
 	$from="`{$dbtable_prefix}blog_posts` a";
-	$where="a.`is_public`=1 AND a.`status`='".STAT_APPROVED."'";
+	$where="a.`is_public`=1 AND a.`status`=".STAT_APPROVED;
 	$orderby="a.`date_posted` DESC";
 
 	// define here all search types
@@ -70,7 +70,7 @@ if (!empty($output['search_md5'])) {
 				$input['acclevel_code']='search_blog';
 				$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
 				$tplvars['page_title']=sprintf('<a href="'.$tplvars['relative_url'].'profile.php?uid=%1$s">%2$s</a>\'s Blogs',$input['uid'],get_user_by_userid($input['uid']));	// translate
-				$where="a.`fk_user_id`='".$input['uid']."' AND ".$where;
+				$where="a.`fk_user_id`=".$input['uid']." AND ".$where;
 				$orderby="a.`post_id` DESC";
 				break;
 
@@ -108,7 +108,7 @@ if (!empty($output['search_md5'])) {
 		$output['search_md5']=md5($serialized_input);
 		$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='".$output['search_md5']."',`search_type`=".SEARCH_BLOG.",`search`='$serialized_input',`results`='".join(',',$post_ids)."'";
 		if (isset($_SESSION['user']['user_id'])) {
-			$query.=",`fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query.=",`fk_user_id`=".$_SESSION['user']['user_id'];
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}

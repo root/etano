@@ -35,7 +35,7 @@ if (!isset($output['return']) && isset($_GET['return'])) {
 $flirt_type=sanitize_and_format_gpc($_GET,'ft',TYPE_INT,0,0);
 
 $flirts=array();
-$query="SELECT `flirt_id`,`flirt_text` FROM `{$dbtable_prefix}flirts` WHERE `flirt_type`='$flirt_type'";
+$query="SELECT `flirt_id`,`flirt_text` FROM `{$dbtable_prefix}flirts` WHERE `flirt_type`=$flirt_type";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
 	$flirts[$rsrow[0]]=$rsrow[1];

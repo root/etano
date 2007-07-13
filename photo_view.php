@@ -26,7 +26,7 @@ $output['pic_width']=get_site_option('pic_width','core_photo');
 
 $loop=array();
 if (!empty($photo_id)) {
-	$query="SELECT `photo_id`,`photo`,`caption`,`fk_user_id`,`_user` as `user`,`status`,`allow_comments`,`allow_rating`,`stat_votes`,`stat_votes_total` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$photo_id'";
+	$query="SELECT `photo_id`,`photo`,`caption`,`fk_user_id`,`_user` as `user`,`status`,`allow_comments`,`allow_rating`,`stat_votes`,`stat_votes_total` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
@@ -47,7 +47,7 @@ if (!empty($photo_id)) {
 			}
 
 			$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
-			$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}photo_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`='".$output['photo_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
+			$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}photo_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`=".$output['photo_id']." AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				// if someone has asked to edit his/her comment
@@ -118,12 +118,12 @@ if (!empty($photo_id)) {
 			}
 
 			// prev/next stuff
-			$query="SELECT max(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`<'$photo_id' AND `fk_user_id`='".$output['fk_user_id']."'";
+			$query="SELECT max(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`<'$photo_id' AND `fk_user_id`=".$output['fk_user_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$output['previous']=mysql_result($res,0,0);
 			}
-			$query="SELECT min(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`>'$photo_id' AND `fk_user_id`='".$output['fk_user_id']."'";
+			$query="SELECT min(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`>'$photo_id' AND `fk_user_id`=".$output['fk_user_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$output['next']=mysql_result($res,0,0);
@@ -173,6 +173,6 @@ if (is_file('photo_view_left.php')) {
 }
 include 'frame.php';
 if (!empty($photo_id) && isset($output['fk_user_id']) && ((isset($_SESSION['user']['user_id']) && $output['fk_user_id']!=$_SESSION['user']['user_id']) || !isset($_SESSION['user']['user_id']))) {
-	$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_views`=`stat_views`+1 WHERE `photo_id`='$photo_id'";
+	$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_views`=`stat_views`+1 WHERE `photo_id`=$photo_id';
 	@mysql_query($query);
 }

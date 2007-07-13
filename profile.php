@@ -41,7 +41,7 @@ $edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
 $output=array();
 // we don't care about user status because the cache generator will generate the profile for the user only if status is approved
 // also _photo is set only with approved photos.
-$query="SELECT `fk_user_id` as `uid`,`_user` as `user`,`_photo` as `photo` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='$uid' AND `del`=0";
+$query="SELECT `fk_user_id` as `uid`,`_user` as `user`,`_photo` as `photo` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=$uid AND `del`=0";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output=mysql_fetch_assoc($res);
@@ -56,7 +56,7 @@ if (!empty($output)) {
 		$output['is_online']=true;
 	}
 	// user photos
-	$query="SELECT `photo_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`='".$output['uid']."' AND `is_private`=0 AND `status`='".STAT_APPROVED."' AND `del`=0";
+	$query="SELECT `photo_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`=".$output['uid']." AND `is_private`=0 AND `status`=".STAT_APPROVED." AND `del`=0";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		while (count($user_photos)<3 && $rsrow=mysql_fetch_assoc($res)) {
@@ -99,7 +99,7 @@ if (!empty($output)) {
 
 	// comments
 	$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
-	$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}profile_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`='".$output['uid']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
+	$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}profile_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`=".$output['uid']." AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		// if someone has asked to edit his/her comment

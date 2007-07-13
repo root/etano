@@ -29,7 +29,7 @@ $output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__fiel
 
 $input['acclevel_code']='search_photo'; // default access level
 $from="`{$dbtable_prefix}user_photos` a";
-$where="a.`is_private`=0 AND a.`status`='".STAT_APPROVED."' AND a.`del`=0";
+$where="a.`is_private`=0 AND a.`status`=".STAT_APPROVED." AND a.`del`=0";
 $orderby="a.`date_posted` DESC";
 
 $error=false;
@@ -68,7 +68,7 @@ if (isset($_GET['st'])) {
 				redirect2page('my_photos.php');
 			}
 			if (!empty($input['uid'])) {
-				$where="a.`fk_user_id`='".$input['uid']."' AND ".$where;
+				$where="a.`fk_user_id`=".$input['uid']." AND ".$where;
 			} else {
 				$error=true;
 			}

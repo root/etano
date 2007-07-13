@@ -32,7 +32,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	}
 }
 
-$query="SELECT `config_option`,`config_value`,`fk_module_code` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="SELECT `config_option`,`config_value`,`fk_module_code` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`=".$_SESSION['user']['user_id'];
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['config_value']=sanitize_and_format($rsrow['config_value'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
