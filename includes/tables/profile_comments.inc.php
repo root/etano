@@ -8,7 +8,7 @@ Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
 *******************************************************************************
-* See the "softwarelicense.txt" file for license.                             *
+* See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
 $profile_comments_default['defaults']=array('comment_id'=>0,'fk_parent_id'=>0,'fk_user_id'=>0,'comment'=>'');

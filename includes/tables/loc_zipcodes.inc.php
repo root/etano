@@ -8,7 +8,7 @@ Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
 *******************************************************************************
-* See the "softwarelicense.txt" file for license.                             *
+* See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
 $zipcodes_default['defaults']=array('zip_id'=>0,'zipcode'=>'','fk_country_id'=>0,'fk_state_id'=>0,'fk_city_id'=>0,'latitude'=>0,'longitude'=>0);

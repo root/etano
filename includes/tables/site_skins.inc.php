@@ -8,7 +8,7 @@ Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
 *******************************************************************************
-* See the "softwarelicense.txt" file for license.                             *
+* See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
 $site_skins_default['defaults']=array('fk_module_code'=>'','skin_dir'=>'','skin_name'=>'','fk_locale_id'=>0,'is_default'=>0);

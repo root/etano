@@ -8,7 +8,7 @@ Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
 *******************************************************************************
-* See the "softwarelicense.txt" file for license.                             *
+* See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
 /* TODO: it would be awsome if we could see which are the most popular searches and refresh them from cron */
