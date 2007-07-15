@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       install/ajax/check_ftp.php
-$Revision: 186 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum

@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       includes/classes/fileop.class.php
-$Revision: 199 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum

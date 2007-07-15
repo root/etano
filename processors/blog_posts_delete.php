@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       processors/blog_posts_delete.php
-$Revision: 204 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum

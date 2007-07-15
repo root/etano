@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       install/step2.php
-$Revision: 193 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum

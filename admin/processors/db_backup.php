@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       admin/processors/db_backup.php
-$Revision: 174 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
