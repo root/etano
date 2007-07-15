@@ -8,7 +8,7 @@ Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
 *******************************************************************************
-* See the "softwarelicense.txt" file for license.                             *
+* See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
 $rate_limiter_default['defaults']=array('rate_id'=>0,'m_value'=>1,'level_code'=>'','limit'=>0,'interval'=>0,'punishment'=>1,'fk_lk_id_error_message'=>0);

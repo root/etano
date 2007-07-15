@@ -8,7 +8,7 @@ Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
 *******************************************************************************
-* See the "softwarelicense.txt" file for license.                             *
+* See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
 $user_blogs_default['defaults']=array('blog_id'=>0,'fk_user_id'=>0,'blog_name'=>'','blog_diz'=>'','blog_skin'=>'','blog_url'=>'');

@@ -8,7 +8,7 @@ Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
 *******************************************************************************
-* See the "softwarelicense.txt" file for license.                             *
+* See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
 $subscriptions_auto_default['defaults']=array('asubscr_id'=>0,'dbfield'=>'','field_value'=>0,'fk_subscr_id'=>0,'date_start'=>'');
