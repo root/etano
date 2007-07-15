@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="html" dir="ltr" xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../js/jquery.js?v={tplvars.js_lib_v}"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="skin/styles/screen.css" />
+<title>Payment History</title>
+<script type="text/javascript">
+	$(function() {
+		window.moveTo(0,0);
+		window.resizeTo(window.screen.width,350);
+	})
+</script>
+</head>
+<body>
+<div id="trim">
+	<div id="container">
+		<h1>{output.user} Payment History</h1>
+
+		<table id="payment_history" class="results_table">
+		<tr>
+			<th>Amount</th>
+			<th>Upgrade</th>
+			<th>Interval</th>
+			<th>Gateway</th>
+			<th>TXN</th>
+			<th>Name</th>
+			<th>Country</th>
+			<th>Email</th>
+		</tr>
+		<!--loop name="loop"-->
+		<tr align="center">
+			<td align="right">${loop.amount_paid}</td>
+			<td>{loop.m_value_from} - {loop.m_value_to}</td>
+			<td>{loop.paid_from} - {loop.paid_until}</td>
+			<td>{loop.gateway}</td>
+			<td align="left">{loop.gw_txn}</td>
+			<td>{loop.name}</td>
+			<td>{loop.country}</td>
+			<td>{loop.email}</td>
+		</tr>
+		<!--/loop name="loop"-->
+		<tr>
+			<td align="right" style="border-top: 1px solid #bbb">Total: ${output.total}</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		</table>
+		<div id="bottom_links"><div align="center"><a class="close" href="javascript:;" onclick="window.close()" title="Close this window">Close window</a></div></div>
+	</div>
+</div>
+</body>
+</html>

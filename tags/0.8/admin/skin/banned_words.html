@@ -1,0 +1,34 @@
+<h2>Banned Words</h2>
+
+<div class="hint"><strong>Add, edit, remove banned words:</strong></div>
+
+<table id="word_list" class="results_table">
+<tr>
+	<th width="38"></th>
+	<th>Word</th>
+</tr>
+<!--loop name="loop"-->
+<tr class="{loop.myclass}">
+	<td>
+		<a class="item_del" href="processors/banned_words_delete.php?word_id={loop.word_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to delete this word?'))" title="Delete this word">Delete word</a>
+	</td>
+	<td>{loop.word}</td>
+</tr>
+<!--noloop name="loop"-->
+<tr>
+	<td colspan="2" class="no_result_item">No banned words found!</td>
+</tr>
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
+</table>
+
+{output.pager2}
+
+<div id="bottom_links">
+	<form action="processors/banned_words_addedit.php" method="post">
+	<input type="text" name="word" id="word" />
+	<input class="button" type="submit" value="Add Word" />
+	</form>
+</div>
+
+<script type="text/javascript" src="js/banned_words.js?v={tplvars.js_lib_v}"></script>

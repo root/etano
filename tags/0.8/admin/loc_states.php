@@ -1,0 +1,73 @@
+<?php
+/******************************************************************************
+Etano
+===============================================================================
+File:                       admin/loc_states.php
+$Revision$
+Software by:                DateMill (http://www.datemill.com)
+Copyright by:               DateMill (http://www.datemill.com)
+Support at:                 http://www.datemill.com/forum
+*******************************************************************************
+* See the "docs/licenses/etano.txt" file for license.                         *
+******************************************************************************/
+
+require_once '../includes/common.inc.php';
+db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
+require_once '../includes/admin_functions.inc.php';
+allow_dept(DEPT_ADMIN);
+
+$tpl=new phemplate('skin/','remove_nonjs');
+
+$o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
+$r=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
+$co=isset($_GET['co']) ? (int)$_GET['co'] : 0;
+$cr=isset($_GET['cr']) ? (int)$_GET['cr'] : current($accepted_results_per_page);
+$country_id=isset($_GET['country_id']) ? (int)$_GET['country_id'] : 0;
+$country='';
+
+$states=array();
+if (!empty($country_id)) {
+	$query="SELECT `country` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='$country_id'";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		$country=mysql_result($res,0,0);
+	}
+	$where="`fk_country_id`='$country_id'";
+	$from="`{$dbtable_prefix}loc_states`";
+
+	$query="SELECT count(*) FROM $from WHERE $where";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$totalrows=mysql_result($res,0,0);
+
+	if (!empty($totalrows)) {
+		if ($o>$totalrows) {
+			$o=$totalrows-$r;
+		}
+		$query="SELECT `state_id`,`state`,`num_cities` FROM $from WHERE $where ORDER BY `state` ASC LIMIT $o,$r";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$i=0;
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$rsrow['state']=sanitize_and_format($rsrow['state'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			$rsrow['myclass']=($i%2) ? 'odd_item' : 'even_item';
+			$states[]=$rsrow;
+			++$i;
+		}
+		$tpl->set_var('pager1',pager($totalrows,$o,$r));
+		$tpl->set_var('pager2',pager($totalrows,$o,$r));
+	}
+}
+
+$tpl->set_file('content','loc_states.html');
+$tpl->set_loop('states',$states);
+$tpl->set_var('country_id',$country_id);
+$tpl->set_var('country',$country);
+$tpl->set_var('o',$o);
+$tpl->set_var('r',$r);
+$tpl->set_var('co',$co);
+$tpl->set_var('cr',$cr);
+$tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
+$tpl->drop_loop('states');
+
+$tplvars['title']='Location Management: States';
+$tplvars['page']='loc_states';
+include 'frame.php';

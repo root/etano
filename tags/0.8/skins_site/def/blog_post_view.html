@@ -1,0 +1,74 @@
+<div class="post_content">
+{output.post_content}
+</div>
+<div class="post_details">
+	<span class="post_by">Posted by <!--opt name="output.fk_user_id"--><a class="content-link member_link {output.is_online}" href="{tplvars.relative_url}profile.php?uid={output.fk_user_id}" title="{output.user} {output.user_online_status}"><!--/opt name="output.fk_user_id"-->{output.user}<!--opt name="output.fk_user_id"--></a><!--/opt name="output.fk_user_id"--></span>
+	<span class="date_posted"> on {output.date_posted}</span>
+</div>
+
+<!--opt name="output.show_comments"-->
+<!--opt name="output.num_comments"--><h3 class="subtitle">Comments ({output.num_comments})</h3><!--/opt name="output.num_comments"-->
+<!--loop name="loop"-->
+<div class="comment {loop.is_online}">
+	<!--opt name="loop.fk_user_id"--><a href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user} {loop.user_online_status}" /><!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"-->
+	<span class="controls"><!--opt name="loop.editme"--><a id="editme_{loop.comment_id}" class="content-link link_change" href="{tplvars.relative_url}blog_post_view.php?pid={output.post_id}&amp;return={output.return2me}&amp;edit_comment={loop.comment_id}#postarea" title="Edit comment">edit</a><!--/opt name="loop.editme"--> <!--opt name="output.post_owner"--><a class="content-link link_delete" href="{tplvars.relative_url}processors/blog_comment_delete.php?comment_id={loop.comment_id}&amp;return={output.return2me}" title="Remove comment">delete</a><!--/opt name="output.post_owner"--></span> <!--opt name="loop.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"-->{loop.user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--> said on {loop.date_posted} :
+	<a name="comm{loop.comment_id}"><p>{loop.comment}</p></a>
+	<div class="clear"></div>
+</div>
+<!--/loop name="loop"-->
+<!--/opt name="output.show_comments"-->
+
+<!--opt name="output.allow_comments"-->
+<h3 class="subtitle">Leave your comment</h3>
+
+<!--opt name="output.bbcode_comments"-->
+<div id="bb_tools">
+	<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a>
+	<div id="smileys-wrapper">
+		<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
+	</div>
+</div>
+<!--/opt name="output.bbcode_comments"-->
+<form id="blogcomment_form" action="{tplvars.relative_url}processors/blog_comments.php" method="post">
+<fieldset>
+	<input type="hidden" name="comment_id" id="comment_id" value="{output.comment_id}" />
+	<input type="hidden" name="fk_parent_id" value="{output.post_id}" />
+	<input type="hidden" name="return" value="{output.return2me}" />
+	<a name="postarea" id="postarea"><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea></a>
+</fieldset>
+<!--opt name="!tplvars.user_logged"-->
+<!--opt name="output.use_captcha"-->
+<fieldset>
+	<dl class="required">
+		<dt>Verification code:</dt>
+		<dd><img src="{tplvars.relative_url}show_captcha.php?{output.rand}" /></dd>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><input type="text" name="captcha" id="captcha" size="4" tabindex="50" /> <span class="field-help">Enter the characters from above.</span></dd>
+	</dl>
+</fieldset>
+<!--/opt name="output.use_captcha"-->
+<!--/opt name="!tplvars.user_logged"-->
+<fieldset class="controls">
+	<input class="button large" id="post-button" type="submit" value="Post comment" />
+</fieldset>
+</form>
+<!--/opt name="output.allow_comments"-->
+<!--opt name="!output.allow_comments"-->
+	<!--opt name="!tplvars.user_logged"-->
+	<div class="login_tease"><a class="content-link simple big" href="{tplvars.relative_url}login.php">Login</a> or <a class="content-link simple big" href="join.php">register</a> to post comments!</div>
+	<!--/opt name="!tplvars.user_logged"-->
+<!--/opt name="!output.allow_comments"-->
+
+<script type="text/javascript" src="{tplvars.relative_url}js/scrollto.js?v={tplvars.js_lib_v}"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/blog_post_view.js?v={tplvars.js_lib_v}"></script>
+<!--opt name="output.bbcode_comments"-->
+<script type="text/javascript">
+	bbcode_field_id='#comment';
+</script>
+<script type="text/javascript" src="{tplvars.relative_url}js/bbcode.js?v={tplvars.js_lib_v}"></script>
+<!--/opt name="output.bbcode_comments"-->

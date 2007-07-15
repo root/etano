@@ -1,0 +1,56 @@
+<p>This wizard will guide you through the install process.</p>
+
+<h3>Step 1 - checking environment</h3>
+
+<form action="step2.php" method="get" class="edit_form">
+<ul id="checks_area">
+	<li>
+		<span>{output.phpversion}</span>
+		PHP version higher than 4.4.0
+		<p class="comment">Although Etano may run on older versions of PHP we consider this to be a security risk.<br />
+		PHP 4.4.0 was released on 11-Jul-2005. If your host hasn't been able to update in such a long time you should move to another host.</p>
+	</li>
+	<li>
+		<span>{output.mysql}</span>
+		Mysql support
+		<p class="comment">Etano needs a MySql database to store all member information.</p>
+	</li>
+	<li>
+		<span>{output.sapi}</span>
+		PHP Server API
+		<p class="comment">If your PHP is configured as a CGI plug-in rather than an Apache module you may experience problems, as this configuration is not always working.</p>
+	</li>
+
+	<li>
+		<span>{output.write}</span>
+		Write support
+		<p class="comment">In order for this installer to make changes to files and for the application to write the cache files, write support is needed.</p>
+	</li>
+	<!--opt name="output.show_rw"-->
+	<!--loop name="rw_files"-->
+	<li class="rw_files">
+		<span>{rw_files.check_result}</span>
+		'{rw_files.file}' {rw_files.perms} permissions
+		<p class="comment">{rw_files.type} {rw_files.file} must have {rw_files.perms} permissions.</p>
+	</li>
+	<!--/loop name="rw_files"-->
+	<!--/opt name="output.show_rw"-->
+	<li>
+		<span>{output.tmp_perm}</span>
+		'tmp' folder 777 permissions
+		<p class="comment">The tmp folder must have 777 permissions.</p>
+	</li>
+	<li>
+		<span>{output.tmpadmin_perm}</span>
+		'tmp/admin' folder rwx permissions
+		<p class="comment">The 'tmp/admin' folder must have 777 permissions</p>
+	</li>
+</ul>
+
+<!--opt name="output.continue"-->
+<fieldset class="controls">
+<input class="button medium" type="submit" value="Next &gt;" />
+</fieldset>
+<!--/opt name="output.continue"-->
+</form>
+<script type="text/javascript" src="js/index.js"></script>

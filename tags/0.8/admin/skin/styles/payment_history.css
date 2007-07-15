@@ -1,0 +1,28 @@
+@import url('datePicker.css');
+
+* html dl {
+	height: 1%;
+}
+
+#range_form {
+	padding-bottom: 10px;
+}
+
+dl {
+	clear:both;
+	float: none;
+}
+
+dl dt, dl dd {
+	float: left;
+}
+
+#date_start, #date_end {
+	width: 80px;
+	float: left;
+}
+
+.stdate, .enddate {
+	width: 130px;
+}
+

@@ -1,0 +1,36 @@
+<h2>Admin Accounts</h2>
+
+<div class="hint"><strong>Add, edit, remove administrator accounts:</strong></div>
+
+<table id="admin_accounts_list" class="results_table">
+<tr>
+	<th width="5%"></th>
+	<th>User</th>
+	<th>Name</th>
+	<th>Status</th>
+	<th>Accout Type</th>
+	<th>Email</th>
+</tr>
+<!--loop name="admin_accounts"-->
+<tr align="center" class="{admin_accounts.myclass}">
+	<td>
+		<a class="item_del" href="processors/admin_accounts_delete.php?admin_id={admin_accounts.admin_id}&amp;o={o}&amp;r={r}" onclick="return(confirm('Are you sure you want to delete this account?'))" title="Delete this account">Delete account</a>
+		<a class="item_edit" href="admin_accounts_addedit.php?admin_id={admin_accounts.admin_id}&amp;o={o}&amp;r={r}" title="Edit this account">Edit account</a>
+	</td>
+	<td align="left">{admin_accounts.user}</td>
+	<td>{admin_accounts.name}</td>
+	<td>{admin_accounts.status}</td>
+	<td>{admin_accounts.dept_id}</td>
+	<td>{admin_accounts.email}</td>
+</tr>
+<!--noloop name="admin_accounts"-->
+<tr>
+	<td colspan="6" class="no_result_item">No accounts found!</td>
+</tr>
+<!--/noloop name="admin_accounts"-->
+<!--/loop name="admin_accounts"-->
+</table>
+
+{pager2}
+
+<div id="bottom_links"><a class="add" href="admin_accounts_addedit.php?o={o}&amp;r={r}" title="Add new account">Add new</a></div>

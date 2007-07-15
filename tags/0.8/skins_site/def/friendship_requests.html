@@ -1,0 +1,26 @@
+<form action="{tplvars.relative_url}processors/friendship_requests.php" method="post" id="requests_form">
+<div class="row header">
+	<div class="control"><input type="checkbox" name="check_all" id="check_all" /><span>All</span></div>
+	<div class="who">Who?</div>
+	<div class="network">Network</div>
+</div>
+
+<!--loop name="loop"-->
+<div class="row">
+	<div class="control"><input type="checkbox" class="check" id="nconn_id_{loop.nconn_id}" name="nconn_id[]" value="{loop.nconn_id}" /></div>
+	<div class="who"><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}&amp;return={output.return}">{loop.user}</a></div>
+	<div class="network">{loop.network}</div>
+	<!--noloop name="loop"-->
+	<p class="no_results">You have no requests yet.</p>
+	<!--/noloop name="loop"-->
+</div>
+<!--/loop name="loop"-->
+
+<div id="controls">
+	<input type="submit" id="btn_accept" name="btn_accept" class="button large" value="Accept selected" />
+	<span>|</span>
+	<input type="submit" id="btn_deny" name="btn_deny" class="button large" value="Decline selected" />
+</div>
+</form>
+
+<script type="text/javascript" src="{tplvars.relative_url}js/friendship_requests.js?v={tplvars.js_lib_v}"></script>

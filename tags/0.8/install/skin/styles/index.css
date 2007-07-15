@@ -1,0 +1,39 @@
+#content_column1 {
+	float: none;
+}
+
+.content_area h3 {
+	padding-left: 0;
+}
+
+#checks_area {
+	border: 1px solid #ccc;
+	margin: 10px 0;
+}
+
+#checks_area li {
+	background-color: #f4f4f4;
+	margin: 1px;
+	padding: 0 10px 0 10px;
+	font-weight: bold;
+}
+
+#checks_area li .comment {
+	font-size: 12px;
+	font-weight: normal;
+	color: #555;
+}
+
+#checks_area li span {
+	float: right;
+}
+
+#checks_area li span span {
+	float: none;
+}
+
+#checks_area li.rw_files {
+	margin-left: 20px;
+}
+
+
