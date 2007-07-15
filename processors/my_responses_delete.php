@@ -34,8 +34,8 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Response deleted.';     // translate
 
-if (!empty($_POST['return'])) {
-	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
+if (!empty($_GET['return'])) {
+	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$nextpage=$input['return'];
 } else {
 	$nextpage='my_responses.php';

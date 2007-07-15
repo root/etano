@@ -23,7 +23,7 @@ if (is_file(_BASEPATH_.'/events/processors/blog_delete.php')) {
 $topass=array();
 $blog_id=isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
 
-$query="SELECT `post_id` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_blog_id`='$blog_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="SELECT `post_id` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `fk_blog_id`='$blog_id'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $post_ids=array();
 for ($i=0;$i<mysql_num_rows($res);++$i) {
@@ -47,8 +47,8 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Blog and all related posts and comments deleted.';     // translate
 
 $nextpage='my_blogs.php';
-if (!empty($_POST['return'])) {
-	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
+if (!empty($_GET['return'])) {
+	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$nextpage=$input['return'];
 }
 if (isset($_on_after_delete)) {

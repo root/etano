@@ -42,8 +42,6 @@ TODO
 	2. for ($i=0;$i<mysql_num_rows($res);++$i) vs $temp=mysql_num_rows($res);
 - de terminat optimizarea pt mysql type cast. In search-ul id`= am ramas la linia 80 (search_left.php).
 	as mai putea sa caut `='
-- nu exista blog_post_delete
-- cronul de cleanup ar trebui sa stearga si din dsb_error_log
 - cronu care sterge din onlines tb sa scada scorul. cred ca tot asta ar trebui sa modifice si last_login.
 	asta si poate si processors/login.php
 - goto top link in blogs/photos/profile la comentarii
@@ -54,7 +52,6 @@ TODO
 - tb sa verific interfata de admin si in IE si in opera (mai ales pfields view si addedit).
 - time last login (sau last seen online).
 - in profil sa se vada cine e premium (poate si in search results)
-- who's online se pare ca tot nu prea merge....apare pagerul dar fara lume
 - user inbox.php + read message cu link in el in admin. back de la read message -> eroare
 - adaugat is_read la inboxu userului din admin
 - delete faves. delete friends
@@ -66,7 +63,7 @@ TODO
 
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
 
-- licenta si verificari
+- licenta si verificari.
 - de afisat versiunea curenta in cpanel.php (installed si latest)
 - in toate procesoarele tb sa verific cazul de eroare:
 	// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:

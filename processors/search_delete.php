@@ -26,8 +26,8 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Your search has been deleted';     // translate
 
 $nextpage='my_searches.php';
-if (!empty($_POST['return'])) {
-	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
+if (!empty($_GET['return'])) {
+	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$nextpage=$input['return'];
 }
 $nextpage=_BASEURL_.'/'.$nextpage;

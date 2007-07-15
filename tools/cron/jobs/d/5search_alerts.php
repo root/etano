@@ -2,7 +2,8 @@
 $jobs[]='search_alerts';
 
 function search_alerts() {
-	global $dbtable_prefix;
+	global $dbtable_prefix,$tplvars;
+	$tplvars['tplrelpath']=_BASEPATH_.'/skins_site/def';
 	require_once _BASEPATH_.'/includes/search_functions.inc.php';
 	require_once _BASEPATH_.'/includes/user_functions.inc.php';
 
