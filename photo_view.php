@@ -173,6 +173,6 @@ if (is_file('photo_view_left.php')) {
 }
 include 'frame.php';
 if (!empty($photo_id) && isset($output['fk_user_id']) && ((isset($_SESSION['user']['user_id']) && $output['fk_user_id']!=$_SESSION['user']['user_id']) || !isset($_SESSION['user']['user_id']))) {
-	$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_views`=`stat_views`+1 WHERE `photo_id`=$photo_id';
+	$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_views`=`stat_views`+1 WHERE `photo_id`=$photo_id";
 	@mysql_query($query);
 }

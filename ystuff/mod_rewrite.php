@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       mod_rewrite.php
-$Revision$
+$Revision: 207 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
