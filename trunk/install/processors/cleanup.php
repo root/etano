@@ -22,14 +22,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	require_once '../../includes/classes/fileop.class.php';
 	$fileop=new fileop();
 	$mt='';
-	if ($fileop->delete(dirname(__FILE__).'/../../install2/')) {
+	if ($fileop->delete(_BASEPATH_.'/install')) {
 		$mt=MESSAGE_INFO;
 	} else {
 		$mt=MESSAGE_ERROR;
 	}
 }
-//$nextpage='http://www.datemill.com/remote/finish.php?lk='.md5(_LICENSE_KEY_).'&v='._INTERNAL_VERSION_.'&mt='.$mt.'&bu='.rawurlencode(base64_encode(_BASEURL_)).'&bp='.rawurlencode(base64_encode(_BASEPATH_));
-$nextpage='http://dating.sco.ro/datemill/remote/finish.php?lk='.md5(_LICENSE_KEY_).'&v='._INTERNAL_VERSION_.'&mt='.$mt.'&bu='.rawurlencode(base64_encode(_BASEURL_)).'&bp='.rawurlencode(base64_encode(_BASEPATH_));
+$nextpage='http://www.datemill.com/remote/finish.php?lk='.md5(_LICENSE_KEY_).'&v='._INTERNAL_VERSION_.'&mt='.$mt.'&bu='.rawurlencode(base64_encode(_BASEURL_)).'&bp='.rawurlencode(base64_encode(_BASEPATH_));
 if (!empty($_SESSION['install']['phpbin'])) {
 	$nextpage.='&p='.rawurlencode(base64_encode($_SESSION['install']['phpbin']));
 }

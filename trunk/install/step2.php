@@ -48,7 +48,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['ftphost']='localhost';
 	$output['dbtable_prefix']='dsb_';
 
-	if (!empty($_SESSION['install']['write']) && $_SESSION['install']['write']==2) {
+	if (!empty($_SESSION['install']['write']) && $_SESSION['install']['write']=='ftp') {
 		$temp=fileowner(__FILE__);
 		if (!empty($temp)) {
 			if (function_exists('posix_getpwuid')) {
@@ -63,7 +63,7 @@ if (isset($_SESSION['topass']['input'])) {
 	}
 }
 
-if (!empty($_SESSION['install']['write']) && $_SESSION['install']['write']==2) {
+if (!empty($_SESSION['install']['write']) && $_SESSION['install']['write']=='ftp') {
 	$output['has_ftp']=true;
 }
 

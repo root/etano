@@ -22,6 +22,7 @@ class fileop {
 			$this->ftp_id=ftp_connect(_FTPHOST_);
 			if ($this->ftp_id) {
 				if (@ftp_login($this->ftp_id,_FTPUSER_,_FTPPASS_)) {
+					ftp_pasv( $this->ftp_id,true);
 					$this->op_mode='ftp';
 				} else {
 					$ftp_error=true;
@@ -226,7 +227,15 @@ class fileop {
 		$myreturn=false;
 		if (substr($source,-1)=='/') {
 			@ftp_chdir($this->ftp_id,$source);
-			$files=ftp_nlist($this->ftp_id,'-aF');	// array or false on error. -F will append / to dirs
+			$files=ftp_nlist($this->ftp_id,'-aF .');	// array or false on error. -F will append / to dirs
+			if (empty($files)) {
+				$temp=ftp_rawlist($this->ftp_id,'-aF .');	// array or false on error. -F will append / to dirs
+				if (!empty($temp)) {
+					for ($i=0;isset($temp[$i]);++$i) {
+						$files[]=preg_replace('/.*:\d\d /','',$temp[$i]);
+					}
+				}
+			}
 			if ($files!==false) {
 				for ($i=0;isset($files[$i]);++$i) {
 					if ($files[$i]!='./' && $files[$i]!='../') {

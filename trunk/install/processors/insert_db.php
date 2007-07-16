@@ -16,6 +16,8 @@ require_once '../../includes/sco_functions.inc.php';
 set_time_limit(0);
 
 $error=false;
+$qs='';
+$qs_sep='';
 $topass=array();
 $nextpage='install/step4.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
