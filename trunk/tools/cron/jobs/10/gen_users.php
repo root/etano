@@ -25,7 +25,7 @@ function gen_user_cache() {
 
 	$config=get_site_option(array('bbcode_profile','use_smilies'),'core');
 
-	require_once '../../includes/classes/fileop.class.php';
+	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
 	$fileop=new fileop();
 
 	$now=gmdate('YmdHis');
