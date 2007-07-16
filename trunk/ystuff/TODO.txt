@@ -36,6 +36,7 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 
 TODO
+- de adaugat refresh button in install/index.php in caz de $error
 - de adaugat verificari pt mail() si GD2 in installer.
 - de duplicat partea cu !$got_from_cache din search.php in CRON/5SEARCH_ALERTS.PHP
 -benchmark:

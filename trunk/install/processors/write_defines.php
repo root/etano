@@ -144,6 +144,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		$input['fileop_mode']=$_SESSION['install']['write']==2 ? 'ftp' : 'disk';
+		define('_FILEOP_MODE_',$input['fileop_mode']);
 		$input['license_key_md5']=md5($input['license_key']);
 		$tpl=new phemplate('../skin/','remove_nonjs');
 		$tpl->set_file('content','defines.inc.php');
