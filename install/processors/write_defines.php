@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text'][]='Server configuration does not allow db connections.';
 	}
-	if (!empty($_SESSION['install']['write']) && $_SESSION['install']['write']==2) {
+	if (!empty($_SESSION['install']['write']) && $_SESSION['install']['write']=='ftp') {
 		if (empty($input['ftphost'])) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
@@ -143,17 +143,23 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$input['fileop_mode']=$_SESSION['install']['write']==2 ? 'ftp' : 'disk';
-		define('_FILEOP_MODE_',$input['fileop_mode']);
+		$input['fileop_mode']=$_SESSION['install']['write'];
 		$input['license_key_md5']=md5($input['license_key']);
 		$tpl=new phemplate('../skin/','remove_nonjs');
 		$tpl->set_file('content','defines.inc.php');
 		$tpl->set_var('input',$input);
 		$towrite=$tpl->process('content','content',TPL_FINISH);
 
+		define('_BASEPATH_',$input['basepath']);
+		define('_FILEOP_MODE_',$input['fileop_mode']);
+		define('_FTPHOST_',$input['ftphost']);
+		define('_FTPPATH_',$input['ftppath']);
+		define('_FTPUSER_',$input['ftpuser']);
+		define('_FTPPASS_',$input['ftppass']);
 		require_once '../../includes/classes/fileop.class.php';
 		$fileop=new fileop();
-		$fileop->file_put_contents('../../includes/defines.inc.php',$towrite);
+		$fileop->delete($input['basepath'].'/includes/defines.inc.php');
+		$fileop->file_put_contents($input['basepath'].'/includes/defines.inc.php',$towrite);
 		$_SESSION['install']['input']=$input;
 	} else {
 		$nextpage='install/step2.php';

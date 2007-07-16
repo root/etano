@@ -129,16 +129,16 @@ if ($fp) {
 	$temp=@fwrite($fp,'test');
 	fclose($fp);
 	if ($temp) {
-		$_SESSION['install']['write']=1;
+		$_SESSION['install']['write']='disk';
 		$output['write']='<span class="comment">(direct write)</span><img src="skin/images/check.gif" alt="ok" />';
 		$rw_files=array();
 	}
 } elseif (function_exists('ftp_connect')) {
-	$_SESSION['install']['write']=2;
+	$_SESSION['install']['write']='ftp';
 	$output['write']='<span class="comment">(ftp method)</span><img src="skin/images/check.gif" alt="ok" />';
 	$rw_files=array();
 } else {
-	$_SESSION['install']['write']=1;
+	$_SESSION['install']['write']='disk';
 	$output['show_rw']=true;
 	$output['write']='<img src="skin/images/check.gif" alt="ok" />';
 
