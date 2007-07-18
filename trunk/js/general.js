@@ -9,7 +9,9 @@ $(function() {
 	}
 
 	last_ka_check=new Date().getTime();
-	window.setTimeout("keep_alive();",180000);
+	if (typeof(in_admin)=='undefined') {
+		window.setTimeout("keep_alive();",180000);
+	}
 });
 
 function keep_alive() {

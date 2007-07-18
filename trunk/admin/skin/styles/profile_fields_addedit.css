@@ -5,11 +5,19 @@ ul#litems li {
 	font-size: 90%;
 }
 
+* html ul#litems li {
+	list-style-type: none;
+}
+
 ul#litems li ul.litem_tools {
 	float: right;
 	width: 120px;
 	padding: 0;
-	margin-top: 2px;
+	margin: 2px 0 0 0;
+}
+
+* html ul#litems li ul.litem_tools {
+	width: 130px;
 }
 
 ul#litems li ul.litem_tools li {
@@ -27,18 +35,21 @@ a.item_add {
 	display: block;
 	width: 16px;
 	height: 16px;
+	margin:0;
 }
 a.item_del {
 	background: url('../images/del.gif') no-repeat top left;
 	display: block;
 	width: 16px;
 	height: 16px;
+	margin:0;
 }
 a.item_edit {
 	background: url('../images/edit.gif') no-repeat top left;
 	display: block;
 	width: 16px;
 	height: 16px;
+	margin:0;
 }
 
 a.item_edit i, a.item_del i, a.item_add i {

@@ -29,7 +29,15 @@ if (!empty($post_id)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
-//		$output['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$output['date_posted']+$_SESSION['user']['prefs']['time_offset']);
+		$config=get_site_option(array('bbcode_blogs','use_smilies'),'core_blog');
+		if (!empty($config['bbcode_blogs'])) {
+			$output['post_content']=bbcode2html($output['post_content']);
+		}
+		if (!empty($config['use_smilies'])) {
+			$output['post_content']=text2smilies($output['post_content']);
+		}
+		$time_options=get_site_option(array('datetime_format','time_offset'),'def_user_prefs');
+		$output['date_posted']=strftime($time_options['datetime_format'],$output['date_posted']+$time_options['time_offset']);
 
 		if (!empty($output['allow_comments'])) {
 			// may I see any comment?
@@ -43,7 +51,7 @@ if (!empty($post_id)) {
 					$output['comment_id']=$rsrow['comment_id'];
 					$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 				}
-//				$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
+				$rsrow['date_posted']=strftime($time_options['datetime_format'],$rsrow['date_posted']+$time_options['time_offset']);
 				$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 				if (!empty($config['bbcode_comments'])) {
 					$rsrow['comment']=bbcode2html($rsrow['comment']);
