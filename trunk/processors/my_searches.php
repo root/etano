@@ -41,14 +41,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				eval($_on_before_update[$i].'();');
 			}
 		}
-		$query="UPDATE `{$dbtable_prefix}user_searches` SET `is_default`=0,`alert`=0 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+		$query="UPDATE `{$dbtable_prefix}user_searches` SET `is_default`=0,`alert`=0 WHERE `fk_user_id`=".$_SESSION['user']['user_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (!empty($input['is_default'])) {
-			$query="UPDATE `{$dbtable_prefix}user_searches` SET `is_default`=1 WHERE `search_id`='".$input['is_default']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query="UPDATE `{$dbtable_prefix}user_searches` SET `is_default`=1 WHERE `search_id`=".$input['is_default']." AND `fk_user_id`=".$_SESSION['user']['user_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 		if (!empty($input['alert'])) {
-			$query="UPDATE `{$dbtable_prefix}user_searches` SET `alert`=1 WHERE `search_id` IN ('".join("','",$input['alert'])."') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query="UPDATE `{$dbtable_prefix}user_searches` SET `alert`=1 WHERE `search_id` IN ('".join("','",$input['alert'])."') AND `fk_user_id`=".$_SESSION['user']['user_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 		$topass['message']['type']=MESSAGE_INFO;

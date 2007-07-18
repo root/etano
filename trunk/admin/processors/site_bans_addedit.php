@@ -69,15 +69,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `ban_id`='".$input['ban_id']."'";
+			$query.=" WHERE `ban_id`=".$input['ban_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="REPLACE INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['reason']."',`fk_lk_id`='".$input['fk_lk_id_reason']."',`skin`='$default_skin_code'";
+			$query="REPLACE INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['reason']."',`fk_lk_id`=".$input['fk_lk_id_reason'].",`skin`='$default_skin_code'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Ban changed.';
 		} else {
 			unset($input['ban_id']);
-			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Ban reason',`lk_use`='".LK_MESSAGE."'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Ban reason',`lk_use`=".LK_MESSAGE;
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_lk_id_reason']=mysql_insert_id();
 			$query="INSERT INTO `{$dbtable_prefix}lang_strings` (`lang_value`,`fk_lk_id`,`skin`) VALUES ('".$input['reason']."','".$input['fk_lk_id_reason']."','$default_skin_code')";

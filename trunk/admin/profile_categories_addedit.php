@@ -27,13 +27,13 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['return']=rawurlencode($output['return']);
 } elseif (!empty($_GET['pcat_id'])) {
 	$pcat_id=(int)$_GET['pcat_id'];
-	$query="SELECT * FROM `{$dbtable_prefix}profile_categories` WHERE `pcat_id`='$pcat_id'";
+	$query="SELECT * FROM `{$dbtable_prefix}profile_categories` WHERE `pcat_id`=$pcat_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
 	}
 	$output['pcat_name']='';
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='".get_default_skin_code()."' AND `fk_lk_id`='".$output['fk_lk_id_pcat']."'";
+	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='".get_default_skin_code()."' AND `fk_lk_id`=".$output['fk_lk_id_pcat'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output['pcat_name']=mysql_result($res,0,0);

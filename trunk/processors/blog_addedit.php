@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `blog_id`='".$input['blog_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query.=" WHERE `blog_id`=".$input['blog_id']." AND `fk_user_id`=".$_SESSION['user']['user_id'];
 			if (isset($_on_before_update)) {
 				for ($i=0;isset($_on_before_update[$i]);++$i) {
 					eval($_on_before_update[$i].'();');

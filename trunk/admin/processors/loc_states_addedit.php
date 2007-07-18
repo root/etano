@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `state_id`='".$input['state_id']."'";
+			$query.=" WHERE `state_id`=".$input['state_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='State info changed.';
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			$query=substr($query,0,-1);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="UPDATE `{$dbtable_prefix}loc_countries` SET `num_states`=`num_states`+1 WHERE `country_id`='".$input['fk_country_id']."'";
+			$query="UPDATE `{$dbtable_prefix}loc_countries` SET `num_states`=`num_states`+1 WHERE `country_id`=".$input['fk_country_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='State added.';

@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$message_body=sanitize_and_format_gpc($_POST,'message_body',TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
 	if (!empty($subject) && !empty($message_body)) {
 		if (!empty($amtpl_id)) {
-			$query="UPDATE `{$dbtable_prefix}admin_mtpls` SET `subject`='$subject',`message_body`='$message_body' WHERE `amtpl_id`='$amtpl_id'";
+			$query="UPDATE `{$dbtable_prefix}admin_mtpls` SET `subject`='$subject',`message_body`='$message_body' WHERE `amtpl_id`=$amtpl_id";
 		} else {
 			$query="INSERT INTO `{$dbtable_prefix}admin_mtpls` SET `amtpl_name`='$amtpl_name',`subject`='$subject',`message_body`='$message_body',`amtpl_type`='$amtpl_type'";
 		}

@@ -23,11 +23,11 @@ $photo_id=isset($_GET['photo_id']) ? (int)$_GET['photo_id'] : 0;
 // no need to urldecode because of the GET
 $return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
-$query="SELECT `fk_user_id`,`photo`,`is_main` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$photo_id'";
+$query="SELECT `fk_user_id`,`photo`,`is_main` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$input=mysql_fetch_assoc($res);
-	$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$photo_id'";
+	$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 	require_once '../../includes/classes/fileop.class.php';
@@ -36,13 +36,13 @@ if (mysql_num_rows($res)) {
 	$fileop->delete(_PHOTOPATH_.'/t2/'.$input['photo']);
 	$fileop->delete(_PHOTOPATH_.'/'.$input['photo']);
 
-	$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_parent_id`='$photo_id'";
+	$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_parent_id`=$photo_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 // what to do with the cache for the deleted comments or photo page? clear_cache($photo_id) ????
 
 	if ($input['is_main']==1) {
-		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$input['user_id']."'";
+		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`=".$input['user_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 

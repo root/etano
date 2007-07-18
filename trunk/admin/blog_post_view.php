@@ -25,7 +25,7 @@ $edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
 $output=array();
 $loop=array();
 if (!empty($post_id)) {
-	$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user`,a.`fk_blog_id`,b.`blog_name`,a.`title`,a.`post_content`,a.`allow_comments` FROM `{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_blogs` b WHERE a.`post_id`='$post_id' AND a.`fk_blog_id`=b.`blog_id`";
+	$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user`,a.`fk_blog_id`,b.`blog_name`,a.`title`,a.`post_content`,a.`allow_comments` FROM `{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_blogs` b WHERE a.`post_id`=$post_id AND a.`fk_blog_id`=b.`blog_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
@@ -35,7 +35,7 @@ if (!empty($post_id)) {
 			// may I see any comment?
 			$output['show_comments']=true;
 			$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
-			$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}blog_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`='".$output['post_id']."' ORDER BY a.`comment_id` ASC";
+			$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}blog_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`=".$output['post_id']." ORDER BY a.`comment_id` ASC";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				// if someone has asked to edit his/her comment

@@ -45,7 +45,7 @@ class widget_datemill_feed extends icontent_widget {
 			if ($ok) {
 				$items=$fr->getFeedOutputData();
 				for ($i=0;isset($items['item'][$i]);++$i) {
-					$items['item'][$i]['content:encoded']=substr($items['item'][$i]['content:encoded'],0,$this->config['num_chars']);
+					$items['item'][$i]['description']=substr($items['item'][$i]['description'],0,$this->config['num_chars']);
 				}
 				$this->tpl->set_file('widget.content','widgets/datemill_feed/display.html');
 				$this->tpl->set_loop('loop',array_slice($items['item'],0,$this->config['num_stories']));
@@ -63,7 +63,7 @@ class widget_datemill_feed extends icontent_widget {
 		$myreturn='';
 		if ($this->tpl->get_var_silent('widget.content')!='') {
 			$widget['title']='Latest Datemill News';	// translate this
-			$widget['id']='os_tech_feed';
+			$widget['id']='datemill_feed';
 			if (isset($this->config['area'])) {
 				if ($this->config['area']=='admin') {
 					$this->tpl->set_file('temp','static/widget.html');

@@ -21,13 +21,13 @@ $qs_sep='';
 $topass=array();
 $country_id=isset($_GET['country_id']) ? (int)$_GET['country_id'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}loc_cities` WHERE `fk_country_id`='$country_id'";
+$query="DELETE FROM `{$dbtable_prefix}loc_cities` WHERE `fk_country_id`=$country_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-$query="DELETE FROM `{$dbtable_prefix}loc_states` WHERE `fk_country_id`='$country_id'";
+$query="DELETE FROM `{$dbtable_prefix}loc_states` WHERE `fk_country_id`=$country_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-$query="DELETE FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='$country_id'";
+$query="DELETE FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=$country_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;

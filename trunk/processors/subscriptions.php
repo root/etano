@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_ERROR;
 			$topass['message']['text']='Invalid membership type. Please select another.';	//translate this
 		}
-		$query="SELECT * FROM `{$dbtable_prefix}subscriptions` WHERE `subscr_id`='".$input['subscr_id']."'";
+		$query="SELECT * FROM `{$dbtable_prefix}subscriptions` WHERE `subscr_id`=".$input['subscr_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$subscription=array();
 		if (mysql_num_rows($res)) {

@@ -46,7 +46,7 @@ if (isset($_SESSION['topass']['input'])) {
 			}
 		}
 	}
-	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='$uid'";
+	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=$uid";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
@@ -104,14 +104,14 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 					$num_states=0;
 					$num_cities=0;
 					if (!empty($country_id)) {
-						$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='$country_id'";
+						$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=$country_id";
 						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 						if (mysql_num_rows($res)) {
 							list($prefered_input,$num_states)=mysql_fetch_row($res);
 						}
 					}
 					if (!empty($state_id)) {
-						$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`='$state_id'";
+						$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`=$state_id";
 						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 						if (mysql_num_rows($res)) {
 							$num_cities=mysql_result($res,0,0);
@@ -122,7 +122,7 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 					$cat_content[$c]['dbfield']=$field['dbfield'].'_state';
 					$cat_content[$c]['field']='<select name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" class="full_width"><option value="0">Select state</option>';	// translate this
 					if (!empty($country_id) && $prefered_input=='s' && !empty($num_states)) {
-						$cat_content[$c]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$output[$field['dbfield'].'_state'],"`fk_country_id`='$country_id'");
+						$cat_content[$c]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$output[$field['dbfield'].'_state'],"`fk_country_id`=$country_id");
 					}
 					$cat_content[$c]['field'].='</select>';
 					$cat_content[$c]['class']=(!empty($country_id) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
@@ -131,7 +131,7 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 					$cat_content[$c]['dbfield']=$field['dbfield'].'_city';
 					$cat_content[$c]['field']='<select name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'" class="full_width"><option value="0">Select city</option>';	// translate this
 					if (!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) {
-						$cat_content[$c]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$output[$field['dbfield'].'_city'],"`fk_state_id`='$state_id'");
+						$cat_content[$c]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$output[$field['dbfield'].'_city'],"`fk_state_id`=$state_id");
 					}
 					$cat_content[$c]['field'].='</select>';
 					$cat_content[$c]['class']=(!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';

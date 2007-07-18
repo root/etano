@@ -162,13 +162,13 @@ class payment_paypal extends ipayment {
 			$reply=trim($reply);
 			if (strcasecmp($reply,'VERIFIED')==0 || strcasecmp($reply,'VERIFIED')!=0) {
 				if (strcasecmp($input['business'],$this->config['paypal_email'])==0 || strcasecmp($input['receiver_email'],$this->config['paypal_email'])==0) {
-					$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='".$input['custom']."'";
+					$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`=".$input['custom'];
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					if (mysql_num_rows($res)) {
 						$real_user=mysql_fetch_assoc($res);
 						if (strcasecmp($input['txn_type'],'web_accept')==0 || strcasecmp($input['txn_type'],'send_money')==0 || strcasecmp($input['txn_type'],'subscr_payment')==0) {
 							if (strcasecmp($input['payment_status'],'Completed')==0) {
-								$query="SELECT `subscr_id`,`price`,`m_value_from`,`m_value_to`,`duration`,`duration_units` FROM `{$dbtable_prefix}subscriptions` WHERE `subscr_id`='".$input['item_number']."' AND `is_visible`=1";
+								$query="SELECT `subscr_id`,`price`,`m_value_from`,`m_value_to`,`duration`,`duration_units` FROM `{$dbtable_prefix}subscriptions` WHERE `subscr_id`=".$input['item_number']." AND `is_visible`=1";
 								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 								if (mysql_num_rows($res)) {
 									$real_subscr=mysql_fetch_assoc($res);
@@ -177,19 +177,19 @@ class payment_paypal extends ipayment {
 											require_once(_BASEPATH_.'/includes/iso3166.inc.php');
 											$input['country']=isset($iso3166[$input['residence_country']]) ? $iso3166[$input['residence_country']] : '';
 											$this->check_fraud($input);
-											$query="SELECT `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`='".$real_user['user_id']."' AND `refunded`=0 ORDER BY `paid_until` DESC LIMIT 1";
+											$query="SELECT `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$real_user['user_id']." AND `refunded`=0 ORDER BY `paid_until` DESC LIMIT 1";
 											if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 											$paid_from=date('Ymd');
 											if (mysql_num_rows($res)) {
 												$paid_from=mysql_result($res,0,0);
 											}
-											$query="INSERT INTO `{$dbtable_prefix}payments` SET `fk_user_id`='".$real_user['user_id']."',`_user`='".$_SESSION['user']['user']."',`gateway`='paypal',`fk_subscr_id`='".$real_subscr['subscr_id']."',`gw_txn`='".$input['txn_id']."',`name`='".$input['first_name'].' '.$input['last_name']."',`country`='".$input['country']."',`email`='".$input['payer_email']."',`m_value_from`='".$real_subscr['m_value_from']."',`m_value_to`='".$real_subscr['m_value_to']."',`amount_paid`='".$input['mc_gross']."',`is_suspect`='".(int)$this->is_fraud."',`suspect_reason`='".$this->fraud_reason."',`paid_from`='$paid_from'";
+											$query="INSERT INTO `{$dbtable_prefix}payments` SET `fk_user_id`=".$real_user['user_id'].",`_user`='".$_SESSION['user']['user']."',`gateway`='paypal',`fk_subscr_id`=".$real_subscr['subscr_id'].",`gw_txn`='".$input['txn_id']."',`name`='".$input['first_name'].' '.$input['last_name']."',`country`='".$input['country']."',`email`='".$input['payer_email']."',`m_value_from`=".$real_subscr['m_value_from'].",`m_value_to`=".$real_subscr['m_value_to'].",`amount_paid`='".$input['mc_gross']."',`is_suspect`=".(int)$this->is_fraud.",`suspect_reason`='".$this->fraud_reason."',`paid_from`='$paid_from'";
 											if (!empty($real_subscr['duration'])) {
 												$query.=",`paid_until`='$paid_from'+INTERVAL ".$real_subscr['duration'].' '.$real_subscr['duration_units'];
 											}
 											if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 											if (!$this->is_fraud) {
-												$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$real_subscr['m_value_to']."' WHERE `".USER_ACCOUNT_ID."`='".$real_user['user_id']."'";
+												$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`=".$real_subscr['m_value_to']." WHERE `".USER_ACCOUNT_ID."`=".$real_user['user_id'];
 												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 												$myreturn=true;
 												require_once _BASEPATH_.'/includes/general_functions.inc.php';
@@ -215,11 +215,11 @@ class payment_paypal extends ipayment {
 								new log_error(get_class($this),'Payment status not Completed: '.$input['payment_status']."\n".array2qs($_POST));
 							}
 						} elseif (strcasecmp($input['txn_type'],'subscr_eot')==0) {
-							$query="SELECT `payment_id` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`='".$real_user['user_id']."' AND `fk_subscr_id`='".$input['item_number']."' ORDER BY `payment_id` DESC LIMIT 1";
+							$query="SELECT `payment_id` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$real_user['user_id']." AND `fk_subscr_id`=".$input['item_number']." ORDER BY `payment_id` DESC LIMIT 1";
 							if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 							if (mysql_num_rows($res)) {
 								$payment_id=mysql_result($res,0,0);
-								$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`=curdate() WHERE `payment_id`='$payment_id'";
+								$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`=curdate() WHERE `payment_id`=$payment_id";
 								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 							} else {
 								// invalid eot.

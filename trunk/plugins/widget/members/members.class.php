@@ -40,19 +40,19 @@ class widget_members extends icontent_widget {
 		global $page_last_modified_time;
 		switch ($this->config['mode']) {
 			case 'new':
-				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(a.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_profiles` a WHERE a.`_photo`<>'' AND a.`del`=0 AND a.`status`='".STAT_APPROVED."' ORDER BY a.`date_added` DESC";
+				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(a.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_profiles` a WHERE a.`_photo`<>'' AND a.`del`=0 AND a.`status`=".STAT_APPROVED." ORDER BY a.`date_added` DESC";
 				break;
 
 			case 'vote':
-				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(b.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='vote_score' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
+				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(b.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='vote_score' AND b.`_photo`<>'' AND b.`status`=".STAT_APPROVED." AND b.`del`=0 ORDER BY a.`value` DESC";
 				break;
 
 			case 'views':
-				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(b.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='total_views' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
+				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(b.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='total_views' AND b.`_photo`<>'' AND b.`status`=".STAT_APPROVED." AND b.`del`=0 ORDER BY a.`value` DESC";
 				break;
 
 			case 'comm':
-				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(b.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='total_comments' AND b.`_photo`<>'' AND b.`status`='".STAT_APPROVED."' AND b.`del`=0 ORDER BY a.`value` DESC";
+				$query="SELECT a.`fk_user_id`,UNIX_TIMESTAMP(b.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}user_stats` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`stat`='total_comments' AND b.`_photo`<>'' AND b.`status`=".STAT_APPROVED." AND b.`del`=0 ORDER BY a.`value` DESC";
 				break;
 
 		}

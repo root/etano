@@ -70,13 +70,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$query.=",`$k`='".$input[$k]."'";
 				}
 			}
-			$query.=" WHERE `comment_id`='".$input['comment_id']."'";
+			$query.=" WHERE `comment_id`=".$input['comment_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Comment changed.';
 		} else {
 			unset($input['comment_id']);
-			$query="INSERT INTO $table SET `_user`='Admin',`date_posted`='$now',`last_changed`='$now',`status`='".STAT_APPROVED."'";
+			$query="INSERT INTO $table SET `_user`='Admin',`date_posted`='$now',`last_changed`='$now',`status`=".STAT_APPROVED;
 			foreach ($default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.=",`$k`='".$input[$k]."'";

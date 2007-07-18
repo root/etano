@@ -118,7 +118,7 @@ class payment_twocheckout extends ipayment {
 			}
 			if ($input['x_response_code']==1) {	// processed ok
 				if (strcasecmp($input['x_MD5_Hash'],md5($this->config['secret'].$this->config['sid'].$input['x_trans_id'].$input['x_amount']))==0) {
-					$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='".$input['user_id']."'";
+					$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`=".$input['user_id'];
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					if (mysql_num_rows($res)) {
 						$real_user=mysql_fetch_assoc($res);
@@ -130,19 +130,19 @@ class payment_twocheckout extends ipayment {
 								if (strcasecmp($input['demo'],'Y')!=0 || ($this->config['demo_mode']==1 && strcasecmp($input['demo'],'Y')==0)) {
 									$input['country']=$input['x_Country'];	// needed for the fraud check
 									$this->check_fraud($input);
-									$query="SELECT max(`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`='".$real_user['user_id']."'";
+									$query="SELECT max(`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$real_user['user_id'];
 									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 									$paid_from=date('Ymd');
 									if (mysql_num_rows($res)) {
 										$paid_from=mysql_result($res,0,0);
 									}
-									$query="INSERT INTO `{$dbtable_prefix}payments` SET `fk_user_id`='".$real_user['user_id']."',`_user`='".$_SESSION['user']['user']."',`gateway`='twocheckout',`fk_subscr_id`='".$real_subscr['subscr_id']."',`gw_txn`='".$input['x_trans_id']."',`name`='".$input['card_holder_name']."',`country`='".$input['x_Country']."',`state`='".$input['x_State']."',`city`='".$input['x_City']."',`zip`='".$input['x_Zip']."',`street_address`='".$input['x_Address']."',`email`='".$input['x_Email']."',`phone`='".$input['x_Phone']."',`m_value_from`='".$real_subscr['m_value_from']."',`m_value_to`='".$real_subscr['m_value_to']."',`amount_paid`='".$input['x_amount']."',`is_suspect`='".(int)$this->is_fraud."',`suspect_reason`='".$this->fraud_reason."',`paid_from`='$paid_from'";
+									$query="INSERT INTO `{$dbtable_prefix}payments` SET `fk_user_id`=".$real_user['user_id'].",`_user`='".$_SESSION['user']['user']."',`gateway`='twocheckout',`fk_subscr_id`='".$real_subscr['subscr_id']."',`gw_txn`='".$input['x_trans_id']."',`name`='".$input['card_holder_name']."',`country`='".$input['x_Country']."',`state`='".$input['x_State']."',`city`='".$input['x_City']."',`zip`='".$input['x_Zip']."',`street_address`='".$input['x_Address']."',`email`='".$input['x_Email']."',`phone`='".$input['x_Phone']."',`m_value_from`=".$real_subscr['m_value_from'].",`m_value_to`=".$real_subscr['m_value_to'].",`amount_paid`='".$input['x_amount']."',`is_suspect`=".(int)$this->is_fraud.",`suspect_reason`='".$this->fraud_reason."',`paid_from`='$paid_from'";
 									if (!empty($real_subscr['duration'])) {
 										$query.=",`paid_until`='$paid_from'+INTERVAL ".$real_subscr['duration'].' '.$real_subscr['duration_units'];
 									}
 									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 									if (!$this->is_fraud) {
-										$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$real_subscr['m_value_to']."' WHERE `".USER_ACCOUNT_ID."`='".$real_user['user_id']."'";
+										$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`=".$real_subscr['m_value_to']." WHERE `".USER_ACCOUNT_ID."`=".$real_user['user_id'];
 										if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 										$myreturn=true;
 										$gateway_text='';

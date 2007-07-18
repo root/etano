@@ -130,7 +130,7 @@ function on_approve_blog_post($post_ids) {
 	foreach ($blog_ids as $bid=>$num) {
 		// blog stats
 		$bid=(string)$bid;
-		$query="UPDATE `{$dbtable_prefix}user_blogs` SET `stat_posts`=`stat_posts`+$num WHERE `blog_id`='$bid'";
+		$query="UPDATE `{$dbtable_prefix}user_blogs` SET `stat_posts`=`stat_posts`+$num WHERE `blog_id`=$bid";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		// blog_archive
 		$blog_archive=array();

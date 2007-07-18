@@ -22,10 +22,10 @@ function search_results($search,$my_membership=1) {
 	$from="`{$dbtable_prefix}user_profiles` a";
 	$where='1';
 	if (isset($search['min_user_id'])) {
-		$where.=" AND a.`fk_user_id`>'".$search['min_user_id']."'";
+		$where.=" AND a.`fk_user_id`>".$search['min_user_id'];
 	}
 //	if (isset($_SESSION['user']['user_id'])) {
-//		$where.=" AND a.`fk_user_id`<>'".$_SESSION['user']['user_id']."'";
+//		$where.=" AND a.`fk_user_id`<>".$_SESSION['user']['user_id'];
 //	}
 	$where.=' AND a.`status`='.STAT_APPROVED.' AND a.`del`=0';
 	$orderby="ORDER BY a.`score` DESC";
@@ -63,7 +63,7 @@ function search_results($search,$my_membership=1) {
 				$input['fk_net_id']=sanitize_and_format_gpc($search,'nid',TYPE_INT,0,0);
 				$select="b.`fk_user_id_other`";
 				$from="`{$dbtable_prefix}user_networks` b,".$from;
-				$where="b.`fk_user_id`='".$input['fk_user_id']."' AND b.`fk_net_id`='".$input['fk_net_id']."' AND b.`nconn_status`=1 AND b.`fk_user_id_other`=a.`fk_user_id` AND ".$where;
+				$where="b.`fk_user_id`=".$input['fk_user_id']." AND b.`fk_net_id`=".$input['fk_net_id']." AND b.`nconn_status`=1 AND b.`fk_user_id_other`=a.`fk_user_id` AND ".$where;
 				break;
 
 			case 'new':
@@ -163,21 +163,21 @@ function search_results($search,$my_membership=1) {
 				case FIELD_LOCATION:
 					$input[$field['dbfield'].'_country']=sanitize_and_format_gpc($search,$field['dbfield'].'_country',TYPE_INT,0,0);
 					if (!empty($input[$field['dbfield'].'_country'])) {
-						$where.=" AND `".$field['dbfield']."_country`='".$input[$field['dbfield'].'_country']."'";
-						$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='".$input[$field['dbfield'].'_country']."'";
+						$where.=" AND `".$field['dbfield']."_country`=".$input[$field['dbfield'].'_country'];
+						$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=".$input[$field['dbfield'].'_country'];
 						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 						if (mysql_num_rows($res)) {
 							list($prefered_input,$num_states)=mysql_fetch_row($res);
 							if ($prefered_input=='s' && !empty($num_states)) {
 								$input[$field['dbfield'].'_state']=sanitize_and_format_gpc($search,$field['dbfield'].'_state',TYPE_INT,0,0);
 								if (!empty($input[$field['dbfield'].'_state'])) {
-									$where.=" AND `".$field['dbfield']."_state`='".$input[$field['dbfield'].'_state']."'";
-									$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`='".$input[$field['dbfield'].'_state']."'";
+									$where.=" AND `".$field['dbfield']."_state`=".$input[$field['dbfield'].'_state'];
+									$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`=".$input[$field['dbfield'].'_state'];
 									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 									if (mysql_num_rows($res)) {
 										$input[$field['dbfield'].'_city']=sanitize_and_format_gpc($search,$field['dbfield'].'_city',TYPE_INT,0,0);
 										if (!empty($input[$field['dbfield'].'_city'])) {
-											$where.=" AND `".$field['dbfield']."_city`='".$input[$field['dbfield'].'_city']."'";
+											$where.=" AND `".$field['dbfield']."_city`=".$input[$field['dbfield'].'_city'];
 	//									} else {
 	//										unset($input[$field['dbfield'].'_city']);
 										}

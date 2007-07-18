@@ -38,7 +38,7 @@ class widget_blogs extends icontent_widget {
 	function _content() {
 		global $dbtable_prefix;
 		global $page_last_modified_time;
-		$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}blog_posts` a WHERE a.`is_public`=1 AND a.`status`='".STAT_APPROVED."'";
+		$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}blog_posts` a WHERE a.`is_public`=1 AND a.`status`=".STAT_APPROVED;
 		switch ($this->config['mode']) {
 			case 'new':
 				$query.=" ORDER BY a.`date_posted` DESC";

@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		unset($input['photo'],$input['status'],$input['date_posted'],$input['last_changed']);
 		if (!empty($input['photo_id'])) {
-			$query="SELECT `photo_id` FROM `{$dbtable_prefix}user_photos` WHERE `is_main`=1 AND `fk_user_id`='".$input['fk_user_id']."'";
+			$query="SELECT `photo_id` FROM `{$dbtable_prefix}user_photos` WHERE `is_main`=1 AND `fk_user_id`=".$input['fk_user_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$old_main=0;
 			if (mysql_num_rows($res)) {
@@ -41,15 +41,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			// handle main profile photo
 			if (!empty($input['is_main']) && $old_main!=$input['photo_id']) {
-				$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_main`=0 WHERE `fk_user_id`='".$input['fk_user_id']."'";
+				$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_main`=0 WHERE `fk_user_id`=".$input['fk_user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				$query="SELECT `photo` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='".$input['photo_id']."'";
+				$query="SELECT `photo` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=".$input['photo_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$output['photo']=mysql_result($res,0,0);
-				$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='".$output['photo']."',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$input['fk_user_id']."'";
+				$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='".$output['photo']."',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`=".$input['fk_user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			} elseif (empty($input['is_main']) && $old_main==$input['photo_id']) {
-				$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$input['fk_user_id']."'";
+				$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`=".$input['fk_user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `last_changed`='".gmdate('YmdHis')."'";
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$query.=",`$k`='".$input[$k]."'";
 				}
 			}
-			$query.=" WHERE `photo_id`='".$input['photo_id']."'";
+			$query.=" WHERE `photo_id`=".$input['photo_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Photo info changed.';

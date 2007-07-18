@@ -22,7 +22,7 @@ $qs_sep='';
 $topass=array();
 $ban_id=isset($_GET['ban_id']) ? (int)$_GET['ban_id'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}site_bans` WHERE `ban_id`='$ban_id'";
+$query="DELETE FROM `{$dbtable_prefix}site_bans` WHERE `ban_id`=$ban_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 regenerate_langstrings_array();
 regenerate_ban_array();

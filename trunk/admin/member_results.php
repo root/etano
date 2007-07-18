@@ -129,14 +129,14 @@ if ($do_query) {
 		$where.=" AND a.`_user` LIKE '".$input['user']."%'";
 	}
 	if (isset($input['pstat'])) {	// profile status
-		$where.=" AND a.`status`='".$input['pstat']."'";
+		$where.=" AND a.`status`=".$input['pstat'];
 	}
 	if (isset($input['astat'])) {	// account status
-		$where.=" AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND b.`status`='".$input['astat']."'";
+		$where.=" AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND b.`status`=".$input['astat'];
 		$from.=",".USER_ACCOUNTS_TABLE." b";
 	}
 	if (isset($input['membership'])) {
-		$where.=" AND b.`membership`='".$input['membership']."'";
+		$where.=" AND b.`membership`=".$input['membership'];
 		if (!isset($input['astat'])) {
 			$where.=" AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."`";
 			$from.=",".USER_ACCOUNTS_TABLE." b";
@@ -213,19 +213,19 @@ if ($do_query) {
 
 			case FIELD_LOCATION:
 				if (isset($input[$field['dbfield'].'_country'])) {
-					$where.=" AND a.`".$field['dbfield']."_country`='".$input[$field['dbfield'].'_country']."'";
-					$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='".$input[$field['dbfield'].'_country']."'";
+					$where.=" AND a.`".$field['dbfield']."_country`=".$input[$field['dbfield'].'_country'];
+					$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=".$input[$field['dbfield'].'_country'];
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					if (mysql_num_rows($res)) {
 						list($prefered_input,$num_states)=mysql_fetch_row($res);
 						if ($prefered_input=='s' && !empty($num_states)) {
 							if (isset($input[$field['dbfield'].'_state'])) {
-								$where.=" AND a.`".$field['dbfield']."_state`='".$input[$field['dbfield'].'_state']."'";
-								$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`='".$input[$field['dbfield'].'_state']."'";
+								$where.=" AND a.`".$field['dbfield']."_state`=".$input[$field['dbfield'].'_state'];
+								$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`=".$input[$field['dbfield'].'_state'];
 								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 								if (mysql_num_rows($res)) {
 									if (isset($input[$field['dbfield'].'_city'])) {
-										$where.=" AND a.`".$field['dbfield']."_city`='".$input[$field['dbfield'].'_city']."'";
+										$where.=" AND a.`".$field['dbfield']."_city`=".$input[$field['dbfield'].'_city'];
 									}
 								}
 							}

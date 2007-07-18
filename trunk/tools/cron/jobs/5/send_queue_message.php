@@ -32,7 +32,7 @@ function send_queue_message() {
 			$rsrow['message_body']=sanitize_and_format($rsrow['message_body'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DB]);
 
 			if (!isset($filters[$rsrow['fk_user_id']])) {
-				$query="SELECT `filter_type`,`field`,`field_value`,`fk_folder_id` FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`='".$rsrow['fk_user_id']."'";
+				$query="SELECT `filter_type`,`field`,`field_value`,`fk_folder_id` FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`=".$rsrow['fk_user_id'];
 				if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				while ($rsrow2=mysql_fetch_assoc($res2)) {
 					$filters[$rsrow['fk_user_id']][]=$rsrow2;

@@ -66,16 +66,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$input['comment'].="\n\nLast edited by ".$_SESSION['user']['user'].' on '.gmdate('Y-m-d H:i').' GMT';	// translate
 				$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='".gmdate('YmdHis')."'";
 				if ($config['manual_com_approval']) {
-					$query.=",`status`='".STAT_PENDING."'";
+					$query.=",`status`=".STAT_PENDING;
 				} else {
-					$query.=",`status`='".STAT_APPROVED."'";
+					$query.=",`status`=".STAT_APPROVED;
 				}
 				foreach ($blog_comments_default['defaults'] as $k=>$v) {
 					if (isset($input[$k])) {
 						$query.=",`$k`='".$input[$k]."'";
 					}
 				}
-				$query.=" WHERE `comment_id`='".$input['comment_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				$query.=" WHERE `comment_id`=".$input['comment_id']." AND `fk_user_id`=".$_SESSION['user']['user_id'];
 				if (isset($_on_before_update)) {
 					for ($i=0;isset($_on_before_update[$i]);++$i) {
 						eval($_on_before_update[$i].'();');
@@ -98,9 +98,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$now=gmdate('YmdHis');
 			$query="INSERT INTO `{$dbtable_prefix}blog_comments` SET `_user`='".$_SESSION['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
 			if ($config['manual_com_approval']==1) {
-				$query.=",`status`='".STAT_PENDING."'";
+				$query.=",`status`=".STAT_PENDING;
 			} else {
-				$query.=",`status`='".STAT_APPROVED."'";
+				$query.=",`status`=".STAT_APPROVED;
 			}
 			foreach ($blog_comments_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (empty($config['manual_com_approval'])) {
 				$topass['message']['text']='Comment added.';	// translate this
-				$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='".$input['fk_parent_id']."'";
+				$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=".$input['fk_parent_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
 					$notification['fk_user_id']=mysql_result($res,0,0);

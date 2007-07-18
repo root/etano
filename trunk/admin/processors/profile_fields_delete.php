@@ -23,7 +23,7 @@ $pfield_id=isset($_GET['pfield_id']) ? (int)$_GET['pfield_id'] : 0;
 // no need to urldecode because of the GET
 $return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
-$query="SELECT `field_type`,`dbfield`,`fk_lk_id_label`,`fk_lk_id_search`,`fk_lk_id_help`,`accepted_values` FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`='$pfield_id'";
+$query="SELECT `field_type`,`dbfield`,`fk_lk_id_label`,`fk_lk_id_search`,`fk_lk_id_help`,`accepted_values` FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`=$pfield_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$rsrow=mysql_fetch_assoc($res);
@@ -38,7 +38,7 @@ if (mysql_num_rows($res)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$query="DELETE FROM `{$dbtable_prefix}lang_keys` WHERE `lk_id` IN ('".join("','",$key_ids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$query="DELETE FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`='$pfield_id'";
+	$query="DELETE FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`=$pfield_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if ($rsrow['field_type']==FIELD_LOCATION) {
 		$query="ALTER TABLE `{$dbtable_prefix}user_profiles` DROP `".$rsrow['dbfield']."_country`,DROP `".$rsrow['dbfield']."_state`,DROP `".$rsrow['dbfield']."_city`,DROP `".$rsrow['dbfield']."_zip`";

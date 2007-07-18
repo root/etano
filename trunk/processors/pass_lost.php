@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input=mysql_fetch_assoc($res);
 			$input['temp_pass']=md5(gen_pass(6));
 			$input['ipaddr']=$_SERVER['REMOTE_ADDR'];
-			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `temp_pass`='".$input['temp_pass']."' WHERE `".USER_ACCOUNT_ID."`='".$input['uid']."'";
+			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `temp_pass`='".$input['temp_pass']."' WHERE `".USER_ACCOUNT_ID."`=".$input['uid'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			send_template_email($input['email'],sprintf('%s password reset confirmation',_SITENAME_),'pass_reset.html',get_my_skin(),$input);
 			$topass['message']['type']=MESSAGE_INFO;

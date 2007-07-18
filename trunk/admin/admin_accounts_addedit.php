@@ -27,7 +27,7 @@ if (isset($_SESSION['topass']['input'])) {
 	}
 } elseif (!empty($_GET['admin_id'])) {
 	$admin_id=(int)$_GET['admin_id'];
-	$query="SELECT `admin_id`,`user`,`name`,`status`,`dept_id`,`email` FROM `{$dbtable_prefix}admin_accounts` WHERE `admin_id`='$admin_id'";
+	$query="SELECT `admin_id`,`user`,`name`,`status`,`dept_id`,`email` FROM `{$dbtable_prefix}admin_accounts` WHERE `admin_id`=$admin_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$admin_accounts=mysql_fetch_assoc($res);

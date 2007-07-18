@@ -62,16 +62,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$input['comment'].="\n\nLast edited by ".$_SESSION['user']['user'].' on '.gmdate('Y-m-d H:i:s').' GMT';
 				$query="UPDATE `{$dbtable_prefix}profile_comments` SET `last_changed`='".gmdate('YmdHis')."'";
 				if ($config['manual_com_approval']) {
-					$query.=",`status`='".STAT_PENDING."'";
+					$query.=",`status`=".STAT_PENDING;
 				} else {
-					$query.=",`status`='".STAT_APPROVED."'";
+					$query.=",`status`=".STAT_APPROVED;
 				}
 				foreach ($profile_comments_default['defaults'] as $k=>$v) {
 					if (isset($input[$k])) {
 						$query.=",`$k`='".$input[$k]."'";
 					}
 				}
-				$query.=" WHERE `comment_id`='".$input['comment_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				$query.=" WHERE `comment_id`=".$input['comment_id']." AND `fk_user_id`=".$_SESSION['user']['user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['type']=MESSAGE_INFO;
 				$topass['message']['text']='Comment changed successfully.';
@@ -84,9 +84,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$now=gmdate('YmdHis');
 			$query="INSERT INTO `{$dbtable_prefix}profile_comments` SET `_user`='".$_SESSION['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
 			if ($config['manual_com_approval']) {
-				$query.=",`status`='".STAT_PENDING."'";
+				$query.=",`status`=".STAT_PENDING;
 			} else {
-				$query.=",`status`='".STAT_APPROVED."'";
+				$query.=",`status`=".STAT_APPROVED;
 			}
 			foreach ($profile_comments_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {

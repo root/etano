@@ -24,7 +24,7 @@ if (!empty($_GET['mail_id'])) {
 	$output['r']=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
 	$config=get_site_option(array('datetime_format'),'core');
-	$query="SELECT *,UNIX_TIMESTAMP(`date_sent`) as `date_sent` FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id`='".$output['mail_id']."'";
+	$query="SELECT *,UNIX_TIMESTAMP(`date_sent`) as `date_sent` FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id`=".$output['mail_id'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));

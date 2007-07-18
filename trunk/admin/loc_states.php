@@ -27,12 +27,12 @@ $country='';
 
 $states=array();
 if (!empty($country_id)) {
-	$query="SELECT `country` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='$country_id'";
+	$query="SELECT `country` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=$country_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$country=mysql_result($res,0,0);
 	}
-	$where="`fk_country_id`='$country_id'";
+	$where="`fk_country_id`=$country_id";
 	$from="`{$dbtable_prefix}loc_states`";
 
 	$query="SELECT count(*) FROM $from WHERE $where";

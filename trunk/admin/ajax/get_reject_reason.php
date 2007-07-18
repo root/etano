@@ -19,7 +19,7 @@ allow_dept(DEPT_ADMIN);
 $amtpl_id=sanitize_and_format_gpc($_POST,'amtpl_id',TYPE_INT,0,0);
 $output='';
 
-$query="SELECT `subject`,`message_body` FROM `{$dbtable_prefix}admin_mtpls` WHERE `amtpl_id`='$amtpl_id'";
+$query="SELECT `subject`,`message_body` FROM `{$dbtable_prefix}admin_mtpls` WHERE `amtpl_id`=$amtpl_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output.='<reason_title>'.rawurlencode(mysql_result($res,0,0)).'</reason_title>';

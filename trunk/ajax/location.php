@@ -35,12 +35,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 	$output.=$actual_field."\n";												//1
 	if ($field=='country') {
-		$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='$val'";
+		$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=$val";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			list($prefered_input,$num_states)=mysql_fetch_row($res);
 			if ($prefered_input=='s') {
-				$query="SELECT `state_id`,`state` FROM `{$dbtable_prefix}loc_states` WHERE `fk_country_id`='$val'";
+				$query="SELECT `state_id`,`state` FROM `{$dbtable_prefix}loc_states` WHERE `fk_country_id`=$val";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
 					$output.="{$actual_field}country|{$actual_field}state\n";	//2
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 	} elseif ($field=='state') {
-		$query="SELECT `city_id`,`city` FROM `{$dbtable_prefix}loc_cities` WHERE `fk_state_id`='$val'";
+		$query="SELECT `city_id`,`city` FROM `{$dbtable_prefix}loc_cities` WHERE `fk_state_id`=$val";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$output.="{$actual_field}country|{$actual_field}state|{$actual_field}city\n";	//2

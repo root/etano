@@ -55,14 +55,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		unset($input['fk_user_id'],$input['fk_blog_id']);
 		$towrite=array();	// what to write in the cache file
 
-		$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='".gmdate('YmdHis')."',`status`='".STAT_APPROVED."'";
+		$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='".gmdate('YmdHis')."',`status`=".STAT_APPROVED;
 		foreach ($blog_posts_default['defaults'] as $k=>$v) {
 			if (isset($input[$k])) {
 				$query.=",`$k`='".$input[$k]."'";
 				$towrite[$k]=$input[$k];
 			}
 		}
-		$query.=" WHERE `post_id`='".$input['post_id']."'";
+		$query.=" WHERE `post_id`=".$input['post_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Post changed successfully.';

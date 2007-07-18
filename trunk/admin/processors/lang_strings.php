@@ -38,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		foreach ($input['lang_strings'] as $k=>$v) {
-			$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='$v' WHERE `fk_lk_id`='$k' AND `skin`='".$input['skin']."'";
+			$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='$v' WHERE `fk_lk_id`=$k AND `skin`='".$input['skin']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (!mysql_affected_rows()) {
-				$query="INSERT IGNORE INTO `{$dbtable_prefix}lang_strings` SET `fk_lk_id`='$k',`skin`='".$input['skin']."',`lang_value`='$v'";
+				$query="INSERT IGNORE INTO `{$dbtable_prefix}lang_strings` SET `fk_lk_id`=$k,`skin`='".$input['skin']."',`lang_value`='$v'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}
 		}

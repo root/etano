@@ -150,13 +150,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `pfield_id`='".$input['pfield_id']."'";
+			$query.=" WHERE `pfield_id`=".$input['pfield_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="REPLACE INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['label']."',`fk_lk_id`='".$input['fk_lk_id_label']."',`skin`='$default_skin_code'";
+			$query="REPLACE INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['label']."',`fk_lk_id`=".$input['fk_lk_id_label'].",`skin`='$default_skin_code'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="REPLACE INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['search_label']."',`fk_lk_id`='".$input['fk_lk_id_search']."',`skin`='$default_skin_code'";
+			$query="REPLACE INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['search_label']."',`fk_lk_id`=".$input['fk_lk_id_search'].",`skin`='$default_skin_code'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="REPLACE INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['help_text']."',`fk_lk_id`='".$input['fk_lk_id_help']."',`skin`='$default_skin_code'";
+			$query="REPLACE INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['help_text']."',`fk_lk_id`=".$input['fk_lk_id_help'].",`skin`='$default_skin_code'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 			$topass['message']['type']=MESSAGE_INFO;
@@ -165,13 +165,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$dbfield_index=get_site_option('dbfield_index','core');
 			$input['dbfield']='f'.$dbfield_index;
 // language keys&strings for this field
-			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Label for ".$input['dbfield']." field',`lk_use`='".LK_FIELD."'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Label for ".$input['dbfield']." field',`lk_use`=".LK_FIELD;
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_lk_id_label']=mysql_insert_id();
-			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Search label for ".$input['dbfield']." field',`lk_use`='".LK_FIELD."'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Search label for ".$input['dbfield']." field',`lk_use`=".LK_FIELD;
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_lk_id_search']=mysql_insert_id();
-			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTAREA.",`lk_diz`='Help text for ".$input['dbfield']." field',`lk_use`='".LK_FIELD."'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTAREA.",`lk_diz`='Help text for ".$input['dbfield']." field',`lk_use`=".LK_FIELD;
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_lk_id_help']=mysql_insert_id();
 			$query="INSERT INTO `{$dbtable_prefix}lang_strings` (`lang_value`,`fk_lk_id`,`skin`) VALUES ('".$input['label']."','".$input['fk_lk_id_label']."','$default_skin_code'),

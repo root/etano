@@ -23,7 +23,7 @@ $topass=array();
 $input=array();
 if (!empty($_POST['search'])) {
 	$input['search']=sanitize_and_format($_POST['search'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
-	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='".SEARCH_USER."'";
+	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`=".SEARCH_USER;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$results=mysql_result($res,0,0);
@@ -40,7 +40,7 @@ if (!empty($input['uids'])) {
 
 		case 'status':
 			$input['status']=sanitize_and_format_gpc($_POST,'status',TYPE_INT,0,0);
-			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `status`='".$input['status']."' WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$input['uids'])."')";
+			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `status`=".$input['status']." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$input['uids'])."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Account status changed succesfully';
@@ -56,7 +56,7 @@ if (!empty($input['uids'])) {
 
 		case 'pass':
 			$input['pass']=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `".USER_ACCOUNT_PASS."`=md5('".$input['pass']."') WHERE `".USER_ACCOUNT_ID."`='".$input['uids'][0]."'";
+			$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `".USER_ACCOUNT_PASS."`=md5('".$input['pass']."') WHERE `".USER_ACCOUNT_ID."`=".$input['uids'][0]."";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Password changed succesfully';

@@ -195,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		if ($input['page']==1) {
 			$input['temp_pass']=md5(gen_pass(6));
-			$query="INSERT IGNORE INTO ".USER_ACCOUNTS_TABLE." SET `".USER_ACCOUNT_USER."`='".$input['user']."',`".USER_ACCOUNT_PASS."`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`='2',`status`='".ASTAT_UNVERIFIED."',`temp_pass`='".$input['temp_pass']."'";
+			$query="INSERT IGNORE INTO ".USER_ACCOUNTS_TABLE." SET `".USER_ACCOUNT_USER."`='".$input['user']."',`".USER_ACCOUNT_PASS."`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`=2,`status`=".ASTAT_UNVERIFIED.",`temp_pass`='".$input['temp_pass']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$_SESSION['user']['reg_id']=mysql_insert_id();
 			$_SESSION['user']['user']=$input['user'];	// for `dsb_payments`
@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input['uid']=$_SESSION['user']['reg_id'];
 			send_template_email($input['email'],sprintf('%s user registration confirmation',_SITENAME_),'confirm_reg.html',get_my_skin(),$input);
 		}
-		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['reg_id']."'";
+		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=".$_SESSION['user']['reg_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$is_update=false;
 		if (mysql_num_rows($res)) {
@@ -218,14 +218,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if ($input['page']==1) {
 			$query.=",`_user`='".$input['user']."'";
 			if (get_site_option('manual_profile_approval','core')==1) {
-				$query.=",`status`='".STAT_PENDING."'";
+				$query.=",`status`=".STAT_PENDING;
 			} else {
-				$query.=",`status`='".STAT_APPROVED."'";
+				$query.=",`status`=".STAT_APPROVED;
 			}
 		}
 		for ($i=0;isset($my_fields[$i]);++$i) {
 			if ($_pfields[$my_fields[$i]]['field_type']==FIELD_LOCATION) {
-				$query.=",`".$_pfields[$my_fields[$i]]['dbfield']."_country`='".$input[$_pfields[$my_fields[$i]]['dbfield'].'_country']."',`".$_pfields[$my_fields[$i]]['dbfield']."_state`='".$input[$_pfields[$my_fields[$i]]['dbfield'].'_state']."',`".$_pfields[$my_fields[$i]]['dbfield']."_city`='".$input[$_pfields[$my_fields[$i]]['dbfield'].'_city']."',`".$_pfields[$my_fields[$i]]['dbfield']."_zip`='".$input[$_pfields[$my_fields[$i]]['dbfield'].'_zip']."'";
+				$query.=",`".$_pfields[$my_fields[$i]]['dbfield']."_country`=".$input[$_pfields[$my_fields[$i]]['dbfield'].'_country'].",`".$_pfields[$my_fields[$i]]['dbfield']."_state`=".$input[$_pfields[$my_fields[$i]]['dbfield'].'_state'].",`".$_pfields[$my_fields[$i]]['dbfield']."_city`=".$input[$_pfields[$my_fields[$i]]['dbfield'].'_city'].",`".$_pfields[$my_fields[$i]]['dbfield']."_zip`='".$input[$_pfields[$my_fields[$i]]['dbfield'].'_zip']."'";
 			} else {
 				$query.=",`".$_pfields[$my_fields[$i]]['dbfield']."`='".$input[$_pfields[$my_fields[$i]]['dbfield']]."'";
 			}
@@ -253,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if ((!empty($rsrow['dbfield']) && $input[$rsrow['dbfield']]==$rsrow['field_value']) || empty($rsrow['dbfield'])) {
 					$qs.=$qs_sep.'nas=1';	// no more auto_subscr checking from now on
 					$qs_sep='&';
-					$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$rsrow['m_value_to']."' WHERE `".USER_ACCOUNT_ID."`='".$_SESSION['user']['reg_id']."'";
+					$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`=".$rsrow['m_value_to']." WHERE `".USER_ACCOUNT_ID."`='".$_SESSION['user']['reg_id']."'";
 					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					// save as a payment with amount 0
 					$query="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`fk_subscr_id`,`is_recuring`,`email`,`m_value_from`,`m_value_to`,`paid_from`,`paid_until`) VALUES ('".$_SESSION['user']['reg_id']."','".$_SESSION['user']['user']."','".$rsrow['subscr_id']."','".$rsrow['is_recurent']."','".$_SESSION['user']['email']."','2','".$rsrow['m_value_to']."',now(),now()+INTERVAL ".$rsrow['duration'].' '.$rsrow['duration_units'].")";

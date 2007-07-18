@@ -22,12 +22,12 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $states=$states_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$states=$_SESSION['topass']['input'];
-	$query="SELECT `country` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='".$states['fk_country_id']."'";
+	$query="SELECT `country` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=".$states['fk_country_id'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$states['country']=sanitize_and_format(mysql_result($res,0,0),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 } elseif (!empty($_GET['state_id'])) {
 	$state_id=(int)$_GET['state_id'];
-	$query="SELECT a.`state_id`,a.`state`,a.`fk_country_id`,b.`country` FROM `{$dbtable_prefix}loc_states` a,`{$dbtable_prefix}loc_countries` b WHERE a.`state_id`='$state_id' AND a.`fk_country_id`=b.`country_id`";
+	$query="SELECT a.`state_id`,a.`state`,a.`fk_country_id`,b.`country` FROM `{$dbtable_prefix}loc_states` a,`{$dbtable_prefix}loc_countries` b WHERE a.`state_id`=$state_id AND a.`fk_country_id`=b.`country_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$states=mysql_fetch_assoc($res);
@@ -36,7 +36,7 @@ if (isset($_SESSION['topass']['input'])) {
 	}
 } elseif (!empty($_GET['country_id'])) {
 	$states['fk_country_id']=(int)$_GET['country_id'];
-	$query="SELECT `country` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='".$states['fk_country_id']."'";
+	$query="SELECT `country` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=".$states['fk_country_id'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$states['country']=sanitize_and_format(mysql_result($res,0,0),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 }

@@ -28,7 +28,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['return']=rawurlencode($output['return']);
 } elseif (!empty($_GET['ban_id'])) {
 	$ban_id=(int)$_GET['ban_id'];
-	$query="SELECT a.`ban_id`,a.`ban_type`,a.`what`,a.`fk_lk_id_reason`,b.`lang_value` as `reason` FROM `{$dbtable_prefix}site_bans` a,`{$dbtable_prefix}lang_strings` b WHERE a.`ban_id`='$ban_id' AND a.`fk_lk_id_reason`=b.`fk_lk_id` AND b.`skin`='".get_default_skin_code()."'";
+	$query="SELECT a.`ban_id`,a.`ban_type`,a.`what`,a.`fk_lk_id_reason`,b.`lang_value` as `reason` FROM `{$dbtable_prefix}site_bans` a,`{$dbtable_prefix}lang_strings` b WHERE a.`ban_id`=$ban_id AND a.`fk_lk_id_reason`=b.`fk_lk_id` AND b.`skin`='".get_default_skin_code()."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);

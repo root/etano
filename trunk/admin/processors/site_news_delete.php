@@ -25,7 +25,7 @@ if (!empty($_GET['return'])) {
 	$nextpage='admin/'.sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 }
 
-$query="DELETE FROM `{$dbtable_prefix}site_news` WHERE `news_id`='$news_id'";
+$query="DELETE FROM `{$dbtable_prefix}site_news` WHERE `news_id`=$news_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='News post deleted.';

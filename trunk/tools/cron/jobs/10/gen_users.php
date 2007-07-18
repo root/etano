@@ -16,7 +16,7 @@ function gen_user_cache() {
 
 	$tpl=new phemplate(_BASEPATH_.'/skins_site/','remove_nonjs');
 
-	$query="SELECT a.`config_value` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b WHERE a.`config_option`='skin_dir' AND a.`fk_module_code`=b.`module_code` AND b.`module_type`='".MODULE_SKIN."'";
+	$query="SELECT a.`config_value` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b WHERE a.`config_option`='skin_dir' AND a.`fk_module_code`=b.`module_code` AND b.`module_type`=".MODULE_SKIN;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$skins=array();
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
@@ -40,7 +40,7 @@ function gen_user_cache() {
 		}
 	}
 
-	$query="SELECT $select FROM `{$dbtable_prefix}user_profiles` WHERE `status`='".STAT_APPROVED."' AND `last_changed`>=DATE_SUB('$now',INTERVAL ".($interval+2)." MINUTE)";
+	$query="SELECT $select FROM `{$dbtable_prefix}user_profiles` WHERE `status`=".STAT_APPROVED." AND `last_changed`>=DATE_SUB('$now',INTERVAL ".($interval+2)." MINUTE)";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($profile=mysql_fetch_assoc($res)) {
 	// set all the fields to their real (readable) values

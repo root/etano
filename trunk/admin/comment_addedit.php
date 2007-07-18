@@ -43,7 +43,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['return']=rawurlencode($output['return']);
 } elseif (!empty($_GET['comment_id'])) {
 	$comment_id=(int)$_GET['comment_id'];
-	$query="SELECT `comment_id`,`fk_parent_id`,`fk_user_id`,`_user`,`comment` FROM $table WHERE `comment_id`='$comment_id'";
+	$query="SELECT `comment_id`,`fk_parent_id`,`fk_user_id`,`_user`,`comment` FROM $table WHERE `comment_id`=$comment_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));

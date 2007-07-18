@@ -62,7 +62,7 @@ if ($do_query) {
 	$from="`{$dbtable_prefix}blog_posts` a";
 
 	if (isset($input['stat'])) {
-		$where.=" AND a.`status`='".$input['stat']."'";
+		$where.=" AND a.`status`=".$input['stat'];
 	}
 	if (isset($input['flagged'])) {
 		$where.=" AND a.`flagged`>0";

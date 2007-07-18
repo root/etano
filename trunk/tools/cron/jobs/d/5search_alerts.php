@@ -31,7 +31,7 @@ function search_alerts() {
 				$output['search_qs']=$rsrow['search_qs'];
 				$output['user']=$rsrow['user'];
 				send_template_email($rsrow['email'],$subject,'search_alert.html',$skin,$output);
-				$query="UPDATE `{$dbtable_prefix}user_searches` SET `alert_last_id`='$last_user_id' WHERE `search_id`='".$rsrow['search_id']."'";
+				$query="UPDATE `{$dbtable_prefix}user_searches` SET `alert_last_id`=$last_user_id WHERE `search_id`=".$rsrow['search_id'];
 				@mysql_query($query);
 			}
 		}

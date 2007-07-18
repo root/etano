@@ -64,16 +64,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='".gmdate('YmdHis')."'";
 			if ($config['manual_blog_approval']==1) {
 				// set to pending only if the title or content was changed.
-				$query2="SELECT `title`,`post_content` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='".$input['post_id']."'";
+				$query2="SELECT `title`,`post_content` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=".$input['post_id'];
 				if (!($res=@mysql_query($query2))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
 					$rsrow=sanitize_and_format(mysql_fetch_assoc($res),TYPE_STRING,$__field2format[TEXT_DB2DB]);
 					if (strcmp($rsrow['title'],$input['title'])!=0 || strcmp($rsrow['post_content'],$input['post_content'])!=0) {
-						$query.=",`status`='".STAT_PENDING."'";
+						$query.=",`status`=".STAT_PENDING;
 					}
 				}
 			} else {
-				$query.=",`status`='".STAT_APPROVED."'";
+				$query.=",`status`=".STAT_APPROVED;
 			}
 			foreach ($blog_posts_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$towrite[$k]=$input[$k];
 				}
 			}
-			$query.=" WHERE `post_id`='".$input['post_id']."'";
+			$query.=" WHERE `post_id`=".$input['post_id'];
 			if (isset($_on_before_update)) {
 				for ($i=0;isset($_on_before_update[$i]);++$i) {
 					eval($_on_before_update[$i].'();');
@@ -100,9 +100,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			unset($input['post_id']);
 			$query="INSERT INTO `{$dbtable_prefix}blog_posts` SET `_user`='".$_SESSION['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
 			if ($config['manual_blog_approval']) {
-				$query.=",`status`='".STAT_PENDING."'";
+				$query.=",`status`=".STAT_PENDING;
 			} else {
-				$query.=",`status`='".STAT_APPROVED."'";
+				$query.=",`status`=".STAT_APPROVED;
 			}
 			foreach ($blog_posts_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 
 			if (empty($config['manual_blog_approval'])) {
-				$query="UPDATE `{$dbtable_prefix}user_blogs` SET `stat_posts`=`stat_posts`+1 WHERE `blog_id`='".$input['fk_blog_id']."'";
+				$query="UPDATE `{$dbtable_prefix}user_blogs` SET `stat_posts`=`stat_posts`+1 WHERE `blog_id`=".$input['fk_blog_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['text']='Post added.';	// translate this
 			} else {

@@ -29,4 +29,8 @@ $(function() {
 	$('#link_unblock').bind('click',function() {
 		return confirm('Are you sure you want to unblock this member?');
 	});
+
+	$('.comment_delete').bind('click',function() {
+		return confirm('Are you sure you want to remove this comment?');
+	});
 });

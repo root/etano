@@ -39,10 +39,10 @@ function update_location($user_id,$field,$field_name='') {
 			$query.="`longitude`='$longitude',";
 		}
 		if (!empty($state_id)) {
-			$query.="`{$field_name}_state`='$state_id',";
+			$query.="`{$field_name}_state`=$state_id,";
 		}
 		if (!empty($state_id)) {
-			$query.="`{$field_name}_city`='$city_id',";
+			$query.="`{$field_name}_city`=$city_id,";
 		}
 		$query=substr($query,0,-1)." WHERE `fk_user_id`='$user_id'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

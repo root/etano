@@ -25,13 +25,13 @@ if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 } elseif (!empty($_GET['rate_id'])) {
 	$rate_id=(int)$_GET['rate_id'];
-	$query="SELECT * FROM `{$dbtable_prefix}rate_limiter` WHERE `rate_id`='$rate_id'";
+	$query="SELECT * FROM `{$dbtable_prefix}rate_limiter` WHERE `rate_id`=$rate_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
 	}
 	$output['error_message']='';
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='".get_default_skin_code()."' AND `fk_lk_id`='".$output['fk_lk_id_error_message']."'";
+	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='".get_default_skin_code()."' AND `fk_lk_id`=".$output['fk_lk_id_error_message'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output['error_message']=mysql_result($res,0,0);

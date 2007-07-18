@@ -32,7 +32,7 @@ if (!empty($_GET['uid'])) {
 
 	$config=get_site_option(array('date_format'),'core');
 
-	$query="SELECT *,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`='".$output['uid']."'";
+	$query="SELECT *,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$output['uid'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$output['total']=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {

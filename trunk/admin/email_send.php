@@ -26,7 +26,7 @@ if (isset($_SESSION['topass']['input'])) {
 } else {
 	if (!empty($_REQUEST['search'])) {
 		$output['search']=sanitize_and_format_gpc($_REQUEST,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-		$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search']."' AND `search_type`='".SEARCH_USER."'";
+		$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search']."' AND `search_type`=".SEARCH_USER;
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$results=mysql_result($res,0,0);
