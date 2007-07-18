@@ -2,7 +2,7 @@
 
 <div class="hint">Please enter the state info:</div>
 
-<form action="processors/loc_cities_addedit.php" method="post" id="loc_cities_addedit" onsubmit="return(check_form(this))">
+<form action="processors/loc_cities_addedit.php" method="post" id="loc_cities_addedit">
 <input type="hidden" name="city_id" value="{city.city_id}" />
 <input type="hidden" name="fk_state_id" value="{city.fk_state_id}" />
 <input type="hidden" name="fk_country_id" value="{city.fk_country_id}" />
@@ -49,7 +49,4 @@
 
 <div id="bottom_links"><a class="back" href="loc_cities.php?state_id={city.fk_state_id}&amp;country_id={city.fk_country_id}&amp;o={o}&amp;r={r}&amp;so={so}&amp;sr={sr}&amp;co={co}&amp;cr={cr}">Back to cities list</a></div>
 
-<script type="text/javascript">
-	document.getElementById('city').focus();
-</script>
-<script type="text/javascript" src="js/cities_addedit.js?v={tplvars.js_lib_v}"></script>
+<script type="text/javascript" src="js/loc_cities_addedit.js?v={tplvars.js_lib_v}"></script>

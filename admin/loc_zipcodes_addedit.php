@@ -14,12 +14,12 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/admin_functions.inc.php';
-require_once '../includes/tables/loc_zipcodes.inc.php';
+require_once '../includes/tables/loc_zips.inc.php';
 allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$zipcode=$zipcodes_default['defaults'];
+$zipcode=$zips_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$zipcode=$_SESSION['topass']['input'];
 	$query="SELECT a.`city`,b.`state`,c.`country` FROM `{$dbtable_prefix}loc_cities` a,`{$dbtable_prefix}loc_states` b,`{$dbtable_prefix}loc_countries` c WHERE a.`city_id`=".$zipcode['fk_city_id']." AND a.`fk_state_id`=b.`state_id` AND a.`fk_country_id`=c.`country_id`";

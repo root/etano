@@ -177,3 +177,4 @@ $GLOBALS['_lang'][184]='de jmeker';
 $GLOBALS['_lang'][185]='asa';
 $GLOBALS['_lang'][186]='mumu';
 $GLOBALS['_lang'][187]='tets';
+$GLOBALS['_lang'][188]='asd';

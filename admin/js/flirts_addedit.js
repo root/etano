@@ -11,8 +11,6 @@ $(function() {
 	$('#flirts_form').bind('submit',function() {
 		return check_form(this);
 	});
-
-	$('#flirt_text').focus();
 });
 
 function check_form(the) {

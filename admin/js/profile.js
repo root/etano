@@ -1,5 +1,5 @@
 function change_password() {
-	newpass=prompt('Please enter the new password:');
+	newpass=prompt('Please enter the new password:','');
 	if (!newpass || newpass=='') {
 		return false;
 	}

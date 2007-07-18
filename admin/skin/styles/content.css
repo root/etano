@@ -143,16 +143,13 @@ label.checkbox {
 	border-bottom: none;
 	padding: 5px;
 	margin-right: 5px;
+	font-weight: bold;
+	color: #009FDA;
 }
 
 .content_submenu li a {
 	text-decoration: none;
 	font-weight: bold;
-}
-
-.content_submenu li {
-	font-weight: bold;
-	color: #009FDA;
 }
 
 .content_submenu li.active {
@@ -161,6 +158,7 @@ label.checkbox {
 
 .hint {
 	clear: both;
+	float: none;
 	padding: 6px 12px;
 	background-color: #9EE4FE;
 	margin-bottom: 10px;
