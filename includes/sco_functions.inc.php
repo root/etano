@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007071301
+File version:				1.2007071802
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -80,19 +80,13 @@ function sanitize_and_format_gpc(&$array,$key,$input_type,$format=0,$empty_value
 	} elseif ($input_type==TYPE_STRING && ((!is_array($array[$key]) && ((string)($array[$key]))=='') || empty($array[$key]))) {
 		$myreturn=$empty_value;
 	} else {
-		$val=$array[$key];
-		$myreturn=sanitize_and_format($val,$input_type,$format,$empty_value);
+		$myreturn=sanitize_and_format($array[$key],$input_type,$format,$empty_value);
 	}
 	return $myreturn;
 }
 
 function sanitize_and_format($input,$input_type,$format=0,$empty_value=null) {
 	if (!is_array($input)) {
-		if ($input_type==TYPE_ARRAY_SMALL) {
-			$input_type=TYPE_INT;
-		} elseif ($input_type!=TYPE_ARRAY_LARGE) {
-			$input_type=TYPE_STRING;
-		}
 		switch ($input_type) {
 
 			case TYPE_INT:
@@ -507,7 +501,9 @@ function vector2radios($show_vector,$radioname,$selected_map_val='',$exclusion_v
 function vector2binvalue($myarray) {
 	$myreturn=0;
 	while (list($k,$v)=each($myarray)) {
-		$myreturn+=(1<<$k);
+		if (((int)$k)==$k) {
+			$myreturn+=(1<<$k);
+		}
 	}
 	return $myreturn;
 }
@@ -839,6 +835,9 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	unset($params['o'],$params['r'],$params['PHPSESSID']);
 	$qs=array2qs($params,array('PHPSESSID'));
 	$myrand=mt_rand(1000,2000);
+	if (empty($results)) {
+		$results=10;
+	}
 	$total_pages=ceil($totalrows/$results);
 	$myreturn="<form id=\"pagerform$myrand\" action=\"$phpself\" method=\"get\">\n";
 	$myreturn.="<ul class=\"pager\">\n";

@@ -19,7 +19,7 @@ require_once 'general_functions.inc.php';
 $tplvars['tplurl']=_BASEURL_.'/skins_site/'.get_my_skin();
 $tplvars['tplrelpath']=$GLOBALS['relative_path'].'skins_site/'.get_my_skin();
 $GLOBALS['_lang']=array();
-require_once $tplvars['tplrelpath'].'/lang/strings.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/strings.inc.php';
 $_pfields=array();
 $_pcats=array();
 require_once 'fields.inc.php';

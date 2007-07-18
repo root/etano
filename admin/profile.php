@@ -22,7 +22,7 @@ if (isset($_GET['clean_user_session'])) {
 }
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$output=array();
+$output=array('_user'=>'');	// needed for the title
 $output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 $uid=0;
 if (!empty($_GET['uid'])) {

@@ -26,11 +26,12 @@ $photo=array();
 $query='';
 if (!empty($photo_id)) {
 	$query="SELECT `photo_id`,`photo`,`fk_user_id`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 } elseif (!empty($main) && !empty($user_id)) {
 	$query="SELECT `photo_id`,`photo`,`fk_user_id`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`=$user_id AND `is_main`=1";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-if (mysql_num_rows($res)) {
+if (isset($res) && mysql_num_rows($res)) {
 	$photo=mysql_fetch_assoc($res);
 	$photo['user']=sanitize_and_format($photo['user'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 }

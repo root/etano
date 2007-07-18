@@ -35,7 +35,7 @@ class user_cache {
 
 	function get_cache_array($user_ids,$part) {
 		$myreturn=array();
-		for ($i=0;isset($user_ids[$i]);++$i) {
+		for ($i=0;!empty($user_ids[$i]);++$i) {
 			$user_ids[$i]=(string)$user_ids[$i];
 			$file=$this->disk_path.$user_ids[$i]{0}.'/'.$user_ids[$i].'/'.$part.'.html';
 			if (is_file($file)) {

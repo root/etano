@@ -18,7 +18,7 @@ require_once 'includes/user_functions.inc.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 define('COLUMNS',3);
-$accepted_results_per_page=array('6'=>6,'12'=>12,'24'=>24,'48'=>48);
+$accepted_results_per_page=array(6=>6,12=>12,24=>24,48=>48);
 
 $output=array();
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
