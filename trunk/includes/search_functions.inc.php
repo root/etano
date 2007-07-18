@@ -186,7 +186,7 @@ function search_results($search,$my_membership=1) {
 	//								unset($input[$field['dbfield'].'_state']);
 								}
 							} elseif ($prefered_input=='z') {
-								$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($search,$field['dbfield'].'_zip',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+								$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($search,$field['dbfield'].'_zip',TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTFIELD],'');
 								$input[$field['dbfield'].'_dist']=sanitize_and_format_gpc($search,$field['dbfield'].'_dist',TYPE_INT,0,0);
 								if (!empty($input[$field['dbfield'].'_zip']) && !empty($input[$field['dbfield'].'_dist'])) {
 									$query="SELECT RADIANS(`latitude`),RADIANS(`longitude`) FROM `{$dbtable_prefix}loc_zips` WHERE `zipcode`='".$input[$field['dbfield'].'_zip']."'";
