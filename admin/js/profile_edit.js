@@ -1,7 +1,6 @@
 $(function() {
 	$('#profile_edit_form').submit(function() {
-		alert('asd');
-		return false;
+		return true;
 	});
 	$('#profile_edit_form select:visible:first').focus();
 });

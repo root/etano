@@ -44,8 +44,6 @@ rezolv cu captcha fara freetype/freettf
 -benchmark:
 	1. fopen+fread+fclose vs file_get_content
 	2. for ($i=0;$i<mysql_num_rows($res);++$i) vs $temp=mysql_num_rows($res);
-- de terminat optimizarea pt mysql type cast. In search-ul id`= am ramas la linia 80 (search_left.php).
-	as mai putea sa caut `='
 - cronu care sterge din onlines tb sa scada scorul. cred ca tot asta ar trebui sa modifice si last_login.
 	asta si poate si processors/login.php
 - goto top link in blogs/photos/profile la comentarii
