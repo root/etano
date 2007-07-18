@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$query="SELECT `flirt_text` FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`='".$input['flirt_id']."'";
+		$query="SELECT `flirt_text` FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`=".$input['flirt_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$input['message_body']=sanitize_and_format(mysql_result($res,0,0),TYPE_STRING,$__field2format[TEXT_DB2DB]);

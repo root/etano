@@ -22,13 +22,13 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $city=$cities_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$city=$_SESSION['topass']['input'];
-	$query="SELECT a.`state`,b.`country` FROM `{$dbtable_prefix}loc_states` a,`{$dbtable_prefix}loc_countries` b WHERE a.`state_id`='".$city['fk_state_id']."' AND a.`fk_country_id`=b.`country_id`";
+	$query="SELECT a.`state`,b.`country` FROM `{$dbtable_prefix}loc_states` a,`{$dbtable_prefix}loc_countries` b WHERE a.`state_id`=".$city['fk_state_id']." AND a.`fk_country_id`=b.`country_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$city['state']=sanitize_and_format(mysql_result($res,0,0),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$city['country']=sanitize_and_format(mysql_result($res,0,1),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 } elseif (!empty($_GET['city_id'])) {
 	$city_id=(int)$_GET['city_id'];
-	$query="SELECT a.`city_id`,a.`city`,a.`latitude`,a.`longitude`,a.`fk_state_id`,a.`fk_country_id`,b.`state`,c.`country` FROM `{$dbtable_prefix}loc_cities` a,`{$dbtable_prefix}loc_states` b,`{$dbtable_prefix}loc_countries` c WHERE a.`city_id`='$city_id' AND a.`fk_state_id`=b.`state_id` AND a.`fk_country_id`=c.`country_id`";
+	$query="SELECT a.`city_id`,a.`city`,a.`latitude`,a.`longitude`,a.`fk_state_id`,a.`fk_country_id`,b.`state`,c.`country` FROM `{$dbtable_prefix}loc_cities` a,`{$dbtable_prefix}loc_states` b,`{$dbtable_prefix}loc_countries` c WHERE a.`city_id`=$city_id AND a.`fk_state_id`=b.`state_id` AND a.`fk_country_id`=c.`country_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$city=mysql_fetch_assoc($res);
@@ -39,7 +39,7 @@ if (isset($_SESSION['topass']['input'])) {
 } elseif (!empty($_GET['state_id']) && !empty($_GET['country_id'])) {
 	$city['fk_state_id']=(int)$_GET['state_id'];
 	$city['fk_country_id']=(int)$_GET['country_id'];
-	$query="SELECT a.`state`,b.`country` FROM `{$dbtable_prefix}loc_states` a,`{$dbtable_prefix}loc_countries` b WHERE a.`state_id`='".$city['fk_state_id']."' AND a.`fk_country_id`=b.`country_id`";
+	$query="SELECT a.`state`,b.`country` FROM `{$dbtable_prefix}loc_states` a,`{$dbtable_prefix}loc_countries` b WHERE a.`state_id`=".$city['fk_state_id']." AND a.`fk_country_id`=b.`country_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$city['state']=sanitize_and_format(mysql_result($res,0,0),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$city['country']=sanitize_and_format(mysql_result($res,0,1),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);

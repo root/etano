@@ -22,7 +22,7 @@ $qs_sep='';
 $topass=array();
 $word_id=isset($_GET['word_id']) ? (int)$_GET['word_id'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}banned_words` WHERE `word_id`='$word_id'";
+$query="DELETE FROM `{$dbtable_prefix}banned_words` WHERE `word_id`=$word_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 if (!$error) {

@@ -24,7 +24,7 @@ $topass=array();
 $input=array();
 if (!empty($_REQUEST['search'])) {
 	$input['search']=sanitize_and_format_gpc($_REQUEST,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`='".SEARCH_BLOG."'";
+	$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$input['search']."' AND `search_type`=".SEARCH_BLOG;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$results=mysql_result($res,0,0);
@@ -36,7 +36,7 @@ if (!empty($_REQUEST['search'])) {
 $input['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 if (!empty($input['pids'])) {
-	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `status`='".STAT_APPROVED."',`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `post_id` IN ('".join("','",$input['pids'])."')";
+	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `status`=".STAT_APPROVED.",`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `post_id` IN ('".join("','",$input['pids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	on_approve_blog_post($input['pids']);
 

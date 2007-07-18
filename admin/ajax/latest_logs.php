@@ -20,7 +20,7 @@ $last_id=sanitize_and_format_gpc($_GET,'last_id',TYPE_INT,0,0);
 $output='';
 
 $datetime_format=isset($_SESSION['admin']['prefs']['datetime_format']) ? $_SESSION['admin']['prefs']['datetime_format'] : get_site_option('datetime_format','def_user_prefs');
-$query="SELECT `log_id`,`fk_user_id`,`user`,`level_code`,`ip`,UNIX_TIMESTAMP(`time`) as `time` FROM `{$dbtable_prefix}site_log` WHERE `log_id`>'$last_id' ORDER BY `log_id` DESC";
+$query="SELECT `log_id`,`fk_user_id`,`user`,`level_code`,`ip`,UNIX_TIMESTAMP(`time`) as `time` FROM `{$dbtable_prefix}site_log` WHERE `log_id`>$last_id ORDER BY `log_id` DESC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output.='"log": [';

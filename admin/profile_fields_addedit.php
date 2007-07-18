@@ -33,7 +33,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['return']=rawurlencode($output['return']);
 } elseif (!empty($_GET['pfield_id'])) {
 	$pfield_id=(int)$_GET['pfield_id'];
-	$query="SELECT * FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`='$pfield_id'";
+	$query="SELECT * FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`=$pfield_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
@@ -41,17 +41,17 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['label']='';
 	$output['search_label']='';
 	$output['help_text']='';
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`='".$output['fk_lk_id_label']."'";
+	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`=".$output['fk_lk_id_label'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output['label']=mysql_result($res,0,0);
 	}
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`='".$output['fk_lk_id_search']."'";
+	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`=".$output['fk_lk_id_search'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output['search_label']=mysql_result($res,0,0);
 	}
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`='".$output['fk_lk_id_help']."'";
+	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`=".$output['fk_lk_id_help'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output['help_text']=mysql_result($res,0,0);

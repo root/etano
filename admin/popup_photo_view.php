@@ -25,9 +25,9 @@ $user_id=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
 $photo=array();
 $query='';
 if (!empty($photo_id)) {
-	$query="SELECT `photo_id`,`photo`,`fk_user_id`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='$photo_id'";
+	$query="SELECT `photo_id`,`photo`,`fk_user_id`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
 } elseif (!empty($main) && !empty($user_id)) {
-	$query="SELECT `photo_id`,`photo`,`fk_user_id`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`='$user_id' AND `is_main`=1";
+	$query="SELECT `photo_id`,`photo`,`fk_user_id`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`=$user_id AND `is_main`=1";
 }
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {

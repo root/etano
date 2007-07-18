@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `news_id`='".$input['news_id']."'";
+			$query.=" WHERE `news_id`=".$input['news_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='News changed.';

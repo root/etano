@@ -7,7 +7,7 @@ function purges() {
 	$now=gmdate('YmdHis');
 	$config=get_site_option(array('purge_unverified','purge_inbox','purge_trash','purge_folders','purge_outbox'),'core');
 	if (!empty($config['purge_unverified'])) {
-		$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." a,`{$dbtable_prefix}user_profiles` b WHERE a.`".USER_ACCOUNT_ID."`=b.`fk_user_id` AND a.`status`='".ASTAT_UNVERIFIED."' AND b.`date_added`<DATE_SUB('$now',INTERVAL ".$config['purge_unverified']." DAY)";
+		$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." a,`{$dbtable_prefix}user_profiles` b WHERE a.`".USER_ACCOUNT_ID."`=b.`fk_user_id` AND a.`status`=".ASTAT_UNVERIFIED." AND b.`date_added`<DATE_SUB('$now',INTERVAL ".$config['purge_unverified']." DAY)";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$to_del=array();
 		for ($i=0;$i<mysql_num_rows($res);++$i) {

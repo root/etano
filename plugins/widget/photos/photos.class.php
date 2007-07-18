@@ -37,7 +37,7 @@ class widget_photos extends icontent_widget {
 
 	function _content() {
 		global $dbtable_prefix;
-		$query="SELECT `photo_id`,`photo`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `is_private`=0 AND `status`='".STAT_APPROVED."' AND `del`=0";
+		$query="SELECT `photo_id`,`photo`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `is_private`=0 AND `status`=".STAT_APPROVED." AND `del`=0";
 		switch ($this->config['mode']) {
 			case 'vote':
 				$query.=" AND `stat_votes_total`>0 ORDER BY `stat_votes_total` DESC";

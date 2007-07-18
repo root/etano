@@ -21,7 +21,7 @@ $qs_sep='';
 $topass=array();
 $rate_id=isset($_GET['rate_id']) ? (int)$_GET['rate_id'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}rate_limiter` WHERE `rate_id`='$rate_id'";
+$query="DELETE FROM `{$dbtable_prefix}rate_limiter` WHERE `rate_id`=$rate_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 regenerate_langstrings_array();
 

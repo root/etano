@@ -24,7 +24,7 @@ $edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
 $output=array();
 $loop=array();
 if (!empty($post_id)) {
-	// no need to check the status of the post ( AND `status`='".STAT_APPROVED."')
+	// no need to check the status of the post ( AND `status`=".STAT_APPROVED)
 	$query="SELECT `fk_user_id`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {

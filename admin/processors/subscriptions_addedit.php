@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `subscr_id`='".$input['subscr_id']."'";
+			$query.=" WHERE `subscr_id`=".$input['subscr_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Subscription changed.';

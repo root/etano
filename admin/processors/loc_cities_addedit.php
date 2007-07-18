@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `city_id`='".$input['city_id']."'";
+			$query.=" WHERE `city_id`=".$input['city_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='City info changed.';
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			$query=substr($query,0,-1);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="UPDATE `{$dbtable_prefix}loc_states` SET `num_cities`=`num_cities`+1 WHERE `state_id`='".$input['fk_state_id']."'";
+			$query="UPDATE `{$dbtable_prefix}loc_states` SET `num_cities`=`num_cities`+1 WHERE `state_id`=".$input['fk_state_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='City added.';

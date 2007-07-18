@@ -222,7 +222,7 @@ function regenerate_langstrings_array() {
 	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
 	global $dbtable_prefix;
 	$fileop=new fileop();
-	$query="SELECT a.`module_code`,b.`config_value` as `skin_dir` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='".MODULE_SKIN."' AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_dir'";
+	$query="SELECT a.`module_code`,b.`config_value` as `skin_dir` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`=".MODULE_SKIN." AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_dir'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$skins[]=$rsrow;
@@ -318,7 +318,7 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 function get_default_skin_name() {
 	$myreturn='';
 	global $dbtable_prefix;
-	$query="SELECT a.`module_name` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_code`=b.`fk_module_code` AND a.`module_type`='".MODULE_SKIN."' AND b.`config_option`='is_default' AND b.`config_value`=1";
+	$query="SELECT a.`module_name` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_code`=b.`fk_module_code` AND a.`module_type`=".MODULE_SKIN." AND b.`config_option`='is_default' AND b.`config_value`=1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$myreturn=mysql_result($res,0,0);

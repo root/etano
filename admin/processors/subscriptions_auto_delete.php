@@ -21,7 +21,7 @@ $qs_sep='';
 $topass=array();
 $asubscr_id=isset($_GET['asubscr_id']) ? (int)$_GET['asubscr_id'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}subscriptions_auto` WHERE `asubscr_id`='$asubscr_id'";
+$query="DELETE FROM `{$dbtable_prefix}subscriptions_auto` WHERE `asubscr_id`=$asubscr_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;

@@ -44,7 +44,7 @@ if (empty($input['net_id'])) {
 }
 
 if (!$error) {
-	$query="SELECT `is_bidi` FROM `{$dbtable_prefix}networks` WHERE `net_id`='".$input['net_id']."'";
+	$query="SELECT `is_bidi` FROM `{$dbtable_prefix}networks` WHERE `net_id`=".$input['net_id'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$is_bidi=1;
 	if (mysql_num_rows($res)) {
@@ -59,22 +59,22 @@ if (!$error) {
 		// if we already have a connect request from this member in this network simply join them
 		$force_connect=0;
 		if (!empty($is_bidi)) {
-			$query="SELECT `nconn_id` FROM `{$dbtable_prefix}user_networks` WHERE `fk_user_id`='".$input['uid']."' AND `fk_net_id`='".$input['net_id']."' AND `fk_user_id_other`='".$_SESSION['user']['user_id']."' AND `nconn_status`=0";
+			$query="SELECT `nconn_id` FROM `{$dbtable_prefix}user_networks` WHERE `fk_user_id`=".$input['uid']." AND `fk_net_id`=".$input['net_id']." AND `fk_user_id_other`=".$_SESSION['user']['user_id']." AND `nconn_status`=0";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$force_connect=mysql_result($res,0,0);
 			}
 		}
-		$query="INSERT IGNORE INTO `{$dbtable_prefix}user_networks` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`fk_net_id`='".$input['net_id']."',`fk_user_id_other`='".$input['uid']."'";
+		$query="INSERT IGNORE INTO `{$dbtable_prefix}user_networks` SET `fk_user_id`=".$_SESSION['user']['user_id'].",`fk_net_id`=".$input['net_id'].",`fk_user_id_other`=".$input['uid'];
 		if (!empty($force_connect)) {
 			$query.=",`nconn_status`=1";
 		} else {
-			$query.=",`nconn_status`='".(1-(int)$is_bidi)."'";
+			$query.=",`nconn_status`=".(1-(int)$is_bidi);
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		// we added him to our network, let's add us to his network
 		if (!empty($force_connect)) {
-			$query="UPDATE `{$dbtable_prefix}user_networks` SET `nconn_status`=1 WHERE `nconn_id`='$force_connect'";
+			$query="UPDATE `{$dbtable_prefix}user_networks` SET `nconn_status`=1 WHERE `nconn_id`=$force_connect";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		} elseif ($input['net_id']==NET_BLOCK) {
 			add_message_filter(array('filter_type'=>FILTER_SENDER,'fk_user_id'=>$_SESSION['user']['user_id'],'field_value'=>$input['uid'],'fk_folder_id'=>FOLDER_SPAMBOX));

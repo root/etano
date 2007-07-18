@@ -23,10 +23,10 @@ $city_id=isset($_GET['city_id']) ? (int)$_GET['city_id'] : 0;
 $state_id=isset($_GET['state_id']) ? (int)$_GET['state_id'] : 0;
 $country_id=isset($_GET['country_id']) ? (int)$_GET['country_id'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}loc_cities` WHERE `city_id`='$city_id'";
+$query="DELETE FROM `{$dbtable_prefix}loc_cities` WHERE `city_id`=$city_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-$query="UPDATE `{$dbtable_prefix}loc_states` SET `num_cities`=`num_cities`-1 WHERE `state_id`='$state_id'";
+$query="UPDATE `{$dbtable_prefix}loc_states` SET `num_cities`=`num_cities`-1 WHERE `state_id`=$state_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;

@@ -46,10 +46,10 @@ switch ($m) {
 
 }
 
-$query="SELECT `fk_parent_id` FROM $table WHERE `comment_id`='$comment_id'";
+$query="SELECT `fk_parent_id` FROM $table WHERE `comment_id`=$comment_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $parent_id=mysql_result($res,0,0);
-$query="DELETE FROM $table WHERE `comment_id`='$comment_id'";
+$query="DELETE FROM $table WHERE `comment_id`=$comment_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $query="UPDATE $parent_table SET `stat_comments`=`stat_comments`-1 WHERE $parent_key='$parent_id'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

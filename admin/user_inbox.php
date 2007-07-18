@@ -25,7 +25,7 @@ if (!empty($_GET['uid'])) {
 	$output['user']=get_user_by_userid($output['uid']);
 	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
-	$where="`fk_user_id`='".$output['uid']."' AND `del`=0";
+	$where="`fk_user_id`=".$output['uid']." AND `del`=0";
 	$from="`{$dbtable_prefix}user_inbox`";
 
 	$query="SELECT count(*) FROM $from WHERE $where";

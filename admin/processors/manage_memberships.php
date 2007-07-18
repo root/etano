@@ -69,18 +69,18 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		} elseif ($_POST['act']=='del') {
 			$input['m_id']=(int)$_POST['m_id'];
-			$query="SELECT `m_value` FROM `{$dbtable_prefix}memberships` WHERE `m_id`='".$input['m_id']."'";
+			$query="SELECT `m_value` FROM `{$dbtable_prefix}memberships` WHERE `m_id`=".$input['m_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$m_value=(int)mysql_result($res,0,0);
-				$query="DELETE FROM `{$dbtable_prefix}memberships` WHERE `m_id`='".$input['m_id']."'";
+				$query="DELETE FROM `{$dbtable_prefix}memberships` WHERE `m_id`=".$input['m_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 				$query="SELECT `level_id`,`level` FROM `{$dbtable_prefix}access_levels`";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				while ($rsrow=mysql_fetch_row($res)) {
 					if (((int)$rsrow[1]) & $m_value) {
-						$query="UPDATE `{$dbtable_prefix}access_levels` SET `level`='".($rsrow[1]-$m_value)."' WHERE `level_id`='".$rsrow[0]."'";
+						$query="UPDATE `{$dbtable_prefix}access_levels` SET `level`='".($rsrow[1]-$m_value)."' WHERE `level_id`=".$rsrow[0];
 						if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					}
 				}

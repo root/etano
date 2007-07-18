@@ -19,7 +19,7 @@ check_login_member('save_searches');
 $topass=array();
 $search_id=isset($_GET['sid']) ? (int)$_GET['sid'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}user_searches` WHERE `search_id`='$search_id' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="DELETE FROM `{$dbtable_prefix}user_searches` WHERE `search_id`=$search_id AND `fk_user_id`=".$_SESSION['user']['user_id'];
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;

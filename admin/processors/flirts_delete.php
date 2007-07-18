@@ -23,7 +23,7 @@ $flirt_id=isset($_GET['flirt_id']) ? (int)$_GET['flirt_id'] : 0;
 // no need to urldecode because of the GET
 $return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
-$query="DELETE FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`='$flirt_id'";
+$query="DELETE FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`=$flirt_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;

@@ -33,7 +33,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['m']=sanitize_and_format_gpc($_GET,'m',TYPE_STRING,0,'');
 }
 
-$query="SELECT `amtpl_id`,`amtpl_name`,`subject`,`message_body` FROM `{$dbtable_prefix}admin_mtpls` WHERE `amtpl_type`='".$output['t']."'";
+$query="SELECT `amtpl_id`,`amtpl_name`,`subject`,`message_body` FROM `{$dbtable_prefix}admin_mtpls` WHERE `amtpl_type`=".$output['t'];
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $amtpls=array();
 $i=0;
@@ -57,7 +57,7 @@ switch ($output['t']) {
 		break;
 
 	case AMTPL_REJECT_PHOTO:
-		$query="SELECT `fk_user_id` as `user_id`,`_user` as `user`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`='".$output['id']."'";
+		$query="SELECT `fk_user_id` as `user_id`,`_user` as `user`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=".$output['id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			list($output['user_id'],$output['user'],$output['photo'])=mysql_fetch_row($res);
@@ -67,7 +67,7 @@ switch ($output['t']) {
 		break;
 
 	case AMTPL_REJECT_BLOG:
-		$query="SELECT `fk_user_id` as `user_id`,`_user` as `user`,`title` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='".$output['id']."'";
+		$query="SELECT `fk_user_id` as `user_id`,`_user` as `user`,`title` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=".$output['id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$output=array_merge($output,mysql_fetch_assoc($res));
@@ -93,7 +93,7 @@ switch ($output['t']) {
 				break;
 
 		}
-		$query="SELECT `comment` FROM $table WHERE `comment_id`='".$output['id']."'";
+		$query="SELECT `comment` FROM $table WHERE `comment_id`=".$output['id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$output=array_merge($output,mysql_fetch_assoc($res));

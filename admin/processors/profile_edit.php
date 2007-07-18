@@ -88,11 +88,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."',`status`='".STAT_APPROVED."'";
+		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."',`status`=".STAT_APPROVED;
 		foreach ($_pfields as $field_id=>$field) {
 			if ($field['editable']) {
 				if ($field['field_type']==FIELD_LOCATION) {
-					$query.=",`".$field['dbfield']."_country`='".$input[$field['dbfield'].'_country']."',`".$field['dbfield']."_state`='".$input[$field['dbfield'].'_state']."',`".$field['dbfield']."_city`='".$input[$field['dbfield'].'_city']."',`".$field['dbfield']."_zip`='".$input[$field['dbfield'].'_zip']."'";
+					$query.=",`".$field['dbfield']."_country`=".$input[$field['dbfield'].'_country'].",`".$field['dbfield']."_state`=".$input[$field['dbfield'].'_state'].",`".$field['dbfield']."_city`=".$input[$field['dbfield'].'_city'].",`".$field['dbfield']."_zip`='".$input[$field['dbfield'].'_zip']."'";
 				} else {
 					if (isset($input[$field['dbfield']])) {
 						$query.=',`'.$field['dbfield']."`='".$input[$field['dbfield']]."'";
@@ -100,14 +100,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 		}
-		$query.=" WHERE `fk_user_id`='".$input['uid']."'";
+		$query.=" WHERE `fk_user_id`=".$input['uid'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (!mysql_affected_rows()) {
-			$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."',`status`='".STAT_APPROVED."'";
+			$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`=".$_SESSION['user']['user_id'].",`last_changed`='".gmdate('YmdHis')."',`status`=".STAT_APPROVED;
 			foreach ($_pfields as $field_id=>$field) {
 				if ($field['editable']) {
 					if ($field['field_type']==FIELD_LOCATION) {
-						$query.=",`".$field['dbfield']."_country`='".$input[$field['dbfield'].'_country']."',`".$field['dbfield']."_state`='".$input[$field['dbfield'].'_state']."',`".$field['dbfield']."_city`='".$input[$field['dbfield'].'_city']."',`".$field['dbfield']."_zip`='".$input[$field['dbfield'].'_zip']."'";
+						$query.=",`".$field['dbfield']."_country`=".$input[$field['dbfield'].'_country'].",`".$field['dbfield']."_state`=".$input[$field['dbfield'].'_state'].",`".$field['dbfield']."_city`=".$input[$field['dbfield'].'_city'].",`".$field['dbfield']."_zip`='".$input[$field['dbfield'].'_zip']."'";
 					} else {
 						if (isset($input[$field['dbfield']])) {
 							$query.=',`'.$field['dbfield']."`='".$input[$field['dbfield']]."'";

@@ -21,7 +21,7 @@ $qs_sep='';
 $topass=array();
 $admin_id=isset($_GET['admin_id']) ? (int)$_GET['admin_id'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}admin_accounts` WHERE `admin_id`='$admin_id'";
+$query="DELETE FROM `{$dbtable_prefix}admin_accounts` WHERE `admin_id`=$admin_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;

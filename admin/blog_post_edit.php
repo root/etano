@@ -23,7 +23,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 } elseif (!empty($_GET['post_id'])) {
 	$post_id=(int)$_GET['post_id'];
-	$query="SELECT `post_id`,`fk_blog_id`,`title`,`post_content`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id'";
+	$query="SELECT `post_id`,`fk_blog_id`,`title`,`post_content`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));

@@ -80,14 +80,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `rate_id`='".$input['rate_id']."'";
+			$query.=" WHERE `rate_id`=".$input['rate_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="REPLACE INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['error_message']."',`fk_lk_id`='".$input['fk_lk_id_error_message']."',`skin`='$default_skin_code'";
+			$query="REPLACE INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['error_message']."',`fk_lk_id`=".$input['fk_lk_id_error_message'].",`skin`='$default_skin_code'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Limit changed.';
 		} else {
-			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Error message for a limit',`lk_use`='".LK_MESSAGE."'";
+			$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Error message for a limit',`lk_use`=".LK_MESSAGE;
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_lk_id_error_message']=mysql_insert_id();
 			$query="INSERT INTO `{$dbtable_prefix}lang_strings` (`lang_value`,`fk_lk_id`,`skin`) VALUES ('".$input['error_message']."','".$input['fk_lk_id_error_message']."','$default_skin_code')";

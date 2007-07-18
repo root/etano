@@ -32,7 +32,7 @@ if (isset($_on_before_delete)) {
 }
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`='$post_id' AND `fk_user_id`=".$_SESSION['user']['user_id'];
+$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id AND `fk_user_id`=".$_SESSION['user']['user_id'];
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 on_delete_blog_post(array($post_id));

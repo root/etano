@@ -42,7 +42,7 @@ if (!empty($input['cids']) && !empty($input['m'])) {
 			break;
 
 	}
-	$query="UPDATE $table SET `status`='".STAT_APPROVED."',`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `comment_id` IN ('".join("','",$input['cids'])."')";
+	$query="UPDATE $table SET `status`=".STAT_APPROVED.",`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `comment_id` IN ('".join("','",$input['cids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	on_approve_comment($input['cids'],$input['m']);
 

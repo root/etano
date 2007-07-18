@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 // save in db
 	foreach ($new_levels as $k=>$v) {
-		$query="UPDATE `{$dbtable_prefix}access_levels` SET `level`='$v' WHERE `level_id`='$k'";
+		$query="UPDATE `{$dbtable_prefix}access_levels` SET `level`='$v' WHERE `level_id`=$k";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 

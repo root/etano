@@ -31,12 +31,12 @@ $country='';
 
 $cities=array();
 if (!empty($state_id) && !empty($country_id)) {
-	$query="SELECT a.`state`,b.`country` FROM `{$dbtable_prefix}loc_states` a,`{$dbtable_prefix}loc_countries` b WHERE a.`state_id`='$state_id' AND a.`fk_country_id`=b.`country_id`";
+	$query="SELECT a.`state`,b.`country` FROM `{$dbtable_prefix}loc_states` a,`{$dbtable_prefix}loc_countries` b WHERE a.`state_id`=$state_id AND a.`fk_country_id`=b.`country_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		list($state,$country)=mysql_fetch_row($res);
 	}
-	$where="`fk_state_id`='$state_id'";
+	$where="`fk_state_id`=$state_id";
 	$from="`{$dbtable_prefix}loc_cities`";
 
 	$query="SELECT count(*) FROM $from WHERE $where";

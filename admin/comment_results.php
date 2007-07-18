@@ -65,7 +65,7 @@ switch ($input['m']) {
 }
 
 if (isset($input['id'])) {
-	$where.=" AND a.`fk_parent_id`='".$input['id']."'";
+	$where.=" AND a.`fk_parent_id`=".$input['id'];
 }
 if (isset($input['uid'])) {	// a user's comment
 	$where.=" AND a.`fk_user_id`=".$input['uid'];
@@ -74,7 +74,7 @@ if (isset($input['flagged'])) {
 	$where.=" AND a.`flagged`>0";
 }
 if (isset($input['stat'])) {
-	$where.=" AND a.`status`='".$input['stat']."'";
+	$where.=" AND a.`status`=".$input['stat'];
 }
 
 $query="SELECT $select,b.`fk_user_id` as `owner_id`,b.`_user` as `owner_user`,a.`comment_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user`,a.`comment`,a.`status`,a.`fk_parent_id` FROM $from WHERE $where LIMIT $o,$r";

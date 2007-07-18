@@ -24,7 +24,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$access_levels=$_SESSION['topass']['input'];
 } elseif (!empty($_GET['level_id'])) {
 	$level_id=(int)$_GET['level_id'];
-	$query="SELECT * FROM `{$dbtable_prefix}access_levels` WHERE `level_id`='$level_id'";
+	$query="SELECT * FROM `{$dbtable_prefix}access_levels` WHERE `level_id`=$level_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$access_levels=mysql_fetch_assoc($res);

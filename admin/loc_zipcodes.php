@@ -35,12 +35,12 @@ $country='';
 
 $zipcodes=array();
 if (!empty($state_id) && !empty($country_id)) {
-	$query="SELECT a.`city`,b.`state`,c.`country` FROM `{$dbtable_prefix}loc_cities` a,`{$dbtable_prefix}loc_states` b,`{$dbtable_prefix}loc_countries` c WHERE a.`city_id`='$city_id' AND a.`fk_state_id`=b.`state_id` AND a.`fk_country_id`=c.`country_id`";
+	$query="SELECT a.`city`,b.`state`,c.`country` FROM `{$dbtable_prefix}loc_cities` a,`{$dbtable_prefix}loc_states` b,`{$dbtable_prefix}loc_countries` c WHERE a.`city_id`=$city_id AND a.`fk_state_id`=b.`state_id` AND a.`fk_country_id`=c.`country_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		list($city,$state,$country)=mysql_fetch_row($res);
 	}
-	$where="`fk_city_id`='$city_id'";
+	$where="`fk_city_id`=$city_id";
 	$from="`{$dbtable_prefix}loc_zips`";
 
 	$query="SELECT count(*) FROM $from WHERE $where";

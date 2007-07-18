@@ -23,7 +23,7 @@ $topass=array();
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$query="SELECT `module_code` FROM `{$dbtable_prefix}modules` WHERE `module_type`='".MODULE_SKIN."'";
+	$query="SELECT `module_code` FROM `{$dbtable_prefix}modules` WHERE `module_type`=".MODULE_SKIN;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$skins=array();
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
@@ -43,12 +43,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		for ($i=0;isset($skins[$i]);++$i) {
-			$query="SELECT `ls_id` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id`='".$input['lk_id']."' AND `skin`='".$skins[$i]."'";
+			$query="SELECT `ls_id` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id`=".$input['lk_id']." AND `skin`='".$skins[$i]."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
-				$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['lang_strings'][$skins[$i]]."' WHERE `fk_lk_id`='".$input['lk_id']."' AND `skin`='".$skins[$i]."'";
+				$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='".$input['lang_strings'][$skins[$i]]."' WHERE `fk_lk_id`=".$input['lk_id']." AND `skin`='".$skins[$i]."'";
 			} else {
-				$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `fk_lk_id`='".$input['lk_id']."',`skin`='".$skins[$i]."',`lang_value`='".$input['lang_strings'][$skins[$i]]."'";
+				$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `fk_lk_id`=".$input['lk_id'].",`skin`='".$skins[$i]."',`lang_value`='".$input['lang_strings'][$skins[$i]]."'";
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}

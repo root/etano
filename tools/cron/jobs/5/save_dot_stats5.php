@@ -13,7 +13,7 @@ function save_dot_stats5() {
 	if (mysql_num_rows($res)) {
 		list($dot_id,$old_value)=mysql_fetch_row($res);
 		if ($value>$old_value) {
-			$query="UPDATE `{$dbtable_prefix}stats_dot` SET `value`='$value' WHERE `dot_id`='$dot_id'";
+			$query="UPDATE `{$dbtable_prefix}stats_dot` SET `value`='$value' WHERE `dot_id`=$dot_id";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	} else {

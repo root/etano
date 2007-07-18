@@ -24,7 +24,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$subscriptions=$_SESSION['topass']['input'];
 } elseif (!empty($_GET['subscr_id'])) {
 	$subscr_id=(int)$_GET['subscr_id'];
-	$query="SELECT * FROM `{$dbtable_prefix}subscriptions` WHERE `subscr_id`='$subscr_id'";
+	$query="SELECT * FROM `{$dbtable_prefix}subscriptions` WHERE `subscr_id`=$subscr_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$subscriptions=mysql_fetch_assoc($res);

@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!empty($texts)) {
 				$query.=',`'.join('`,`',$texts).'`';	// get the old value of the texts for comparing with new values
 			}
-			$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=".$_SESSION['user']['user_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$is_update=false;
 			$old_text_values=array();
@@ -136,22 +136,22 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					}
 				}
 				if ($force_pending) {
-					$query.=",`status`='".STAT_PENDING."'";
+					$query.=",`status`=".STAT_PENDING;
 				} else {
 					//keep it to whatever it was
-					//$query.=",`status`='".STAT_APPROVED."'";
+					//$query.=",`status`=".STAT_APPROVED;
 				}
 			} else {		// insert here
-				$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."'";
+				$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`=".$_SESSION['user']['user_id'].",`last_changed`='".gmdate('YmdHis')."'";
 				if (!empty($config['manual_profile_approval'])) {
-					$query.=",`status`='".STAT_PENDING."'";
+					$query.=",`status`=".STAT_PENDING;
 				} else {
-					$query.=",`status`='".STAT_APPROVED."'";
+					$query.=",`status`=".STAT_APPROVED;
 				}
 			}
 			foreach ($_pcats[$pcat_id]['fields'] as $v) {
 				if ($_pfields[$v]['field_type']==FIELD_LOCATION) {
-					$query.=",`".$_pfields[$v]['dbfield']."_country`='".$input[$_pfields[$v]['dbfield'].'_country']."',`".$_pfields[$v]['dbfield']."_state`='".$input[$_pfields[$v]['dbfield'].'_state']."',`".$_pfields[$v]['dbfield']."_city`='".$input[$_pfields[$v]['dbfield'].'_city']."',`".$_pfields[$v]['dbfield']."_zip`='".$input[$_pfields[$v]['dbfield'].'_zip']."'";
+					$query.=",`".$_pfields[$v]['dbfield']."_country`=".$input[$_pfields[$v]['dbfield'].'_country'].",`".$_pfields[$v]['dbfield']."_state`=".$input[$_pfields[$v]['dbfield'].'_state'].",`".$_pfields[$v]['dbfield']."_city`=".$input[$_pfields[$v]['dbfield'].'_city'].",`".$_pfields[$v]['dbfield']."_zip`='".$input[$_pfields[$v]['dbfield'].'_zip']."'";
 				} else {
 					if (isset($input[$_pfields[$v]['dbfield']])) {
 						$query.=',`'.$_pfields[$v]['dbfield']."`='".$input[$_pfields[$v]['dbfield']]."'";
@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			if ($is_update) {
-				$query.=" WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				$query.=" WHERE `fk_user_id`=".$_SESSION['user']['user_id'];
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 

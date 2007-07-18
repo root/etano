@@ -84,14 +84,14 @@ function check_login_member($level_code) {
 	$user_id=0;
 	$now=gmdate('YmdHis');
 	if (isset($_SESSION['user']['user_id'])) {
-		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='$now' WHERE `".USER_ACCOUNT_ID."`='".$_SESSION['user']['user_id']."'";
+		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='$now' WHERE `".USER_ACCOUNT_ID."`=".$_SESSION['user']['user_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$user_id=$_SESSION['user']['user_id'];
 	}
-	$query="UPDATE `{$dbtable_prefix}online` SET `last_activity`='$now' WHERE `fk_user_id`='$user_id' AND `sess`='".session_id()."'";
+	$query="UPDATE `{$dbtable_prefix}online` SET `last_activity`='$now' WHERE `fk_user_id`=$user_id AND `sess`='".session_id()."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (!mysql_affected_rows()) {
-		$query="REPLACE INTO `{$dbtable_prefix}online` SET `fk_user_id`='$user_id',`sess`='".session_id()."',`last_activity`='$now'";
+		$query="REPLACE INTO `{$dbtable_prefix}online` SET `fk_user_id`=$user_id,`sess`='".session_id()."',`last_activity`='$now'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 	// log and rate limit
@@ -121,9 +121,9 @@ function allow_at_level($level_code,$membership=1) {
 function get_user_folder_name($folder_id,$user_id=null) {
 	$myreturn='';
 	global $dbtable_prefix;
-	$query="SELECT `folder` FROM `{$dbtable_prefix}user_folders` WHERE `folder_id`='$folder_id'";
+	$query="SELECT `folder` FROM `{$dbtable_prefix}user_folders` WHERE `folder_id`=$folder_id";
 	if (isset($user_id)) {
-		$query.=" AND `fk_user_id`='$user_id'";
+		$query.=" AND `fk_user_id`=$user_id";
 	}
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {

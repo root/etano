@@ -13,10 +13,10 @@ Support at:                 http://www.datemill.com/forum
 
 function update_stats($user_id,$stat,$add_val) {
 	global $dbtable_prefix;
-	$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`='$user_id' AND `stat`='$stat' LIMIT 1";
+	$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (!mysql_affected_rows()) {
-		$query="INSERT INTO `{$dbtable_prefix}user_stats` SET `fk_user_id`='$user_id',`stat`='$stat',`value`='$add_val'";
+		$query="INSERT INTO `{$dbtable_prefix}user_stats` SET `fk_user_id`=$user_id,`stat`='$stat',`value`=$add_val";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 }
@@ -33,7 +33,7 @@ function get_user_stats($user_id,$stat='') {
 	}
 	global $dbtable_prefix;
 	if (!empty($user_id)) {
-		$query="SELECT `stat`,`value` FROM `{$dbtable_prefix}user_stats` WHERE `fk_user_id`='$user_id'";
+		$query="SELECT `stat`,`value` FROM `{$dbtable_prefix}user_stats` WHERE `fk_user_id`=$user_id";
 		if (!empty($stat)) {
 			if (is_array($stat)) {
 				$query.=" AND `stat` IN ('".join("','",$stat)."')";
@@ -132,7 +132,7 @@ function get_my_skin() {
 function get_default_skin_dir() {
 	$myreturn='';
 	global $dbtable_prefix;
-	$query="SELECT a.`config_value` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b,`{$dbtable_prefix}site_options3` c WHERE a.`config_option`='skin_dir' AND a.`fk_module_code`=b.`module_code` AND b.`module_code`=c.`fk_module_code` AND b.`module_type`='".MODULE_SKIN."' AND c.`config_option`='is_default' AND c.`config_value`=1";
+	$query="SELECT a.`config_value` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b,`{$dbtable_prefix}site_options3` c WHERE a.`config_option`='skin_dir' AND a.`fk_module_code`=b.`module_code` AND b.`module_code`=c.`fk_module_code` AND b.`module_type`=".MODULE_SKIN." AND c.`config_option`='is_default' AND c.`config_value`=1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$myreturn=mysql_result($res,0,0);
@@ -147,7 +147,7 @@ function get_default_skin_dir() {
 function get_default_skin_code() {
 	$myreturn='';
 	global $dbtable_prefix;
-	$query="SELECT a.`module_code` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_code`=b.`fk_module_code` AND a.`module_type`='".MODULE_SKIN."' AND b.`config_option`='is_default' AND b.`config_value`=1";
+	$query="SELECT a.`module_code` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_code`=b.`fk_module_code` AND a.`module_type`=".MODULE_SKIN." AND b.`config_option`='is_default' AND b.`config_value`=1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$myreturn=mysql_result($res,0,0);
@@ -241,7 +241,7 @@ function add_member_score($user_ids,$act,$times=1,$just_read_value=false,$points
 function get_user_by_userid($user_id) {
 	$myreturn='';
 	if (!empty($user_id)) {
-		$query="SELECT `".USER_ACCOUNT_USER."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`='$user_id'";
+		$query="SELECT `".USER_ACCOUNT_USER."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`=$user_id";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$myreturn=mysql_result($res,0,0);
@@ -261,7 +261,7 @@ function get_user_settings($user_id,$module_code,$option='') {
 		$remaining=array($option=>1);
 	}
 	if (!empty($user_id)) {
-		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`='$user_id'";
+		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`=$user_id";
 		if (!empty($option)) {
 			if (is_array($option)) {
 				$query.=" AND `config_option` IN ('".join("','",$option)."')";
@@ -385,8 +385,8 @@ function create_search_form($search_fields) {
 	$myreturn=array();
 	global $dbtable_prefix,$_pfields;
 	$user_defaults=array();
-	if (isset($_SESSION['user']['user_id'])) {
-		$query="SELECT `search` FROM `{$dbtable_prefix}user_searches` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `is_default`=1";
+	if (!empty($_SESSION['user']['user_id'])) {
+		$query="SELECT `search` FROM `{$dbtable_prefix}user_searches` WHERE `fk_user_id`=".$_SESSION['user']['user_id']." AND `is_default`=1";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$user_defaults=unserialize(mysql_result($res,0,0));

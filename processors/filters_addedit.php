@@ -70,7 +70,7 @@ if (!$error) {
 			}
 		}
 		$query=substr($query,0,-1);
-		$query.=" WHERE `filter_id`='".$input['filter_id']."' AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+		$query.=" WHERE `filter_id`=".$input['filter_id']." AND `fk_user_id`=".$_SESSION['user']['user_id'];
 		if (isset($_on_before_update)) {
 			for ($i=0;isset($_on_before_update[$i]);++$i) {
 				eval($_on_before_update[$i].'();');

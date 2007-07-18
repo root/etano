@@ -70,7 +70,7 @@ if ($do_query) {
 	$from="`{$dbtable_prefix}user_photos` a";
 
 	if (isset($input['stat'])) {
-		$where.=" AND a.`status`='".$input['stat']."'";
+		$where.=" AND a.`status`=".$input['stat'];
 	}
 	if (isset($input['is_main'])) {
 		$where.=" AND a.`is_main`=1";
