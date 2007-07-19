@@ -63,7 +63,7 @@ if (!empty($_GET['bid'])) {
 			unset($blog_posts_cache);
 			for ($i=0;isset($loop[$i]);++$i) {
 				$loop[$i]['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$loop[$i]['date_posted']+$_SESSION['user']['prefs']['time_offset']);
-				if (isset($_SESSION['user']['user_id']) && $loop[$i]['fk_user_id']==$_SESSION['user']['user_id']) {
+				if (!empty($_SESSION['user']['user_id']) && $loop[$i]['fk_user_id']==$_SESSION['user']['user_id']) {
 					$loop[$i]['editable']=true;
 				}
 				$loop[$i]['stat_comments']=$temp[$loop[$i]['post_id']]['stat_comments'];
@@ -85,7 +85,7 @@ if (!empty($_GET['bid'])) {
 
 $output['return2me']='blog_view.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','blog_view.html');

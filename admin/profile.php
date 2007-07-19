@@ -18,6 +18,7 @@ allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 // cleanup after an 'impersonate user' action
 if (isset($_GET['clean_user_session'])) {
+	$_SESSION['user']=array();
 	unset($_SESSION['user']);
 }
 $tpl=new phemplate('skin/','remove_nonjs');
@@ -149,7 +150,7 @@ if (isset($_GET['r'])) {
 }
 $output['return2me']='profile.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','profile.html');

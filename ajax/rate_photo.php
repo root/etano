@@ -19,7 +19,7 @@ $output='';
 $error=false;
 $photo_id=0;
 $topass=array();
-if (isset($_SESSION['user']['user_id'])) {
+if (!empty($_SESSION['user']['user_id'])) {
 	if (!empty($_REQUEST['photo_id']) && !empty($_REQUEST['vote'])) {
 		$photo_id=(int)$_REQUEST['photo_id'];
 		$vote=(int)$_REQUEST['vote'];

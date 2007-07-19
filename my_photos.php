@@ -84,7 +84,7 @@ if (!empty($totalrows)) {
 
 $output['return2me']='my_photos.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','my_photos.html');

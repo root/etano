@@ -64,7 +64,7 @@ if (isset($_GET['st'])) {
 		case 'user':
 			$input['acclevel_code']='search_photo';
 			$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
-			if (isset($_SESSION['user']['user_id']) && $input['uid']==$_SESSION['user']['user_id']) {
+			if (!empty($_SESSION['user']['user_id']) && $input['uid']==$_SESSION['user']['user_id']) {
 				redirect2page('my_photos.php');
 			}
 			if (!empty($input['uid'])) {
@@ -177,11 +177,11 @@ if (!$error) {
 	}
 }
 
-$output['return']='photo_search.php';
+$output['return2me']='photo_search.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
-$output['return']=rawurlencode($output['return']);
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','photo_search.html');
 $tpl->set_loop('loop_rows',$loop_rows);
 $tpl->set_var('output',$output);

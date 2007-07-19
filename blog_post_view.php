@@ -37,7 +37,7 @@ if (!empty($post_id)) {
 			$page_last_modified_time=$output['date_posted'];
 		}
 		$output['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$output['date_posted']+$_SESSION['user']['prefs']['time_offset']);
-		if (isset($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id']) {
+		if (!empty($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id']) {
 			$output['post_owner']=true;
 		}
 		if (isset($_list_of_online_members[$output['fk_user_id']])) {
@@ -68,7 +68,7 @@ if (!empty($post_id)) {
 				$rsrow['comment']=text2smilies($rsrow['comment']);
 			}
 			// allow showing the edit links to rightfull owners
-			if (isset($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
+			if (!empty($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
 				$rsrow['editme']=true;
 			}
 
@@ -96,7 +96,7 @@ if (!empty($post_id)) {
 		if (!empty($output['allow_comments'])) {
 			// may I post comments please?
 			if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
-				if (!isset($_SESSION['user']['user_id'])) {
+				if (empty($_SESSION['user']['user_id'])) {
 					if ($config['use_captcha']) {
 						require_once 'includes/classes/sco_captcha.class.php';
 						$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
@@ -136,7 +136,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 	if (!empty($edit_comment)) {
 		$_SERVER['QUERY_STRING']=str_replace('&edit_comment='.$edit_comment,'',$_SERVER['QUERY_STRING']);
 	}
-	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','blog_post_view.html');
@@ -155,7 +155,7 @@ if (is_file('blog_post_view_left.php')) {
 	include 'blog_post_view_left.php';
 }
 include 'frame.php';
-if (!empty($post_id) && isset($output['fk_user_id']) && ((isset($_SESSION['user']['user_id']) && $output['fk_user_id']!=$_SESSION['user']['user_id']) || !isset($_SESSION['user']['user_id']))) {
+if (!empty($post_id) && isset($output['fk_user_id']) && ((!empty($_SESSION['user']['user_id']) && $output['fk_user_id']!=$_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id']))) {
 	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `stat_views`=`stat_views`+1 WHERE `post_id`=$post_id";
 	@mysql_query($query);
 }

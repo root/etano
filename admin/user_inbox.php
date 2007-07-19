@@ -34,14 +34,18 @@ if (!empty($_GET['uid'])) {
 
 	$loop=array();
 	if (!empty($totalrows)) {
-		$config=get_site_option(array('date_format'),'core');
+		$config=get_site_option(array('datetime_format','time_offset'),'def_user_prefs');
 		$query="SELECT `mail_id`,`fk_user_id_other`,`_user_other`,`subject`,UNIX_TIMESTAMP(`date_sent`) as `date_sent`,`message_type` FROM $from WHERE $where ORDER BY `date_sent` ASC LIMIT ".$output['o'].','.$output['r'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$i=0;
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$rsrow['_user_other']=sanitize_and_format($rsrow['_user_other'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			if ($rsrow['message_type']==MESS_SYSTEM) {
+				$rsrow['_user_other']='SYSTEM';
+			} else {
+				$rsrow['_user_other']=sanitize_and_format($rsrow['_user_other'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			}
 			$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-			$rsrow['date_sent']=strftime($config['date_format'],$rsrow['date_sent']);
+			$rsrow['date_sent']=strftime($config['datetime_format'],$rsrow['date_sent']+$config['time_offset']);
 			$rsrow['myclass']=($i%2) ? 'odd_item' : 'even_item';
 			if ($rsrow['message_type']==MESS_SYSTEM || empty($rsrow['fk_user_id_other'])) {
 				unset($rsrow['fk_user_id_other']);
@@ -52,6 +56,11 @@ if (!empty($_GET['uid'])) {
 		$output['pager2']=pager($totalrows,$output['o'],$output['r']);
 	}
 
+	$output['return2me']='user_inbox.php';
+	if (!empty($_SERVER['QUERY_STRING'])) {
+		$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+	}
+	$output['return2me']=rawurlencode($output['return2me']);
 	$tpl->set_file('content','user_inbox.html');
 	$tpl->set_loop('loop',$loop);
 	$tpl->set_var('output',$output);

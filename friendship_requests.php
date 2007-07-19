@@ -27,11 +27,11 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$loop[]=$rsrow;
 }
 
-$output['return']='friendship_requests.php';
+$output['return2me']='friendship_requests.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
-$output['return']=rawurlencode($output['return']);
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','friendship_requests.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);
