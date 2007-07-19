@@ -37,21 +37,14 @@ asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a t
 
 TODO
 
-- de adaugat refresh button in install/index.php in caz de $error
-- de adaugat verificari pt mail() si GD2 in installer. De asemenea tb sa verific daca GD are suport pt freetype/freettf pana
-rezolv cu captcha fara freetype/freettf
 - de duplicat partea cu !$got_from_cache din search.php in CRON/5SEARCH_ALERTS.PHP
 -benchmark:
 	1. fopen+fread+fclose vs file_get_content
 	2. for ($i=0;$i<mysql_num_rows($res);++$i) vs $temp=mysql_num_rows($res);
-- cronu care sterge din onlines tb sa scada scorul. cred ca tot asta ar trebui sa modifice si last_login.
-	asta si poate si processors/login.php
 - goto top link in blogs/photos/profile la comentarii
 - data la blog post si comentarii in admin/blog_post_view
-- baseurl is not defined in keep_alive()
-- scos alpha din design-ul final si css-ul si js-ul.
 - de verif de ce nu se vede poza la alerte search si de ce vin asa multe match-uri.
-- tb sa verific interfata de admin si in IE si in opera (mai ales pfields view si addedit).
+- tb sa verific interfata de admin si in opera (mai ales pfields view si addedit).
 - time last login (sau last seen online).
 - in profil sa se vada cine e premium (poate si in search results)
 - user inbox.php + read message cu link in el in admin. back de la read message -> eroare

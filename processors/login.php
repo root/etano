@@ -38,11 +38,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (mysql_num_rows($res)) {
 			$user=mysql_fetch_assoc($res);
 			$user['membership']=(int)$user['membership'];
+			$user['user_id']=(int)$user['user_id'];
 			if ($user['status']==ASTAT_ACTIVE) {
 				$user['prefs']=get_user_settings($user['user_id'],'def_user_prefs',array('date_format','datetime_format','time_offset','rate_my_photos','profile_comments'));
 				if ($user['last_activity']<time()-$score_threshold) {
 					add_member_score($user['user_id'],'login');
 				}
+				$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$user['user_id'];
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				unset($user['last_activity'],$user['email']);
 				$_SESSION['user']=$user;
 				$_SESSION['user']['loginout']=time();

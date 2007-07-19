@@ -51,22 +51,22 @@ function save_thumbnail($image,$size,$save_path,$save_name,$config=array()) {
 			}
 		}
 
-		if (!empty($config['watermark_text'])) {
+		if (!empty($config['watermark_text']) && function_exists('imagettftext')) {
 			$config['watermark_text_color']=str_pad($config['watermark_text_color'],6,'0',STR_PAD_RIGHT);
 			$text_color=imagecolorallocate($mynewimg,hexdec(substr($config['watermark_text_color'],0,2)),hexdec(substr($config['watermark_text_color'],2,2)),hexdec(substr($config['watermark_text_color'],4,2)));
 			$text_color2=imagecolorallocate($mynewimg,255-hexdec(substr($config['watermark_text_color'],0,2)),255-hexdec(substr($config['watermark_text_color'],2,2)),255-hexdec(substr($config['watermark_text_color'],4,2)));
 			$font_size=15;
 			do {
 				--$font_size;
-				$text_box=imagettfbbox($font_size,0,_BASEPATH_.'/includes/fonts/verdana.ttf',$config['watermark_text']);
+				$text_box=imagettfbbox($font_size,0,_BASEPATH_.'/includes/fonts/arial.ttf',$config['watermark_text']);
 				$textlen=$text_box[2]-$text_box[0]+5;
 			} while ($textlen>$size);
 			$watermark_x=(int)(($size-$new_size[0])/2)+5;
 			$watermark_y=$new_size[1]+(int)(($size-$new_size[1])/2)-20;
 			//shadow first
-			ImageTTFText($mynewimg,$font_size,0,$watermark_x,$watermark_y,$text_color2,_BASEPATH_.'/includes/fonts/verdana.ttf',$config['watermark_text']);
+			imagettftext($mynewimg,$font_size,0,$watermark_x,$watermark_y,$text_color2,_BASEPATH_.'/includes/fonts/arial.ttf',$config['watermark_text']);
 			//text second
-			ImageTTFText($mynewimg,$font_size,0,$watermark_x+1,$watermark_y+1,$text_color,_BASEPATH_.'/includes/fonts/verdana.ttf',$config['watermark_text']);
+			imagettftext($mynewimg,$font_size,0,$watermark_x+1,$watermark_y+1,$text_color,_BASEPATH_.'/includes/fonts/arial.ttf',$config['watermark_text']);
 		}
 
 		if (!empty($config['round_corners'])) {
