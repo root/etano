@@ -141,7 +141,7 @@ $output['return2me']='photo_results.php';
 if (!empty($output['search_md5'])) {
 	$output['return2me'].='?search='.$output['search_md5'];
 } elseif (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','photo_results.html');

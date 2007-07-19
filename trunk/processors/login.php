@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$pass=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	if (!empty($user) && !empty($pass)) {
 		$log['level']='login';
-		$log['user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
+		$log['user_id']=!empty($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
 		$log['sess']=session_id();
 		$log['user']=$user;
 		$log['membership']=$_SESSION['user']['membership'];

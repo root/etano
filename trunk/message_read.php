@@ -114,7 +114,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 
 		$output['return2me']='message_read.php';
 		if (!empty($_SERVER['QUERY_STRING'])) {
-			$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+			$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 		}
 		$output['return2me']=rawurlencode($output['return2me']);
 		$tpl->set_file('content','message_read.html');

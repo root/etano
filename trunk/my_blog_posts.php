@@ -56,11 +56,11 @@ if (!empty($_GET['bid'])) {
 		}
 	}
 
-	$output['return']='my_blog_posts.php';
+	$output['return2me']='my_blog_posts.php';
 	if (!empty($_SERVER['QUERY_STRING'])) {
-		$output['return'].='?'.$_SERVER['QUERY_STRING'];
+		$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 	}
-	$output['return']=rawurlencode($output['return']);
+	$output['return2me']=rawurlencode($output['return2me']);
 	$tpl->set_file('content','my_blog_posts.html');
 	$tpl->set_loop('loop',$loop);
 	$tpl->set_var('output',$output);

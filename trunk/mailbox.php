@@ -105,7 +105,7 @@ if (!empty($totalrows)) {
 
 $return='mailbox.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$return.='?'.$_SERVER['QUERY_STRING'];
+	$return.='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
 $tpl->set_file('content','mailbox.html');
 $tpl->set_loop('loop',$loop);

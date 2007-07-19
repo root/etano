@@ -30,7 +30,7 @@ if (!empty($photo_id)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
-		if ($output['status']==STAT_APPROVED || (isset($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id'])) {
+		if ($output['status']==STAT_APPROVED || (!empty($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id'])) {
 			$output['caption']=sanitize_and_format($output['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			if (!empty($output['allow_rating'])) {
 				if ($output['stat_votes']>0) {
@@ -42,7 +42,7 @@ if (!empty($photo_id)) {
 			} else {
 				unset($output['allow_rating']);
 			}
-			if (isset($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id']) {
+			if (!empty($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id']) {
 				$output['photo_owner']=true;
 			}
 
@@ -64,7 +64,7 @@ if (!empty($photo_id)) {
 					$rsrow['comment']=text2smilies($rsrow['comment']);
 				}
 				// allow showing the edit links to rightfull owners
-				if (isset($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
+				if (!empty($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
 					$rsrow['editme']=true;
 				}
 
@@ -92,7 +92,7 @@ if (!empty($photo_id)) {
 			if (!empty($output['allow_comments'])) {
 				// may I post comments please?
 				if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
-					if (!isset($_SESSION['user']['user_id'])) {
+					if (empty($_SESSION['user']['user_id'])) {
 						if ($config['use_captcha']) {
 							require_once 'includes/classes/sco_captcha.class.php';
 							$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
@@ -149,7 +149,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 	if (!empty($edit_comment)) {
 		$_SERVER['QUERY_STRING']=str_replace('&edit_comment='.$edit_comment,'',$_SERVER['QUERY_STRING']);
 	}
-	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
 $output['return2me']=rawurlencode($output['return2me']);
 
@@ -172,7 +172,7 @@ if (is_file('photo_view_left.php')) {
 	include 'photo_view_left.php';
 }
 include 'frame.php';
-if (!empty($photo_id) && isset($output['fk_user_id']) && ((isset($_SESSION['user']['user_id']) && $output['fk_user_id']!=$_SESSION['user']['user_id']) || !isset($_SESSION['user']['user_id']))) {
+if (!empty($photo_id) && isset($output['fk_user_id']) && ((!empty($_SESSION['user']['user_id']) && $output['fk_user_id']!=$_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id']))) {
 	$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_views`=`stat_views`+1 WHERE `photo_id`=$photo_id";
 	@mysql_query($query);
 }

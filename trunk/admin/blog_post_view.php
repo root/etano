@@ -84,7 +84,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 	if (!empty($edit_comment)) {
 		$_SERVER['QUERY_STRING']=str_replace('&edit_comment='.$edit_comment,'',$_SERVER['QUERY_STRING']);
 	}
-	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','blog_post_view.html');

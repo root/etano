@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	foreach ($profile_comments_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$profile_comments_default['defaults'][$k]);
 	}
-	$input['fk_user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
+	$input['fk_user_id']=!empty($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
 	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['comment']=remove_banned_words($input['comment']);
 		if (!empty($input['comment_id'])) {
 			// only members can edit their comments
-			if (isset($_SESSION['user']['user_id'])) {
+			if (!empty($_SESSION['user']['user_id'])) {
 				$input['comment'].="\n\nLast edited by ".$_SESSION['user']['user'].' on '.gmdate('Y-m-d H:i:s').' GMT';
 				$query="UPDATE `{$dbtable_prefix}profile_comments` SET `last_changed`='".gmdate('YmdHis')."'";
 				if ($config['manual_com_approval']) {
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text']='Comment added.';	// translate this
 				$notification['fk_user_id']=$input['fk_parent_id'];
 				// send notif only if it's not my blog
-				if (isset($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']!=$notification['fk_user_id']) {
+				if (!empty($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']!=$notification['fk_user_id']) {
 					$notification['subject']='New comment on your profile';	// translate
 					$notification['message_body']=sprintf('%1$s posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm%2$s">Click here</a> to view the comment',$_SESSION['user']['user'],$input['comment_id']);
 					$notification['message_type']=MESS_SYSTEM;

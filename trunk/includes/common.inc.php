@@ -79,27 +79,27 @@ define('NET_BLOCK',2);
 define('NET_FAVES',3);
 
 // Unset globally registered vars. this should protect us agains any remote file inclusion attack
-function _unset_vars(&$var) {
-	$temp=array_keys($var);
+function _unset_vars(&$v) {
+	$temp=array_keys($v);
 	for ($i=0;isset($temp[$i]);++$i) {
 		unset($GLOBALS[$temp[$i]]);
 	}
 }
 if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=='on') {
-	$test=array('_GET','_POST','_SERVER','_COOKIE','_ENV','_SESSION','_REQUEST');
-	foreach ($test as $k=>$var) {
-		if (isset(${'HTTP'.$var.'_VARS'}) && is_array(${'HTTP'.$var.'_VARS'})) {
-			_unset_vars(${'HTTP'.$var.'_VARS'});
-			unset(${'HTTP'.$var.'_VARS'});
+	$temp=array('_GET','_POST','_SERVER','_COOKIE','_ENV','_SESSION','_REQUEST');
+	foreach ($temp as $k=>$v) {
+		if (isset(${'HTTP'.$v.'_VARS'}) && is_array(${'HTTP'.$v.'_VARS'})) {
+			_unset_vars(${'HTTP'.$v.'_VARS'});
+			unset(${'HTTP'.$v.'_VARS'});
 		}
-		if (isset(${$var}) && is_array(${$var})) {
-			_unset_vars(${$var});
-			@reset(${$var});
+		if (isset(${$v}) && is_array(${$v})) {
+			_unset_vars(${$v});
+			@reset(${$v});
 		}
 	}
-	if (is_array(${'HTTP_POST_FILES'})) {
-		_unset_vars(${'HTTP_POST_FILES'});
-		@reset(${'HTTP_POST_FILES'});
+	if (is_array($HTTP_POST_FILES)) {
+		_unset_vars($HTTP_POST_FILES);
+		@reset($HTTP_POST_FILES);
 	}
 }
 

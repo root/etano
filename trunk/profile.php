@@ -32,7 +32,7 @@ if (!empty($_GET['uid'])) {
 	redirect2page('index.php');
 }
 
-if (isset($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']==$uid) {
+if (!empty($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']==$uid) {
 	redirect2page('my_profile.php');
 }
 
@@ -116,7 +116,7 @@ if (!empty($output)) {
 			$rsrow['comment']=text2smilies($rsrow['comment']);
 		}
 		// allow showing the edit links to rightfull owners
-		if (isset($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
+		if (!empty($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
 			$rsrow['editme']=true;
 		}
 
@@ -145,7 +145,7 @@ if (!empty($output)) {
 		// may I post comments please?
 		if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
 			$output['allow_comments']=true;
-			if (!isset($_SESSION['user']['user_id'])) {
+			if (empty($_SESSION['user']['user_id'])) {
 				if ($config['use_captcha']) {
 					require_once 'includes/classes/sco_captcha.class.php';
 					$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
@@ -159,7 +159,7 @@ if (!empty($output)) {
 				$output['bbcode_comments']=true;
 			}
 			// if we came back after an error get what was previously posted
-			if (isset($_SESSION['topass']['input'])) {
+			if (!empty($_SESSION['topass']['input'])) {
 				$output=array_merge($output,$_SESSION['topass']['input']);
 				unset($_SESSION['topass']['input']);
 			}
@@ -184,7 +184,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 	if (!empty($edit_comment)) {
 		$_SERVER['QUERY_STRING']=str_replace('&edit_comment='.$edit_comment,'',$_SERVER['QUERY_STRING']);
 	}
-	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','profile.html');

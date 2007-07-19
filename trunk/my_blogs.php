@@ -30,11 +30,11 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 }
 $loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
-$output['return']='my_blogs.php';
+$output['return2me']='my_blogs.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
-$output['return']=rawurlencode($output['return']);
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','my_blogs.html');
 $tpl->set_loop('loop',$loop);
 $tpl->set_var('output',$output);

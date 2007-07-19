@@ -70,7 +70,7 @@ function on_approve_comment($comment_ids,$type) {
 		}
 	}
 	foreach ($parent_owner_ids as $uid=>$num) {
-		if (!empty($uid) && (!isset($_SESSION['user']['user_id']) || $_SESSION['user']['user_id']!=$uid)) {
+		if (!empty($uid) && (empty($_SESSION['user']['user_id']) || $_SESSION['user']['user_id']!=$uid)) {
 			add_member_score($uid,'received_comment',$num);
 		}
 	}

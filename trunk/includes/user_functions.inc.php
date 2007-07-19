@@ -23,7 +23,7 @@ require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/strings.inc.php';
 $_pfields=array();
 $_pcats=array();
 require_once 'fields.inc.php';
-if (!isset($_SESSION['user']['user_id'])) {
+if (empty($_SESSION['user']['user_id'])) {
 	$_SESSION['user']['user']='guest';
 	$_SESSION['user']['membership']=1;
 } else {
@@ -69,7 +69,7 @@ function check_login_member($level_code) {
 		$GLOBALS['_access_level'][$level_code]=0;	// no access allowed if level not defined
 	}
 	// ask visitors to login if they land on a page that doesn't allow guests
-	if (!($GLOBALS['_access_level'][$level_code]&1) && (!isset($_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id']))) {
+	if (!($GLOBALS['_access_level'][$level_code]&1) && (empty($_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id']))) {
 		$mysession=session_id();
 		if (empty($mysession)) {
 			session_start();
@@ -83,7 +83,8 @@ function check_login_member($level_code) {
 	}
 	$user_id=0;
 	$now=gmdate('YmdHis');
-	if (isset($_SESSION['user']['user_id'])) {
+	if (!empty($_SESSION['user']['user_id'])) {
+		$_SESSION['user']['user_id']=(int)$_SESSION['user']['user_id'];
 		$user_id=$_SESSION['user']['user_id'];
 	}
 	$query="UPDATE `{$dbtable_prefix}online` SET `last_activity`='$now' WHERE `fk_user_id`=$user_id AND `sess`='".session_id()."'";
@@ -94,7 +95,7 @@ function check_login_member($level_code) {
 	}
 	// log and rate limit
 	$log['level']=$level_code;
-	$log['user_id']=isset($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
+	$log['user_id']=$user_id;
 	$log['sess']=session_id();
 	$log['user']=$_SESSION['user']['user'];
 	$log['membership']=$_SESSION['user']['membership'];

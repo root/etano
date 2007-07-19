@@ -62,7 +62,7 @@ if (!empty($totalrows)) {
 $output['field_type']=vector2options($accepted_fieldtype,'',array(FIELD_RANGE));
 $output['return2me']='profile_fields.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
 }
 $output['return2me2']=$output['return2me'];	// this is used in the add form (with method="get")
 $output['return2me']=rawurlencode($output['return2me']);
