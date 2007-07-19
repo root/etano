@@ -84,8 +84,6 @@ function check_login_member($level_code) {
 	$user_id=0;
 	$now=gmdate('YmdHis');
 	if (isset($_SESSION['user']['user_id'])) {
-		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='$now' WHERE `".USER_ACCOUNT_ID."`=".$_SESSION['user']['user_id'];
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$user_id=$_SESSION['user']['user_id'];
 	}
 	$query="UPDATE `{$dbtable_prefix}online` SET `last_activity`='$now' WHERE `fk_user_id`=$user_id AND `sess`='".session_id()."'";

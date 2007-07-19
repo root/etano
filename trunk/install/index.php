@@ -101,27 +101,53 @@ $topass=array();
 	// check php version
 if (function_exists('version_compare')) {
 	if (version_compare(phpversion(),'4.4.0')>=0) {
-		$output['phpversion']='<img src="skin/images/check.gif" alt="ok" />';
+		$output['phpversion']='state_green';
 	} else {
 		$error=true;
-		$output['phpversion']='<img src="skin/images/del.gif" alt="not ok" />';
+		$output['phpversion']='state_red';
 	}
 } else {
 	$error=true;
-	$output['phpversion']='<img src="skin/images/del.gif" alt="not ok" />';
+	$output['phpversion']='state_red';
 }
 
 if (function_exists('mysql_connect')) {
-	$output['mysql']='<img src="skin/images/check.gif" alt="ok" />';
+	$output['mysql']='state_green';
 } else {
 	$error=true;
-	$output['mysql']='<img src="skin/images/del.gif" alt="not ok" />';
+	$output['mysql']='state_red';
+}
+
+if (function_exists('mail')) {
+	$output['mail']='state_green';
+} else {
+	$error=true;
+	$output['mail']='state_red';
+}
+
+if (extension_loaded('gd') && function_exists('gd_info')) {
+	$temp=gd_info();
+	$temp['GD Version']=preg_replace('/[^0-9]/','',$temp['GD Version']);
+	if (((int)$temp['GD Version'])>=((int)str_pad('2',strlen($temp['GD Version'])-1,'0',STR_PAD_RIGHT))) {
+		$output['gd2']='state_green';
+	} else {
+		$error=true;
+		$output['gd2']='state_red';
+	}
+	if (!isset($temp['FreeType Support']) && $temp['FreeType Support']) {
+		$output['gd2type']='state_green';
+	} else {
+		$output['gd2type']='state_yellow';
+	}
+} else {
+	$error=true;
+	$output['gd2']='state_red';
 }
 
 if (php_sapi_name()=='apache') {
-	$output['sapi']='<img src="skin/images/check.gif" alt="ok" />';
+	$output['sapi']='state_green';
 } else {
-	$output['sapi']='<img src="skin/images/warning.gif" alt="not ok" />';
+	$output['sapi']='state_yellow';
 }
 
 $fp=@fopen(dirname(__FILE__).'/write_test.txt','wb');
@@ -130,17 +156,20 @@ if ($fp) {
 	fclose($fp);
 	if ($temp) {
 		$_SESSION['install']['write']='disk';
-		$output['write']='<span class="comment">(direct write)</span><img src="skin/images/check.gif" alt="ok" />';
+//		$output['write']='<span class="comment">(direct write)</span><img src="skin/images/check.gif" alt="ok" />';
+		$output['write']='state_green';
 		$rw_files=array();
+		@unlink(dirname(__FILE__).'/write_test.txt');
 	}
 } elseif (function_exists('ftp_connect')) {
 	$_SESSION['install']['write']='ftp';
-	$output['write']='<span class="comment">(ftp method)</span><img src="skin/images/check.gif" alt="ok" />';
+//	$output['write']='<span class="comment">(ftp method)</span><img src="skin/images/check.gif" alt="ok" />';
+	$output['write']='state_green';
 	$rw_files=array();
 } else {
 	$_SESSION['install']['write']='disk';
 	$output['show_rw']=true;
-	$output['write']='<img src="skin/images/check.gif" alt="ok" />';
+	$output['write']='state_green';
 
 	$basepath=dirname(__FILE__).'/../';
 	$local_error=false;
@@ -154,10 +183,10 @@ if ($fp) {
 		}
 		if ($local_error) {
 			$error=true;
-			$rw_files[$i]['check_result']='<img src="skin/images/del.gif" alt="not ok" />';
-			$output['write']='<img src="skin/images/del.gif" alt="not ok" />';
+			$rw_files[$i]['check_result']='state_red';
+			$output['write']='state_red';
 		} else {
-			$rw_files[$i]['check_result']='<img src="skin/images/check.gif" alt="ok" />';
+			$rw_files[$i]['check_result']='state_green';
 		}
 		unset($rw_files[$i]['real_file']);
 	}
@@ -165,16 +194,18 @@ if ($fp) {
 
 $temp=substr(sprintf('%o',fileperms(dirname(__FILE__).'/../tmp/')),-3);
 if ($temp=='777') {
-	$output['tmp_perm']='<img src="skin/images/check.gif" alt="ok" />';
+	$output['tmp_perm']='state_green';
 } else {
-	$output['tmp_perm']='<img src="skin/images/del.gif" alt="not ok" />';
+	$error=true;
+	$output['tmp_perm']='state_red';
 }
 
 $temp=substr(sprintf('%o',fileperms(dirname(__FILE__).'/../tmp/admin/')),-3);
 if ($temp=='777') {
-	$output['tmpadmin_perm']='<img src="skin/images/check.gif" alt="ok" />';
+	$output['tmpadmin_perm']='state_green';
 } else {
-	$output['tmpadmin_perm']='<img src="skin/images/del.gif" alt="not ok" />';
+	$error=true;
+	$output['tmpadmin_perm']='state_red';
 }
 
 // check if we can use any exec function to find out where php-cli and mysql binaries are
@@ -238,6 +269,7 @@ if (!$error) {
 	$output['continue']=true;
 }
 
+$output['rand']=mt_rand(1,10000);
 $tplvars=array();
 $tplvars['page_title']='Etano Install Process';
 $tplvars['css']='index.css';

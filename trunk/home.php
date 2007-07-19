@@ -23,10 +23,10 @@ $query="SELECT `_photo` as `photo`,UNIX_TIMESTAMP(`date_added`) as `date_added` 
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output=mysql_fetch_assoc($res);
-	if (empty($output['photo'])) {
-		$output['photo']='no_photo.gif';
-	}
 	$output['date_added']=strftime($_SESSION['user']['prefs']['date_format'],$output['date_added']+$_SESSION['user']['prefs']['time_offset']);
+}
+if (empty($output['photo'])) {
+	$output['photo']='no_photo.gif';
 }
 
 $my_stats=get_user_stats($_SESSION['user']['user_id'],array('total_photos','pviews','num_friends'));

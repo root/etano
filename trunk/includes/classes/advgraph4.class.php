@@ -643,7 +643,7 @@ class graph {
 			$tiVars[] = array($this->iVars[$e][$i], $this->dVars[$e][$i], $this->ids[$e][$i]);
 		}
 
-		usort($tiVars, array("graph", "actSort"));
+		usort($tiVars, array($this, "actSort"));
 
 		foreach ($tiVars as $k => $g) {
 			$this->iVars[$e][$k] = $g[0];
@@ -778,7 +778,7 @@ class graph {
 			}
 		}
 
-		uasort($sortkeys,array('graph','piesort'));
+		uasort($sortkeys,array($this,'piesort'));
 
 		$sk = array_keys($sortkeys);
 
