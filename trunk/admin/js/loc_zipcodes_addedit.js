@@ -1,7 +1,7 @@
 $(function() {
-	$('#zipcode').focus();
+	$('#addedit_form input:visible:first').focus();
 
-	$('#zip_form').bind('submit',function() {
+	$('#addedit_form').bind('submit',function() {
 		return check_form(this);
 	});
 });
