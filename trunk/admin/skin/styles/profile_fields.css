@@ -1,18 +1,18 @@
+.hint p {
+	color: #f00;
+	font-weight: bold;
+}
+
 .control {
 	width: 50px;
 }
 
 .plabel {
-	width: 120px;
+	width: 220px;
 }
 
 .field_type {
 	width: 80px;
-}
-
-.results_table .srr {
-	width: 60px;
-	text-align: center;
 }
 
 .results_table .searchable {
@@ -31,7 +31,7 @@
 }
 
 .pcat {
-	width: 84px;
+	width: 120px;
 }
 
 .accvals {
@@ -39,7 +39,7 @@
 }
 
 .order {
-	width: 38px;
+	width: 30px;
 }
 
 #bottom_links form {

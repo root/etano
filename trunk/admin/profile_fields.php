@@ -50,7 +50,7 @@ if (!empty($totalrows)) {
 		}
 		$loop[$i]['field_type']=$accepted_fieldtype[$loop[$i]['field_type']];
 		$loop[$i]['searchable']=!empty($loop[$i]['searchable']) ? '<img src="skin/images/check.gif" alt="" />' : '';
-		$loop[$i]['at_registration']=!empty($loop[$i]['at_registration']) ? '<img src="skin/images/check.gif" alt="" />' : '';
+		$loop[$i]['reg_page']=(!empty($loop[$i]['reg_page']) && $loop[$i]['at_registration']==1) ? $loop[$i]['reg_page'] : ' - ';
 		$loop[$i]['required']=!empty($loop[$i]['required']) ? '<img src="skin/images/check.gif" alt="" />' : '';
 		$loop[$i]['fk_pcat_id']=db_key2value("`{$dbtable_prefix}lang_strings`",'`fk_lk_id`','`lang_value`',$loop[$i]['fk_lk_id_pcat']);
 		$loop[$i]['myclass']=($i%2) ? 'odd_item' : 'even_item';

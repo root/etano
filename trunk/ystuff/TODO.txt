@@ -43,15 +43,12 @@ TODO
 	1. fopen+fread+fclose vs file_get_content
 	2. for ($i=0;$i<mysql_num_rows($res);++$i) vs $temp=mysql_num_rows($res);
 - de verif de ce nu se vede poza la alerte search si de ce vin asa multe match-uri.
-- tb sa verific interfata de admin si in opera (mai ales pfields view si addedit).
 - time last login (sau last seen online).
 - in profil sa se vada cine e premium (poate si in search results)
 - delete faves. delete friends
 - de verificat si inlocuit
 	$query="SELECT `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`='".$real_user['user_id']."' AND `refunded`=0 ORDER BY `paid_until` DESC LIMIT 1";
 	cu max(paid_until) ?
-
-- de creat un create_indexes care sa creeze indecsi pe user_profiles. macar pt campurile din basic search daca nu pe toate.
 
 - clear_cache('photo',$photo_id), idem pt profile/blog/blog post/comment
 
