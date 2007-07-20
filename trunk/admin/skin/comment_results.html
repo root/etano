@@ -5,6 +5,7 @@
 	<dd>
 		<p>Comment by: <!--opt name="loop.fk_user_id"--><a href="profile.php?uid={loop.fk_user_id}"><!--/opt name="loop.fk_user_id"-->{loop._user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--></p>
 		<p>{loop.owner}</p>
+		<p>Posted on: {loop.date_posted}</p>
 		<p>Status: <!--opt name="loop.pending"--><span class="alert_ppending">Needs your approval</span><!--/opt name="loop.pending"--><!--opt name="loop.need_edit"--><span class="alert_pedit">Needs editing</span><!--/opt name="loop.need_edit"--><!--opt name="loop.approved"--><span class="alert_papproved">Approved</span><!--/opt name="loop.approved"--></p>
 		<p>{loop.comment}</p>
 	</dd>

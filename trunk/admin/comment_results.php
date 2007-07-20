@@ -84,6 +84,7 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $loop=array();
 if (mysql_num_rows($res)) {
 	$config=get_site_option(array('bbcode_comments','smilies_comm'),'core');
+	$config=array_merge($config,get_site_option(array('datetime_format','time_offset'),'def_user_prefs'));
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		if (!empty($config['bbcode_comments'])) {
@@ -102,9 +103,10 @@ if (mysql_num_rows($res)) {
 		if (empty($rsrow['fk_user_id'])) {
 			unset($rsrow['fk_user_id']);
 		}
+		$rsrow['date_posted']=strftime($config['datetime_format'],$rsrow['date_posted']+$config['time_offset']);
 		if ($input['m']=='blog') {
 			$rsrow['select1']=sanitize_and_format($rsrow['select1'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-			$rsrow['owner']='On post: <a href="blog_post_view.php?post_id='.$rsrow['fk_parent_id'].'">'.$rsrow['select1'].'</a> by <a href="profile.php?uid='.$rsrow['owner_id'].'">'.$rsrow['owner_user'].'</a>';
+			$rsrow['owner']='On post: <a href="blog_post_view.php?pid='.$rsrow['fk_parent_id'].'">'.$rsrow['select1'].'</a> by <a href="profile.php?uid='.$rsrow['owner_id'].'">'.$rsrow['owner_user'].'</a>';
 		} elseif ($input['m']=='user') {
 			$rsrow['owner']=sprintf("On %s's profile",$rsrow['select1']);
 		} elseif ($input['m']=='photo') {
