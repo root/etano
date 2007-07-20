@@ -42,7 +42,6 @@ TODO
 -benchmark:
 	1. fopen+fread+fclose vs file_get_content
 	2. for ($i=0;$i<mysql_num_rows($res);++$i) vs $temp=mysql_num_rows($res);
-- goto top link in blogs/photos/profile la comentarii
 - data la blog post si comentarii in admin/blog_post_view
 - de verif de ce nu se vede poza la alerte search si de ce vin asa multe match-uri.
 - tb sa verific interfata de admin si in opera (mai ales pfields view si addedit).
