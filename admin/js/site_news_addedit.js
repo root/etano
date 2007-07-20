@@ -21,11 +21,5 @@ function check_form(the) {
 		the.news_title.focus();
 		return false;
 	}
-
-//	if (the.news_body.value=='') {
-//		alert('Please enter the body of the news');
-//		the.news_body.focus();
-//		return false;
-//	}
 	return true;
 }

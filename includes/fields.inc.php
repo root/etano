@@ -12,7 +12,7 @@ $GLOBALS['_pfields'][1]['dbfield']='f2';
 $GLOBALS['_pfields'][1]['fk_pcat_id']=1;
 $GLOBALS['_pfields'][1]['accepted_values']=array('-',$GLOBALS['_lang'][6],$GLOBALS['_lang'][7]);
 $GLOBALS['_pfields'][1]['default_value']=array(1);
-$GLOBALS['_pfields'][1]['default_search']=array(2);
+$GLOBALS['_pfields'][1]['default_search']=array(1,2);
 $GLOBALS['_pfields'][1]['help_text']=$GLOBALS['_lang'][10];
 
 $GLOBALS['_pfields'][2]['label']=$GLOBALS['_lang'][13];

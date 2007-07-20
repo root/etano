@@ -34,4 +34,5 @@ $tpl->process('content','content');
 
 $tplvars['title']='Send Newsletter';
 $tplvars['page']='newsletter';
+$tplvars['css']='newsletter.css';
 include 'frame.php';
