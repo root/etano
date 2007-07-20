@@ -23,6 +23,9 @@ require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/strings.inc.php';
 $_pfields=array();
 $_pcats=array();
 require_once 'fields.inc.php';
+if (isset($_SESSION['user']['user_id'])) {
+	$_SESSION['user']['user_id']=(int)$_SESSION['user']['user_id'];
+}
 if (empty($_SESSION['user']['user_id'])) {
 	$_SESSION['user']['user']='guest';
 	$_SESSION['user']['membership']=1;

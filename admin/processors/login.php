@@ -19,10 +19,10 @@ $topass=array();
 $qs='';
 $qs_sep='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-	$user=strtolower(sanitize_and_format($_POST['username'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD],''));
-	$pass=sanitize_and_format($_POST['password'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	if (!empty($user) && !empty($pass)) {
-		$query="SELECT `admin_id`,`name`,`dept_id`,`status` FROM `{$dbtable_prefix}admin_accounts` WHERE `user`='$user' AND `pass`=md5('$pass')";
+	$username=strtolower(sanitize_and_format_gpc($_POST,'username',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],''));
+	$password=sanitize_and_format_gpc($_POST,'password',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	if (!empty($username) && !empty($password)) {
+		$query="SELECT `admin_id`,`name`,`dept_id`,`status` FROM `{$dbtable_prefix}admin_accounts` WHERE `user`='$username' AND `pass`=md5('$password')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$admin=mysql_fetch_assoc($res);
@@ -49,11 +49,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		} else {
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Invalid user or pass. Please try again!';
+			$topass['message']['text']='Invalid username or pass. Please try again!';
 		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Invalid user or pass. Please try again!';
+		$topass['message']['text']='Invalid username or pass. Please try again!';
 	}
 }
 redirect2page('admin/index.php',$topass);

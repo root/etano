@@ -35,7 +35,7 @@ if (!empty($_GET['uid'])) {
 	$loop=array();
 	if (!empty($totalrows)) {
 		$config=get_site_option(array('datetime_format','time_offset'),'def_user_prefs');
-		$query="SELECT `mail_id`,`fk_user_id_other`,`_user_other`,`subject`,UNIX_TIMESTAMP(`date_sent`) as `date_sent`,`message_type` FROM $from WHERE $where ORDER BY `date_sent` ASC LIMIT ".$output['o'].','.$output['r'];
+		$query="SELECT `mail_id`,`is_read`,`fk_user_id_other`,`_user_other`,`subject`,UNIX_TIMESTAMP(`date_sent`) as `date_sent`,`message_type` FROM $from WHERE $where ORDER BY `date_sent` ASC LIMIT ".$output['o'].','.$output['r'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$i=0;
 		while ($rsrow=mysql_fetch_assoc($res)) {
@@ -46,7 +46,11 @@ if (!empty($_GET['uid'])) {
 			}
 			$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			$rsrow['date_sent']=strftime($config['datetime_format'],$rsrow['date_sent']+$config['time_offset']);
-			$rsrow['myclass']=($i%2) ? 'odd_item' : 'even_item';
+			if ($rsrow['is_read']) {
+				$rsrow['is_read']='mail_read';
+			} else {
+				$rsrow['is_read']='mail_notread';
+			}
 			if ($rsrow['message_type']==MESS_SYSTEM || empty($rsrow['fk_user_id_other'])) {
 				unset($rsrow['fk_user_id_other']);
 			}
@@ -71,4 +75,5 @@ if (!empty($_GET['uid'])) {
 
 $tplvars['title']='User Inbox';
 $tplvars['page']='user_inbox';
+$tplvars['css']='user_inbox.css';
 include 'frame.php';

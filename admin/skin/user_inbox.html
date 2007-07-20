@@ -12,7 +12,7 @@
 	<th>Date</th>
 </tr>
 <!--loop name="loop"-->
-<tr align="center" class="{loop.myclass}">
+<tr class="{loop.is_read}">
 	<td><input type="checkbox" name="mail_ids[]" value="{loop.mail_id}" /></td>
 	<td><!--opt name="loop.fk_user_id_other"--><a href="profile.php?uid={loop.fk_user_id_other}"><!--/opt name="loop.fk_user_id_other"-->{loop._user_other}<!--opt name="loop.link_member"--></a><!--/opt name="loop.link_member"--></td>
 	<td><a href="user_message_read.php?mail_id={loop.mail_id}&amp;return={output.return2me}">{loop.subject}</a></td>
@@ -25,7 +25,7 @@
 <!--/noloop name="loop"-->
 <!--/loop name="loop"-->
 </table>
-<p><input type="submit" value="Delete" /> selected</p>
+<p><input type="submit" value="Delete selected" /></p>
 </form>
 
 {output.pager2}
