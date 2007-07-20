@@ -45,7 +45,8 @@ class widget_osignal_feed extends icontent_widget {
 			if ($ok) {
 				$items=$fr->getFeedOutputData();
 				for ($i=0;isset($items['item'][$i]);++$i) {
-					$items['item'][$i]['description']=isset($items['item'][$i]['description']) ? substr($items['item'][$i]['description'],0,$this->config['num_chars']) : '';
+					$items['item'][$i]['description']=isset($items['item'][$i]['description']) ? substr($items['item'][$i]['description'],0,$this->config['num_chars']) : (isset($items['item'][$i]['content:encoded']) ? substr($items['item'][$i]['content:encoded'],0,$this->config['num_chars']) : '');
+					unset($items['item'][$i]['content:encoded']);
 				}
 				$this->tpl->set_file('widget.content','widgets/osignal_feed/display.html');
 				$this->tpl->set_loop('loop',array_slice($items['item'],0,$this->config['num_stories']));
