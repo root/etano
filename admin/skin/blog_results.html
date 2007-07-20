@@ -5,7 +5,7 @@
 	<dd>
 		<a href="blog_post_view.php?pid={loop.post_id}">{loop.title}</a>
 		<p>In blog: {loop.blog_name}</p>
-		<p>Owner: <a href="profile.php?uid={loop.fk_user_id}">{loop._user}</a></p>
+		<p>Posted by: <a href="profile.php?uid={loop.fk_user_id}">{loop._user}</a> on {loop.date_posted}</p>
 		<p>Status: <!--opt name="loop.pending"--><span class="alert_ppending">Needs your approval</span><!--/opt name="loop.pending"--><!--opt name="loop.need_edit"--><span class="alert_pedit">Needs editing</span><!--/opt name="loop.need_edit"--><!--opt name="loop.approved"--><span class="alert_papproved">Approved</span><!--/opt name="loop.approved"--></p>
 		<p>Comments: <a href="comment_results.php?m=blog&amp;id={loop.post_id}">{loop.stat_comments}</a></p>
 		<p>Views: {loop.stat_views}</p>

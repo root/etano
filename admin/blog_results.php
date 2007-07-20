@@ -96,6 +96,7 @@ if (!empty($totalrows)) {
 		$o=$totalrows-$r;
 	}
 	$post_ids=array_slice($post_ids,$o,$r);
+	$config=get_site_option(array('datetime_format','time_offset'),'def_user_prefs');
 	$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user`,a.`fk_blog_id`,b.`blog_name`,a.`title`,a.`status`,a.`stat_views`,a.`stat_comments` FROM `{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_blogs` b WHERE a.`post_id` IN ('".join("','",$post_ids)."') AND a.`fk_blog_id`=b.`blog_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
@@ -106,6 +107,7 @@ if (!empty($totalrows)) {
 		} elseif ($rsrow['status']==STAT_APPROVED) {
 			$rsrow['approved']=true;
 		}
+		$rsrow['date_posted']=strftime($config['datetime_format'],$rsrow['date_posted']+$config['time_offset']);
 		$loop[]=$rsrow;
 	}
 
