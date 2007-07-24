@@ -386,7 +386,7 @@ function create_search_form($search_fields) {
 	global $dbtable_prefix,$_pfields;
 	$user_defaults=array();
 	if (!empty($_SESSION['user']['user_id'])) {
-		$query="SELECT `search` FROM `{$dbtable_prefix}user_searches` WHERE `fk_user_id`=".$_SESSION['user']['user_id']." AND `is_default`=1";
+		$query="SELECT `search` FROM `{$dbtable_prefix}user_searches` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `is_default`=1";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$user_defaults=unserialize(mysql_result($res,0,0));

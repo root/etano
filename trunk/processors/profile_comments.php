@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 						$query.=",`$k`='".$input[$k]."'";
 					}
 				}
-				$query.=" WHERE `comment_id`=".$input['comment_id']." AND `fk_user_id`=".$_SESSION['user']['user_id'];
+				$query.=" WHERE `comment_id`=".$input['comment_id']." AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['type']=MESSAGE_INFO;
 				$topass['message']['text']='Comment changed successfully.';

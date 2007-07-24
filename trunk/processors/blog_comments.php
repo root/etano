@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 						$query.=",`$k`='".$input[$k]."'";
 					}
 				}
-				$query.=" WHERE `comment_id`=".$input['comment_id']." AND `fk_user_id`=".$_SESSION['user']['user_id'];
+				$query.=" WHERE `comment_id`=".$input['comment_id']." AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (isset($_on_before_update)) {
 					for ($i=0;isset($_on_before_update[$i]);++$i) {
 						eval($_on_before_update[$i].'();');

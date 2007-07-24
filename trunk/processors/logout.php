@@ -20,7 +20,7 @@ if (is_file(_BASEPATH_.'/events/processors/logout.php')) {
 }
 
 if (!empty($_SESSION['user']['user_id'])) {
-	$query="DELETE FROM `{$dbtable_prefix}online` WHERE `fk_user_id`=".$_SESSION['user']['user_id'];
+	$query="DELETE FROM `{$dbtable_prefix}online` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (isset($_on_before_insert)) {
 		for ($i=0;isset($_on_before_insert[$i]);++$i) {
 			eval($_on_before_insert[$i].'();');

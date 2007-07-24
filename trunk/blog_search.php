@@ -108,7 +108,7 @@ if (!empty($output['search_md5'])) {
 		$output['search_md5']=md5($serialized_input);
 		$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='".$output['search_md5']."',`search_type`=".SEARCH_BLOG.",`search`='$serialized_input',`results`='".join(',',$post_ids)."'";
 		if (!empty($_SESSION['user']['user_id'])) {
-			$query.=",`fk_user_id`=".$_SESSION['user']['user_id'];
+			$query.=",`fk_user_id`='".$_SESSION['user']['user_id']."'";
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}

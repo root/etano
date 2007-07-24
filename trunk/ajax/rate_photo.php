@@ -23,7 +23,7 @@ if (!empty($_SESSION['user']['user_id'])) {
 	if (!empty($_REQUEST['photo_id']) && !empty($_REQUEST['vote'])) {
 		$photo_id=(int)$_REQUEST['photo_id'];
 		$vote=(int)$_REQUEST['vote'];
-		$query="SELECT UNIX_TIMESTAMP(`date_voted`) FROM `{$dbtable_prefix}photo_ratings` WHERE `fk_photo_id`=$photo_id AND `fk_user_id`=".$_SESSION['user']['user_id']." AND `date_voted`>".gmdate('YmdHis')."-INTERVAL 1 DAY";
+		$query="SELECT UNIX_TIMESTAMP(`date_voted`) FROM `{$dbtable_prefix}photo_ratings` WHERE `fk_photo_id`=$photo_id AND `fk_user_id`='".$_SESSION['user']['user_id']."' AND `date_voted`>".gmdate('YmdHis')."-INTERVAL 1 DAY";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$error=true;
@@ -41,7 +41,7 @@ if (!empty($_SESSION['user']['user_id'])) {
 		}
 
 		if (!$error) {
-			$query="INSERT INTO `{$dbtable_prefix}photo_ratings` SET `fk_photo_id`=$photo_id,`fk_user_id`=".$_SESSION['user']['user_id'].",`vote`=$vote,`date_voted`='".gmdate('YmdHis')."'";
+			$query="INSERT INTO `{$dbtable_prefix}photo_ratings` SET `fk_photo_id`=$photo_id,`fk_user_id`='".$_SESSION['user']['user_id']."',`vote`=$vote,`date_voted`='".gmdate('YmdHis')."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_votes`=`stat_votes`+1,`stat_votes_total`=`stat_votes_total`+'$vote' WHERE `photo_id`=$photo_id";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

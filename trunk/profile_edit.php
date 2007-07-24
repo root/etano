@@ -51,7 +51,7 @@ if (isset($_SESSION['topass']['input'])) {
 		}
 	}
 	$query=substr($query,0,-1);
-	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=".$_SESSION['user']['user_id'];
+	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$user_details=mysql_fetch_assoc($res);

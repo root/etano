@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$query="UPDATE `{$dbtable_prefix}user_searches` SET `title`='".$input['title']."' WHERE `search_id`=".$input['search_id']." AND `fk_user_id`=".$_SESSION['user']['user_id'];
+		$query="UPDATE `{$dbtable_prefix}user_searches` SET `title`='".$input['title']."' WHERE `search_id`=".$input['search_id']." AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 		if (isset($_on_before_update)) {
 			for ($i=0;isset($_on_before_update[$i]);++$i) {
 				eval($_on_before_update[$i].'();');

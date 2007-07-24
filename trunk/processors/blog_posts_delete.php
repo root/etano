@@ -24,7 +24,7 @@ if (is_file(_BASEPATH_.'/events/processors/blog_posts_delete.php')) {
 $topass=array();
 $post_id=isset($_GET['post_id']) ? (int)$_GET['post_id'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_parent_id`=$post_id AND `fk_user_id`=".$_SESSION['user']['user_id'];
+$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_parent_id`=$post_id AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (isset($_on_before_delete)) {
 	for ($i=0;isset($_on_before_delete[$i]);++$i) {
 		eval($_on_before_delete[$i].'();');
@@ -32,7 +32,7 @@ if (isset($_on_before_delete)) {
 }
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id AND `fk_user_id`=".$_SESSION['user']['user_id'];
+$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 on_delete_blog_post(array($post_id));

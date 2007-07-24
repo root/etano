@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			// with this if() we target date_format because an empty date_format
 			// could break all dates on the site.
 			if ($types[$module_code][$config_option]!=FIELD_TEXTFIELD || !empty($config_value)) {
-				$query="REPLACE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`=".$_SESSION['user']['user_id'].",`config_option`='$config_option',`config_value`='$config_value',`fk_module_code`='$module_code'";
+				$query="REPLACE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`config_option`='$config_option',`config_value`='$config_value',`fk_module_code`='$module_code'";
 				if (isset($_on_before_update)) {
 					for ($i=0;isset($_on_before_update[$i]);++$i) {
 						eval($_on_before_update[$i].'();');

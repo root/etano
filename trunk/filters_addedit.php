@@ -29,7 +29,7 @@ if (isset($_SESSION['topass']['input'])) {
 	}
 } elseif (!empty($_GET['filter_id'])) {
 	$filter_id=(int)$_GET['filter_id'];
-	$query="SELECT * FROM `{$dbtable_prefix}message_filters` WHERE `filter_id`=$filter_id AND `fk_user_id`=".$_SESSION['user']['user_id'];
+	$query="SELECT * FROM `{$dbtable_prefix}message_filters` WHERE `filter_id`=$filter_id AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
@@ -60,7 +60,7 @@ switch ($output['filter_type']) {
 }
 
 $my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'SENT',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
-$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`=".$_SESSION['user']['user_id']." ORDER BY `folder` ASC";
+$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' ORDER BY `folder` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
 	$my_folders[$rsrow[0]]=$rsrow[1];

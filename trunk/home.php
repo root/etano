@@ -19,7 +19,7 @@ check_login_member('auth');
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $output=array();
 
-$query="SELECT `_photo` as `photo`,UNIX_TIMESTAMP(`date_added`) as `date_added` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=".$_SESSION['user']['user_id'];
+$query="SELECT `_photo` as `photo`,UNIX_TIMESTAMP(`date_added`) as `date_added` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output=mysql_fetch_assoc($res);
@@ -30,10 +30,10 @@ if (empty($output['photo'])) {
 }
 
 $my_stats=get_user_stats($_SESSION['user']['user_id'],array('total_photos','pviews','num_friends'));
-$query="SELECT count(*) FROM `{$dbtable_prefix}user_inbox` WHERE `fk_user_id`=".$_SESSION['user']['user_id']." AND `del`=0";
+$query="SELECT count(*) FROM `{$dbtable_prefix}user_inbox` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $my_stats['total_messages']=mysql_result($res,0,0);
-$query="SELECT count(*) FROM `{$dbtable_prefix}user_inbox` WHERE `is_read`=0 AND `fk_user_id`=".$_SESSION['user']['user_id']." AND `del`=0";
+$query="SELECT count(*) FROM `{$dbtable_prefix}user_inbox` WHERE `is_read`=0 AND `fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $my_stats['new_messages']=mysql_result($res,0,0);
 

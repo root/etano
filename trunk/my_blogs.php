@@ -20,7 +20,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $output=array();
 
 $from="`{$dbtable_prefix}user_blogs`";
-$where="`fk_user_id`=".$_SESSION['user']['user_id'];
+$where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
 
 $loop=array();
 $query="SELECT `blog_id`,`blog_name`,`blog_diz`,`stat_posts` FROM $from WHERE $where ORDER BY `blog_name`";
