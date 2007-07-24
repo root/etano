@@ -31,7 +31,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['is_private']=sanitize_and_format_gpc($_POST,'is_private',TYPE_INT,0,0);
 
 	$config=get_site_option(array('round_corners','watermark_text','watermark_text_color','t1_width','t2_width','pic_width','manual_photo_approval','min_size','max_size'),'core_photo');
-	$config2=$config;
+	$config['padding_type']=PAD_NONE;
+	$config_t1=$config;
+	$config_t1['padding_type']=PAD_2SIDES;
+	$config_t2=$config;
+	$config_t2['padding_type']=PAD_1SIDE;
 	unset($config['round_corners']);
 	$curtime=time();
 
@@ -60,8 +64,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text'][]=sprintf('The first photo was not uploaded because the maximum allowed size for photos is %1$s bytes.',$config['max_size']);
 			} else {
 				$rand=mt_rand(0,9);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file1']);
 				$input['file1']=$rand.'/'.$filename.'.jpg';
@@ -93,8 +97,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text'][]=sprintf('The second photo was not uploaded because the maximum allowed size for photos is %1$s bytes.',$config['max_size']);
 			} else {
 				$rand=mt_rand(0,9);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file2']);
 				$input['file2']=$rand.'/'.$filename.'.jpg';
@@ -127,8 +131,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			} else {
 				mt_srand(make_seed());
 				$rand=mt_rand(0,9);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file3']);
 				$input['file3']=$rand.'/'.$filename.'.jpg';
@@ -160,8 +164,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text'][]=sprintf('The fourth photo was not uploaded because the maximum allowed size for photos is %1$s bytes.',$config['max_size']);
 			} else {
 				$rand=mt_rand(0,9);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file4']);
 				$input['file4']=$rand.'/'.$filename.'.jpg';
@@ -193,8 +197,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text'][]=sprintf('The fifth photo was not uploaded because the maximum allowed size for photos is %1$s bytes.',$config['max_size']);
 			} else {
 				$rand=mt_rand(0,9);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file5']);
 				$input['file5']=$rand.'/'.$filename.'.jpg';
@@ -226,8 +230,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text'][]=sprintf('The sixth photo was not uploaded because the maximum allowed size for photos is %1$s bytes.',$config['max_size']);
 			} else {
 				$rand=mt_rand(0,9);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config2);
-				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config2);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
+				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file6']);
 				$input['file6']=$rand.'/'.$filename.'.jpg';
