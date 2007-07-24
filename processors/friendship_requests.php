@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$new_friends=0;
 				while ($rsrow=mysql_fetch_assoc($res)) {
-					$query="INSERT IGNORE INTO `{$dbtable_prefix}user_networks` SET `fk_user_id`=".$_SESSION['user']['user_id'].",`fk_net_id`=".$rsrow['fk_net_id'].",`fk_user_id_other`=".$rsrow['fk_user_id'].",`nconn_status`=1";
+					$query="INSERT IGNORE INTO `{$dbtable_prefix}user_networks` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`fk_net_id`=".$rsrow['fk_net_id'].",`fk_user_id_other`=".$rsrow['fk_user_id'].",`nconn_status`=1";
 					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					++$new_friends;
 					update_stats($rsrow['fk_user_id'],'num_friends',1);

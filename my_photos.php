@@ -24,7 +24,7 @@ $output=array();
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
-$where="`fk_user_id`=".$_SESSION['user']['user_id']." AND `del`=0";
+$where="`fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
 $from="`{$dbtable_prefix}user_photos`";
 
 $query="SELECT count(*) FROM $from WHERE $where";

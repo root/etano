@@ -19,7 +19,7 @@ check_login_member('manage_networks');
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $output=array();
-$query="SELECT a.`nconn_id`,a.`fk_user_id`,b.`_user` as `user`,c.`network` FROM `{$dbtable_prefix}user_networks` a,`{$dbtable_prefix}user_profiles` b,`{$dbtable_prefix}networks` c WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`fk_net_id`=c.`net_id` AND a.`fk_user_id_other`=".$_SESSION['user']['user_id']." AND a.`nconn_status`=0";
+$query="SELECT a.`nconn_id`,a.`fk_user_id`,b.`_user` as `user`,c.`network` FROM `{$dbtable_prefix}user_networks` a,`{$dbtable_prefix}user_profiles` b,`{$dbtable_prefix}networks` c WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`fk_net_id`=c.`net_id` AND a.`fk_user_id_other`='".$_SESSION['user']['user_id']."' AND a.`nconn_status`=0";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $loop=array();
 while ($rsrow=mysql_fetch_assoc($res)) {

@@ -20,7 +20,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $output=array();
 
 $from="`{$dbtable_prefix}user_searches`";
-$where="`fk_user_id`=".$_SESSION['user']['user_id'];
+$where="`fk_user_id`='".$_SESSION['user']['user_id']."'";
 
 $loop=array();
 $query="SELECT `search_id`,`title`,`is_default`,`alert`,`search_qs` FROM $from WHERE $where ORDER BY `search_id` DESC";

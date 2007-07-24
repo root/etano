@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!empty($texts)) {
 				$query.=',`'.join('`,`',$texts).'`';	// get the old value of the texts for comparing with new values
 			}
-			$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=".$_SESSION['user']['user_id'];
+			$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$is_update=false;
 			$old_text_values=array();
@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					//$query.=",`status`=".STAT_APPROVED;
 				}
 			} else {		// insert here
-				$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`=".$_SESSION['user']['user_id'].",`last_changed`='".gmdate('YmdHis')."'";
+				$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."'";
 				if (!empty($config['manual_profile_approval'])) {
 					$query.=",`status`=".STAT_PENDING;
 				} else {
@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			if ($is_update) {
-				$query.=" WHERE `fk_user_id`=".$_SESSION['user']['user_id'];
+				$query.=" WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
