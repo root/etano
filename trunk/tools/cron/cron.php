@@ -11,6 +11,7 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
+define('NO_SESSION',1);
 require_once dirname(__FILE__).'/../../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once dirname(__FILE__).'/../../includes/admin_functions.inc.php';
