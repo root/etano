@@ -104,7 +104,7 @@ function save_thumbnail($image,$size,$save_path,$save_name,$config=array()) {
 				imageline($mynewimg,0,7,0,$size[1]-8,$border_color);				//tl->bl
 			}
 
-			imagepng($mynewimg,$save_path.'/'.$save_name.'.png',$config['quality']);
+			imagejpeg($mynewimg,$save_path.'/'.$save_name.'.jpg',$config['quality']);
 			$myreturn=true;
 		}
 	}
