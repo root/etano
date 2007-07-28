@@ -39,14 +39,19 @@ $input['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field
 if (!empty($input['uids'])) {
 	if ($act==1) {
 		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `del`=1 WHERE `fk_user_id` IN ('".join("','",$input['uids'])."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `status`=".ASTAT_SUSPENDED." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$input['uids'])."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Member(s) marked for deletion.';
 	} elseif ($act==-1) {
 		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `del`=0 WHERE `fk_user_id` IN ('".join("','",$input['uids'])."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `status`=".ASTAT_ACTIVE." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$input['uids'])."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Member(s) undeleted.';
 	}
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 
 $nextpage=_BASEURL_.'/admin/member_search.php';
