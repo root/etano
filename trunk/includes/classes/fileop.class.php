@@ -86,6 +86,20 @@ class fileop {
 	}
 
 
+// both params should have a full basepath (for 'disk' op mode)
+	function rename($source,$destination) {
+		$myreturn=false;
+		if ($this->op_mode=='disk') {
+			$myreturn=@rename($source,$destination);
+		} elseif ($this->op_mode=='ftp') {
+			$source=str_replace(_BASEPATH_,_FTPPATH_,$source);
+			$destination=str_replace(_BASEPATH_,_FTPPATH_,$destination);
+			$myreturn=@ftp_rename($this->ftp_id,$source,$destination);
+		}
+		return $myreturn;
+	}
+
+
 	function file_put_contents($myfilename,$mydata) {
 		$myreturn=false;
 		if ($this->op_mode=='disk') {

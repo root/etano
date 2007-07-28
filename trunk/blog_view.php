@@ -22,6 +22,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $blog=array();
 $output=array();
 $loop=array();
+$blog_id='';
 if (!empty($_GET['bid'])) {
 	$blog_id=(string)(int)$_GET['bid'];
 	if (is_file(_CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php')) {
