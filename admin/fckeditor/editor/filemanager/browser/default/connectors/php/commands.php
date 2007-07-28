@@ -193,13 +193,17 @@ function FileUpload( $resourceType, $currentFolder )
 				}
 				else
 				{
-					move_uploaded_file( $oFile['tmp_name'], $sFilePath ) ;
+//					move_uploaded_file( $oFile['tmp_name'], $sFilePath ) ;
+					move_uploaded_file( $oFile['tmp_name'],_BASEPATH_.'/tmp/'.$sFileName );
+					require_once _BASEPATH_.'/includes/classes/fileop.class.php';
+					$fileop=new fileop();
+					$fileop->rename(_BASEPATH_.'/tmp/'.$sFileName,$sFilePath);
 
 					if ( is_file( $sFilePath ) )
 					{
 						$oldumask = umask(0) ;
-						chmod( $sFilePath, 0777 ) ;
-						umask( $oldumask ) ;
+//						chmod( $sFilePath, 0777 ) ;
+//						umask( $oldumask ) ;
 					}
 
 					break ;

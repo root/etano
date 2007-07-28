@@ -33,13 +33,13 @@ $Config['UseFileType'] = false ;
 
 include dirname(__FILE__).'/../../../../../../includes/common.inc.php';
 // Path to uploaded files relative to the document root.
-$Config['UserFilesPath'] = _BASEURL_.'/images/emails/' ;
+$Config['UserFilesPath'] = _BASEURL_.'/images/custom/' ;
 
 // Fill the following value it you prefer to specify the absolute path for the
 // user files directory. Usefull if you are using a virtual directory, symbolic
 // link or alias. Examples: 'C:\\MySite\\userfiles\\' or '/root/mysite/userfiles/'.
 // Attention: The above 'UserFilesPath' must point to the same directory.
-$Config['UserFilesAbsolutePath'] = _BASEPATH_.'/images/emails/';
+$Config['UserFilesAbsolutePath'] = _BASEPATH_.'/images/custom/';
 
 // Due to security issues with Apache modules, it is reccomended to leave the
 // following setting enabled.

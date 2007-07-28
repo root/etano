@@ -12,7 +12,7 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 $blog_archive=array();
-if (is_file(_CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php')) {
+if (!empty($blog_id) && is_file(_CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php')) {
 	include _CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog_archive.inc.php';
 }
 
