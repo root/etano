@@ -26,10 +26,12 @@ class widget_osignal_feed extends icontent_widget {
 
 
 	function display(&$tpl) {
-		$this->tpl=$tpl;
-		$this->_title($this->config['module_name']);
-		$this->_content();
-		return $this->_finish_display();
+		if (get_site_option('enabled','osignal_feed')) {
+			$this->tpl=$tpl;
+			$this->_title($this->config['module_name']);
+			$this->_content();
+			return $this->_finish_display();
+		}
 	}
 
 
