@@ -141,6 +141,9 @@ if (!empty($output['totalrows'])) {
 		} else {
 			$loop[$i]['user_online_status']='is offline';	// translate
 		}
+		if (!is_file(_PHOTOPATH_.'/t1/'.$loop[$i]['photo'])) {
+			$loop[$i]['photo']='no_photo.gif';
+		}
 		// fancy word coloring - lightning fast now :)
 		if (isset($input['tags'])) {
 			$loop[$i]['title']=str_replace($search_words,$replace_words,$loop[$i]['title']);
