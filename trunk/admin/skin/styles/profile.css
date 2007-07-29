@@ -1,5 +1,9 @@
 @import url('thickbox.css');
 
+#message_wrapper {
+	margin-left: 210px;
+}
+
 #profile_menu {
 	width: 200px;
 	position: absolute;
