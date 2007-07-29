@@ -25,6 +25,7 @@ if (!isset($_SESSION['admin']['admin_id'])) {
 	$tpl->set_var('title','Admin panel login');
 	$tpl->set_var('baseurl',_BASEURL_);
 	$tpl->set_var('message',$message);
+	$tpl->set_var('tplvars',$tplvars);
 	echo $tpl->process('','frame',TPL_FINISH);
 } else {
 	redirect2page('admin/cpanel.php');
