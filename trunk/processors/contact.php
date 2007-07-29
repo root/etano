@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['subject']=sanitize_and_format_gpc($_POST,'subject',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$input['name']=sanitize_and_format_gpc($_POST,'name',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$input['email']=sanitize_and_format_gpc($_POST,'email',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	$input['message_body']=sanitize_and_format_gpc($_POST,'message_body',TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
+	$input['message_body']=sanitize_and_format_gpc($_POST,'message_body',TYPE_STRING,FORMAT_STRIP_MQ | FORMAT_TRIM,'');
 
 	if (empty($input['subject'])) {
 		$error=true;
