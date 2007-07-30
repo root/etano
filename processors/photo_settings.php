@@ -65,6 +65,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='".$photos[$input['is_main']]."',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}
+			if ($old_main==0) {
+				add_member_score($_SESSION['user']['user_id'],'add_main_photo');
+			}
 		}
 		foreach ($input['caption'] as $photo_id=>$caption) {
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_private`=".(isset($input['is_private'][$photo_id]) ? 1 : 0).",`allow_comments`=".(isset($input['allow_comments'][$photo_id]) ? 1 : 0).",`last_changed`='".gmdate('YmdHis')."'";
