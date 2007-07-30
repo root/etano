@@ -87,20 +87,15 @@ function _unset_vars(&$v) {
 	}
 }
 if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=='on') {
-	$temp=array('_GET','_POST','_SERVER','_COOKIE','_ENV','_SESSION','_REQUEST');
-	foreach ($temp as $k=>$v) {
+	$temp=array('_GET','_POST','_SERVER','_COOKIE','_ENV','_SESSION','_REQUEST','_FILES','_SESSION');
+	foreach ($temp as $v) {
 		if (isset(${'HTTP'.$v.'_VARS'}) && is_array(${'HTTP'.$v.'_VARS'})) {
 			_unset_vars(${'HTTP'.$v.'_VARS'});
 			unset(${'HTTP'.$v.'_VARS'});
 		}
 		if (isset(${$v}) && is_array(${$v})) {
 			_unset_vars(${$v});
-			@reset(${$v});
 		}
-	}
-	if (is_array($HTTP_POST_FILES)) {
-		_unset_vars($HTTP_POST_FILES);
-		@reset($HTTP_POST_FILES);
 	}
 }
 

@@ -95,7 +95,7 @@ if (empty($_GET['page']) || $_GET['page']==1) {
 		theform.email.focus();
 		return false;
 	}
-	if (theform.captcha.value=='') {
+	if (typeof(theform.captcha)!='undefined' && theform.captcha.value=='') {
 		alert('Please enter the code you see in the image');
 		theform.captcha.focus();
 		return false;

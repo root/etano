@@ -35,10 +35,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['email2']=strtolower(sanitize_and_format_gpc($_POST,'email2',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],''));
 		$input['agree']=sanitize_and_format_gpc($_POST,'agree',TYPE_INT,0,0);
 
-		if (!preg_match('/^[a-z0-9_]+$/',$input['user'])) {
+		if (!preg_match('/^[a-z0-9_]+$/',$input['user']) || strlen($input['user'])<4 || strlen($input['user'])>20) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]='Invalid user name. Please use only letters and digits.';//translate
+			$topass['message']['text'][]='Please use only letters and digits for your username. 4-20 chars.';//translate
 			$input['error_user']='red_border';
 		}
 		if (!$error && ($input['user']=='guest' || get_userid_by_user($input['user']))) {
@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input['uid']=$_SESSION['user']['reg_id'];
 			send_template_email($input['email'],sprintf('%s user registration confirmation',_SITENAME_),'confirm_reg.html',get_my_skin(),$input);
 		}
-		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=".$_SESSION['user']['reg_id'];
+		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['reg_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$is_update=false;
 		if (mysql_num_rows($res)) {
