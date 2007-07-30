@@ -81,10 +81,14 @@ function on_approve_comment($comment_ids,$type) {
 
 function on_approve_photo($photo_ids) {
 	global $dbtable_prefix;
-	$query="SELECT `photo_id`,`fk_user_id` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."') AND `processed`=0";
+	$query="SELECT `photo_id`,`fk_user_id`,`is_main`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."') AND `processed`=0";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$photo_ids=array();	// yup
 	$user_ids=array();
+	$scores=array();
+	$score_photo=add_member_score(0,'add_photo',1,true);
+	$score_main_photo=add_member_score(0,'add_main_photo',1,true);
+	$main_photos=array();
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$photo_ids[]=$rsrow['photo_id'];	// get only the not processed ones
 		if (isset($user_ids[$rsrow['fk_user_id']])) {
@@ -92,10 +96,25 @@ function on_approve_photo($photo_ids) {
 		} else {
 			$user_ids[$rsrow['fk_user_id']]=1;
 		}
+		if (isset($scores[$rsrow['fk_user_id']])) {
+			$scores[$rsrow['fk_user_id']]+=empty($rsrow['is_main']) ? $score_photo : $score_main_photo;
+		} else {
+			$scores[$rsrow['fk_user_id']]=empty($rsrow['is_main']) ? $score_photo : $score_main_photo;
+		}
+		if (!empty($rsrow['is_main'])) {
+			$main_photos[$rsrow['fk_user_id']]=$rsrow['photo'];
+		}
 	}
 	foreach ($user_ids as $uid=>$num) {
 		update_stats($uid,'total_photos',$num);
-		add_member_score($uid,'add_photo',$num);
+	}
+	foreach ($scores as $uid=>$score) {
+		add_member_score($uid,'force',1,false,$score);
+	}
+	$now=gmdate('YmdHis');
+	foreach ($main_photos as $uid=>$photo) {
+		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='$photo',`last_changed`='$now' WHERE `fk_user_id`=$uid";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 	$query="UPDATE `{$dbtable_prefix}user_photos` SET `processed`=1 WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

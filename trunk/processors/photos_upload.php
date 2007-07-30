@@ -271,12 +271,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if ($force_main) {
 					$query.=",`is_main`=1";
 					$force_main=false;
-					// unfortunately we have to force _photo in user_profile here instead of in photo_settings
-					// if photo approvals are automatic then we can make this photo the main photo now. Otherwise it will have to be done upon approval!!!
-					if (empty($config['manual_photo_approval'])) {
-						$query2="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='".$input['file'.$i]."',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
-						if (!($res=@mysql_query($query2))) {trigger_error(mysql_error(),E_USER_ERROR);}
-					}
 				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$ids[]=mysql_insert_id();
