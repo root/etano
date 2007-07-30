@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007071802
+File version:				1.2007073001
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -698,11 +698,11 @@ function redirect2page($pagename,$topass=array(),$qstring='',$full_url=false) {
 			$separator='?';
 			if (defined('SID') && SID!='') {
 				$redirect.=$separator.SID;
-				$separator='&amp;';
+				$separator='&';
 			}
 			if (!empty($qstring)) {
 				$redirect.=$separator.$qstring;
-				$separator='&amp;';
+				$separator='&';
 			}
 		} else {
 			$redirect=$pagename;
