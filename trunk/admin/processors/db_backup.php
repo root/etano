@@ -72,44 +72,44 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$towrite.=$rsrow['Type'].' '.$rsrow['Create_options'].";\n\n";
 	}
 
-	$filename=_BASEPATH_.'/tmp/admin/db_'.date('YmdHis').'.sql';
-	$fp=fopen($filename,'wb');
-	fwrite($fp,$towrite);
-
-	$towrite='';
-	$query_char_limit=10000;
-	for ($i=0;isset($tables[$i]);++$i) {
-		$query="SELECT * FROM `".$tables[$i]."`";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$towrite='';
-		$querystart="INSERT INTO `".$tables[$i]."` VALUES ";
-		$towrite=$querystart;
-		$is_insert=false;
-		while ($rsrow=mysql_fetch_row($res)) {
-			if (strlen($towrite)<$query_char_limit) {
-				$rsrow=sanitize_and_format($rsrow,TYPE_STRING,FORMAT_ADDSLASH);
-				$towrite.="('".join("','",$rsrow)."'),";
-				$is_insert=true;
-			} else {
-				$towrite=substr($towrite,0,-1).";\n";
-				fwrite($fp,$towrite);
-				$towrite=$querystart;
-				$is_insert=false;
-			}
-		}
-		if ($is_insert) {
-			$towrite=substr($towrite,0,-1).";\n\n";
-			fwrite($fp,$towrite);
-		}
-	}
-	fclose($fp);
-	if (is_file($filename)) {
+	if (!empty($towrite)) {
 		header('Content-Type: application/octet-stream; name="etano_'.date('Y-m-d').'.sql"'); //This should work for Non IE/Opera browsers
 		header('Content-Type: application/octetstream; name="etano_'.date('Y-m-d').'.sql"'); // This should work for IE & Opera
 		header('Content-Disposition: attachment; filename="etano_'.date('Y-m-d').'.sql"');
 		header('Content-transfer-encoding: binary');
-		header('Content-length: '.filesize($filename));
-		@readfile($filename);
+		echo $towrite;
+		ob_flush();
+		flush();
+		$towrite='';
+		$query_char_limit=10000;
+		for ($i=0;isset($tables[$i]);++$i) {
+			$query="SELECT * FROM `".$tables[$i]."`";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$towrite='';
+			$querystart="INSERT INTO `".$tables[$i]."` VALUES ";
+			$towrite=$querystart;
+			$is_insert=false;
+			while ($rsrow=mysql_fetch_row($res)) {
+				if (strlen($towrite)<$query_char_limit) {
+					$rsrow=sanitize_and_format($rsrow,TYPE_STRING,FORMAT_ADDSLASH);
+					$towrite.="('".join("','",$rsrow)."'),";
+					$is_insert=true;
+				} else {
+					$towrite=substr($towrite,0,-1).";\n";
+					echo $towrite;
+					ob_flush();
+					flush();
+					$towrite=$querystart;
+					$is_insert=false;
+				}
+			}
+			if ($is_insert) {
+				$towrite=substr($towrite,0,-1).";\n\n";
+				echo $towrite;
+				ob_flush();
+				flush();
+			}
+		}
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Database saved.';
 	}
