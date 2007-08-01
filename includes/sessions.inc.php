@@ -43,6 +43,7 @@ if (defined('CACHE_LIMITER')) {
 	session_cache_limiter('nocache');
 }
 session_start();
+header('Content-Type: text/html; charset=utf-8',true);	// overwrite possible apache headers
 
 if (isset($_GET['skin'])) {
 	if (preg_match('/^\w+$/',$_GET['skin'])) {
