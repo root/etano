@@ -29,7 +29,6 @@ $Config['Enabled'] = true;
 
 
 {
-	include dirname(__FILE__).'/../../../../../../../../includes/common.inc.php';
 	// Path to user files relative to the document root.
 	$Config['UserFilesPath'] = _BASEURL_.'/images/custom/' ;
 	// Fill the following value it you prefer to specify the absolute path for the
