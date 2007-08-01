@@ -33,7 +33,7 @@ body
 
 #xEditingArea
 {
-    border: #696969 1px solid;
+    border: #688420 1px solid;
 }
 
 .SourceField
@@ -50,13 +50,13 @@ body
 .TB_ToolbarSet, .TB_Expand, .TB_Collapse
 {
     cursor: default;
-    background-color: #efefde;
+    background-color: #A6CE39;
 }
 
 .TB_ToolbarSet
 {
-    border-top: #efefde 1px outset;
-    border-bottom: #efefde 1px outset;
+    border-top: #688420 1px solid;
+    border-bottom: #688420 1px solid;
 }
 
 .TB_ToolbarSet TD
@@ -76,7 +76,7 @@ body
     width: 1px;
     height: 16px;
     margin: 2px;
-    background-color: #999966;
+    background-color: #ECFBC2;
 }
 
 .TB_Start
@@ -113,7 +113,7 @@ body
 .TB_Expand, .TB_Collapse
 {
     padding: 2px 2px 2px 2px;
-    border: #efefde 1px outset;
+    border: #688420 1px solid;
 }
 
 .TB_Collapse
@@ -132,7 +132,7 @@ body
 
 .TB_Button_On, .TB_Button_Off, .TB_Button_On_Over, .TB_Button_Off_Over, .TB_Button_Disabled
 {
-    border: #efefde 1px solid; /* This is the default border */
+    border: #A6CE39 1px solid; /* This is the default border */
     height: 22px; /* The height is necessary, otherwise IE will not apply the alpha */
 }
 
@@ -183,7 +183,7 @@ body
 
 .TB_Button_Off .TB_Button_Text
 {
-   	background-color: #efefde;  /* Needed because of a bug on Clear Type */
+   	background-color: #A6CE39;  /* Needed because of a bug on Clear Type */
 }
 
 .TB_ConnectionLine
@@ -374,7 +374,7 @@ body
 
 .SC_Field
 {
-    border: #b7b7a6 1px solid;
+    border: #000 1px solid;
     cursor: default;
 }
 
@@ -386,7 +386,7 @@ body
     opacity: 0.75; /* Safari, Opera and Mozilla */
     filter: alpha(opacity=70); /* IE */ /* -moz-opacity: 0.75; Mozilla (Old) */
     height: 23px;
-    background-color: #efefde;
+    background-color: #A6CE39;
 }
 
 .SC_FieldLabel
