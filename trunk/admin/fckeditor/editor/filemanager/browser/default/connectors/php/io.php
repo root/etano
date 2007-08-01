@@ -24,11 +24,7 @@
 
 function GetUrlFromPath( $resourceType, $folderPath )
 {
-	if ( $resourceType == '' )
-		return RemoveFromEnd( $GLOBALS["UserFilesPath"], '/' ) . $folderPath ;
-	else
-//		return $GLOBALS["UserFilesPath"] . strtolower( $resourceType ) . $folderPath ;
-		return $GLOBALS["UserFilesPath"];	// by dan caragea
+	return RemoveFromEnd( $GLOBALS["UserFilesPath"], '/' ) . $folderPath ;
 }
 
 function RemoveExtension( $fileName )

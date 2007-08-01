@@ -24,6 +24,10 @@
 
 ob_start() ;
 
+require_once dirname(__FILE__).'/../../../../../../../../includes/common.inc.php';
+require_once dirname(__FILE__).'/../../../../../../../../includes/admin_functions.inc.php';
+allow_dept(DEPT_ADMIN);
+
 include('config.php') ;
 include('util.php') ;
 include('io.php') ;

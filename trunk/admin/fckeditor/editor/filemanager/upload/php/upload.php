@@ -22,6 +22,10 @@
  * This is the "File Uploader" for PHP.
  */
 
+require_once dirname(__FILE__).'/../../../../../../includes/common.inc.php';
+require_once dirname(__FILE__).'/../../../../../../includes/admin_functions.inc.php';
+allow_dept(DEPT_ADMIN);
+
 require('config.php') ;
 require('util.php') ;
 
