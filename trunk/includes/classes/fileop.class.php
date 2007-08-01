@@ -228,7 +228,7 @@ class fileop {
 			}
 			$d->close();
 			$myreturn=@rmdir($source);
-		} else {
+		} elseif (is_file($source)) {
 			$myreturn=@unlink($source);
 		}
 		return $myreturn;
