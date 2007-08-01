@@ -83,18 +83,20 @@ define('NET_FAVES',3);
 function _unset_vars(&$v) {
 	$temp=array_keys($v);
 	for ($i=0;isset($temp[$i]);++$i) {
-		unset($GLOBALS[$temp[$i]]);
+		if ($temp[$i]!='__v' && $temp[$i]!='__temp') {
+			unset($GLOBALS[$temp[$i]]);
+		}
 	}
 }
 if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=='on') {
-	$temp=array('_GET','_POST','_SERVER','_COOKIE','_ENV','_SESSION','_REQUEST','_FILES','_SESSION');
-	foreach ($temp as $v) {
-		if (isset(${'HTTP'.$v.'_VARS'}) && is_array(${'HTTP'.$v.'_VARS'})) {
-			_unset_vars(${'HTTP'.$v.'_VARS'});
-			unset(${'HTTP'.$v.'_VARS'});
+	$__temp=array('_GET','_POST','_SERVER','_COOKIE','_ENV','_SESSION','_REQUEST','_FILES','_SESSION');
+	foreach ($__temp as $__v) {
+		if (isset(${'HTTP'.$__v.'_VARS'}) && is_array(${'HTTP'.$__v.'_VARS'})) {
+			_unset_vars(${'HTTP'.$__v.'_VARS'});
+			unset(${'HTTP'.$__v.'_VARS'});
 		}
-		if (isset(${$v}) && is_array(${$v})) {
-			_unset_vars(${$v});
+		if (isset(${$__v}) && is_array(${$__v})) {
+			_unset_vars(${$__v});
 		}
 	}
 }
