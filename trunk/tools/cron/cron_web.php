@@ -148,7 +148,7 @@ print "time: $hour:$minute<br>";
 					$start_time=time();
 					$jobs[$i]();
 					echo $jobs[$i].': '.(time()-$start_time)." seconds<br>\n";
-					ob_flush();
+//					ob_flush();
 					flush();
 				}
 			}
