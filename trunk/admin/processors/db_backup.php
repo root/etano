@@ -65,17 +65,22 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$towrite.="\n\t{$keyname} (`".join('`,`',$fields)."`),";
 		}
 		$towrite=substr($towrite,0,-1);
-		$towrite.="\n) TYPE=";
+		$towrite.="\n)";
 		$query="SHOW TABLE STATUS LIKE '".$tables[$i]."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$rsrow=mysql_fetch_assoc($res);
-		$towrite.=$rsrow['Type'].' '.$rsrow['Create_options'].";\n\n";
+		if (isset($rsrow['Type'])) {
+			 $towrite.=' TYPE='.$rsrow['Type'];
+		} elseif (isset($rsrow['Engine'])) {
+			 $towrite.=' ENGINE='.$rsrow['Engine'];
+		}
+		$towrite.=' '.$rsrow['Create_options'].";\n\n";
 	}
 
 	if (!empty($towrite)) {
-		header('Content-Type: application/octet-stream; name="etano_'.date('Y-m-d').'.sql"'); //This should work for Non IE/Opera browsers
-		header('Content-Type: application/octetstream; name="etano_'.date('Y-m-d').'.sql"'); // This should work for IE & Opera
-		header('Content-Disposition: attachment; filename="etano_'.date('Y-m-d').'.sql"');
+		header('Content-Type: application/octet-stream; name="'._DBNAME_.'_'.date('Y-m-d').'.sql"'); //This should work for Non IE/Opera browsers
+		header('Content-Type: application/octetstream; name="'._DBNAME_.'_'.date('Y-m-d').'.sql"'); // This should work for IE & Opera
+		header('Content-Disposition: attachment; filename="'._DBNAME_.'_'.date('Y-m-d').'.sql"');
 		header('Content-transfer-encoding: binary');
 		echo $towrite;
 		ob_flush();
