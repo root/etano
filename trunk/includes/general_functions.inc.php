@@ -404,13 +404,17 @@ function create_search_form($search_fields) {
 				case FIELD_SELECT:
 					if (isset($user_defaults[$field['dbfield']])) {
 						$field['default_search'][0]=$user_defaults[$field['dbfield']];
+					} else {
+						$field['default_search'][0]=0;
 					}
-					$myreturn[$s]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],isset($field['default_search'][0]) ? $field['default_search'][0] : 0).'</select>';
+					$myreturn[$s]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0]).'</select>';
 					break;
 
 				case FIELD_CHECKBOX_LARGE:
 					if (isset($user_defaults[$field['dbfield']])) {
 						$field['default_search']=$user_defaults[$field['dbfield']];
+					} else {
+						$field['default_search']='';
 					}
 					$myreturn[$s]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],$field['default_search'],2,true,'tabindex="'.($i+4).'"');
 					break;
@@ -418,9 +422,13 @@ function create_search_form($search_fields) {
 				case FIELD_RANGE:
 					if (isset($user_defaults[$field['dbfield'].'_min'])) {
 						$field['default_search'][0]=$user_defaults[$field['dbfield'].'_min'];
+					} else {
+						$field['default_search'][0]=0;
 					}
 					if (isset($user_defaults[$field['dbfield'].'_max'])) {
 						$field['default_search'][1]=$user_defaults[$field['dbfield'].'_max'];
+					} else {
+						$field['default_search'][1]=0;
 					}
 					if ($field['field_type']==FIELD_DATE) {
 						$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'"><option value="0">Any</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][0]).'</select> - ';	// translate
