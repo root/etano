@@ -168,7 +168,7 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 			$loop[$j]['dbfield']=$field['dbfield'].'_city';
 			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option>';	// translate this
 			if (!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) {
-				$loop[$j]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$user_details[$field['dbfield'].'_city'],"`fk_state_id`=$state_id");
+				$loop[$j]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$output[$field['dbfield'].'_city'],"`fk_state_id`=$state_id");
 			}
 			$loop[$j]['field'].='</select>';
 			$loop[$j]['class']=(!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';
