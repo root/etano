@@ -1,4 +1,6 @@
 <?php
+// this job should be run last!!! In case it takes too long, all other 5mins jobs must be run before.
+
 $jobs[]='send_queue_mail';
 
 function send_queue_mail() {

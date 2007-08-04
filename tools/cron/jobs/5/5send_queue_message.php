@@ -1,4 +1,6 @@
 <?php
+// this job should come before send_queue_email job
+
 $jobs[]='send_queue_message';
 
 function send_queue_message() {
