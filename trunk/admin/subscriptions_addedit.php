@@ -33,7 +33,7 @@ if (isset($_SESSION['topass']['input'])) {
 }
 
 // we preffer to do this query here rather than dbtable2options to save one dbtable2options query.
-$query="SELECT `m_value`,`m_name` FROM `{$dbtable_prefix}memberships` WHERE `m_value`<>1";
+$query="SELECT `m_value`,`m_name` FROM `{$dbtable_prefix}memberships` WHERE `m_value`>1";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $memberships=array();
 while ($rsrow=mysql_fetch_row($res)) {
@@ -41,7 +41,6 @@ while ($rsrow=mysql_fetch_row($res)) {
 }
 
 $subscriptions['currency']=vector2options($accepted_currencies,$subscriptions['currency']);
-$subscriptions['m_value_from']=vector2options($memberships,$subscriptions['m_value_from']);
 $subscriptions['m_value_to']=vector2options($memberships,$subscriptions['m_value_to'],array(2));
 $subscriptions['is_recurent']=($subscriptions['is_recurent']==1) ? 'checked="checked"' : '';
 $subscriptions['is_visible']=($subscriptions['is_visible']==1) ? 'checked="checked"' : '';

@@ -12,7 +12,7 @@
 	<th width="15%">Name</th>
 	<th>Price</th>
 	<th>Duration</th>
-	<th>Upgrades</th>
+	<th>Upgrades To</th>
 	<th>Visible</th>
 </tr>
 <!--loop name="subscriptions"-->
@@ -21,7 +21,7 @@
 	<td><a href="subscriptions_addedit.php?subscr_id={subscriptions.subscr_id}" title="Edit this subscription">{subscriptions.subscr_name}</a></td>
 	<td align="right">{subscriptions.is_recurent} {subscriptions.price} {subscriptions.currency}</td>
 	<td>{subscriptions.duration} days</td>
-	<td>{subscriptions.m_value_from} -> {subscriptions.m_value_to}</td>
+	<td>{subscriptions.m_value_to}</td>
 	<td>{subscriptions.is_visible}</td>
 </tr>
 <!--noloop name="subscriptions"-->

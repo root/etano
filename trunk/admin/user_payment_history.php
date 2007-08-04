@@ -36,7 +36,6 @@ if (!empty($_GET['uid'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$output['total']=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['m_value_from']=$memberships[$rsrow['m_value_from']];
 		$rsrow['m_value_to']=$memberships[$rsrow['m_value_to']];
 		$rsrow['paid_from']=strftime($config['date_format'],$rsrow['paid_from']);
 		$rsrow['paid_until']=strftime($config['date_format'],$rsrow['paid_until']);

@@ -247,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		// auto subscriptions
 		if (!isset($_GET['nas'])) {
-			$query="SELECT a.`dbfield`,a.`field_value`,b.`subscr_id`,b.`is_recurent`,b.`m_value_to`,b.`duration`,b.`duration_units` FROM `{$dbtable_prefix}subscriptions_auto` a, `{$dbtable_prefix}subscriptions` b WHERE a.`dbfield` IN ('','".join("','",array_keys($input))."') AND a.`fk_subscr_id`=b.`subscr_id` AND a.`date_start`='0000-00-00'";
+			$query="SELECT a.`dbfield`,a.`field_value`,b.`subscr_id`,b.`is_recurent`,b.`m_value_to`,b.`duration` FROM `{$dbtable_prefix}subscriptions_auto` a, `{$dbtable_prefix}subscriptions` b WHERE a.`dbfield` IN ('','".join("','",array_keys($input))."') AND a.`fk_subscr_id`=b.`subscr_id` AND a.`date_start`='0000-00-00'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				if ((!empty($rsrow['dbfield']) && $input[$rsrow['dbfield']]==$rsrow['field_value']) || empty($rsrow['dbfield'])) {
@@ -256,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`=".$rsrow['m_value_to']." WHERE `".USER_ACCOUNT_ID."`='".$_SESSION['user']['reg_id']."'";
 					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					// save as a payment with amount 0
-					$query="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`fk_subscr_id`,`is_recuring`,`email`,`m_value_from`,`m_value_to`,`paid_from`,`paid_until`) VALUES ('".$_SESSION['user']['reg_id']."','".$_SESSION['user']['user']."','".$rsrow['subscr_id']."','".$rsrow['is_recurent']."','".$_SESSION['user']['email']."','2','".$rsrow['m_value_to']."',now(),now()+INTERVAL ".$rsrow['duration'].' '.$rsrow['duration_units'].")";
+					$query="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`fk_subscr_id`,`is_recuring`,`email`,`m_value_to`,`paid_from`,`paid_until`) VALUES ('".$_SESSION['user']['reg_id']."','".$_SESSION['user']['user']."','".$rsrow['subscr_id']."','".$rsrow['is_recurent']."','".$_SESSION['user']['email']."','".$rsrow['m_value_to']."',now(),now()+INTERVAL ".$rsrow['duration'].' DAY)';
 					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					break;
 				}
