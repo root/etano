@@ -54,9 +54,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if ($rsrow['Non_unique']==0) {
 					$rsrow['Key_name']='UNIQUE KEY `'.$rsrow['Key_name'].'`';
 				} elseif ($rsrow['Index_type']=='FULLTEXT') {
-					$rsrow['Non_unique']='FULLTEXT KEY `'.$rsrow['Key_name'].'`';
+					$rsrow['Key_name']='FULLTEXT KEY `'.$rsrow['Key_name'].'`';
 				} else {
-					$rsrow['Non_unique']='KEY `'.$rsrow['Key_name'].'`';
+					$rsrow['Key_name']='KEY `'.$rsrow['Key_name'].'`';
 				}
 				$keys[$rsrow['Key_name']][$rsrow['Seq_in_index']]=$rsrow['Column_name'];
 			}
