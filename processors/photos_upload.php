@@ -68,13 +68,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file1']);
-				$input['file1']=$rand.'/'.$filename.'.jpg';
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file1']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file1']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file1']);
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+				$input['file1']=$rand.'/'.$filename.'.png';
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.png',_PHOTOPATH_.'/t1/'.$input['file1']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.png',_PHOTOPATH_.'/t2/'.$input['file1']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.png',_PHOTOPATH_.'/'.$input['file1']);
 			}
 		} elseif ($input['file1']===false) {
 			$error=true;
@@ -102,12 +99,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file2']);
 				$input['file2']=$rand.'/'.$filename.'.jpg';
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file2']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file2']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file2']);
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file2']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file2']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file2']);
 			}
 		} elseif ($input['file2']===false) {
 			$error=true;
@@ -136,12 +130,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file3']);
 				$input['file3']=$rand.'/'.$filename.'.jpg';
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file3']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file3']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file3']);
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file3']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file3']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file3']);
 			}
 		} elseif ($input['file3']===false) {
 			$error=true;
@@ -169,12 +160,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file4']);
 				$input['file4']=$rand.'/'.$filename.'.jpg';
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file4']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file4']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file4']);
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file4']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file4']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file4']);
 			}
 		} elseif ($input['file4']===false) {
 			$error=true;
@@ -202,12 +190,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file5']);
 				$input['file5']=$rand.'/'.$filename.'.jpg';
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file5']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file5']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file5']);
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file5']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file5']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file5']);
 			}
 		} elseif ($input['file5']===false) {
 			$error=true;
@@ -235,12 +220,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
 				@unlink(_BASEPATH_.'/tmp/'.$input['file6']);
 				$input['file6']=$rand.'/'.$filename.'.jpg';
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file6']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file6']);
-				$fileop->copy(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file6']);
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_1.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_2.jpg');
-				@unlink(_BASEPATH_.'/tmp/'.$filename.'_3.jpg');
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file6']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file6']);
+				$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file6']);
 			}
 		} elseif ($input['file6']===false) {
 			$error=true;
