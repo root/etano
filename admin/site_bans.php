@@ -25,8 +25,15 @@ $where="a.`fk_lk_id_reason`=b.`fk_lk_id` AND b.`skin`='".get_default_skin_code()
 $from="`{$dbtable_prefix}site_bans` a,`{$dbtable_prefix}lang_strings` b";
 
 $query="SELECT count(*) FROM $from WHERE $where";
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-$totalrows=mysql_result($res,0,0);
+$temp=md5($query);
+if (isset($_SESSION['admin']['cache'][$temp]['time']) && $_SESSION['admin']['cache'][$temp]['time']>=time()-600) {
+	$totalrows=$_SESSION['admin']['cache'][$temp]['count'];
+} else {
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$totalrows=mysql_result($res,0,0);
+	$_SESSION['admin']['cache'][$temp]['time']=time();
+	$_SESSION['admin']['cache'][$temp]['count']=$totalrows;
+}
 
 $loop=array();
 if (!empty($totalrows)) {

@@ -58,6 +58,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
+			if (isset($input['latitude'])) {
+				$query.=",`rad_latitude`=radians(".$input['latitude'].")";
+			}
+			if (isset($input['longitude'])) {
+				$query.=",`rad_longitude`=radians(".$input['longitude'].")";
+			}
 			$query.=" WHERE `zip_id`=".$input['zip_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
@@ -70,6 +76,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
+			if (isset($input['latitude'])) {
+				$query.=",`rad_latitude`=radians(".$input['latitude'].")";
+			}
+			if (isset($input['longitude'])) {
+				$query.=",`rad_longitude`=radians(".$input['longitude'].")";
+			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Zip code added.';
