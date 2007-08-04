@@ -21,7 +21,7 @@
 <table id="payment_history" class="results_table">
 <tr>
 	<th>Amount</th>
-	<th>Upgrade</th>
+	<th>To Membership</th>
 	<th>Interval</th>
 	<th>Gateway</th>
 	<th>TXN</th>
@@ -32,7 +32,7 @@
 <!--loop name="loop"-->
 <tr align="center">
 	<td align="right">${loop.amount_paid} {loop.refunded}</td>
-	<td>{loop.m_value_from} - {loop.m_value_to}</td>
+	<td>{loop.m_value_to}</td>
 	<td>{loop.paid_from} - {loop.paid_until}</td>
 	<td>{loop.gateway}</td>
 	<td align="left">{loop.gw_txn}</td>

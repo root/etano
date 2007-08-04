@@ -18,8 +18,8 @@ allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$where='a.`m_value_from`=b.`m_value` AND a.`m_value_to`=c.`m_value`';
-$from="`{$dbtable_prefix}subscriptions` a,`{$dbtable_prefix}memberships` b,`{$dbtable_prefix}memberships` c";
+$where='a.`m_value_to`=b.`m_value`';
+$from="`{$dbtable_prefix}subscriptions` a,`{$dbtable_prefix}memberships` b";
 
 $query="SELECT count(*) FROM $from WHERE $where";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -27,7 +27,7 @@ $totalrows=mysql_result($res,0,0);
 
 $subscriptions=array();
 if (!empty($totalrows)) {
-	$query="SELECT a.*,b.`m_name` as `m_value_from`,c.`m_name` as `m_value_to` FROM $from WHERE $where ORDER BY a.`subscr_id`";
+	$query="SELECT a.`subscr_id`,a.`subscr_name`,a.`price`,a.`currency`,a.`is_recurent`,b.`m_name` as `m_value_to`,a.`duration`,a.`is_visible` FROM $from WHERE $where ORDER BY a.`subscr_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['currency']=isset($accepted_currencies[$rsrow['currency']]) ? $accepted_currencies[$rsrow['currency']] : '';
@@ -45,7 +45,6 @@ if (!empty($totalrows)) {
 		$subscriptions[]=$rsrow;
 	}
 }
-
 
 $tpl->set_file('content','subscriptions.html');
 $tpl->set_loop('subscriptions',$subscriptions);

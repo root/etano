@@ -36,22 +36,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['text']='Please enter the short description';
 		$input['error_subscr_name']='red_border';
 	}
-	if (empty($input['m_value_from'])) {
-		$error=true;
-		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Please select a starting membership!';
-		$input['error_m_value_from']='red_border';
-	}
 	if (empty($input['m_value_to'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Please select an ending membership!';
-		$input['error_m_value_to']='red_border';
-	}
-	if ($input['m_value_from']==$input['m_value_to']) {
-		$error=true;
-		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='The ending membership must be different from the starting membership!';
+		$topass['message']['text']='Please select the membership this subscription upgrades to!';
 		$input['error_m_value_to']='red_border';
 	}
 

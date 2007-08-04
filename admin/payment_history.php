@@ -39,12 +39,11 @@ while ($rsrow=mysql_fetch_row($res)) {
 
 $config=get_site_option(array('date_format'),'core');
 
-$query="SELECT `fk_user_id`,`_user`,`gateway`,`gw_txn`,`name`,`country`,`email`,`m_value_from`,`m_value_to`,`amount_paid`,`refunded`,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` WHERE `date`>='".$output['date_start']."' AND `date`<='".$output['date_end']."' ORDER BY `payment_id`";
+$query="SELECT `fk_user_id`,`_user`,`gateway`,`gw_txn`,`name`,`country`,`email`,`m_value_to`,`amount_paid`,`refunded`,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` WHERE `date`>='".$output['date_start']."' AND `date`<='".$output['date_end']."' ORDER BY `payment_id`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $output['total']=0;
 $loop=array();
 while ($rsrow=mysql_fetch_assoc($res)) {
-	$rsrow['m_value_from']=$memberships[$rsrow['m_value_from']];
 	$rsrow['m_value_to']=$memberships[$rsrow['m_value_to']];
 	$rsrow['paid_from']=strftime($config['date_format'],$rsrow['paid_from']);
 	$rsrow['paid_until']=strftime($config['date_format'],$rsrow['paid_until']);

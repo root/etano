@@ -118,11 +118,11 @@ class payment_twocheckout extends ipayment {
 			}
 			if ($input['x_response_code']==1) {	// processed ok
 				if (strcasecmp($input['x_MD5_Hash'],md5($this->config['secret'].$this->config['sid'].$input['x_trans_id'].$input['x_amount']))==0) {
-					$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`=".$input['user_id'];
+					$query="SELECT `".USER_ACCOUNT_ID."` as `user_id`,`".USER_ACCOUNT_USER."` as `user` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`=".$input['user_id'];
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					if (mysql_num_rows($res)) {
 						$real_user=mysql_fetch_assoc($res);
-						$query="SELECT `subscr_id`,`price`,`m_value_from`,`m_value_to`,`duration`,`duration_units` FROM `{$dbtable_prefix}subscriptions` WHERE `subscr_id`='".$input['subscr_id']."' AND `is_visible`=1";
+						$query="SELECT `subscr_id`,`price`,`m_value_to`,`duration` FROM `{$dbtable_prefix}subscriptions` WHERE `subscr_id`='".$input['subscr_id']."' AND `is_visible`=1";
 						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 						if (mysql_num_rows($res)) {
 							$real_subscr=mysql_fetch_assoc($res);
@@ -130,15 +130,33 @@ class payment_twocheckout extends ipayment {
 								if (strcasecmp($input['demo'],'Y')!=0 || ($this->config['demo_mode']==1 && strcasecmp($input['demo'],'Y')==0)) {
 									$input['country']=$input['x_Country'];	// needed for the fraud check
 									$this->check_fraud($input);
-									$query="SELECT max(`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$real_user['user_id'];
-									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-									$paid_from=date('Ymd');
-									if (mysql_num_rows($res)) {
-										$paid_from=mysql_result($res,0,0);
-									}
-									$query="INSERT INTO `{$dbtable_prefix}payments` SET `fk_user_id`=".$real_user['user_id'].",`_user`='".$_SESSION['user']['user']."',`gateway`='twocheckout',`fk_subscr_id`='".$real_subscr['subscr_id']."',`gw_txn`='".$input['x_trans_id']."',`name`='".$input['card_holder_name']."',`country`='".$input['x_Country']."',`state`='".$input['x_State']."',`city`='".$input['x_City']."',`zip`='".$input['x_Zip']."',`street_address`='".$input['x_Address']."',`email`='".$input['x_Email']."',`phone`='".$input['x_Phone']."',`m_value_from`=".$real_subscr['m_value_from'].",`m_value_to`=".$real_subscr['m_value_to'].",`amount_paid`='".$input['x_amount']."',`is_suspect`=".(int)$this->is_fraud.",`suspect_reason`='".$this->fraud_reason."',`paid_from`='$paid_from'";
+									$old_payment_id=0;
 									if (!empty($real_subscr['duration'])) {
-										$query.=",`paid_until`='$paid_from'+INTERVAL ".$real_subscr['duration'].' '.$real_subscr['duration_units'];
+										// if the old subscription is not over yet, we need to extend the new one with some days
+										$query="SELECT a.`payment_id`,UNIX_TIMESTAMP(a.`paid_until`) as `paid_until`,b.`price`,b.`duration` FROM `{$dbtable_prefix}payments` a LEFT JOIN `{$dbtable_prefix}subscriptions` b ON a.`fk_subscr_id`=b.`subscr_id` WHERE a.`fk_user_id`=".$real_user['user_id']." AND `refunded`=0 ORDER BY `paid_until` DESC LIMIT 1";
+										if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+										if (mysql_num_rows($res)) {
+											$rsrow=mysql_fetch_assoc($res);
+											if ($rsrow['paid_until']>time()) {
+												$old_payment_id=$rsrow['payment_id'];
+												$remaining_days=(time()-$rsrow['paid_until'])/86400;  //86400 seconds in a day
+												if ($remaining_days>0) {
+													$remaining_value=($rsrow['price']/$rsrow['duration'])*$remaining_days;
+													$day_value_new=$real_subscr['price']/$real_subscr['duration'];
+													$days_append=(int)($remaining_value/$day_value_new);
+													$real_subscr['duration']+=$days_append;
+												}
+											}
+										}
+									}
+									// the old subscription ends now!
+									if (!empty($old_payment_id)) {
+										$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`=CURDATE() WHERE `payment_id`=$old_payment_id";
+										if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+									}
+									$query="INSERT INTO `{$dbtable_prefix}payments` SET `fk_user_id`=".$real_user['user_id'].",`_user`='".$real_user['user']."',`gateway`='twocheckout',`fk_subscr_id`='".$real_subscr['subscr_id']."',`gw_txn`='".$input['x_trans_id']."',`name`='".$input['card_holder_name']."',`country`='".$input['x_Country']."',`state`='".$input['x_State']."',`city`='".$input['x_City']."',`zip`='".$input['x_Zip']."',`street_address`='".$input['x_Address']."',`email`='".$input['x_Email']."',`phone`='".$input['x_Phone']."',`m_value_to`=".$real_subscr['m_value_to'].",`amount_paid`='".$input['x_amount']."',`is_suspect`=".(int)$this->is_fraud.",`suspect_reason`='".$this->fraud_reason."',`paid_from`=CURDATE()";
+									if (!empty($real_subscr['duration'])) {
+										$query.=",`paid_until`=CURDATE()+INTERVAL ".$real_subscr['duration'].' DAY';
 									}
 									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 									if (!$this->is_fraud) {
@@ -171,7 +189,7 @@ class payment_twocheckout extends ipayment {
 				} else {
 					$gateway_text='We\'re sorry but this transaction failed internal validation. Please try again.';	// translate this
 					require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-					new log_error(get_class($this),'Invalid user_id received after payment: '.array2qs($input));
+					new log_error(get_class($this),'Invalid hash code received after payment: '.array2qs($input));
 				}
 			} else {
 				$gateway_text=sprintf('We\'re sorry, but an error occurred when trying to process your Credit Card: %1$s (%2$s)',$input['x_response_reason_text'],$input['x_response_reason_code']);	// translate this
