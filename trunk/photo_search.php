@@ -25,7 +25,7 @@ $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 // no reason to use the cached results because we would have to re-query the db anyway for the rest of the info
 // It will only make sense if we start caching photo data as we do with the profile and blog data.
-$output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+//$output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
 $input['acclevel_code']='search_photo'; // default access level
 $from="`{$dbtable_prefix}user_photos` a";
@@ -125,8 +125,15 @@ $totalrows=0;
 $loop_rows=array();
 if (!$error) {
 	$query="SELECT count(*) FROM $from WHERE $where";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$totalrows=mysql_result($res,0,0);
+	$temp=md5($query);
+	if (isset($_SESSION['user']['cache'][$temp]['time']) && $_SESSION['user']['cache'][$temp]['time']>=time()-600) {
+		$totalrows=$_SESSION['user']['cache'][$temp]['count'];
+	} else {
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$totalrows=mysql_result($res,0,0);
+		$_SESSION['user']['cache'][$temp]['time']=time();
+		$_SESSION['user']['cache'][$temp]['count']=$totalrows;
+	}
 
 	if (!empty($totalrows)) {
 		if ($o>$totalrows) {

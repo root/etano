@@ -39,8 +39,15 @@ $where='1';
 $from="`{$dbtable_prefix}profile_categories` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`fk_lk_id_pcat`=b.`fk_lk_id` AND b.`skin`='$default_skin_code')";
 
 $query="SELECT count(*) FROM $from WHERE $where";
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-$totalrows=mysql_result($res,0,0);
+$temp=md5($query);
+if (isset($_SESSION['admin']['cache'][$temp]['time']) && $_SESSION['admin']['cache'][$temp]['time']>=time()-600) {
+	$totalrows=$_SESSION['admin']['cache'][$temp]['count'];
+} else {
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$totalrows=mysql_result($res,0,0);
+	$_SESSION['admin']['cache'][$temp]['time']=time();
+	$_SESSION['admin']['cache'][$temp]['count']=$totalrows;
+}
 
 $loop=array();
 if (!empty($totalrows)) {
