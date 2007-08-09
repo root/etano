@@ -61,7 +61,7 @@ if (!empty($totalrows)) {
 		$memberships[$rsrow[0]]=$rsrow[1];
 	}
 
-	$query="SELECT a.*,b.`lang_value` as `pcat_name` FROM $from WHERE $where $orderby LIMIT $o,$r";
+	$query="SELECT a.`pcat_id`,a.`access_level`,b.`lang_value` as `pcat_name` FROM $from WHERE $where $orderby LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$i=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {

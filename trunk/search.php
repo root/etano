@@ -279,6 +279,35 @@ if (!empty($output['totalrows'])) {
 		$o=$output['totalrows']-$r;
 	}
 	$user_ids=array_slice($user_ids,$o,$r);
+	// last activity only for not online members
+	$temp=array();
+	$inject_by_uid=array();
+	for ($i=0;isset($user_ids[$i]);++$i) {
+		if (!isset($_list_of_online_members[$user_ids[$i]])) {
+			$temp[]=$user_ids[$i];
+		} else {
+			$inject_by_uid[$user_ids[$i]]=array('last_online'=>'Online now!');	// translate
+		}
+	}
+	if (!empty($temp)) {
+		$time=gmmktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('Y'));
+		$query="SELECT `".USER_ACCOUNT_ID."` as `uid`,UNIX_TIMESTAMP(`last_activity`) as `last_activity` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."` IN (".join(',',$temp).")";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$rsrow['last_activity']=$time-$rsrow['last_activity'];
+			if ($rsrow['last_activity']<86400) {
+				$inject_by_uid[$rsrow['uid']]=array('last_online'=>'Today.');	// translate
+			} elseif ($rsrow['last_activity']<172800) {
+				$inject_by_uid[$rsrow['uid']]=array('last_online'=>'Yesterday.');	// translate
+			} elseif ($rsrow['last_activity']<604800) {
+				$inject_by_uid[$rsrow['uid']]=array('last_online'=>'Last week.');	// translate
+			} elseif ($rsrow['last_activity']<2419200) {
+				$inject_by_uid[$rsrow['uid']]=array('last_online'=>'Last month.');	// translate
+			} else {
+				$inject_by_uid[$rsrow['uid']]=array('last_online'=>'More than a month ago.');	// translate
+			}
+		}
+	}
 	// how to display the results: in gallery mode or in list mode
 	$rv_mode='list_view';
 	if (isset($_COOKIE['sco_app']['rv_mode']) && $_COOKIE['sco_app']['rv_mode']=='g') {
@@ -297,7 +326,7 @@ if (!empty($output['totalrows'])) {
 			$cell_css_classes[$i]='is_online';
 		}
 	}
-	$output['results']=smart_table($user_cache->get_cache_array($user_ids,'result_user'),5,$rv_mode,$cell_css_classes);
+	$output['results']=smart_table($user_cache->get_cache_array($user_ids,'result_user',$inject_by_uid),5,$rv_mode,$cell_css_classes);
 	unset($user_cache);
 
 	if (!$skip_cache) {

@@ -1,14 +1,11 @@
 - de adaugat vector2checkboxes_alt in sco_functions pt TYPE_CHECKBOX (si in html2format)
 (admin\profile_categories_addedit.php are un vector2checkboxes_new)
 
-- nu ar trebui sa generez lk pentru search label daca nu e searchable.
 - in caz de eroare la profile_edit
 
 - ar trebui inlocuit 		$site_skins[$i]['is_default']='<img src="skin/images/check.gif" />';
 in php cu o clasa pt un <span> care sa aiba ca bgimage skin/images/check.gif pentru checked si altceva (nimic) pt
 not checked. In felul asta userul poate sa isi aleaga ce se afiseaza
-
-- in check_login_member tb verificate ban-urile
 
 - ar trebui creat un regenerate_langstrings_array_diff(action,lk,lang_val,skin) (si restul de functii regenerate)
 	care sa faca un include() (nu include_once()) la fisierul lor, sa modifice diferenta si sa il rescrie.
@@ -22,7 +19,6 @@ licenta) a.i. sa avem $_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
 
 - cauta "translate" ca sa gasesti toate stringurile de tradus hardcodate in scripts.
 
-
 - de verif toate check_login_member() ca au id-urile nashpa (networks.php)
 
 - generatorul de cache care ruleaza la 10 minute ar trebui sa decida daca sa stearga site_search-ul sau nu.
@@ -30,9 +26,6 @@ licenta) a.i. sa avem $_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
 
 - daca intr-un *_left.php exista optionale si tb sa process(,TPL_OPTIONAL) atunci optionalele din html care
 depind de $tplvars vor fi sterse pt ca tplvars se proceseaza abea in frame.
-
-- cand se sterge un user as putea sa fac fk_user_id=0 peste tot pe unde era setat (in special in inbox). In felul
-asta nu mai trebuie sa fac left join cu user_details sa vad daca userul care a trimis emailul mai exista sau nu...
 
 
 TODO
@@ -42,7 +35,6 @@ TODO
 	1. fopen+fread+fclose vs file_get_content
 	2. for ($i=0;$i<mysql_num_rows($res);++$i) vs $temp=mysql_num_rows($res);
 - de verif de ce nu se vede poza la alerte search si de ce vin asa multe match-uri.
-- time last login (sau last seen online).
 - in profil sa se vada cine e premium (poate si in search results)
 - delete faves. delete friends
 - de verificat si inlocuit
@@ -56,20 +48,6 @@ TODO
 - in toate procesoarele tb sa verific cazul de eroare:
 	// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
 	//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
-
-- PAYMENTURILE: UN UPGRADE DE LA UN AB A->B E CA SI O INTRERUPERE DE ABONAMENT A SI INCEPUT DE ABONAMENT FREE->B
-
-- in cazul mai multor paymenturi care se suprapun ar trebui marcat paymentul activ.
-	daca adaug un nou camp 'priority', in momentul platii se poate insera noua plata cu priority=max(priority)+1.
-	La expirare pot sa verific daca plata cu prioritatea cea mai mare a expirat caz in care downgradez userul, altfel nu conteaza.
-	Downgradez userul la paymentul cu prioritatea mai mica daca asta nu a expirat, daca nu, ma uit la prioritate si mai mica, etc.
-- ar trebui sa se poata replati abonamentul curent sau orice alte abonamente cu acelasi m_value_from ca abonamentul curent.
-	in cazul asta abonamentul curent se prelungeste cu noul abonament.
-- ce se intampla daca in cursul unui abonament se plateste un alt abonament? As putea sa intrerup ab. curent, sa il incep pe cel
-	nou, iar cand se termina cel nou sa continui cu ce a ramas din cel vechi. Asta daca nu sunt la fel (acelasi m_from si m_to), caz
-	in care se prelungeste pur si simplu. vezi problema anterioara.
-- de facut cron care sa trimita email cu cateva zile inainte sa expire abonamentele.
-
 
 
 ---------------------------------------------------------------------
@@ -85,7 +63,6 @@ function set_seolink() {
 
 - mailbox.php in format nou (cu $output)
 - formatare la date of birth
-- cron: check for and remove orpahned lk_ids
 - [in admin la mass management tb schimbat din <uid>|<uid>|<uid> in search_md5 si sa fie expandat searchul abea in processor]
 - search membri (search.php) case 'vote',case 'views',case 'comm'
 - subscriptions si info_access cu tabela cu toate preturile/descrierile si 1click button/link pt fiecare pret*gateway ca la

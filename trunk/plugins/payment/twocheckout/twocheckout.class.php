@@ -137,13 +137,14 @@ class payment_twocheckout extends ipayment {
 										if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 										if (mysql_num_rows($res)) {
 											$rsrow=mysql_fetch_assoc($res);
-											if ($rsrow['paid_until']>time()) {
+											if ((int)$rsrow['paid_until']>(int)time()) {
 												$old_payment_id=$rsrow['payment_id'];
-												$remaining_days=(time()-$rsrow['paid_until'])/86400;  //86400 seconds in a day
+												$remaining_days=((int)$rsrow['paid_until']-(int)time())/86400;  //86400 seconds in a day
 												if ($remaining_days>0) {
-													$remaining_value=($rsrow['price']/$rsrow['duration'])*$remaining_days;
-													$day_value_new=$real_subscr['price']/$real_subscr['duration'];
+													$remaining_value=(((int)$rsrow['price'])/((int)$rsrow['duration']))*$remaining_days;
+													$day_value_new=((int)$real_subscr['price'])/((int)$real_subscr['duration']);
 													$days_append=(int)($remaining_value/$day_value_new);
+													$real_subscr['duration']=(int)$real_subscr['duration'];
 													$real_subscr['duration']+=$days_append;
 												}
 											}
