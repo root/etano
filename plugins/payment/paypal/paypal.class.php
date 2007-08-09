@@ -182,17 +182,18 @@ class payment_paypal extends ipayment {
 											$old_payment_id=0;
 											if (!empty($real_subscr['duration'])) {
 												// if the old subscription is not over yet, we need to extend the new one with some days
-												$query="SELECT a.`payment_id`,UNIX_TIMESTAMP(a.`paid_until`) as `paid_until`,b.`price`,b.`duration` FROM `{$dbtable_prefix}payments` a LEFT JOIN `{$dbtable_prefix}subscriptions` b ON a.`fk_subscr_id`=b.`subscr_id` WHERE a.`fk_user_id`=".$real_user['user_id']." AND `refunded`=0 ORDER BY `paid_until` DESC LIMIT 1";
+												$query="SELECT a.`payment_id`,UNIX_TIMESTAMP(a.`paid_until`) as `paid_until`,b.`price`,b.`duration` FROM `{$dbtable_prefix}payments` a LEFT JOIN `{$dbtable_prefix}subscriptions` b ON a.`fk_subscr_id`=b.`subscr_id` WHERE a.`fk_user_id`=".$real_user['user_id']." AND `refunded`=0 AND `is_active`=1 ORDER BY `paid_until` DESC LIMIT 1";
 												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 												if (mysql_num_rows($res)) {
 													$rsrow=mysql_fetch_assoc($res);
-													if ($rsrow['paid_until']>time()) {
+													if ((int)$rsrow['paid_until']>(int)time()) {
 														$old_payment_id=$rsrow['payment_id'];
-														$remaining_days=(time()-$rsrow['paid_until'])/86400;  //86400 seconds in a day
+														$remaining_days=((int)$rsrow['paid_until']-(int)time())/86400;  //86400 seconds in a day
 														if ($remaining_days>0) {
-															$remaining_value=($rsrow['price']/$rsrow['duration'])*$remaining_days;
-															$day_value_new=$real_subscr['price']/$real_subscr['duration'];
-															$days_append=(int)($remaining_value/$day_value_new);
+															$remaining_value=(((int)$rsrow['price'])/((int)$rsrow['duration']))*$remaining_days;
+															$day_value_new=((int)$real_subscr['price'])/((int)$real_subscr['duration']);
+															$days_append=round($remaining_value/$day_value_new);
+															$real_subscr['duration']=(int)$real_subscr['duration'];
 															$real_subscr['duration']+=$days_append;
 														}
 													}
@@ -203,7 +204,7 @@ class payment_paypal extends ipayment {
 												$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`=CURDATE(),`is_active`=0 WHERE `payment_id`=$old_payment_id";
 												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 											}
-											$query="INSERT INTO `{$dbtable_prefix}payments` SET `is_active`=1,`fk_user_id`=".$real_user['user_id'].",`_user`='".$real_user['user']."',`gateway`='paypal',`fk_subscr_id`=".$real_subscr['subscr_id'].",`gw_txn`='".$input['txn_id']."',`name`='".$input['first_name'].' '.$input['last_name']."',`country`='".$input['country']."',`email`='".$input['payer_email']."',`m_value_to`=".$real_subscr['m_value_to'].",`amount_paid`='".$input['mc_gross']."',`is_suspect`=".(int)$this->is_fraud.",`suspect_reason`='".$this->fraud_reason."',`paid_from`=CURDATE()";
+											$query="INSERT INTO `{$dbtable_prefix}payments` SET `is_active`=1,`fk_user_id`=".$real_user['user_id'].",`_user`='".$real_user['user']."',`gateway`='paypal',`fk_subscr_id`=".$real_subscr['subscr_id'].",`gw_txn`='".$input['txn_id']."',`name`='".$input['first_name'].' '.$input['last_name']."',`country`='".$input['country']."',`email`='".$input['payer_email']."',`m_value_to`=".$real_subscr['m_value_to'].",`amount_paid`='".$input['mc_gross']."',`is_suspect`=".(int)$this->is_fraud.",`suspect_reason`='".$this->fraud_reason."',`paid_from`=CURDATE(),`date`=now()";
 											if (!empty($real_subscr['duration'])) {
 												$query.=",`paid_until`=CURDATE()+INTERVAL ".$real_subscr['duration'].' DAY';
 											}

@@ -112,8 +112,16 @@ function on_approve_photo($photo_ids) {
 		add_member_score($uid,'force',1,false,$score);
 	}
 	$now=gmdate('YmdHis');
+	$main_uids=array();
 	foreach ($main_photos as $uid=>$photo) {
 		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='$photo',`last_changed`='$now' WHERE `fk_user_id`=$uid";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
+	// this is needed to recreate caches containing the new photo
+	if (!empty($main_uids)) {
+		$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',$main_uids).")";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',$main_uids).")";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 	$query="UPDATE `{$dbtable_prefix}user_photos` SET `processed`=1 WHERE `photo_id` IN ('".join("','",$photo_ids)."')";

@@ -33,15 +33,21 @@ class user_cache {
 	}
 
 
-	function get_cache_array($user_ids,$part) {
+	function get_cache_array($user_ids,$part,$inject_by_uid=array()) {
 		$myreturn=array();
 		for ($i=0;!empty($user_ids[$i]);++$i) {
 			$user_ids[$i]=(string)$user_ids[$i];
 			$file=$this->disk_path.$user_ids[$i]{0}.'/'.$user_ids[$i].'/'.$part.'.html';
 			if (is_file($file)) {
-				$fp=fopen($file,'rb');
-				$myreturn[]=fread($fp,filesize($file));
-				fclose($fp);
+				if (isset($inject_by_uid[$user_ids[$i]])) {
+					$temp=file_get_contents($file);
+					$GLOBALS['tpl']->set_var('temp',$temp);
+					$GLOBALS['tpl']->set_var('inject',$inject_by_uid[$user_ids[$i]]);
+					$temp=$GLOBALS['tpl']->process('temp','temp');
+					$myreturn[]=$temp;
+				} else {
+					$myreturn[]=file_get_contents($file);
+				}
 			}
 		}
 		return $myreturn;

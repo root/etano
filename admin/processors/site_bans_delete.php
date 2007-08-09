@@ -22,12 +22,21 @@ $qs_sep='';
 $topass=array();
 $ban_id=isset($_GET['ban_id']) ? (int)$_GET['ban_id'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}site_bans` WHERE `ban_id`=$ban_id";
+$query="SELECT `fk_lk_id_reason` FROM `{$dbtable_prefix}site_bans` WHERE `ban_id`=$ban_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-regenerate_langstrings_array();
-regenerate_ban_array();
+if (mysql_num_rows($res)) {
+	$lk_id=mysql_result($res,0,0);
+	$query="DELETE FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id`=$lk_id";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$query="DELETE FROM `{$dbtable_prefix}lang_keys` WHERE `lk_id`=$lk_id";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$query="DELETE FROM `{$dbtable_prefix}site_bans` WHERE `ban_id`=$ban_id";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-$topass['message']['type']=MESSAGE_INFO;
-$topass['message']['text']='Limit removed successfully.';
+	regenerate_langstrings_array();
+	regenerate_ban_array();
 
+	$topass['message']['type']=MESSAGE_INFO;
+	$topass['message']['text']='Ban removed successfully.';
+}
 redirect2page('admin/site_bans.php',$topass,$qs);

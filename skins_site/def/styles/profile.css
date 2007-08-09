@@ -106,6 +106,6 @@ textarea#comment {
 	height: 60px;
 }
 
-#user_friends .info1, #user_friends .info2, #user_friends .info3 {
+#user_friends .info {
 	display: none;
 }

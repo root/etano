@@ -44,16 +44,19 @@ if (!empty($totalrows)) {
 	if ($o>$totalrows) {
 		$o=$totalrows-$r;
 	}
-	$query="SELECT a.*,b.`lang_value` as `label`,c.`fk_lk_id_pcat` FROM $from WHERE $where ORDER BY a.`order_num` LIMIT $o,$r";
+	$query="SELECT a.`pfield_id`,a.`dbfield`,a.`field_type`,a.`searchable`,a.`at_registration`,a.`reg_page`,a.`required`,a.`accepted_values`,b.`lang_value` as `label`,c.`fk_lk_id_pcat` FROM $from WHERE $where ORDER BY a.`order_num` LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$i=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
+		$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$loop[$i]=$rsrow;
-		$loop[$i]=sanitize_and_format($loop[$i],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		if ($loop[$i]['field_type']==FIELD_SELECT || $loop[$i]['field_type']==FIELD_CHECKBOX_LARGE) {
 			$loop[$i]['accepted_values']=lkids2lks(explode('|',substr($loop[$i]['accepted_values'],1,-1)),$default_skin_code);
 		} else {
 			$loop[$i]['accepted_values']=str_replace('|',', ',substr($loop[$i]['accepted_values'],1,-1));
+		}
+		if ($loop[$i]['field_type']==FIELD_LOCATION) {
+			$loop[$i]['dbfield'].='_country';	// just for display
 		}
 		$loop[$i]['field_type']=$accepted_fieldtype[$loop[$i]['field_type']];
 		$loop[$i]['searchable']=!empty($loop[$i]['searchable']) ? '<img src="skin/images/check.gif" alt="" />' : '';
