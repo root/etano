@@ -2,6 +2,7 @@
 	width: 150px;
 	height: 28px;
 	margin: 15px 0 10px;
+	position:relative;
 }
 
 #bb_tools a {
@@ -37,21 +38,17 @@
 	background-image: url('../images/bbcode_smiley.gif');
 }
 
-#smileys-wrapper {
-	position:relative;
-}
-
 #smiley_set {
 	display: none;
 	position: absolute;
 	z-index: 2;
-	top: -100px;;
+	top: -100px;
 	left: 140px;
 	padding: 4px;
 	border: 2px solid #000;
 	background: #fff;
 	color: #000;
-	overflow:hidden;
+	overflow: hidden;
 	width: 190px;
 }
 
