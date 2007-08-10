@@ -129,4 +129,4 @@ if (isset($_SERVER['PHP_SELF'])) {
 $accepted_months=array('month','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'); // translate
 $accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
 
-$tplvars['js_lib_v']=1;	// change this when you update any .js file. This should force a reload of the js scripts.
+$tplvars['js_lib_v']=2;	// change this when you update any .js file. This should force a reload of the js scripts.

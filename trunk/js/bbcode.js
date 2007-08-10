@@ -56,7 +56,7 @@ $(function() {
 				smiley_set+='<td><a href="javascript:;" title="yay" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':!:\')"><img src="images/emoticons/yay.gif" alt="yay" /></a></td>';
 				smiley_set+='</tr>';
 				smiley_set+='</tbody></table></div>';
-				$(smiley_set).appendTo('#smileys-wrapper');
+				$(smiley_set).appendTo('#bb_tools');
 			}
 			$('#smiley_set').toggle();
 			return false;
