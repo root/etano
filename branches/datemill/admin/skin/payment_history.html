@@ -1,0 +1,57 @@
+<h2>Payment History</h2>
+
+<form action="payment_history.php" method="get" id="range_form">
+<fieldset>
+<dl>
+	<dt class="stdate"><label for="date_start">Start date:</label></dt>
+	<dt class="enddate"><label for="date_end">End date:</label></dt>
+</dl>
+<dl>
+	<dd class="stdate"><input type="text" name="date_start" id="date_start" value="{output.date_start}" /></dd>
+	<dd class="enddate"><input type="text" name="date_end" id="date_end" value="{output.date_end}" /></dd>
+	<dd><input type="submit" class="button" value="Apply" /></dd>
+</dl>
+<dl>
+	<dd class="stdate">(yyyy-mm-dd)</dd>
+	<dd class="enddate">(yyyy-mm-dd)</dd>
+</dl>
+</fieldset>
+</form>
+
+<table id="payment_history" class="results_table">
+<tr>
+	<th>Amount</th>
+	<th>To Membership</th>
+	<th>Interval</th>
+	<th>Gateway</th>
+	<th>TXN</th>
+	<th>Name</th>
+	<th>Country</th>
+	<th>Email</th>
+</tr>
+<!--loop name="loop"-->
+<tr align="center">
+	<td align="right">${loop.amount_paid} {loop.refunded}</td>
+	<td>{loop.m_value_to}</td>
+	<td>{loop.paid_from} - {loop.paid_until}</td>
+	<td>{loop.gateway}</td>
+	<td align="left">{loop.gw_txn}</td>
+	<td>{loop.name} (<a href="profile.php?uid={loop.fk_user_id}">{loop._user}</a>)</td>
+	<td>{loop.country}</td>
+	<td>{loop.email}</td>
+</tr>
+<!--/loop name="loop"-->
+<tr>
+	<td align="right" style="border-top: 1px solid #bbb">Total: ${output.total}</td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</table>
+
+<script type="text/javascript" src="js/datePicker.js?v={tplvars.js_lib_v}"></script>
+<script type="text/javascript" src="js/payment_history.js?v={tplvars.js_lib_v}"></script>

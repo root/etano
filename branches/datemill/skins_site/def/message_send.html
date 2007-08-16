@@ -1,0 +1,34 @@
+<form action="{tplvars.relative_url}processors/message_send.php" method="post" id="msend_form">
+<fieldset>
+	<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
+	<input type="hidden" name="return" value="{output.return}" />
+	<label for="subject">Subject: </label><input class="text" type="text" name="subject" id="subject" value="{output.subject}" tabindex="1" />
+	<!--opt name="output.flirt_reply"--><p><a class="content-link link_flirt" href="{tplvars.relative_url}flirt_send.php?to_id={output.fk_user_id}&amp;ft=1&amp;return={output.return}">Reply with a flirt instead</a></p><!--/opt name="output.flirt_reply"-->
+</fieldset>
+<!--opt name="output.bbcode_message"-->
+<div id="bb_tools">
+	<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a>
+	<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
+</div>
+<!--/opt name="output.bbcode_message"-->
+<fieldset>
+	<textarea name="message_body" id="message_body" cols="" rows="" tabindex="2">{output.message_body}</textarea>
+</fieldset>
+<fieldset class="controls">
+	<p><a class="content-link plain thickbox" href="{tplvars.relative_url}popup_use_tpl.php?mail_id={output.mail_id}&amp;return={output.return}&amp;keepThis=true&amp;TB_iframe=true&amp;height=500&amp;width=750" id="popup_use_tpl">Use a saved template</a></p>
+	<input class="button medium" type="submit" value="Send" tabindex="3" />
+	<input class="button large" id="btn_savetpl" type="submit" value="Save template" tabindex="4" />
+</fieldset>
+</form>
+
+<script type="text/javascript" src="{tplvars.relative_url}js/thickbox.js?v={tplvars.js_lib_v}"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/message_send.js?v={tplvars.js_lib_v}"></script>
+<!--opt name="output.bbcode_message"-->
+<script type="text/javascript">
+	bbcode_field_id='#message_body';
+</script>
+<script type="text/javascript" src="{tplvars.relative_url}js/bbcode.js?v={tplvars.js_lib_v}"></script>
+<!--/opt name="output.bbcode_message"-->

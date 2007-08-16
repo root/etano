@@ -1,0 +1,18 @@
+<form action="{tplvars.relative_url}processors/my_settings.php" id="prefs_form" method="post" class="edit_form">
+<fieldset>
+<!--loop name="loop"-->
+<dl>
+	<dt>{loop.config_diz}</dt>
+	<dd>{loop.field}</dd>
+</dl>
+<!--/loop name="loop"-->
+</fieldset>
+<fieldset class="controls">
+	<input type="submit" class="button medium" value="Save" />
+</fieldset>
+</form>
+
+<script type="text/javascript">
+	server_time=new Date('{output.gmtime}');
+</script>
+<script type="text/javascript" src="{tplvars.relative_url}js/my_settings.js?v={tplvars.js_lib_v}"></script>

@@ -1,0 +1,40 @@
+@import url('bbcode.css');
+@import url('rating.css');
+
+#photo_nav {
+	margin-bottom: 20px;
+}
+
+#photo_caption {
+	margin-bottom: 10px;
+	font-size: 13px;
+}
+
+.comment {
+	padding-top: 10px;
+	margin-top: 20px;
+	border-top: 1px dashed #ccc;
+}
+
+.comment .user_photo {
+	float: left;
+	margin: 0 10px 10px 0;
+}
+
+.comment p {
+	font-size: 13px;
+}
+
+.comment .controls {
+	float: right;
+}
+
+textarea#comment {
+	width: 50%;
+	height: 140px;
+}
+
+#photocomment_form .controls {
+	padding-top: 15px;
+}
+
