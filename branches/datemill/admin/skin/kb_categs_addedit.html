@@ -1,0 +1,36 @@
+<h2>KB Category</h2>
+
+<div class="hint">Please enter the category info:</div>
+
+<form action="processors/kb_categs_addedit.php" method="post" id="addedit_form">
+<input type="hidden" name="kbc_id" value="{output.kbc_id}" />
+<input type="hidden" name="return" value="{output.return}" />
+<table id="kb_categs_addedit" class="form_table">
+<tr>
+	<td class="label"><label for="kbc_title">Title:</label></td>
+	<td class="field {output.error_kbc_title}">
+		<input class="text" type="text" name="kbc_title" id="kbc_title" value="{output.kbc_title}" tabindex="1" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="fk_kbc_id_parent">Parent Category:</label></td>
+	<td class="field {output.error_fk_kbc_id_parent}">
+		<select name="fk_kbc_id_parent" id="fk_kbc_id_parent" tabindex="2">
+		<option value="0"></option>
+		{output.fk_kbc_id_parent}
+		</select>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" id="btn_save" tabindex="3" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links"><a class="back" href="kb_categs.php?return={output.return2}">Back to list</a></div>
+
+<script type="text/javascript" src="js/kb_categs_addedit.js?v={tplvars.js_lib_v}"></script>

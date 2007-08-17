@@ -29,15 +29,8 @@ $where='1';
 $from="`{$dbtable_prefix}profile_fields` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`fk_lk_id_label`=b.`fk_lk_id` AND b.`skin`='$default_skin_code') LEFT JOIN `{$dbtable_prefix}profile_categories` c ON a.`fk_pcat_id`=c.`pcat_id`";
 
 $query="SELECT count(*) FROM $from WHERE $where";
-$temp=md5($query);
-if (isset($_SESSION['admin']['cache'][$temp]['time']) && $_SESSION['admin']['cache'][$temp]['time']>=time()-600) {
-	$totalrows=$_SESSION['admin']['cache'][$temp]['count'];
-} else {
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$totalrows=mysql_result($res,0,0);
-	$_SESSION['admin']['cache'][$temp]['time']=time();
-	$_SESSION['admin']['cache'][$temp]['count']=$totalrows;
-}
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$totalrows=mysql_result($res,0,0);
 
 $loop=array();
 if (!empty($totalrows)) {

@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>{tplvars.title}</title>
+	<title>Datemill.com - Community package, sns, dating script</title>
 	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
 	<link rel="shortcut icon" href="{tplvars.baseurl}/favicon.ico" />
 	<meta name="description" content="{tplvars.meta_diz}" />
@@ -11,99 +11,85 @@
 	<meta name="robots" content="index,follow" />
 	<link href="{tplvars.tplurl}/styles/common.css" rel="stylesheet" type="text/css" />
 	<link href="{tplvars.tplurl}/styles/index.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript">
-		baseurl='{tplvars.baseurl}';
-	</script>
-	<script type="text/javascript" src="{tplvars.baseurl}/js/jquery.js?v={tplvars.js_lib_v}"></script>
-	<script type="text/javascript" src="{tplvars.baseurl}/js/general.js?v={tplvars.js_lib_v}"></script>
-	<script type="text/javascript" src="{tplvars.baseurl}/js/index.js?v={tplvars.js_lib_v}"></script>
 </head>
 <body>
 <div id="expandable-container">
 	<div id="header-container">
-		<div id="header-body">
-			<ul id="primary-nav">
-				<li><a class="menu1" href="{tplvars.relative_url}home.php" title="Home"><span>Home</span></a></li>
-				<li><a class="menu1" href="{tplvars.relative_url}search_more.php" title="Search"><span>Search</span></a></li>
-				<li><a class="menu1" href="{tplvars.relative_url}photos.php" title="Member Photos"><span>Photos</span></a></li>
-				<li><a class="menu1" href="{tplvars.relative_url}blogs.php" title="Member Blogs"><span>Blogs</span></a></li>
-				<li><a class="menu1" href="{tplvars.relative_url}search.php?st=online" title="Online Members"><span>Who's Online</span></a></li>
-			</ul>
-			<div id="logo-box">
-				<a href="{tplvars.relative_url}index.php">{tplvars.sitename}</a>
-			</div>
-			<!--widget="login"-->
-		</div>
-	</div>
-	<div id="content-container">
-
-		<div id="description" class="content_area large">
-			<h1>It's that easy</h1>
-			<div class="box_content">
-				<ul>
-					<li id="description-search" class="description-box">
-						<h3>Search</h3>
-						<p>our thousands of members.</p>
-					</li>
-					<li id="description-meet" class="description-box">
-						<h3>Meet</h3>
-						<p>new people for friendship and more.</p>
-					</li>
-					<li id="description-have-fun" class="description-box">
-						<h3>Have fun</h3>
-						<p>there's nothing like a real date.</p>
-					</li>
-					<li id="description-more" class="description-box">
-						<a href="{tplvars.relative_url}join.php" id="sign-up-now" title="Sign up now!">Sign up now!</a>
-						<h4>and a lot more</h4>
-						<p>Flirts, messages, photos, blogs, alerts...</p>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-		<!--widget="members(array('mode'=>'new','area'=>'front'))"-->
-
-		<!--widget="blogs(array('mode'=>'new','area'=>'front','num_stories'=>3))"-->
-
-		<!--widget="osignal_feed(array('module_code'=>'osignal_feed','area'=>'front','num_stories'=>4))"-->
-
-		<div id="search" class="content_area small">
-			<h2>Find</h2>
-			<div class="box_content">
-				<form action="search.php" method="get" id="search-form">
-					<fieldset>
-					<input type="hidden" name="st" value="basic" />
-					<!--loop name="search"-->
-					<dl id="row_{search.dbfield}" class="{search.class}">
-						<dt>{search.label}:</dt>
-						<dd>{search.field}</dd>
-					</dl>
-					<!--/loop name="search"-->
-					<dl id="row_photo">
-						<dt>With photo?</dt>
-						<dd><input type="checkbox" name="wphoto" value="1" /></dd>
-					</dl>
-					</fieldset>
-					<fieldset class="controls">
-						<input id="search-button" type="submit" class="button medium" value="Search" />
-					</fieldset>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div id="footer-cleaner">&nbsp;</div>
-</div>
-
-<div id="footer-container">
-	<div id="footer-body">
-		<p id="copyright">&copy; Copyright 2007 <a href="http://www.datemill.com">datemill.com</a>. All Rights Reserved.</p>
-		<ul id="secondary-nav">
-			<li class="first"><a href="{tplvars.relative_url}tos.php" title="Terms &amp; Conditions">Terms &amp; Conditions</a></li>
-			<li><a href="{tplvars.relative_url}privacy.php" title="Privacy Statement">Privacy Statement</a></li>
-			<li><a href="{tplvars.relative_url}contact.php" title="Contact">Contact</a></li>
+		<h1 id="logo-box">
+			<a href="http://www.datemill.com">Datemill.com</a>
+		</h1>
+		<ul id="primary_nav">
+			<li class="first"></li>
+			<li class="links">
+				<a class="active" href="index.php">Home</a>
+				<a href="products.php" title="All our products">Products</a>
+				<a href="features.php" title="Full list of community features">Features</a>
+				<a href="gallery.php" title="Showcase">Gallery</a>
+				<a href="support.php" title="Get support">Support</a>
+				<a href="purchase.php" title="Buy now">Purchase</a>
+				<a href="contact.php" title="Ask us a question">Contact</a>
+			</li>
+			<li class="last"></li>
 		</ul>
 	</div>
+	<div id="content-container">
+		<div id="promo">
+			<div id="testimonials">
+				A complete dating script for this price? Unencoded? With free updates? Count me in!
+				<cite>Nevasta</cite>
+			</div>
+			<div id="tease_buttons">
+				<a id="btn_demo" href="" title="See for yourself">Try Community Demo</a>
+				<a id="btn_features" href="features.php" title="Full list of features">Comprehensive Features</a>
+				<a id="btn_buy" href="purchase.php" title="Buy now">Buy Etano</a>
+			</div>
+		</div>
+		<div id="content">
+			<div class="column1">
+				<h2>What do you need from a community software?</h2>
+				<p class="justify"><strong>Etano</strong> was built entirely based on requests from customers of our previous dating package (Dating Site Builder).</p>
+				<p class="justify">Almost every feature ever requested was built into Etano - our community package. You can use Etano to start up a <em>dating site</em>, a <em>social networking site</em>, a <em>listings site</em> or any other type of site involving <em>groups of people</em>.</p>
+				<p class="justify">It is so versatile that even this site is built on top of Etano.</p>
+			</div>
+			<div class="column2">
+				<h3>Customer login</h3>
+				<!--widget="login"-->
+			</div>
+			<div class="clear"></div>
+			<div class="column1">
+				<h3>Latest blog posts</h3>
+			</div>
+			<div class="column2">
+				<h3>Quick features</h3>
+				<ul id="features">
+					<li>Friend networks</li>
+					<li>Photo albums</li>
+					<li>User blogs</li>
+					<li>Inbox and flirts</li>
+					<li>RSS feeds</li>
+					<li>Spam protection</li>
+					<li>CSS layout</li>
+					<li class="last"><a href="features.php" title="Full list of features">More</a></li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div> <!--content-container-->
+</div>	<!--expandable-container-->
+
+<div id="footer-container">
+	<p>
+		<a href="index.php">Home</a>
+		<a href="products.php" title="All our products">Products</a>
+		<a href="features.php" title="Full list of community features">Features</a>
+		<a href="gallery.php" title="Showcase">Gallery</a>
+		<a href="faq.php" title="Frequently Asked Questions about our SNS">FAQ</a>
+		<a href="support.php" title="Get support">Support</a>
+		<a href="purchase.php" title="Buy now">Purchase</a>
+		<a href="contact.php" title="Ask us a question">Contact</a>
+		<a href="tos.php" title="Terms">Terms</a>
+	</p>
+	<p>Copyright (c) 2006-<script type="text/javascript">curdate=new Date(); document.write(curdate.getFullYear())</script> Datemill</p>
 </div>
 </body>
 </html>
