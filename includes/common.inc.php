@@ -84,9 +84,9 @@ function _unset_vars(&$v) {
 	$temp=array_keys($v);
 	for ($i=0;isset($temp[$i]);++$i) {
 		if ($temp[$i]!='__v' && $temp[$i]!='__temp') {
-		unset($GLOBALS[$temp[$i]]);
+			unset($GLOBALS[$temp[$i]]);
+		}
 	}
-}
 }
 if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=='on') {
 	$__temp=array('_GET','_POST','_SERVER','_COOKIE','_ENV','_SESSION','_REQUEST','_FILES','_SESSION');
@@ -103,6 +103,7 @@ if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=
 		_unset_vars($HTTP_POST_FILES);
 		@reset($HTTP_POST_FILES);
 	}
+}
 
 if (!defined('NO_SESSION')) {
 	require_once 'sessions.inc.php';
