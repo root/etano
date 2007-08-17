@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$properties['description']='Site news';
 		$properties['link']=_BASEURL_;
 		$properties['title']='Site news';
-		$properties['dc:date']=gmmktime();
+		$properties['dc:date']=gmmktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('Y'));
 		$rss_writer_object->addchannel($properties);
 
 		$query="SELECT `news_title`,`news_body`,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM `{$dbtable_prefix}site_news` ORDER BY `news_id` DESC";
