@@ -10,18 +10,19 @@
 <!--/opt name="tplvars.user_logged"-->
 <!--opt name="!tplvars.user_logged"-->
 <form id="login-box" action="{tplvars.relative_url}processors/login.php" method="post">
-	<fieldset>
-		<input type="text" id="username" name="user" />
-		<input type="password" id="password" name="pass" />
-		<input type="image" id="login" alt="Login" src="{tplvars.tplurl}/images/btn-login-over.gif" />
-	</fieldset>
-	<fieldset>
-		<span id="lost-password">
-			<a href="{tplvars.relative_url}pass_lost.php" title="Lost password?">Lost password?</a>
-		</span>
-		<span id="sign-up">
-			Hello guest, please login above or <a href="{tplvars.relative_url}join.php" title="Sign up">sign up</a>.
-		</span>
-	</fieldset>
+<fieldset>
+	<dl>
+		<dt>User:</dt>
+		<dd><input type="text" id="username" name="user" /></dd>
+	</dl>
+	<dl>
+		<dt>Pass:</dt>
+		<dd><input type="password" id="password" name="pass" /></dd>
+	</dl>
+</fieldset>
+<fieldset>
+	<input type="submit" class="button small" id="btn_login" value="Login" />
+	<a id="lostpasslink" href="{tplvars.relative_url}pass_lost.php" title="Lost password?">Lost password?</a>
+</fieldset>
 </form>
 <!--/opt name="!tplvars.user_logged"-->

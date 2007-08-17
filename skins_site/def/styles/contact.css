@@ -1,13 +1,9 @@
-#content_column1 {
-	float: none;
-}
-
 form.edit_form dd {
 	width:400px;
 }
 
 #subject,#email,#name {
-	width:200px;
+	width: 200px;
 }
 
 #message_body {

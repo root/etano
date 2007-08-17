@@ -2,8 +2,8 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       contact.php
-$Revision$
+File:                       purchase.php
+$Revision: 221 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
@@ -34,14 +34,14 @@ if (empty($_SESSION['user']['user_id'])) {
 	}
 }
 
-$tpl->set_file('content','contact.html');
+$tpl->set_file('content','purchase.html');
 $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_OPTIONAL);
 
-$tplvars['title']='Contact Us';
-$tplvars['page_title']='Contact Us';
-$tplvars['page']='contact';
-$tplvars['menu_contact']='active';
-$tplvars['css']='contact.css';
+$tplvars['title']='Purchase';
+$tplvars['page_title']='Purchase';
+$tplvars['page']='purchase';
+$tplvars['menu_buy']='active';
+$tplvars['css']='purchase.css';
 include 'frame.php';

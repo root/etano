@@ -1,5 +1,247 @@
 @import url('browser-reset.css');
-@import url('layout.css');
-@import url('header.css');
-@import url('content.css');
-@import url('footer.css');
+
+html {
+	height: 100%;
+}
+
+body {
+	background-color: #000;
+	color: #000;
+	font-family: Arial, sans-serif;
+	height: 100%;
+}
+
+* html body {
+	font-size: 85%;
+}
+
+strong {
+	font-weight: bold;
+}
+
+em {
+	color: #FF6C00;
+}
+
+.clear {
+	height: 1%; /*IE*/
+	clear: both;
+	line-height:1px;
+}
+
+#expandable-container {
+	background-color: #fff;
+	border: 14px solid #22475b;
+	margin: 0 auto;
+	width: 926px;
+	padding-bottom: 20px;
+}
+
+/* EDIT&SEARCH FORMS */
+
+form.edit_form fieldset {
+	border-bottom: 1px dashed #ccc;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+}
+
+form.edit_form fieldset legend {
+	padding-bottom: 15px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+* html form.edit_form dl {
+	height: 1%;
+}
+
+form.edit_form dl {
+	overflow: hidden;
+	padding: 0 0 10px 0;
+}
+
+	form.edit_form dt {
+		float: left;
+		width: 140px;
+		font-size: 13px;
+		padding: 0px 10px;
+	}
+
+	form.edit_form dl.required dt {
+		font-size: 14px;
+		color: #4383D3;
+	}
+
+	form.edit_form dd {
+		float: left;
+		width: 240px;
+		padding: 0px;
+	}
+
+form.edit_form dd input, form.edit_form dd select, form.edit_form dd label {
+	font: 12px "Trebuchet MS", Arial, sans-serif;
+}
+
+form.edit_form dd > .check {
+	margin-bottom: 2px;
+}
+
+form.edit_form dd > .radio {
+	margin-bottom: -3px;
+}
+
+* html form.edit_form dd .check, * html form.edit_form dd .radio {
+	margin-left: -4px;
+}
+
+form.edit_form dd select {
+	margin-right: 2px;
+}
+
+form.edit_form dd label {
+	margin: 0 3px 0 1px;
+}
+
+form.edit_form dd textarea {
+	width: 100%;
+	height: 150px;
+}
+
+.field-help {
+	font-size: 12px;
+	color: #666;
+	margin-left: 10px;
+}
+
+form.edit_form dd.field-help {
+	float: left;
+	width: 290px;
+}
+
+form.edit_form dd.full-width {
+	float: left;
+	width: 546px;
+}
+
+form.edit_form .controls {
+	border: none;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+.comment {
+	color: #666;
+}
+
+/*============================HEADER================================*/
+
+
+#header-container {
+	position: relative;
+	height: 150px;
+}
+
+#logo-box {
+	padding-top: 10px;
+}
+
+#logo-box a {
+	background: url('../images/logo.gif') no-repeat;
+	width: 369px;
+	height: 91px;
+	display: block;
+	text-indent: -9999px;
+	margin: 0 auto;
+}
+
+#primary_nav {
+	position: absolute;
+	bottom: 0;
+	left: 46px;
+	background: url('../images/pri_nav_bg.gif') repeat-x left center;
+}
+
+#primary_nav li {
+	float: left;
+	height: 35px;
+}
+
+#primary_nav li.first {
+	width: 17px;
+	padding: 0;
+	background: url('../images/pri_nav_left.gif') no-repeat left center;
+}
+
+#primary_nav li.links {
+	width: 800px;
+	text-align: center;
+	padding-top: 5px;
+	height: 30px;
+}
+
+#primary_nav li.last {
+	width: 17px;
+	padding: 0px;
+	background: url('../images/pri_nav_right.gif') no-repeat left center;
+}
+
+#primary_nav li a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 130%;
+	padding: 0px 10px;
+}
+
+#primary_nav li a:hover {
+	color: #0cff00;
+}
+#primary_nav a.active,#primary_nav a.active:hover {
+	color: #58c7fb;
+}
+
+/*============================CONTENT================================*/
+
+#content a {
+	font-weight: bold;
+	text-decoration: underline;
+	color: #204068;
+	font-size: 95%;
+}
+
+#content a:hover {
+	color: #018CD3;
+}
+
+.justify {
+	text-align: justify;
+}
+
+#content {
+	font-size: 95%;
+}
+
+
+/*============================FOOTER================================*/
+
+#footer-container {
+	margin: 0 auto;
+	width: 926px;
+	color: #fff;
+}
+
+#footer-container a {
+	color: #fff;
+	padding: 0 10px;
+}
+
+#footer-container a:hover {
+	text-decoration: underline;
+	color: #0cff00;
+}
+
+#footer-container p {
+	text-align: center;
+	font-size: 85%;
+	margin: 5px 0;
+}
+
