@@ -18,7 +18,12 @@ allow_dept(DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 
-$config=get_site_option(array('datetime_format'),'def_user_prefs');
+if (!isset($_SESSION['admin']['prefs']['datetime_format']) || !isset($_SESSION['admin']['prefs']['time_offset'])) {
+	if (!isset($_SESSION['admin']['prefs'])) {
+		$_SESSION['admin']['prefs']=array();
+	}
+	$_SESSION['admin']['prefs']=array_merge($_SESSION['admin']['prefs'],get_site_option(array('time_offset','datetime_format'),'def_user_prefs'));
+}
 $query="SELECT `log_id`,`fk_user_id`,`user`,`level_code`,`ip`,UNIX_TIMESTAMP(`time`) as `time` FROM `{$dbtable_prefix}site_log` ORDER BY `log_id` DESC limit 10";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $loop=array();
@@ -31,7 +36,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 		$last_id=$rsrow['log_id'];
 	}
 	$rsrow['ip']=long2ip($rsrow['ip']);
-	$rsrow['time']=strftime($config['datetime_format'],$rsrow['time']);
+	$rsrow['time']=strftime($_SESSION['admin']['prefs']['datetime_format'],$rsrow['time']+$_SESSION['admin']['prefs']['time_offset']);
 	$loop[]=$rsrow;
 }
 
