@@ -1,0 +1,48 @@
+#kb_categs a.closed {
+	padding-left: 20px;
+	background: url('../images/plus.gif') no-repeat left center;
+}
+#kb_categs a.opened {
+	padding-left: 20px;
+	background: url('../images/minus.gif') no-repeat left center;
+}
+
+#kb_categs ul {
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
+
+#kb_categs ul.articles {
+	margin-left: 20px;
+	padding-left: 10px;
+	border-left: 1px solid #ccc;
+}
+
+#kb_categs ul.subcategs {
+	border-left: 1px solid #ccc;
+}
+
+a.item_del {
+	margin-right: 0px;
+}
+.item_addunder {
+	width: 12px;
+	height: 12px;
+	background: url('../images/add_under.gif') no-repeat center center;
+	display: block;
+}
+
+#kb_categs dd {
+	float: left;
+	margin-right: 10px;
+}
+
+#kb_categs textarea {
+	display: block;
+	width: 400px;
+	height: 100px;
+}
+
+.kba_title {
+	width: 400px;
+}

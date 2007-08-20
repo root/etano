@@ -20,10 +20,31 @@ li {
 	list-style: none;
 }
 
+.stretch,
 .clear {
-	height: 1%; /*IE*/
+	clear:both;
+	height:1px;
+	margin:0;
+	padding:0;
+	font-size: 15px;
+	line-height: 1px;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
 	clear: both;
-	line-height:1px;
+	visibility: hidden;
+}
+* html>body .clearfix {
+	display: inline-block;
+	width: 100%;
+}
+
+* html .clearfix {
+	/* Hides from IE-mac \*/
+	height: 1%;
+	/* End hide from IE-mac */
 }
 
 #content h2 {
@@ -129,8 +150,9 @@ label.checkbox {
 }
 
 .menu_box .box_content li {
-	padding: 2px 0 2px 10px;
-	background: url('../images/bullet.gif') no-repeat center left;
+	padding: 0;
+	list-style-image: url('../images/bullet.gif');
+	margin-left: 15px;
 }
 
 

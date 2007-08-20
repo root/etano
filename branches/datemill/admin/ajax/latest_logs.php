@@ -19,10 +19,13 @@ allow_dept(DEPT_ADMIN);
 $last_id=sanitize_and_format_gpc($_GET,'last_id',TYPE_INT,0,0);
 $output='';
 
-$datetime_format=isset($_SESSION['admin']['prefs']['datetime_format']) ? $_SESSION['admin']['prefs']['datetime_format'] : get_site_option('datetime_format','def_user_prefs');
-if (!isset($_SESSION['admin']['prefs']['datetime_format'])) {
-	$_SESSION['admin']['prefs']['datetime_format']=$datetime_format;
+if (!isset($_SESSION['admin']['prefs']['datetime_format']) || !isset($_SESSION['admin']['prefs']['time_offset'])) {
+	if (!isset($_SESSION['admin']['prefs'])) {
+		$_SESSION['admin']['prefs']=array();
+	}
+	$_SESSION['admin']['prefs']=array_merge($_SESSION['admin']['prefs'],get_site_option(array('time_offset','datetime_format'),'def_user_prefs'));
 }
+
 $query="SELECT `log_id`,`fk_user_id`,`user`,`level_code`,`ip`,UNIX_TIMESTAMP(`time`) as `time` FROM `{$dbtable_prefix}site_log` WHERE `log_id`>$last_id ORDER BY `log_id` DESC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
@@ -37,7 +40,7 @@ if (mysql_num_rows($res)) {
 		}
 		$output.='"level_code": "'.$rsrow['level_code'].'",';
 		$output.='"ip": "'.long2ip($rsrow['ip']).'",';
-		$output.='"time": "'.strftime($datetime_format,$rsrow['time']).'"';
+		$output.='"time": "'.strftime($_SESSION['admin']['prefs']['datetime_format'],$rsrow['time']+$_SESSION['admin']['prefs']['time_offset']).'"';
 		$output.='},';
 	}
 	$output=substr($output,0,-1);
