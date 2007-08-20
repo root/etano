@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       admin/processors/kb_categs_addedit.php
+File:                       admin/processors/kb_articles_addedit.php
 $Revision: 219 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -14,7 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../../includes/admin_functions.inc.php';
-require_once '../../includes/tables/kb_categs.inc.php';
+require_once '../../includes/tables/kb_articles.inc.php';
 allow_dept(DEPT_ADMIN);
 
 $dbtable_prefix='';
@@ -23,12 +23,12 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='kb_categs.php';
+$nextpage='kb_articles.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	foreach ($kb_categs_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$kb_categs_default['defaults'][$k]);
+	foreach ($kb_articles_default['types'] as $k=>$v) {
+		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v] | FORMAT_RUDECODE,$kb_articles_default['defaults'][$k]);
 	}
 	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
@@ -36,41 +36,49 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 // check for input errors
-	if (empty($input['kbc_title'])) {
+	if (empty($input['kba_title'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='Please enter the title!';
-		$input['error_kbc_title']='red_border';
+		$input['error_kba_title']='red_border';
+	}
+	if (empty($input['kba_content'])) {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Please enter the article content!';
+		$input['error_kba_content']='red_border';
 	}
 
 	if (!$error) {
-		if (!empty($input['kbc_id'])) {
-			$query="UPDATE `{$dbtable_prefix}kb_categs` SET ";
-			foreach ($kb_categs_default['defaults'] as $k=>$v) {
+		if (!empty($input['kba_id'])) {
+			$query="UPDATE `{$dbtable_prefix}kb_articles` SET ";
+			foreach ($kb_articles_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.="`$k`='".$input[$k]."',";
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `kbc_id`=".$input['kbc_id'];
+			$query.=" WHERE `kba_id`=".$input['kba_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Category changed.';
+			$topass['message']['text']='Article changed.';
 		} else {
-			unset($input['kbc_id']);
-			$query="INSERT INTO `{$dbtable_prefix}kb_categs` SET ";
-			foreach ($kb_categs_default['defaults'] as $k=>$v) {
+			unset($input['kba_id']);
+			$query="INSERT INTO `{$dbtable_prefix}kb_articles` SET ";
+			foreach ($kb_articles_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.="`$k`='".$input[$k]."',";
 				}
 			}
 			$query=substr($query,0,-1);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$query="UPDATE `{$dbtable_prefix}kb_categs` SET `num_articles`=`num_articles`+1 WHERE `kbc_id`=".$input['fk_kbc_id'];
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Category added.';
+			$topass['message']['text']='Article added.';
 		}
 	} else {
-		$nextpage='kb_categs_addedit.php';
+		$nextpage='kb_articles_addedit.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
 		$input['return']=isset($input['return']) ? rawurlencode($input['return']) : '';
@@ -84,7 +92,7 @@ if (!isset($_POST['silent'])) {
 } else {
 	$output='';
 	if (!$error) {
-		$output=$input['fk_kbc_id_parent'];
+		$output=$input['fk_kbc_id'];
 	} else {
 		$output='0|'.$topass['message']['text'];
 	}

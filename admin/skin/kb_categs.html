@@ -1,30 +1,31 @@
-<h2>Knowledge Base Categories Management</h2>
+<h2>Knowledge Base Management</h2>
 
-<div class="hint"><strong>Add, edit, remove KB Categories:</strong></div>
+<div class="hint"><strong>Add, edit, remove KB Categories and Articles:</strong></div>
 
-<table id="countries_list" class="results_table">
-<tr>
-	<th width="6%"></th>
-	<th>Category</th>
-	<th>Articles</th>
-</tr>
-<!--loop name="loop"-->
-<tr>
-	<td>
-		<a href="processors/kb_categs_delete.php?kbc_id={loop.kbc_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to delete this category?'))" title="Delete this category"><img alt="Delete this category" src="skin/images/del.gif" /></a>
-		<a href="kb_categs_addedit.php?kbc_id={loop.kbc_id}&amp;return={output.return2me}" title="Edit this category"><img alt="Delete this category" src="skin/images/edit.gif" /></a>
-	</td>
-	<td>{loop.parent_title} -> {loop.kbc_title}</td>
-	<td>{loop.num_articles} (<a href="kb_articles.php?kbc_id={loop.kbc_id}&amp;return={output.return2me}" title="Article management for this category">Articles</a>)</td>
-</tr>
-<!--noloop name="loop"-->
-<tr>
-	<td colspan="3" class="no_result_item">No categories found!</td>
-</tr>
-<!--/noloop name="loop"-->
-<!--/loop name="loop"-->
-</table>
+<ul id="kb_categs">
+	<li>
+		<dl class="clearfix">
+			<dd><a href="#kbc_0" id="kbc_toggle_0" class="opened">Root</a></dd>
+			<dd><a href="javascript:;" class="item_addunder" id="addkbc_0" title="Add subcategory"></a></dd>
+		</dl>
+		<ul class="subcategs" id="subcategs_0">
+			<!--loop name="loop"-->
+			<li>
+				<dl id="dlk_{loop.kbc_id}" class="clearfix">
+					<dd><a href="#kbc_{loop.kbc_id}" id="kbc_toggle_{loop.kbc_id}" class="closed">{loop.kbc_title}</a> <span>({loop.num_articles})</span></dd>
+					<dd><a href="javascript:;" class="item_add" id="addart_{loop.kbc_id}" title="Add articles in this category"></a></dd>
+					<dd><a href="javascript:;" class="item_edit" id="editkbc_{loop.kbc_id}_0" title="Edit category title"></a></dd>
+					<dd><a href="javascript:;" class="item_del" id="delkbc_{loop.kbc_id}" title="Delete category and all articles"></a></dd>
+					<dd><a href="javascript:;" class="item_addunder" id="addkbc_{loop.kbc_id}" title="Add subcategory"></a></dd>
+				</dl>
+				<ul class="subcategs" id="subcategs_{loop.kbc_id}" style="display: none;">
+				</ul>
+				<ul class="articles" id="articles_{loop.kbc_id}" style="display: none;">
+				</ul>
+			</li>
+			<!--/loop name="loop"-->
+		</ul>
+	</li>
+</ul>
 
-{output.pager2}
-
-<div id="bottom_links"><a class="add" href="kb_categs_addedit.php?return={output.return2me}" title="Add new category">Add new</a></div>
+<script type="text/javascript" src="js/kb_categs.js?v={tplvars.js_lib_v}"></script>
