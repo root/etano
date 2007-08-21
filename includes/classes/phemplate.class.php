@@ -448,8 +448,8 @@ class phemplate {
 		reset($this->loops);
 		if (!empty($str)) {
 			while (list($loop_name,$loop_ar)=each($this->loops)) {
-				$start_pos=strpos($str,'<!--loop name="'.$loop_name.'"-->')+strlen('<!--loop name="'.$loop_name.'"-->');
-				if ($start_pos!==false) {
+				while (false!==($start_pos=strpos($str,'<!--loop name="'.$loop_name.'"-->'))) {
+					$start_pos+=strlen('<!--loop name="'.$loop_name.'"-->');
 					$end_pos=strpos($str,'<!--/loop name="'.$loop_name.'"-->',$start_pos);
 					$loop_code=substr($str,$start_pos,$end_pos-$start_pos);
 					$new_code=$this->parse_one_loop($loop_code,$loop_name,$loop_ar,$loop_mode);
