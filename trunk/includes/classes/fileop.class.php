@@ -47,7 +47,7 @@ class fileop {
 		if ($this->op_mode=='disk') {
 			$myreturn=@chmod($file,$mode);
 		} elseif ($this->op_mode=='ftp') {
-			$file=str_replace(_BASEPATH_,_FTPPATH_,$file);
+			$file=str_replace(_BASEPATH_.'/',_FTPPATH_,$file);
 			if (function_exists('ftp_chmod')) {
 				$myreturn=@ftp_chmod($this->ftp_id,$mode,$file);
 			} else {
@@ -63,7 +63,7 @@ class fileop {
 		if ($this->op_mode=='disk') {
 			$myreturn=$this->_disk_copy($source,$destination);
 		} elseif ($this->op_mode=='ftp') {
-			$destination=str_replace(_BASEPATH_,_FTPPATH_,$destination);
+			$destination=str_replace(_BASEPATH_.'/',_FTPPATH_,$destination);
 			$myreturn=$this->_ftp_copy($source,$destination);
 		}
 		return $myreturn;
@@ -92,9 +92,15 @@ class fileop {
 		if ($this->op_mode=='disk') {
 			$myreturn=@rename($source,$destination);
 		} elseif ($this->op_mode=='ftp') {
-			$source=str_replace(_BASEPATH_,_FTPPATH_,$source);
-			$destination=str_replace(_BASEPATH_,_FTPPATH_,$destination);
+			$source=str_replace(_BASEPATH_.'/',_FTPPATH_,$source);
+			$destination=str_replace(_BASEPATH_.'/',_FTPPATH_,$destination);
 			$myreturn=@ftp_rename($this->ftp_id,$source,$destination);
+// because the source might have the web server owner instead of the ftp owner, we try to copy+delete
+//			$this->copy($source,$destination);
+//			if (!$this->_disk_delete($source)) {
+//				$source=str_replace(_BASEPATH_.'/',_FTPPATH_,$source);
+//				$this->_ftp_delete($source);
+//			}
 		}
 		return $myreturn;
 	}
@@ -118,7 +124,7 @@ class fileop {
 				}
 			}
 		} elseif ($this->op_mode=='ftp') {
-			$myfilename=str_replace(_BASEPATH_,_FTPPATH_,$myfilename);
+			$myfilename=str_replace(_BASEPATH_.'/',_FTPPATH_,$myfilename);
 			$tmpfname=tempnam(_BASEPATH_.'/tmp','ftp');
 			$temp=fopen($tmpfname,'wb+');
 			fwrite($temp,$mydata);
@@ -162,7 +168,7 @@ class fileop {
 			if ($this->op_mode=='disk') {
 				@mkdir($fullpath,0755);
 			} elseif ($this->op_mode=='ftp') {
-				$ftp_fullpath=str_replace(_BASEPATH_,_FTPPATH_,$fullpath);
+				$ftp_fullpath=str_replace(_BASEPATH_.'/',_FTPPATH_,$fullpath);
 				ftp_mkdir($this->ftp_id,$ftp_fullpath);
 			}
 		}
