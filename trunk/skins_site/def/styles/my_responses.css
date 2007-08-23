@@ -29,6 +29,11 @@
 	border-left: 0;
 }
 
+.my_responses .row .message_body {
+	width: 620px;
+	border-left: 0;
+}
+
 .my_responses a.link_delete {
 	float: left;
 	width: 22px;
