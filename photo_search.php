@@ -126,7 +126,7 @@ $loop_rows=array();
 if (!$error) {
 	$query="SELECT count(*) FROM $from WHERE $where";
 	$temp=md5($query);
-	if (isset($_SESSION['user']['cache'][$temp]['time']) && $_SESSION['user']['cache'][$temp]['time']>=time()-600) {
+	if (isset($_SESSION['user']['cache'][$temp]['time']) && $_SESSION['user']['cache'][$temp]['time']>=time()-150) {
 		$totalrows=$_SESSION['user']['cache'][$temp]['count'];
 	} else {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

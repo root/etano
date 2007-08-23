@@ -44,15 +44,8 @@ if (!empty($state_id) && !empty($country_id)) {
 	$from="`{$dbtable_prefix}loc_zips`";
 
 	$query="SELECT count(*) FROM $from WHERE $where";
-	$temp=md5($query);
-	if (isset($_SESSION['admin']['cache'][$temp]['time']) && $_SESSION['admin']['cache'][$temp]['time']>=time()-600) {
-		$totalrows=$_SESSION['admin']['cache'][$temp]['count'];
-	} else {
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$totalrows=mysql_result($res,0,0);
-		$_SESSION['admin']['cache'][$temp]['time']=time();
-		$_SESSION['admin']['cache'][$temp]['count']=$totalrows;
-	}
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$totalrows=mysql_result($res,0,0);
 
 	if (!empty($totalrows)) {
 		if ($o>$totalrows) {
