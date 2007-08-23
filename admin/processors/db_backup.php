@@ -35,7 +35,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$query="SHOW COLUMNS FROM `".$tables[$i]."`";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$towrite.="\n\t`".$rsrow['Field'].'` '.$rsrow['Type']." DEFAULT '".$rsrow['Default']."'";
+			$towrite.="\n\t`".$rsrow['Field'].'` '.$rsrow['Type'];
+			if ($rsrow['Extra']!='auto_increment') {
+				$towrite.=" DEFAULT '".$rsrow['Default']."'";
+			}
 			if ($rsrow['Null']!='YES') {
 				$towrite.=' NOT NULL';
 			}
