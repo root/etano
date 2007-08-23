@@ -72,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!empty($input['fk_user_id'])) {
 			$query="SELECT `email` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`=".$input['fk_user_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$input['email']=mysql_result($res,0,0);
 		}
 		require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
 		$mail=new PHPMailer();
