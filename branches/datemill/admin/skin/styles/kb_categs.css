@@ -26,8 +26,8 @@ a.item_del {
 	margin-right: 0px;
 }
 .item_addunder {
-	width: 12px;
-	height: 12px;
+	width: 16px;
+	height: 16px;
 	background: url('../images/add_under.gif') no-repeat center center;
 	display: block;
 }

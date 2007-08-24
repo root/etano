@@ -10,18 +10,18 @@ $(function() {
 
 	last_ka_check=new Date().getTime();
 	if (typeof(in_admin)=='undefined') {
-		window.setTimeout("keep_alive();",180000);
+		window.setTimeout("keep_alive();",270000);
 	}
 });
 
 function keep_alive() {
 	var cur_time=new Date().getTime();
-	if (baseurl && cur_time-last_ka_check>150000) {
+	if (baseurl && cur_time-last_ka_check>240000) {
 		var tempImage=new Image();
 		tempImage.src=baseurl+"/ajax/keepalive.php?"+cur_time;
 		last_ka_check=cur_time;
 	}
-	window.setTimeout("keep_alive();",180000);
+	window.setTimeout("keep_alive();",270000);
 }
 
 /*

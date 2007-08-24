@@ -11,6 +11,8 @@
 	<meta name="robots" content="index,follow" />
 	<link href="{tplvars.tplurl}/styles/common.css" rel="stylesheet" type="text/css" />
 	<link href="{tplvars.tplurl}/styles/index.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="{tplvars.baseurl}/js/jquery.js?v={tplvars.js_lib_v}"></script>
+	<script type="text/javascript" src="{tplvars.baseurl}/js/index.js?v={tplvars.js_lib_v}"></script>
 </head>
 <body>
 <div id="expandable-container">
@@ -21,13 +23,12 @@
 		<ul id="primary_nav">
 			<li class="first"></li>
 			<li class="links">
-				<a class="active" href="index.php">Home</a>
-				<a href="products.php" title="All our products">Products</a>
-				<a href="features.php" title="Full list of community features">Features</a>
-				<a href="gallery.php" title="Showcase">Gallery</a>
-				<a href="support.php" title="Get support">Support</a>
-				<a href="purchase.php" title="Buy now">Purchase</a>
-				<a href="contact.php" title="Ask us a question">Contact</a>
+				<a class="active" href="{tplvars.relative_url}index.php">Home</a>
+				<a href="{tplvars.relative_url}features.php" title="Full list of community features">Features</a>
+				<a href="{tplvars.relative_url}gallery.php" title="Showcase">Gallery</a>
+				<a href="{tplvars.relative_url}support.php" title="Get support">Support</a>
+				<a href="{tplvars.relative_url}purchase.php" title="Buy now">Purchase</a>
+				<a href="{tplvars.relative_url}contact.php" title="Ask us a question">Contact</a>
 			</li>
 			<li class="last"></li>
 		</ul>
@@ -35,20 +36,20 @@
 	<div id="content-container">
 		<div id="promo">
 			<div id="testimonials">
-				A complete dating script for this price? Unencoded? With free updates? Count me in!
-				<cite>Nevasta</cite>
+				{output.ttext}
+				<cite>{output.tname}</cite>
 			</div>
 			<div id="tease_buttons">
-				<a id="btn_demo" href="" title="See for yourself">Try Community Demo</a>
-				<a id="btn_features" href="features.php" title="Full list of features">Comprehensive Features</a>
-				<a id="btn_buy" href="purchase.php" title="Buy now">Buy Etano</a>
+				<a id="btn_demo" href="{tplvars.relative_url}" title="See for yourself">Try Community Demo</a>
+				<a id="btn_features" href="{tplvars.relative_url}features.php" title="Full list of features">Comprehensive Features</a>
+				<a id="btn_buy" href="{tplvars.relative_url}purchase.php" title="Buy now">Buy Etano</a>
 			</div>
 		</div>
 		<div id="content">
 			<div class="column1">
-				<h2>What do you need from a community software?</h2>
-				<p class="justify"><strong>Etano</strong> was built entirely based on requests from customers of our previous dating package (Dating Site Builder).</p>
-				<p class="justify">Almost every feature ever requested was built into Etano - our community package. You can use Etano to start up a <em>dating site</em>, a <em>social networking site</em>, a <em>listings site</em> or any other type of site involving <em>groups of people</em>.</p>
+				<h2>What do you need from a community application?</h2>
+				<p class="justify">The community script we provide - Etano - was built entirely based on requests from customers of our previous dating package (Dating Site Builder).</p>
+				<p class="justify">Almost every feature ever requested was built into <strong>Etano</strong> to help you build a better site for your community members. You can use Etano to start up a <em>dating site</em>, a <em>social networking site</em>, a <em>classifieds site</em> or any other type of site involving <em>groups of people</em>, companies, products.</p>
 				<p class="justify">It is so versatile that even this site is built on top of Etano.</p>
 			</div>
 			<div class="column2">
@@ -65,11 +66,12 @@
 					<li>Friend networks</li>
 					<li>Photo albums</li>
 					<li>User blogs</li>
+					<li>Community builder</li>
 					<li>Inbox and flirts</li>
 					<li>RSS feeds</li>
 					<li>Spam protection</li>
 					<li>CSS layout</li>
-					<li class="last"><a href="features.php" title="Full list of features">More</a></li>
+					<li class="last"><a href="{tplvars.relative_url}features.php" title="Full list of features">More</a></li>
 				</ul>
 			</div>
 			<div class="clear"></div>
@@ -79,15 +81,13 @@
 
 <div id="footer-container">
 	<p>
-		<a href="index.php">Home</a>
-		<a href="products.php" title="All our products">Products</a>
-		<a href="features.php" title="Full list of community features">Features</a>
-		<a href="gallery.php" title="Showcase">Gallery</a>
-		<a href="faq.php" title="Frequently Asked Questions about our SNS">FAQ</a>
-		<a href="support.php" title="Get support">Support</a>
-		<a href="purchase.php" title="Buy now">Purchase</a>
-		<a href="contact.php" title="Ask us a question">Contact</a>
-		<a href="tos.php" title="Terms">Terms</a>
+		<a href="{tplvars.relative_url}index.php">Home</a>
+		<a href="{tplvars.relative_url}features.php" title="Full list of community features">Features</a>
+		<a href="{tplvars.relative_url}gallery.php" title="Showcase">Gallery</a>
+		<a href="{tplvars.relative_url}support.php" title="Get support">Support</a>
+		<a href="{tplvars.relative_url}purchase.php" title="Buy now">Purchase</a>
+		<a href="{tplvars.relative_url}contact.php" title="Ask us a question">Contact</a>
+		<a href="{tplvars.relative_url}tos.php" title="Terms">Terms</a>
 	</p>
 	<p>Copyright (c) 2006-<script type="text/javascript">curdate=new Date(); document.write(curdate.getFullYear())</script> Datemill</p>
 </div>

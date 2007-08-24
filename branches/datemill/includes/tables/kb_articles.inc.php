@@ -2,8 +2,8 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       tos.php
-$Revision$
+File:                       includes/tables/kb_articles.inc.php
+$Revision: 207 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
@@ -11,17 +11,5 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once 'includes/common.inc.php';
-db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
-require_once 'includes/user_functions.inc.php';
-
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
-
-$tpl->set_file('content','tos.html');
-$tpl->process('content','content');
-
-$tplvars['title']='Terms of Use';
-$tplvars['page_title']='Terms of Use';
-$tplvars['page']='tos';
-$tplvars['css']='tos.css';
-include 'frame.php';
+$kb_articles_default['defaults']=array('kba_id'=>0,'fk_kbc_id'=>0,'kba_title'=>'','kba_content'=>'');
+$kb_articles_default['types']=array('kba_id'=>FIELD_INT,'fk_kbc_id'=>FIELD_INT,'kba_title'=>FIELD_TEXTFIELD,'kba_content'=>FIELD_TEXTAREA);
