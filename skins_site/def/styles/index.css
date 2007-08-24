@@ -25,7 +25,7 @@
 #tease_buttons {
 	position: absolute;
 	bottom: 7px;
-	right: 55px;
+	right: 68px;
 }
 
 #btn_demo,#btn_features,#btn_buy {
@@ -62,22 +62,6 @@ a#btn_demo:hover,a#btn_features:hover,a#btn_buy:hover {
 	padding: 10px 45px;
 }
 
-h2 {
-	color: #018CD3;
-	font-size: 140%;
-	font-weight: bold;
-	margin-top: 15px;
-	margin-bottom: 10px;
-}
-
-h3 {
-	color: #018CD3;
-	font-size: 110%;
-	font-weight: bold;
-	margin-top: 15px;
-	margin-bottom: 5px;
-}
-
 .column1 {
 	float: right;
 	width: 77%;
@@ -96,12 +80,12 @@ h3 {
 }
 
 #features li {
-	background: url('../images/bullet1.gif') no-repeat center left;
-	padding-left: 15px;
+	list-style-image: url('../images/bullet1.gif');
+	margin-left: 20px;
 }
 
 #features li.last {
-	background: url('../images/bullet2.gif') no-repeat center left;
+	list-style-image: url('../images/bullet2.gif');
 }
 
 #login-box dt {

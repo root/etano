@@ -15,6 +15,29 @@ body {
 	font-size: 85%;
 }
 
+h2 {
+	color: #018CD3;
+	font-size: 140%;
+	font-weight: bold;
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+h3 {
+	color: #018CD3;
+	font-size: 110%;
+	font-weight: bold;
+	margin-top: 15px;
+	margin-bottom: 5px;
+}
+
+h4 {
+	color: #FF6C00;
+	font-weight: bold;
+	margin-top: 15px;
+	margin-bottom: 5px;
+}
+
 strong {
 	font-weight: bold;
 }
@@ -23,11 +46,33 @@ em {
 	color: #FF6C00;
 }
 
+.stretch,
 .clear {
-	height: 1%; /*IE*/
-	clear: both;
-	line-height:1px;
+	clear:both;
+	height:1px;
+	margin:0;
+	padding:0;
+	font-size: 15px;
+	line-height: 1px;
 }
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+* html>body .clearfix {
+	display: inline-block;
+	width: 100%;
+}
+
+* html .clearfix {
+	/* Hides from IE-mac \*/
+	height: 1%;
+	/* End hide from IE-mac */
+}
+
 
 #expandable-container {
 	background-color: #fff;
@@ -133,6 +178,47 @@ form.edit_form .controls {
 	color: #666;
 }
 
+/* PAGER */
+
+ul.pager {
+	list-style-type: none;
+}
+
+ul.pager li {
+	float: left;
+	list-style-image: none;
+	margin: 0 1px;
+}
+
+#content ul.pager li a {
+	text-decoration: none;
+	padding: 2px 10px;
+	border: 1px solid #ccc;
+}
+#content ul.pager li a:hover {
+	text-decoration: underline;
+}
+
+ul.pager li.current_page, ul.pager li.dots {
+	color: #000;
+	font-weight: bold;
+	padding: 0 10px;
+}
+
+ul.pager li.rpp {
+	float: right;
+}
+
+.rpp select {
+	font-size: 11px;
+}
+
+ul.pager li.last {
+	float:none;
+	clear:both;
+}
+
+
 /*============================HEADER================================*/
 
 
@@ -189,7 +275,7 @@ form.edit_form .controls {
 	color: #fff;
 	text-decoration: none;
 	font-size: 130%;
-	padding: 0px 10px;
+	padding: 0px 25px;
 }
 
 #primary_nav li a:hover {

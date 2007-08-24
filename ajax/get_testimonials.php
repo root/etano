@@ -2,8 +2,8 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       tos.php
-$Revision$
+File:                       ajax/get_testimonials.php
+$Revision: 228 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
@@ -11,17 +11,11 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once 'includes/common.inc.php';
-db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
-require_once 'includes/user_functions.inc.php';
+require_once dirname(__FILE__).'/../includes/testimonials.inc.php';
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$output='';
+$tid=mt_rand(0,count($testimonials)-1);
+$output.="'ttext': '".addslashes($testimonials[$tid]['ttext'])."'";
+$output.=",'tname': '".addslashes($testimonials[$tid]['tname'])."'";
 
-$tpl->set_file('content','tos.html');
-$tpl->process('content','content');
-
-$tplvars['title']='Terms of Use';
-$tplvars['page_title']='Terms of Use';
-$tplvars['page']='tos';
-$tplvars['css']='tos.css';
-include 'frame.php';
+echo '{'.$output.'}';

@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       purchase.php
+File:                       gallery.php
 $Revision: 221 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -27,9 +27,9 @@ $tpl->set_file('content','purchase.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);
 
-$tplvars['title']='Purchase';
-$tplvars['page_title']='Purchase';
-$tplvars['page']='purchase';
-$tplvars['menu_buy']='active';
-$tplvars['css']='purchase.css';
+$tplvars['title']='Gallery';
+$tplvars['page_title']='Gallery';
+$tplvars['page']='gallery';
+$tplvars['menu_gallery']='active';
+$tplvars['css']='gallery.css';
 include 'frame.php';

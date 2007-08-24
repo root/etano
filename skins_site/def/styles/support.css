@@ -1,0 +1,55 @@
+#subcategs,#article_summary {
+	margin-left: 20px;
+	padding: 10px;
+	border: 1px dotted #ddd;
+	margin-top: 10px;
+}
+
+#subcategs h4 ,#article_summary h4 {
+	margin-bottom: 10px;
+}
+
+#subcategs ul {
+	list-style-image: url('../images/bullet1.gif');
+	margin-left: 30px;
+}
+
+#article_summary ul {
+	list-style-image: url('../images/bullet2.gif');
+	margin-left: 30px;
+}
+
+#article_summary ul.pager {
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+#content h3 a {
+	color: #018CD3;
+}
+
+#content h4 {
+	margin-top: 0px;
+}
+
+ul.articles {
+	list-style-image: url('../images/bullet1.gif');
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+ul.articles li {
+	text-align: justify;
+	padding-bottom: 20px;
+	margin-bottom: 10px;
+	border-bottom: 1px dotted #ccc;
+}
+
+ul.articles li p {
+	font-weight: bold;
+}
+
+#content p a.totop {
+	float: right;
+	font-size: 80%;
+}
