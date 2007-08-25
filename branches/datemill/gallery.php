@@ -23,7 +23,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 }
 
-$tpl->set_file('content','purchase.html');
+$tpl->set_file('content','gallery.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);
 

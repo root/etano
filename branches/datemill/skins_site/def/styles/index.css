@@ -58,10 +58,6 @@ a#btn_demo:hover,a#btn_features:hover,a#btn_buy:hover {
 
 /*============================CONTENT================================*/
 
-#content {
-	padding: 10px 45px;
-}
-
 .column1 {
 	float: right;
 	width: 77%;

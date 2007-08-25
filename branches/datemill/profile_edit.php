@@ -201,7 +201,5 @@ $tplvars['title']=sprintf('Edit My %s',$_pcats[$cid]['pcat_name']);
 $tplvars['page_title']=sprintf('<a href="'.$tplvars['relative_url'].'my_profile.php">My Profile</a> - %s',$_pcats[$cid]['pcat_name']);
 $tplvars['page']='profile_edit';
 $tplvars['css']='profile_edit.css';
-if (is_file('profile_edit_left.php')) {
-	include 'profile_edit_left.php';
-}
-include 'frame.php';
+include 'home_left.php';
+include 'frame2.php';

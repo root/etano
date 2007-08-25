@@ -1,0 +1,11 @@
+#content_column1 {
+	float: right;
+	margin: 0;
+	width: 80%;
+}
+
+#content_column2 {
+	margin: 0;
+	float: left;
+	width: 17%;
+}
