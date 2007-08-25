@@ -202,9 +202,7 @@ unset($user_photos);
 
 $tplvars['page']='profile';
 $tplvars['css']='profile.css';
-if (is_file('profile_left.php')) {
-	include 'profile_left.php';
-}
-include 'frame.php';
+include 'home_left.php';
+include 'frame2.php';
 update_stats($uid,'pviews',1);
 add_member_score($uid,'pview');

@@ -10,6 +10,7 @@
 	<meta name="distribution" content="global" />
 	<meta name="robots" content="index,follow" />
 	<link href="{tplvars.tplurl}/styles/common.css" rel="stylesheet" type="text/css" />
+	<link href="{tplvars.tplurl}/styles/content2.css" rel="stylesheet" type="text/css" />
 	<!--opt name="tplvars.css"--><link href="{tplvars.tplurl}/styles/{tplvars.css}" rel="stylesheet" type="text/css" /><!--/opt name="tplvars.css"-->
 	<script type="text/javascript">
 		baseurl='{tplvars.baseurl}';
@@ -26,7 +27,6 @@
 		<ul id="primary_nav">
 			<li class="first"></li>
 			<li class="links">
-				<a class="{tplvars.menu_home}" href="{tplvars.relative_url}index.php">Home</a>
 				<a class="{tplvars.menu_blog}" href="{tplvars.relative_url}devblog/1/developer-blogs" title="Developer blogs">Blog</a>
 				<a class="{tplvars.menu_features}" href="{tplvars.relative_url}features.php" title="Full list of community features">Features</a>
 				<a class="{tplvars.menu_gallery}" href="{tplvars.relative_url}gallery.php" title="Showcase">Gallery</a>
@@ -37,21 +37,30 @@
 			<li class="last"></li>
 		</ul>
 	</div>
-	<div id="content-container">
-		<div id="content">
+	<div id="content" class="clearfix">
+		<div id="content_column1" class="{tplvars.page} content_area large">
 			<h2>{tplvars.page_title}</h2>
-			<!--opt name="message.text"-->
+<!--opt name="message.text"-->
 			<div id="message_wrapper" class="content_area medium {message.type}">
 				<h2></h2>
 				<div class="box_content">
 					<div class="message_text">{message.text}</div>
 				</div>
 			</div>
-			<!--/opt name="message.text"-->
-			{content}
-			<div class="clear"></div>
-		</div>
-	</div> <!--content-container-->
+<!--/opt name="message.text"-->
+			<div class="box_content">
+				{content}
+				&nbsp;
+			<!--opt name="tplvars.fixlayout"-->
+			<div style="height: {tplvars.fixlayout}px"></div>
+			<!--/opt name="tplvars.fixlayout"-->
+			</div>
+		</div>	<!-- end of middle column -->
+
+		<div id="content_column2">
+			{left_content}
+		</div>	<!-- end of left column -->
+	</div>
 </div>	<!--expandable-container-->
 
 <div id="footer-container">

@@ -2,13 +2,11 @@
 <ul id="stats">
 	<li>Hi <strong>{tplvars.myself.user}</strong></li>
 	<li id="messages"><a class="content-link simple" href="{tplvars.relative_url}mailbox.php">Messages</a>: {my_stats.total_messages} ({my_stats.new_messages} new)</li>
-	<li id="photos"><a class="content-link simple" href="{tplvars.relative_url}my_photos.php">Photos</a>: {my_stats.total_photos}</li>
-	<li id="friends"><a class="content-link simple" href="{tplvars.relative_url}my_networks.php">Friends</a>: {my_stats.num_friends}</li>
-	<li id="pviews">Your profile has been viewed {my_stats.pviews} times since {output.date_added}</li>
+	<li id="friends"><a class="content-link simple" href="{tplvars.relative_url}my_networks.php">Connections</a>: {my_stats.num_friends}</li>
 </ul>
 
 <div id="s">
-	<a class="content-link simple" href="{tplvars.relative_url}friendship_requests.php">Friendship Requests</a>
+	<a class="content-link simple" href="{tplvars.relative_url}friendship_requests.php">Connection Requests</a>
 </div>
 
 <!--widget="site_news_feed(array('total'=>3))"-->

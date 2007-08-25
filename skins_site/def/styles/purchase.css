@@ -1,0 +1,22 @@
+.warning {
+	border: 1px solid #ccc;
+	margin-top: 20px;
+	margin-left: 20px;
+	padding: 10px;
+	font-size: 80%;
+}
+
+.product {
+	margin-top: 20px;
+}
+
+.product dt {
+	float: left;
+	width: 360px;
+}
+
+.product dd {
+	float: left;
+	width: 130px;
+}
+

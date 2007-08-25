@@ -275,7 +275,7 @@ ul.pager li.last {
 	color: #fff;
 	text-decoration: none;
 	font-size: 130%;
-	padding: 0px 25px;
+	padding: 0px 15px;
 }
 
 #primary_nav li a:hover {
@@ -286,6 +286,11 @@ ul.pager li.last {
 }
 
 /*============================CONTENT================================*/
+
+#content {
+	padding: 10px 45px;
+	position: relative;
+}
 
 #content a {
 	font-weight: bold;
@@ -330,4 +335,3 @@ ul.pager li.last {
 	font-size: 85%;
 	margin: 5px 0;
 }
-

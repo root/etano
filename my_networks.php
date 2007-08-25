@@ -51,7 +51,5 @@ $tplvars['title']='My network members';
 $tplvars['page_title']='How I am connected';
 $tplvars['page']='my_networks';
 $tplvars['css']='my_networks.css';
-if (is_file('my_networks_left.php')) {
-	include 'my_networks_left.php';
-}
-include 'frame.php';
+include 'home_left.php';
+include 'frame2.php';

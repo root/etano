@@ -128,7 +128,5 @@ $tplvars['title']='Read your messages';     // translate
 $tplvars['page_title']=$my_folders[$fid];
 $tplvars['page']='mailbox';
 $tplvars['css']='mailbox.css';
-if (is_file('mailbox_left.php')) {
-	include 'mailbox_left.php';
-}
-include 'frame.php';
+include 'home_left.php';
+include 'frame2.php';

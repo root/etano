@@ -98,6 +98,7 @@ unset($loop);
 
 $tplvars['title']='Blog posts';
 $tplvars['page_title']=isset($blog['blog_name']) ? $blog['blog_name'] : '';
+$tplvars['menu_blog']='active';
 $tplvars['page']='blog_view';
 $tplvars['css']='blog_view.css';
 if (is_file('blog_view_left.php')) {

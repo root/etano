@@ -30,6 +30,10 @@ if ($uri_parts[0]=='blog' && isset($uri_parts[1])) {
 	$_GET['pid']=$uri_parts[1];
 	require_once 'blog_post_view.php';
 	die;
+} elseif ($uri_parts[0]=='devblog' && isset($uri_parts[1])) {
+	$_GET['bid']=$uri_parts[1];
+	require_once 'blog_view.php';
+	die;
 } elseif ($uri_parts[0]=='inbox') {
 	require_once 'mailbox.php';
 	die;

@@ -28,7 +28,7 @@ $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']='Purchase';
-$tplvars['page_title']='Purchase';
+$tplvars['page_title']='Purchase Etano';
 $tplvars['page']='purchase';
 $tplvars['menu_buy']='active';
 $tplvars['css']='purchase.css';

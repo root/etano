@@ -80,7 +80,5 @@ $tplvars['title']='Blog Posts';
 $tplvars['page_title']=sprintf('Posts in %s',$output['blog_name']);
 $tplvars['page']='my_blog_posts';
 $tplvars['css']='my_blog_posts.css';
-if (is_file('my_blog_posts_left.php')) {
-	include 'my_blog_posts_left.php';
-}
-include 'frame.php';
+include 'home_left.php';
+include 'frame2.php';
