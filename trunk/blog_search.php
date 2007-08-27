@@ -146,6 +146,7 @@ if (!empty($output['totalrows'])) {
 		}
 		// fancy word coloring - lightning fast now :)
 		if (isset($input['tags'])) {
+			$loop[$i]['title_clean']=$loop[$i]['title'];
 			$loop[$i]['title']=str_replace($search_words,$replace_words,$loop[$i]['title']);
 			$loop[$i]['post_content']=str_replace($search_words,$replace_words,$loop[$i]['post_content']);
 		}
