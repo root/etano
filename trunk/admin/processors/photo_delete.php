@@ -41,10 +41,7 @@ if (mysql_num_rows($res)) {
 
 // what to do with the cache for the deleted comments or photo page? clear_cache($photo_id) ????
 
-	if ($input['is_main']==1) {
-		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`=".$input['user_id'];
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	}
+	on_delete_photo(array($photo_id));
 
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Photo deleted.';

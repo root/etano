@@ -69,8 +69,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				add_member_score($_SESSION['user']['user_id'],'add_main_photo');
 			}
 		}
+		$now=gmdate('YmdHis');
 		foreach ($input['caption'] as $photo_id=>$caption) {
-			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_private`=".(isset($input['is_private'][$photo_id]) ? 1 : 0).",`allow_comments`=".(isset($input['allow_comments'][$photo_id]) ? 1 : 0).",`last_changed`='".gmdate('YmdHis')."'";
+			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_private`=".(isset($input['is_private'][$photo_id]) ? 1 : 0).",`allow_comments`=".(isset($input['allow_comments'][$photo_id]) ? 1 : 0).",`last_changed`='$now'";
 			if ($input['is_main']==$photo_id) {
 				$query.=",`is_main`=1";
 			} else {
