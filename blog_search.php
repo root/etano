@@ -77,12 +77,13 @@ if (!empty($output['search_md5'])) {
 			case 'tag':
 				$tplvars['page_title']='Search Results';
 				$input['acclevel_code']='search_blog';
-				$input['tags']=sanitize_and_format_gpc($_GET,'tags',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+				$input['tags']=isset($_GET['tags']) ? $_GET['tags'] : '';
 				// remove extra spaces and words with less than 3 chars
-				$input['tags']=trim(preg_replace(array("/['\"%<>\+-]/","/\s\s+/","/\b[^\s]{1,3}\b/"),array(' ',' ',''),$input['tags']));
+				$input['tags']=trim(preg_replace(array("/\s\s+/","/\b[^\s]{1,3}\b/"),array(' ',''),$input['tags']));
+				$input['tags']=sanitize_and_format($input['tags'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 				if (!empty($input['tags'])) {
-					$select.=",MATCH (a.`title`,a.`post_content`) AGAINST ('".$input['tags']."') as `match_score`";
-					$where.=" AND MATCH (a.`title`,a.`post_content`) AGAINST ('".$input['tags']."')";
+					$select.=",MATCH (a.`title`,a.`post_content`) AGAINST ('".$input['tags']."' IN BOOLEAN MODE) as `match_score`";
+					$where.=" AND MATCH (a.`title`,a.`post_content`) AGAINST ('".$input['tags']."' IN BOOLEAN MODE)";
 					$orderby="`match_score` DESC";
 				} else {
 					$error=true;
