@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 
+		$now=gmdate('YmdHis');
 		$config=get_site_option(array('manual_photo_approval'),'core_photo');
 		if ($input['is_main']!=$old_main) {
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_main`=0 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
@@ -64,12 +65,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (empty($config['manual_photo_approval']) || $statuses[$input['is_main']]==STAT_APPROVED) {
 				$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='".$photos[$input['is_main']]."',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				// this sucks...the code below is taken from on_after_approve_photo(). In the future, when new functionality that depends on the main photo will be added, we'll have to change the code there and here too.
+				$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}
 			if ($old_main==0) {
 				add_member_score($_SESSION['user']['user_id'],'add_main_photo');
 			}
 		}
-		$now=gmdate('YmdHis');
 		foreach ($input['caption'] as $photo_id=>$caption) {
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_private`=".(isset($input['is_private'][$photo_id]) ? 1 : 0).",`allow_comments`=".(isset($input['allow_comments'][$photo_id]) ? 1 : 0).",`last_changed`='$now'";
 			if ($input['is_main']==$photo_id) {

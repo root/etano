@@ -115,9 +115,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['comment_id']=mysql_insert_id();
 			$topass['message']['type']=MESSAGE_INFO;
-			if (!empty($_SESSION['user']['user_id'])) {
-				update_stats($_SESSION['user']['user_id'],'comments_made',1);
-			}
 			if (empty($config['manual_com_approval'])) {
 				$topass['message']['text']='Comment added.';	// translate this
 				$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=".$input['fk_parent_id'];
@@ -144,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		if (empty($config['manual_com_approval'])) {
 			// this trigger is global
-			on_approve_comment(array($input['comment_id']),'blog');
+			on_after_approve_comment(array($input['comment_id']),'blog');
 		}
 	} else {
 		$input['comment']=addslashes_mq($_POST['comment']);

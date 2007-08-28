@@ -70,7 +70,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$rsrow=sanitize_and_format(mysql_fetch_assoc($res),TYPE_STRING,$__field2format[TEXT_DB2DB]);
 					if (strcmp($rsrow['title'],$input['title'])!=0 || strcmp($rsrow['post_content'],$input['post_content'])!=0) {
 						$query.=",`status`=".STAT_PENDING;
-						on_delete_blog_post(array($input['post_id']));	// since this post disappears until approval this is like a post delete
 					}
 				}
 			} else {
@@ -121,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 
 			if (empty($config['manual_blog_approval'])) {
-				on_approve_blog_post(array($input['post_id']));
+				on_after_approve_blog_post(array($input['post_id']));
 				$topass['message']['text']='Post added.';	// translate this
 			} else {
 				$topass['message']['text']='Post added. It will be reviewed and published shortly.';	// translate this
