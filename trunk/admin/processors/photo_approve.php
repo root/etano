@@ -38,7 +38,7 @@ if (!empty($_GET['photo_id'])) {
 		} else {
 			$do_stats=true;
 		}
-		on_approve_photo(array($input['photo_id']),$do_stats);
+		on_after_approve_photo(array($input['photo_id']),$do_stats);
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Photo approved.';
 	}

@@ -44,7 +44,7 @@ if (!empty($input['cids']) && !empty($input['m'])) {
 	}
 	$query="UPDATE $table SET `status`=".STAT_APPROVED.",`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `comment_id` IN ('".join("','",$input['cids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	on_approve_comment($input['cids'],$input['m']);
+	on_after_approve_comment($input['cids'],$input['m']);
 
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Comment(s) approved.';

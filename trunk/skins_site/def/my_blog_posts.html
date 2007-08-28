@@ -9,7 +9,7 @@
 <!--loop name="loop"-->
 <div class="row">
 	<div class="control">
-		<a class="content-link link_delete" href="{tplvars.relative_url}processors/blog_posts_delete.php?post_id={loop.post_id}&amp;bid={output.fk_blog_id}&amp;return={output.return2me}" title="Delete post" onclick="return(confirm('Are you sure you want to permanently delete this post?'))">Delete post</a>
+		<a class="content-link link_delete" href="{tplvars.relative_url}processors/blog_posts_delete.php?post_id={loop.post_id}&amp;return={output.return2me}" title="Delete post" onclick="return(confirm('Are you sure you want to permanently delete this post?'))">Delete post</a>
 		<a class="content-link link_change" href="{tplvars.relative_url}blog_posts_addedit.php?post_id={loop.post_id}&amp;return={output.return2me}" title="Edit post">Edit post</a>
 	</div>
 	<div class="title">{loop.title}&nbsp;</div>

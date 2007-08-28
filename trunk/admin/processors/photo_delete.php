@@ -27,6 +27,9 @@ $query="SELECT `fk_user_id`,`photo`,`is_main` FROM `{$dbtable_prefix}user_photos
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$input=mysql_fetch_assoc($res);
+
+	on_before_delete_photo(array($photo_id));
+
 	$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
@@ -40,8 +43,6 @@ if (mysql_num_rows($res)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 // what to do with the cache for the deleted comments or photo page? clear_cache($photo_id) ????
-
-	on_delete_photo(array($photo_id));
 
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Photo deleted.';

@@ -36,6 +36,8 @@ if (mysql_num_rows($res)) {
 			eval($_on_before_delete[$i].'();');
 		}
 	}
+	on_before_delete_photo(array($photo_id));
+
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (!empty($input['photo'])) {
 		require_once '../includes/classes/fileop.class.php';
@@ -50,8 +52,6 @@ if (mysql_num_rows($res)) {
 	// what to do with the cache for the deleted comments or photo page? clear_cache($photo_id) ????
 
 	}
-
-	on_delete_photo(array($photo_id));
 
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Photo deleted.';
