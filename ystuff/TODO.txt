@@ -103,4 +103,9 @@ Ar mai putea fi facut prin filtre generale cu fk_user_id=0
 - vizualizare message/email_queue
 
 - NOU TIP DE FIELD: SCHOOL/HIGHSCHOOL/UNIVERSITY
-- rss pe toate commenturile
+
+RSS Feeds
+    * Comments to this post
+    * All posts
+    * All comments
+
