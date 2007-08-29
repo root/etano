@@ -7,19 +7,18 @@ class log_error {
 	var $config=array();
 	var $module_code='log';
 
-	function log_error($module_name,$error) {
+	function log_error(&$error,$config=array()) {
 		$this->_init();
+		$this->config=array_merge($this->config,$config);
+		$error=array_merge(array('module_name'=>'','text'=>''),$error);
 		if ($this->config['log_mode']==_ERRORLOG_DB_) {
 			$dbtable_prefix=$GLOBALS['dbtable_prefix'];
-			$query="INSERT IGNORE INTO `{$dbtable_prefix}error_log` SET `module`='$module_name',`error`='".sanitize_and_format($error,TYPE_STRING,FORMAT_ADDSLASH)."'";
+			$query="INSERT IGNORE INTO `{$dbtable_prefix}error_log` SET `module`='".$error['module_name']."',`error`='".sanitize_and_format($error['text'],TYPE_STRING,FORMAT_ADDSLASH)."'";
 			@mysql_query($query);
 		} elseif ($this->config['log_mode']==_ERRORLOG_FILE_) {
-			error_log("\n-------\n".date('Y-m-d H:i:s',time()).': '.$module_name.': '.$error."\n\n",3,$this->config['file_log']);
+			error_log("\n-------\n".date('Y-m-d H:i:s',time()).': '.$error['module_name'].': '.$error['text']."\n\n",3,$this->config['file_log']);
 		} elseif ($this->config['log_mode']==_ERRORLOG_STDOUT_) {
-			echo $module_name.': '.$error;
-		}
-		if ($this->config['log_mode']!=_ERRORLOG_STDOUT_ && defined('_DEBUG_') && _DEBUG_!=0) {
-			echo $module_name.': '.$error;
+			echo $error['module_name'].': '.$error['text'];
 		}
 	}
 

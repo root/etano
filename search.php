@@ -86,6 +86,19 @@ if (!$got_from_cache) {
 				}
 				break;
 
+			case 'user':
+				$input['acclevel_code']='search_advanced';
+				$continue=true;
+				$input['user']=sanitize_and_format_gpc($_GET,'user',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+				if (strlen($input['user'])<=3) {
+					$topass['message']['text']='You are not allowed to search for less than 4 chars';
+					$topass['message']['type']=MESSAGE_ERROR;
+					$where='';	// force no results returned.
+				} else {
+					$where.=" AND a.`_user` LIKE '".$input['user']."%'";
+				}
+				break;
+
 			case 'net':
 				$input['acclevel_code']='search_basic';
 				$continue=true;
@@ -245,30 +258,32 @@ if (!$got_from_cache) {
 		}	//switch ($field['search_type'])
 	} // the for() that constructs the where
 
-	$serialized_input=serialize($input);
-	$output['search_md5']=md5($serialized_input);
-	if (!$skip_cache) {
-		// let's give the cache one more chance. This is useful for the first page of results when we don't know the search_md5
-		$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."' AND `search_type`=".SEARCH_USER;
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		if (mysql_num_rows($res)) {
-			$user_ids=mysql_result($res,0,0);
-			$user_ids=explode(',',$user_ids);
-			$got_from_cache=true;
+	if (!empty($where)) {	// if $where is empty then a condition above prevents us from searching. There must be a message to display.
+		$serialized_input=serialize($input);
+		$output['search_md5']=md5($serialized_input);
+		if (!$skip_cache) {
+			// let's give the cache one more chance. This is useful for the first page of results when we didn't know the search_md5 until now
+			$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."' AND `search_type`=".SEARCH_USER;
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				$user_ids=mysql_result($res,0,0);
+				$user_ids=explode(',',$user_ids);
+				$got_from_cache=true;
+			}
 		}
-	}
-	if (!$got_from_cache) {	// this is where we absolutely must search the users...it's the most expensive search
-		$query="SELECT $select FROM $from WHERE $where $orderby";
-		//print $query;die;
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		for ($i=0;$i<mysql_num_rows($res);++$i) {
-			$user_ids[]=mysql_result($res,$i,0);
+		if (!$got_from_cache) {	// this is where we absolutely must search the users...it's the most expensive search
+			$query="SELECT $select FROM $from WHERE $where $orderby";
+	//print $query;die;
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			for ($i=0;$i<mysql_num_rows($res);++$i) {
+				$user_ids[]=mysql_result($res,$i,0);
+			}
+			$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='".$output['search_md5']."',`search_type`=".SEARCH_USER.",`search`='$serialized_input',`results`='".join(',',$user_ids)."'";
+			if (!empty($_SESSION['user']['user_id'])) {
+				$query.=",`fk_user_id`='".$_SESSION['user']['user_id']."'";
+			}
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
-		$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='".$output['search_md5']."',`search_type`=".SEARCH_USER.",`search`='$serialized_input',`results`='".join(',',$user_ids)."'";
-		if (!empty($_SESSION['user']['user_id'])) {
-			$query.=",`fk_user_id`='".$_SESSION['user']['user_id']."'";
-		}
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 }
 $output['totalrows']=count($user_ids);

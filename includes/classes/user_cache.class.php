@@ -25,9 +25,7 @@ class user_cache {
 		$user_id=(string)$user_id;
 		$file=$this->disk_path.$user_id{0}.'/'.$user_id.'/'.$part.'.html';
 		if (is_file($file)) {
-			$fp=fopen($file,'rb');
-			$myreturn=fread($fp,filesize($file));
-			fclose($fp);
+			$myreturn=file_get_contents($file);
 		}
 		return $myreturn;
 	}
@@ -70,9 +68,8 @@ class user_cache {
 			for ($p=0;isset($parts[$p]);++$p) {
 				$file=$this->disk_path.(string)$user_ids[$id]{0}.'/'.$user_ids[$id].'/'.$parts[$p].'.html';
 				if (is_file($file)) {
-					$fp=fopen($file,'rb');
 					if ($destination=='tpl') {
-						$myreturn[$id][$parts[$p]]=fread($fp,filesize($file));
+						$myreturn[$id][$parts[$p]]=file_get_contents($file);
 						$myreturn[$id]['uid']=$user_ids[$id];
 						if (isset($GLOBALS['_list_of_online_members'][(int)$user_ids[$id]])) {
 							$myreturn[$id]['is_online']='is_online';
@@ -82,9 +79,8 @@ class user_cache {
 							$myreturn[$id]['user_online_status']='is offline';	// translate
 						}
 					} else {
-						$myreturn[$parts[$p]]=fread($fp,filesize($file));
+						$myreturn[$parts[$p]]=file_get_contents($file);
 					}
-					fclose($fp);
 				}
 			}
 		}

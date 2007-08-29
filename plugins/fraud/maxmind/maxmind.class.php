@@ -44,11 +44,11 @@ class fraud_maxmind extends ifraud {
 					}
 				} else {
 					require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-					new log_error(get_class($this),$reply.' country code not found in iso3166.inc.php file');
+					new log_error(array('module_name'=>get_class($this),'text'=>$reply.' country code not found in iso3166.inc.php file'));
 				}
 			} else {
 				require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-				new log_error(get_class($this),'Unable to connect to maxmind server: '.$errstr);
+				new log_error(array('module_name'=>get_class($this),'text'=>'Unable to connect to maxmind server: '.$errstr));
 			}
 		}
 		return $myreturn;

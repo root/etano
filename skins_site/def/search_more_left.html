@@ -5,6 +5,13 @@
 			<li class="first"><a class="content-link link_search" href="{tplvars.relative_url}search.php?st=latest">Latest members</a></li>
 			<li><a class="content-link link_search" href="{tplvars.relative_url}search.php?st=online">Online members</a></li>
 		</ul>
+		<form action="{tplvars.relative_url}search.php" method="get" id="name_search">
+		<input type="hidden" name="st" value="user" />
+		<dl>
+			<dt>By Name:</dt>
+			<dd><input type="text" name="user" id="byname" /> <input type="submit" class="button small" value="Go" /></dd>
+		</dl>
+		</form>
 	</div>
 </div>
 
@@ -25,7 +32,7 @@
 		</ul>
 		<!--/opt name="tplvars.user_logged"-->
 		<!--opt name="!tplvars.user_logged"-->
-			<a class="content-link link_simple" href="{tplvars.relative_url}login.php">Login</a> or <a class="content-link link_simple" href="{tplvars.relative_url}join.php">sign up</a> to save this search
+			<a class="content-link simple" href="{tplvars.relative_url}login.php">Login</a> or <a class="content-link simple" href="{tplvars.relative_url}join.php">sign up</a> to save this search
 		<!--/opt name="!tplvars.user_logged"-->
 	</div>
 </div>
