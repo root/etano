@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       processors/pass_change.php
+File:                       processors/forgot_pass_change.php
 $Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -15,15 +15,15 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 
-if (is_file(_BASEPATH_.'/events/processors/pass_change.php')) {
-	include_once _BASEPATH_.'/events/processors/pass_change.php';
+if (is_file(_BASEPATH_.'/events/processors/forgot_pass_change.php')) {
+	include_once _BASEPATH_.'/events/processors/forgot_pass_change.php';
 }
 
 $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='pass_change.php';
+$nextpage='forgot_pass_change.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it

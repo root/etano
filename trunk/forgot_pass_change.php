@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       pass_change.php
+File:                       forgot_pass_change.php
 $Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -45,12 +45,12 @@ if (!empty($output['uid']) && !empty($output['secret'])) {
 	trigger_error('Invalid user');
 }
 
-$tpl->set_file('content','pass_change.html');
+$tpl->set_file('content','forgot_pass_change.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']='Change Password';
 $tplvars['page_title']='Change Password';
-$tplvars['page']='pass_change';
-$tplvars['css']='pass_change.css';
+$tplvars['page']='forgot_pass_change';
+$tplvars['css']='forgot_pass_change.css';
 include 'frame.php';
