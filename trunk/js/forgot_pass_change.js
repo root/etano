@@ -1,6 +1,6 @@
 $(function() {
-	$('#pass_change input:visible:first').focus();
-	$('#pass_change').bind('submit',function() {
+	$('#forgot_pass_change input:visible:first').focus();
+	$('#forgot_pass_change').bind('submit',function() {
 		return check_form(this);
 	});
 });
