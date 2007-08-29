@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007073001
+File version:				1.2007082901
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -776,24 +776,31 @@ function send_email($from,$to,$subject,$message,$html=false,$attachments=array()
 
 
 function general_error($errlevel,$message,$file='unset',$line='unset') {
-	$output=$message."\n<br />";
-	if (defined('_DEBUG_') && _DEBUG_!=0) {
-		if (!empty($GLOBALS['query'])) {
-			$output.='Last query run: '.$GLOBALS['query']."\n<br />";
-		}
-		if (_DEBUG_==1) {
-			$output.="Line: $line\n<br />File: $file\n<br />";
-		} elseif (_DEBUG_==2) {
-			ob_start();
-			echo '<pre>';
-			print_r(debug_backtrace());
-			echo '</pre>';
-			$output.=ob_get_contents();
-			ob_end_clean();
-		}
+	$error=array();
+	$error['text']=$message."\n<br />";
+	if (!empty($GLOBALS['query'])) {
+		$error['text'].='Last query run: '.$GLOBALS['query']."\n<br />";
 	}
+	ob_start();
+	echo '<pre>';
+	print_r(debug_backtrace());
+	echo '</pre>';
+	$error['text'].=ob_get_contents();
+	ob_end_clean();
+
 	require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-	new log_error('',$output);
+	new log_error($error);
+	if (defined('_DEBUG_') && _DEBUG_!=0) {
+		if (_DEBUG_==1) {
+			$error['text']=$message."\n<br /> Line: $line\n<br />File: $file\n<br />";
+		} elseif (_DEBUG_==2) {
+			// same full error
+			// $error['text']=$error['text'];
+		}
+	} else {
+		$error['text']='Sorry, a critical error has occured. If you are the site administrator please check out the error log to see the actual error.';
+	}
+	new log_error($error,array('log_mode'=>_ERRORLOG_STDOUT_));
 	if ($errlevel==E_USER_ERROR || (defined('_DEBUG_') && _DEBUG_!=0)) {
 		exit;
 	}

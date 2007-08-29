@@ -28,3 +28,6 @@
 	margin-top: 5px;
 }
 
+input#byname {
+	width: 110px;
+}
