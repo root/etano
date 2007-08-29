@@ -13,3 +13,25 @@
 		</ul>
 	</div>
 </div>
+
+<div class="content_area small">
+	<h3>Change Password</h3>
+	<div class="box_content">
+		<form action="{tplvars.relative_url}processors/pass_change.php" id="passchange_form" method="post">
+		<fieldset>
+		<dl>
+			<dt>New password:</dt>
+			<dd><input type="text" name="pass" /></dd>
+		</dl>
+		<dl>
+			<dt>Again:</dt>
+			<dd><input type="text" name="pass2" /></dd>
+		</dl>
+		</fieldset>
+		<fieldset class="controls">
+			<input type="submit" class="button medium" value="Change" />
+		</fieldset>
+		</form>
+	</div>
+</div>
+
