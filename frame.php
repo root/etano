@@ -24,6 +24,16 @@ if (!empty($message)) {
 	$tpl->set_var('message',$message);
 }
 $tpl->set_var('tplvars',$tplvars);
+
+if (is_file(_BASEPATH_.'/events/frame.php')) {
+	include_once _BASEPATH_.'/events/frame.php';
+}
+if (isset($_on_before_display)) {
+	for ($i=0;isset($_on_before_display[$i]);++$i) {
+		eval($_on_before_display[$i].'();');
+	}
+}
+
 if (!empty($page_last_modified_time)) {
 	header('Cache-Control: private, max-age=0',true);
 	header('Last-Modified: '. gmdate('D,d M Y H:i:s',$page_last_modified_time).' GMT',true);
@@ -33,3 +43,8 @@ if (isset($_SESSION['topass'])) {
 	unset($_SESSION['topass']);
 }
 ob_end_flush();
+if (isset($_on_after_display)) {
+	for ($i=0;isset($_on_after_display[$i]);++$i) {
+		eval($_on_after_display[$i].'();');
+	}
+}
