@@ -1,0 +1,33 @@
+<a class="content-link view_blog" href="{tplvars.relative_url}blog_view.php?bid={output.fk_blog_id}" title="View blog">View blog</a>
+
+<div class="row header">
+	<div class="control">Manage</div>
+	<div class="title">Post</div>
+	<div class="date_posted">Date Posted</div>
+</div>
+
+<!--loop name="loop"-->
+<div class="row">
+	<div class="control">
+		<a class="content-link link_delete" href="{tplvars.relative_url}processors/blog_posts_delete.php?post_id={loop.post_id}&amp;bid={output.fk_blog_id}&amp;return={output.return2me}" title="Delete post" onclick="return(confirm('Are you sure you want to permanently delete this post?'))">Delete post</a>
+		<a class="content-link link_change" href="{tplvars.relative_url}blog_posts_addedit.php?post_id={loop.post_id}&amp;return={output.return2me}" title="Edit post">Edit post</a>
+	</div>
+	<div class="title">{loop.title}&nbsp;</div>
+	<div class="date_posted">{loop.date_posted}</div>
+</div>
+<!--noloop name="loop"-->
+<div class="row">
+	<p class="no_result_item">There are no posts to display.</p>
+</div>
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
+
+{output.pager2}
+
+<div class="controls">
+	<a class="content-link link_add" id="link_add_post" href="{tplvars.relative_url}blog_posts_addedit.php?bid={output.fk_blog_id}&amp;return={output.return2me}" />Add post</a>
+</div>
+
+<div id="bottom_links">
+	<a class="content-link link_previous" href="{tplvars.relative_url}my_blogs.php" />Back to blogs</a>
+</div>

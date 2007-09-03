@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Datemill.com - Community package, sns, dating script</title>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	<link rel="shortcut icon" href="{tplvars.baseurl}/favicon.ico" />
+	<meta name="description" content="{tplvars.meta_diz}" />
+	<meta name="keywords" content="{tplvars.meta_keywords}" />
+	<meta name="distribution" content="global" />
+	<meta name="robots" content="index,follow" />
+	<link href="{tplvars.tplurl}/styles/common.css" rel="stylesheet" type="text/css" />
+	<link href="{tplvars.tplurl}/styles/content2.css" rel="stylesheet" type="text/css" />
+	<!--opt name="tplvars.css"--><link href="{tplvars.tplurl}/styles/{tplvars.css}" rel="stylesheet" type="text/css" /><!--/opt name="tplvars.css"-->
+	<script type="text/javascript">
+		baseurl='{tplvars.baseurl}';
+	</script>
+	<script type="text/javascript" src="{tplvars.baseurl}/js/jquery.js?v={tplvars.js_lib_v}"></script>
+	<script type="text/javascript" src="{tplvars.baseurl}/js/general.js?v={tplvars.js_lib_v}"></script>
+</head>
+<body>
+<div id="expandable-container">
+	<div id="header-container">
+		<h1 id="logo-box">
+			<a name="pagetop" href="http://www.datemill.com">Datemill.com</a>
+		</h1>
+		<ul id="primary_nav">
+			<li>
+			<li class="first"><a class="{tplvars.menu_blog}" href="{tplvars.relative_url}devblog/1/developer-blogs" title="Developer blogs">Blog</a></li>
+			<li><a class="{tplvars.menu_features}" href="{tplvars.relative_url}features.php" title="Full list of community features">Features</a></li>
+			<li><a class="{tplvars.menu_gallery}" href="{tplvars.relative_url}gallery.php" title="Showcase">Gallery</a></li>
+			<li><a class="{tplvars.menu_support}" href="{tplvars.baseurl}/kb/0/knowledge-base" title="Support and Frequently Asked Questions">Support</a></li>
+			<li><a class="{tplvars.menu_buy}" href="{tplvars.relative_url}purchase.php" title="Buy now">Purchase</a></li>
+			<li class="last"><a class="{tplvars.menu_contact}" href="{tplvars.relative_url}contact.php" title="Ask us a question">Contact</a></li>
+		</ul>
+		<p id="skin_changer" class="clearfix">
+			<a id="to_def" href="javascript:;" title="Change skin to blue" onclick="createCookie('sco_app[skin]','def',365);window.location=window.location">Change skin</a>
+			<a id="to_green" href="javascript:;" title="Change skin to green" onclick="createCookie('sco_app[skin]','green',365);window.location=window.location">Change skin</a>
+		</p>
+	</div>
+	<div id="content" class="clearfix">
+		<div id="content_column1" class="{tplvars.page} content_area large">
+			<h2>{tplvars.page_title}</h2>
+<!--opt name="message.text"-->
+			<div id="message_wrapper" class="content_area medium {message.type}">
+				<h2></h2>
+				<div class="box_content">
+					<div class="message_text">{message.text}</div>
+				</div>
+			</div>
+<!--/opt name="message.text"-->
+			<div class="box_content">
+				{content}
+				&nbsp;
+			<!--opt name="tplvars.fixlayout"-->
+			<div style="height: {tplvars.fixlayout}px"></div>
+			<!--/opt name="tplvars.fixlayout"-->
+			</div>
+		</div>	<!-- end of middle column -->
+
+		<div id="content_column2">
+			{left_content}
+		</div>	<!-- end of left column -->
+	</div>
+</div>	<!--expandable-container-->
+
+<div id="footer-container">
+	<p>
+		<a href="{tplvars.relative_url}index.php">Home</a>
+		<a href="{tplvars.relative_url}devblog/1/developer-blogs" title="Developer blogs">Blog</a>
+		<a href="{tplvars.relative_url}features.php" title="Full list of community features">Features</a>
+		<a href="{tplvars.relative_url}gallery.php" title="Showcase">Gallery</a>
+		<a href="{tplvars.baseurl}/kb/0/knowledge-base" title="Support and Frequently Asked Questions">Support</a>
+		<a href="{tplvars.relative_url}purchase.php" title="Buy now">Purchase</a>
+		<a href="{tplvars.relative_url}contact.php" title="Ask us a question">Contact</a>
+		<a href="{tplvars.relative_url}tos.php" title="Terms">Terms</a>
+	</p>
+	<p>Copyright (c) 2006-<script type="text/javascript">curdate=new Date(); document.write(curdate.getFullYear())</script> Datemill</p>
+</div>
+</body>
+</html>

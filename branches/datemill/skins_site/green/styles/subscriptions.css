@@ -1,0 +1,19 @@
+#subscr_form dt {
+	width: 120px;
+}
+
+#subscr_form dd {
+	width: 400px;
+}
+
+#subscr_form dd li label {
+	padding-left: 5px;
+}
+
+#subscr_form dd li {
+	padding-bottom: 10px;
+}
+
+#subscr_form dd li input {
+	margin: -3px 0;
+}

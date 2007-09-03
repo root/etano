@@ -19,7 +19,6 @@ if (($pos=strpos($request_uri,'?'))!==false) {
 }
 //phpinfo();die;
 
-$baseurl_parts=explode('/',substr(_BASEURL_,7));
 if (($pos=strpos(_BASEURL_,'/',8))!==false) {
 	$request_uri=str_replace(substr(_BASEURL_,$pos),'',$request_uri);
 }
