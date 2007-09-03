@@ -1,0 +1,113 @@
+/*============================PROMO================================*/
+
+
+#promo {
+	height: 293px;
+	background: url('../images/promo_bg.gif') no-repeat top left;
+	position: relative;
+}
+
+#testimonials {
+	position: absolute;
+	left: 410px;
+	top: 135px;
+	width: 398px;
+	height: 80px;
+	text-align: justify;
+	font-size: 85%;
+}
+
+#testimonials cite {
+	float: right;
+	font-style: italic;
+}
+
+#tease_buttons {
+	position: absolute;
+	bottom: 7px;
+	right: 68px;
+}
+
+#btn_demo,#btn_features,#btn_buy {
+	display: block;
+	float: left;
+	height: 44px;
+	text-indent: -9999px;
+}
+
+a#btn_demo {
+	width: 144px;
+	background: url('../images/btn_demo.gif') no-repeat top left;
+	margin-right: 20px;
+}
+
+a#btn_features {
+	width: 144px;
+	background: url('../images/btn_features.gif') no-repeat top left;
+	margin-right: 20px;
+}
+
+a#btn_buy {
+	width: 126px;
+	background: url('../images/btn_buy.gif') no-repeat top left;
+}
+
+a#btn_demo:hover,a#btn_features:hover,a#btn_buy:hover {
+	background-position: bottom left;
+}
+
+/*============================CONTENT================================*/
+
+.column1 {
+	float: right;
+	width: 77%;
+	border-left: 1px solid #ccc;
+	padding-left: 10px;
+}
+
+.column1 p {
+	margin-bottom: 5px;
+}
+
+.column2 {
+	float: left;
+	width: 20%;
+	padding-right: 10px;
+}
+
+#features li {
+	list-style-image: url('../images/bullet1.gif');
+	margin-left: 20px;
+}
+
+#features li.last {
+	list-style-image: url('../images/bullet2.gif');
+}
+
+#login-box dt {
+	float: left;
+	width: 60px;
+}
+
+#login-box dd {
+	float: left;
+}
+
+#login-box dl {
+	clear: both;
+	float: none;
+}
+
+a#lostpasslink {
+	font-size: 80%;
+	padding-left: 15px;
+}
+
+#username, #password {
+	width: 100px;
+}
+
+#lost-password {
+	float: right;
+}
+

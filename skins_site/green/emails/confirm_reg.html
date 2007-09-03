@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	<style>
+		html {
+			height: 100%;
+		}
+
+		body {
+			background-color: #FFFFFF;
+			color: #222222;
+			font: 12px "Trebuchet MS", Arial, sans-serif;
+			height: 100%;
+		}
+
+		.content-link {
+			font-size: 11px;
+			color: #c57794;
+			padding: 0;
+			text-decoration: none;
+			background-position: top left;
+			background-repeat: no-repeat;
+			font-weight: bold;
+		}
+		.content-link:hover {
+			text-decoration: underline;
+			background-position: bottom left;
+		}
+
+		img {
+			border: none;
+		}
+		#footer {
+			border-top: 1px solid #ccc;
+			margin-top: 10px;
+			font-size: 10px;
+		}
+	</style>
+</head>
+<body>
+<table>
+<tr>
+	<td>
+		<p>You have requested a new user account on <a href="{tplvars.baseurl}">{tplvars.sitename}</a> and you have specified this address ({output.email}) as your contact email.</p>
+		<p>If you did not do this, please ignore this email.</p>
+		<p>To confirm your user registration, you have to follow this link:</p>
+		<p><a href="{tplvars.baseurl}/account_confirm.php?uid={output.uid}&amp;secret={output.temp_pass}">{tplvars.baseurl}/account_confirm.php?uid={output.uid}&amp;secret={output.temp_pass}</a></p>
+		<p>After you do this, you will be able to use your new account. If you fail to
+		do this, you account will be deleted within a few days. We urge you to read
+		the RULES and FAQ before you start using <a href="{tplvars.baseurl}">{tplvars.sitename}</a>.</p>
+	</td>
+</tr>
+</table>
+<div id="footer">
+	<a href="{tplvars.baseurl}">{tplvars.sitename}</a>
+</div>
+</body>
+</html>

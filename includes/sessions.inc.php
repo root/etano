@@ -51,3 +51,10 @@ if (isset($_GET['skin'])) {
 		setcookie('sco_app[skin]',$_GET['skin'],mktime(0,0,0,date('m'),date('d'),date('Y')+1),'/',$cookie_domain);
 	}
 }
+
+// the cookie was probably set from javascript
+if (isset($_SESSION['user']['skin']) && isset($_COOKIE['sco_app']['skin']) && $_COOKIE['sco_app']['skin']!=$_SESSION['user']['skin']) {
+	if (preg_match('/^\w+$/',$_COOKIE['sco_app']['skin'])) {
+		$_SESSION['user']['skin']=$_COOKIE['sco_app']['skin'];
+	}
+}

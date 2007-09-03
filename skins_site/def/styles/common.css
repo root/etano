@@ -285,6 +285,33 @@ ul.pager li.last {
 	color: #58c7fb;
 }
 
+#skin_changer {
+	position: absolute;
+	bottom: 62px;
+	left: 650px;
+	height: 20px;
+}
+
+#skin_changer a {
+	display: block;
+	width: 20px;
+	height: 20px;
+	text-indent: -9999px;
+	float: left;
+	margin: 5px;
+}
+
+#to_def {
+	background: #59C7FB;
+	border: 1px solid #018CD3;
+}
+
+#to_green {
+	background: #b4dd44;
+	border: 1px solid #9c4711;
+
+}
+
 /*============================CONTENT================================*/
 
 #content {

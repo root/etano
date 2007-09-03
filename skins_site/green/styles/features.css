@@ -1,0 +1,53 @@
+#feature_summary {
+	margin-left: 20px;
+	padding: 10px;
+	border: 1px dotted #ddd;
+	margin-top: 10px;
+}
+
+#feature_summary h4 {
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+#feature_summary ul {
+	list-style-image: url('../images/bullet2.gif');
+	margin-left: 30px;
+}
+
+h3 {
+	border-top: 1px dotted #ccc;
+	padding-top: 20px;
+	margin-top: 20px;
+}
+
+h3#userfeats {
+	border: none;
+	padding-top:0;
+}
+
+ul.features {
+	list-style-image: url('../images/bullet1.gif');
+	margin-left: 20px;
+}
+
+ul.features li {
+	font-size: 80%;
+	text-align: justify;
+	margin-bottom: 10px;
+}
+
+ul.features li strong {
+	display: block;
+	font-size: 120%;
+}
+
+ul.features li.last {
+	font-size: 110%;
+	list-style-image: url('../images/bullet2.gif');
+}
+
+#content h3 a.totop {
+	float: right;
+	font-size: 80%;
+}

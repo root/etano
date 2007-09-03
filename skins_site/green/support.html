@@ -1,0 +1,37 @@
+<p>Here you can find a list of the most frequent questions we are asked. If you cannot find the answer you are looking for here, you can try the <a href="{tplvars.baseurl}/forum" title="Community driven forum for Etano">dedicated forum</a> or you could <a href="contact.php" title="Contact Us">contact us</a> directly.</p>
+
+<h3>{output.tracer}</h3>
+
+<!--opt name="output.has_subcategs"-->
+<div id="subcategs">
+	<h4>Sub-categories</h4>
+	<ul>
+		<!--loop name="subcategs"-->
+		<li><a href="{tplvars.baseurl}/kb/{subcategs.kbc_id}/{subcategs.kbc_title_url}" title="{subcategs.kbc_title}">{subcategs.kbc_title}</a></li>
+		<!--/loop name="subcategs"-->
+	</ul>
+</div>
+<!--/opt name="output.has_subcategs"-->
+
+<!--opt name="output.has_articles"-->
+<div id="article_summary">
+	<h4>Articles in this category</h4>
+	<ul>
+		<!--loop name="articles"-->
+		<li><a href="#art_{articles.kba_id}" title="{articles.kba_title}">{articles.kba_title}</a></li>
+		<!--/loop name="articles"-->
+	</ul>
+	{output.pager}
+</div>
+<!--/opt name="output.has_articles"-->
+
+<ul class="articles">
+<!--loop name="articles"-->
+	<li>
+		<a name="art_{articles.kba_id}"></a><p><a class="totop" href="#pagetop" title="Back to top">top</a>{articles.kba_title}</p>
+		{articles.kba_content}
+	</li>
+<!--/loop name="articles"-->
+</ul>
+
+<script type="text/javascript" src="{tplvars.relative_url}js/support.js?v={tplvars.js_lib_v}"></script>
