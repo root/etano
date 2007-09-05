@@ -85,7 +85,7 @@ switch ($output['field_type']) {
 		if (!empty($accepted_values)) {
 			$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id` IN ('".join("','",$accepted_values)."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$accepted_values=array();
+			$accepted_values=array_flip($accepted_values);
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				$accepted_values[$rsrow['fk_lk_id']]=$rsrow['lang_value'];
 			}
@@ -109,7 +109,7 @@ switch ($output['field_type']) {
 		if (!empty($accepted_values)) {
 			$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id` IN ('".join("','",$accepted_values)."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$accepted_values=array();
+			$accepted_values=array_flip($accepted_values);
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				$accepted_values[$rsrow['fk_lk_id']]=$rsrow['lang_value'];
 			}

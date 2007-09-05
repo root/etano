@@ -59,8 +59,8 @@ if ($_GET['move']=='d') {
 	}
 }
 
-regenerate_fields_array();
-regenerate_langstrings_array();
+//regenerate_langstrings_array();
+//regenerate_fields_array();
 
 if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/'.$return;

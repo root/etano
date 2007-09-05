@@ -48,6 +48,7 @@ $accepted_yesno=array(0=>'No',1=>'Yes');
 $country_prefered_input=array('s'=>'state/city selection','z'=>'zip/postal code');
 $inverse_fields=array(2=>'FIELD_TEXTFIELD',3=>'FIELD_SELECT',4=>'FIELD_TEXTAREA',9=>'FIELD_CHECKBOX',10=>'FIELD_CHECKBOX_LARGE',101=>'FIELD_FILE',102=>'FIELD_FK_SELECT',103=>'FIELD_DATE',104=>'FIELD_INT',105=>'FIELD_FLOAT',106=>'HTML_PIC',107=>'FIELD_LOCATION',108=>'FIELD_RANGE');
 $flirt_types=array(0=>'Initial flirt',1=>'Reply');
+$accepted_module_types=array(MODULE_REGULAR=>'Update',MODULE_PAYMENT=>'Payment',MODULE_FRAUD=>'Fraud Check',MODULE_WIDGET=>'Widget',MODULE_SKIN=>'Skin');
 
 // you shouldn't call this function directly. Instead set this to set_error_handler() and use the trigger_error method
 function admin_error($errlevel,$text,$file='unset',$line='unset') {

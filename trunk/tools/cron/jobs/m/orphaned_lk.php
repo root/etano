@@ -35,7 +35,7 @@ function orphaned_lk() {
 		$lk_ids[]=mysql_result($res,$i,0);
 	}
 
-	$query="SELECT `lk_id` FROM `{$dbtable_prefix}lang_keys` WHERE `lk_id` NOT IN (".join(',',$lk_ids).") AND (`lk_use`=".LK_FIELD." OR `lk_use`=".LK_SITE.")";
+	$query="SELECT `lk_id` FROM `{$dbtable_prefix}lang_keys` WHERE `lk_id` NOT IN (".join(',',$lk_ids).") AND (`lk_use` IN (".LK_FIELD.','.LK_SITE.")";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$lk_ids=array();
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
