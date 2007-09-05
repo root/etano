@@ -43,6 +43,7 @@ if (!empty($totalrows)) {
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow=sanitize_and_format($rsrow,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$loop[$i]=$rsrow;
+/*
 		if ($loop[$i]['field_type']==FIELD_SELECT || $loop[$i]['field_type']==FIELD_CHECKBOX_LARGE) {
 			$loop[$i]['accepted_values']=lkids2lks(explode('|',substr($loop[$i]['accepted_values'],1,-1)),$default_skin_code);
 		} else {
@@ -51,6 +52,7 @@ if (!empty($totalrows)) {
 		if ($loop[$i]['field_type']==FIELD_LOCATION) {
 			$loop[$i]['dbfield'].='_country';	// just for display
 		}
+*/
 		$loop[$i]['field_type']=$accepted_fieldtype[$loop[$i]['field_type']];
 		$loop[$i]['searchable']=!empty($loop[$i]['searchable']) ? '<img src="skin/images/check.gif" alt="" />' : '';
 		$loop[$i]['reg_page']=(!empty($loop[$i]['reg_page']) && $loop[$i]['at_registration']==1) ? $loop[$i]['reg_page'] : ' - ';
@@ -82,15 +84,15 @@ $tplvars['page']='profile_fields';
 include 'frame.php';
 
 function lkids2lks($lk_ids,$skin) {
-	$myreturn='';
+	$temp=array();
 	global $dbtable_prefix;
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id` IN ('".join("','",$lk_ids)."') AND `skin`='$skin'";
+	$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id` IN ('".join("','",$lk_ids)."') AND `skin`='$skin'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	for ($i=0;$i<mysql_num_rows($res);++$i) {
-		$myreturn.=mysql_result($res,$i,0).', ';
+	foreach ($lk_ids as $v) {
+		$temp[$v]='?';
 	}
-	if (!empty($myreturn)) {
-		$myreturn=substr($myreturn,0,-2);
+	while ($rsrow=mysql_fetch_assoc($res)) {
+		$temp[$rsrow['fk_lk_id']]=$rsrow['lang_value'];
 	}
-	return $myreturn;
+	return join(', ',$temp);
 }

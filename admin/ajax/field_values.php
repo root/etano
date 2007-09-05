@@ -35,6 +35,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		case 'edit':
 			$query="UPDATE `{$dbtable_prefix}lang_strings` SET `lang_value`='$val' WHERE `fk_lk_id`=$lk_id AND `skin`='".get_default_skin_code()."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (!mysql_affected_rows()) {
+				$query="INSERT IGNORE INTO `{$dbtable_prefix}lang_keys` SET `lk_id`=$lk_id,`lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Field value',`lk_use`=".LK_FIELD;
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$query="INSERT IGNORE INTO `{$dbtable_prefix}lang_strings` SET `fk_lk_id`=$lk_id,`lang_value`='$val',`skin`='".get_default_skin_code()."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			}
 			$output=$lk_id;
 			break;
 

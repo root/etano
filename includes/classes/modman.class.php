@@ -48,6 +48,11 @@ class modman {
 	}
 
 
+	function patch() {
+
+	}
+
+
 	function update($file='',$content='',$reverse=false,$new_version='') {
 		require_once 'lib.xml.class.php';
 		if (!empty($file)) {
