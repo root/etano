@@ -106,7 +106,7 @@ class fileop {
 	}
 
 
-	function file_put_contents($myfilename,$mydata) {
+	function file_put_contents($myfilename,&$mydata) {
 		$myreturn=false;
 		if ($this->op_mode=='disk') {
 			if (is_file($myfilename) && !is_writable($myfilename)) {
@@ -146,6 +146,30 @@ class fileop {
 			fclose($fp);
 		}
 		return $myreturn;
+	}
+
+
+	function extract_zip($archive,$path='') {
+		if (substr($archive,-4)=='.zip') {
+			require_once dirname(__FILE__).'/zip.class.php';
+
+			$basename=substr($archive_name,0,-4);
+			$zipfile=new zipfile();
+			$zipfile->read_zip($archive);
+			if (empty($path)) {
+				$path=dirname($archive);
+			}
+			for ($i=0;isset($zipfile->dirs[$i]);++$i) {
+				if (!is_dir($path.'/'.$basename.$zipfile->dirs[$i])) {
+					$this->mkdir($path.'/'.$basename.$zipfile->dirs[$i]);
+				}
+			}
+		}
+		for ($i=0;isset($zipfile->files[$i]);++$i) {
+			$this->file_put_contents($path.'/'.$basename.$zipfile->files[$i]['dir'].'/'.$zipfile->files[$i]['name'],$zipfile->files[$i]['data']);
+		}
+		
+		return $basename;
 	}
 
 

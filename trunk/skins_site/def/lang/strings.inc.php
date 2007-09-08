@@ -1,10 +1,12 @@
 <?php
 setlocale(LC_TIME,array('en_US','english'));
-$GLOBALS['_lang'][1]='Basic Info';
+$GLOBALS['_lang'][1]='';
 $GLOBALS['_lang'][2]='Appearance';
 $GLOBALS['_lang'][3]='About me';
 $GLOBALS['_lang'][4]='';
 $GLOBALS['_lang'][5]='';
+$GLOBALS['_lang'][6]='Man';
+$GLOBALS['_lang'][7]='Woman';
 $GLOBALS['_lang'][8]='I am a';
 $GLOBALS['_lang'][9]='Find a';
 $GLOBALS['_lang'][10]='';

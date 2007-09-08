@@ -42,5 +42,5 @@ if (empty($_GET['from_cat'])) {
 }
 
 $topass['message']['type']=MESSAGE_INFO;
-$topass['message']['text']='Field and category changes applied succesfully.';
+$topass['message']['text']='Field and category changes applied successfully.';
 redirect2page('admin/profile_fields.php',$topass);

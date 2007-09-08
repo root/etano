@@ -72,7 +72,6 @@ function set_seolink() {
 - ca sa nu se stearga un searchmd5 folosit din site_searches, as putea sa fac refresh la searchurile din site_searches in loc sa
 	le sterg. doar ca poate ar trebui sa fac si un contoar cu cat de folosite sunt searchurile ca sa nu le tin degeaba.
 - modman: ftp low level?
-- read zip files. extract files from zip archives (pt modmanager).
 - help texts (hints) pentru campurile textarea
 - functie fields_edit_tpl($field_ids)
 - functie fields_search_tpl($field_ids)

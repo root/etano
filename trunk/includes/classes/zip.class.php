@@ -7,6 +7,9 @@ class zipfile
 		Based on tutorial given by John Coggeshall at http://www.zend.com/zend/spotlight/creating-zip-files3.php
 		Copyright (C) Joshua Townsend and licensed under the GPL
 		Version 1.0
+
+		Tweaked & improved by datemill.com
+
 	*/
 	var $datasec = array(); // array to store compressed data
 	var $files = array(); // array of uncompressed files
@@ -26,25 +29,25 @@ class zipfile
 		$fr .= "\x00\x00";	// compression method
 		$fr .= "\x00\x00\x00\x00"; // last mod time and date
 
-		$fr .= pack("V",0); // crc32
-		$fr .= pack("V",0); //compressed filesize
-		$fr .= pack("V",0); //uncompressed filesize
-		$fr .= pack("v",strlen($name)); //length of pathname
-		$fr .= pack("v", 0); //extra field length
+		$fr .= pack('V',0); // crc32
+		$fr .= pack('V',0); //compressed filesize
+		$fr .= pack('V',0); //uncompressed filesize
+		$fr .= pack('v',strlen($name)); //length of pathname
+		$fr .= pack('v', 0); //extra field length
 		$fr .= $name;
 		// end of "local file header" segment
 
 		// no "file data" segment for path
 
 		// "data descriptor" segment (optional but necessary if archive is not served as file)
-		$fr .= pack("V",0); //crc32
-		$fr .= pack("V",0); //compressed filesize
-		$fr .= pack("V",0); //uncompressed filesize
+		$fr .= pack('V',0); //crc32
+		$fr .= pack('V',0); //compressed filesize
+		$fr .= pack('V',0); //uncompressed filesize
 
 		// add this entry to array
 		$this->datasec[] = $fr;
 
-		$new_offset = strlen(implode("", $this->datasec));
+		$new_offset = strlen(implode('', $this->datasec));
 
 		// ext. file attributes mirrors MS-DOS directory attr byte, detailed
 		// at http://support.microsoft.com/support/kb/articles/Q125/0/19.asp
@@ -56,17 +59,17 @@ class zipfile
 		$cdrec .="\x00\x00";	// general purpose bit flag
 		$cdrec .="\x00\x00";	// compression method
 		$cdrec .="\x00\x00\x00\x00"; // last mod time and date
-		$cdrec .= pack("V",0); // crc32
-		$cdrec .= pack("V",0); //compressed filesize
-		$cdrec .= pack("V",0); //uncompressed filesize
-		$cdrec .= pack("v", strlen($name) ); //length of filename
-		$cdrec .= pack("v", 0 ); //extra field length
-		$cdrec .= pack("v", 0 ); //file comment length
-		$cdrec .= pack("v", 0 ); //disk number start
-		$cdrec .= pack("v", 0 ); //internal file attributes
-		$cdrec .= pack("V", 16 ); //external file attributes  - 'directory' bit set
+		$cdrec .= pack('V',0); // crc32
+		$cdrec .= pack('V',0); //compressed filesize
+		$cdrec .= pack('V',0); //uncompressed filesize
+		$cdrec .= pack('v', strlen($name) ); //length of filename
+		$cdrec .= pack('v', 0 ); //extra field length
+		$cdrec .= pack('v', 0 ); //file comment length
+		$cdrec .= pack('v', 0 ); //disk number start
+		$cdrec .= pack('v', 0 ); //internal file attributes
+		$cdrec .= pack('V', 16 ); //external file attributes  - 'directory' bit set
 
-		$cdrec .= pack("V", $this->old_offset); //relative offset of local header
+		$cdrec .= pack('V', $this->old_offset); //relative offset of local header
 		$this->old_offset = $new_offset;
 
 		$cdrec .= $name;
@@ -92,26 +95,26 @@ class zipfile
 		$zdata = gzcompress($data);
 		$zdata = substr($zdata, 2, -4); // fix crc bug
 		$c_len = strlen($zdata);
-		$fr .= pack("V",$crc); // crc32
-		$fr .= pack("V",$c_len); //compressed filesize
-		$fr .= pack("V",$unc_len); //uncompressed filesize
-		$fr .= pack("v", strlen($name) ); //length of filename
-		$fr .= pack("v", 0 ); //extra field length
+		$fr .= pack('V',$crc); // crc32
+		$fr .= pack('V',$c_len); //compressed filesize
+		$fr .= pack('V',$unc_len); //uncompressed filesize
+		$fr .= pack('v', strlen($name) ); //length of filename
+		$fr .= pack('v', 0 ); //extra field length
 		$fr .= $name;
-		// end of "local file header" segment
+		// end of 'local file header' segment
 
-		// "file data" segment
+		// 'file data' segment
 		$fr .= $zdata;
 
-		// "data descriptor" segment (optional but necessary if archive is not served as file)
-		$fr .= pack("V",$crc); // crc32
-		$fr .= pack("V",$c_len); // compressed filesize
-		$fr .= pack("V",$unc_len); // uncompressed filesize
+		// 'data descriptor' segment (optional but necessary if archive is not served as file)
+		$fr .= pack('V',$crc); // crc32
+		$fr .= pack('V',$c_len); // compressed filesize
+		$fr .= pack('V',$unc_len); // uncompressed filesize
 
 		// add this entry to array
 		$this->datasec[] = $fr;
 
-		$new_offset = strlen(implode("", $this->datasec));
+		$new_offset = strlen(implode('', $this->datasec));
 
 		// now add to central directory record
 		$cdrec = "\x50\x4b\x01\x02";
@@ -120,17 +123,17 @@ class zipfile
 		$cdrec .="\x00\x00";	// general purpose bit flag
 		$cdrec .="\x08\x00";	// compression method
 		$cdrec .="\x00\x00\x00\x00"; // last mod time & date
-		$cdrec .= pack("V",$crc); // crc32
-		$cdrec .= pack("V",$c_len); //compressed filesize
-		$cdrec .= pack("V",$unc_len); //uncompressed filesize
-		$cdrec .= pack("v", strlen($name) ); //length of filename
-		$cdrec .= pack("v", 0 ); //extra field length
-		$cdrec .= pack("v", 0 ); //file comment length
-		$cdrec .= pack("v", 0 ); //disk number start
-		$cdrec .= pack("v", 0 ); //internal file attributes
-		$cdrec .= pack("V", 32 ); //external file attributes - 'archive' bit set
+		$cdrec .= pack('V',$crc); // crc32
+		$cdrec .= pack('V',$c_len); //compressed filesize
+		$cdrec .= pack('V',$unc_len); //uncompressed filesize
+		$cdrec .= pack('v', strlen($name) ); //length of filename
+		$cdrec .= pack('v', 0 ); //extra field length
+		$cdrec .= pack('v', 0 ); //file comment length
+		$cdrec .= pack('v', 0 ); //disk number start
+		$cdrec .= pack('v', 0 ); //internal file attributes
+		$cdrec .= pack('V', 32 ); //external file attributes - 'archive' bit set
 
-		$cdrec .= pack("V", $this->old_offset); //relative offset of local header
+		$cdrec .= pack('V', $this->old_offset); //relative offset of local header
 		$this->old_offset = $new_offset;
 
 		$cdrec .= $name;
@@ -165,11 +168,13 @@ class zipfile
 		$filesecta = explode("\x50\x4b\x03\x04", $filesecta[0]);
 		array_shift($filesecta); // Removes empty entry/signature
 
+		$temp_dirs=array();
+
 		foreach($filesecta as $filedata)
 		{
 			// CRC:crc, FD:file date, FT: file time, CM: compression method, GPF: general purpose flag, VN: version needed, CS: compressed size, UCS: uncompressed size, FNL: filename length
 			$entrya = array();
-			$entrya['error'] = "";
+			$entrya['error'] = '';
 
 			$unpackeda = unpack("v1version/v1general_purpose/v1compress_method/v1file_time/v1file_date/V1crc/V1size_compressed/V1size_uncompressed/v1filename_length", $filedata);
 
@@ -190,31 +195,26 @@ class zipfile
 
 			$entrya['name'] = substr($filedata, 26, $unpackeda['filename_length']);
 
-			if(substr($entrya['name'], -1) == "/") // skip directories
-			{
+			if(substr($entrya['name'], -1) == '/') {	// skip directories
 				continue;
 			}
 
 			$entrya['dir'] = dirname($entrya['name']);
-			$entrya['dir'] = ($entrya['dir'] == "." ? "" : $entrya['dir']);
+			$entrya['dir'] = ($entrya['dir'] == '.' ? '' : $entrya['dir']);
+			$entrya['dir']='/'.$entrya['dir'];
+			$temp_dirs[$entrya['dir']]=1;
 			$entrya['name'] = basename($entrya['name']);
-
 
 			$filedata = substr($filedata, 26 + $unpackeda['filename_length']);
 
-			if(strlen($filedata) != $unpackeda['size_compressed'])
-			{
-				$entrya['error'] = "Compressed size is not equal to the value given in header.";
+			if(strlen($filedata) != $unpackeda['size_compressed']) {
+				$entrya['error'] = 'Compressed size is not equal to the value given in header.';
 			}
 
-			if($isencrypted)
-			{
-				$entrya['error'] = "Encryption is not supported.";
-			}
-			else
-			{
-				switch($unpackeda['compress_method'])
-				{
+			if($isencrypted) {
+				$entrya['error'] = 'Encryption is not supported.';
+			} else {
+				switch($unpackeda['compress_method']) {
 					case 0: // Stored
 						// Not compressed, continue
 					break;
@@ -222,37 +222,26 @@ class zipfile
 						$filedata = gzinflate($filedata);
 					break;
 					case 12: // BZIP2
-						if(!extension_loaded("bz2"))
-						{
-							@dl((strtolower(substr(PHP_OS, 0, 3)) == "win") ? "php_bz2.dll" : "bz2.so");
+						if(!extension_loaded('bz2')) {
+							@dl((strtolower(substr(PHP_OS, 0, 3)) == 'win') ? 'php_bz2.dll' : 'bz2.so');
 						}
-
-						if(extension_loaded("bz2"))
-						{
+						if(extension_loaded('bz2'))	{
 							$filedata = bzdecompress($filedata);
-						}
-						else
-						{
-							$entrya['error'] = "Required BZIP2 Extension not available.";
+						} else {
+							$entrya['error'] = 'Required BZIP2 Extension not available.';
 						}
 					break;
 					default:
 						$entrya['error'] = "Compression method ({$unpackeda['compress_method']}) not supported.";
 				}
 
-				if(!$entrya['error'])
-				{
-					if($filedata === false)
-					{
-						$entrya['error'] = "Decompression failed.";
-					}
-					elseif(strlen($filedata) != $unpackeda['size_uncompressed'])
-					{
-						$entrya['error'] = "File size is not equal to the value given in header.";
-					}
-					elseif(crc32($filedata) != $unpackeda['crc'])
-					{
-						$entrya['error'] = "CRC32 checksum is not equal to the value given in header.";
+				if(!$entrya['error']) {
+					if($filedata === false)	{
+						$entrya['error'] = 'Decompression failed.';
+					} elseif(strlen($filedata) != $unpackeda['size_uncompressed']) {
+						$entrya['error'] = 'File size is not equal to the value given in header.';
+					} elseif(crc32($filedata) != $unpackeda['crc']) {
+						$entrya['error'] = 'CRC32 checksum is not equal to the value given in header.';
 					}
 				}
 
@@ -263,65 +252,65 @@ class zipfile
 			$this->files[] = $entrya;
 		}
 
+		// have all dirs and sub-dirs ordered by the number of slashes in the path
+		$temp_dirs=array_keys($temp_dirs);
+		$this->dirs=array();
+		for ($i=0;isset($temp_dirs[$i]);++$i) {
+			$temp=explode('/',$temp_dirs[$i]);
+			$path='';
+			for ($j=0;isset($temp[$j]);++$j) {
+				$path.='/'.$temp[$j];
+				$this->dirs[substr($path,1)]=$j;
+			}
+		}
+		unset($this->dirs[0]);
+		asort($this->dirs);
+		$this->dirs=array_keys($this->dirs);
 		return $this->files;
 	}
 
-	function add_file($file, $dir = ".", $file_blacklist = array(), $ext_blacklist = array())
-	{
+	function add_file($file, $dir = ".", $file_blacklist = array(), $ext_blacklist = array()) {
 		$file = str_replace("\\", "/", $file);
 		$dir = str_replace("\\", "/", $dir);
 
-		if(strpos($file, "/") !== false)
-		{
+		if(strpos($file, '/') !== false) {
 			$dira = explode("/", "{$dir}/{$file}");
 			$file = array_shift($dira);
 			$dir = implode("/", $dira);
 			unset($dira);
 		}
 
-		while(substr($dir, 0, 2) == "./")
-		{
+		while(substr($dir, 0, 2) == "./") {
 			$dir = substr($dir, 2);
 		}
-		while(substr($file, 0, 2) == "./")
-		{
+		while(substr($file, 0, 2) == "./") {
 			$file = substr($file, 2);
 		}
-		if(!in_array($dir, $this->dirs))
-		{
-			if($dir == ".")
-			{
-				$this->create_dir("./");
+		if(!in_array($dir, $this->dirs)) {
+			if($dir == '.') {
+				$this->create_dir('./');
 			}
 			$this->dirs[] = $dir;
 		}
-		if(in_array($file, $file_blacklist))
-		{
+		if(in_array($file, $file_blacklist)) {
 			return true;
 		}
-		foreach($ext_blacklist as $ext)
-		{
-			if(substr($file, -1 - strlen($ext)) == ".{$ext}")
-			{
+		foreach($ext_blacklist as $ext) {
+			if(substr($file, -1 - strlen($ext)) == ".{$ext}") {
 				return true;
 			}
 		}
 
 		$filepath = (($dir && $dir != ".") ? "{$dir}/" : "").$file;
-		if(is_dir("{$this->basedir}/{$filepath}"))
-		{
+		if(is_dir("{$this->basedir}/{$filepath}")) {
 			$dh = opendir("{$this->basedir}/{$filepath}");
-			while(($subfile = readdir($dh)) !== false)
-			{
-				if($subfile != "." && $subfile != "..")
-				{
+			while(($subfile = readdir($dh)) !== false) {
+				if($subfile != "." && $subfile != "..") {
 					$this->add_file($subfile, $filepath, $file_blacklist, $ext_blacklist);
 				}
 			}
 			closedir($dh);
-		}
-		else
-		{
+		} else {
 			$this->create_file(implode("", file("{$this->basedir}/{$filepath}")), $filepath);
 		}
 
