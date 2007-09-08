@@ -97,19 +97,22 @@ class etano_package {
 			$mod_command=$mydoc->firstChild->firstChild;
 			while ($mod_command) {
 				if ($mod_command->nodeName=='php') {
-					if (!is_file($this->package_path.'/'.$mod_command->firstChild->nodeValue)) {
+					$mod_command->firstChild->nodeValue=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$mod_command->firstChild->nodeValue);
+					if (!is_file($mod_command->firstChild->nodeValue)) {
 						$this->error=true;
 						$this->error_text=sprintf('Couldn\'t find %1$s php file required by %2$s',$mod_command->firstChild->nodeValue,$modfile);
 						break;
 					}
-				} elseif ($mod_command->nodeName=='file-copy') {
+				} elseif ($mod_command->nodeName=='copy') {
 					$attrs=$mod_command->attributes;
-					if (!is_file(_BASEPATH_.'/'.$attrs['from'])) {
+					$attrs['from']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['from']);
+					if (!is_file($attrs['from'])) {
 						$this->error=true;
 						$this->error_text=sprintf('Couldn\'t find %1$s file required by %2$s',$attrs['from'],$modfile);
 						break;
 					}
-				} elseif ($mod_command->nodeName=='file-del') {
+				} elseif ($mod_command->nodeName=='delete') {
+				} elseif ($mod_command->nodeName=='mkdir') {
 				} elseif ($mod_command->nodeName=='diff') {
 					if (!is_file($this->package_path.'/'.$mod_command->firstChild->nodeValue)) {
 						$this->error=true;
@@ -153,7 +156,8 @@ class etano_package {
 				{	// artificially create a block
 					// inside the included file we're still in this class!!
 					// this php file can generate errors of type critical which halt the execution of installer
-					require_once $this->package_path.'/'.$mod_command->firstChild->nodeValue;
+					$mod_command->firstChild->nodeValue=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$mod_command->firstChild->nodeValue);
+					require_once $mod_command->firstChild->nodeValue;
 				}	// end block
 			} elseif ($mod_command->nodeName=='diff') {
 				if (isset($mod_command->attributes['force_revision'])) {
@@ -168,8 +172,10 @@ class etano_package {
 					$this->manual_actions[$masize]['to']='';
 					$this->manual_actions[$masize]['error']=$this->error_text;
 				}
-			} elseif ($mod_command->nodeName=='file-copy') {
+			} elseif ($mod_command->nodeName=='copy') {
 				$attrs=$mod_command->attributes;
+				$attrs['from']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['from']);
+				$attrs['to']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['to']);
 				if (!$fileop->copy($attrs['from'],$attrs['to'])) {
 					$masize=count($this->manual_actions);
 					$this->manual_actions[$masize]['type']='copy';
@@ -177,14 +183,31 @@ class etano_package {
 					$this->manual_actions[$masize]['to']=$attrs['to'];
 					$this->manual_actions[$masize]['error']=sprintf("Unable to copy file '%1$s' to '%2$s'",$attrs['from'],$attrs['to']);
 				}
-			} elseif ($mod_command->nodeName=='file-del') {
+			} elseif ($mod_command->nodeName=='delete') {
 				$attrs=$mod_command->attributes;
-				if (!$fileop->delete(_BASEPATH_.'/'.$attrs['file'])) {
+				$attrs['file']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['file']);
+				if (!$fileop->delete($attrs['file'])) {
 					$masize=count($this->manual_actions);
 					$this->manual_actions[$masize]['type']='delete';
 					$this->manual_actions[$masize]['from']=$attrs['file'];
 					$this->manual_actions[$masize]['to']='';
 					$this->manual_actions[$masize]['error']="Unable to automatically delete file.";
+				}
+			} elseif ($mod_command->nodeName=='mkdir') {
+				$attrs=$mod_command->attributes;
+				$attrs['path']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['path']);
+				$path='';
+				$temp=explode('/',$attrs['path']);
+				for ($i=0;isset($temp[$i]);++$i) {
+					$path.='/'.$temp[$i];
+					if (!is_dir($path) && !$fileop->mkdir($path)) {
+						$masize=count($this->manual_actions);
+						$this->manual_actions[$masize]['type']='mkdir';
+						$this->manual_actions[$masize]['from']=$attrs['path'];
+						$this->manual_actions[$masize]['to']='';
+						$this->manual_actions[$masize]['error']='Unable to create automatically create directory.';
+						break;
+					}
 				}
 			} elseif ($mod_command->nodeName=='sql') {
 				$attrs=$mod_command->attributes;
