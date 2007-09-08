@@ -1,15 +1,33 @@
 <h2>Package Manager</h2>
 
+<h3>These modules are available for install on your site:</h3>
+
+<table class="results_table">
+<tr>
+	<th class="mod_name">Module Name</th>
+	<th class="mod_type">Type</th>
+	<th>Dependencies not satisfied</th>
+</tr>
+<!--loop name="not_installed"-->
+<tr>
+	<td class="mod_name">{not_installed.module_name} ({not_installed.version}) <!--opt name="not_installed.valid"--><a href="install_package.php?f={not_installed.filename}">install</a><!--/opt name="not_installed.valid"--></td>
+	<td>{not_installed.module_type}</td>
+	<td>{not_installed.reasons}</td>
+</tr>
+<!--/loop name="not_installed"-->
+</table>
+
+
 <h3>These modules are installed on your site:</h3>
 
 <table class="results_table">
 <tr>
-	<th>Module Name</th>
+	<th class="mod_name">Module Name</th>
 	<th>Type</th>
 </tr>
 <!--loop name="installed"-->
 <tr>
-	<td>{installed.module_name} ({installed.version})</td>
+	<td class="mod_name">{installed.module_name} ({installed.version})</td>
 	<td>{installed.module_type}</td>
 </tr>
 <!--/loop name="installed"-->

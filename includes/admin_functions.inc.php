@@ -135,9 +135,9 @@ function regenerate_fields_array() {
 			case FIELD_SELECT:
 			case FIELD_CHECKBOX_LARGE:
 				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
-					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-',\$GLOBALS['_lang'][".str_replace('|',"],\$GLOBALS['_lang'][",substr($rsrow['accepted_values'],1,-1))."]);\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('',\$GLOBALS['_lang'][".str_replace('|',"],\$GLOBALS['_lang'][",substr($rsrow['accepted_values'],1,-1))."]);\n";
 				} else {
-					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-');\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('');\n";
 				}
 				if (!empty($rsrow['default_value']) && $rsrow['default_value']!='||') {
 					$rsrow['default_value']=explode('|',substr($rsrow['default_value'],1,-1));
@@ -165,9 +165,9 @@ function regenerate_fields_array() {
 
 			case FIELD_DATE:
 				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
-					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-','".str_replace('|',"','",substr($rsrow['accepted_values'],1,-1))."');\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('','".str_replace('|',"','",substr($rsrow['accepted_values'],1,-1))."');\n";
 				} else {
-					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-');\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('');\n";
 				}
 				if (!empty($rsrow['default_search']) && $rsrow['default_search']!='||') {
 					$rsrow['default_search']=explode('|',substr($rsrow['default_search'],1,-1));

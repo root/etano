@@ -404,7 +404,7 @@ function create_search_form($search_fields) {
 				case FIELD_SELECT:
 					if (isset($user_defaults[$field['dbfield']])) {
 						$field['default_search'][0]=$user_defaults[$field['dbfield']];
-					} else {
+					} elseif (empty($field['default_search'])) {
 						$field['default_search'][0]=0;
 					}
 					$myreturn[$s]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0]).'</select>';
@@ -413,8 +413,8 @@ function create_search_form($search_fields) {
 				case FIELD_CHECKBOX_LARGE:
 					if (isset($user_defaults[$field['dbfield']])) {
 						$field['default_search']=$user_defaults[$field['dbfield']];
-					} else {
-						$field['default_search']='';
+					} elseif (empty($field['default_search'])) {
+						$field['default_search']=array();
 					}
 					$myreturn[$s]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],$field['default_search'],2,true,'tabindex="'.($i+4).'"');
 					break;
