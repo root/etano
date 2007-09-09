@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       admin/install_package.php
+File:                       admin/package_install.php
 $Revision: 217 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -59,7 +59,7 @@ if (substr($file,-4)=='.zip') {
 			$mcodes[$rsrow['module_code']]=$rsrow['version'];
 		}
 		// make sure this new package is installable
-		if (!isset($mcodes[$p->module_code]) || $mcodes[$p->module_code]<$p->version) {	// not installed packages
+		if (!isset($mcodes[$p->module_code]) || $mcodes[$p->module_code]<$p->version) {	// not installed packages/versions
 			for ($j=0;isset($p->install[$j]);++$j) {
 				$req_ok=true;
 				for ($k=0;isset($p->install[$j]['requires'][$k]);++$k) {
@@ -69,8 +69,8 @@ if (substr($file,-4)=='.zip') {
 					}
 				}
 				if ($req_ok) {	// if all requirements of this install are satisfied....
-					if ($p->dry_run($p->install[$j]['file'])) {	// ...test to see if we can install the package
-						$p->install($p->install[$j]['file']);	// ...and finally install it.
+					if ($p->dry_run($j) {	// ...test to see if we can install the package
+						$p->install($j);	// ...and finally install it.
 						// if there's another install instruction after this one we need to reread the list of installed
 						// modules because our install might have modified it.
 						if (isset($p->install[$j+1])) {

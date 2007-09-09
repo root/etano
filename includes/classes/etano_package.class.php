@@ -25,22 +25,20 @@ class etano_package {
 	var $package_path='';
 	var $manual_actions=array();
 
-	function etano_package($manifest_content='',$manifest_file='') {
+	function etano_package($manifest_file='') {
 		if (!empty($manifest_file)) {
 			$this->set_file($manifest_file);
-		} elseif (!empty($manifest_content)) {
-			$this->set_content($manifest_content);
 		}
 	}
 
 
 	function set_file($manifest_file) {
 		$this->package_path=dirname($manifest_file);
-		$this->set_content(file_get_contents($manifest_file));
+		$this->_set_content(file_get_contents($manifest_file));
 	}
 
 
-	function set_content($manifest_content) {
+	function _set_content($manifest_content) {
 		$manifest=new XML_dsb();
 		$manifest->parseXML($manifest_content);
 		$item=$manifest->firstChild;
@@ -67,7 +65,7 @@ class etano_package {
 								$this->install[$install_counter]['requires'][$i]['version']=$attrs['version'];
 							}
 							if (isset($attrs['change-version'])) {
-								$this->install[$install_counter]['requires'][$i]['new_version']=$attrs['change-version'];
+								$this->install[$install_counter]['requires'][$i]['change-version']=$attrs['change-version'];
 							}
 						} elseif ($setting->nodeName=='modfile') {
 							$this->install[$install_counter]['file']=$setting->firstChild->nodeValue;
@@ -85,11 +83,9 @@ class etano_package {
 	}
 
 
-	function dry_run($modfile) {
-		if (empty($this->package_path)) {
-			$this->package_path=str_replace(_BASEPATH_.'/tmp/packages/','',$modfile);
-			$this->package_path=_BASEPATH_.'/tmp/packages/'.substr($this->package_path,0,strpos($this->package_path,'/'));
-		}
+	function dry_run($install_index) {
+		$modfile=$this->package_path.'/'.$this->install[$install_index]['file'];
+
 		if (is_file($modfile)) {
 			$mod_content=file_get_contents($modfile);
 			$mydoc=new XML_dsb();
@@ -141,13 +137,10 @@ class etano_package {
 	}
 
 
-	function install($modfile) {
-		$fileop=new fileop();
-		if (empty($this->package_path)) {
-			$this->package_path=str_replace(_BASEPATH_.'/tmp/packages/','',$modfile);
-			$this->package_path=_BASEPATH_.'/tmp/packages/'.substr($this->package_path,0,strpos($this->package_path,'/'));
-		}
+	function install($install_index) {
+		$modfile=$this->package_path.'/'.$this->install[$install_index]['file'];
 		$mod_content=file_get_contents($modfile);
+		$fileop=new fileop();
 		$mydoc=new XML_dsb();
 		$mydoc->parseXML($mod_content);
 		$mod_command=$mydoc->firstChild->firstChild;
@@ -238,7 +231,31 @@ class etano_package {
 			}
 			$mod_command=$mod_command->nextSibling;
 		}
+		if (!$this->error) {
+			$this->post_install($install_index);
+		}
 		return !$this->error;
+	}
+
+
+	function post_install($install_index) {
+		global $dbtable_prefix;
+		for ($i=0;isset($this->install[$install_index]['requires'][$i]);++$i) {
+			if (isset($this->install[$install_index]['requires'][$i]['change-version'])) {
+				$query="UPDATE `{$dbtable_prefix}modules` SET `version`='".$this->install[$install_index]['requires'][$i]['change-version']."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			}
+		}
+		$query="SELECT max(`sort`)+1 FROM `{$dbtable_prefix}modules`";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$sort=mysql_result($res,0,0);
+		$query="INSERT IGNORE INTO `{$dbtable_prefix}modules` SET `module_code`='".$this->module_code."',`module_name`='".$this->module_name."',`module_type`='".$this->module_type."',`version`='".$this->version."',`sort`='$sort'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (!mysql_affected_rows()) {
+// if the insert failed then this is an update and the new version should have been set with change-version
+//			$query="UPDATE `{$dbtable_prefix}modules` SET `version`='".$this->version."' WHERE `module_code`='".$this->module_code."'";
+//			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		}
 	}
 
 
@@ -340,7 +357,7 @@ class etano_package {
 						}
 					}
 				}
-				
+
 				// if we are here then there was no error and we can apply the diff!!!
 				array_splice($file_content,$dest_start,count($source),$dest);
 				$first_chunk=false;
