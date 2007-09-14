@@ -17,6 +17,7 @@ require_once '../includes/admin_functions.inc.php';
 require_once '../includes/classes/fileop.class.php';
 require_once '../includes/classes/etano_package.class.php';
 allow_dept(DEPT_ADMIN);
+set_time_limit(0);
 
 $error=false;
 $tpl=new phemplate('skin/','remove_nonjs');

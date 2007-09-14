@@ -28,14 +28,17 @@ $query="SELECT `module_code`,`module_name`,`module_type`,`version` FROM `{$dbtab
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $installed=array();
 $mcodes=array();
+$accepted_module_types2=$accepted_module_types;
+$accepted_module_types2[MODULE_REGULAR]='Core';
+
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['module_name']=sanitize_and_format($rsrow['module_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-	$rsrow['module_type']=$accepted_module_types[$rsrow['module_type']];
+	$rsrow['module_type']=$accepted_module_types2[$rsrow['module_type']];
 	$installed[]=$rsrow;
 	$mcodes[$rsrow['module_code']]=$rsrow['version'];
 }
 
-// read the manifests into $packages
+// read the manifests of existing packages into $packages
 $packages=array();
 $d=dir(_BASEPATH_.'/tmp/packages');
 $i=0;
@@ -78,7 +81,7 @@ for ($i=0;isset($packages[$i]);++$i) {
 		for ($j=0;isset($p->install[$j]);++$j) {
 			$req_ok=true;
 			for ($k=0;isset($p->install[$j]['requires'][$k]);++$k) {
-				if (!isset($mcodes[$p->install[$j]['requires'][$k]['id']]) || (isset($p->install[$j]['requires'][$k]['version']) && $mcodes[$p->install[$j]['requires'][$k]['id']]!=$p->install[$j]['requires'][$k]['version'])) {
+				if (!isset($mcodes[$p->install[$j]['requires'][$k]['id']]) || (isset($p->install[$j]['requires'][$k]['version']) && ((float)$mcodes[$p->install[$j]['requires'][$k]['id']])!=((float)$p->install[$j]['requires'][$k]['version']))) {
 					$req_ok=false;
 					$reasons[$j][]=$p->install[$j]['requires'][$k]['id'].(isset($p->install[$j]['requires'][$k]['version']) ? ' ('.$p->install[$j]['requires'][$k]['version'].')' : '');
 				}
@@ -87,7 +90,7 @@ for ($i=0;isset($packages[$i]);++$i) {
 		}
 		if ($install_req_satisfied) {
 			$not_installed[$m]['valid']=true;
-			$not_installed[$m]['reasons']='Package is valid';
+			$not_installed[$m]['reasons']='No requirements. Package is valid.';
 		} else {
 			for ($n=0;isset($reasons[$n]);++$n) {
 				$reasons[$n]=join(', ',$reasons[$n]);
