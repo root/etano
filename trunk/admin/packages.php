@@ -45,32 +45,28 @@ while (false!==($entry=$d->read())) {
 		$filename=substr($entry,0,-4);
 		if (is_file(_BASEPATH_.'/tmp/packages/'.$filename.'.info')) {
 			$filenames[$i]=$entry;
-			$packages[$i++]=file_get_contents(_BASEPATH_.'/tmp/packages/'.$filename.'.info');
+			$packages[$i++]=_BASEPATH_.'/tmp/packages/'.$filename.'.info';
 		} else {
 			// read the manifest from the zip file
 			$zipfile->read_zip(_BASEPATH_.'/tmp/packages/'.$entry);
 			$found=false;
+			$manifest_content='';
 			foreach ($zipfile->files as $zfile) {
 				if ($zfile['name']=='manifest.xml' && $zfile['dir']=='/') {
 					$found=true;
 					$filenames[$i]=$entry;
-					$packages[$i++]=$zfile['data'];
+					$manifest_content=$zfile['data'];
 					break;
 				}
 			}
 			if ($found) {
 				// now save it as a separate file to speed things up next time
-				$fileop->file_put_contents(_BASEPATH_.'/tmp/packages/'.$filename.'.info',$packages[$i-1]);
+				$fileop->file_put_contents(_BASEPATH_.'/tmp/packages/'.$filename.'.info',$manifest_content);
+				$packages[$i++]=_BASEPATH_.'/tmp/packages/'.$filename.'.info';
 			}
 		}
 	}
 }
-
-	$p=new etano_package();
-	if (!$p->dry_run(_BASEPATH_.'/tmp/packages/sendakiss/sendakiss.mod')) {
-		print $p->error_text;
-	}
-die;
 
 $not_installed=array();
 $m=0;

@@ -85,7 +85,6 @@ class etano_package {
 
 	function dry_run($install_index) {
 		$modfile=$this->package_path.'/'.$this->install[$install_index]['file'];
-
 		if (is_file($modfile)) {
 			$mod_content=file_get_contents($modfile);
 			$mydoc=new XML_dsb();
@@ -96,7 +95,11 @@ class etano_package {
 					$mod_command->firstChild->nodeValue=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$mod_command->firstChild->nodeValue);
 					if (!is_file($mod_command->firstChild->nodeValue)) {
 						$this->error=true;
-						$this->error_text=sprintf('Couldn\'t find %1$s php file required by %2$s',$mod_command->firstChild->nodeValue,$modfile);
+						$masize=count($this->manual_actions);
+						$this->manual_actions[$masize]['type']='php';
+						$this->manual_actions[$masize]['from']='';
+						$this->manual_actions[$masize]['to']='';
+						$this->manual_actions[$masize]['error']=sprintf('Couldn\'t find %1$s php file required by %2$s',$mod_command->firstChild->nodeValue,$modfile);
 						break;
 					}
 				} elseif ($mod_command->nodeName=='copy') {
@@ -104,7 +107,11 @@ class etano_package {
 					$attrs['from']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['from']);
 					if (!is_file($attrs['from'])) {
 						$this->error=true;
-						$this->error_text=sprintf('Couldn\'t find %1$s file required by %2$s',$attrs['from'],$modfile);
+						$masize=count($this->manual_actions);
+						$this->manual_actions[$masize]['type']='copy';
+						$this->manual_actions[$masize]['from']='';
+						$this->manual_actions[$masize]['to']='';
+						$this->manual_actions[$masize]['error']=sprintf('Couldn\'t find %1$s file required by %2$s',$attrs['from'],$modfile);
 						break;
 					}
 				} elseif ($mod_command->nodeName=='delete') {
@@ -112,7 +119,11 @@ class etano_package {
 				} elseif ($mod_command->nodeName=='diff') {
 					if (!is_file($this->package_path.'/'.$mod_command->firstChild->nodeValue)) {
 						$this->error=true;
-						$this->error_text=sprintf('Couldn\'t find %1$s diff file required by %2$s',$mod_command->firstChild->nodeValue,$modfile);
+						$masize=count($this->manual_actions);
+						$this->manual_actions[$masize]['type']='diff';
+						$this->manual_actions[$masize]['from']='';
+						$this->manual_actions[$masize]['to']='';
+						$this->manual_actions[$masize]['error']=sprintf('Couldn\'t find %1$s diff file required by %2$s',$mod_command->firstChild->nodeValue,$modfile);
 						break;
 					}
 					if (!$this->_do_diff($this->package_path.'/'.$mod_command->firstChild->nodeValue,false,true)) {
@@ -122,7 +133,11 @@ class etano_package {
 					if (isset($mod_command->attributes['type']) && $mod_command->attributes['type']=='file') {
 						if (!is_file($this->package_path.'/'.$mod_command->firstChild->nodeValue)) {
 							$this->error=true;
-							$this->error_text=sprintf('Couldn\'t find %1$s sql file required by %2$s',$mod_command->firstChild->nodeValue,$modfile);
+							$masize=count($this->manual_actions);
+							$this->manual_actions[$masize]['type']='sql';
+							$this->manual_actions[$masize]['from']='';
+							$this->manual_actions[$masize]['to']='';
+							$this->manual_actions[$masize]['error']=sprintf('Couldn\'t find %1$s sql file required by %2$s',$mod_command->firstChild->nodeValue,$modfile);
 							break;
 						}
 					}
@@ -131,7 +146,11 @@ class etano_package {
 			}
 		} else {
 			$this->error=true;
-			$this->error_text=sprintf('Couldn\'t find %s mod file',$modfile);
+			$masize=count($this->manual_actions);
+			$this->manual_actions[$masize]['type']='mod';
+			$this->manual_actions[$masize]['from']='';
+			$this->manual_actions[$masize]['to']='';
+			$this->manual_actions[$masize]['error']=sprintf('Couldn\'t find %s mod file',$modfile);
 		}
 		return !$this->error;
 	}
@@ -159,6 +178,7 @@ class etano_package {
 					$force_revision=false;
 				}
 				if (!$this->_do_diff($this->package_path.'/'.$mod_command->firstChild->nodeValue,$force_revision,true)) {
+					$this->error=true;
 					$masize=count($this->manual_actions);
 					$this->manual_actions[$masize]['type']='diff';
 					$this->manual_actions[$masize]['from']=$this->package_path.'/'.$mod_command->firstChild->nodeValue;
@@ -170,6 +190,7 @@ class etano_package {
 				$attrs['from']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['from']);
 				$attrs['to']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['to']);
 				if (!$fileop->copy($attrs['from'],$attrs['to'])) {
+					$this->error=true;
 					$masize=count($this->manual_actions);
 					$this->manual_actions[$masize]['type']='copy';
 					$this->manual_actions[$masize]['from']=$attrs['from'];
@@ -180,6 +201,7 @@ class etano_package {
 				$attrs=$mod_command->attributes;
 				$attrs['file']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['file']);
 				if (!$fileop->delete($attrs['file'])) {
+					$this->error=true;
 					$masize=count($this->manual_actions);
 					$this->manual_actions[$masize]['type']='delete';
 					$this->manual_actions[$masize]['from']=$attrs['file'];
@@ -194,11 +216,12 @@ class etano_package {
 				for ($i=0;isset($temp[$i]);++$i) {
 					$path.='/'.$temp[$i];
 					if (!is_dir($path) && !$fileop->mkdir($path)) {
+						$this->error=true;
 						$masize=count($this->manual_actions);
 						$this->manual_actions[$masize]['type']='mkdir';
 						$this->manual_actions[$masize]['from']=$attrs['path'];
 						$this->manual_actions[$masize]['to']='';
-						$this->manual_actions[$masize]['error']='Unable to create automatically create directory.';
+						$this->manual_actions[$masize]['error']='Unable to automatically create directory.';
 						break;
 					}
 				}
@@ -213,6 +236,7 @@ class etano_package {
 						$query=substr($query,0,-1);
 					}
 					if (!@mysql_query($query)) {
+						$this->error=true;
 						$masize=count($this->manual_actions);
 						$this->manual_actions[$masize]['type']='sql';
 						$this->manual_actions[$masize]['from']=$mod_command->firstChild->nodeValue;
@@ -221,6 +245,7 @@ class etano_package {
 					}
 				} else {
 					if (!$this->db_insert_file($mod_command->firstChild->nodeValue)) {
+						$this->error=true;
 						$masize=count($this->manual_actions);
 						$this->manual_actions[$masize]['type']='sqlfile';
 						$this->manual_actions[$masize]['from']=$mod_command->firstChild->nodeValue;
@@ -242,7 +267,7 @@ class etano_package {
 		global $dbtable_prefix;
 		for ($i=0;isset($this->install[$install_index]['requires'][$i]);++$i) {
 			if (isset($this->install[$install_index]['requires'][$i]['change-version'])) {
-				$query="UPDATE `{$dbtable_prefix}modules` SET `version`='".$this->install[$install_index]['requires'][$i]['change-version']."'";
+				$query="UPDATE `{$dbtable_prefix}modules` SET `version`='".$this->install[$install_index]['requires'][$i]['change-version']."' WHERE `module_code`='".$this->install[$install_index]['requires'][$i]['id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}
 		}

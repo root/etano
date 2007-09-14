@@ -153,22 +153,33 @@ class fileop {
 		if (substr($archive,-4)=='.zip') {
 			require_once dirname(__FILE__).'/zip.class.php';
 
-			$basename=substr($archive_name,0,-4);
+			$basename=substr(basename($archive),0,-4);
 			$zipfile=new zipfile();
 			$zipfile->read_zip($archive);
 			if (empty($path)) {
 				$path=dirname($archive);
 			}
+			$path.='/'.$basename;
+			if (!is_dir($path)) {
+				$this->mkdir($path);
+			}
 			for ($i=0;isset($zipfile->dirs[$i]);++$i) {
-				if (!is_dir($path.'/'.$basename.$zipfile->dirs[$i])) {
-					$this->mkdir($path.'/'.$basename.$zipfile->dirs[$i]);
+				$temp=explode('/',$zipfile->dirs[$i]);
+				$sub_path=$path;
+				for ($j=0;isset($temp[$j]);++$j) {
+					if (!empty($temp[$j])) {
+						$sub_path.='/'.$temp[$j];
+						if (!is_dir($sub_path)) {
+							$this->mkdir($sub_path);
+						}
+					}
 				}
 			}
 		}
 		for ($i=0;isset($zipfile->files[$i]);++$i) {
-			$this->file_put_contents($path.'/'.$basename.$zipfile->files[$i]['dir'].'/'.$zipfile->files[$i]['name'],$zipfile->files[$i]['data']);
+			$this->file_put_contents($path.$zipfile->files[$i]['dir'].'/'.$zipfile->files[$i]['name'],$zipfile->files[$i]['data']);
 		}
-		
+
 		return $basename;
 	}
 
@@ -188,14 +199,16 @@ class fileop {
 
 
 	function mkdir($fullpath) {
+		$myreturn=false;
 		if (!is_dir($fullpath)) {
 			if ($this->op_mode=='disk') {
-				@mkdir($fullpath,0755);
+				$myreturn=@mkdir($fullpath,0755);
 			} elseif ($this->op_mode=='ftp') {
 				$ftp_fullpath=str_replace(_BASEPATH_.'/',_FTPPATH_,$fullpath);
-				ftp_mkdir($this->ftp_id,$ftp_fullpath);
+				$myreturn=@ftp_mkdir($this->ftp_id,$ftp_fullpath);
 			}
 		}
+		return $myreturn;
 	}
 
 // internal function, do not call from outside. Call fileop->copy() instead
