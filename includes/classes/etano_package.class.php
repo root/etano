@@ -244,11 +244,11 @@ class etano_package {
 						$this->manual_actions[$masize]['error']=mysql_error();
 					}
 				} else {
-					if (!$this->db_insert_file($mod_command->firstChild->nodeValue)) {
+					if (!$this->db_insert_file($this->package_path.'/'.$mod_command->firstChild->nodeValue)) {
 						$this->error=true;
 						$masize=count($this->manual_actions);
 						$this->manual_actions[$masize]['type']='sqlfile';
-						$this->manual_actions[$masize]['from']=$mod_command->firstChild->nodeValue;
+						$this->manual_actions[$masize]['from']=$this->package_path.'/'.$mod_command->firstChild->nodeValue;
 						$this->manual_actions[$masize]['to']='';
 						$this->manual_actions[$masize]['error']=mysql_error();
 					}

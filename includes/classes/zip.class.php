@@ -146,6 +146,8 @@ class zipfile
 	{
 		// Clear current file
 		$this->datasec = array();
+		$this->files= array();
+		$this->dirs= array();
 
 		// File information
 		$this->name = $name;
