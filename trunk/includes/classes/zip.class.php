@@ -149,125 +149,127 @@ class zipfile
 		$this->files= array();
 		$this->dirs= array();
 
-		// File information
-		$this->name = $name;
-		$this->mtime = filemtime($name);
-		$this->size = filesize($name);
-
-		// Read file
-		$filedata = file_get_contents($name);
-
-		// Break into sections
-		$filesecta = explode("\x50\x4b\x05\x06", $filedata);
-
-		// ZIP Comment
-		$unpackeda = unpack('x16/v1length', $filesecta[1]);
-		$this->comment = substr($filesecta[1], 18, $unpackeda['length']);
-		$this->comment = str_replace(array("\r\n", "\r"), "\n", $this->comment); // CR + LF and CR -> LF
-
-		// Cut entries from the central directory
-		$filesecta = explode("\x50\x4b\x01\x02", $filedata);
-		$filesecta = explode("\x50\x4b\x03\x04", $filesecta[0]);
-		array_shift($filesecta); // Removes empty entry/signature
-
-		$temp_dirs=array();
-
-		foreach($filesecta as $filedata)
-		{
-			// CRC:crc, FD:file date, FT: file time, CM: compression method, GPF: general purpose flag, VN: version needed, CS: compressed size, UCS: uncompressed size, FNL: filename length
-			$entrya = array();
-			$entrya['error'] = '';
-
-			$unpackeda = unpack("v1version/v1general_purpose/v1compress_method/v1file_time/v1file_date/V1crc/V1size_compressed/V1size_uncompressed/v1filename_length", $filedata);
-
-			// Check for encryption
-			$isencrypted = (($unpackeda['general_purpose'] & 0x0001) ? true : false);
-
-			// Check for value block after compressed data
-			if($unpackeda['general_purpose'] & 0x0008)
+		if (is_file($name)) {
+			// File information
+			$this->name = $name;
+			$this->mtime = filemtime($name);
+			$this->size = filesize($name);
+	
+			// Read file
+			$filedata = file_get_contents($name);
+	
+			// Break into sections
+			$filesecta = explode("\x50\x4b\x05\x06", $filedata);
+	
+			// ZIP Comment
+			$unpackeda = unpack('x16/v1length', $filesecta[1]);
+			$this->comment = substr($filesecta[1], 18, $unpackeda['length']);
+			$this->comment = str_replace(array("\r\n", "\r"), "\n", $this->comment); // CR + LF and CR -> LF
+	
+			// Cut entries from the central directory
+			$filesecta = explode("\x50\x4b\x01\x02", $filedata);
+			$filesecta = explode("\x50\x4b\x03\x04", $filesecta[0]);
+			array_shift($filesecta); // Removes empty entry/signature
+	
+			$temp_dirs=array();
+	
+			foreach($filesecta as $filedata)
 			{
-				$unpackeda2 = unpack("V1crc/V1size_compressed/V1size_uncompressed", substr($filedata, -12));
-
-				$unpackeda['crc'] = $unpackeda2['crc'];
-				$unpackeda['size_compressed'] = $unpackeda2['size_uncompressed'];
-				$unpackeda['size_uncompressed'] = $unpackeda2['size_uncompressed'];
-
-				unset($unpackeda2);
-			}
-
-			$entrya['name'] = substr($filedata, 26, $unpackeda['filename_length']);
-
-			if(substr($entrya['name'], -1) == '/') {	// skip directories
-				continue;
-			}
-
-			$entrya['dir'] = dirname($entrya['name']);
-			$entrya['dir'] = ($entrya['dir'] == '.' ? '' : $entrya['dir']);
-			$entrya['dir']='/'.$entrya['dir'];
-			$temp_dirs[$entrya['dir']]=1;
-			$entrya['name'] = basename($entrya['name']);
-
-			$filedata = substr($filedata, 26 + $unpackeda['filename_length']);
-
-			if(strlen($filedata) != $unpackeda['size_compressed']) {
-				$entrya['error'] = 'Compressed size is not equal to the value given in header.';
-			}
-
-			if($isencrypted) {
-				$entrya['error'] = 'Encryption is not supported.';
-			} else {
-				switch($unpackeda['compress_method']) {
-					case 0: // Stored
-						// Not compressed, continue
-					break;
-					case 8: // Deflated
-						$filedata = gzinflate($filedata);
-					break;
-					case 12: // BZIP2
-						if(!extension_loaded('bz2')) {
-							@dl((strtolower(substr(PHP_OS, 0, 3)) == 'win') ? 'php_bz2.dll' : 'bz2.so');
-						}
-						if(extension_loaded('bz2'))	{
-							$filedata = bzdecompress($filedata);
-						} else {
-							$entrya['error'] = 'Required BZIP2 Extension not available.';
-						}
-					break;
-					default:
-						$entrya['error'] = "Compression method ({$unpackeda['compress_method']}) not supported.";
+				// CRC:crc, FD:file date, FT: file time, CM: compression method, GPF: general purpose flag, VN: version needed, CS: compressed size, UCS: uncompressed size, FNL: filename length
+				$entrya = array();
+				$entrya['error'] = '';
+	
+				$unpackeda = unpack("v1version/v1general_purpose/v1compress_method/v1file_time/v1file_date/V1crc/V1size_compressed/V1size_uncompressed/v1filename_length", $filedata);
+	
+				// Check for encryption
+				$isencrypted = (($unpackeda['general_purpose'] & 0x0001) ? true : false);
+	
+				// Check for value block after compressed data
+				if($unpackeda['general_purpose'] & 0x0008)
+				{
+					$unpackeda2 = unpack("V1crc/V1size_compressed/V1size_uncompressed", substr($filedata, -12));
+	
+					$unpackeda['crc'] = $unpackeda2['crc'];
+					$unpackeda['size_compressed'] = $unpackeda2['size_uncompressed'];
+					$unpackeda['size_uncompressed'] = $unpackeda2['size_uncompressed'];
+	
+					unset($unpackeda2);
 				}
-
-				if(!$entrya['error']) {
-					if($filedata === false)	{
-						$entrya['error'] = 'Decompression failed.';
-					} elseif(strlen($filedata) != $unpackeda['size_uncompressed']) {
-						$entrya['error'] = 'File size is not equal to the value given in header.';
-					} elseif(crc32($filedata) != $unpackeda['crc']) {
-						$entrya['error'] = 'CRC32 checksum is not equal to the value given in header.';
+	
+				$entrya['name'] = substr($filedata, 26, $unpackeda['filename_length']);
+	
+				if(substr($entrya['name'], -1) == '/') {	// skip directories
+					continue;
+				}
+	
+				$entrya['dir'] = dirname($entrya['name']);
+				$entrya['dir'] = ($entrya['dir'] == '.' ? '' : $entrya['dir']);
+				$entrya['dir']='/'.$entrya['dir'];
+				$temp_dirs[$entrya['dir']]=1;
+				$entrya['name'] = basename($entrya['name']);
+	
+				$filedata = substr($filedata, 26 + $unpackeda['filename_length']);
+	
+				if(strlen($filedata) != $unpackeda['size_compressed']) {
+					$entrya['error'] = 'Compressed size is not equal to the value given in header.';
+				}
+	
+				if($isencrypted) {
+					$entrya['error'] = 'Encryption is not supported.';
+				} else {
+					switch($unpackeda['compress_method']) {
+						case 0: // Stored
+							// Not compressed, continue
+						break;
+						case 8: // Deflated
+							$filedata = gzinflate($filedata);
+						break;
+						case 12: // BZIP2
+							if(!extension_loaded('bz2')) {
+								@dl((strtolower(substr(PHP_OS, 0, 3)) == 'win') ? 'php_bz2.dll' : 'bz2.so');
+							}
+							if(extension_loaded('bz2'))	{
+								$filedata = bzdecompress($filedata);
+							} else {
+								$entrya['error'] = 'Required BZIP2 Extension not available.';
+							}
+						break;
+						default:
+							$entrya['error'] = "Compression method ({$unpackeda['compress_method']}) not supported.";
 					}
+	
+					if(!$entrya['error']) {
+						if($filedata === false)	{
+							$entrya['error'] = 'Decompression failed.';
+						} elseif(strlen($filedata) != $unpackeda['size_uncompressed']) {
+							$entrya['error'] = 'File size is not equal to the value given in header.';
+						} elseif(crc32($filedata) != $unpackeda['crc']) {
+							$entrya['error'] = 'CRC32 checksum is not equal to the value given in header.';
+						}
+					}
+	
+					$entrya['filemtime'] = mktime(($unpackeda['file_time']  & 0xf800) >> 11,($unpackeda['file_time']  & 0x07e0) >>  5, ($unpackeda['file_time']  & 0x001f) <<  1, ($unpackeda['file_date']  & 0x01e0) >>  5, ($unpackeda['file_date']  & 0x001f), (($unpackeda['file_date'] & 0xfe00) >>  9) + 1980);
+					$entrya['data'] = $filedata;
 				}
-
-				$entrya['filemtime'] = mktime(($unpackeda['file_time']  & 0xf800) >> 11,($unpackeda['file_time']  & 0x07e0) >>  5, ($unpackeda['file_time']  & 0x001f) <<  1, ($unpackeda['file_date']  & 0x01e0) >>  5, ($unpackeda['file_date']  & 0x001f), (($unpackeda['file_date'] & 0xfe00) >>  9) + 1980);
-				$entrya['data'] = $filedata;
+	
+				$this->files[] = $entrya;
 			}
-
-			$this->files[] = $entrya;
-		}
-
-		// have all dirs and sub-dirs ordered by the number of slashes in the path
-		$temp_dirs=array_keys($temp_dirs);
-		$this->dirs=array();
-		for ($i=0;isset($temp_dirs[$i]);++$i) {
-			$temp=explode('/',$temp_dirs[$i]);
-			$path='';
-			for ($j=0;isset($temp[$j]);++$j) {
-				$path.='/'.$temp[$j];
-				$this->dirs[substr($path,1)]=$j;
+	
+			// have all dirs and sub-dirs ordered by the number of slashes in the path
+			$temp_dirs=array_keys($temp_dirs);
+			$this->dirs=array();
+			for ($i=0;isset($temp_dirs[$i]);++$i) {
+				$temp=explode('/',$temp_dirs[$i]);
+				$path='';
+				for ($j=0;isset($temp[$j]);++$j) {
+					$path.='/'.$temp[$j];
+					$this->dirs[substr($path,1)]=$j;
+				}
 			}
+			unset($this->dirs[0]);
+			asort($this->dirs);
+			$this->dirs=array_keys($this->dirs);
 		}
-		unset($this->dirs[0]);
-		asort($this->dirs);
-		$this->dirs=array_keys($this->dirs);
 		return $this->files;
 	}
 

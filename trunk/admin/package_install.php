@@ -18,6 +18,7 @@ require_once '../includes/classes/fileop.class.php';
 require_once '../includes/classes/etano_package.class.php';
 allow_dept(DEPT_ADMIN);
 set_time_limit(0);
+ignore_user_abort(true);
 
 $error=false;
 $tpl=new phemplate('skin/','remove_nonjs');
@@ -38,73 +39,115 @@ if (substr($file,0,7)=='http://') {
 }
 
 $install_index=0;
+$ui_request=false;
 
 // read the manifest
 if (substr($file,-4)=='.zip') {
 	$p=new etano_package();
-	if (!isset($_GET['finish'])) {	// no previous error for this package.
+	if (!isset($_GET['finish']) && !isset($_GET['skip_input']) && !isset($_GET['ui_error'])) {	// first time here
 		$dirname=$fileop->extract_zip(_BASEPATH_.'/tmp/packages/'.$file);
-		if (is_file(_BASEPATH_.'/tmp/packages/'.$dirname.'/manifest.xml')) {
-			$p->set_file(_BASEPATH_.'/tmp/packages/'.$dirname.'/manifest.xml');
-		} elseif (!empty($dirname)) {
+	} else {
+		$dirname=substr($file,0,-4);
+	}
+	if (is_file(_BASEPATH_.'/tmp/packages/'.$dirname.'/manifest.xml')) {
+		$p->set_file(_BASEPATH_.'/tmp/packages/'.$dirname.'/manifest.xml');
+	} elseif (!empty($dirname)) {
+		if (is_dir(_BASEPATH_.'/tmp/packages/'.$dirname)) {
 			$fileop->delete(_BASEPATH_.'/tmp/packages/'.$dirname);
-			$error=true;
-			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Invalid package';
 		}
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Invalid package';
+	}
 
-		if (!$p->error) {
-			// read currently installed modules
-			$query="SELECT `module_code`,`version` FROM `{$dbtable_prefix}modules`";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$mcodes=array();
-			while ($rsrow=mysql_fetch_assoc($res)) {
-				$mcodes[$rsrow['module_code']]=$rsrow['version'];
+	if (!$p->error) {
+		$install_index_start=0;
+		$skip_input=-1;
+		if (isset($_GET['finish'])) {	// no previous error for this package.
+			$install_index_start=(int)$_GET['finish'];
+			$p->post_install($install_index_start);
+			++$install_index_start;
+		}
+		if (isset($_GET['skip_input'])) {	// returned from a user input page.
+			$skip_input=(int)$_GET['skip_input'];
+			$install_index_start=$skip_input;
+		}
+		if (isset($_GET['ui_error'])) {	// returned from a user input page.
+			$install_index_start=(int)$_GET['ui_error'];
+		}
+		// read currently installed modules
+		$query="SELECT `module_code`,`version`,`module_type` FROM `{$dbtable_prefix}modules`";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$mcodes=array();
+		$skins=array();
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$mcodes[$rsrow['module_code']]=$rsrow['version'];
+			if ($rsrow['module_type']==MODULE_SKIN) {
+				$skins[]=$rsrow['module_code'];
 			}
-			// make sure this new package is installable
-			if (!isset($mcodes[$p->module_code]) || $mcodes[$p->module_code]<$p->version) {	// not installed packages/versions
-				for ($install_index=0;isset($p->install[$install_index]);++$install_index) {
-					$req_ok=true;
-					for ($k=0;isset($p->install[$install_index]['requires'][$k]);++$k) {
-						if (!isset($mcodes[$p->install[$install_index]['requires'][$k]['id']]) || (isset($p->install[$install_index]['requires'][$k]['version']) && $mcodes[$p->install[$install_index]['requires'][$k]['id']]!=$p->install[$install_index]['requires'][$k]['version'])) {
-							$req_ok=false;
-							break;
-						}
+		}
+		$query="SELECT `fk_module_code`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code` IN ('".join("','",$skins)."') AND `config_option`='skin_dir'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$skins=array();
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$skins[$rsrow['fk_module_code']]=$rsrow['config_value'];
+		}
+		// make sure this new package is installable
+		if (!isset($mcodes[$p->module_code]) || $mcodes[$p->module_code]<$p->version) {	// not installed packages/versions
+			for ($install_index=$install_index_start;isset($p->install[$install_index]);++$install_index) {
+				$req_ok=true;
+				for ($k=0;isset($p->install[$install_index]['requires'][$k]);++$k) {
+					$required=$p->install[$install_index]['requires'][$k];
+					if (!isset($mcodes[$required['id']]) || (isset($required['version']) && $mcodes[$required['id']]!=$required['version']) || (isset($required['min-version']) && $mcodes[$required['id']]<$required['min-version']) || (isset($required['max-version']) && $mcodes[$required['id']]>$required['max-version'])) {
+						$req_ok=false;
+						break;
 					}
-					if ($req_ok) {	// if all requirements of this install are satisfied....
-						if ($p->dry_run($install_index)) {	// ...test to see if we can install the package
-							if ($p->install($install_index)) {	// ...and finally install it.
+				}
+				if ($req_ok) {	// if all requirements of this install are satisfied....
+					if ($p->dry_run($install_index)) {	// ...test to see if we can install the package
+						if ($p->install($install_index,$skip_input)) {	// ...and finally install it.
+							if (!empty($p->ui)) {
+								$ui_request=true;
+								break;
+							} else {
 								// if there's another install instruction after this one we need to reread the list of installed
 								// modules because our install might have modified it.
 								if (isset($p->install[$install_index+1])) {
 									// read currently installed modules
-									$query="SELECT `module_code`,`version` FROM `{$dbtable_prefix}modules`";
+									$query="SELECT `module_code`,`version`,`module_type` FROM `{$dbtable_prefix}modules`";
 									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 									$mcodes=array();
+									$skins=array();
 									while ($rsrow=mysql_fetch_assoc($res)) {
 										$mcodes[$rsrow['module_code']]=$rsrow['version'];
+										if ($rsrow['module_type']==MODULE_SKIN) {
+											$skins[]=$rsrow['module_code'];
+										}
+									}
+									$query="SELECT `fk_module_code`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code` IN ('".join("','",$skins)."') AND `config_option`=`skin_dir`";
+									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+									$skins=array();
+									while ($rsrow=mysql_fetch_assoc($res)) {
+										$skins[$rsrow['fk_module_code']]=$rsrow['config_value'];
 									}
 								}
-							} else {
-								break;
 							}
+						} else {
+							break;
 						}
-					} else {
-						// some of the requirements of this install are not satisfied, moving on to next install instruction
 					}
+				} else {
+					// some of the requirements of this install are not satisfied, moving on to next install instruction
 				}
 			}
-		} else {
-			$error=true;
-			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Error reading the package';
+			if (!$ui_request && !$p->error) {
+				$p->finish();
+			}
 		}
 	} else {
-		$dirname=substr($file,0,-4);
-		$p->set_file(_BASEPATH_.'/tmp/packages/'.$dirname.'/manifest.xml');
-		if (!$p->error) {
-			$p->post_install((int)$_GET['finish']);
-		}
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Error reading the package';
 	}
 } else {
 	$error=true;
@@ -119,6 +162,15 @@ if ($p->error && !empty($p->manual_actions)) {
 	$output['finish']=$install_index;
 	$tpl->set_var('output',$output);
 	$tpl->process('content','content',TPL_LOOP);
+
+	$tplvars['title']='Package Manager';
+	$tplvars['page']='package_install';
+	$tplvars['css']='package_install.css';
+	include 'frame.php';
+} elseif ($ui_request) {
+	$tpl->set_file('content','package_ui.html');
+	$tpl->set_var('output',$p->ui);
+	$tpl->process('content','content');
 
 	$tplvars['title']='Package Manager';
 	$tplvars['page']='package_install';

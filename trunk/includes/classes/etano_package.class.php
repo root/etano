@@ -24,6 +24,7 @@ class etano_package {
 	var $error_text='';
 	var $package_path='';
 	var $manual_actions=array();
+	var $ui='';	// user input content. It is set to some html content if a user input page must be displayed.
 
 	function etano_package($manifest_file='') {
 		if (!empty($manifest_file)) {
@@ -32,13 +33,14 @@ class etano_package {
 	}
 
 
-	function set_file($manifest_file) {
+	function set_file($manifest_file,$skip_input=-1) {
 		$this->package_path=dirname($manifest_file);
-		$this->_set_content(file_get_contents($manifest_file));
+		$this->_set_content(file_get_contents($manifest_file),$skip_input);
 	}
 
 
-	function _set_content($manifest_content) {
+	function _set_content($manifest_content,$skip_input=-1) {
+		$this->ui='';
 		$manifest=new XML_dsb();
 		$manifest->parseXML($manifest_content);
 		$item=$manifest->firstChild;
@@ -64,6 +66,12 @@ class etano_package {
 							if (!empty($attrs['version'])) {
 								$this->install[$install_counter]['requires'][$i]['version']=$attrs['version'];
 							}
+							if (isset($attrs['min-version'])) {
+								$this->install[$install_counter]['requires'][$i]['min-version']=$attrs['min-version'];
+							}
+							if (isset($attrs['max-version'])) {
+								$this->install[$install_counter]['requires'][$i]['max-version']=$attrs['max-version'];
+							}
 							if (isset($attrs['change-version'])) {
 								$this->install[$install_counter]['requires'][$i]['change-version']=$attrs['change-version'];
 							}
@@ -71,6 +79,8 @@ class etano_package {
 							$this->install[$install_counter]['file']=$setting->firstChild->nodeValue;
 						} elseif ($setting->nodeName=='text') {
 							$this->install[$install_counter]['text']=$setting->firstChild->nodeValue;
+						} elseif ($setting->nodeName=='input' && $skip_input<$install_counter) {
+							$this->install[$install_counter]['input']=$setting->firstChild->nodeValue;
 						}
 						$setting=$setting->nextSibling;	// go to the next install setting
 					}
@@ -105,7 +115,7 @@ class etano_package {
 				} elseif ($mod_command->nodeName=='copy') {
 					$attrs=$mod_command->attributes;
 					$attrs['from']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['from']);
-					if (!is_file($attrs['from'])) {
+					if (!is_file($attrs['from']) && !is_dir($attrs['from'])) {
 						$this->error=true;
 						$masize=count($this->manual_actions);
 						$this->manual_actions[$masize]['type']='copy';
@@ -116,6 +126,37 @@ class etano_package {
 					}
 				} elseif ($mod_command->nodeName=='delete') {
 				} elseif ($mod_command->nodeName=='mkdir') {
+				} elseif ($mod_command->nodeName=='extract') {
+					$attrs=$mod_command->attributes;
+					$attrs['archive']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['archive']);
+					$attrs['to']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['to']);
+					if (!isset($attrs['type']) || $attrs['type']!='zip' || substr($attrs['archive'],-3)!='zip') {
+						$this->error=true;
+						$masize=count($this->manual_actions);
+						$this->manual_actions[$masize]['type']='extract';
+						$this->manual_actions[$masize]['from']='';
+						$this->manual_actions[$masize]['to']='';
+						$this->manual_actions[$masize]['error']=sprintf('Unknown archive type: %s',$attrs['archive']);
+						break;
+					}
+					if (!is_file($attrs['archive'])) {
+						$this->error=true;
+						$masize=count($this->manual_actions);
+						$this->manual_actions[$masize]['type']='extract';
+						$this->manual_actions[$masize]['from']='';
+						$this->manual_actions[$masize]['to']='';
+						$this->manual_actions[$masize]['error']=sprintf('Couldn\'t find %1$s file required by %2$s',$attrs['archive'],$modfile);
+						break;
+					}
+					if (!is_dir($attrs['to'])) {
+						$this->error=true;
+						$masize=count($this->manual_actions);
+						$this->manual_actions[$masize]['type']='extract';
+						$this->manual_actions[$masize]['from']='';
+						$this->manual_actions[$masize]['to']='';
+						$this->manual_actions[$masize]['error']=sprintf('Destination directory for archive extraction does not exist: %s',$attrs['to']);
+						break;
+					}
 				} elseif ($mod_command->nodeName=='diff') {
 					if (!is_file($this->package_path.'/'.$mod_command->firstChild->nodeValue)) {
 						$this->error=true;
@@ -156,131 +197,179 @@ class etano_package {
 	}
 
 
-	function install($install_index) {
-		$modfile=$this->package_path.'/'.$this->install[$install_index]['file'];
-		$mod_content=file_get_contents($modfile);
-		$fileop=new fileop();
-		$mydoc=new XML_dsb();
-		$mydoc->parseXML($mod_content);
-		$mod_command=$mydoc->firstChild->firstChild;
-		while ($mod_command) {
-			if ($mod_command->nodeName=='php') {
-				{	// artificially create a block
-					// inside the included file we're still in this class!!
-					// this php file can generate errors of type critical which halt the execution of installer
-					$mod_command->firstChild->nodeValue=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$mod_command->firstChild->nodeValue);
-					require_once $mod_command->firstChild->nodeValue;
-				}	// end block
-			} elseif ($mod_command->nodeName=='diff') {
-				if (isset($mod_command->attributes['force_revision'])) {
-					$force_revision=true;
-				} else {
-					$force_revision=false;
-				}
-				if (!$this->_do_diff($this->package_path.'/'.$mod_command->firstChild->nodeValue,$force_revision,true)) {
-					$this->error=true;
-					$masize=count($this->manual_actions);
-					$this->manual_actions[$masize]['type']='diff';
-					$this->manual_actions[$masize]['from']=$this->package_path.'/'.$mod_command->firstChild->nodeValue;
-					$this->manual_actions[$masize]['to']='';
-					$this->manual_actions[$masize]['error']=$this->error_text;
-				}
-			} elseif ($mod_command->nodeName=='copy') {
-				$attrs=$mod_command->attributes;
-				$attrs['from']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['from']);
-				$attrs['to']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['to']);
-				if (!$fileop->copy($attrs['from'],$attrs['to'])) {
-					$this->error=true;
-					$masize=count($this->manual_actions);
-					$this->manual_actions[$masize]['type']='copy';
-					$this->manual_actions[$masize]['from']=$attrs['from'];
-					$this->manual_actions[$masize]['to']=$attrs['to'];
-					$this->manual_actions[$masize]['error']=sprintf("Unable to copy file '%1$s' to '%2$s'",$attrs['from'],$attrs['to']);
-				}
-			} elseif ($mod_command->nodeName=='delete') {
-				$attrs=$mod_command->attributes;
-				$attrs['file']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['file']);
-				if (!$fileop->delete($attrs['file'])) {
-					$this->error=true;
-					$masize=count($this->manual_actions);
-					$this->manual_actions[$masize]['type']='delete';
-					$this->manual_actions[$masize]['from']=$attrs['file'];
-					$this->manual_actions[$masize]['to']='';
-					$this->manual_actions[$masize]['error']="Unable to automatically delete file.";
-				}
-			} elseif ($mod_command->nodeName=='mkdir') {
-				$attrs=$mod_command->attributes;
-				$attrs['path']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['path']);
-				$path='';
-				$temp=explode('/',$attrs['path']);
-				for ($i=0;isset($temp[$i]);++$i) {
-					$path.='/'.$temp[$i];
-					if (!is_dir($path) && !$fileop->mkdir($path)) {
+	function install($install_index,$skip_input=-1) {
+		$this->ui='';
+		if (isset($this->install[$install_index]['input']) && $skip_input!=$install_index) {
+			$this->ui=require_once $this->package_path.'/'.$this->install[$install_index]['input'];
+			$this->error=false;
+		} else {
+			$modfile=$this->package_path.'/'.$this->install[$install_index]['file'];
+			$mod_content=file_get_contents($modfile);
+			$fileop=new fileop();
+			$mydoc=new XML_dsb();
+			$mydoc->parseXML($mod_content);
+			$mod_command=$mydoc->firstChild->firstChild;
+			while ($mod_command) {
+				if ($mod_command->nodeName=='php') {
+					{	// artificially create a block
+						// inside the included file we're still in this class!!
+						// this php file can generate errors of type critical which halt the execution of installer
+						$mod_command->firstChild->nodeValue=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$mod_command->firstChild->nodeValue);
+						require_once $mod_command->firstChild->nodeValue;
+					}	// end block
+				} elseif ($mod_command->nodeName=='diff') {
+					if (isset($mod_command->attributes['force_revision'])) {
+						$force_revision=true;
+					} else {
+						$force_revision=false;
+					}
+					if (!$this->_do_diff($this->package_path.'/'.$mod_command->firstChild->nodeValue,$force_revision,true)) {
 						$this->error=true;
 						$masize=count($this->manual_actions);
-						$this->manual_actions[$masize]['type']='mkdir';
-						$this->manual_actions[$masize]['from']=$attrs['path'];
-						$this->manual_actions[$masize]['to']='';
-						$this->manual_actions[$masize]['error']='Unable to automatically create directory.';
-						break;
-					}
-				}
-			} elseif ($mod_command->nodeName=='sql') {
-				$attrs=$mod_command->attributes;
-				if (!isset($attrs['type'])) {
-					$attrs['type']='inline';
-				}
-				if ($attrs['type']=='inline') {
-					$query=$mod_command->firstChild->nodeValue;
-					if (substr($query,-1)==';') {
-						$query=substr($query,0,-1);
-					}
-					if (!@mysql_query($query)) {
-						$this->error=true;
-						$masize=count($this->manual_actions);
-						$this->manual_actions[$masize]['type']='sql';
-						$this->manual_actions[$masize]['from']=$mod_command->firstChild->nodeValue;
-						$this->manual_actions[$masize]['to']='';
-						$this->manual_actions[$masize]['error']=mysql_error();
-					}
-				} else {
-					if (!$this->db_insert_file($this->package_path.'/'.$mod_command->firstChild->nodeValue)) {
-						$this->error=true;
-						$masize=count($this->manual_actions);
-						$this->manual_actions[$masize]['type']='sqlfile';
+						$this->manual_actions[$masize]['type']='diff';
 						$this->manual_actions[$masize]['from']=$this->package_path.'/'.$mod_command->firstChild->nodeValue;
 						$this->manual_actions[$masize]['to']='';
-						$this->manual_actions[$masize]['error']=mysql_error();
+						$this->manual_actions[$masize]['error']=$this->error_text;
+					}
+				} elseif ($mod_command->nodeName=='copy') {
+					$attrs=$mod_command->attributes;
+					$attrs['from']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['from']);
+					$attrs['to']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['to']);
+					if (isset($attrs['type']) && $attrs['type']=='skin') {
+						for ($i=0;isset($GLOBALS['skins'][$i]);++$i) {
+							$temp=str_replace('{skin}',$GLOBALS['skins'][$i],$attrs['from']);
+							$temp1=str_replace('{skin}',$GLOBALS['skins'][$i],$attrs['to']);
+							if (!$fileop->copy($temp,$temp1)) {
+								$this->error=true;
+								$masize=count($this->manual_actions);
+								$this->manual_actions[$masize]['type']='copy';
+								$this->manual_actions[$masize]['from']=$temp;
+								$this->manual_actions[$masize]['to']=$temp1;
+								$this->manual_actions[$masize]['error']=sprintf("Unable to copy file '%1$s' to '%2$s'",$temp,$temp1);
+							}
+						}
+					} else {
+						if (!$fileop->copy($attrs['from'],$attrs['to'])) {
+							$this->error=true;
+							$masize=count($this->manual_actions);
+							$this->manual_actions[$masize]['type']='copy';
+							$this->manual_actions[$masize]['from']=$attrs['from'];
+							$this->manual_actions[$masize]['to']=$attrs['to'];
+							$this->manual_actions[$masize]['error']=sprintf("Unable to copy file '%1$s' to '%2$s'",$attrs['from'],$attrs['to']);
+						}
+					}
+				} elseif ($mod_command->nodeName=='delete') {
+					$attrs=$mod_command->attributes;
+					$attrs['file']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['file']);
+					if (isset($attrs['type']) && $attrs['type']=='skin') {
+						for ($i=0;isset($GLOBALS['skins'][$i]);++$i) {
+							$temp=str_replace('{skin}',$GLOBALS['skins'][$i],$attrs['file']);
+							if (!$fileop->delete($temp)) {
+								$this->error=true;
+								$masize=count($this->manual_actions);
+								$this->manual_actions[$masize]['type']='delete';
+								$this->manual_actions[$masize]['from']=$temp;
+								$this->manual_actions[$masize]['to']='';
+								$this->manual_actions[$masize]['error']="Unable to automatically delete file.";
+							}
+						}
+					} else {
+						if (!$fileop->delete($attrs['file'])) {
+							$this->error=true;
+							$masize=count($this->manual_actions);
+							$this->manual_actions[$masize]['type']='delete';
+							$this->manual_actions[$masize]['from']=$attrs['file'];
+							$this->manual_actions[$masize]['to']='';
+							$this->manual_actions[$masize]['error']="Unable to automatically delete file.";
+						}
+					}
+				} elseif ($mod_command->nodeName=='extract') {
+					$attrs=$mod_command->attributes;
+					$attrs['archive']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['archive']);
+					$attrs['to']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['to']);
+					if (isset($attrs['type']) && $attrs['type']=='zip') {
+						if (!$fileop->extract_zip($attrs['archive'],$attrs['to'])) {
+							$this->error=true;
+							$masize=count($this->manual_actions);
+							$this->manual_actions[$masize]['type']='extract';
+							$this->manual_actions[$masize]['from']=$attrs['archive'];
+							$this->manual_actions[$masize]['to']=$attrs['to'];
+							$this->manual_actions[$masize]['error']="Unable to extract archive.";
+						}
+					}
+				} elseif ($mod_command->nodeName=='mkdir') {
+					$attrs=$mod_command->attributes;
+					$attrs['path']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['path']);
+					if (isset($attrs['type']) && $attrs['type']=='skin') {
+						for ($i=0;isset($GLOBALS['skins'][$i]);++$i) {
+							$temp1=str_replace('{skin}',$GLOBALS['skins'][$i],$attrs['path']);
+							$path='';
+							$temp=explode('/',$temp1);
+							for ($i=0;isset($temp[$i]);++$i) {
+								$path.='/'.$temp[$i];
+								if (!is_dir($path) && !$fileop->mkdir($path)) {
+									$this->error=true;
+									$masize=count($this->manual_actions);
+									$this->manual_actions[$masize]['type']='mkdir';
+									$this->manual_actions[$masize]['from']=$temp1;
+									$this->manual_actions[$masize]['to']='';
+									$this->manual_actions[$masize]['error']='Unable to automatically create directory.';
+									break;
+								}
+							}
+						}
+					} else {
+						$path='';
+						$temp=explode('/',$attrs['path']);
+						for ($i=0;isset($temp[$i]);++$i) {
+							$path.='/'.$temp[$i];
+							if (!is_dir($path) && !$fileop->mkdir($path)) {
+								$this->error=true;
+								$masize=count($this->manual_actions);
+								$this->manual_actions[$masize]['type']='mkdir';
+								$this->manual_actions[$masize]['from']=$attrs['path'];
+								$this->manual_actions[$masize]['to']='';
+								$this->manual_actions[$masize]['error']='Unable to automatically create directory.';
+								break;
+							}
+						}
+					}
+				} elseif ($mod_command->nodeName=='sql') {
+					$attrs=$mod_command->attributes;
+					if (!isset($attrs['type'])) {
+						$attrs['type']='inline';
+					}
+					if ($attrs['type']=='inline') {
+						$query=$mod_command->firstChild->nodeValue;
+						if (substr($query,-1)==';') {
+							$query=substr($query,0,-1);
+						}
+						if (!@mysql_query($query)) {
+							$this->error=true;
+							$masize=count($this->manual_actions);
+							$this->manual_actions[$masize]['type']='sql';
+							$this->manual_actions[$masize]['from']=$mod_command->firstChild->nodeValue;
+							$this->manual_actions[$masize]['to']='';
+							$this->manual_actions[$masize]['error']=mysql_error();
+						}
+					} else {
+						if (!$this->db_insert_file($this->package_path.'/'.$mod_command->firstChild->nodeValue)) {
+							$this->error=true;
+							$masize=count($this->manual_actions);
+							$this->manual_actions[$masize]['type']='sqlfile';
+							$this->manual_actions[$masize]['from']=$this->package_path.'/'.$mod_command->firstChild->nodeValue;
+							$this->manual_actions[$masize]['to']='';
+							$this->manual_actions[$masize]['error']=mysql_error();
+						}
 					}
 				}
+				$mod_command=$mod_command->nextSibling;
 			}
-			$mod_command=$mod_command->nextSibling;
-		}
-		if (!$this->error) {
-			$this->post_install($install_index);
+			if (!$this->error) {
+				$this->post_install($install_index);
+			}
 		}
 		return !$this->error;
-	}
-
-
-	function post_install($install_index) {
-		global $dbtable_prefix;
-		for ($i=0;isset($this->install[$install_index]['requires'][$i]);++$i) {
-			if (isset($this->install[$install_index]['requires'][$i]['change-version'])) {
-				$query="UPDATE `{$dbtable_prefix}modules` SET `version`='".$this->install[$install_index]['requires'][$i]['change-version']."' WHERE `module_code`='".$this->install[$install_index]['requires'][$i]['id']."'";
-				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			}
-		}
-		$query="SELECT max(`sort`)+1 FROM `{$dbtable_prefix}modules`";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$sort=mysql_result($res,0,0);
-		$query="INSERT IGNORE INTO `{$dbtable_prefix}modules` SET `module_code`='".$this->module_code."',`module_name`='".$this->module_name."',`module_type`='".$this->module_type."',`version`='".$this->version."',`sort`='$sort'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		if (!mysql_affected_rows()) {
-// if the insert failed then this is an update and the new version should have been set with change-version
-//			$query="UPDATE `{$dbtable_prefix}modules` SET `version`='".$this->version."' WHERE `module_code`='".$this->module_code."'";
-//			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		}
 	}
 
 
@@ -433,4 +522,36 @@ class etano_package {
 		return $myreturn;
 	}
 
+
+	function post_install($install_index) {
+		global $dbtable_prefix;
+		if (isset($_SESSION['admin']['post_install'][$this->module_code][$install_index]) && is_file($this->package_path.'/'.$_SESSION['admin']['post_install'][$this->module_code][$install_index])) {
+			require_once $this->package_path.'/'.$_SESSION['admin']['post_install'][$this->module_code][$install_index];
+			unset($_SESSION['admin']['post_install'][$this->module_code][$install_index]);
+		}
+		// update the version of all required packages with a change-version attribute
+		for ($i=0;isset($this->install[$install_index]['requires'][$i]);++$i) {
+			if (isset($this->install[$install_index]['requires'][$i]['change-version'])) {
+				$query="UPDATE `{$dbtable_prefix}modules` SET `version`='".$this->install[$install_index]['requires'][$i]['change-version']."' WHERE `module_code`='".$this->install[$install_index]['requires'][$i]['id']."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			}
+		}
+	}
+
+
+	// all installable mods are installed successfully at this point so we should add ourselves to the list of installed modules
+	function finish() {
+		global $dbtable_prefix;
+		$query="SELECT max(`sort`)+1 FROM `{$dbtable_prefix}modules`";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$sort=mysql_result($res,0,0);
+		$query="INSERT IGNORE INTO `{$dbtable_prefix}modules` SET `module_code`='".$this->module_code."',`module_name`='".$this->module_name."',`module_type`='".$this->module_type."',`version`='".$this->version."',`sort`='$sort'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (!mysql_affected_rows()) {
+// if the insert failed then this is was just an update and the new version should have been set with change-version in one
+// of the requires
+		}
+		$fileop=new fileop();
+		$fileop->delete($this->package_path);
+	}
 }	// class{}

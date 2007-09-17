@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		if (isset($_on_before_insert)) {
 			for ($i=0;isset($_on_before_insert[$i]);++$i) {
-				eval($_on_before_insert[$i].'();');
+				call_user_func($_on_before_insert[$i]);
 			}
 		}
 		$config=get_site_option(array('mail_from','mail_crlf'),'core');
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!$error) {
 			if (isset($_on_after_insert)) {
 				for ($i=0;isset($_on_after_insert[$i]);++$i) {
-					eval($_on_after_insert[$i].'();');
+					call_user_func($_on_after_insert[$i]);
 				}
 			}
 		}
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['input']=$input;
 		if (isset($_on_error)) {
 			for ($i=0;isset($_on_error[$i]);++$i) {
-				eval($_on_error[$i].'();');
+				call_user_func($_on_error[$i]);
 			}
 		}
 	}

@@ -49,13 +49,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-			define('_DBHOST_',$_SESSION['install']['input']['dbhost']);
-			define('_DBUSER_',$_SESSION['install']['input']['dbuser']);
-			define('_DBPASS_',$_SESSION['install']['input']['dbpass']);
-			define('_DBNAME_',$_SESSION['install']['input']['dbname']);
-			require_once '../../includes/classes/modman.class.php';
-			$modman=new modman();
-			$modman->db_insert_file(dirname(__FILE__).'/../sql/db.sql');
+			require_once '../../includes/classes/etano_package.class.php';
+			db_connect($_SESSION['install']['input']['dbhost'],$_SESSION['install']['input']['dbuser'],$_SESSION['install']['input']['dbpass'],$_SESSION['install']['input']['dbname']);
+			$p=new etano_package();
+			if (!$p->db_insert_file(dirname(__FILE__).'/../sql/db.sql')) {
+				trigger_error($p->manual_actions[count($p->manual_actions)-1]['error'],E_USER_ERROR);
+			}
 	} else {
 		$nextpage='install/step3.php';
 	}

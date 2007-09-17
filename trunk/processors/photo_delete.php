@@ -33,7 +33,7 @@ if (mysql_num_rows($res)) {
 	$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
 	if (isset($_on_before_delete)) {
 		for ($i=0;isset($_on_before_delete[$i]);++$i) {
-			eval($_on_before_delete[$i].'();');
+			call_user_func($_on_before_delete[$i]);
 		}
 	}
 	on_before_delete_photo(array($photo_id));
@@ -58,7 +58,7 @@ if (mysql_num_rows($res)) {
 
 	if (isset($_on_after_delete)) {
 		for ($i=0;isset($_on_after_delete[$i]);++$i) {
-			eval($_on_after_delete[$i].'();');
+			call_user_func($_on_after_delete[$i]);
 		}
 	}
 }

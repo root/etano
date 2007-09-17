@@ -18,15 +18,15 @@ class package_downloader {
 	var $file_name='';
 	var $error=false;
 	var $error_text='';
-	
+
 	function package_downloader($remote_file) {
 //		if (substr($remote_file,0,25)=='http://files.datemill.com') {
 			$this->remote_file=$remote_file;
 //		}
 		$this->file_name='';
 	}
-	
-	
+
+
 	function download() {
 		$this->error=false;
 		define('HTTP_EOL',"\r\n");
@@ -72,7 +72,9 @@ class package_downloader {
 			fclose ($socket);
 			if (!empty($reply) && !empty($this->file_name)) {
 				$fileop->file_put_contents(_BASEPATH_.'/tmp/'.$this->file_name,$reply);
-				$this->verify();				
+				if ($this->verify()) {
+					$fileop->rename(_BASEPATH_.'/tmp/'.$this->file_name,_BASEPATH_.'/tmp/packages/'.$this->file_name);
+				}
 			} else {
 				$this->error=true;
 				$this->error_text='Unable to download package.';
@@ -83,10 +85,10 @@ class package_downloader {
 		}
 		return !$this->error;
 	}
-	
+
 	// TODO: this function should connect to datemill fileserver to confirm that the downloaded file is a legitimate file
 	// for now we rely on the simple verification in the constructor of the class
 	function verify() {
-		
+		return true;
 	}
 }

@@ -34,7 +34,7 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $query="DELETE FROM `{$dbtable_prefix}user_folders` WHERE `folder_id`=$folder_id AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (isset($_on_before_delete)) {
 	for ($i=0;isset($_on_before_delete[$i]);++$i) {
-		eval($_on_before_delete[$i].'();');
+		call_user_func($_on_before_delete[$i]);
 	}
 }
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -47,7 +47,7 @@ $topass['message']['text']='Folder deleted.';     // translate
 
 if (isset($_on_after_delete)) {
 	for ($i=0;isset($_on_after_delete[$i]);++$i) {
-		eval($_on_after_delete[$i].'();');
+		call_user_func($_on_after_delete[$i]);
 	}
 }
 redirect2page('folders.php',$topass,$qs);
