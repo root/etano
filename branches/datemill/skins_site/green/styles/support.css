@@ -3,6 +3,7 @@
 	padding: 10px;
 	border: 1px dotted #ddd;
 	margin-top: 10px;
+	background: #E6F7D4;
 }
 
 #subcategs h4 ,#article_summary h4 {
@@ -25,7 +26,7 @@
 }
 
 #content h3 a {
-	color: #018CD3;
+	color: #96821D;
 }
 
 #content h4 {
