@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query.=" WHERE `post_id`=".$input['post_id'];
 			if (isset($_on_before_update)) {
 				for ($i=0;isset($_on_before_update[$i]);++$i) {
-					eval($_on_before_update[$i].'();');
+					call_user_func($_on_before_update[$i]);
 				}
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Post changed successfully.';
 			if (isset($_on_after_update)) {
 				for ($i=0;isset($_on_after_update[$i]);++$i) {
-					eval($_on_after_update[$i].'();');
+					call_user_func($_on_after_update[$i]);
 				}
 			}
 		} else {
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (isset($_on_before_insert)) {
 				for ($i=0;isset($_on_before_insert[$i]);++$i) {
-					eval($_on_before_insert[$i].'();');
+					call_user_func($_on_before_insert[$i]);
 				}
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 			if (isset($_on_after_insert)) {
 				for ($i=0;isset($_on_after_insert[$i]);++$i) {
-					eval($_on_after_insert[$i].'();');
+					call_user_func($_on_after_insert[$i]);
 				}
 			}
 		}
@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['input']=$input;
 		if (isset($_on_error)) {
 			for ($i=0;isset($_on_error[$i]);++$i) {
-				eval($_on_error[$i].'();');
+				call_user_func($_on_error[$i]);
 			}
 		}
 	}

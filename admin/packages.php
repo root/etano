@@ -24,7 +24,7 @@ $output=array();
 $fileop=new fileop();
 $zipfile=new zipfile();
 
-$query="SELECT `module_code`,`module_name`,`module_type`,`version` FROM `{$dbtable_prefix}modules` ORDER BY `module_name`";
+$query="SELECT `module_code`,`module_name`,`module_type`,`version` FROM `{$dbtable_prefix}modules` ORDER BY `module_type`,`sort`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $installed=array();
 $mcodes=array();
@@ -78,6 +78,7 @@ for ($i=0;isset($packages[$i]);++$i) {
 	if (!isset($mcodes[$p->module_code]) || $mcodes[$p->module_code]<$p->version) {	// not installed packages
 		$install_req_satisfied=0;
 		$reasons=array();	// holds the reasons why this is not satisfied (if it isn't)
+		$relevant_install=true;
 		for ($j=0;isset($p->install[$j]);++$j) {
 			$req_ok=true;
 			for ($k=0;isset($p->install[$j]['requires'][$k]);++$k) {
@@ -87,6 +88,10 @@ for ($i=0;isset($packages[$i]);++$i) {
 				}
 			}
 			$install_req_satisfied|=(int)$req_ok;
+			if ($relevant_install && $req_ok) {
+				$not_installed[$m]['text']=$p->install[$j]['text'];
+				$relevant_install=false;
+			}
 		}
 		if ($install_req_satisfied) {
 			$not_installed[$m]['valid']=true;

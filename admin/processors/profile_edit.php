@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 		for ($i=0;isset($on_changes[$i]);++$i) {
 			if (function_exists($on_changes[$i]['fn'])) {
-				eval($on_changes[$i]['fn'].'($input[\'uid\'],$on_changes[$i][\'param2\'],$on_changes[$i][\'param3\']);');
+				call_user_func($on_changes[$i]['fn'],$input['uid'],$on_changes[$i]['param2'],$on_changes[$i]['param3']);
 			}
 		}
 

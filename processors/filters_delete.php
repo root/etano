@@ -30,7 +30,7 @@ $where=isset($_GET['uid']) ? "`filter_type`="._FILTER_USER_." AND `field_value`=
 $query="DELETE FROM `{$dbtable_prefix}message_filters` WHERE $where AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 if (isset($_on_before_delete)) {
 	for ($i=0;isset($_on_before_delete[$i]);++$i) {
-		eval($_on_before_delete[$i].'();');
+		call_user_func($_on_before_delete[$i]);
 	}
 }
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -68,7 +68,7 @@ if (isset($_GET['od'])) {
 
 if (isset($_on_after_delete)) {
 	for ($i=0;isset($_on_after_delete[$i]);++$i) {
-		eval($_on_after_delete[$i].'();');
+		call_user_func($_on_after_delete[$i]);
 	}
 }
 redirect2page($nextpage,$topass,$qs);

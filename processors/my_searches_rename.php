@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$query="UPDATE `{$dbtable_prefix}user_searches` SET `title`='".$input['title']."' WHERE `search_id`=".$input['search_id']." AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 		if (isset($_on_before_update)) {
 			for ($i=0;isset($_on_before_update[$i]);++$i) {
-				eval($_on_before_update[$i].'();');
+				call_user_func($_on_before_update[$i]);
 			}
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['text']='Search title saved';
 		if (isset($_on_after_update)) {
 			for ($i=0;isset($_on_after_update[$i]);++$i) {
-				eval($_on_after_update[$i].'();');
+				call_user_func($_on_after_update[$i]);
 			}
 		}
 	} else {
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['input']=$input;
 		if (isset($_on_error)) {
 			for ($i=0;isset($_on_error[$i]);++$i) {
-				eval($_on_error[$i].'();');
+				call_user_func($_on_error[$i]);
 			}
 		}
 	}

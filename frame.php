@@ -30,7 +30,7 @@ if (is_file(_BASEPATH_.'/events/frame.php')) {
 }
 if (isset($_on_before_display)) {
 	for ($i=0;isset($_on_before_display[$i]);++$i) {
-		eval($_on_before_display[$i].'();');
+		call_user_func($_on_before_display[$i]);
 	}
 }
 
@@ -45,6 +45,6 @@ if (isset($_SESSION['topass'])) {
 ob_end_flush();
 if (isset($_on_after_display)) {
 	for ($i=0;isset($_on_after_display[$i]);++$i) {
-		eval($_on_after_display[$i].'();');
+		call_user_func($_on_after_display[$i]);
 	}
 }

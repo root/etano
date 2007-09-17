@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="UPDATE `{$dbtable_prefix}user_networks` SET `nconn_status`=1 WHERE `nconn_id` IN ('".join("','",$input['nconn_id'])."')";
 				if (isset($_on_before_insert)) {
 					for ($i=0;isset($_on_before_insert[$i]);++$i) {
-						eval($_on_before_insert[$i].'();');
+						call_user_func($_on_before_insert[$i]);
 					}
 				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -56,14 +56,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text']=sprintf('%s connections added',count($input['nconn_id']));     // translate
 				if (isset($_on_after_insert)) {
 					for ($i=0;isset($_on_after_insert[$i]);++$i) {
-						eval($_on_after_insert[$i].'();');
+						call_user_func($_on_after_insert[$i]);
 					}
 				}
 			} elseif (isset($_POST['btn_deny'])) {
 				$query="DELETE FROM `{$dbtable_prefix}user_networks` WHERE `nconn_id` IN ('".join("','",$input['nconn_id'])."')";
 				if (isset($_on_before_delete)) {
 					for ($i=0;isset($_on_before_delete[$i]);++$i) {
-						eval($_on_before_delete[$i].'();');
+						call_user_func($_on_before_delete[$i]);
 					}
 				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text']=sprintf('%s connections declined',count($input['nconn_id']));     // translate
 				if (isset($_on_after_delete)) {
 					for ($i=0;isset($_on_after_delete[$i]);++$i) {
-						eval($_on_after_delete[$i].'();');
+						call_user_func($_on_after_delete[$i]);
 					}
 				}
 			}
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['input']=$input;
 		if (isset($_on_error)) {
 			for ($i=0;isset($_on_error[$i]);++$i) {
-				eval($_on_error[$i].'();');
+				call_user_func($_on_error[$i]);
 			}
 		}
 	}

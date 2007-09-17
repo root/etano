@@ -32,7 +32,7 @@ if (!empty($comment_id)) {
 		$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `comment_id`=$comment_id";
 		if (isset($_on_before_delete)) {
 			for ($i=0;isset($_on_before_delete[$i]);++$i) {
-				eval($_on_before_delete[$i].'();');
+				call_user_func($_on_before_delete[$i]);
 			}
 		}
 
@@ -44,7 +44,7 @@ if (!empty($comment_id)) {
 		$topass['message']['text']='Comment deleted.';     // translate
 		if (isset($_on_after_delete)) {
 			for ($i=0;isset($_on_after_delete[$i]);++$i) {
-				eval($_on_after_delete[$i].'();');
+				call_user_func($_on_after_delete[$i]);
 			}
 		}
 	} else {
