@@ -1,0 +1,39 @@
+<h2>Products</h2>
+
+<div class="hint"><strong>Add, edit, remove products:</strong></div>
+
+<table id="products_list" class="results_table">
+<tr>
+	<th width="50"></th>
+	<th>Product</th>
+	<th>Type</th>
+	<th>Price</th>
+	<th>Snapshot</th>
+</tr>
+<!--loop name="loop"-->
+<tr class="{loop.myclass}">
+	<td>
+		<a class="item_del" href="processors/products_delete.php?prod_id={loop.prod_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to delete this product?'))" title="Delete this product">Delete product</a>
+		<a class="item_edit" href="products_addedit.php?prod_id={loop.prod_id}&amp;return={output.return2me}" title="Edit this product">Edit product</a>
+	</td>
+	<td>
+		<h3>{loop.prod_name} {loop.version}</h3>
+		<p>{loop.prod_diz}</p>
+	</td>
+	<td>{loop.prod_type}</td>
+	<td>{loop.price}</td>
+	<td><!--opt name=loop.prod_pic"--><img src="{tplvars.photourl}/products/{loop.prod_pic}" alt="" /><!--/opt name=loop.prod_pic"--></td>
+</tr>
+<!--noloop name="loop"-->
+<tr>
+	<td colspan="5" class="no_result_item">No products found!</td>
+</tr>
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
+</table>
+
+{output.pager2}
+
+<div id="bottom_links">
+	<a class="add" href="products_addedit.php?return={output.return2me}" title="Add new product">Add new product</a>
+</div>

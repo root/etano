@@ -49,23 +49,23 @@ foreach ($prefs as $module_code=>$v) {
 
 				case FIELD_CHECKBOX:
 					$kv['config_value']=($kv['config_value']==1) ? 'checked="checked"' : '';
-					$loop[$i]['field']='<input type="checkbox" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="1" '.$kv['config_value'].' />';
+					$loop[$i]['field']='<input type="checkbox" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="1" '.$kv['config_value'].' tabindex="'.($i+1).'" />';
 					break;
 
 				case FIELD_TEXTFIELD:
-					$loop[$i]['field']='<input type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" />';
+					$loop[$i]['field']='<input type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" tabindex="'.($i+1).'" />';
 					break;
 
 				case FIELD_INT:
-					$loop[$i]['field']='<input class="number" type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" />';
+					$loop[$i]['field']='<input class="number" type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" tabindex="'.($i+1).'" />';
 					break;
 
 				case FIELD_TEXTAREA:
-					$loop[$i]['field']='<textarea name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'">'.$kv['config_value'].'</textarea>';
+					$loop[$i]['field']='<textarea name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" tabindex="'.($i+1).'">'.$kv['config_value'].'</textarea>';
 					break;
 
 				case FIELD_SELECT:
-					$loop[$i]['field']='<select name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'">'.vector2options($kv['choices'],$kv['config_value']).'</select>';
+					$loop[$i]['field']='<select name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" tabindex="'.($i+1).'">'.vector2options($kv['choices'],$kv['config_value']).'</select>';
 					break;
 
 			}

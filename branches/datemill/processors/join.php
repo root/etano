@@ -235,7 +235,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		if (isset($_on_before_insert)) {
 			for ($i=0;isset($_on_before_insert[$i]);++$i) {
-				eval($_on_before_insert[$i].'();');
+				call_user_func($_on_before_insert[$i]);
 			}
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -256,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`=".$rsrow['m_value_to']." WHERE `".USER_ACCOUNT_ID."`='".$_SESSION['user']['reg_id']."'";
 					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					// save as a payment with amount 0
-					$query="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`fk_subscr_id`,`is_recuring`,`email`,`m_value_to`,`paid_from`,`paid_until`) VALUES ('".$_SESSION['user']['reg_id']."','".$_SESSION['user']['user']."','".$rsrow['subscr_id']."','".$rsrow['is_recurent']."','".$_SESSION['user']['email']."','".$rsrow['m_value_to']."',now(),now()+INTERVAL ".$rsrow['duration'].' DAY)';
+					$query="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`fk_subscr_id`,`is_recurring`,`email`,`m_value_to`,`paid_from`,`paid_until`) VALUES ('".$_SESSION['user']['reg_id']."','".$_SESSION['user']['user']."','".$rsrow['subscr_id']."','".$rsrow['is_recurent']."','".$_SESSION['user']['email']."','".$rsrow['m_value_to']."',now(),now()+INTERVAL ".$rsrow['duration'].' DAY)';
 					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					break;
 				}
@@ -278,7 +278,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		if (isset($_on_after_insert)) {
 			for ($i=0;isset($_on_after_insert[$i]);++$i) {
-				eval($_on_after_insert[$i].'();');
+				call_user_func($_on_after_insert[$i]);
 			}
 		}
 	} else {
@@ -292,7 +292,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['input']=$input;
 		if (isset($_on_error)) {
 			for ($i=0;isset($_on_error[$i]);++$i) {
-				eval($_on_error[$i].'();');
+				call_user_func($_on_error[$i]);
 			}
 		}
 	}

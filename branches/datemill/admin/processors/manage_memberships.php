@@ -76,14 +76,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="DELETE FROM `{$dbtable_prefix}memberships` WHERE `m_id`=".$input['m_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-				$query="SELECT `level_id`,`level` FROM `{$dbtable_prefix}access_levels`";
+				$query="UPDATE `{$dbtable_prefix}access_levels` SET `level`=`level`-$m_value WHERE `level`&$m_value";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				while ($rsrow=mysql_fetch_row($res)) {
-					if (((int)$rsrow[1]) & $m_value) {
-						$query="UPDATE `{$dbtable_prefix}access_levels` SET `level`='".($rsrow[1]-$m_value)."' WHERE `level_id`=".$rsrow[0];
-						if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-					}
-				}
+				$query="SELECT max(`m_value`) FROM `{$dbtable_prefix}memberships` WHERE `m_value`<$m_value";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$lower_mvalue=mysql_result($res,0,0);
+				$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`=$lower_mvalue WHERE `membership`=$m_value";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['type']=MESSAGE_INFO;
 				$topass['message']['text']='Membership deleted.';
 			}

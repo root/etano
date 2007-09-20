@@ -39,9 +39,11 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='Connection Requests';
-$tplvars['page_title']='Connection Requests';
+$tplvars['title']='Friendship Requests';
+$tplvars['page_title']='Friendship Requests';
 $tplvars['page']='friendship_requests';
 $tplvars['css']='friendship_requests.css';
-include 'home_left.php';
-include 'frame2.php';
+if (is_file('friendship_requests_left.php')) {
+	include 'friendship_requests_left.php';
+}
+include 'frame.php';

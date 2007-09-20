@@ -65,13 +65,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="REPLACE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`config_option`='$config_option',`config_value`='$config_value',`fk_module_code`='$module_code'";
 				if (isset($_on_before_update)) {
 					for ($i=0;isset($_on_before_update[$i]);++$i) {
-						eval($_on_before_update[$i].'();');
+						call_user_func($_on_before_update[$i]);
 					}
 				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (isset($_on_after_update)) {
 					for ($i=0;isset($_on_after_update[$i]);++$i) {
-						eval($_on_after_update[$i].'();');
+						call_user_func($_on_after_update[$i]);
 					}
 				}
 			}

@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$towrite=array();	// what to write in the cache file
 		if (!empty($input['post_id'])) {
 			$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='".gmdate('YmdHis')."'";
-			if ($config['manual_blog_approval']==1) {
+			if ($config['manual_blog_approval']) {
 				// set to pending only if the title or content was changed.
 				$query2="SELECT `title`,`post_content` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=".$input['post_id'];
 				if (!($res=@mysql_query($query2))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query.=" WHERE `post_id`=".$input['post_id'];
 			if (isset($_on_before_update)) {
 				for ($i=0;isset($_on_before_update[$i]);++$i) {
-					eval($_on_before_update[$i].'();');
+					call_user_func($_on_before_update[$i]);
 				}
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Post changed successfully.';
 			if (isset($_on_after_update)) {
 				for ($i=0;isset($_on_after_update[$i]);++$i) {
-					eval($_on_after_update[$i].'();');
+					call_user_func($_on_after_update[$i]);
 				}
 			}
 		} else {
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (isset($_on_before_insert)) {
 				for ($i=0;isset($_on_before_insert[$i]);++$i) {
-					eval($_on_before_insert[$i].'();');
+					call_user_func($_on_before_insert[$i]);
 				}
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -120,19 +120,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 
 			if (empty($config['manual_blog_approval'])) {
-				$query="UPDATE `{$dbtable_prefix}user_blogs` SET `stat_posts`=`stat_posts`+1 WHERE `blog_id`=".$input['fk_blog_id'];
-				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				on_after_approve_blog_post(array($input['post_id']));
 				$topass['message']['text']='Post added.';	// translate this
 			} else {
 				$topass['message']['text']='Post added. It will be reviewed and published shortly.';	// translate this
 			}
 
-			if (empty($config['manual_blog_approval'])) {
-				on_approve_blog_post(array($input['post_id']));
-			}
 			if (isset($_on_after_insert)) {
 				for ($i=0;isset($_on_after_insert[$i]);++$i) {
-					eval($_on_after_insert[$i].'();');
+					call_user_func($_on_after_insert[$i]);
 				}
 			}
 		}
@@ -151,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['input']=$input;
 		if (isset($_on_error)) {
 			for ($i=0;isset($_on_error[$i]);++$i) {
-				eval($_on_error[$i].'();');
+				call_user_func($_on_error[$i]);
 			}
 		}
 	}

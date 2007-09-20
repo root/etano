@@ -42,5 +42,7 @@ $tplvars['title']='Manage my blogs';
 $tplvars['page_title']='Add/Edit a Blog';
 $tplvars['page']='blog_addedit';
 $tplvars['css']='blog_addedit.css';
-include 'home_left.php';
-include 'frame2.php';
+if (is_file('blog_addedit_left.php')) {
+	include 'blog_addedit_left.php';
+}
+include 'frame.php';

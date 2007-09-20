@@ -47,7 +47,7 @@ class fileop {
 		if ($this->op_mode=='disk') {
 			$myreturn=@chmod($file,$mode);
 		} elseif ($this->op_mode=='ftp') {
-			$file=str_replace(_BASEPATH_,_FTPPATH_,$file);
+			$file=str_replace(_BASEPATH_.'/',_FTPPATH_,$file);
 			if (function_exists('ftp_chmod')) {
 				$myreturn=@ftp_chmod($this->ftp_id,$mode,$file);
 			} else {
@@ -63,7 +63,7 @@ class fileop {
 		if ($this->op_mode=='disk') {
 			$myreturn=$this->_disk_copy($source,$destination);
 		} elseif ($this->op_mode=='ftp') {
-			$destination=str_replace(_BASEPATH_,_FTPPATH_,$destination);
+			$destination=str_replace(_BASEPATH_.'/',_FTPPATH_,$destination);
 			$myreturn=$this->_ftp_copy($source,$destination);
 		}
 		return $myreturn;
@@ -92,15 +92,21 @@ class fileop {
 		if ($this->op_mode=='disk') {
 			$myreturn=@rename($source,$destination);
 		} elseif ($this->op_mode=='ftp') {
-			$source=str_replace(_BASEPATH_,_FTPPATH_,$source);
-			$destination=str_replace(_BASEPATH_,_FTPPATH_,$destination);
+			$source=str_replace(_BASEPATH_.'/',_FTPPATH_,$source);
+			$destination=str_replace(_BASEPATH_.'/',_FTPPATH_,$destination);
 			$myreturn=@ftp_rename($this->ftp_id,$source,$destination);
+// because the source might have the web server owner instead of the ftp owner, we try to copy+delete
+//			$this->copy($source,$destination);
+//			if (!$this->_disk_delete($source)) {
+//				$source=str_replace(_BASEPATH_.'/',_FTPPATH_,$source);
+//				$this->_ftp_delete($source);
+//			}
 		}
 		return $myreturn;
 	}
 
 
-	function file_put_contents($myfilename,$mydata) {
+	function file_put_contents($myfilename,&$mydata) {
 		$myreturn=false;
 		if ($this->op_mode=='disk') {
 			if (is_file($myfilename) && !is_writable($myfilename)) {
@@ -118,7 +124,7 @@ class fileop {
 				}
 			}
 		} elseif ($this->op_mode=='ftp') {
-			$myfilename=str_replace(_BASEPATH_,_FTPPATH_,$myfilename);
+			$myfilename=str_replace(_BASEPATH_.'/',_FTPPATH_,$myfilename);
 			$tmpfname=tempnam(_BASEPATH_.'/tmp','ftp');
 			$temp=fopen($tmpfname,'wb+');
 			fwrite($temp,$mydata);
@@ -143,6 +149,43 @@ class fileop {
 	}
 
 
+	function extract_zip($archive,$path='') {
+		$basename=false;
+		if (substr($archive,-4)=='.zip') {
+			if (is_file($archive)) {
+				require_once dirname(__FILE__).'/zip.class.php';
+				
+				$basename=substr(basename($archive),0,-4);
+				$zipfile=new zipfile();
+				$zipfile->read_zip($archive);
+				if (empty($path)) {
+					$path=dirname($archive);
+				}
+				$path.='/'.$basename;
+				if (!is_dir($path)) {
+					$this->mkdir($path);
+				}
+				for ($i=0;isset($zipfile->dirs[$i]);++$i) {
+					$temp=explode('/',$zipfile->dirs[$i]);
+					$sub_path=$path;
+					for ($j=0;isset($temp[$j]);++$j) {
+						if (!empty($temp[$j])) {
+							$sub_path.='/'.$temp[$j];
+							if (!is_dir($sub_path)) {
+								$this->mkdir($sub_path);
+							}
+						}
+					}
+				}
+				for ($i=0;isset($zipfile->files[$i]);++$i) {
+					$this->file_put_contents($path.$zipfile->files[$i]['dir'].'/'.$zipfile->files[$i]['name'],$zipfile->files[$i]['data']);
+				}
+			}
+		}
+		return $basename;
+	}
+
+
 // a special way to mark the backup files. Why? because accessing file.php~ on the web would show the source code
 // while file~.php wouldn't
 // $myfilename should have a full basepath
@@ -158,14 +201,16 @@ class fileop {
 
 
 	function mkdir($fullpath) {
+		$myreturn=false;
 		if (!is_dir($fullpath)) {
 			if ($this->op_mode=='disk') {
-				@mkdir($fullpath,0755);
+				$myreturn=@mkdir($fullpath,0755);
 			} elseif ($this->op_mode=='ftp') {
-				$ftp_fullpath=str_replace(_BASEPATH_,_FTPPATH_,$fullpath);
-				ftp_mkdir($this->ftp_id,$ftp_fullpath);
+				$ftp_fullpath=str_replace(_BASEPATH_.'/',_FTPPATH_,$fullpath);
+				$myreturn=@ftp_mkdir($this->ftp_id,$ftp_fullpath);
 			}
 		}
+		return $myreturn;
 	}
 
 // internal function, do not call from outside. Call fileop->copy() instead

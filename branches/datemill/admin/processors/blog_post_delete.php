@@ -26,6 +26,8 @@ $return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD
 $query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_parent_id`=$post_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
+on_before_delete_blog_post(array($post_id));
+
 $query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 

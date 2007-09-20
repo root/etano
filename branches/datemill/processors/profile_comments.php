@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 		if (empty($config['manual_com_approval'])) {
-			on_approve_comment(array($input['comment_id']),'user');
+			on_after_approve_comment(array($input['comment_id']),'user');
 		}
 	} else {
 		$input['comment']=addslashes_mq($_POST['comment']);

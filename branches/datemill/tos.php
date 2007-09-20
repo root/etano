@@ -20,8 +20,8 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $tpl->set_file('content','tos.html');
 $tpl->process('content','content');
 
-$tplvars['title']='Terms of Use';
-$tplvars['page_title']='Terms of Use';
+$tplvars['title']='Terms of Service';
+$tplvars['page_title']='Terms of Service';
 $tplvars['page']='tos';
 $tplvars['css']='tos.css';
 include 'frame.php';
