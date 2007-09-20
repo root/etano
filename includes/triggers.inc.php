@@ -11,7 +11,7 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-function on_approve_comment($comment_ids,$type) {
+function on_after_approve_comment($comment_ids,$type) {
 	global $dbtable_prefix;
 	switch ($type) {
 
@@ -53,10 +53,12 @@ function on_approve_comment($comment_ids,$type) {
 		} else {
 			$user_ids[$rsrow['fk_user_id']]=1;
 		}
-		if (isset($parent_owner_ids[$rsrow['fk_parent_owner_id']])) {
-			++$parent_owner_ids[$rsrow['fk_parent_owner_id']];
-		} else {
-			$parent_owner_ids[$rsrow['fk_parent_owner_id']]=1;
+		if ($rsrow['fk_parent_owner_id']!=$rsrow['fk_user_id']) {
+			if (isset($parent_owner_ids[$rsrow['fk_parent_owner_id']])) {
+				++$parent_owner_ids[$rsrow['fk_parent_owner_id']];
+			} else {
+				$parent_owner_ids[$rsrow['fk_parent_owner_id']]=1;
+			}
 		}
 	}
 	if ($type!='user') {
@@ -70,31 +72,159 @@ function on_approve_comment($comment_ids,$type) {
 		}
 	}
 	foreach ($parent_owner_ids as $uid=>$num) {
-		if (!empty($uid) && (empty($_SESSION['user']['user_id']) || $_SESSION['user']['user_id']!=$uid)) {
+		if (!empty($uid)) {
 			add_member_score($uid,'received_comment',$num);
 		}
 	}
-	$query="UPDATE $table SET `processed`=1 WHERE `comment_id` IN ('".join("','",$comment_ids)."')";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	foreach ($user_ids as $uid=>$num) {
+		if (!empty($uid)) {
+			update_stats($uid,'comments_made',$num);
+		}
+	}
+	if (!empty($comment_ids)) {
+		$query="UPDATE $table SET `processed`=1 WHERE `comment_id` IN ('".join("','",$comment_ids)."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
 }
 
 
-function on_approve_photo($photo_ids) {
+function on_before_delete_comment($comment_ids,$type) {
+	global $dbtable_prefix;
+	switch ($type) {
+
+		case 'blog':
+			$table="`{$dbtable_prefix}blog_comments`";
+			$parent_table="`{$dbtable_prefix}blog_posts`";
+			$parent_key="`post_id`";
+			break;
+
+	 	case 'photo':
+			$table="`{$dbtable_prefix}photo_comments`";
+			$parent_table="`{$dbtable_prefix}user_photos`";
+			$parent_key="`photo_id`";
+			break;
+
+		case 'user':
+			$table="`{$dbtable_prefix}profile_comments`";
+			$parent_table="`{$dbtable_prefix}user_profiles`";
+			$parent_key="`fk_user_id`";
+			break;
+
+	}
+
+	$query="SELECT a.`comment_id`,a.`fk_parent_id`,a.`fk_user_id`,b.`fk_user_id` as `fk_parent_owner_id` FROM $table a,$parent_table b WHERE a.`comment_id` IN ('".join("','",$comment_ids)."') AND a.`fk_parent_id`=b.$parent_key";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$parent_ids=array();
+	$user_ids=array();
+	$parent_owner_ids=array();
+	while ($rsrow=mysql_fetch_assoc($res)) {
+		if (isset($parent_ids[$rsrow['fk_parent_id']])) {
+			--$parent_ids[$rsrow['fk_parent_id']];
+		} else {
+			$parent_ids[$rsrow['fk_parent_id']]=-1;
+		}
+		if (isset($user_ids[$rsrow['fk_user_id']])) {
+			--$user_ids[$rsrow['fk_user_id']];
+		} else {
+			$user_ids[$rsrow['fk_user_id']]=-1;
+		}
+		if ($rsrow['fk_parent_owner_id']!=$rsrow['fk_user_id']) {
+			if (isset($parent_owner_ids[$rsrow['fk_parent_owner_id']])) {
+				--$parent_owner_ids[$rsrow['fk_parent_owner_id']];
+			} else {
+				$parent_owner_ids[$rsrow['fk_parent_owner_id']]=-1;
+			}
+		}
+	}
+	if ($type!='user') {
+		foreach ($parent_ids as $pid=>$num) {
+			$query="UPDATE $parent_table SET `stat_comments`=`stat_comments`+$num WHERE $parent_key='$pid'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		}
+	} else {
+		foreach ($parent_ids as $pid=>$num) {
+			update_stats($pid,'profile_comments',$num);
+		}
+	}
+	foreach ($parent_owner_ids as $uid=>$num) {
+		if (!empty($uid)) {
+			add_member_score($uid,'removed_comment',-$num);	// -$num because $num is already negative.
+		}
+	}
+}
+
+
+function on_after_approve_photo($photo_ids,$do_stats=true) {
 	global $dbtable_prefix;
 	$query="SELECT `photo_id`,`fk_user_id`,`is_main`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."') AND `processed`=0";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$photo_ids=array();	// yup
 	$user_ids=array();
 	$scores=array();
-	$score_photo=add_member_score(0,'add_photo',1,true);
-	$score_main_photo=add_member_score(0,'add_main_photo',1,true);
+	$score_photo=add_member_score(0,'add_photo',1,true);	// just read the score, don't set anything
+	$score_main_photo=add_member_score(0,'add_main_photo',1,true);	// just read the score, don't set anything
+	$main_photos=array();
+	while ($rsrow=mysql_fetch_assoc($res)) {
+		$photo_ids[]=$rsrow['photo_id'];	// get only the not processed ones
+		if ($do_stats) {
+			if (isset($user_ids[$rsrow['fk_user_id']])) {
+				++$user_ids[$rsrow['fk_user_id']];
+			} else {
+				$user_ids[$rsrow['fk_user_id']]=1;
+			}
+			if (isset($scores[$rsrow['fk_user_id']])) {
+				$scores[$rsrow['fk_user_id']]+=empty($rsrow['is_main']) ? $score_photo : $score_main_photo;
+			} else {
+				$scores[$rsrow['fk_user_id']]=empty($rsrow['is_main']) ? $score_photo : $score_main_photo;
+			}
+		}
+		if (!empty($rsrow['is_main'])) {
+			$main_photos[$rsrow['fk_user_id']]=$rsrow['photo'];
+		}
+	}
+	if ($do_stats) {
+		foreach ($user_ids as $uid=>$num) {
+			update_stats($uid,'total_photos',$num);
+		}
+		foreach ($scores as $uid=>$score) {
+			add_member_score($uid,'force',1,false,$score);
+		}
+	}
+	$now=gmdate('YmdHis');
+	foreach ($main_photos as $uid=>$photo) {
+		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='$photo',`last_changed`='$now' WHERE `fk_user_id`=$uid";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
+	// this is needed to recreate caches containing the new photo
+	if (!empty($main_photos)) {
+		$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',array_keys($main_photos)).")";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',array_keys($main_photos)).")";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
+	if (!empty($photo_ids)) {
+		$query="UPDATE `{$dbtable_prefix}user_photos` SET `processed`=1 WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
+}
+
+
+function on_before_delete_photo($photo_ids) {
+	global $dbtable_prefix;
+	$query="SELECT `photo_id`,`fk_user_id`,`is_main`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$photo_ids=array();	// yup
+	$user_ids=array();
+	$scores=array();
+	$score_photo=add_member_score(0,'del_photo',1,true);	// just read the score, don't set anything
+	$score_main_photo=add_member_score(0,'del_main_photo',1,true);	// just read the score, don't set anything
 	$main_photos=array();
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$photo_ids[]=$rsrow['photo_id'];	// get only the not processed ones
 		if (isset($user_ids[$rsrow['fk_user_id']])) {
-			++$user_ids[$rsrow['fk_user_id']];
+			--$user_ids[$rsrow['fk_user_id']];
 		} else {
-			$user_ids[$rsrow['fk_user_id']]=1;
+			$user_ids[$rsrow['fk_user_id']]=-1;
 		}
 		if (isset($scores[$rsrow['fk_user_id']])) {
 			$scores[$rsrow['fk_user_id']]+=empty($rsrow['is_main']) ? $score_photo : $score_main_photo;
@@ -112,24 +242,21 @@ function on_approve_photo($photo_ids) {
 		add_member_score($uid,'force',1,false,$score);
 	}
 	$now=gmdate('YmdHis');
-	$main_uids=array();
 	foreach ($main_photos as $uid=>$photo) {
-		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='$photo',`last_changed`='$now' WHERE `fk_user_id`=$uid";
+		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='',`last_changed`='$now' WHERE `fk_user_id`=$uid";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 	// this is needed to recreate caches containing the new photo
-	if (!empty($main_uids)) {
-		$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',$main_uids).")";
+	if (!empty($main_photos)) {
+		$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',array_keys($main_photos)).")";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',$main_uids).")";
+		$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',array_keys($main_photos)).")";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
-	$query="UPDATE `{$dbtable_prefix}user_photos` SET `processed`=1 WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 
 
-function on_approve_blog_post($post_ids) {
+function on_after_approve_blog_post($post_ids) {
 	global $dbtable_prefix;
 	require_once 'classes/fileop.class.php';
 	$fileop=new fileop();
@@ -140,15 +267,15 @@ function on_approve_blog_post($post_ids) {
 	$user_ids=array();
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$post_ids[]=$rsrow['post_id'];	// get only the not processed ones
-		if (isset($blog_ids[$rsrow['fk_blog_id']])) {
-			++$blog_ids[$rsrow['fk_blog_id']];
-		} else {
+		if (!isset($blog_ids[$rsrow['fk_blog_id']])) {
 			$blog_ids[$rsrow['fk_blog_id']]=1;
-		}
-		if (isset($user_ids[$rsrow['fk_user_id']])) {
-			++$user_ids[$rsrow['fk_user_id']];
 		} else {
+			++$blog_ids[$rsrow['fk_blog_id']];
+		}
+		if (!isset($user_ids[$rsrow['fk_user_id']])) {
 			$user_ids[$rsrow['fk_user_id']]=1;
+		} else {
+			++$user_ids[$rsrow['fk_user_id']];
 		}
 	}
 
@@ -177,12 +304,14 @@ function on_approve_blog_post($post_ids) {
 		update_stats($uid,'blog_posts',$num);
 		add_member_score($uid,'add_blog',$num);
 	}
-	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `processed`=1 WHERE `post_id` IN ('".join("','",$post_ids)."')";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (!empty($post_ids)) {
+		$query="UPDATE `{$dbtable_prefix}blog_posts` SET `processed`=1 WHERE `post_id` IN ('".join("','",$post_ids)."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
 }
 
 
-function on_delete_blog_post($post_ids) {
+function on_before_delete_blog_post($post_ids) {
 	global $dbtable_prefix;
 	require_once 'classes/fileop.class.php';
 	$fileop=new fileop();

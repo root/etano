@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query.=" WHERE `blog_id`=".$input['blog_id']." AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 			if (isset($_on_before_update)) {
 				for ($i=0;isset($_on_before_update[$i]);++$i) {
-					eval($_on_before_update[$i].'();');
+					call_user_func($_on_before_update[$i]);
 				}
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input['blog_id']=(string)$input['blog_id'];
 			if (isset($_on_after_update)) {
 				for ($i=0;isset($_on_after_update[$i]);++$i) {
-					eval($_on_after_update[$i].'();');
+					call_user_func($_on_after_update[$i]);
 				}
 			}
 		} else {
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query=substr($query,0,-1);
 			if (isset($_on_before_insert)) {
 				for ($i=0;isset($_on_before_insert[$i]);++$i) {
-					eval($_on_before_insert[$i].'();');
+					call_user_func($_on_before_insert[$i]);
 				}
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Blog created.';     // translate
 			if (isset($_on_after_insert)) {
 				for ($i=0;isset($_on_after_insert[$i]);++$i) {
-					eval($_on_after_insert[$i].'();');
+					call_user_func($_on_after_insert[$i]);
 				}
 			}
 		}
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['input']=$input;
 		if (isset($_on_error)) {
 			for ($i=0;isset($_on_error[$i]);++$i) {
-				eval($_on_error[$i].'();');
+				call_user_func($_on_error[$i]);
 			}
 		}
 	}

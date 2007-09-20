@@ -46,5 +46,7 @@ $tplvars['title']='Blog posts';
 $tplvars['page_title']='My Blogs';
 $tplvars['page']='my_blogs';
 $tplvars['css']='my_blogs.css';
-include 'home_left.php';
-include 'frame2.php';
+if (is_file('my_blogs_left.php')) {
+	include 'my_blogs_left.php';
+}
+include 'frame.php';

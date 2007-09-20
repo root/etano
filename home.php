@@ -49,4 +49,4 @@ $tplvars['css']='home.css';
 if (is_file('home_left.php')) {
 	include 'home_left.php';
 }
-include 'frame2.php';
+include 'frame.php';

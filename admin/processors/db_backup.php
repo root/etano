@@ -35,7 +35,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$query="SHOW COLUMNS FROM `".$tables[$i]."`";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$towrite.="\n\t`".$rsrow['Field'].'` '.$rsrow['Type']." DEFAULT '".$rsrow['Default']."'";
+			$towrite.="\n\t`".$rsrow['Field'].'` '.$rsrow['Type'];
+			if ($rsrow['Extra']!='auto_increment') {
+				$towrite.=" DEFAULT '".$rsrow['Default']."'";
+			}
 			if ($rsrow['Null']!='YES') {
 				$towrite.=' NOT NULL';
 			}
@@ -48,18 +51,18 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$keys=array();
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			if ($rsrow['Key_name']=='PRIMARY') {
-				$towrite.="\n\tPRIMARY KEY (`".$rsrow['Column_name']."`),";
-			} else {
-				if ($rsrow['Non_unique']==0) {
-					$rsrow['Key_name']='UNIQUE KEY `'.$rsrow['Key_name'].'`';
-				} elseif ($rsrow['Index_type']=='FULLTEXT') {
-					$rsrow['Key_name']='FULLTEXT KEY `'.$rsrow['Key_name'].'`';
+			if ($rsrow['Non_unique']==0) {
+				if ($rsrow['Key_name']=='PRIMARY') {
+					$rsrow['Key_name']='PRIMARY KEY';
 				} else {
-					$rsrow['Key_name']='KEY `'.$rsrow['Key_name'].'`';
+					$rsrow['Key_name']='UNIQUE KEY `'.$rsrow['Key_name'].'`';
 				}
-				$keys[$rsrow['Key_name']][$rsrow['Seq_in_index']]=$rsrow['Column_name'];
+			} elseif ($rsrow['Index_type']=='FULLTEXT') {
+				$rsrow['Key_name']='FULLTEXT KEY `'.$rsrow['Key_name'].'`';
+			} else {
+				$rsrow['Key_name']='KEY `'.$rsrow['Key_name'].'`';
 			}
+			$keys[$rsrow['Key_name']][$rsrow['Seq_in_index']]=$rsrow['Column_name'];
 		}
 		foreach ($keys as $keyname=>$fields) {
 			$towrite.="\n\t{$keyname} (`".join('`,`',$fields)."`),";

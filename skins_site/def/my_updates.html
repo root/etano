@@ -1,0 +1,16 @@
+<p>The following updates are displayed based on the last synchronization with your site which occured on {output.last_sync}. You can <a href="" title="">synchronize now</a></p>
+
+<!--loop name="loop"-->
+<div class="addon-listitem clearfix">
+	<img class="preview-image" alt="" src="" />
+	<div class="addon-titleby">
+		<h3>{loop.addon_name}</h3>
+		<span>by {loop.dev_name}</span>
+	</div>
+	<div class="addon-desc">{loop.addon_diz}</div>
+</div>
+<!--/loop name="loop"-->
+
+{output.pager2}
+
+<script type="text/javascript" src="{tplvars.relative_url}js/addons.js?v={tplvars.js_lib_v}"></script>

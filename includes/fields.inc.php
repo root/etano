@@ -73,28 +73,31 @@ $GLOBALS['_pfields'][9]['dbfield']='f9';
 $GLOBALS['_pfields'][9]['fk_pcat_id']=1;
 $GLOBALS['_pfields'][9]['help_text']=$GLOBALS['_lang'][224];
 
-$GLOBALS['_pfields'][10]['label']=$GLOBALS['_lang'][225];
-$GLOBALS['_pfields'][10]['field_type']=FIELD_TEXTFIELD;
-$GLOBALS['_pfields'][10]['editable']=true;
-$GLOBALS['_pfields'][10]['visible']=true;
-$GLOBALS['_pfields'][10]['dbfield']='f10';
-$GLOBALS['_pfields'][10]['fk_pcat_id']=1;
-$GLOBALS['_pfields'][10]['help_text']=$GLOBALS['_lang'][227];
-
 $GLOBALS['_pfields'][11]['label']=$GLOBALS['_lang'][230];
 $GLOBALS['_pfields'][11]['field_type']=FIELD_SELECT;
 $GLOBALS['_pfields'][11]['editable']=false;
 $GLOBALS['_pfields'][11]['visible']=false;
 $GLOBALS['_pfields'][11]['dbfield']='f11';
 $GLOBALS['_pfields'][11]['fk_pcat_id']=1;
-$GLOBALS['_pfields'][11]['accepted_values']=array('-',$GLOBALS['_lang'][228],$GLOBALS['_lang'][229]);
+$GLOBALS['_pfields'][11]['accepted_values']=array('',$GLOBALS['_lang'][228],$GLOBALS['_lang'][229]);
 $GLOBALS['_pfields'][11]['default_value']=array(2);
 $GLOBALS['_pfields'][11]['default_search']=array();
 $GLOBALS['_pfields'][11]['help_text']=$GLOBALS['_lang'][232];
 
+$GLOBALS['_pfields'][13]['label']=$GLOBALS['_lang'][240];
+$GLOBALS['_pfields'][13]['field_type']=FIELD_SELECT;
+$GLOBALS['_pfields'][13]['editable']=false;
+$GLOBALS['_pfields'][13]['visible']=false;
+$GLOBALS['_pfields'][13]['dbfield']='f13';
+$GLOBALS['_pfields'][13]['fk_pcat_id']=1;
+$GLOBALS['_pfields'][13]['accepted_values']=array('',$GLOBALS['_lang'][243],$GLOBALS['_lang'][244]);
+$GLOBALS['_pfields'][13]['default_value']=array();
+$GLOBALS['_pfields'][13]['default_search']=array();
+$GLOBALS['_pfields'][13]['help_text']=$GLOBALS['_lang'][242];
+
 
 $GLOBALS['_pcats'][1]['pcat_name']=$GLOBALS['_lang'][1];
 $GLOBALS['_pcats'][1]['access_level']=7;
-$GLOBALS['_pcats'][1]['fields']=array(1,2,3,4,5,6,7,8,9,10,11);
+$GLOBALS['_pcats'][1]['fields']=array(1,2,3,4,5,6,7,8,9,11,13);
 
 $basic_search_fields=array();

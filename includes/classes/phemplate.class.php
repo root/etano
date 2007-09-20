@@ -699,8 +699,7 @@ class phemplate {
 			$this->error('phemplate::read_file(): file '.$filename.' does not exist.', 'fatal');
 			return '';
 		}
-		$tmp = fread($fp = fopen($filename, 'r'), filesize($filename));
-		fclose($fp);
+		$tmp = file_get_contents($filename);
 		return $tmp;
 	}
 

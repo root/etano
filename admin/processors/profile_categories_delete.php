@@ -34,8 +34,8 @@ if (mysql_num_rows($res)) {
 	$query="DELETE FROM `{$dbtable_prefix}profile_categories` WHERE `pcat_id`=$pcat_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-	regenerate_fields_array();
-	regenerate_langstrings_array();
+//	regenerate_langstrings_array();
+//	regenerate_fields_array();
 
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Category deleted.';

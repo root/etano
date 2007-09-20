@@ -80,15 +80,8 @@ switch ($fid) {
 }
 
 $query="SELECT count(*) FROM $from WHERE $where";
-$temp=md5($query);
-if (isset($_SESSION['user']['cache'][$temp]['time']) && $_SESSION['user']['cache'][$temp]['time']>=time()-600) {
-	$totalrows=$_SESSION['user']['cache'][$temp]['count'];
-} else {
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$totalrows=mysql_result($res,0,0);
-	$_SESSION['user']['cache'][$temp]['time']=time();
-	$_SESSION['user']['cache'][$temp]['count']=$totalrows;
-}
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$totalrows=mysql_result($res,0,0);
 
 $loop=array();
 if (!empty($totalrows)) {
@@ -128,5 +121,7 @@ $tplvars['title']='Read your messages';     // translate
 $tplvars['page_title']=$my_folders[$fid];
 $tplvars['page']='mailbox';
 $tplvars['css']='mailbox.css';
-include 'home_left.php';
-include 'frame2.php';
+if (is_file('mailbox_left.php')) {
+	include 'mailbox_left.php';
+}
+include 'frame.php';

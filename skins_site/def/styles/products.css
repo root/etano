@@ -1,0 +1,14 @@
+.prod-listitem .preview-image {
+	float: right;
+}
+
+ul#prod_list {
+	list-style-image: url('../images/bullet2.gif');
+	margin-left: 20px;
+}
+
+.version {
+	font-size: 85%;
+	margin-bottom: 5px;
+	margin-left: 15px;
+}

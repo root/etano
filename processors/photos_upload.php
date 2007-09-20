@@ -260,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		if (!empty($ids)) {
 			if (empty($config['manual_photo_approval'])) {
-				on_approve_photo($ids);
+				on_after_approve_photo($ids);
 			}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']=sprintf('%1u photos uploaded.',count($ids));

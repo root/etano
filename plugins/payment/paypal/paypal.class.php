@@ -219,21 +219,21 @@ class payment_paypal extends ipayment {
 										} else {
 											// a demo transaction when we're not in demo mode
 											require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-											new log_error(get_class($this),'Demo transaction when demo is not enabled: '.array2qs($_POST));
+											new log_error(array('module_name'=>get_class($this),'text'=>'Demo transaction when demo is not enabled: '.array2qs($_POST)));
 										}
 									} else {
 										// paid price doesn't match the subscription price
 										require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-										new log_error(get_class($this),'Invalid amount paid: '.array2qs($_POST));
+										new log_error(array('module_name'=>get_class($this),'text'=>'Invalid amount paid: '.array2qs($_POST)));
 									}
 								} else {
 									// if the subscr_id was not found
 									require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-									new log_error(get_class($this),'Invalid subscr_id received after payment: '.array2qs($_POST));
+									new log_error(array('module_name'=>get_class($this),'text'=>'Invalid subscr_id received after payment: '.array2qs($_POST)));
 								}
 							} else {
 								require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-								new log_error(get_class($this),'Payment status not Completed: '.$input['payment_status']."\n".array2qs($_POST));
+								new log_error(array('module_name'=>get_class($this),'text'=>'Payment status not Completed: '.$input['payment_status']."\n".array2qs($_POST)));
 							}
 						} elseif (strcasecmp($input['txn_type'],'subscr_eot')==0) {
 							$query="SELECT `payment_id` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$real_user['user_id']." AND `fk_subscr_id`=".$input['item_number']." ORDER BY `payment_id` DESC LIMIT 1";
@@ -248,28 +248,28 @@ class payment_paypal extends ipayment {
 						} else {
 							// unhandled txn_type
 							require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-							new log_error(get_class($this),'Unhandled txn_type (probably not an error): '.$input['txn_type']."\n".array2qs($_POST));
+							new log_error(array('module_name'=>get_class($this),'text'=>'Unhandled txn_type (probably not an error): '.$input['txn_type']."\n".array2qs($_POST)));
 						}
 					} else {
 						// if the user_id was not found
 						require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-						new log_error(get_class($this),'Invalid user_id received after payment: '.array2qs($_POST));
+						new log_error(array('module_name'=>get_class($this),'text'=>'Invalid user_id received after payment: '.array2qs($_POST)));
 					}
 				} else {
 					require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-					new log_error(get_class($this),'Payment was not made into our account: '.array2qs($_POST));
+					new log_error(array('module_name'=>get_class($this),'text'=>'Payment was not made into our account: '.array2qs($_POST)));
 				}
 			} elseif (strcasecmp($reply,'INVALID')==0) {
 				require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-				new log_error(get_class($this),'Transaction verification with paypal server failed as invalid: '.array2qs($_POST));
+				new log_error(array('module_name'=>get_class($this),'text'=>'Transaction verification with paypal server failed as invalid: '.array2qs($_POST)));
 			} else {
 				require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-				new log_error(get_class($this),'Transaction verification with paypal server failed with unknown code: '.$reply.' '.array2qs($_POST));
+				new log_error(array('module_name'=>get_class($this),'text'=>'Transaction verification with paypal server failed with unknown code: '.$reply.' '.array2qs($_POST)));
 			}
 		} else {
 			// socket problem
 			require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-			new log_error(get_class($this),'Connection to paypal server failed. '.array2qs($_POST));
+			new log_error(array('module_name'=>get_class($this),'text'=>'Connection to paypal server failed. '.array2qs($_POST)));
 		}
 //fclose($fp);
 	}

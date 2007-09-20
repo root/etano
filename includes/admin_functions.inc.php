@@ -48,6 +48,7 @@ $accepted_yesno=array(0=>'No',1=>'Yes');
 $country_prefered_input=array('s'=>'state/city selection','z'=>'zip/postal code');
 $inverse_fields=array(2=>'FIELD_TEXTFIELD',3=>'FIELD_SELECT',4=>'FIELD_TEXTAREA',9=>'FIELD_CHECKBOX',10=>'FIELD_CHECKBOX_LARGE',101=>'FIELD_FILE',102=>'FIELD_FK_SELECT',103=>'FIELD_DATE',104=>'FIELD_INT',105=>'FIELD_FLOAT',106=>'HTML_PIC',107=>'FIELD_LOCATION',108=>'FIELD_RANGE');
 $flirt_types=array(0=>'Initial flirt',1=>'Reply');
+$accepted_module_types=array(MODULE_REGULAR=>'Update',MODULE_PAYMENT=>'Payment',MODULE_FRAUD=>'Fraud Check',MODULE_WIDGET=>'Widget',MODULE_SKIN=>'Skin');
 
 // you shouldn't call this function directly. Instead set this to set_error_handler() and use the trigger_error method
 function admin_error($errlevel,$text,$file='unset',$line='unset') {
@@ -134,9 +135,9 @@ function regenerate_fields_array() {
 			case FIELD_SELECT:
 			case FIELD_CHECKBOX_LARGE:
 				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
-					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-',\$GLOBALS['_lang'][".str_replace('|',"],\$GLOBALS['_lang'][",substr($rsrow['accepted_values'],1,-1))."]);\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('',\$GLOBALS['_lang'][".str_replace('|',"],\$GLOBALS['_lang'][",substr($rsrow['accepted_values'],1,-1))."]);\n";
 				} else {
-					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-');\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('');\n";
 				}
 				if (!empty($rsrow['default_value']) && $rsrow['default_value']!='||') {
 					$rsrow['default_value']=explode('|',substr($rsrow['default_value'],1,-1));
@@ -164,9 +165,9 @@ function regenerate_fields_array() {
 
 			case FIELD_DATE:
 				if (!empty($rsrow['accepted_values']) && $rsrow['accepted_values']!='||') {
-					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-','".str_replace('|',"','",substr($rsrow['accepted_values'],1,-1))."');\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('','".str_replace('|',"','",substr($rsrow['accepted_values'],1,-1))."');\n";
 				} else {
-					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('-');\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['accepted_values']=array('');\n";
 				}
 				if (!empty($rsrow['default_search']) && $rsrow['default_search']!='||') {
 					$rsrow['default_search']=explode('|',substr($rsrow['default_search'],1,-1));
@@ -218,11 +219,14 @@ function regenerate_fields_array() {
 }
 
 
-function regenerate_langstrings_array() {
+function regenerate_langstrings_array($skin='') {
 	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
 	global $dbtable_prefix;
 	$fileop=new fileop();
 	$query="SELECT a.`module_code`,b.`config_value` as `skin_dir` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`=".MODULE_SKIN." AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_dir'";
+	if (!empty($skin)) {
+		$query.=" AND a.`module_code`='$skin'";
+	}
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$skins[]=$rsrow;

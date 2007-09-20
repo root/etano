@@ -36,11 +36,11 @@ if (empty($_SESSION['user']['user_id'])) {
 
 $tpl->set_file('content','contact.html');
 $tpl->set_var('output',$output);
+$tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']='Contact Us';
 $tplvars['page_title']='Contact Us';
 $tplvars['page']='contact';
-$tplvars['menu_contact']='active';
 $tplvars['css']='contact.css';
 include 'frame.php';

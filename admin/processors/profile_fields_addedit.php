@@ -201,8 +201,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Field added.';
 		}
-		regenerate_fields_array();
-		regenerate_langstrings_array();
+//		regenerate_langstrings_array();
+//		regenerate_fields_array();
 
 	} else {
 		$nextpage='profile_fields_addedit.php';

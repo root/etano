@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query.=" WHERE `comment_id`=".$input['comment_id']." AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
 				if (isset($_on_before_update)) {
 					for ($i=0;isset($_on_before_update[$i]);++$i) {
-						eval($_on_before_update[$i].'();');
+						call_user_func($_on_before_update[$i]);
 					}
 				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text']='Comment changed successfully.';
 				if (isset($_on_after_update)) {
 					for ($i=0;isset($_on_after_update[$i]);++$i) {
-						eval($_on_after_update[$i].'();');
+						call_user_func($_on_after_update[$i]);
 					}
 				}
 			} else {
@@ -109,15 +109,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (isset($_on_before_insert)) {
 				for ($i=0;isset($_on_before_insert[$i]);++$i) {
-					eval($_on_before_insert[$i].'();');
+					call_user_func($_on_before_insert[$i]);
 				}
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['comment_id']=mysql_insert_id();
 			$topass['message']['type']=MESSAGE_INFO;
-			if (!empty($_SESSION['user']['user_id'])) {
-				update_stats($_SESSION['user']['user_id'],'comments_made',1);
-			}
 			if (empty($config['manual_com_approval'])) {
 				$topass['message']['text']='Comment added.';	// translate this
 				$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=".$input['fk_parent_id'];
@@ -138,13 +135,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (isset($_on_after_insert)) {
 				for ($i=0;isset($_on_after_insert[$i]);++$i) {
-					eval($_on_after_insert[$i].'();');
+					call_user_func($_on_after_insert[$i]);
 				}
 			}
 		}
 		if (empty($config['manual_com_approval'])) {
 			// this trigger is global
-			on_approve_comment(array($input['comment_id']),'blog');
+			on_after_approve_comment(array($input['comment_id']),'blog');
 		}
 	} else {
 		$input['comment']=addslashes_mq($_POST['comment']);
@@ -153,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['input']=$input;
 		if (isset($_on_error)) {
 			for ($i=0;isset($_on_error[$i]);++$i) {
-				eval($_on_error[$i].'();');
+				call_user_func($_on_error[$i]);
 			}
 		}
 	}

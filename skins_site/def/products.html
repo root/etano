@@ -1,0 +1,14 @@
+<p>If you want to see the updates available for your site please check <a href="my_updates.php" title="Community script updates">my Etano updates page</a>.</p>
+
+<ul id="prod_list">
+<!--loop name="loop"-->
+<li class="prod-listitem clearfix">
+	<!--opt name="loop.prod_pic"--><img class="preview-image" alt="{loop.prod_name}" src="{tplvars.photourl}/products/{loop.prod_pic}" /><!--/opt name="loop.prod_pic"-->
+	<h3>{loop.prod_name}</h3>
+	<p class="version">Version {loop.version} by {loop.dev_name} - {loop.last_changed}</p>
+	<div class="prod_diz">{loop.prod_diz}</div>
+</li>
+<!--/loop name="loop"-->
+</ul>
+
+{output.pager2}

@@ -1,0 +1,65 @@
+<h2>Products</h2>
+
+<div class="hint">Please enter the product below:</div>
+
+<form action="processors/products_addedit.php" method="post" id="products_form" enctype="multipart/form-data">
+<input type="hidden" name="prod_id" value="{output.prod_id}" />
+<input type="hidden" name="return" value="{output.return}" />
+<input type="hidden" name="module_code" value="{output.module_code}" />
+<table id="products_addedit" class="form_table">
+<tr>
+	<td class="label">Package:</td>
+	<td class="field">
+		<input type="file" name="filename" id="filename" />
+<strong>Note that we do not support multiple install instructions for now!!!</strong>
+	</td>
+</tr>
+<tr>
+	<td class="label">Product Type:</td>
+	<td class="field">{output.prod_type}</td>
+</tr>
+<tr>
+	<td class="label">Module Code:</td>
+	<td class="field">{output.module_code}</td>
+</tr>
+<tr>
+	<td class="label">Version:</td>
+	<td class="field">{output.version}</td>
+</tr>
+<tr>
+	<td class="label">Product Name:</td>
+	<td class="field">{output.prod_name}</td>
+</tr>
+<tr>
+	<td class="label">Description:</td>
+	<td class="field"><textarea name="prod_diz" id="prod_diz" cols="" rows="">{output.prod_diz}</textarea></td>
+</tr>
+<tr>
+	<td class="label">Snapshot:</td>
+	<td class="field">
+		<input type="file" name="prod_pic" id="prod_pic" />
+		<!--opt name="output.prod_pic"--><img src="{tplvars.photourl}/products/{output.prod_pic}" alt="" /><!--/opt name="output.prod_pic"-->
+	</td>
+</tr>
+<tr>
+	<td class="label">Developer:</td>
+	<td class="field">
+		<select name="fk_dev_id" id="fk_dev_id">
+		{output.fk_dev_id}
+		</select>
+	</td>
+</tr>
+<tr>
+	<td class="label">Price:</td>
+	<td class="field"><input type="text" name="price" id="price" value="{output.price}" /></td>
+</tr>
+<tr>
+	<td class="label">&nbsp;</td>
+	<td class="field"><input type="submit" class="button" value="Save" id="btn_save" tabindex="2" /></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
+
+<script type="text/javascript" src="js/products_addedit.js?v={tplvars.js_lib_v}"></script>

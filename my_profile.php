@@ -176,5 +176,7 @@ $tplvars['title']='My Profile';
 $tplvars['page_title']='My Profile';
 $tplvars['page']='my_profile';
 $tplvars['css']='my_profile.css';
-include 'home_left.php';
-include 'frame2.php';
+if (is_file('my_profile_left.php')) {
+	include 'my_profile_left.php';
+}
+include 'frame.php';
