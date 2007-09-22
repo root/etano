@@ -47,11 +47,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$user['user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				unset($user['last_activity'],$user['email']);
-				$_SESSION['user']=$user;
+				$_SESSION['user']=array_merge(isset($_SESSION['user']) ? $_SESSION['user'] : array(),$user);
 				$_SESSION['user']['loginout']=time();
-				if (isset($_SESSION['timedout']['url'])) {
-					$next=$_SESSION['timedout'];
-					unset($_SESSION['timedout']);
+				if (isset($_SESSION['user']['timedout']['url'])) {
+					$next=$_SESSION['user']['timedout'];
+					unset($_SESSION['user']['timedout']);
 					if ($next['method']=='GET') {
 						redirect2page($next['url'].'?'.array2qs($next['qs']),array(),'',true);
 					} else {

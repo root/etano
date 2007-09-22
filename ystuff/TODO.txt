@@ -108,3 +108,6 @@ RSS Feeds
     * All posts
     * All comments
 
+- urmarire campanii publicitate/newsletters: un link in email la o imagine cu un cod de campanie care sa identifice campania.
+Sau link propriuzis cu o variabila de campanie. Sau amandoua pentru a vedea cati au citit emailul si cati au dat click.
+

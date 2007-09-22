@@ -88,6 +88,11 @@ function allow_dept($levels=DEPT_ADMIN) {
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='Please login first.';
+		$mysession=session_id();
+		if (empty($mysession)) {
+			session_start();
+		}
+		$_SESSION['admin']['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
 		redirect2page('admin/index.php',$topass);
 	}
 	return $myreturn;
