@@ -138,7 +138,7 @@ function get_default_skin_dir() {
 		$myreturn=mysql_result($res,0,0);
 	}
 	if (empty($myreturn)) {
-		$myreturn='basic';
+		$myreturn='def';
 	}
 	return $myreturn;
 }
@@ -153,7 +153,7 @@ function get_default_skin_code() {
 		$myreturn=mysql_result($res,0,0);
 	}
 	if (empty($myreturn)) {
-		$myreturn='basic';
+		$myreturn='def';
 	}
 	return $myreturn;
 }

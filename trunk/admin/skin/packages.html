@@ -1,5 +1,18 @@
 <h2>Package Manager</h2>
 
+<h3>To check for new updates available for your site please click here:
+<!--<form action="http://www.datemill.com/remote/sync.php" method="post">-->
+<form action="http://dating.sco.ro/dm_new/remote/sync.php" method="post">
+<input type="hidden" name="lk" value="{tplvars.lk}" />
+<input type="hidden" name="bu" value="{output.bu}" />
+<!--loop name="installed"-->
+<input type="hidden" name="module[{installed.module_code}]" value="{installed.version}" />
+<!--/loop name="installed"-->
+<input type="submit" value="Check now" />
+</form>
+</h3>
+
+<br />
 <h3>These modules are available for install on your site:</h3>
 
 <table class="results_table">
@@ -34,4 +47,3 @@
 </tr>
 <!--/loop name="installed"-->
 </table>
-
