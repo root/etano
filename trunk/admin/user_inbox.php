@@ -62,7 +62,7 @@ if (!empty($_GET['uid'])) {
 
 	$output['return2me']='user_inbox.php';
 	if (!empty($_SERVER['QUERY_STRING'])) {
-		$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+		$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 	}
 	$output['return2me']=rawurlencode($output['return2me']);
 	$tpl->set_file('content','user_inbox.html');

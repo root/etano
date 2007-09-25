@@ -110,7 +110,7 @@ for ($i=0;isset($packages[$i]);++$i) {
 	}
 }
 
-$output['bu']=rawurlencode(base64_encode(_BASEURL_));
+$output['bu']=base64_encode(_BASEURL_);
 
 $tpl->set_file('content','packages.html');
 $tpl->set_loop('installed',$installed);

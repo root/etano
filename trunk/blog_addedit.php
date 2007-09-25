@@ -22,6 +22,9 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $output=$user_blogs_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
+	// our 'return' here was decoded in the processor
+	$output['return2']=$output['return'];
+	$output['return']=rawurlencode($output['return']);
 } elseif (!empty($_GET['bid'])) {
 	$blog_id=(int)$_GET['bid'];
 	$query="SELECT `blog_id`,`blog_name`,`blog_diz` FROM `{$dbtable_prefix}user_blogs` WHERE `blog_id`=$blog_id AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
@@ -30,10 +33,12 @@ if (isset($_SESSION['topass']['input'])) {
 		$output=mysql_fetch_assoc($res);
 		$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
+}
+
+if (empty($output['return'])) {
 	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$output['return']=rawurlencode($output['return2']);
 }
-
 $tpl->set_file('content','blog_addedit.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content');

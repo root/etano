@@ -32,6 +32,7 @@ $loop=array();
 if (!empty($totalrows)) {
 	if ($o>$totalrows) {
 		$o=$totalrows-$r;
+		$o=$o>=0 ? $o : 0;
 	}
 	$config=get_site_option(array('datetime_format'),'def_user_prefs');
 	$query="SELECT a.`ban_id`,a.`ban_type`,a.`what`,b.`lang_value` as `reason`,UNIX_TIMESTAMP(a.`since`) as `since` FROM $from WHERE $where LIMIT $o,$r";
@@ -50,7 +51,7 @@ if (!empty($totalrows)) {
 
 $output['return2me']='site_bans.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','site_bans.html');

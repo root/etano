@@ -35,8 +35,6 @@ if (isset($_SESSION['topass']['input'])) {
 	} elseif (!empty($_REQUEST['uids'])) {
 		$output['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 	}
-	$output['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	$output['return2']=rawurldecode($output['return']);
 }
 
 if (!empty($output['uids'])) {
@@ -52,6 +50,10 @@ if (!empty($output['uids'])) {
 	redirect2page($nextpage,$topass,'',true);
 }
 
+if (empty($output['return'])) {
+	$output['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return2']=rawurldecode($output['return']);
+}
 $tpl->set_file('content','email_send.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content');

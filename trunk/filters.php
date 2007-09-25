@@ -40,6 +40,7 @@ $loop=array();
 if (!empty($totalrows)) {
 	if ($o>$totalrows) {
 		$o=$totalrows-$r;
+		$o=$o>=0 ? $o : 0;
 	}
 	$field_values=array();
 	$query="SELECT * FROM $from WHERE $where ORDER BY `fk_folder_id` LIMIT $o,$r";

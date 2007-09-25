@@ -32,7 +32,7 @@ $loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $output['return2me']='my_blogs.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','my_blogs.html');

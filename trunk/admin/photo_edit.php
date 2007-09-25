@@ -35,9 +35,6 @@ if (isset($_SESSION['topass']['input'])) {
 		$config=get_site_option(array('date_format'),'core');
 		$output['date_posted']=strftime($config['date_format'],$output['date_posted']);
 	}
-	// because of the GET, our 'return' is decoded
-	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	$output['return']=rawurlencode($output['return2']);
 }
 
 $output['is_main']=($output['is_main']==1) ? 'checked="checked"' : '';
@@ -45,6 +42,11 @@ $output['is_private']=($output['is_private']==1) ? 'checked="checked"' : '';
 $output['allow_rating']=($output['allow_rating']==1) ? 'checked="checked"' : '';
 $output['allow_comments']=($output['allow_comments']==1) ? 'checked="checked"' : '';
 
+if (empty($output['return'])) {
+	// because of the GET, our 'return' is decoded
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
+}
 $tpl->set_file('content','photo_edit.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content');
