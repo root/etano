@@ -138,6 +138,7 @@ if (!$error) {
 	if (!empty($totalrows)) {
 		if ($o>$totalrows) {
 			$o=$totalrows-$r;
+			$o=$o>=0 ? $o : 0;
 		}
 		$query="SELECT a.`photo_id`,a.`fk_user_id`,a.`_user` as `user`,a.`photo`,a.`allow_comments`,a.`caption`,a.`stat_views`,a.`stat_comments`,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM $from WHERE $where ORDER BY $orderby LIMIT $o,$r";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -186,7 +187,7 @@ if (!$error) {
 
 $output['return2me']='photo_search.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','photo_search.html');

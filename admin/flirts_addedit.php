@@ -33,12 +33,14 @@ if (isset($_SESSION['topass']['input'])) {
 		$output=mysql_fetch_assoc($res);
 		$output['flirt_text']=sanitize_and_format($output['flirt_text'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
-	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	$output['return']=rawurlencode($output['return2']);
 }
 
 $output['flirt_type']=vector2radios($flirt_types,'flirt_type',$output['flirt_type']);
 
+if (empty($output['return'])) {
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
+}
 $tpl->set_file('content','flirts_addedit.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content');

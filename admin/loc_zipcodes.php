@@ -50,6 +50,7 @@ if (!empty($state_id) && !empty($country_id)) {
 	if (!empty($totalrows)) {
 		if ($o>$totalrows) {
 			$o=$totalrows-$r;
+			$o=$o>=0 ? $o : 0;
 		}
 		$query="SELECT `zip_id`,`zipcode`,`latitude`,`longitude` FROM $from WHERE $where ORDER BY `zipcode` ASC LIMIT $o,$r";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

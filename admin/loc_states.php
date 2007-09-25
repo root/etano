@@ -42,6 +42,7 @@ if (!empty($country_id)) {
 	if (!empty($totalrows)) {
 		if ($o>$totalrows) {
 			$o=$totalrows-$r;
+			$o=$o>=0 ? $o : 0;
 		}
 		$query="SELECT `state_id`,`state`,`num_cities` FROM $from WHERE $where ORDER BY `state` ASC LIMIT $o,$r";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

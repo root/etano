@@ -81,8 +81,9 @@ $i=0;
 foreach ($_pcats as $pcat_id=>$pcat) {
 	$fields=array();
 	for ($j=0;isset($pcat['fields'][$j]);++$j) {
-		$fields[$j]['label']=$_pfields[$pcat['fields'][$j]]['label'];
-		$fields[$j]['field']=isset($output[$_pfields[$pcat['fields'][$j]]['dbfield']]) ? $output[$_pfields[$pcat['fields'][$j]]['dbfield']] : '?';
+		if ($_pfields[$pcat['fields'][$j]]['visible']) {
+			$fields[]=array('label'=>$_pfields[$pcat['fields'][$j]]['label'],'field'=>isset($output[$_pfields[$pcat['fields'][$j]]['dbfield']]) ? $output[$_pfields[$pcat['fields'][$j]]['dbfield']] : '?');
+		}
 	}
 	$categs[$i]['pcat_name']=$pcat['pcat_name'];
 	$categs[$i]['pcat_id']=$pcat_id;
@@ -159,7 +160,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 	if (!empty($edit_comment)) {
 		$_SERVER['QUERY_STRING']=str_replace('&edit_comment='.$edit_comment,'',$_SERVER['QUERY_STRING']);
 	}
-	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','my_profile.html');

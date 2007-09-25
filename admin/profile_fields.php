@@ -36,6 +36,7 @@ $loop=array();
 if (!empty($totalrows)) {
 	if ($o>$totalrows) {
 		$o=$totalrows-$r;
+		$o=$o>=0 ? $o : 0;
 	}
 	$query="SELECT a.`pfield_id`,a.`dbfield`,a.`field_type`,a.`searchable`,a.`at_registration`,a.`reg_page`,a.`required`,a.`accepted_values`,b.`lang_value` as `label`,c.`fk_lk_id_pcat` FROM $from WHERE $where ORDER BY a.`order_num` LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -67,7 +68,7 @@ if (!empty($totalrows)) {
 $output['field_type']=vector2options($accepted_fieldtype,'',array(FIELD_RANGE));
 $output['return2me']='profile_fields.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me2']=$output['return2me'];	// this is used in the add form (with method="get")
 $output['return2me']=rawurlencode($output['return2me']);

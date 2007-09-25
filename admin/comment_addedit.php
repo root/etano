@@ -49,9 +49,6 @@ if (isset($_SESSION['topass']['input'])) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
 		$output['comment']=sanitize_and_format($output['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
-	// because of the GET, our 'return' is decoded
-	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	$output['return']=rawurlencode($output['return2']);
 }
 
 $output['bbcode_comments']=get_site_option('bbcode_comments','core');
@@ -59,6 +56,11 @@ if (empty($output['bbcode_comments'])) {
 	unset($output['bbcode_comments']);
 }
 
+if (empty($output['return'])) {
+	// because of the GET, our 'return' is decoded
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
+}
 $tpl->set_file('content','comment_addedit.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);
