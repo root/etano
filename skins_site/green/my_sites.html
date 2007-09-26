@@ -1,0 +1,27 @@
+<div class="row header">
+	<div class="control"></div>
+	<div class="license">License</div>
+	<div class="baseurl">Assigned to Site</div>
+	<div class="screenshot">Screenshot</div>
+	<div class="is_featured">Featured</div>
+</div>
+
+<!--loop name="loop"-->
+<div class="row">
+	<div class="control">
+		<a class="content-link link_change" href="{tplvars.relative_url}site_edit.php?site_id={loop.site_id}&amp;return={output.return2me}" title="Change license details">Edit details</a>
+		<a class="content-link link_updates" href="{tplvars.relative_url}site_updates.php?lk={loop.license_md5}&amp;return={output.return2me}" title="Site updates">Check for updates</a>
+	</div>
+	<div class="license">{loop.license}</div>
+	<div class="baseurl">{loop.baseurl}</div>
+	<div class="screenshot">{loop.screenshot}</div>
+	<div class="is_featured">{loop.is_featured}</div>
+</div>
+<!--noloop name="loop"-->
+<div class="row">
+	<p class="no_result_item">You have no licenses assigned yet.</p>
+</div>
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
+
+<script type="text/javascript" src="{tplvars.relative_url}js/my_sites.js?v={tplvars.js_lib_v}"></script>

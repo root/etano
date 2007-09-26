@@ -48,10 +48,6 @@ if ($uri_parts[0]=='blog' && isset($uri_parts[1])) {
 	}
 	require_once 'support.php';
 	die;
-} elseif (!empty($uri_parts[0]) && !isset($uri_parts[1])) {
-	$_GET['user']=$uri_parts[0];
-	require_once 'profile.php';
-	die;
 } else {
 	redirect2page('index.php');
 }

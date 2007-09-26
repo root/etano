@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007082901
+File version:				1.2007092501
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -849,13 +849,13 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	$myreturn="<form id=\"pagerform$myrand\" action=\"$phpself\" method=\"get\">\n";
 	$myreturn.="<ul class=\"pager\">\n";
 	$myreturn.='<li class="text">'.(isset($lang_strings['page']) ? $lang_strings['page'] : '').'</li>';
-	$myreturn.='<li class="goto_first">';
-	$myreturn.='<a href="'.$phpself.'?o=0&amp;r='.$results;
-	if (!empty($qs)) {
-		$myreturn.='&amp;'.$qs;
-	}
-	$myreturn.='" title="'.(isset($lang_strings['goto_first']) ? $lang_strings['goto_first'] : 'Go to first page').'">&lt;&lt;</a></li>';
 	if ($offset>0) {
+		$myreturn.='<li class="goto_first">';
+		$myreturn.='<a href="'.$phpself.'?o=0&amp;r='.$results;
+		if (!empty($qs)) {
+			$myreturn.='&amp;'.$qs;
+		}
+		$myreturn.='" title="'.(isset($lang_strings['goto_first']) ? $lang_strings['goto_first'] : 'Go to first page').'">&lt;&lt;</a></li>';
 		$myreturn.='<li class="goto_previous">';
 		$myreturn.='<a href="'.$phpself.'?o='.(($offset-$results>0) ? $offset-$results : 0).'&amp;r='.$results;
 		if (!empty($qs)) {
@@ -904,12 +904,12 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 			$myreturn.='&amp;'.$qs;
 		}
 		$myreturn.='" title="'.(isset($lang_strings['goto_next']) ? $lang_strings['goto_next'] : 'Go to next page')."\">&gt;</a></li>\n";
+		$myreturn.='<li class="goto_last"><a href="'.$phpself.'?o='.(($total_pages-1)*$results).'&amp;r='.$results;
+		if (!empty($qs)) {
+			$myreturn.='&amp;'.$qs;
+		}
+		$myreturn.='" title="'.(isset($lang_strings['goto_last']) ? $lang_strings['goto_last'] : 'Go to last page')."\">&gt;&gt;</a></li>\n";
 	}
-	$myreturn.='<li class="goto_last"><a href="'.$phpself.'?o='.(($total_pages-1)*$results).'&amp;r='.$results;
-	if (!empty($qs)) {
-		$myreturn.='&amp;'.$qs;
-	}
-	$myreturn.='" title="'.(isset($lang_strings['goto_last']) ? $lang_strings['goto_last'] : 'Go to last page')."\">&gt;&gt;</a></li>\n";
 	$myreturn.="<li class=\"rpp\">\n";
 	$myreturn.="\t<input type=\"hidden\" name=\"o\" value=\"$offset\" />\n";
 	while (list($k,$v)=each($params)) {

@@ -1,0 +1,20 @@
+<p>The following updates are displayed based on the last synchronization with your site which occurred on
+<strong>{output.last_sync}</strong>.
+To synchronize now please go back to <a href="{output.baseurl}/admin/packages.php">your site admin panel</a> and use the "check now" button.</p>
+
+<ul id="updates_list">
+<!--loop name="loop"-->
+	<li>
+		<h3>{loop.update_name}</h3>
+		<p>{loop.update_diz}</p>
+		<p class="dl_links"><a href="{tplvars.baseurl}/remote/download.php?t=u&amp;id={loop.update_id}&amp;lk={output.license_md5}">Download</a> | <a href="{output.baseurl}/admin/package_install.php?f={loop.enc_url}">Install</a></p>
+	</li>
+<!--noloop name="loop"-->
+	No updates available for your site at this time.
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
+</ul>
+
+{output.pager2}
+
+<script type="text/javascript" src="{tplvars.relative_url}js/site_updates.js?v={tplvars.js_lib_v}"></script>

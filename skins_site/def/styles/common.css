@@ -82,6 +82,15 @@ em {
 	padding-bottom: 20px;
 }
 
+.visible {
+	visibility: visible;
+}
+
+.invisible {
+	display: none;
+	visibility: hidden;
+}
+
 /* EDIT&SEARCH FORMS */
 
 form.edit_form fieldset {
@@ -123,6 +132,10 @@ form.edit_form dl {
 		padding: 0px;
 	}
 
+	form.edit_form dd input {
+		width: 90%;
+	}
+
 form.edit_form dd input, form.edit_form dd select, form.edit_form dd label {
 	font: 12px "Trebuchet MS", Arial, sans-serif;
 }
@@ -160,7 +173,7 @@ form.edit_form dd textarea {
 
 form.edit_form dd.field-help {
 	float: left;
-	width: 290px;
+	width: 240px;
 }
 
 form.edit_form dd.full-width {

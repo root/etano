@@ -21,7 +21,7 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='profile.php';
+$nextpage='my_profile.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it

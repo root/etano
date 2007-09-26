@@ -82,8 +82,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$_SESSION['user']['prefs']['date_format']=$input['def_user_prefs']['date_format'];
 	$_SESSION['user']['prefs']['datetime_format']=$input['def_user_prefs']['datetime_format'];
 	$_SESSION['user']['prefs']['time_offset']=$input['def_user_prefs']['time_offset'];
-	$_SESSION['user']['prefs']['rate_my_photos']=$input['def_user_prefs']['rate_my_photos'];
-	$_SESSION['user']['prefs']['profile_comments']=$input['def_user_prefs']['profile_comments'];
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Your preferences were saved.';
 }

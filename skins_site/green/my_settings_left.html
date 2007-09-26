@@ -3,13 +3,30 @@
 	<div class="box_content">
 		<ul class="menu">
 			<li class="first"><a class="content-link link_profile" href="{tplvars.relative_url}my_profile.php">My Profile</a></li>
-			<li><a class="content-link link_photos" href="{tplvars.relative_url}my_photos.php">My Photos</a></li>
-			<li><a class="content-link link_blogs" href="{tplvars.relative_url}my_blogs.php">My Blogs</a></li>
-			<li><a class="content-link link_friends" href="{tplvars.relative_url}my_networks.php">My Connections</a></li>
-			<li><a class="content-link link_mail" href="{tplvars.relative_url}mailbox.php">My Messages</a></li>
-			<li><a class="content-link link_view" href="{tplvars.relative_url}my_searches.php">My Saved Searches</a></li>
-			<li><a class="content-link link_mail" href="{tplvars.relative_url}my_responses.php">My Saved Responses</a></li>
 			<li><a class="content-link link_change" href="{tplvars.relative_url}my_settings.php">My Settings</a></li>
+			<li><a class="content-link link_change" href="{tplvars.relative_url}my_sites.php">My Licenses</a></li>
 		</ul>
 	</div>
 </div>
+
+<div class="content_area small">
+	<h3>Change Password</h3>
+	<div class="box_content">
+		<form action="{tplvars.relative_url}processors/pass_change.php" id="passchange_form" method="post">
+		<fieldset>
+		<dl>
+			<dt>New password:</dt>
+			<dd><input type="password" name="pass" tabindex="51" /></dd>
+		</dl>
+		<dl>
+			<dt>Again:</dt>
+			<dd><input type="password" name="pass2" tabindex="52" /></dd>
+		</dl>
+		</fieldset>
+		<fieldset class="controls">
+			<input type="submit" class="button medium" tabindex="53" value="Change" />
+		</fieldset>
+		</form>
+	</div>
+</div>
+

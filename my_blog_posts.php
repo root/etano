@@ -37,6 +37,7 @@ if (!empty($_GET['bid'])) {
 	if (!empty($totalrows)) {
 		if ($o>$totalrows) {
 			$o=$totalrows-$r;
+			$o=$o>=0 ? $o : 0;
 		}
 		$query="SELECT a.`post_id`,a.`title`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`blog_name`,b.`blog_url` FROM $from WHERE $where ORDER BY a.`date_posted` DESC LIMIT $o,$r";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -58,7 +59,7 @@ if (!empty($_GET['bid'])) {
 
 	$output['return2me']='my_blog_posts.php';
 	if (!empty($_SERVER['QUERY_STRING'])) {
-		$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+		$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 	}
 	$output['return2me']=rawurlencode($output['return2me']);
 	$tpl->set_file('content','my_blog_posts.html');

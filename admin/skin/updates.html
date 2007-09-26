@@ -1,0 +1,35 @@
+<h2>update Updates</h2>
+
+<div class="hint"><strong>Add, edit, remove updates:</strong></div>
+
+<table id="updates_list" class="results_table">
+<tr>
+	<th width="50"></th>
+	<th>Update</th>
+	<th>Requires</th>
+</tr>
+<!--loop name="loop"-->
+<tr class="{loop.myclass}">
+	<td>
+		<a class="item_del" href="processors/updates_delete.php?update_id={loop.update_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to delete this update?'))" title="Delete this update">Delete update</a>
+		<a class="item_edit" href="updates_addedit.php?update_id={loop.update_id}&amp;return={output.return2me}" title="Edit this update">Edit update</a>
+	</td>
+	<td>
+		<h3>{loop.update_name}</h3>
+		<p>{loop.update_diz}</p>
+	</td>
+	<td>{loop.requires}</td>
+</tr>
+<!--noloop name="loop"-->
+<tr>
+	<td colspan="3" class="no_result_item">No updates found!</td>
+</tr>
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
+</table>
+
+{output.pager2}
+
+<div id="bottom_links">
+	<a class="add" href="updates_addedit.php?return={output.return2me}" title="Add new update">Add new update</a>
+</div>

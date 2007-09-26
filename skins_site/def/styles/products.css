@@ -1,14 +1,35 @@
 .prod-listitem .preview-image {
 	float: right;
 }
+.prod-listitem {
+	border-bottom: 1px dotted #ccc;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+}
 
 ul#prod_list {
 	list-style-image: url('../images/bullet2.gif');
 	margin-left: 20px;
+	margin-bottom: 20px;
+	clear: both;
 }
 
 .version {
 	font-size: 85%;
 	margin-bottom: 5px;
 	margin-left: 15px;
+}
+
+.prod_diz {
+	margin-bottom: 10px;
+}
+
+.price li {
+	float: left;
+	padding-left: 5px;
+}
+
+.price li.first {
+	padding-top: 5px;
+	padding-left: 0;
 }

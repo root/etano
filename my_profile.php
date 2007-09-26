@@ -57,23 +57,6 @@ if (mysql_num_rows($res)) {
 			unset($output[$field['dbfield']]);
 		}
 	}
-
-	if (empty($output['_photo']) || !is_file(_PHOTOPATH_.'/t1/'.$output['_photo'])) {
-		unset($output['_photo']);
-	}
-}
-
-$user_photos=array();
-$query="SELECT `photo_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-if (mysql_num_rows($res)) {
-	while (count($user_photos)<3 && $rsrow=mysql_fetch_assoc($res)) {
-		if (is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
-			$user_photos[]=$rsrow;
-		}
-	}
-	$user_photos[0]['class']='first';
-	$output['num_photos']=mysql_num_rows($res);
 }
 
 $categs=array();
@@ -81,8 +64,9 @@ $i=0;
 foreach ($_pcats as $pcat_id=>$pcat) {
 	$fields=array();
 	for ($j=0;isset($pcat['fields'][$j]);++$j) {
-		$fields[$j]['label']=$_pfields[$pcat['fields'][$j]]['label'];
-		$fields[$j]['field']=isset($output[$_pfields[$pcat['fields'][$j]]['dbfield']]) ? $output[$_pfields[$pcat['fields'][$j]]['dbfield']] : '?';
+		if ($_pfields[$pcat['fields'][$j]]['visible']) {
+			$fields[]=array('label'=>$_pfields[$pcat['fields'][$j]]['label'],'field'=>isset($output[$_pfields[$pcat['fields'][$j]]['dbfield']]) ? $output[$_pfields[$pcat['fields'][$j]]['dbfield']] : '?');
+		}
 	}
 	$categs[$i]['pcat_name']=$pcat['pcat_name'];
 	$categs[$i]['pcat_id']=$pcat_id;
@@ -90,82 +74,16 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 	++$i;
 }
 
-$output['pic_width']=get_site_option('pic_width','core_photo');
-
-// comments
-$edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
-$loop_comments=array();
-$config=get_site_option(array('bbcode_comments','smilies_comm'),'core');
-$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}profile_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`='".$_SESSION['user']['user_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-while ($rsrow=mysql_fetch_assoc($res)) {
-	// if someone has asked to edit his/her comment
-	if ($edit_comment==$rsrow['comment_id']) {
-		$output['comment_id']=$rsrow['comment_id'];
-		$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
-	}
-	$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
-	$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-	if (!empty($config['bbcode_comments'])) {
-		$rsrow['comment']=bbcode2html($rsrow['comment']);
-	}
-	if (!empty($config['smilies_comm'])) {
-		$rsrow['comment']=text2smilies($rsrow['comment']);
-	}
-	// allow showing the edit links to rightfull owners
-	if ($rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
-		$rsrow['editme']=true;
-	}
-
-	if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
-		unset($rsrow['fk_user_id']);
-	} else {
-		if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
-			$rsrow['is_online']='is_online';
-			$rsrow['user_online_status']='is online';	// translate
-		} else {
-			$rsrow['user_online_status']='is offline';	// translate
-		}
-	}
-	if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
-		$rsrow['photo']='no_photo.gif';
-	}
-	$loop_comments[]=$rsrow;
-}
-
-if (!empty($loop_comments)) {
-	$output['num_comments']=count($loop_comments);
-	$output['show_comments']=true;
-}
-
-if ($_SESSION['user']['prefs']['profile_comments']) {
-	// may I post comments please?
-	if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
-		$output['allow_comments']=true;
-		// would you let me use bbcode?
-		if (!empty($config['bbcode_comments'])) {
-			$output['bbcode_comments']=true;
-		}
-		// if we came back after an error get what was previously posted
-		if (isset($_SESSION['topass']['input'])) {
-			$output=array_merge($output,$_SESSION['topass']['input']);
-			unset($_SESSION['topass']['input']);
-		}
-	}
-}
-
 $output['return2me']='my_profile.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
 	if (!empty($edit_comment)) {
 		$_SERVER['QUERY_STRING']=str_replace('&edit_comment='.$edit_comment,'',$_SERVER['QUERY_STRING']);
 	}
-	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','my_profile.html');
-$tpl->set_loop('user_photos',$user_photos);
 $tpl->set_loop('categs',$categs);
-$tpl->set_loop('loop_comments',$loop_comments);
 $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTLOOP | TPL_OPTIONAL);
@@ -179,4 +97,4 @@ $tplvars['css']='my_profile.css';
 if (is_file('my_profile_left.php')) {
 	include 'my_profile_left.php';
 }
-include 'frame.php';
+include 'frame2.php';

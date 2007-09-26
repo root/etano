@@ -1,18 +1,3 @@
-<div id="photo_area">
-	<!--opt name="output._photo"--><a href="javascript:;" onclick="popWin('{tplvars.relative_url}popup_photo_view.php?uid={output.fk_user_id}&amp;main=1','photo',{output.pic_width},{output.pic_width},1)"><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/{output._photo}" /></a><!--/opt name="output._photo"-->
-	<!--opt name="!output._photo"--><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/no_photo.gif" /><!--/opt name="!output._photo"-->
-
-	<!--opt name="output.num_photos"-->
-	<ul id="user_photos">
-		<!--loop name="user_photos"-->
-		<li class="{user_photos.class}"><a href="{tplvars.relative_url}photo_view.php?photo_id={user_photos.photo_id}&amp;return={output.return2me}"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{user_photos.photo}" /></a></li>
-		<!--/loop name="user_photos"-->
-		<li class="last"><a class="content-link simple" href="{tplvars.relative_url}my_photos.php?return={output.return2me}">View all photos</a>({output.num_photos})</li>
-	</ul>
-	<!--/opt name="output.num_photos"-->
-</div>
-<div class="clear"></div>
-
 <div id="profile_area">
 	<!--loop name="categs"-->
 	<div class="profile_cat" id="cat_{categs.pcat_id}">
@@ -26,62 +11,4 @@
 	<!--/loop name="categs"-->
 </div>
 
-<!--opt name="output.show_comments"-->
-<!--opt name="output.num_comments"--><h3 class="subtitle">Comments {output.num_comments}</h3><!--/opt name="output.num_comments"-->
-<!--loop name="loop_comments"-->
-<div class="comment {loop_comments.is_online}">
-	<!--opt name="loop_comments.fk_user_id"--><a href="{tplvars.relative_url}profile.php?uid={loop_comments.fk_user_id}" title="{loop_comments.user} {loop_comments.user_online_status}"><!--/opt name="loop_comments.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop_comments.photo}" alt="{loop_comments.user} {loop_comments.user_online_status}" /><!--opt name="loop_comments.fk_user_id"--></a><!--/opt name="loop_comments.fk_user_id"-->
-	<span class="controls"><!--opt name="loop_comments.editme"--><a id="editme_{loop_comments.comment_id}" class="content-link link_change" href="{tplvars.relative_url}my_profile.php?return={output.return2me}&amp;edit_comment={loop_comments.comment_id}#postarea" title="Edit comment">edit</a><!--/opt name="loop_comments.editme"--> <a class="content-link link_delete comment_delete" href="{tplvars.relative_url}processors/profile_comment_delete.php?comment_id={loop_comments.comment_id}&amp;return={output.return2me}" title="Remove comment">delete</a><a class="content-link" href="#pagetop">top</a></span> <!--opt name="loop_comments.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop_comments.fk_user_id}" title="{loop_comments.user} {loop_comments.user_online_status}"><!--/opt name="loop_comments.fk_user_id"-->{loop_comments.user}<!--opt name="loop_comments.fk_user_id"--></a><!--/opt name="loop_comments.fk_user_id"--> said on {loop_comments.date_posted} :
-	<a name="comm{loop_comments.comment_id}"><p id="comment_{loop_comments.comment_id}">{loop_comments.comment}</p></a>
-	<div class="clear"></div>
-</div>
-<!--/loop name="loop_comments"-->
-<!--/opt name="output.show_comments"-->
-
-<!--opt name="output.allow_comments"-->
-<h3 class="subtitle">Leave your comment</h3>
-
-<!--opt name="output.bbcode_comments"-->
-<div id="bb_tools">
-	<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
-	<a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a>
-	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a>
-	<a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a>
-	<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
-</div>
-<!--/opt name="output.bbcode_comments"-->
-<form action="{tplvars.relative_url}processors/profile_comments.php" method="post" id="comment_form">
-<fieldset>
-	<input type="hidden" name="comment_id" value="{output.comment_id}" />
-	<input type="hidden" name="fk_parent_id" value="{tplvars.myself.user_id}" />
-	<input type="hidden" name="return" value="{output.return2me}" />
-	<a name="postarea" id="postarea"><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea></a>
-</fieldset>
-<!--opt name="!tplvars.user_logged"-->
-<!--opt name="output.use_captcha"-->
-<fieldset>
-	<dl class="required">
-		<dt>Verification code:</dt>
-		<dd><img src="{tplvars.relative_url}show_captcha.php?{output.rand}" /></dd>
-	</dl>
-	<dl>
-		<dt>&nbsp;</dt>
-		<dd><input type="text" name="captcha" id="captcha" size="4" tabindex="50" /> <span class="field-help">Enter the characters from above.</span></dd>
-	</dl>
-</fieldset>
-<!--/opt name="output.use_captcha"-->
-<!--/opt name="!tplvars.user_logged"-->
-<fieldset class="controls">
-	<input class="button large" id="post-button" type="submit" value="Post comment" />
-</fieldset>
-</form>
-<!--/opt name="output.allow_comments"-->
-
-<script type="text/javascript" src="{tplvars.relative_url}js/scrollto.js?v={tplvars.js_lib_v}"></script>
 <script type="text/javascript" src="{tplvars.relative_url}js/my_profile.js?v={tplvars.js_lib_v}"></script>
-<!--opt name="output.bbcode_message"-->
-<script type="text/javascript">
-	bbcode_field_id='#comment';
-</script>
-<script type="text/javascript" src="{tplvars.relative_url}js/bbcode.js?v={tplvars.js_lib_v}"></script>
-<!--/opt name="output.bbcode_message"-->

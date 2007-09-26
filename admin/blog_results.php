@@ -94,6 +94,7 @@ $loop=array();
 if (!empty($totalrows)) {
 	if ($o>$totalrows) {
 		$o=$totalrows-$r;
+		$o=$o>=0 ? $o : 0;
 	}
 	$post_ids=array_slice($post_ids,$o,$r);
 	$config=get_site_option(array('datetime_format','time_offset'),'def_user_prefs');
@@ -126,7 +127,7 @@ $output['return2me']='blog_results.php';
 if (!empty($output['search_md5'])) {
 	$output['return2me'].='?search='.$output['search_md5'];
 } elseif (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','blog_results.html');

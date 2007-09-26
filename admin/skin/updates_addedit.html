@@ -1,0 +1,35 @@
+<h2>Product Updates</h2>
+
+<div class="hint">Please enter the update below:</div>
+
+<form action="processors/updates_addedit.php" method="post" id="updates_form" enctype="multipart/form-data">
+<input type="hidden" name="update_id" value="{output.update_id}" />
+<input type="hidden" name="return" value="{output.return}" />
+<table id="updates_addedit" class="form_table">
+<tr>
+	<td class="label">Package:</td>
+	<td class="field">
+		<input type="file" name="filename" id="filename" />
+<strong>Note that we do not support multiple install instructions for now!!!</strong>
+	</td>
+</tr>
+<tr>
+	<td class="label">Update Name:</td>
+	<td class="field">{output.update_name}</td>
+</tr>
+<tr>
+	<td class="label">Requires:</td>
+	<td class="field">{output.requires}</td>
+</tr>
+<tr>
+	<td class="label">Description:</td>
+	<td class="field"><textarea name="update_diz" id="update_diz" cols="" rows="">{output.update_diz}</textarea></td>
+</tr>
+<tr>
+	<td class="label">&nbsp;</td>
+	<td class="field"><input type="submit" class="button" value="Save" id="btn_save" tabindex="2" /></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>

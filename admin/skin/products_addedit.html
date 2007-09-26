@@ -15,6 +15,10 @@
 	</td>
 </tr>
 <tr>
+	<td class="label">Visible in list?</td>
+	<td class="field"><input type="checkbox" name="is_visible" id="is_visible" {output.is_visible} /></td>
+</tr>
+<tr>
 	<td class="label">Product Type:</td>
 	<td class="field">{output.prod_type}</td>
 </tr>
@@ -37,8 +41,8 @@
 <tr>
 	<td class="label">Snapshot:</td>
 	<td class="field">
+		<!--opt name="output.prod_pic"--><img src="{tplvars.photourl}/products/{output.prod_pic}" alt="" /><br /><!--/opt name="output.prod_pic"-->
 		<input type="file" name="prod_pic" id="prod_pic" />
-		<!--opt name="output.prod_pic"--><img src="{tplvars.photourl}/products/{output.prod_pic}" alt="" /><!--/opt name="output.prod_pic"-->
 	</td>
 </tr>
 <tr>
@@ -61,5 +65,3 @@
 </form>
 
 <div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
-
-<script type="text/javascript" src="js/products_addedit.js?v={tplvars.js_lib_v}"></script>
