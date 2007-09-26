@@ -24,7 +24,7 @@ $output=array();
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
-$where="a.`fk_dev_id`=b.`dev_id`";
+$where="a.`fk_dev_id`=b.`dev_id` AND `is_visible`=1";
 $from="`{$dbtable_prefix}products` a,`{$dbtable_prefix}developers` b";
 
 $query="SELECT count(*) FROM $from WHERE $where";
@@ -35,6 +35,7 @@ $loop=array();
 if (!empty($totalrows)) {
 	if ($o>$totalrows) {
 		$o=$totalrows-$r;
+		$o=$o>=0 ? $o : 0;
 	}
 	$query="SELECT a.`prod_id`,a.`prod_name`,a.`prod_diz`,a.`prod_pic`,a.`version`,UNIX_TIMESTAMP(a.`last_changed`) as `last_changed`,a.`price`,b.`dev_name` FROM $from WHERE $where ORDER BY `last_changed` DESC LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -45,6 +46,11 @@ if (!empty($totalrows)) {
 		if (empty($rsrow['prod_pic']) || !is_file(_PHOTOPATH_.'/products/'.$rsrow['prod_pic'])) {
 			unset($rsrow['prod_pic']);
 		}
+		if ((float)$rsrow['price']==0) {
+			$rsrow['price']='Free!';
+		} else {
+			$rsrow['price'].='USD';
+		}
 		$loop[]=$rsrow;
 	}
 	$output['pager2']=pager($totalrows,$o,$r);
@@ -52,7 +58,7 @@ if (!empty($totalrows)) {
 
 $output['return2me']='products.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','products.html');

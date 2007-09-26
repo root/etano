@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (mysql_num_rows($res)) {
 			$admin=mysql_fetch_assoc($res);
 			if ($admin['status']==ASTAT_ACTIVE) {
-				$_SESSION['admin']=$admin;
+				$_SESSION['admin']=array_merge(isset($_SESSION['admin']) ? $_SESSION['admin'] : array(),$admin);
 				$_SESSION['admin']['def_skin']=get_default_skin_dir();
 				if (isset($_SESSION['admin']['timedout']['url'])) {
 					$next=$_SESSION['admin']['timedout'];

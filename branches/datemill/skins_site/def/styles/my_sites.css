@@ -1,0 +1,57 @@
+* html .my_sites .row {
+	height: 1%;
+}
+
+.my_sites .row {
+	overflow: hidden;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px dashed #ccc;
+	font-size: 80%;
+}
+
+.my_sites .row div {
+	border-left: 1px solid #DEDEDE;
+	float: left;
+	margin: 3px 0;
+	padding: 0 2px 5px 8px;
+	overflow: hidden;
+}
+
+.my_sites .header {
+	font-weight: bold;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.my_sites .row .control {
+	width: 30px;
+	border-left: 0;
+	background-position: top right;
+	background-repeat: no-repeat;
+}
+
+.my_sites a.link_change {
+	float: right;
+	width: 22px;
+	height: 22px;
+	display: block;
+	padding: 0;
+	text-indent: -9999px;
+}
+
+.my_sites .row .license {
+	width: 170px;
+	overflow: hidden;
+}
+
+.my_sites .row .baseurl {
+	width: 150px;
+	overflow: hidden;
+}
+
+.my_sites .row .screenshot {
+	width: 130px;
+	overflow: hidden;
+}
+

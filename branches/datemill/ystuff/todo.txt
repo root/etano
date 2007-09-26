@@ -1,0 +1,2 @@
+cand se plateste trebuie sa adaug produsul in user_products si sa creez si un site nou cu lk+lk_md5 daca s-a cumparat chiar
+etano.

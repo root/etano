@@ -1,0 +1,4 @@
+ul#updates_list {
+	list-style-image: url('../images/bullet2.gif');
+	margin-bottom: 20px;
+}

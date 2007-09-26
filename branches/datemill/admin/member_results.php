@@ -252,7 +252,7 @@ if ($do_query) {
 		}	//switch ($field['search_type'])
 	} // the for() that constructs the where
 
-	$query="SELECT a.`fk_user_id` FROM $from WHERE $where";
+	$query="SELECT a.`fk_user_id` FROM $from WHERE $where ORDER BY `fk_user_id` DESC";
 //print $query;
 //die;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -272,6 +272,7 @@ $loop=array();
 if (!empty($totalrows)) {
 	if ($o>$totalrows) {
 		$o=$totalrows-$r;
+		$o=$o>=0 ? $o : 0;
 	}
 	// handle prev/next from profile.php
 	if (isset($_GET['uid']) && isset($_GET['go']) && ($_GET['go']==1 || $_GET['go']==-1)) {
@@ -283,9 +284,8 @@ if (!empty($totalrows)) {
 		}
 	}
 	$user_ids=array_slice($user_ids,$o,$r);
-	$query="SELECT `fk_user_id`,`_user`,`_photo`,`status`,`del`";
-	for ($i=0;isset($basic_search_fields[$i]);++$i) {
-		$field=$_pfields[$basic_search_fields[$i]];
+	$query="SELECT `fk_user_id`,`_user`,`_photo`,`status`,`del`,`score`";
+	foreach ($_pfields as $k=>$field) {
 		switch ($field['field_type']) {
 
 			case FIELD_LOCATION:
@@ -297,11 +297,10 @@ if (!empty($totalrows)) {
 
 		}
 	}
-	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id` IN ('".join("','",$user_ids)."') ORDER BY `_user`";
+	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id` IN ('".join("','",$user_ids)."') ORDER BY `fk_user_id` DESC";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		for ($i=0;isset($basic_search_fields[$i]);++$i) {
-			$field=$_pfields[$basic_search_fields[$i]];
+		foreach ($_pfields as $k=>$field) {
 			$rsrow[$field['dbfield'].'_label']=$field['label'];
 			switch ($field['field_type']) {
 
@@ -353,6 +352,14 @@ if (!empty($totalrows)) {
 		if (empty($rsrow['del'])) {
 			unset($rsrow['del']);
 		}
+		$query="SELECT `baseurl` FROM `user_sites` WHERE `fk_user_id`=".$rsrow['fk_user_id'];
+		if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$user_sites=array();
+		for ($i=0;$i<mysql_num_rows($res2);++$i) {
+			$temp=mysql_result($res2,$i,0);
+			$user_sites[]='<a target="_blank" href="'.$temp.'">'.$temp.'</a>';
+		}
+		$rsrow['user_sites']=join(', ',$user_sites);
 		$loop[]=$rsrow;
 	}
 
@@ -371,7 +378,7 @@ $output['return2me']='member_results.php';
 if (!empty($output['search_md5'])) {
 	$output['return2me'].='?search='.$output['search_md5'];
 } elseif (!empty($_SERVER['QUERY_STRING'])) {
-	$output['return2me'].='?'.str_replace('&','&amp;',$_SERVER['QUERY_STRING']);
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','member_results.html');

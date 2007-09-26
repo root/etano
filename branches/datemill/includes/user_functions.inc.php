@@ -77,10 +77,10 @@ function check_login_member($level_code) {
 		if (empty($mysession)) {
 			session_start();
 		}
-		$_SESSION['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
+		$_SESSION['user']['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
 		redirect2page('login.php');
 	}
-//	unset($_SESSION['timedout']);
+//	unset($_SESSION['user']['timedout']);
 	if (($GLOBALS['_access_level'][$level_code]&$_SESSION['user']['membership'])!=$_SESSION['user']['membership']) {
 		redirect2page('info.php',array(),'type=access');	// no access to this feature
 	}

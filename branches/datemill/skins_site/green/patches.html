@@ -1,0 +1,16 @@
+<p>If you want to see the updates available for your site please check the <a href="addons.php?type=1" title="Community script updates">Etano updates page</a>.</p>
+
+<!--loop name="loop"-->
+<div class="addon-listitem clearfix">
+	<img class="preview-image" alt="" src="" />
+	<div class="addon-titleby">
+		<h2>{loop.addon_name}</h2>
+		<span>by {loop.fk_user_id_developer}</span>
+	</div>
+	<div class="addon-desc">{loop.addon_diz}</div>
+</div>
+<!--/loop name="loop"-->
+
+{output.pager2}
+
+<script type="text/javascript" src="{tplvars.relative_url}js/addons.js?v={tplvars.js_lib_v}"></script>

@@ -81,6 +81,15 @@ em {
 	padding-bottom: 20px;
 }
 
+.visible {
+	visibility: visible;
+}
+
+.invisible {
+	display: none;
+	visibility: hidden;
+}
+
 /* EDIT&SEARCH FORMS */
 
 form.edit_form fieldset {
@@ -120,6 +129,10 @@ form.edit_form dl {
 		float: left;
 		width: 240px;
 		padding: 0px;
+	}
+
+	form.edit_form dd input {
+		width: 90%;
 	}
 
 form.edit_form dd input, form.edit_form dd select, form.edit_form dd label {

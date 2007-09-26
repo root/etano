@@ -244,7 +244,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		for ($i=1;$i<=6;++$i) {
 			if (!empty($input['file'.$i])) {
-				$query="INSERT INTO `{$dbtable_prefix}user_photos` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`_user`='".$_SESSION['user']['user']."',`photo`='".$input['file'.$i]."',`allow_comments`=1,`allow_rating`='".$_SESSION['user']['prefs']['rate_my_photos']."',`is_private`=".$input['is_private'].",`date_posted`='$now',`last_changed`='$now'";
+				$query="INSERT INTO `{$dbtable_prefix}user_photos` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`_user`='".$_SESSION['user']['user']."',`photo`='".$input['file'.$i]."',`allow_comments`=1,`is_private`=".$input['is_private'].",`date_posted`='$now',`last_changed`='$now'";
 				if ($config['manual_photo_approval']) {
 					$query.=",`status`=".STAT_PENDING;
 				} else {
