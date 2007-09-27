@@ -1,108 +1,53 @@
-Etano License
-DateMill.com's Etano
-	(c) 2007 DateMill.com
-	All Rights Reserved.
+The End User License Agreement for Etano community software - Software Package
 
-This agreement serves as evidence of the mutual understanding governing the transfer and subsequent use of
-DateMill.com's Etano.
-Throughout this document ("licensee") refers to you-the individual who has purchased a license to use
-DateMill.com's Etano; ("licensor") refers to the software owners granting permission to use
-("software") in the below outlined capacity; and ("software"), ("program"), ("package") refers to
-DateMill.com's Etano - the dating service engine of which this license grants usage.
+This End User License Agreement ("EULA") is a legal agreement between an individual or a legal entity (Customer) and Datemill (Company). The EULA is offered to you conditioned on your acceptance without modification of the terms, conditions, and notices contained herein. Your use of the Software Package constitutes your agreement to all such terms, conditions, and notices.
 
-The licensee, as an independent individual or as the responsible official of the firm, institution,
-association, government agency, or other such group that has purchased the license, agrees to abide
-by the conditions listed below.
+1. MODIFICATION OF THESE TERMS OF USE BY THE COMPANY
+	 1. The Company reserves the right to change the terms, conditions, notices under which the Software Package is offered, and inform the Customer beforehand the changes would come into effect, in this instance 5 work days by email.
+	 2. The Company has the right to reassess the monthly charges associated with the support of the Software Package taking into account of new modifications accrued to the package. This is arranged between the Company and the Customer beforehand.
 
-- DateMill.com's Etano is furnished and is accepted and used by the recipient individual or
-group entity with the express understanding that licensor makes no warranties, expressed or implied, concerning
-the accuracy, completeness, reliability, usability, or suitability for any particular purpose of the information
-or data contained in the software, or furnished in connection therewith, and licensor shall be under no liability
-whatsoever to any such individual or group entity by reason of use thereof. No oral or written communication from
-or information provided by licensor shall create such a warranty. While licensor makes every effort to deliver
-high quality products, we do not guarantee that our products are free from defects. Our software is provided
-'as is' and you use the software at your own risk.
+2. NO UNLAWFUL OR PROHIBITED USE BY A CUSTOMER
+	 1. As a condition of your use of the Software Package, you warrant to the Company that you will not use the Software Package for any purpose that is unlawful or prohibited by these terms, conditions, and notices.
+	 2. You may not use the Software Package in any manner which could damage, disable, overburden, or impair the Software Package or interfere with any other party's use and enjoyment of the Software Package.
+	 3. If you install additional copies, even if such additional copies are located on the same domain and/or the same IP, such usage is prohibited unless additional licenses are purchased.
+	 4. This license prohibits selling, licensing, or otherwise distributing the source code of the script contained in Software Package, either in full or any subpart thereof or as part of another program that you either sell, license, or otherwise distribute via any method.
 
-- There will be no free operational support (including technical assistance) of software or documentation
-transferred from licensor to licensee other than stated below:
+3. THE CUSTOMER'S RIGHTS
+	 1. You are granted a single, non-exclusive, non-transferable license to install and use one copy of the Software Package on a single domain name or IP address.
+	 2. You own the rights to advertise or offer, to sell or buy any goods or services for any business purpose, publish, post, upload, distribute or disseminate, sell any material or information through your web site, but bear all the responsibility for it on yourself.
+	 3. Create and sell memberships and other materials and information posted on your web site.
+	 4. You may ask the Company to make improvements and/or changes in the Software Package this relates to Modifications, the prices and the time period depend on a complexity of a modification and should be discussed separately.
+	 5. You may change a package and take another one which is offered by the Company, but the change-over will be charged taking into consideration all modifications which were made for your Software Package, service charges, banking charges.
 
-Should the program fail to work at any time within 60  days of purchase without there having been any attempted
-modifications in violation of the terms of use on the part of the licensee, or any known or unknown misuse or
-intentional abuse by any member of or visitor to lincencee's website, licensee is entitled to free technical
-support and/or a replacement.
+4. LIABILITY DISCLAIMER
+	 1. The Company is not responsible for:
+			* uploaded files that contain viruses, corrupted files, or any other similar software or programs that may damage the operation of Customer's server.
+			* conduct or forward surveys, contests, pyramid schemes on the Customer's web site.
+	 2. The Company does not control or endorse the content, messages or information found in any web pages on Customer's web site and, therefore, the Company specifically disclaims any liability with regard to any actions resulting from your activity.
+	 3. The Company does not take any responsibility for the development of Customer's business, booming, slacking, business recession and bankruptcy.
+	 4. Managers and technical staff are not authorized to reflect the full and official Company's point of view in particular matters.
+	 5. To the maximum extent permitted by applicable law, in no event shall the Company be liable for any direct, indirect, punitive, incidental, special, consequential damages or any damages whatsoever including, without limitation, damages for loss of use, data or profits, arising out of or in any way connected with use or performance of the Software Package, with the delay or inability to use Software Package or related services, the provision of failure to provide services, or for any information, products, services obtained through the Software Package, or otherwise arising out of the use of the Software Package, whether based on contract, tort, negligence, strict liability or otherwise.
 
-- The licensee will not imply proprietary possession of this program.
+5. REFUNDS
+	 1. The Company does not make refunds after the program source code package is accessed by the Customer with Software Package License. In this case there are no circumstances that make it possible to claim full or partial refund.
 
-- The licensee understands that the current program and all documents related thereto may be discontinued from
-further support or maintenance by licensor at any time. When licensor supports or maintains an updated version
-of the program and/or related document, NOT to include any separate programs available as add-ons to the core
-application, the recipient can request the newest version. Licensor may notify recorded users of updates and
-new products at licensor initiative, but such notifications are subject to budget and policy constraints.
-Recipients are not afforded any sort of subscription service.
+6. TERMINATION/ACCESS RESTRICTION
+	 1. GENERAL. To the maximum extent permitted by law, this agreement is governed by the laws of Romania and you hereby consent to the exclusive jurisdiction and venue of courts in Romania in all disputes arising out of or relating to the use of the Software Package. Use of the Software Package is unauthorized in any jurisdiction that does not give effect to all provisions of these terms and conditions, including without limitation this paragraph. You agree that no joint venture, partnership, employment, or agency relationship exists between you and the Company as a result of this agreement or use of the Software Package. The Company's performance of this agreement is subject to existing laws and legal process, and nothing contained in this agreement is in derogation of the Company's right to comply with governmental, court and law enforcement requests or requirements relating to your use of the Software Package. If any part of this agreement is determined to be invalid or unenforceable pursuant to applicable law including, but not limited to, the warranty disclaimers and liability limitations set forth above, then the invalid or unenforceable provision will be deemed superseded by a valid, enforceable provision that most closely matches the intent of the original provision and the remainder of the agreement shall continue in effect. Unless otherwise specified herein, this agreement constitutes the entire agreement between the Customer and the Company with respect to the Software Package and it supersedes all prior or contemporaneous communications and proposals, whether electronic, oral or written, between the Customer and the Company with respect to the Software Package. A printed version of this agreement and of any notice given in electronic form shall be admissible in judicial or administrative proceedings based upon or relating to this agreement to the same extent an d subject to the same conditions as other business documents and records originally generated and maintained in printed form. It is the express wish to the parties that this agreement and all related documents be drawn up in English.
 
-- Licensee will adhere to the additional terms of the license listed below:
+7. COLLECTION OF THE CUSTOMER'S PERSONAL INFORMATION
+	 1. The Company is committed to protecting your privacy and developing technology that gives you the most powerful and safe online experience. This Statement of Privacy applies to the Software Package and governs data collection and usage. By using the Software Package, you consent to the data practices described in this statement.
+	 2. The Company collects personally identifiable information, such as your e-mail address, name, home/work address, telephone number, credit card. The Company also collects anonymous demographic information, which is not unique to you, such as your ZIP code, age, gender, preferences.
+	 3. There is also information about your computer hardware and software that is automatically collected by the Company. This information can include: your IP address, browser type, domain names, access times and referring Web site addresses. This information is used by the Company for the operation of the service, to maintain quality of the service, and to provide general statistics regarding use of the Software Package.
 
-Permission is herby granted licensee to:
+8. COPYRIGHT
+	 1. All contents of the Software Package are copyright Datemill SRL. All rights reserved.
+	 2. Any rights not expressly granted herein are reserved.
 
-- Install one (1) copy of the files included in this digital package on one (1) personal computer that is not
-worldwide web accessible or accessible over any LAN (local area), WAN (wide area), or any other type of network
-for the sole and express purpose of configuring the program files for use at the online dating service to be
-powered by the software, and having local access to the files when needed.
-
-- Install one (1) copy of the files included in this digital package on one (1) website server whether said
-website server be locally or remotely hosted, for the sole and express purpose of using the program to power
-one (1) online dating service on (1) single internet domain.
-
-- Modify the program templates to suit desired style.
-
-- Replace any graphics included in this package with licensee's own graphics.
-
-- Remove any licensor proprietary information or links to licensor entities in the HTML documents included
-in the package that will be visible to persons viewing pages on the website where the program is in use.
-
-- Make one (1) backup copy on disc of the program for restoration purposes should the personal computer on
-which the permitted copy of the program is stored crash or suffer an event that results in the loss of program
-files on licensee's personal computer.
-
-Permission is NOT granted licensee to:
-
-- Install the program on more than one (1) personal computer or install more than one (1) copy of the program
-on a single personal computer.
-
-- Use the program to power more than one (1) website or internet domain.
-
-- Use the program to power affiliate entities of the website where the program is intended for use.
-
-- Install the program on more than (1) website server or internet domain or install more than one (1) copy of
-the program on a single website server or internet domain.
-
-- Modify and use the program to operate any other kind of service.
-
-- Modify the program scripts other than as allowed under "Permission granted".
-
-- Give copies of the program files to another individual. This license grants access to the program files to
-the licensee alone. Licensee may not share copies of the program files with others.
-
-- Redistribute the program in whole or part.
-
-- Resell the program or any modified version of the program.
-
-- Remove any licensor copyright or proprietary information from any files that are not viewable to persons
-using licensee's website like, but not limited to, the copyright information within the script files.
-
-- Use any graphics included in the program outside of the program.
-
-- Use the program code in whole or part to build another program unless a file in the package specifically
-states that you may reuse the code within that specific file. In the event you use a file that grants re-use
-permission you MUST abide by the copyright terms outlined in that specific file.
-
-DISCLAIMER
-The licensor is NOT responsible for any program mal-function that may result from your attempted modifications.
-Should the program fail to work as a result of your attempted modifications you may request technical support
-and may be granted free technical support in answer to your request but free technical support is not an
-entitlement under these circumstances and will be granted at the sole discretion of licensor.
-By using this software you agree that you will not hold the licensor responsible for any accidental or
-intentional misuse by individuals using your facility. Licensor will not be held responsible for any type of
-damage or loss that may occur as a result of using this software, even if licensor has been advised of the
-possibility of such damages. This includes but is not limited to the corruption, or loss of data on your host
-server, loss of time, revenues or profits.
+9. CANCELLING OF THE EULA
+	 1. The company is entitled to cancel the agreement at any time in any case of a violation of the terms, conditions, notices of this agreement.
+	 2. The Customer has a right to ask the Company for hand down the right to own the rule over the software package to any person - a third part, but:
+			* The Customer has to inform the Company of his expectancies before hand down in a given time - 14 days, by email.
+			* The Customer supposes to wait for a Company's decision during - 14 days after the request is accepted by the Company.
+			* The Customer must pay all charges which will be given by the Company after making all calculations concerned hand over the right to own the rule over the software package by a third part, less undelivered services in the case of prepaid sum.
+			* The Customer ought to persuade a third part to renew the EULA with the Company.
+			* The third part has to renew the EULA with the Company.

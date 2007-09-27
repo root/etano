@@ -32,7 +32,7 @@ if (substr($file,0,7)=='http://') {
 	require_once '../includes/classes/package_downloader.class.php';
 	$p=new package_downloader($file);
 	if ($p->download()) {
-		$file=$p->file;
+		$file=$p->file_name;
 	} else {
 		$file='';
 		$error=true;

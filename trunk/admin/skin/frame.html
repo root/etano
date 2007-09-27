@@ -1,13 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>{tplvars.title}</title>
-<link rel="stylesheet" type="text/css" media="screen" href="skin/styles/common.css" />
-<!--opt name="tplvars.css"--><link href="skin/styles/{tplvars.css}" rel="stylesheet" type="text/css" /><!--/opt name="tplvars.css"-->
-<script type="text/javascript" src="{tplvars.baseurl}/js/jquery.js?v={tplvars.js_lib_v}"></script>
-<script type="text/javascript">in_admin=true;</script>
-<script type="text/javascript" src="{tplvars.baseurl}/js/general.js?v={tplvars.js_lib_v}"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{tplvars.title}</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="skin/styles/common.css" />
+	<!--opt name="tplvars.css"--><link href="skin/styles/{tplvars.css}" rel="stylesheet" type="text/css" /><!--/opt name="tplvars.css"-->
+	<script type="text/javascript" src="{tplvars.baseurl}/js/jquery.js?v={tplvars.js_lib_v}"></script>
+	<script type="text/javascript">
+		in_admin=true;
+		baseurl='{tplvars.baseurl}';
+	</script>
+	<script type="text/javascript" src="{tplvars.baseurl}/js/general.js?v={tplvars.js_lib_v}"></script>
 </head>
 <body id="adminframe">
 <div id="trim">
@@ -91,7 +94,7 @@
 
 				<div id="footer_holder">
 					<div id="nav">
-						<a href="http://www.datemill.com/forum">Datemill forum</a> | <a href="http://www.datemill.com/contact.php?lk={tplvars.lk}">contact us</a> | <a href="http://www.datemill.com/remote/help.php?lk={tplvars.lk}&amp;p={tplvars.page}">help topics</a>
+						<a href="http://www.datemill.com/forum?lk={tplvars.lk}&amp;bu={tplvars.bu}">Datemill forum</a> | <a href="http://www.datemill.com/contact.php?lk={tplvars.lk}&amp;bu={tplvars.bu}">contact us</a> | <a href="http://www.datemill.com/remote/help.php?lk={tplvars.lk}&amp;bu={tplvars.bu}&amp;p={tplvars.page}">help topics</a>
 					</div>
 					<span id="copyright">Powered by <a href="http://www.datemill.com" title="Datemill.com">Datemill</a></span>
 				</div>	<!--footer-->

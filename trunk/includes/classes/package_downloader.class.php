@@ -76,7 +76,7 @@ class package_downloader {
 				}
 			} else {
 				$this->error=true;
-//				$this->error_text='Unable to download package.';
+				$this->error_text='Unable to download package.';
 			}
 		} else {
 			$this->error=true;
