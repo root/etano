@@ -341,9 +341,7 @@ class etano_package {
 					}
 					if ($attrs['type']=='inline') {
 						$query=$mod_command->firstChild->nodeValue;
-						if (substr($query,-1)==';') {
-							$query=substr($query,0,-1);
-						}
+						$query=trim($query," \n\t;\r\0");
 						if (!@mysql_query($query)) {
 							$this->error=true;
 							$masize=count($this->manual_actions);
