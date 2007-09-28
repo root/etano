@@ -26,7 +26,7 @@ $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 $output['blog_name']='';
 if (!empty($_GET['bid'])) {
 	$output['fk_blog_id']=(int)$_GET['bid'];
-	$where="a.`fk_user_id`='".$_SESSION['user']['user_id']."' AND a.`fk_blog_id`=".$output['fk_blog_id']." AND a.`fk_blog_id`=b.`blog_id`";
+	$where="a.`fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND a.`fk_blog_id`=".$output['fk_blog_id']." AND a.`fk_blog_id`=b.`blog_id`";
 	$from="`{$dbtable_prefix}blog_posts` a,`{$dbtable_prefix}user_blogs` b";
 
 	$query="SELECT count(*) FROM $from WHERE $where";
@@ -42,7 +42,7 @@ if (!empty($_GET['bid'])) {
 		$query="SELECT a.`post_id`,a.`title`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`blog_name`,b.`blog_url` FROM $from WHERE $where ORDER BY a.`date_posted` DESC LIMIT $o,$r";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['date_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
+			$rsrow['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$rsrow['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 			$loop[]=$rsrow;
 		}
 		$loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);

@@ -64,7 +64,7 @@ if (isset($_GET['st'])) {
 		case 'user':
 			$input['acclevel_code']='search_photo';
 			$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
-			if (!empty($_SESSION['user']['user_id']) && $input['uid']==$_SESSION['user']['user_id']) {
+			if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $input['uid']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 				redirect2page('my_photos.php');
 			}
 			if (!empty($input['uid'])) {
@@ -126,13 +126,13 @@ $loop_rows=array();
 if (!$error) {
 	$query="SELECT count(*) FROM $from WHERE $where";
 	$temp=md5($query);
-	if (isset($_SESSION['user']['cache'][$temp]['time']) && $_SESSION['user']['cache'][$temp]['time']>=time()-150) {
-		$totalrows=$_SESSION['user']['cache'][$temp]['count'];
+	if (isset($_SESSION[_LICENSE_KEY_]['user']['cache'][$temp]['time']) && $_SESSION[_LICENSE_KEY_]['user']['cache'][$temp]['time']>=time()-150) {
+		$totalrows=$_SESSION[_LICENSE_KEY_]['user']['cache'][$temp]['count'];
 	} else {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$totalrows=mysql_result($res,0,0);
-		$_SESSION['user']['cache'][$temp]['time']=time();
-		$_SESSION['user']['cache'][$temp]['count']=$totalrows;
+		$_SESSION[_LICENSE_KEY_]['user']['cache'][$temp]['time']=time();
+		$_SESSION[_LICENSE_KEY_]['user']['cache'][$temp]['count']=$totalrows;
 	}
 
 	if (!empty($totalrows)) {
@@ -147,7 +147,7 @@ if (!$error) {
 		$rows=0;
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$photo_ids[]=$rsrow['photo_id'];
-			$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['date_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
+			$rsrow['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$rsrow['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 			$rsrow['is_private']=sprintf('%1$s',empty($rsrow['is_private']) ? 'public' : 'private');	// translate this
 			$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			$rsrow['class']='';

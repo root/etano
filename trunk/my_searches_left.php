@@ -12,8 +12,8 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 $my_searches=array();
-if (!empty($_SESSION['user']['user_id'])) {
-	$query="SELECT `search_qs`,`title` FROM `{$dbtable_prefix}user_searches` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' ORDER BY `search_id` DESC LIMIT 5";
+if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+	$query="SELECT `search_qs`,`title` FROM `{$dbtable_prefix}user_searches` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' ORDER BY `search_id` DESC LIMIT 5";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 	while ($rsrow=mysql_fetch_assoc($res)) {

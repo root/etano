@@ -15,9 +15,9 @@ require_once dirname(__FILE__).'/../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 
 $output='';
-if (!empty($_SESSION['user']['user_id']) && !empty($_POST['comment_id'])) {
+if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && !empty($_POST['comment_id'])) {
 	$comment_id=(int)$_POST['comment_id'];
-	$query="SELECT `comment_id`,`comment` FROM `{$dbtable_prefix}blog_comments` WHERE `comment_id`=$comment_id AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+	$query="SELECT `comment_id`,`comment` FROM `{$dbtable_prefix}blog_comments` WHERE `comment_id`=$comment_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_row($res);

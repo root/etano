@@ -33,7 +33,7 @@ $output['return']=rawurlencode($output['return2']);
 
 $loop=array();
 if (!empty($photo_ids)) {
-	$query="SELECT `photo_id`,`photo`,`caption`,`is_main`,`is_private`,`allow_comments` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+	$query="SELECT `photo_id`,`photo`,`caption`,`is_main`,`is_private`,`allow_comments` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."') AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);

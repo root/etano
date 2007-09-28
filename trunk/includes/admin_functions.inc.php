@@ -19,7 +19,7 @@ Support at:                 http://www.datemill.com/forum
 
 require_once 'general_functions.inc.php';
 $GLOBALS['_lang']=array();
-$def_skin=isset($_SESSION['admin']['def_skin']) ? $_SESSION['admin']['def_skin'] : get_default_skin_dir();
+$def_skin=isset($_SESSION[_LICENSE_KEY_]['admin']['def_skin']) ? $_SESSION[_LICENSE_KEY_]['admin']['def_skin'] : get_default_skin_dir();
 require_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/strings.inc.php';
 $_pfields=array();
 $_pcats=array();
@@ -78,8 +78,8 @@ function admin_error($errlevel,$text,$file='unset',$line='unset') {
 
 function allow_dept($levels=DEPT_ADMIN) {
 	$myreturn=false;
-	if (isset($_SESSION['admin']['admin_id'])) {
-		if (((int)$levels) & ((int)$_SESSION['admin']['dept_id'])) {
+	if (isset($_SESSION[_LICENSE_KEY_]['admin']['admin_id'])) {
+		if (((int)$levels) & ((int)$_SESSION[_LICENSE_KEY_]['admin']['dept_id'])) {
 			$myreturn=true;
 		} else {
 			$topass['message']='You are not authorized to use this section.';
@@ -92,7 +92,7 @@ function allow_dept($levels=DEPT_ADMIN) {
 		if (empty($mysession)) {
 			session_start();
 		}
-		$_SESSION['admin']['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
+		$_SESSION[_LICENSE_KEY_]['admin']['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
 		redirect2page('admin/index.php',$topass);
 	}
 	return $myreturn;

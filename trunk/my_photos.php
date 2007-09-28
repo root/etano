@@ -24,7 +24,7 @@ $output=array();
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 
-$where="`fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
+$where="`fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND `del`=0";
 $from="`{$dbtable_prefix}user_photos`";
 
 $query="SELECT count(*) FROM $from WHERE $where";
@@ -43,7 +43,7 @@ if (!empty($totalrows)) {
 	$i=1;
 	$rows=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['date_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
+		$rsrow['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$rsrow['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 		$rsrow['is_private']=sprintf('%1$s',empty($rsrow['is_private']) ? 'public' : 'private');	// translate this
 		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['class']='';

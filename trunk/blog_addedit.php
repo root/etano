@@ -27,7 +27,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['return']=rawurlencode($output['return']);
 } elseif (!empty($_GET['bid'])) {
 	$blog_id=(int)$_GET['bid'];
-	$query="SELECT `blog_id`,`blog_name`,`blog_diz` FROM `{$dbtable_prefix}user_blogs` WHERE `blog_id`=$blog_id AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+	$query="SELECT `blog_id`,`blog_name`,`blog_diz` FROM `{$dbtable_prefix}user_blogs` WHERE `blog_id`=$blog_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);

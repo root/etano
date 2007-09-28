@@ -61,9 +61,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$input['fk_user_id_other']=$_SESSION['user']['user_id'];
-		$input['_user_other']=$_SESSION['user']['user'];
-		$input['subject']=sprintf('%s sent you a flirt',$_SESSION['user']['user']);	// translate
+		$input['fk_user_id_other']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
+		$input['_user_other']=$_SESSION[_LICENSE_KEY_]['user']['user'];
+		$input['subject']=sprintf('%s sent you a flirt',$_SESSION[_LICENSE_KEY_]['user']['user']);	// translate
 		$input['message_type']=MESS_FLIRT;
 		$query="INSERT INTO `{$dbtable_prefix}queue_message` SET `date_sent`='".gmdate('YmdHis')."'";
 		foreach ($queue_message_default['defaults'] as $k=>$v) {
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		update_stats($_SESSION['user']['user_id'],'flirts_sent',1);
+		update_stats($_SESSION[_LICENSE_KEY_]['user']['user_id'],'flirts_sent',1);
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Flirt sent.';
 		if (isset($_on_after_insert)) {

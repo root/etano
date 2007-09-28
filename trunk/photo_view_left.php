@@ -14,12 +14,12 @@ Support at:                 http://www.datemill.com/forum
 $user_views=array();
 
 $tpl->set_file('left_content','photo_view_left.html');
-if (isset($output['fk_user_id']) && !empty($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id']) {
+if (isset($output['fk_user_id']) && !empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $output['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 	$tpl->set_var('own_photo',true);
 }
-if (!empty($_SESSION['user']['user_id'])) {
+if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	require_once 'includes/network_functions.inc.php';
-	if (is_network_member($_SESSION['user']['user_id'],$output['fk_user_id'],NET_BLOCK)) {
+	if (is_network_member($_SESSION[_LICENSE_KEY_]['user']['user_id'],$output['fk_user_id'],NET_BLOCK)) {
 		$output['unblock_user']=true;
 	}
 }

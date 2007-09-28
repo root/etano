@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$subscription=array();
 		if (mysql_num_rows($res)) {
 			$subscription=mysql_fetch_assoc($res);
-			$subscription['user_id']=$_SESSION['user']['user_id'];
+			$subscription['user_id']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 		} else {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;

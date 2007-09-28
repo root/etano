@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	foreach ($message_filters_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$message_filters_default['defaults'][$k]);
 	}
-	$input['fk_user_id']=$_SESSION['user']['user_id'];
+	$input['fk_user_id']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 
 	switch ($input['filter_type']) {
 		case FILTER_SENDER:
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // not working
 	$input['filter_id']=$message_filters_default['defaults']['filter_id'];
 	$input['filter_type']=_FILTER_USER_;
-	$input['fk_user_id']=$_SESSION['user']['user_id'];
+	$input['fk_user_id']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 	$input['field']='fk_user_id';
 	$input['field_value']=isset($_GET['uid']) ? (int)$_GET['uid'] : 0;
 	$input['fk_folder_id']=FOLDER_SPAMBOX;
@@ -70,7 +70,7 @@ if (!$error) {
 			}
 		}
 		$query=substr($query,0,-1);
-		$query.=" WHERE `filter_id`=".$input['filter_id']." AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+		$query.=" WHERE `filter_id`=".$input['filter_id']." AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 		if (isset($_on_before_update)) {
 			for ($i=0;isset($_on_before_update[$i]);++$i) {
 				call_user_func($_on_before_update[$i]);

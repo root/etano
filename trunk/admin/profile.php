@@ -18,8 +18,8 @@ allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 // cleanup after an 'impersonate user' action
 if (isset($_GET['clean_user_session'])) {
-	$_SESSION['user']=array();
-	unset($_SESSION['user']);
+	$_SESSION[_LICENSE_KEY_]['user']=array();
+	unset($_SESSION[_LICENSE_KEY_]['user']);
 }
 $tpl=new phemplate('skin/','remove_nonjs');
 

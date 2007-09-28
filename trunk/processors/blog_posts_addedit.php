@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // max 2 empty lines
 	$input['post_content']=preg_replace(array('/\\\r\\\n/','/(\\\n\s+\\\n)+/','/(\\\n){3,}/'),array('\n','\n','\n\n'),$input['post_content']);
 
-	$input['fk_user_id']=$_SESSION['user']['user_id'];
+	$input['fk_user_id']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		} else {
 			$now=gmdate('YmdHis');
 			unset($input['post_id']);
-			$query="INSERT INTO `{$dbtable_prefix}blog_posts` SET `_user`='".$_SESSION['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
+			$query="INSERT INTO `{$dbtable_prefix}blog_posts` SET `_user`='".$_SESSION[_LICENSE_KEY_]['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
 			if ($config['manual_blog_approval']) {
 				$query.=",`status`=".STAT_PENDING;
 			} else {

@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	foreach ($user_blogs_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$user_blogs_default['defaults'][$k]);
 	}
-	$input['fk_user_id']=$_SESSION['user']['user_id'];
+	$input['fk_user_id']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `blog_id`=".$input['blog_id']." AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query.=" WHERE `blog_id`=".$input['blog_id']." AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 			if (isset($_on_before_update)) {
 				for ($i=0;isset($_on_before_update[$i]);++$i) {
 					call_user_func($_on_before_update[$i]);

@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		$input['caption']=remove_banned_words($input['caption']);
-		$query="SELECT `photo_id`,`caption`,`is_main`,`photo`,`status` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",array_keys($input['caption']))."') AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+		$query="SELECT `photo_id`,`caption`,`is_main`,`photo`,`status` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",array_keys($input['caption']))."') AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$old_captions=array();
 		$old_main=0;
@@ -59,20 +59,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$now=gmdate('YmdHis');
 		$config=get_site_option(array('manual_photo_approval'),'core_photo');
 		if ($input['is_main']!=$old_main) {
-			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_main`=0 WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_main`=0 WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 // if photo approvals are automatic then we can make this photo the main photo now. Otherwise it will have to be done upon approval!!!
 			if (empty($config['manual_photo_approval']) || $statuses[$input['is_main']]==STAT_APPROVED) {
-				$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='".$photos[$input['is_main']]."',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='".$photos[$input['is_main']]."',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				// this sucks...the code below is taken from on_after_approve_photo(). In the future, when new functionality that depends on the main photo will be added, we'll have to change the code there and here too.
-				$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}
 			if ($old_main==0) {
-				add_member_score($_SESSION['user']['user_id'],'add_main_photo');
+				add_member_score($_SESSION[_LICENSE_KEY_]['user']['user_id'],'add_main_photo');
 			}
 		}
 		foreach ($input['caption'] as $photo_id=>$caption) {
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 //					$query.=",`status`=".STAT_APPROVED;
 				}
 			}
-			$query.=" WHERE `photo_id`=$photo_id AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query.=" WHERE `photo_id`=$photo_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 		$topass['message']['type']=MESSAGE_INFO;

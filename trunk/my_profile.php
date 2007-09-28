@@ -20,7 +20,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $config=get_site_option(array('bbcode_profile'),'core');
 
-$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output=mysql_fetch_assoc($res);
@@ -64,7 +64,7 @@ if (mysql_num_rows($res)) {
 }
 
 $user_photos=array();
-$query="SELECT `photo_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `del`=0";
+$query="SELECT `photo_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND `del`=0";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	while (count($user_photos)<3 && $rsrow=mysql_fetch_assoc($res)) {
@@ -97,7 +97,7 @@ $output['pic_width']=get_site_option('pic_width','core_photo');
 $edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
 $loop_comments=array();
 $config=get_site_option(array('bbcode_comments','smilies_comm'),'core');
-$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}profile_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`='".$_SESSION['user']['user_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
+$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}profile_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_assoc($res)) {
 	// if someone has asked to edit his/her comment
@@ -105,7 +105,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 		$output['comment_id']=$rsrow['comment_id'];
 		$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
-	$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
+	$rsrow['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 	$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	if (!empty($config['bbcode_comments'])) {
 		$rsrow['comment']=bbcode2html($rsrow['comment']);
@@ -114,7 +114,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['comment']=text2smilies($rsrow['comment']);
 	}
 	// allow showing the edit links to rightfull owners
-	if ($rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
+	if ($rsrow['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 		$rsrow['editme']=true;
 	}
 
@@ -139,9 +139,9 @@ if (!empty($loop_comments)) {
 	$output['show_comments']=true;
 }
 
-if ($_SESSION['user']['prefs']['profile_comments']) {
+if ($_SESSION[_LICENSE_KEY_]['user']['prefs']['profile_comments']) {
 	// may I post comments please?
-	if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
+	if (allow_at_level('write_comments',$_SESSION[_LICENSE_KEY_]['user']['membership'])) {
 		$output['allow_comments']=true;
 		// would you let me use bbcode?
 		if (!empty($config['bbcode_comments'])) {

@@ -27,7 +27,7 @@ $comment_id=isset($_GET['comment_id']) ? (int)$_GET['comment_id'] : 0;
 if (!empty($comment_id)) {
 	$query="SELECT b.`fk_user_id` FROM `{$dbtable_prefix}blog_comments` a,`{$dbtable_prefix}blog_posts` b WHERE a.`comment_id`=$comment_id AND a.`fk_parent_id`=b.`post_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_num_rows($res) && mysql_result($res,0,0)==$_SESSION['user']['user_id']) {
+	if (mysql_num_rows($res) && mysql_result($res,0,0)==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 		// delete only if I am the owner of the original post this comment's been made on
 		$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `comment_id`=$comment_id";
 		if (isset($_on_before_delete)) {

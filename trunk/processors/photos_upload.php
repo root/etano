@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$filename=$_SESSION['user']['user_id'].'_1'.$curtime;
+		$filename=$_SESSION[_LICENSE_KEY_]['user']['user_id'].'_1'.$curtime;
 		$input['file1']=upload_file(_BASEPATH_.'/tmp','file1',$filename);
 		mt_srand(make_seed());
 		if (!empty($input['file1'])) {
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			// we should have $topass['message'] set from within upload_file();
 		}
 
-		$filename=$_SESSION['user']['user_id'].'_2'.$curtime;
+		$filename=$_SESSION[_LICENSE_KEY_]['user']['user_id'].'_2'.$curtime;
 		$input['file2']=upload_file(_BASEPATH_.'/tmp','file2',$filename);
 		mt_srand(make_seed());
 		if (!empty($input['file2'])) {
@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			// we should have $topass['message'] set from within upload_file();
 		}
 
-		$filename=$_SESSION['user']['user_id'].'_3'.$curtime;
+		$filename=$_SESSION[_LICENSE_KEY_]['user']['user_id'].'_3'.$curtime;
 		$input['file3']=upload_file(_BASEPATH_.'/tmp','file3',$filename);
 		mt_srand(make_seed());
 		if (!empty($input['file3'])) {
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			// we should have $topass['message'] set from within upload_file();
 		}
 
-		$filename=$_SESSION['user']['user_id'].'_4'.$curtime;
+		$filename=$_SESSION[_LICENSE_KEY_]['user']['user_id'].'_4'.$curtime;
 		$input['file4']=upload_file(_BASEPATH_.'/tmp','file4',$filename);
 		mt_srand(make_seed());
 		if (!empty($input['file4'])) {
@@ -169,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			// we should have $topass['message'] set from within upload_file();
 		}
 
-		$filename=$_SESSION['user']['user_id'].'_5'.$curtime;
+		$filename=$_SESSION[_LICENSE_KEY_]['user']['user_id'].'_5'.$curtime;
 		$input['file5']=upload_file(_BASEPATH_.'/tmp','file5',$filename);
 		mt_srand(make_seed());
 		if (!empty($input['file5'])) {
@@ -199,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			// we should have $topass['message'] set from within upload_file();
 		}
 
-		$filename=$_SESSION['user']['user_id'].'_6'.$curtime;
+		$filename=$_SESSION[_LICENSE_KEY_]['user']['user_id'].'_6'.$curtime;
 		$input['file6']=upload_file(_BASEPATH_.'/tmp','file6',$filename);
 		mt_srand(make_seed());
 		if (!empty($input['file6'])) {
@@ -236,7 +236,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$force_main=false;
 		if (empty($input['is_private'])) {
 			// if there's no main photo yet, make the first one the main one
-			$query="SELECT `photo_id` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `is_main`=1";
+			$query="SELECT `photo_id` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND `is_main`=1";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (!mysql_num_rows($res)) {
 				$force_main=true;
@@ -244,7 +244,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		for ($i=1;$i<=6;++$i) {
 			if (!empty($input['file'.$i])) {
-				$query="INSERT INTO `{$dbtable_prefix}user_photos` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`_user`='".$_SESSION['user']['user']."',`photo`='".$input['file'.$i]."',`allow_comments`=1,`allow_rating`='".$_SESSION['user']['prefs']['rate_my_photos']."',`is_private`=".$input['is_private'].",`date_posted`='$now',`last_changed`='$now'";
+				$query="INSERT INTO `{$dbtable_prefix}user_photos` SET `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."',`_user`='".$_SESSION[_LICENSE_KEY_]['user']['user']."',`photo`='".$input['file'.$i]."',`allow_comments`=1,`allow_rating`='".$_SESSION[_LICENSE_KEY_]['user']['prefs']['rate_my_photos']."',`is_private`=".$input['is_private'].",`date_posted`='$now',`last_changed`='$now'";
 				if ($config['manual_photo_approval']) {
 					$query.=",`status`=".STAT_PENDING;
 				} else {

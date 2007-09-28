@@ -26,13 +26,13 @@ if (!empty($_GET['uid'])) {
 } elseif (isset($_GET['user'])) {
 	$user=sanitize_and_format($_GET['user'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 	$uid=get_userid_by_user($user);
-} elseif (!empty($_SESSION['user']['user_id'])) {
-	$uid=(string)$_SESSION['user']['user_id'];
+} elseif (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+	$uid=(string)$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 } else {
 	redirect2page('index.php');
 }
 
-if (!empty($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']==$uid) {
+if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $_SESSION[_LICENSE_KEY_]['user']['user_id']==$uid) {
 	redirect2page('my_profile.php');
 }
 
@@ -74,7 +74,7 @@ if (!empty($output)) {
 
 	$j=0;
 	foreach ($_pcats as $pcat_id=>$pcat) {
-		if (((int)$pcat['access_level']) & ((int)$_SESSION['user']['membership'])) {
+		if (((int)$pcat['access_level']) & ((int)$_SESSION[_LICENSE_KEY_]['user']['membership'])) {
 			$temp=$user_cache->get_cache($output['uid'],'categ_'.$pcat_id);
 			if (!empty($temp)) {
 				$categs[$j]['content']=$temp;
@@ -107,7 +107,7 @@ if (!empty($output)) {
 			$output['comment_id']=$rsrow['comment_id'];
 			$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 		}
-		$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
+		$rsrow['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 		$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		if (!empty($config['bbcode_comments'])) {
 			$rsrow['comment']=bbcode2html($rsrow['comment']);
@@ -116,7 +116,7 @@ if (!empty($output)) {
 			$rsrow['comment']=text2smilies($rsrow['comment']);
 		}
 		// allow showing the edit links to rightfull owners
-		if (!empty($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
+		if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 			$rsrow['editme']=true;
 		}
 
@@ -143,9 +143,9 @@ if (!empty($output)) {
 
 	if (get_user_settings($output['uid'],'def_user_prefs','profile_comments')) {
 		// may I post comments please?
-		if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
+		if (allow_at_level('write_comments',$_SESSION[_LICENSE_KEY_]['user']['membership'])) {
 			$output['allow_comments']=true;
-			if (empty($_SESSION['user']['user_id'])) {
+			if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 				if ($config['use_captcha']) {
 					require_once 'includes/classes/sco_captcha.class.php';
 					$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);

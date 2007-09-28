@@ -523,9 +523,9 @@ class etano_package {
 
 	function post_install($install_index) {
 		global $dbtable_prefix;
-		if (isset($_SESSION['admin']['post_install'][$this->module_code][$install_index]) && is_file($this->package_path.'/'.$_SESSION['admin']['post_install'][$this->module_code][$install_index])) {
-			require_once $this->package_path.'/'.$_SESSION['admin']['post_install'][$this->module_code][$install_index];
-			unset($_SESSION['admin']['post_install'][$this->module_code][$install_index]);
+		if (isset($_SESSION[_LICENSE_KEY_]['admin']['post_install'][$this->module_code][$install_index]) && is_file($this->package_path.'/'.$_SESSION[_LICENSE_KEY_]['admin']['post_install'][$this->module_code][$install_index])) {
+			require_once $this->package_path.'/'.$_SESSION[_LICENSE_KEY_]['admin']['post_install'][$this->module_code][$install_index];
+			unset($_SESSION[_LICENSE_KEY_]['admin']['post_install'][$this->module_code][$install_index]);
 		}
 		// update the version of all required packages with a change-version attribute
 		for ($i=0;isset($this->install[$install_index]['requires'][$i]);++$i) {

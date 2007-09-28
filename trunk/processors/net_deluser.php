@@ -56,13 +56,13 @@ if (!$error) {
 	}
 
 	if (!$error) {
-		$query="DELETE FROM `{$dbtable_prefix}user_networks` WHERE (`fk_user_id`='".$_SESSION['user']['user_id']."' AND `fk_net_id`=".$input['net_id']." AND `fk_user_id_other`=".$input['uid'].")";
+		$query="DELETE FROM `{$dbtable_prefix}user_networks` WHERE (`fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND `fk_net_id`=".$input['net_id']." AND `fk_user_id_other`=".$input['uid'].")";
 		if ($is_bidi) {
-			$query.=" OR (`fk_user_id`=".$input['uid']." AND `fk_net_id`=".$input['net_id']." AND `fk_user_id_other`='".$_SESSION['user']['user_id']."')";
+			$query.=" OR (`fk_user_id`=".$input['uid']." AND `fk_net_id`=".$input['net_id']." AND `fk_user_id_other`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."')";
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if ($input['net_id']==NET_BLOCK) {
-			del_message_filter(array('filter_type'=>FILTER_SENDER,'fk_user_id'=>$_SESSION['user']['user_id'],'field_value'=>$input['uid']));
+			del_message_filter(array('filter_type'=>FILTER_SENDER,'fk_user_id'=>$_SESSION[_LICENSE_KEY_]['user']['user_id'],'field_value'=>$input['uid']));
 			add_member_score($input['uid'],'unblock_member');
 		}
 		$topass['message']['type']=MESSAGE_INFO;

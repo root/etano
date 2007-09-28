@@ -21,7 +21,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $search_fields=array();
 foreach ($_pcats as $pcat_id=>$pcat) {
-	if (((int)$pcat['access_level']) & ((int)$_SESSION['user']['membership'])) {
+	if (((int)$pcat['access_level']) & ((int)$_SESSION[_LICENSE_KEY_]['user']['membership'])) {
 		for ($i=0;isset($pcat['fields'][$i]);++$i) {
 			if (isset($_pfields[$pcat['fields'][$i]]['searchable'])) {
 				$search_fields[]=$pcat['fields'][$i];
