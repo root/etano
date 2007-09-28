@@ -49,6 +49,7 @@ TODO
 	// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
 	//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
 
+- ar trebui sa fac un buton de continue la instalarea pachetelor cand da eroare (langa cel de finish)
 
 ---------------------------------------------------------------------
 - digg button: <span style="float: left"><script src="http://digg.com/tools/diggthis.js" type="text/javascript"></script></span>
