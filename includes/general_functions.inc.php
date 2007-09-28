@@ -112,18 +112,18 @@ function pager($totalrows,$offset,$results) {
 
 
 function get_my_skin() {
-	if (!empty($_SESSION['user']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_SESSION['user']['skin'])) {
-		$myreturn=$_SESSION['user']['skin'];
+	if (!empty($_SESSION[_LICENSE_KEY_]['user']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_SESSION[_LICENSE_KEY_]['user']['skin'])) {
+		$myreturn=$_SESSION[_LICENSE_KEY_]['user']['skin'];
 		$_COOKIE['sco_app']['skin']=$myreturn;
 	} elseif (!empty($_COOKIE['sco_app']['skin']) && preg_match('/^\w+$/',$_COOKIE['sco_app']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_COOKIE['sco_app']['skin'])) {
 		$myreturn=$_COOKIE['sco_app']['skin'];
 		// save the option in less expensive places
-		$_SESSION['user']['skin']=$myreturn;
+		$_SESSION[_LICENSE_KEY_]['user']['skin']=$myreturn;
 	} else {
 		$myreturn=get_default_skin_dir();
 		// save the option in less expensive places
 		$_COOKIE['sco_app']['skin']=$myreturn;
-		$_SESSION['user']['skin']=$myreturn;
+		$_SESSION[_LICENSE_KEY_]['user']['skin']=$myreturn;
 	}
 	return $myreturn;
 }
@@ -385,8 +385,8 @@ function create_search_form($search_fields) {
 	$myreturn=array();
 	global $dbtable_prefix,$_pfields;
 	$user_defaults=array();
-	if (!empty($_SESSION['user']['user_id'])) {
-		$query="SELECT `search` FROM `{$dbtable_prefix}user_searches` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `is_default`=1";
+	if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+		$query="SELECT `search` FROM `{$dbtable_prefix}user_searches` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND `is_default`=1";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$user_defaults=unserialize(mysql_result($res,0,0));

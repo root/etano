@@ -20,7 +20,7 @@ class package_downloader {
 	var $error_text='';
 
 	function package_downloader($remote_file) {
-		if (substr($remote_file,0,23)==substr($tplvars['remote_site'],0,23)) {
+		if (substr($remote_file,0,23)==substr($GLOBALS['tplvars']['remote_site'],0,23)) {
 			$this->remote_file=$remote_file;
 		}
 		$this->file_name='';

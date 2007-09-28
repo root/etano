@@ -13,7 +13,7 @@ Support at:                 http://www.datemill.com/forum
 
 $tpl->set_file('left_content','message_read_left.html');
 
-$query="SELECT `fk_folder_id`,count(*) FROM `{$dbtable_prefix}user_inbox` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `is_read`=0 AND `del`=0 GROUP BY `fk_folder_id`";
+$query="SELECT `fk_folder_id`,count(*) FROM `{$dbtable_prefix}user_inbox` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND `is_read`=0 AND `del`=0 GROUP BY `fk_folder_id`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $num_messages=array();
 while ($rsrow=mysql_fetch_row($res)) {

@@ -30,7 +30,7 @@ if (!empty($photo_id)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
-		if ($output['status']==STAT_APPROVED || (!empty($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id'])) {
+		if ($output['status']==STAT_APPROVED || (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $output['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 			$output['caption']=sanitize_and_format($output['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			if (!empty($output['allow_rating'])) {
 				if ($output['stat_votes']>0) {
@@ -42,7 +42,7 @@ if (!empty($photo_id)) {
 			} else {
 				unset($output['allow_rating']);
 			}
-			if (!empty($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id']) {
+			if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $output['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 				$output['photo_owner']=true;
 			}
 
@@ -55,7 +55,7 @@ if (!empty($photo_id)) {
 					$output['comment_id']=$rsrow['comment_id'];
 					$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 				}
-				$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
+				$rsrow['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 				$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 				if (!empty($config['bbcode_comments'])) {
 					$rsrow['comment']=bbcode2html($rsrow['comment']);
@@ -64,7 +64,7 @@ if (!empty($photo_id)) {
 					$rsrow['comment']=text2smilies($rsrow['comment']);
 				}
 				// allow showing the edit links to rightfull owners
-				if (!empty($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
+				if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 					$rsrow['editme']=true;
 				}
 
@@ -91,8 +91,8 @@ if (!empty($photo_id)) {
 
 			if (!empty($output['allow_comments'])) {
 				// may I post comments please?
-				if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
-					if (empty($_SESSION['user']['user_id'])) {
+				if (allow_at_level('write_comments',$_SESSION[_LICENSE_KEY_]['user']['membership'])) {
+					if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 						if ($config['use_captcha']) {
 							require_once 'includes/classes/sco_captcha.class.php';
 							$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
@@ -172,7 +172,7 @@ if (is_file('photo_view_left.php')) {
 	include 'photo_view_left.php';
 }
 include 'frame.php';
-if (!empty($photo_id) && isset($output['fk_user_id']) && ((!empty($_SESSION['user']['user_id']) && $output['fk_user_id']!=$_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id']))) {
+if (!empty($photo_id) && isset($output['fk_user_id']) && ((!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $output['fk_user_id']!=$_SESSION[_LICENSE_KEY_]['user']['user_id']) || empty($_SESSION[_LICENSE_KEY_]['user']['user_id']))) {
 	$query="UPDATE `{$dbtable_prefix}user_photos` SET `stat_views`=`stat_views`+1 WHERE `photo_id`=$photo_id";
 	@mysql_query($query);
 }

@@ -28,7 +28,7 @@ $networks=array();
 $i=0;
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['network']=sanitize_and_format($rsrow['network'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-	$net_members=get_network_members($_SESSION['user']['user_id'],$rsrow['net_id'],4);
+	$net_members=get_network_members($_SESSION[_LICENSE_KEY_]['user']['user_id'],$rsrow['net_id'],4);
 	if (!empty($net_members)) {
 		$rsrow['members']=$user_cache->get_cache_beta($net_members,'result_user','tpl',$tpl);
 	}
@@ -39,7 +39,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 }
 
 $output=array();
-$output['user_id']=$_SESSION['user']['user_id'];
+$output['user_id']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 $tpl->set_file('content','my_networks.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('networks',$networks);

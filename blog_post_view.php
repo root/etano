@@ -36,8 +36,8 @@ if (!empty($post_id)) {
 		if ($output['date_posted']>$page_last_modified_time) {
 			$page_last_modified_time=$output['date_posted'];
 		}
-		$output['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$output['date_posted']+$_SESSION['user']['prefs']['time_offset']);
-		if (!empty($_SESSION['user']['user_id']) && $output['fk_user_id']==$_SESSION['user']['user_id']) {
+		$output['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$output['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
+		if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $output['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 			$output['post_owner']=true;
 		}
 		if (isset($_list_of_online_members[$output['fk_user_id']])) {
@@ -59,7 +59,7 @@ if (!empty($post_id)) {
 				$output['comment_id']=$rsrow['comment_id'];
 				$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 			}
-			$rsrow['date_posted']=strftime($_SESSION['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION['user']['prefs']['time_offset']);
+			$rsrow['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 			$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			if (!empty($config['bbcode_comments'])) {
 				$rsrow['comment']=bbcode2html($rsrow['comment']);
@@ -68,7 +68,7 @@ if (!empty($post_id)) {
 				$rsrow['comment']=text2smilies($rsrow['comment']);
 			}
 			// allow showing the edit links to rightfull owners
-			if (!empty($_SESSION['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION['user']['user_id']) {
+			if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 				$rsrow['editme']=true;
 			}
 
@@ -95,8 +95,8 @@ if (!empty($post_id)) {
 
 		if (!empty($output['allow_comments'])) {
 			// may I post comments please?
-			if (allow_at_level('write_comments',$_SESSION['user']['membership'])) {
-				if (empty($_SESSION['user']['user_id'])) {
+			if (allow_at_level('write_comments',$_SESSION[_LICENSE_KEY_]['user']['membership'])) {
+				if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 					if ($config['use_captcha']) {
 						require_once 'includes/classes/sco_captcha.class.php';
 						$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
@@ -155,7 +155,7 @@ if (is_file('blog_post_view_left.php')) {
 	include 'blog_post_view_left.php';
 }
 include 'frame.php';
-if (!empty($post_id) && isset($output['fk_user_id']) && ((!empty($_SESSION['user']['user_id']) && $output['fk_user_id']!=$_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id']))) {
+if (!empty($post_id) && isset($output['fk_user_id']) && ((!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $output['fk_user_id']!=$_SESSION[_LICENSE_KEY_]['user']['user_id']) || empty($_SESSION[_LICENSE_KEY_]['user']['user_id']))) {
 	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `stat_views`=`stat_views`+1 WHERE `post_id`=$post_id";
 	@mysql_query($query);
 }

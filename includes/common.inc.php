@@ -79,6 +79,7 @@ define('NET_FRIENDS',1);
 define('NET_BLOCK',2);
 define('NET_FAVES',3);
 
+require_once 'defines.inc.php';
 if (!defined('NO_SESSION')) {
 	require_once 'sessions.inc.php';
 }
@@ -109,7 +110,6 @@ if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=
 	}
 }
 
-require_once 'defines.inc.php';
 require_once 'sco_functions.inc.php';
 define('FIELD_LOCATION',107);
 $__field2type[FIELD_LOCATION]=TYPE_INT;

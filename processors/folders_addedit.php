@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	foreach ($user_folders_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$user_folders_default['defaults'][$k]);
 	}
-	$input['fk_user_id']=$_SESSION['user']['user_id'];
+	$input['fk_user_id']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 
 	if (!$error) {
 		if (!empty($input['folder_id'])) {
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query=substr($query,0,-1);
-			$query.=" WHERE `folder_id`=".$input['folder_id']." AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query.=" WHERE `folder_id`=".$input['folder_id']." AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 			if (isset($_on_before_update)) {
 				for ($i=0;isset($_on_before_update[$i]);++$i) {
 					call_user_func($_on_before_update[$i]);

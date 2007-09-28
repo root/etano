@@ -47,7 +47,14 @@ header('Content-Type: text/html; charset=utf-8',true);	// overwrite possible apa
 
 if (isset($_GET['skin'])) {
 	if (preg_match('/^\w+$/',$_GET['skin'])) {
-		$_SESSION['user']['skin']=$_GET['skin'];
+		$_SESSION[_LICENSE_KEY_]['user']['skin']=$_GET['skin'];
 		setcookie('sco_app[skin]',$_GET['skin'],mktime(0,0,0,date('m'),date('d'),date('Y')+1),'/',$cookie_domain);
+	}
+}
+
+// the cookie was probably set from javascript
+if (isset($_SESSION[_LICENSE_KEY_]['user']['skin']) && isset($_COOKIE['sco_app']['skin']) && $_COOKIE['sco_app']['skin']!=$_SESSION[_LICENSE_KEY_]['user']['skin']) {
+	if (preg_match('/^\w+$/',$_COOKIE['sco_app']['skin'])) {
+		$_SESSION[_LICENSE_KEY_]['user']['skin']=$_COOKIE['sco_app']['skin'];
 	}
 }

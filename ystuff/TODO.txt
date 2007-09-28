@@ -29,6 +29,10 @@ depind de $tplvars vor fi sterse pt ca tplvars se proceseaza abea in frame.
 
 
 TODO
+- generatorul de licenta trebuie sa fie bazat pe site_id, nu pe user_id pentru ca licenta sa poata fi unica per site.
+	(eventual si pe user_id si pe site_id)
+- trebuie sa fac $_SESSION[_LICENSE_]['user']/['admin'], etc ca sa nu se poate loga userii dintr-o aplicatie in alta
+	in acelasi domeniu.
 - notificarea de 'new comment' tb sa se faca din on_approve_comment(), nu din processor.
 - de duplicat partea cu !$got_from_cache din search.php in CRON/5SEARCH_ALERTS.PHP
 -benchmark:

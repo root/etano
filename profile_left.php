@@ -16,7 +16,7 @@ if (isset($output['uid'])) {
 	unset($output);
 	$output['uid']=$uid;
 
-	if (!empty($_SESSION['user']['user_id']) && is_network_member($_SESSION['user']['user_id'],$output['uid'],NET_BLOCK)) {
+	if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && is_network_member($_SESSION[_LICENSE_KEY_]['user']['user_id'],$output['uid'],NET_BLOCK)) {
 		$output['unblock_user']=true;
 	}
 }
