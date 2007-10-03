@@ -27,7 +27,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 	$output['return']=rawurlencode($output['return2']);
 
 	$my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'SENT',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
-	$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+	$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_row($res)) {
 		$my_folders[$rsrow[0]]=$rsrow[1];
@@ -45,7 +45,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 	$my_folders=sanitize_and_format($my_folders,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 	$mailbox_table='inbox';
-	$where="a.`fk_user_id`='".$_SESSION['user']['user_id']."' AND a.`mail_id`=".$output['mail_id'];
+	$where="a.`fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND a.`mail_id`=".$output['mail_id'];
 
 	switch ($output['fid']) {
 		case FOLDER_INBOX:
@@ -74,7 +74,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
-		$output['date_sent']=strftime($_SESSION['user']['prefs']['datetime_format'],$output['date_sent']+$_SESSION['user']['prefs']['time_offset']);
+		$output['date_sent']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$output['date_sent']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 		$output['subject']=sanitize_and_format($output['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 		switch ($output['message_type']) {
@@ -105,7 +105,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 			unset($output['other_id']);
 		} else {
 			require_once 'includes/network_functions.inc.php';
-			if (is_network_member($_SESSION['user']['user_id'],$output['other_id'],NET_BLOCK)) {
+			if (is_network_member($_SESSION[_LICENSE_KEY_]['user']['user_id'],$output['other_id'],NET_BLOCK)) {
 				$output['is_blocked']=true;
 			}
 			$output['net_block']=NET_BLOCK;
@@ -121,7 +121,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 		$tpl->set_var('output',$output);
 		$tpl->process('content','content',TPL_OPTIONAL);
 		if ($output['is_read']==0) {
-			$query="UPDATE `{$dbtable_prefix}user_{$mailbox_table}` SET `is_read`=1 WHERE `mail_id`=".$output['mail_id']." AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+			$query="UPDATE `{$dbtable_prefix}user_{$mailbox_table}` SET `is_read`=1 WHERE `mail_id`=".$output['mail_id']." AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	} else {

@@ -31,7 +31,7 @@ if (isset($_SESSION['topass']['input'])) {
 }
 
 // no landing on 2+ join pages.
-if ($page>1 && (!isset($_SESSION['user']['reg_id']) || empty($_SESSION['user']['reg_id']))) {
+if ($page>1 && (!isset($_SESSION[_LICENSE_KEY_]['user']['reg_id']) || empty($_SESSION[_LICENSE_KEY_]['user']['reg_id']))) {
 	redirect2page('join.php');
 }
 

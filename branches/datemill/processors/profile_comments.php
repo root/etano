@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	foreach ($profile_comments_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$profile_comments_default['defaults'][$k]);
 	}
-	$input['fk_user_id']=!empty($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
+	$input['fk_user_id']=!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) ? $_SESSION[_LICENSE_KEY_]['user']['user_id'] : 0;
 	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
@@ -58,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['comment']=remove_banned_words($input['comment']);
 		if (!empty($input['comment_id'])) {
 			// only members can edit their comments
-			if (!empty($_SESSION['user']['user_id'])) {
-				$input['comment'].="\n\nLast edited by ".$_SESSION['user']['user'].' on '.gmdate('Y-m-d H:i:s').' GMT';
+			if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+				$input['comment'].="\n\nLast edited by ".$_SESSION[_LICENSE_KEY_]['user']['user'].' on '.gmdate('Y-m-d H:i:s').' GMT';
 				$query="UPDATE `{$dbtable_prefix}profile_comments` SET `last_changed`='".gmdate('YmdHis')."'";
 				if ($config['manual_com_approval']) {
 					$query.=",`status`=".STAT_PENDING;
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 						$query.=",`$k`='".$input[$k]."'";
 					}
 				}
-				$query.=" WHERE `comment_id`=".$input['comment_id']." AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+				$query.=" WHERE `comment_id`=".$input['comment_id']." AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['type']=MESSAGE_INFO;
 				$topass['message']['text']='Comment changed successfully.';
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		} else {
 			unset($input['comment_id']);
 			$now=gmdate('YmdHis');
-			$query="INSERT INTO `{$dbtable_prefix}profile_comments` SET `_user`='".$_SESSION['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
+			$query="INSERT INTO `{$dbtable_prefix}profile_comments` SET `_user`='".$_SESSION[_LICENSE_KEY_]['user']['user']."',`date_posted`='$now',`last_changed`='$now'";
 			if ($config['manual_com_approval']) {
 				$query.=",`status`=".STAT_PENDING;
 			} else {
@@ -100,9 +100,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text']='Comment added.';	// translate this
 				$notification['fk_user_id']=$input['fk_parent_id'];
 				// send notif only if it's not my blog
-				if (!empty($_SESSION['user']['user_id']) && $_SESSION['user']['user_id']!=$notification['fk_user_id']) {
+				if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $_SESSION[_LICENSE_KEY_]['user']['user_id']!=$notification['fk_user_id']) {
 					$notification['subject']='New comment on your profile';	// translate
-					$notification['message_body']=sprintf('%1$s posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm%2$s">Click here</a> to view the comment',$_SESSION['user']['user'],$input['comment_id']);
+					$notification['message_body']=sprintf('%1$s posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm%2$s">Click here</a> to view the comment',$_SESSION[_LICENSE_KEY_]['user']['user'],$input['comment_id']);
 					$notification['message_type']=MESS_SYSTEM;
 					queue_or_send_message($notification);
 				}

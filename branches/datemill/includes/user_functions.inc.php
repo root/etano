@@ -23,21 +23,21 @@ require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/strings.inc.php';
 $_pfields=array();
 $_pcats=array();
 require_once 'fields.inc.php';
-if (isset($_SESSION['user']['user_id'])) {
-	$_SESSION['user']['user_id']=(int)$_SESSION['user']['user_id'];
+if (isset($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+	$_SESSION[_LICENSE_KEY_]['user']['user_id']=(int)$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 }
-if (empty($_SESSION['user']['user_id'])) {
-	$_SESSION['user']['user']='guest';
-	$_SESSION['user']['membership']=1;
+if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+	$_SESSION[_LICENSE_KEY_]['user']['user']='guest';
+	$_SESSION[_LICENSE_KEY_]['user']['membership']=1;
 } else {
 	$tplvars['user_logged']=true;
 }
-$tplvars['myself']=$_SESSION['user'];
+$tplvars['myself']=$_SESSION[_LICENSE_KEY_]['user'];
 $GLOBALS['_list_of_online_members']=get_online_ids();
-$GLOBALS['page_last_modified_time']=isset($_SESSION['user']['loginout']) ? $_SESSION['user']['loginout'] : 0;	// need this for cache control - the Last-Modified header
+$GLOBALS['page_last_modified_time']=isset($_SESSION[_LICENSE_KEY_]['user']['loginout']) ? $_SESSION[_LICENSE_KEY_]['user']['loginout'] : 0;	// need this for cache control - the Last-Modified header
 
-if (!isset($_SESSION['user']['prefs'])) {
-	$_SESSION['user']['prefs']=get_site_option(array('date_format','datetime_format','time_offset'),'def_user_prefs');
+if (!isset($_SESSION[_LICENSE_KEY_]['user']['prefs'])) {
+	$_SESSION[_LICENSE_KEY_]['user']['prefs']=get_site_option(array('date_format','datetime_format','time_offset'),'def_user_prefs');
 }
 
 if (function_exists('error_handler')) {
@@ -62,7 +62,7 @@ function get_userid_by_user($user) {
 function check_login_member($level_code) {
 	// is this user banned?
 	global $_bans;
-	if (isset($_bans[_PUNISH_BANUSER_]) && in_array($_SESSION['user']['user'],$_bans[_PUNISH_BANUSER_])) {
+	if (isset($_bans[_PUNISH_BANUSER_]) && in_array($_SESSION[_LICENSE_KEY_]['user']['user'],$_bans[_PUNISH_BANUSER_])) {
 		die;
 	} elseif (isset($_bans[_PUNISH_BANIP_]) && in_array(sprintf('%u',ip2long($_SERVER['REMOTE_ADDR'])),$_bans[_PUNISH_BANIP_])) {
 		die;
@@ -72,23 +72,23 @@ function check_login_member($level_code) {
 		$GLOBALS['_access_level'][$level_code]=0;	// no access allowed if level not defined
 	}
 	// ask visitors to login if they land on a page that doesn't allow guests
-	if (!($GLOBALS['_access_level'][$level_code]&1) && empty($_SESSION['user']['user_id'])) {
+	if (!($GLOBALS['_access_level'][$level_code]&1) && empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 		$mysession=session_id();
 		if (empty($mysession)) {
 			session_start();
 		}
-		$_SESSION['user']['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
+		$_SESSION[_LICENSE_KEY_]['user']['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
 		redirect2page('login.php');
 	}
-//	unset($_SESSION['user']['timedout']);
-	if (($GLOBALS['_access_level'][$level_code]&$_SESSION['user']['membership'])!=$_SESSION['user']['membership']) {
+//	unset($_SESSION[_LICENSE_KEY_]['user']['timedout']);
+	if (($GLOBALS['_access_level'][$level_code]&$_SESSION[_LICENSE_KEY_]['user']['membership'])!=$_SESSION[_LICENSE_KEY_]['user']['membership']) {
 		redirect2page('info.php',array(),'type=access');	// no access to this feature
 	}
 	$user_id=0;
 	$now=gmdate('YmdHis');
-	if (!empty($_SESSION['user']['user_id'])) {
-		$_SESSION['user']['user_id']=(int)$_SESSION['user']['user_id'];
-		$user_id=$_SESSION['user']['user_id'];
+	if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+		$_SESSION[_LICENSE_KEY_]['user']['user_id']=(int)$_SESSION[_LICENSE_KEY_]['user']['user_id'];
+		$user_id=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 	}
 	$query="UPDATE `{$dbtable_prefix}online` SET `last_activity`='$now' WHERE `fk_user_id`=$user_id AND `sess`='".session_id()."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -100,8 +100,8 @@ function check_login_member($level_code) {
 	$log['level']=$level_code;
 	$log['user_id']=$user_id;
 	$log['sess']=session_id();
-	$log['user']=$_SESSION['user']['user'];
-	$log['membership']=$_SESSION['user']['membership'];
+	$log['user']=$_SESSION[_LICENSE_KEY_]['user']['user'];
+	$log['membership']=$_SESSION[_LICENSE_KEY_]['user']['membership'];
 	$log['ip']=sprintf('%u',ip2long($_SERVER['REMOTE_ADDR']));
 	if ($level_code!='all') {
 		log_user_action($log);

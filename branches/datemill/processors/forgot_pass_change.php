@@ -69,15 +69,22 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']='Password changed, please login below.';     // translate
+		if (mysql_affected_rows()) {
+			$topass['message']['type']=MESSAGE_INFO;
+			$topass['message']['text']='Password changed, please login below.';     // translate
+		} else {
+			$error=true;
+			$topass['message']['type']=MESSAGE_ERROR;
+			$topass['message']['text']='Invalid username specified. Password not changed.';     // translate
+		}
 		$nextpage='login.php';
 		if (isset($_on_after_update)) {
 			for ($i=0;isset($_on_after_update[$i]);++$i) {
 				call_user_func($_on_after_update[$i]);
 			}
 		}
-	} else {
+	}
+	if ($error) {
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);

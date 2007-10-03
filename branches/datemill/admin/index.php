@@ -13,7 +13,7 @@ Support at:                 http://www.datemill.com/forum
 
 require_once '../includes/common.inc.php';
 
-if (!isset($_SESSION['admin']['admin_id'])) {
+if (!isset($_SESSION[_LICENSE_KEY_]['admin']['admin_id'])) {
 	if (!empty($_SESSION['topass'])) {
 		$topass=$_SESSION['topass'];
 		$_SESSION['topass']=array();

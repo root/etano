@@ -126,7 +126,7 @@ class XMLNode_dsb extends XMLText_dsb {
 					$tmp->nodeName = $vals[$i]['tag'];
 					$tmp->attributes = isset($vals[$i]['attributes'])?$vals[$i]['attributes']:null;
 					if (isset($vals[$i]['value'])) {
-						$tmp->appendChild(XMLNode_dsb::createTextNode($vals[$i]['value']));
+						$tmp->appendChild((XMLNode_dsb::createTextNode($vals[$i]['value'])));
 					}
 					$tmp->parentNode = $this;
 					$children[] = $tmp;
@@ -378,7 +378,8 @@ class XML_dsb extends XMLNode_dsb {
 		if (!empty($vals)) {
 			$root = XMLNode_dsb::createElement($vals[0]['tag']);
 			$root->attributes = isset($vals[0]['attributes'])?$vals[0]['attributes']:null;
-			$root->childNodes = $root->_xml_get_children($vals, $i = 0);
+			$i = 0;
+			$root->childNodes = $root->_xml_get_children($vals, $i);
 			$this->appendChild($root);
 		}
 

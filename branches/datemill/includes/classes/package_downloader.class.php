@@ -20,9 +20,9 @@ class package_downloader {
 	var $error_text='';
 
 	function package_downloader($remote_file) {
-//		if (substr($remote_file,0,25)=='http://files.datemill.com') {
+		if (substr($remote_file,0,23)==substr($GLOBALS['tplvars']['remote_site'],0,23)) {
 			$this->remote_file=$remote_file;
-//		}
+		}
 		$this->file_name='';
 	}
 
@@ -33,7 +33,6 @@ class package_downloader {
 		if (!empty($this->remote_file)) {
 			$this->file_name='';
 			$info=parse_url($this->remote_file);
-			$this->file_name=basename($this->remote_file);
 			$fileop=new fileop();
 
 			$header='GET '.$info['path'];
@@ -58,9 +57,9 @@ class package_downloader {
 					if (empty($this->file_name)) {
 						if (preg_match('/Content\-Disposition: attachment; filename="(.+)"/',$line,$m)) {
 							$this->file_name=$m[1];
-						} elseif (preg_match('/Content\-Type: application/octet\-stream; name="(.+)"/',$line,$m)) {
+						} elseif (preg_match('/Content\-Type: application\/octet\-stream; name="(.+)"/',$line,$m)) {
 							$this->file_name=$m[1];
-						} elseif (preg_match('/Content\-Type: application/octetstream; name="(.+)"/',$line,$m)) {
+						} elseif (preg_match('/Content\-Type: application\/octetstream; name="(.+)"/',$line,$m)) {
 							$this->file_name=$m[1];
 						}
 					}

@@ -27,7 +27,7 @@ $nextpage='filters.php';
 $filter_id=isset($_GET['filter_id']) ? (int)$_GET['filter_id'] : 0;
 $where=isset($_GET['uid']) ? "`filter_type`="._FILTER_USER_." AND `field_value`='".(int)$_GET['uid']."' AND `fk_folder_id`=".FOLDER_SPAMBOX : "`filter_id`=".$filter_id;
 
-$query="DELETE FROM `{$dbtable_prefix}message_filters` WHERE $where AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="DELETE FROM `{$dbtable_prefix}message_filters` WHERE $where AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 if (isset($_on_before_delete)) {
 	for ($i=0;isset($_on_before_delete[$i]);++$i) {
 		call_user_func($_on_before_delete[$i]);

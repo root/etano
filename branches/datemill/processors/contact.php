@@ -29,7 +29,7 @@ $nextpage='contact.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$input['fk_user_id']=!empty($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
+	$input['fk_user_id']=!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) ? $_SESSION[_LICENSE_KEY_]['user']['user_id'] : 0;
 	$input['subject']=sanitize_and_format_gpc($_POST,'subject',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$input['name']=sanitize_and_format_gpc($_POST,'name',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$input['email']=sanitize_and_format_gpc($_POST,'email',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
@@ -79,8 +79,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$mail->IsHTML(false);
 		$mail->From=$input['email'];
 		$mail->Sender=$input['email'];
-		if (isset($_SESSION['user']['user'])) {
-			$mail->FromName=$_SESSION['user']['user'];
+		if (isset($_SESSION[_LICENSE_KEY_]['user']['user'])) {
+			$mail->FromName=$_SESSION[_LICENSE_KEY_]['user']['user'];
 		} elseif (!empty($input['name'])) {
 			$mail->FromName=$input['name'];
 		} else {

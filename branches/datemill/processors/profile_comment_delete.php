@@ -27,7 +27,7 @@ $comment_id=isset($_GET['comment_id']) ? (int)$_GET['comment_id'] : 0;
 if (!empty($comment_id)) {
 	$query="SELECT `fk_parent_id` FROM `{$dbtable_prefix}profile_comments` WHERE `comment_id`=$comment_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_num_rows($res) && mysql_result($res,0,0)==$_SESSION['user']['user_id']) {
+	if (mysql_num_rows($res) && mysql_result($res,0,0)==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 		// delete only if I am the owner of the profile this comment's been made on
 		$query="DELETE FROM `{$dbtable_prefix}profile_comments` WHERE `comment_id`=$comment_id";
 		if (isset($_on_before_delete)) {

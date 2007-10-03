@@ -1,0 +1,39 @@
+<form action="{tplvars.relative_url}processors/site_edit.php" method="post" id="site_edit_form" class="edit_form" enctype="multipart/form-data">
+<fieldset>
+<input type="hidden" name="return" value="{output.return}" />
+<input type="hidden" name="blog_id" value="{output.site_id}" />
+<dl>
+	<dt>License:</dt>
+	<dd>{output.license}</dd>
+</dl>
+<dl>
+	<dt><label for="baseurl">Site URL:</label></dt>
+	<dd><input type="text" class="text" name="baseurl" id="baseurl" value="{output.baseurl}" /></dd>
+	<dd class="field-help">The baseurl is the url of your site. It is defined in includes/defines.inc.php as _BASEURL_. It must include the http:// prefix.</dd>
+</dl>
+<dl>
+	<dt><label for="remote_cron">Enable remote cron jobs for this site?</label></dt>
+	<dd><input type="checkbox" name="remote_cron" id="remote_cron" value="1" {output.remote_cron} /></dd>
+	<dd class="field-help">Remote cron is a paid service we offer in case you cannot run the cron jobs on your server. The cron jobs are periodic maintenance tasks that need to be run in order to keep your site in good shape.</dd>
+</dl>
+<dl>
+	<dt><label for="is_featured">Show this site in the gallery?</label></dt>
+	<dd><input type="checkbox" name="is_featured" id="is_featured" value="1" {output.is_featured} /></dd>
+	<dd class="field-help">If you want to be featured in our sites gallery you need to upload a screenshot of your site (below) and check this box.</dd>
+</dl>
+<dl>
+	<dt><label for="baseurl">Site Screenshot:</label></dt>
+	<dd><input type="file" name="screenshot" id="screenshot" /></dd>
+</dl>
+</fieldset>
+
+<fieldset class="controls">
+	<input class="button medium" type="submit" value="Save" />
+</fieldset>
+</form>
+
+<div id="bottom_links">
+	<a class="content-link link_previous" href="{tplvars.relative_url}my_sites.php">Back to my licenses list</a>
+</div>
+
+<script type="text/javascript" src="{tplvars.relative_url}js/site_edit.js?v={tplvars.js_lib_v}"></script>

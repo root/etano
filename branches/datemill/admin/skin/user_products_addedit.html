@@ -1,0 +1,55 @@
+<form action="processors/user_products_addedit.php" method="post" id="addedit_form">
+<input type="hidden" name="uprod_id" value="{output.uprod_id}" />
+<input type="hidden" name="return" value="{output.return}" />
+<table class="form_table">
+<tr>
+	<td class="label"><label for="fk_prod_id">Product:</label></td>
+	<td class="field {output.error_fk_prod_id}">
+		<select name="fk_prod_id" id="fk_prod_id" tabindex="1">
+		<option value="0"></option>
+		{output.fk_prod_id}
+		</select>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="fk_site_id">Site:</label></td>
+	<td class="field {output.error_fk_site_id}">
+		<select name="fk_site_id" id="fk_site_id" tabindex="2">
+		{output.fk_site_id}
+		</select>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="processor">Processor:</label></td>
+	<td class="field {output.error_processor}">
+		<input class="text" type="text" name="processor" id="processor" value="{output.processor}" tabindex="3" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="orderno">Order No:</label></td>
+	<td class="field {output.error_orderno}">
+		<input class="text" type="text" name="orderno" id="orderno" value="{output.orderno}" tabindex="4" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="license">License:</label></td>
+	<td class="field {output.error_license}">
+		<input class="text" type="text" name="license" id="license" value="{output.license}" tabindex="5" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" id="btn_save" tabindex="6" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
+
+<script type="text/javascript" src="js/user_products_addedit.js?v={tplvars.js_lib_v}"></script>

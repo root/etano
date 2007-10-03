@@ -23,7 +23,7 @@ if (is_file(_BASEPATH_.'/events/processors/blog_delete.php')) {
 $topass=array();
 $blog_id=isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
 
-$query="SELECT `post_id` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `fk_blog_id`=$blog_id";
+$query="SELECT `post_id` FROM `{$dbtable_prefix}blog_posts` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND `fk_blog_id`=$blog_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $post_ids=array();
 for ($i=0;$i<mysql_num_rows($res);++$i) {
@@ -37,10 +37,10 @@ if (isset($_on_before_delete)) {
 }
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."' AND `fk_blog_id`=$blog_id";
+$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND `fk_blog_id`=$blog_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-$query="DELETE FROM `{$dbtable_prefix}user_blogs` WHERE `blog_id`=$blog_id AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="DELETE FROM `{$dbtable_prefix}user_blogs` WHERE `blog_id`=$blog_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;

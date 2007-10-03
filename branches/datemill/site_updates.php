@@ -54,9 +54,9 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 }
 
 $output['last_sync']='never';
-$temp=get_user_stats($_SESSION['user']['user_id'],'last_sync');
+$temp=get_user_stats($_SESSION[_LICENSE_KEY_]['user']['user_id'],'last_sync');
 if (!empty($temp['last_sync'])) {
-	$output['last_sync']=strftime($_SESSION['user']['prefs']['datetime_format'],$temp['last_sync']+$_SESSION['user']['prefs']['time_offset']);
+	$output['last_sync']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$temp['last_sync']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 }
 
 // fetch all available updates and their requirements from db
@@ -68,6 +68,9 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$updates[$rsrow['update_id']]['update_name']=$rsrow['update_name'];
 	$updates[$rsrow['update_id']]['update_diz']=$rsrow['update_diz'];
 	unset($rsrow['update_name'],$rsrow['update_diz']);
+	$rsrow['version']=(float)$rsrow['version'];
+	$rsrow['min-version']=(float)$rsrow['min-version'];
+	$rsrow['max-version']=(float)$rsrow['max-version'];
 	if (!empty($rsrow['module_code'])) {
 		$update_reqs[$rsrow['update_id']][]=$rsrow;
 	}
@@ -82,13 +85,13 @@ foreach ($updates as $update_id=>$v) {
 		if (!isset($my_modules[$required['module_code']])) {
 			$req_ok=false;
 			break;
-		} elseif (!empty($required['version']) && $my_modules[$required['module_code']]!=$required['version']) {
+		} elseif (!empty($required['version']) && ((float)$my_modules[$required['module_code']])!=((float)$required['version'])) {
 			$req_ok=false;
 			break;
-		} elseif (!empty($required['min-version']) && $my_modules[$required['module_code']]<$required['min-version']) {
+		} elseif (!empty($required['min-version']) && ((float)$my_modules[$required['module_code']])<((float)$required['min-version'])) {
 			$req_ok=false;
 			break;
-		} elseif (!empty($required['max-version']) && $my_modules[$required['module_code']]>$required['max-version']) {
+		} elseif (!empty($required['max-version']) && ((float)$my_modules[$required['module_code']])>((float)$required['max-version'])) {
 			$req_ok=false;
 			break;
 		}
@@ -114,7 +117,7 @@ if (!empty($totalrows)) {
 	$query="SELECT `update_id`,`update_name`,`update_diz`,UNIX_TIMESTAMP(`last_changed`) as `last_changed` FROM $from WHERE $where ORDER BY `update_id` LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['last_changed']=strftime($_SESSION['user']['prefs']['date_format'],$rsrow['last_changed']+$_SESSION['user']['prefs']['time_offset']);
+		$rsrow['last_changed']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$rsrow['last_changed']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 		$rsrow['update_name']=sanitize_and_format($rsrow['update_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['update_diz']=sanitize_and_format($rsrow['update_diz'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['enc_url']=rawurlencode(_BASEURL_.'/remote/download.php?t=u&id='.$rsrow['update_id'].'&lk='.$output['license_md5']);

@@ -48,11 +48,14 @@ class fileop {
 			$myreturn=@chmod($file,$mode);
 		} elseif ($this->op_mode=='ftp') {
 			$file=str_replace(_BASEPATH_.'/',_FTPPATH_,$file);
+			$old_de=ini_get('display_errors');
+			ini_set('display_errors',0);
 			if (function_exists('ftp_chmod')) {
 				$myreturn=@ftp_chmod($this->ftp_id,$mode,$file);
 			} else {
 				$myreturn=ftp_site($this->ftp_id,"CHMOD $mode $file");
 			}
+			ini_set('display_errors',$old_de);
 		}
 	}
 
@@ -64,7 +67,10 @@ class fileop {
 			$myreturn=$this->_disk_copy($source,$destination);
 		} elseif ($this->op_mode=='ftp') {
 			$destination=str_replace(_BASEPATH_.'/',_FTPPATH_,$destination);
+			$old_de=ini_get('display_errors');
+			ini_set('display_errors',0);
 			$myreturn=$this->_ftp_copy($source,$destination);
+			ini_set('display_errors',$old_de);
 		}
 		return $myreturn;
 	}
@@ -80,7 +86,10 @@ class fileop {
 				$source.='/';
 			}
 			$source=str_replace(_BASEPATH_.'/',_FTPPATH_,$source);
+			$old_de=ini_get('display_errors');
+			ini_set('display_errors',0);
 			$myreturn=$this->_ftp_delete($source);
+			ini_set('display_errors',$old_de);
 		}
 		return $myreturn;
 	}
@@ -94,6 +103,8 @@ class fileop {
 		} elseif ($this->op_mode=='ftp') {
 			$source=str_replace(_BASEPATH_.'/',_FTPPATH_,$source);
 			$destination=str_replace(_BASEPATH_.'/',_FTPPATH_,$destination);
+			$old_de=ini_get('display_errors');
+			ini_set('display_errors',0);
 			$myreturn=@ftp_rename($this->ftp_id,$source,$destination);
 // because the source might have the web server owner instead of the ftp owner, we try to copy+delete
 //			$this->copy($source,$destination);
@@ -101,6 +112,7 @@ class fileop {
 //				$source=str_replace(_BASEPATH_.'/',_FTPPATH_,$source);
 //				$this->_ftp_delete($source);
 //			}
+			ini_set('display_errors',$old_de);
 		}
 		return $myreturn;
 	}
@@ -129,9 +141,12 @@ class fileop {
 			$temp=fopen($tmpfname,'wb+');
 			fwrite($temp,$mydata);
 			rewind($temp);
+			$old_de=ini_get('display_errors');
+			ini_set('display_errors',0);
 			$myreturn=ftp_fput($this->ftp_id,$myfilename,$temp,FTP_BINARY);
 			fclose($temp);
 			@unlink($tmpfname);
+			ini_set('display_errors',$old_de);
 		}
 		return $myreturn;
 	}
@@ -154,7 +169,7 @@ class fileop {
 		if (substr($archive,-4)=='.zip') {
 			if (is_file($archive)) {
 				require_once dirname(__FILE__).'/zip.class.php';
-				
+
 				$basename=substr(basename($archive),0,-4);
 				$zipfile=new zipfile();
 				$zipfile->read_zip($archive);
@@ -207,7 +222,10 @@ class fileop {
 				$myreturn=@mkdir($fullpath,0755);
 			} elseif ($this->op_mode=='ftp') {
 				$ftp_fullpath=str_replace(_BASEPATH_.'/',_FTPPATH_,$fullpath);
+				$old_de=ini_get('display_errors');
+				ini_set('display_errors',0);
 				$myreturn=@ftp_mkdir($this->ftp_id,$ftp_fullpath);
+				ini_set('display_errors',$old_de);
 			}
 		}
 		return $myreturn;
@@ -315,7 +333,10 @@ class fileop {
 // must call this function to make sure we won't open several connections to the ftp server.
 	function finish() {
 		if ($this->op_mode=='ftp') {
+			$old_de=ini_get('display_errors');
+			ini_set('display_errors',0);
 			ftp_quit($this->ftp_id);
+			ini_set('display_errors',$old_de);
 		}
 	}
 }

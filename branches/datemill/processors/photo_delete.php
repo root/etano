@@ -26,7 +26,7 @@ $qs_sep='';
 $topass=array();
 $photo_id=isset($_GET['photo_id']) ? (int)$_GET['photo_id'] : 0;
 
-$query="SELECT `photo` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="SELECT `photo` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$input=mysql_fetch_assoc($res);

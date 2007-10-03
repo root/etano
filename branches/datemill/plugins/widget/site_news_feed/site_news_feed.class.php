@@ -46,9 +46,9 @@ class widget_site_news_feed extends icontent_widget {
 			if ($fr->parseFeed()) {
 				$items=$fr->getFeedOutputData();
 
-				if (isset($_SESSION['user']['prefs'])) {
+				if (isset($_SESSION[_LICENSE_KEY_]['user']['prefs'])) {
 					for ($i=0;isset($items['item'][$i]);++$i) {
-						$items['item'][$i]['dc:date']=strftime($_SESSION['user']['prefs']['datetime_format'],$items['item'][$i]['dc:date']+$_SESSION['user']['prefs']['time_offset']);
+						$items['item'][$i]['dc:date']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$items['item'][$i]['dc:date']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 					}
 				}
 				$this->tpl->set_file('widget.content','widgets/site_news_feed/display.html');

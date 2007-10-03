@@ -1,7 +1,17 @@
-.edit_form dl dt {
+#prefs_form dl dt {
 	width: 300px;
 }
 
 .number {
 	width: 50px;
+}
+
+#passchange_form fieldset {
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+#passchange_form dl, #passchange_form dt {
+	padding: 0;
 }

@@ -27,11 +27,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (mysql_num_rows($res)) {
 			$admin=mysql_fetch_assoc($res);
 			if ($admin['status']==ASTAT_ACTIVE) {
-				$_SESSION['admin']=array_merge(isset($_SESSION['admin']) ? $_SESSION['admin'] : array(),$admin);
-				$_SESSION['admin']['def_skin']=get_default_skin_dir();
-				if (isset($_SESSION['admin']['timedout']['url'])) {
-					$next=$_SESSION['admin']['timedout'];
-					unset($_SESSION['admin']['timedout']);
+				$_SESSION[_LICENSE_KEY_]['admin']=array_merge(isset($_SESSION[_LICENSE_KEY_]['admin']) ? $_SESSION[_LICENSE_KEY_]['admin'] : array(),$admin);
+				$_SESSION[_LICENSE_KEY_]['admin']['def_skin']=get_default_skin_dir();
+				if (isset($_SESSION[_LICENSE_KEY_]['admin']['timedout']['url'])) {
+					$next=$_SESSION[_LICENSE_KEY_]['admin']['timedout'];
+					unset($_SESSION[_LICENSE_KEY_]['admin']['timedout']);
 					if ($next['method']=='GET') {
 						if (!empty($next['qs'])) {
 							$next['url']=$next['url'].'?'.array2qs($next['qs']);

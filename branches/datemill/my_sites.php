@@ -20,7 +20,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $output=array();
 
 $from="`user_sites`";
-$where="`fk_user_id`=".$_SESSION['user']['user_id'];
+$where="`fk_user_id`=".$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 
 $loop=array();
 $query="SELECT `site_id`,`license`,`license_md5`,`baseurl`,`is_featured`,`screenshot` FROM $from WHERE $where";
@@ -32,7 +32,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['screenshot']='<img src="'.$tplvars['photourl'].'/sites/'.$rsrow['screenshot'].'" />';
 	}
 	if (empty($rsrow['baseurl'])) {
-		$rsrow['baseurl']='<a href="javascript:;" onclick="assign_site('.$rsrow['license'].')">Assign now</a>';
+		$rsrow['baseurl']='<a href="site_edit.php?site_id='.$rsrow['site_id'].'" onclick="return assign_site(\''.$rsrow['license'].'\')">Assign now</a>';
 	} else {
 		$rsrow['baseurl']='<a target="_blank" href="'.$rsrow['baseurl'].'">'.$rsrow['baseurl'].'</a>';
 	}
