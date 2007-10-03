@@ -24,7 +24,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 }
 
-if (empty($_SESSION['user']['user_id'])) {
+if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	if ($config['use_captcha']) {
 		require_once 'includes/classes/sco_captcha.class.php';
 		$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);

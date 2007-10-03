@@ -23,7 +23,7 @@ if (is_file(_BASEPATH_.'/events/processors/my_responses_delete.php')) {
 $topass=array();
 $mtpl_id=isset($_GET['mtpl_id']) ? (int)$_GET['mtpl_id'] : 0;
 
-$query="DELETE FROM `{$dbtable_prefix}user_mtpls` WHERE `mtpl_id`=$mtpl_id AND `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="DELETE FROM `{$dbtable_prefix}user_mtpls` WHERE `mtpl_id`=$mtpl_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 if (isset($_on_before_delete)) {
 	for ($i=0;isset($_on_before_delete[$i]);++$i) {
 		call_user_func($_on_before_delete[$i]);

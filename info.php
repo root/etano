@@ -23,7 +23,7 @@ $output=array();
 switch ($type) {
 	case 'signup':
 		$template='info_signup.html';
-		$output['email']=isset($_SESSION['user']['email']) ? $_SESSION['user']['email'] : (isset($_GET['email']) ? $_GET['email'] : '');
+		$output['email']=isset($_SESSION[_LICENSE_KEY_]['user']['email']) ? $_SESSION[_LICENSE_KEY_]['user']['email'] : (isset($_GET['email']) ? $_GET['email'] : '');
 		$tplvars['page_title']='Signup successful!';
 		$tplvars['page']='info_signup';
 		break;
@@ -68,7 +68,7 @@ switch ($type) {
 			$active_gateways[$rsrow['module_code']]=$rsrow['module_name'];
 		}
 
-		$query="SELECT `subscr_id`,`subscr_name`,`subscr_diz` FROM `{$dbtable_prefix}subscriptions` WHERE `is_visible`=1 AND `m_value_to`>".$_SESSION['user']['membership'];
+		$query="SELECT `subscr_id`,`subscr_name`,`subscr_diz` FROM `{$dbtable_prefix}subscriptions` WHERE `is_visible`=1 AND `m_value_to`>".$_SESSION[_LICENSE_KEY_]['user']['membership'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$subscriptions=array();
 		while ($rsrow=mysql_fetch_assoc($res)) {

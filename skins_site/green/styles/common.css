@@ -190,6 +190,12 @@ form.edit_form .controls {
 	color: #666;
 }
 
+#bottom_links {
+	border-top: 1px dashed #ccc;
+	padding-top: 15px;
+	margin-top: 15px;
+}
+
 /* PAGER */
 
 ul.pager {

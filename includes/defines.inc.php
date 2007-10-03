@@ -21,7 +21,7 @@ define('USER_ACCOUNT_USER','user');
 define('USER_ACCOUNT_PASS','pass');
 define('PASSWORD_ENC_FUNC','md5');
 
-define('_LICENSE_KEY_','0917JJ8239HG8S623DFG45'); // md5()=d3074931bf4080bff08a1cc60fff4504
+define('_LICENSE_KEY_','7B005E43F1817FA9232845'); // md5()=66886026c95a1da38cc3e630cc8a7d25
 define('_INTERNAL_VERSION_','0.8');
 
 $accepted_results_per_page=array(10=>10,5=>5,15=>15,20=>20);

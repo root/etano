@@ -56,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		// sender of the message: me
-		$input['fk_user_id_other']=$_SESSION['user']['user_id'];
-		$input['_user_other']=$_SESSION['user']['user'];
+		$input['fk_user_id_other']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
+		$input['_user_other']=$_SESSION[_LICENSE_KEY_]['user']['user'];
 		$query="INSERT INTO `{$dbtable_prefix}queue_message` SET `date_sent`='".gmdate('YmdHis')."'";
 		foreach ($queue_message_default['defaults'] as $k=>$v) {
 			if (isset($input[$k])) {
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 		// save the message in my outbox
 		$input['fk_user_id_other']=$input['fk_user_id'];
-		$input['fk_user_id']=$_SESSION['user']['user_id'];
+		$input['fk_user_id']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 		$input['_user_other']=get_user_by_userid($input['fk_user_id_other']);
 		$query="INSERT INTO `{$dbtable_prefix}user_outbox` SET `date_sent`='".gmdate('YmdHis')."'";
 		foreach ($user_outbox_default['defaults'] as $k=>$v) {
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		update_stats($_SESSION['user']['user_id'],'mess_sent',1);
+		update_stats($_SESSION[_LICENSE_KEY_]['user']['user_id'],'mess_sent',1);
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Message sent.';
 		if (isset($_on_after_insert)) {

@@ -22,7 +22,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 
 if (isset($_GET['top'])) {
 	$content_file='user_login_top.html';
-	$tpl->set_var('user',$_SESSION['user']);
+	$tpl->set_var('user',$_SESSION[_LICENSE_KEY_]['user']);
 } else {
 	$content_file='user_login.html';
 	if (strpos($output['return'],'?')===false) {
@@ -37,7 +37,7 @@ if (isset($_GET['top'])) {
 	if (mysql_num_rows($res)) {
 		$user=mysql_fetch_assoc($res);
 		$user['prefs']=get_user_settings($user['user_id'],'def_user_prefs',array('date_format','datetime_format','time_offset'));
-		$_SESSION['user']=$user;
+		$_SESSION[_LICENSE_KEY_]['user']=$user;
 	}
 }
 

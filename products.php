@@ -40,7 +40,7 @@ if (!empty($totalrows)) {
 	$query="SELECT a.`prod_id`,a.`prod_name`,a.`prod_diz`,a.`prod_pic`,a.`version`,UNIX_TIMESTAMP(a.`last_changed`) as `last_changed`,a.`price`,b.`dev_name` FROM $from WHERE $where ORDER BY `last_changed` DESC LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['last_changed']=strftime($_SESSION['user']['prefs']['date_format'],$rsrow['last_changed']+$_SESSION['user']['prefs']['time_offset']);
+		$rsrow['last_changed']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$rsrow['last_changed']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 		$rsrow['prod_name']=sanitize_and_format($rsrow['prod_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['prod_diz']=sanitize_and_format($rsrow['prod_diz'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		if (empty($rsrow['prod_pic']) || !is_file(_PHOTOPATH_.'/products/'.$rsrow['prod_pic'])) {

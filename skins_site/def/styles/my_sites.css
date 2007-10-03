@@ -25,7 +25,7 @@
 }
 
 .my_sites .row .control {
-	width: 30px;
+	width: 60px;
 	border-left: 0;
 	background-position: top right;
 	background-repeat: no-repeat;
@@ -38,6 +38,11 @@
 	display: block;
 	padding: 0;
 	text-indent: -9999px;
+	background: url('../images/link_change.gif') no-repeat top left;
+}
+
+a.link_change:hover, a.link_updates:hover {
+	background-position: bottom left;
 }
 
 .my_sites .row .license {
@@ -54,4 +59,3 @@
 	width: 130px;
 	overflow: hidden;
 }
-

@@ -35,7 +35,7 @@ if (!empty($totalrows)) {
 		$o=$totalrows-$r;
 		$o=$o>=0 ? $o : 0;
 	}
-	$query="SELECT `prod_id`,`prod_name`,`prod_diz`,`prod_pic`,`prod_type`,`version`,`price` FROM $from WHERE $where LIMIT $o,$r";
+	$query="SELECT `prod_id`,`prod_name`,`prod_diz`,`prod_pic`,`prod_type`,`version`,`price` FROM $from WHERE $where ORDER BY `prod_id` DESC LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['prod_name']=sanitize_and_format($rsrow['prod_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);

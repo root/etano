@@ -51,7 +51,7 @@ if (!empty($input['site_id'])) {
 		if ($user['status']==ASTAT_ACTIVE) {
 			update_stats($user['user_id'],'last_sync',mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y')),'=');
 			$user['prefs']=get_user_settings($user['user_id'],'def_user_prefs',array('date_format','datetime_format','time_offset'));
-			$_SESSION['user']=$user;
+			$_SESSION[_LICENSE_KEY_]['user']=$user;
 			redirect2page('site_updates.php',array(),'lk='.$input['lk']);
 		}
 	}

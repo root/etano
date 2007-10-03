@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			// with this if() we target date_format because an empty date_format
 			// could break all dates on the site.
 			if ($types[$module_code][$config_option]!=FIELD_TEXTFIELD || !empty($config_value)) {
-				$query="REPLACE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='".$_SESSION['user']['user_id']."',`config_option`='$config_option',`config_value`='$config_value',`fk_module_code`='$module_code'";
+				$query="REPLACE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."',`config_option`='$config_option',`config_value`='$config_value',`fk_module_code`='$module_code'";
 				if (isset($_on_before_update)) {
 					for ($i=0;isset($_on_before_update[$i]);++$i) {
 						call_user_func($_on_before_update[$i]);
@@ -79,9 +79,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	// update the prefs stored in the session
-	$_SESSION['user']['prefs']['date_format']=$input['def_user_prefs']['date_format'];
-	$_SESSION['user']['prefs']['datetime_format']=$input['def_user_prefs']['datetime_format'];
-	$_SESSION['user']['prefs']['time_offset']=$input['def_user_prefs']['time_offset'];
+	$_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format']=$input['def_user_prefs']['date_format'];
+	$_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format']=$input['def_user_prefs']['datetime_format'];
+	$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']=$input['def_user_prefs']['time_offset'];
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Your preferences were saved.';
 }

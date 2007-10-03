@@ -35,9 +35,10 @@ if (!empty($totalrows)) {
 		$o=$totalrows-$r;
 		$o=$o>=0 ? $o : 0;
 	}
-	$query="SELECT `update_id`,`update_name`,`update_diz` FROM $from WHERE $where LIMIT $o,$r";
+	$query="SELECT `update_id`,`update_name`,`update_diz`,UNIX_TIMESTAMP(`last_changed`) as `last_changed` FROM $from WHERE $where ORDER BY `update_id` DESC LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
+		$rsrow['last_changed']=strftime('%d/%m/%Y',$rsrow['last_changed']);
 		$rsrow['update_name']=sanitize_and_format($rsrow['update_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['update_diz']=sanitize_and_format($rsrow['update_diz'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$query="SELECT `module_code`,`version`,`min-version`,`max-version` FROM `update_requirements` WHERE `fk_update_id`=".$rsrow['update_id'];

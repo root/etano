@@ -24,8 +24,8 @@ function search_results($search,$my_membership=1) {
 	if (isset($search['min_user_id'])) {
 		$where.=" AND a.`fk_user_id`>".$search['min_user_id'];
 	}
-//	if (!empty($_SESSION['user']['user_id'])) {
-//		$where.=" AND a.`fk_user_id`<>'".$_SESSION['user']['user_id']."'";
+//	if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+//		$where.=" AND a.`fk_user_id`<>'".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 //	}
 	$where.=' AND a.`status`='.STAT_APPROVED.' AND a.`del`=0';
 	$orderby="ORDER BY a.`score` DESC";

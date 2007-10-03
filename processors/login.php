@@ -26,10 +26,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$pass=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	if (!empty($user) && !empty($pass)) {
 		$log['level']='login';
-		$log['user_id']=!empty($_SESSION['user']['user_id']) ? $_SESSION['user']['user_id'] : 0;
+		$log['user_id']=!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) ? $_SESSION[_LICENSE_KEY_]['user']['user_id'] : 0;
 		$log['sess']=session_id();
 		$log['user']=$user;
-		$log['membership']=$_SESSION['user']['membership'];
+		$log['membership']=$_SESSION[_LICENSE_KEY_]['user']['membership'];
 		$log['ip']=sprintf('%u',ip2long($_SERVER['REMOTE_ADDR']));
 		log_user_action($log);
 		rate_limiter($log);
@@ -47,11 +47,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$user['user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				unset($user['last_activity'],$user['email']);
-				$_SESSION['user']=array_merge(isset($_SESSION['user']) ? $_SESSION['user'] : array(),$user);
-				$_SESSION['user']['loginout']=time();
-				if (isset($_SESSION['user']['timedout']['url'])) {
-					$next=$_SESSION['user']['timedout'];
-					unset($_SESSION['user']['timedout']);
+				$_SESSION[_LICENSE_KEY_]['user']=array_merge(isset($_SESSION[_LICENSE_KEY_]['user']) ? $_SESSION[_LICENSE_KEY_]['user'] : array(),$user);
+				$_SESSION[_LICENSE_KEY_]['user']['loginout']=time();
+				if (isset($_SESSION[_LICENSE_KEY_]['user']['timedout']['url'])) {
+					$next=$_SESSION[_LICENSE_KEY_]['user']['timedout'];
+					unset($_SESSION[_LICENSE_KEY_]['user']['timedout']);
 					if ($next['method']=='GET') {
 						redirect2page($next['url'].'?'.array2qs($next['qs']),array(),'',true);
 					} else {

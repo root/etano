@@ -20,7 +20,7 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $config=get_site_option(array('bbcode_profile'),'core');
 
-$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION['user']['user_id']."'";
+$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output=mysql_fetch_assoc($res);
