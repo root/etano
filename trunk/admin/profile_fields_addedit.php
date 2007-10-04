@@ -27,7 +27,9 @@ $accepted_values=array();
 $default_skin_code=get_default_skin_code();
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
-	$accepted_values=explode('|',substr($output['accepted_values'],1,-1));
+	if (!empty($output['accepted_values']) && $output['accepted_values']!='||') {
+		$accepted_values=explode('|',substr($output['accepted_values'],1,-1));
+	}
 	// our 'return' here was decoded in the processor
 	$output['return2']=$output['return'];
 	$output['return']=rawurlencode($output['return']);
@@ -41,23 +43,21 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['label']='';
 	$output['search_label']='';
 	$output['help_text']='';
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`=".$output['fk_lk_id_label'];
+	$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id` IN (".$output['fk_lk_id_label'].','.$output['fk_lk_id_search'].','.$output['fk_lk_id_help'].')';
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_num_rows($res)) {
-		$output['label']=mysql_result($res,0,0);
-	}
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`=".$output['fk_lk_id_search'];
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_num_rows($res)) {
-		$output['search_label']=mysql_result($res,0,0);
-	}
-	$query="SELECT `lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$default_skin_code' AND `fk_lk_id`=".$output['fk_lk_id_help'];
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_num_rows($res)) {
-		$output['help_text']=mysql_result($res,0,0);
+	while ($rsrow=mysql_fetch_assoc($res)) {
+		if ($rsrow['fk_lk_id']==$output['fk_lk_id_label']) {
+			$output['label']=$rsrow['lang_value'];
+		} elseif ($rsrow['fk_lk_id']==$output['fk_lk_id_search']) {
+			$output['search_label']=$rsrow['lang_value'];
+		} elseif ($rsrow['fk_lk_id']==$output['fk_lk_id_help']) {
+			$output['help_text']=$rsrow['lang_value'];
+		}
 	}
 	$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-	$accepted_values=explode('|',substr($output['accepted_values'],1,-1));
+	if (!empty($output['accepted_values']) && $output['accepted_values']!='||') {
+		$accepted_values=explode('|',substr($output['accepted_values'],1,-1));
+	}
 	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$output['return']=rawurlencode($output['return2']);
 } elseif (!empty($_GET['field_type'])) {
