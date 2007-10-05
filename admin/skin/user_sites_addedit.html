@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{tplvars.title}</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="skin/styles/common.css" />
+	<style>
+		.text {
+			width: 300px;
+		}
+	</style>
+	<script type="text/javascript" src="{tplvars.baseurl}/js/jquery.js?v={tplvars.js_lib_v}"></script>
+	<script type="text/javascript">
+		in_admin=true;
+		baseurl='{tplvars.baseurl}';
+	</script>
+	<script type="text/javascript" src="{tplvars.baseurl}/js/general.js?v={tplvars.js_lib_v}"></script>
+</head>
+<body id="adminframe">
+<div id="trim">
+	<div id="container">
+		<div id="content_holder">
+			<form action="processors/user_sites_addedit.php" method="post" id="addedit_form">
+			<input type="hidden" name="site_id" value="{output.site_id}" />
+			<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
+			<input type="hidden" name="return" value="{output.return}" />
+			<table class="form_table">
+			<tr>
+				<td class="label">User:</td>
+				<td class="field">{output.user}</td>
+				<td class="comment"></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="baseurl">Base URL:</label></td>
+				<td class="field {output.error_baseurl}">
+					<input class="text" type="text" name="baseurl" id="baseurl" value="{output.baseurl}" tabindex="2" />
+				</td>
+				<td class="comment"></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="ftp_user">ftp_user:</label></td>
+				<td class="field {output.error_ftp_user}">
+					<input class="text" type="text" name="ftp_user" id="ftp_user" value="{output.ftp_user}" tabindex="3" />
+				</td>
+				<td class="comment"></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="ftp_pass">ftp_pass:</label></td>
+				<td class="field {output.error_ftp_pass}">
+					<input class="text" type="text" name="ftp_pass" id="ftp_pass" value="{output.ftp_pass}" tabindex="4" />
+				</td>
+				<td class="comment"></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="active">Active?</label></td>
+				<td class="field {output.error_active}">
+					<input type="checkbox" name="active" id="active" value="1" {output.active} tabindex="5" />
+				</td>
+				<td class="comment"></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="license">License:</label></td>
+				<td class="field {output.error_license}">
+					<input class="text" type="text" name="license" id="license" value="{output.license}" tabindex="6" />
+				</td>
+				<td class="comment"></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="remote_cron">Remote cron?</label></td>
+				<td class="field {output.error_remote_cron}">
+					<input type="checkbox" name="remote_cron" id="remote_cron" value="1" {output.remote_cron} tabindex="6" />
+				</td>
+				<td class="comment"></td>
+			</tr>
+			<tr>
+				<td class="label"><label for="is_featured">Is featured?</label></td>
+				<td class="field {output.error_is_featured}">
+					<input type="checkbox" name="is_featured" id="is_featured" value="1" {output.is_featured} tabindex="7" />
+				</td>
+				<td class="comment"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" class="button" value="Save" id="btn_save" tabindex="8" /></td>
+				<td></td>
+			</tr>
+			</table>
+			</form>
+
+			<div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
+		</div><!--content_holder-->
+	</div><!--container-->
+</div><!--trim-->
+</body>
+</html>

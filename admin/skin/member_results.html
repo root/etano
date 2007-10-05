@@ -28,10 +28,13 @@
 <dl class="member_details">
 	<dt><input class="sel_user" type="checkbox" name="uids[]" value="{loop.fk_user_id}" id="uids_{loop.fk_user_id}" /></dt>
 	<dd>
-		<p><a class="link_bare" href="profile.php?uid={loop.fk_user_id}&amp;search={output.search_md5}&amp;return={output.return2me}"><strong>{loop._user}</strong></a> Score: {loop.score}</p>
-		<p><strong>{loop.f1_label}:</strong> {loop.f1}</p>
-		<p><strong>{loop.f2_label}:</strong> {loop.f2}</p>
-		<p><strong>Sites:</strong> {loop.user_sites}</p>
+		<p><a class="link_bare" href="profile.php?uid={loop.fk_user_id}&amp;search={output.search_md5}&amp;return={output.return2me}"><strong>{loop._user}</strong></a> ({loop.score}) - {loop.f1} - {loop.f2}</p>
+		<p>
+			<strong>Sites:</strong>
+			<ul id="sites_list">
+				<li>{loop.user_sites}</li>
+			</ul>
+		</p>
 		<p><strong>{loop.f9_label}:</strong> {loop.f9}</p>
 	</dd>
 	<dd class="actions">

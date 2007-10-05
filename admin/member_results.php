@@ -352,14 +352,21 @@ if (!empty($totalrows)) {
 		if (empty($rsrow['del'])) {
 			unset($rsrow['del']);
 		}
-		$query="SELECT `baseurl` FROM `user_sites` WHERE `fk_user_id`=".$rsrow['fk_user_id'];
+		$query="SELECT `site_id`,`baseurl`,`active` FROM `user_sites` WHERE `fk_user_id`=".$rsrow['fk_user_id'];
 		if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$user_sites=array();
-		for ($i=0;$i<mysql_num_rows($res2);++$i) {
-			$temp=mysql_result($res2,$i,0);
-			$user_sites[]='<a target="_blank" href="'.$temp.'">'.$temp.'</a>';
+		while ($temp=mysql_fetch_assoc($res2)) {
+			$alert='';
+			if (!$temp['active']) {
+				$alert='class="alert_ppending"';
+			}
+			$site='<span '.$alert.'>'.$temp['site_id'].' : '.$temp['baseurl'].'</span> <a class="thickbox" href="user_sites_addedit.php?site_id='.$temp['site_id'].'&amp;keepThis=true&amp;TB_iframe=true&amp;width=900">edit</a>';
+			if (!empty($temp['baseurl'])) {
+				$site.=' <a target="_blank" class="external" href="'.$temp['baseurl'].'">visit</a>';
+			}
+			$user_sites[]=$site;
 		}
-		$rsrow['user_sites']=join(', ',$user_sites);
+		$rsrow['user_sites']=join('</li><li>',$user_sites);
 		$loop[]=$rsrow;
 	}
 
