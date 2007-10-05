@@ -53,3 +53,12 @@ dl.member_details dd.actions li {
 dl.member_details dd.actions li.first {
 	border-left: none;
 }
+
+#sites_list {
+	list-style-type: disc;
+	margin-left: 70px;
+}
+
+#sites_list li {
+	list-style-type: disc;
+}

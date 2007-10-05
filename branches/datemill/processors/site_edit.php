@@ -29,8 +29,10 @@ $topass=array();
 $nextpage='my_sites.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
+// unset these vars because we only need them in admin
+	unset($user_sites_default['types']['screenshot'],$user_sites_default['types']['fk_user_id'],$user_sites_default['types']['ftp_user'],$user_sites_default['types']['ftp_pass'],$user_sites_default['types']['active'],$user_sites_default['types']['license'],$user_sites_default['types']['license_md5']);
+	unset($user_sites_default['defaults']['screenshot'],$user_sites_default['defaults']['fk_user_id'],$user_sites_default['defaults']['ftp_user'],$user_sites_default['defaults']['ftp_pass'],$user_sites_default['defaults']['active'],$user_sites_default['defaults']['license'],$user_sites_default['defaults']['license_md5']);
 // get the input we need and sanitize it
-	unset($user_sites_default['types']['screenshot']);
 	foreach ($user_sites_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$user_sites_default['defaults'][$k]);
 	}
