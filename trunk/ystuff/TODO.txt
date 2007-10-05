@@ -13,10 +13,6 @@ not checked. In felul asta userul poate sa isi aleaga ce se afiseaza
 
 - de scos vector2checkboxes_new din admin/profile_categories_addedit si de verif ca merge fara.
 
-- ce se intampla daca sunt mai multe aplicatii create de mine in acelasi domeniu? $_SESSION['user']['user_id'] o
-sa autentifice automat userii dintr-o aplicatie in cealalta...Ar trebui creat un unique id (poate bazat pe
-licenta) a.i. sa avem $_SESSION['uniq_id']['user']['user_id'] (la fel pt admin)
-
 - cauta "translate" ca sa gasesti toate stringurile de tradus hardcodate in scripts.
 
 - de verif toate check_login_member() ca au id-urile nashpa (networks.php)
@@ -29,17 +25,18 @@ depind de $tplvars vor fi sterse pt ca tplvars se proceseaza abea in frame.
 
 
 TODO
-- generatorul de licenta trebuie sa fie bazat pe site_id, nu pe user_id pentru ca licenta sa poata fi unica per site.
-	(eventual si pe user_id si pe site_id)
-- trebuie sa fac $_SESSION[_LICENSE_]['user']/['admin'], etc ca sa nu se poate loga userii dintr-o aplicatie in alta
-	in acelasi domeniu.
+- CAND O SA FAC OFERTA DE UPDATE DE LA DSB LA ETANO AR TREBUI SA FAC O VERIFICARE ASEMANATOARE CU VERIFICAREA GOOGLE CA
+	SA FIU SIGUR CA CEL CARUIA I-AM TRIMIS OFERTA MAI ESTE OWNER-UL SITE-ULUI:
+	iL INTREB CARE E SITE-UL LUI SI IL PUN SA CREEZE UN FISIER GOL CU UN NUME RANDOM DAT DE MINE IN SITE-UL LUI.
+
 - notificarea de 'new comment' tb sa se faca din on_approve_comment(), nu din processor.
 - de duplicat partea cu !$got_from_cache din search.php in CRON/5SEARCH_ALERTS.PHP
 -benchmark:
 	1. fopen+fread+fclose vs file_get_content
 	2. for ($i=0;$i<mysql_num_rows($res);++$i) vs $temp=mysql_num_rows($res);
 - de verif de ce nu se vede poza la alerte search si de ce vin asa multe match-uri.
-- in profil sa se vada cine e premium (poate si in search results)
+- in profil sa se vada cine e premium (poate si in search results). De asemenea in home.php detalii si despre cat mai are din
+	subscription
 - delete faves. delete friends
 - de verificat si inlocuit
 	$query="SELECT `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`='".$real_user['user_id']."' AND `refunded`=0 ORDER BY `paid_until` DESC LIMIT 1";
@@ -49,9 +46,6 @@ TODO
 
 - licenta si verificari.
 - de afisat versiunea curenta in cpanel.php (installed si latest)
-- in toate procesoarele tb sa verific cazul de eroare:
-	// 		you must replace '\r' and '\n' strings with <enter> in all textareas like this:
-	//		$input['x']=preg_replace(array('/([^\\\])\\\n/','/([^\\\])\\\r/'),array("$1\n","$1"),$input['x']);
 
 - ar trebui sa fac un buton de continue la instalarea pachetelor cand da eroare (langa cel de finish)
 
@@ -105,8 +99,9 @@ function set_seolink() {
 neaprobare. Ar fi bun in primul rand pentru mesaje: daca un mesaj contine un anumit cuvant sa nu se trimita.
 Ar mai putea fi facut prin filtre generale cu fk_user_id=0
 - vizualizare message/email_queue
+- vizualizare error log
 
-- NOU TIP DE FIELD: SCHOOL/HIGHSCHOOL/UNIVERSITY
+- NOU TIP DE FIELD: SCHOOL/HIGHSCHOOL/UNIVERSITY sau Yahoo ID/Skype ID
 
 RSS Feeds
     * Comments to this post

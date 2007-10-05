@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007092501
+File version:				1.2007100101
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -797,10 +797,11 @@ function general_error($errlevel,$message,$file='unset',$line='unset') {
 			// same full error
 			// $error['text']=$error['text'];
 		}
-	} else {
+		new log_error($error,array('log_mode'=>_ERRORLOG_STDOUT_));
+	} elseif ($errlevel==E_USER_ERROR) {
 		$error['text']='Sorry, a critical error has occured. If you are the site administrator please check out the error log to see the actual error.';
+		new log_error($error,array('log_mode'=>_ERRORLOG_STDOUT_));
 	}
-	new log_error($error,array('log_mode'=>_ERRORLOG_STDOUT_));
 	if ($errlevel==E_USER_ERROR || (defined('_DEBUG_') && _DEBUG_!=0)) {
 		exit;
 	}

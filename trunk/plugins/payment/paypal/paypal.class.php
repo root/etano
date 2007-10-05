@@ -90,7 +90,7 @@ class payment_paypal extends ipayment {
 		$this->_set_payment($payment);
 		$topass=array(	'cmd'=>'_xclick-subscriptions',
 						'business'=>$this->config['paypal_email'],
-						'return'=>_BASEURL_.'/thankyou.php?p=paypal',
+						'return'=>_BASEURL_.'/thankyou.php?p='.$this->module_code,
 						'notify_url'=>_BASEURL_.'/processors/ipn.php?p='.$this->module_code,
 						'cancel_return'=>_BASEURL_,
 						'item_name'=>$this->payment['subscr_name'],

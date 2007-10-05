@@ -78,13 +78,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 				$query="UPDATE `{$dbtable_prefix}access_levels` SET `level`=`level`-$m_value WHERE `level`&$m_value";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$query="DELETE FROM `{$dbtable_prefix}subscriptions` WHERE `m_value_to`=$m_value";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$query="SELECT max(`m_value`) FROM `{$dbtable_prefix}memberships` WHERE `m_value`<$m_value";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$lower_mvalue=mysql_result($res,0,0);
 				$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`=$lower_mvalue WHERE `membership`=$m_value";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$affected=mysql_affected_rows();
 				$topass['message']['type']=MESSAGE_INFO;
-				$topass['message']['text']='Membership deleted.';
+				$topass['message']['text']=sprintf('Membership deleted. %s members affected',$affected);
 			}
 // we should regenerate all access levels here to remove the just deleted membership.
 		}
