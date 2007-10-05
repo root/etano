@@ -24,4 +24,5 @@ $tplvars['title']='Login';
 $tplvars['page_title']='Login to continue...';
 $tplvars['page']='login';
 $tplvars['css']='login.css';
+$no_timeout=true;
 include 'frame.php';

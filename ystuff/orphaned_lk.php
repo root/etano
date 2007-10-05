@@ -1,4 +1,7 @@
 <?php
+// this works ok now but we'd better not use it because in future more field types might appear and if we don't
+// update this script then it will break the sites.
+
 $jobs[]='orphaned_lk';
 
 function orphaned_lk() {
@@ -21,6 +24,14 @@ function orphaned_lk() {
 		$lk_ids[]=$rsrow['fk_lk_id_help'];
 	}
 
+	// lk_ids from profile_fields.accepted_values
+	$query="SELECT `accepted_values` FROM `{$dbtable_prefix}profile_fields` WHERE `field_type` IN (".FIELD_SELECT.','.FIELD_CHECKBOX_LARGE.") AND `accepted_values`<>''";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	for ($i=0,$count=mysql_num_rows($res);$i<$count;++$i) {
+		$accval=mysql_result($res,$i,0);
+		$lk_ids=array_merge($lk_ids,explode('|',substr($accval,1,-1)));
+	}
+
 	// lk_ids from rate_limiter
 	$query="SELECT `fk_lk_id_error_message` FROM `{$dbtable_prefix}rate_limiter`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -35,7 +46,7 @@ function orphaned_lk() {
 		$lk_ids[]=mysql_result($res,$i,0);
 	}
 
-	$query="SELECT `lk_id` FROM `{$dbtable_prefix}lang_keys` WHERE `lk_id` NOT IN (".join(',',$lk_ids).") AND (`lk_use` IN (".LK_FIELD.','.LK_SITE.")";
+	$query="SELECT `lk_id` FROM `{$dbtable_prefix}lang_keys` WHERE `lk_id` NOT IN (".join(',',$lk_ids).") AND `lk_use` IN (".LK_FIELD.','.LK_SITE.")";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$lk_ids=array();
 	for ($i=0;$i<mysql_num_rows($res);++$i) {

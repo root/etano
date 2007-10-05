@@ -37,7 +37,7 @@ while ($rsrow=mysql_fetch_row($res)) {
 	$memberships[$rsrow[0]]=$rsrow[1];
 }
 
-$config=get_site_option(array('date_format'),'core');
+$config=get_site_option(array('date_format'),'def_user_prefs');
 
 $query="SELECT `fk_user_id`,`_user`,`gateway`,`gw_txn`,`name`,`country`,`email`,`m_value_to`,`amount_paid`,`refunded`,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` WHERE `date`>='".$output['date_start']."' AND `date`<='".$output['date_end']."' ORDER BY `payment_id`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

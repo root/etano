@@ -89,9 +89,13 @@ if (!empty($totalrows)) {
 		$o=$totalrows-$r;
 		$o=$o>=0 ? $o : 0;
 	}
+	$diff2gm=(int)mktime(date('H'))-(int)gmmktime(date('H'));
 	$query="SELECT `mail_id`,`is_read`,`_user_other` as `user_other`,`subject`,UNIX_TIMESTAMP(`date_sent`) as `date_sent`,`message_type` FROM $from WHERE $where $orderby LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
+		if ($rsrow['date_sent']-$diff2gm>$page_last_modified_time) {
+			$page_last_modified_time=$rsrow['date_sent']-$diff2gm;
+		}
 		$rsrow['date_sent']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$rsrow['date_sent']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['is_read']=(!empty($rsrow['is_read'])) ? 'read' : 'not_read';

@@ -29,6 +29,17 @@ if (empty($output['photo'])) {
 	$output['photo']='no_photo.gif';
 }
 
+$query="SELECT b.`m_name`,UNIX_TIMESTAMP(a.`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` a,`{$dbtable_prefix}memberships` b WHERE a.`m_value_to`=b.`m_value` AND a.`fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND a.`paid_until`>'".date('Ymd',time())."' AND a.`refunded`=0 AND a.`is_active`=1 ORDER BY a.`paid_until` DESC LIMIT 1";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+if (mysql_num_rows($res)) {
+	$output=array_merge($output,mysql_fetch_assoc($res));
+	$output['paid_until']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$output['paid_until']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
+} else {
+	$query="SELECT b.`m_name` FROM ".USER_ACCOUNTS_TABLE." a,`{$dbtable_prefix}memberships` b WHERE a.`membership`=b.`m_value` AND a.`".USER_ACCOUNT_ID."`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$output['m_name']=mysql_result($res,0,0);
+	$output['paid_until']='Never';	// translate
+}
 $my_stats=get_user_stats($_SESSION[_LICENSE_KEY_]['user']['user_id'],array('total_photos','pviews','num_friends'));
 $query="SELECT count(*) FROM `{$dbtable_prefix}user_inbox` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND `del`=0";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

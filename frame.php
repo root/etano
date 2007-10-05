@@ -24,6 +24,9 @@ if (!empty($message)) {
 	$tpl->set_var('message',$message);
 }
 $tpl->set_var('tplvars',$tplvars);
+if (empty($no_timeout)) {
+	$_SESSION[_LICENSE_KEY_]['user']['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
+}
 
 if (is_file(_BASEPATH_.'/events/frame.php')) {
 	include_once _BASEPATH_.'/events/frame.php';
