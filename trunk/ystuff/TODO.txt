@@ -103,10 +103,21 @@ Ar mai putea fi facut prin filtre generale cu fk_user_id=0
 
 - NOU TIP DE FIELD: SCHOOL/HIGHSCHOOL/UNIVERSITY sau Yahoo ID/Skype ID
 
-RSS Feeds
+- recent comments widget:
+	dragon on 'post name'
+	gigi on 'another post name'
+
+- recent posts widget:
+	post name
+	another post name
+
+- categories
+- RSS Feeds
     * Comments to this post
     * All posts
     * All comments
+
+
 
 - urmarire campanii publicitate/newsletters: un link in email la o imagine cu un cod de campanie care sa identifice campania.
 Sau link propriuzis cu o variabila de campanie. Sau amandoua pentru a vedea cati au citit emailul si cati au dat click.

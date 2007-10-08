@@ -297,7 +297,8 @@ function on_after_approve_blog_post($post_ids) {
 			$blog_archive[$year][$month]=$num;
 		}
 		krsort($blog_archive,SORT_NUMERIC);
-		$fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$bid{0}.'/'.$bid.'/blog_archive.inc.php','<?php $blog_archive='.var_export($blog_archive,true).';');
+		$towrite='<?php $blog_archive='.var_export($blog_archive,true).';';
+		$fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$bid{0}.'/'.$bid.'/blog_archive.inc.php',$towrite);
 	}
 
 	foreach ($user_ids as $uid=>$num) {

@@ -35,13 +35,17 @@ $output['return2']=rawurldecode($output['return']);
 
 if (!empty($output['uids'])) {
 	$output['m_value']=dbtable2options("`{$dbtable_prefix}memberships`",'`m_value`','`m_name`','`m_value`',4,'`m_value`<>1');
-	$query="SELECT `".USER_ACCOUNT_ID."` as `user_id`,`".USER_ACCOUNT_USER."` as `user` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$output['uids'])."')";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$output['users']='';
-	while ($rsrow=mysql_fetch_assoc($res)) {
-		$output['users'].='<a href="profile.php?uid='.$rsrow['user_id'].'">'.$rsrow['user'].'</a>, ';
+	if (count($output['uids'])<10) {
+		$query="SELECT `".USER_ACCOUNT_ID."` as `user_id`,`".USER_ACCOUNT_USER."` as `user` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$output['uids'])."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$output['users'].='<a href="profile.php?uid='.$rsrow['user_id'].'">'.$rsrow['user'].'</a>, ';
+		}
+		$output['users']=substr($output['users'],0,-2);
+	} else {
+		$output['users']='Selected members';
 	}
-	$output['users']=substr($output['users'],0,-2);
 	$output['uids']=join('|',$output['uids']);
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
@@ -52,6 +56,17 @@ if (!empty($output['uids'])) {
 		$nextpage=_BASEURL_.'/admin/member_search.php';
 	}
 	redirect2page($nextpage,$topass,'',true);
+}
+
+if (empty($output['return'])) {
+	if ($_SERVER['REQUEST_METHOD']=='GET') {
+		// because of the GET, our 'return' is decoded
+		$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+		$output['return']=rawurlencode($output['return2']);
+	} else {
+		$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+		$output['return2']=rawurldecode($output['return']);
+	}
 }
 
 $tpl->set_file('content','membership_assign.html');

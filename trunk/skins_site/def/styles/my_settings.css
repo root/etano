@@ -5,3 +5,7 @@
 .number {
 	width: 50px;
 }
+
+.content_area h3 {
+	padding-left: 0;
+}

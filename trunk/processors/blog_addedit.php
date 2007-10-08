@@ -103,7 +103,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!is_dir(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'])) {
 				$fileop->mkdir(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id']);
 			}
-			$fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'].'/blog_archive.inc.php','<?php $blog_archive=array();');
+			$towrite='<?php $blog_archive=array();';
+			$fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'].'/blog_archive.inc.php',$towrite);
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Blog created.';     // translate
 			if (isset($_on_after_insert)) {

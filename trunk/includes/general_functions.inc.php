@@ -241,7 +241,7 @@ function add_member_score($user_ids,$act,$times=1,$just_read_value=false,$points
 function get_user_by_userid($user_id) {
 	$myreturn='';
 	if (!empty($user_id)) {
-		$query="SELECT `".USER_ACCOUNT_USER."` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`=$user_id";
+		$query="SELECT `".USER_ACCOUNT_USER."` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`=$user_id";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$myreturn=mysql_result($res,0,0);

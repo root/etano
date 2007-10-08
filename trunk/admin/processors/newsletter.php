@@ -42,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		$config=get_site_option(array('allow_news'),'def_user_prefs');
 		if ($config['allow_news']) {
-			$query="SELECT `email` FROM ".USER_ACCOUNTS_TABLE." a LEFT JOIN `{$dbtable_prefix}user_settings2` b ON a.`".USER_ACCOUNT_ID."`=b.`fk_user_id` AND b.`config_option`='allow_news' WHERE b.`fk_user_id` IS NULL OR b.`config_value`=1";
+			$query="SELECT `email` FROM `".USER_ACCOUNTS_TABLE."` a LEFT JOIN `{$dbtable_prefix}user_settings2` b ON a.`".USER_ACCOUNT_ID."`=b.`fk_user_id` AND b.`config_option`='allow_news' WHERE b.`fk_user_id` IS NULL OR b.`config_value`=1";
 		} else {
-			$query="SELECT `email` FROM ".USER_ACCOUNTS_TABLE." a,`{$dbtable_prefix}user_settings2` b WHERE a.`".USER_ACCOUNT_ID."`=b.`fk_user_id` AND b.`config_option`='allow_news' AND b.`config_value`=1";
+			$query="SELECT `email` FROM `".USER_ACCOUNTS_TABLE."` a,`{$dbtable_prefix}user_settings2` b WHERE a.`".USER_ACCOUNT_ID."`=b.`fk_user_id` AND b.`config_option`='allow_news' AND b.`config_value`=1";
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$insert="INSERT INTO `{$dbtable_prefix}queue_email` (`to`,`subject`,`message_body`) VALUES ";

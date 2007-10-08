@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input['error_email']='red_border';
 		}
 		if (!$error) {
-			$query="SELECT `".USER_ACCOUNT_ID."` FROM ".USER_ACCOUNTS_TABLE." WHERE `email`='".$input['email']."' LIMIT 1";
+			$query="SELECT `".USER_ACCOUNT_ID."` FROM `".USER_ACCOUNTS_TABLE."` WHERE `email`='".$input['email']."' LIMIT 1";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$error=true;
@@ -195,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		if ($input['page']==1) {
 			$input['temp_pass']=md5(gen_pass(6));
-			$query="INSERT IGNORE INTO ".USER_ACCOUNTS_TABLE." SET `".USER_ACCOUNT_USER."`='".$input['user']."',`".USER_ACCOUNT_PASS."`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`=2,`status`=".ASTAT_UNVERIFIED.",`temp_pass`='".$input['temp_pass']."'";
+			$query="INSERT IGNORE INTO `".USER_ACCOUNTS_TABLE."` SET `".USER_ACCOUNT_USER."`='".$input['user']."',`".USER_ACCOUNT_PASS."`=md5('".$input['pass']."'),`email`='".$input['email']."',`membership`=2,`status`=".ASTAT_UNVERIFIED.",`temp_pass`='".$input['temp_pass']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$_SESSION[_LICENSE_KEY_]['user']['reg_id']=mysql_insert_id();
 			$_SESSION[_LICENSE_KEY_]['user']['user']=$input['user'];	// for `dsb_payments`
@@ -253,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if ((!empty($rsrow['dbfield']) && $input[$rsrow['dbfield']]==$rsrow['field_value']) || empty($rsrow['dbfield'])) {
 					$qs.=$qs_sep.'nas=1';	// no more auto_subscr checking from now on
 					$qs_sep='&';
-					$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`=".$rsrow['m_value_to']." WHERE `".USER_ACCOUNT_ID."`='".$_SESSION[_LICENSE_KEY_]['user']['reg_id']."'";
+					$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `membership`=".$rsrow['m_value_to']." WHERE `".USER_ACCOUNT_ID."`='".$_SESSION[_LICENSE_KEY_]['user']['reg_id']."'";
 					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					// save as a payment with amount 0
 					$query="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`fk_subscr_id`,`is_recurring`,`email`,`m_value_to`,`paid_from`,`paid_until`) VALUES ('".$_SESSION[_LICENSE_KEY_]['user']['reg_id']."','".$_SESSION[_LICENSE_KEY_]['user']['user']."','".$rsrow['subscr_id']."','".$rsrow['is_recurent']."','".$_SESSION[_LICENSE_KEY_]['user']['email']."','".$rsrow['m_value_to']."',now(),now()+INTERVAL ".$rsrow['duration'].' DAY)';

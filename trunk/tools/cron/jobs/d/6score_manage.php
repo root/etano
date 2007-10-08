@@ -18,7 +18,7 @@ function score_manage() {
 	}
 
 // now decrease the score for those that are inactive for more than a month
-	$query="SELECT `".USER_ACCOUNT_ID."` as `user_id` FROM ".USER_ACCOUNTS_TABLE." WHERE `last_activity`<DATE_SUB('$now',INTERVAL 1 MONTH)";
+	$query="SELECT `".USER_ACCOUNT_ID."` as `user_id` FROM `".USER_ACCOUNTS_TABLE."` WHERE `last_activity`<DATE_SUB('$now',INTERVAL 1 MONTH)";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$user_ids=array();
 	for ($i=0;$i<mysql_num_rows($res);++$i) {

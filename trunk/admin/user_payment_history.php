@@ -30,7 +30,7 @@ if (!empty($_GET['uid'])) {
 		$memberships[$rsrow[0]]=$rsrow[1];
 	}
 
-	$config=get_site_option(array('date_format'),'core');
+	$config=get_site_option(array('date_format'),'def_user_prefs');
 
 	$query="SELECT *,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$output['uid'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
