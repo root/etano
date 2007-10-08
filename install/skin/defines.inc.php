@@ -15,7 +15,7 @@ define('_FTPPATH_','{input.ftppath}');
 define('_FTPUSER_','{input.ftpuser}');
 define('_FTPPASS_','{input.ftppass}');
 $dbtable_prefix='{input.dbtable_prefix}';
-define('USER_ACCOUNTS_TABLE',"`{$dbtable_prefix}user_accounts`");
+define('USER_ACCOUNTS_TABLE',"{$dbtable_prefix}user_accounts");
 define('USER_ACCOUNT_ID','user_id');
 define('USER_ACCOUNT_USER','user');
 define('USER_ACCOUNT_PASS','pass');

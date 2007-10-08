@@ -28,8 +28,4 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$mt=MESSAGE_ERROR;
 	}
 }
-$nextpage='http://www.datemill.com/remote/finish.php?lk='.md5(_LICENSE_KEY_).'&v='._INTERNAL_VERSION_.'&mt='.$mt.'&bu='.rawurlencode(base64_encode(_BASEURL_)).'&bp='.rawurlencode(base64_encode(_BASEPATH_));
-if (!empty($_SESSION['install']['phpbin'])) {
-	$nextpage.='&p='.rawurlencode(base64_encode($_SESSION['install']['phpbin']));
-}
-redirect2page($nextpage,$topass,'',true);
+redirect2page('finish.php',array(),'success='.$mt);
