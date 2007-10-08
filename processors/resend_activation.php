@@ -20,7 +20,7 @@ $qssep='&';
 
 $uid=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
 if (!empty($uid)) {
-	$query="SELECT `".USER_ACCOUNT_ID."` as `uid`,`email`,`temp_pass` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`=$uid";
+	$query="SELECT `".USER_ACCOUNT_ID."` as `uid`,`email`,`temp_pass` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`=$uid";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$input=mysql_fetch_assoc($res);

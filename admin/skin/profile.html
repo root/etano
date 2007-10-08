@@ -33,11 +33,12 @@
 		<!--opt name="output.blog_posts"--><li><a href="blog_results.php?uid={output.fk_user_id}">View blogs ({output.blog_posts})</a></li><!--/opt name="output.blog_posts"-->
 		<!--opt name="output.profile_comments"--><li><a href="comment_results.php?m=user&amp;id={output.fk_user_id}">Profile comments ({output.profile_comments})</a></li><!--/opt name="output.profile_comments"-->
 		<li><a href="user_inbox.php?uid={output.fk_user_id}&amp;return={output.return2me}">Read mail</a></li>
+		<li><a href="membership_assign.php?uids%5B%5D={output.fk_user_id}&amp;return={output.return2me}">Change Membership</a></li>
 		<li><a href="javascript:;" onclick="change_password()">Change password</a></li>
 		<!--opt name="!output.del"--><li><a href="processors/member_delete.php?uids%5B%5D={output.fk_user_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to mark this member for deletion?'))">Mark for deletion</a></li><!--/opt name="!output.del"-->
 		<!--opt name="output.del"--><li><a href="processors/member_delete.php?act=-1&amp;uids%5B%5D={output.fk_user_id}&amp;return={output.return2me}">Unmark for deletion</a></li><!--/opt name="output.del"-->
 		<li><a href="processors/user_sentmail_delete.php?uid={output.fk_user_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to delete all messages sent by this member from other member inboxes?'))">Delete sent mail</a></li>
-		<li><a href="javascript:;" onclick="popWin('user_payment_history.php?uid={output.fk_user_id}','history',400,400,1)">Payment History</a></li>
+		<li><a class="thickbox" href="user_payment_history.php?uid={output.fk_user_id}&amp;keepThis=true&amp;TB_iframe=true&amp;width=900">Payment History</a></li>
 		<li><a href="user_login.php?uid={output.fk_user_id}&amp;return={output.return2me}">Impersonate User</a></li>
 		<li><a href="email_send.php?uids%5B%5D={output.fk_user_id}&amp;return={output.return2me}">Send Email</a></li>
 		<li><a href="message_send.php?uids%5B%5D={output.fk_user_id}&amp;return={output.return2me}">Send On-site Message</a></li>

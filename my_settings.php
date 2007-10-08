@@ -74,6 +74,10 @@ foreach ($prefs as $module_code=>$v) {
 	}
 }
 
+$query="SELECT `email` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$output['email']=mysql_result($res,0,0);
+
 $output['gmtime']=gmdate('F d, Y, h:i:s A');
 $tpl->set_file('content','my_settings.html');
 $tpl->set_loop('loop',$loop);

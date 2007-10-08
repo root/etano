@@ -37,10 +37,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$query="SELECT `".USER_ACCOUNT_ID."` as `user_id`,`".USER_ACCOUNT_USER."` as `user`,`membership` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$input['uids'])."')";
+		$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`=CURDATE(),`is_active`=0 WHERE `fk_user_id` IN ('".join("','",$input['uids'])."') AND `is_active`=1 AND `is_subscr`=1";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="SELECT `".USER_ACCOUNT_ID."` as `user_id`,`".USER_ACCOUNT_USER."` as `user`,`membership` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$input['uids'])."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$uids=array();
-		$insert="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`gateway`,`m_value_to`,`paid_from`,`paid_until`) VALUES ";
+		$insert="INSERT INTO `{$dbtable_prefix}payments` (`is_active`,`is_subscr`,`fk_user_id`,`_user`,`gateway`,`m_value_to`,`paid_from`,`paid_until`,`date`) VALUES ";
 		$query=$insert;
 		$now=gmdate('YmdHis');
 		while ($rsrow=mysql_fetch_assoc($res)) {
@@ -49,13 +51,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$query=$insert;
 			}
-			$query.="('".$rsrow['user_id']."','".$rsrow['user']."','manual','".$input['m_value']."','$now','$now'+INTERVAL '".$input['duration']."' DAY),";
+			$query.="(1,1,'".$rsrow['user_id']."','".$rsrow['user']."','manual','".$input['m_value']."','$now','$now'+INTERVAL '".$input['duration']."' DAY,now()),";
 		}
 		if ($query!=$insert) {
 			$query=substr($query,0,-1);
 			if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
-		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`='".$input['m_value']."' WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$input['uids'])."')";
+		$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `membership`='".$input['m_value']."' WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$input['uids'])."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$topass['message']['type']=MESSAGE_INFO;

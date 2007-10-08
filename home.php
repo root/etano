@@ -35,7 +35,7 @@ if (mysql_num_rows($res)) {
 	$output=array_merge($output,mysql_fetch_assoc($res));
 	$output['paid_until']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$output['paid_until']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 } else {
-	$query="SELECT b.`m_name` FROM ".USER_ACCOUNTS_TABLE." a,`{$dbtable_prefix}memberships` b WHERE a.`membership`=b.`m_value` AND a.`".USER_ACCOUNT_ID."`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+	$query="SELECT b.`m_name` FROM `".USER_ACCOUNTS_TABLE."` a,`{$dbtable_prefix}memberships` b WHERE a.`membership`=b.`m_value` AND a.`".USER_ACCOUNT_ID."`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$output['m_name']=mysql_result($res,0,0);
 	$output['paid_until']='Never';	// translate

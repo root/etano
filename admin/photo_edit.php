@@ -32,7 +32,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
 		$output['caption']=sanitize_and_format($output['caption'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
-		$config=get_site_option(array('date_format'),'core');
+		$config=get_site_option(array('date_format'),'def_user_prefs');
 		$output['date_posted']=strftime($config['date_format'],$output['date_posted']);
 	}
 }
