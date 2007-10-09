@@ -26,13 +26,18 @@ function get_network_members($user_id,$net_id,$limit=0) {
 }
 
 
-function is_network_member($user_id,$other_id,$net_id) {
+function is_network_member($user_id,$other_id,$net_id=0,$excluded_nets=array()) {
 	$myreturn=false;
 	global $dbtable_prefix;
-	$query="SELECT `nconn_id` FROM `{$dbtable_prefix}user_networks` WHERE `fk_user_id`=$user_id AND `fk_net_id`=$net_id AND `fk_user_id_other`=$other_id AND `nconn_status`=1";
+	$query="SELECT b.`net_id`,b.`network` FROM `{$dbtable_prefix}user_networks` a,`{$dbtable_prefix}networks` b WHERE a.`fk_net_id`=b.`net_id` AND a.`fk_user_id`=$user_id AND a.`nconn_status`=1 AND a.`fk_user_id_other`=$other_id";
+	if (!empty($net_id)) {
+		$query.=" AND `fk_net_id`=$net_id";
+	} elseif (!empty($excluded_nets)) {
+		$query.=" AND `fk_net_id` NOT IN ('".join("','",$excluded_nets)."')";
+	}
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_num_rows($res)) {
-		$myreturn=true;
+	while ($rsrow=mysql_fetch_assoc($res)) {
+		$myreturn[]=$rsrow;
 	}
 	return $myreturn;
 }
