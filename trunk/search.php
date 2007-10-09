@@ -45,7 +45,7 @@ if (!empty($output['search_md5'])) {
 }
 
 if (!$got_from_cache) {
-	// THIS PART IS DUPLICATED IN CRON/5SEARCH_ALERTS.PHP. IF YOU CHANGE THIS YOU MUST CHANGE THAT TOO.
+	// THIS PART IS DUPLICATED IN CRON/d/5SEARCH_ALERTS.PHP. IF YOU CHANGE THIS YOU MUST CHANGE THAT TOO.
 	// first search here, no cache, must calculate everything
 	$input['acclevel_code']='search_advanced'; // default access level is the one for advanced search!!!!
 	$search_fields=array();
@@ -333,14 +333,15 @@ if (!empty($output['totalrows'])) {
 			$rv_mode='gallery_view';
 		}
 	}
-	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
-	$user_cache=new user_cache(get_my_skin());
+
 	$cell_css_classes=array();
 	for ($i=0;isset($user_ids[$i]);++$i) {
 		if (isset($_list_of_online_members[$user_ids[$i]])) {
 			$cell_css_classes[$i]='is_online';
 		}
 	}
+	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
+	$user_cache=new user_cache(get_my_skin());
 	$output['results']=smart_table($user_cache->get_cache_array($user_ids,'result_user',$inject_by_uid),5,$rv_mode,$cell_css_classes);
 	unset($user_cache);
 
