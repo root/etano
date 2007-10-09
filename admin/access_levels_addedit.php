@@ -32,6 +32,10 @@ if (isset($_SESSION['topass']['input'])) {
 	}
 }
 
+if (!empty($access_levels['allow_na'])) {
+	$access_levels['allow_na']='checked="checked"';
+}
+
 $tpl->set_file('content','access_levels_addedit.html');
 $tpl->set_var('access_levels',$access_levels);
 if (isset($_GET['o'])) {
@@ -50,4 +54,5 @@ $tpl->process('content','content');
 
 $tplvars['title']='Access Levels Management';
 $tplvars['page']='access_levels_addedit';
+$tplvars['css']='access_levels_addedit.css';
 include 'frame.php';

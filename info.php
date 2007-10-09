@@ -54,6 +54,12 @@ switch ($type) {
 		$tplvars['page']='info_acctok';
 		break;
 
+	case 'profile_na':	// profile is not approved yet
+		$template='info_profilena.html';
+		$tplvars['page_title']='No access until approved!';
+		$tplvars['page']='info_profilena';
+		break;
+
 	case 'access':	// no access to the requested page, show the upgrade options.
 		$template='info_access.html';
 		$tplvars['page_title']='Subscribe';
