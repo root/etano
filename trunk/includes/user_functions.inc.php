@@ -29,6 +29,7 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 } else {
 	$_SESSION[_LICENSE_KEY_]['user']['user']='guest';
 	$_SESSION[_LICENSE_KEY_]['user']['membership']=1;
+	$_SESSION[_LICENSE_KEY_]['user']['pstat']=STAT_PENDING;
 }
 $tplvars['myself']=$_SESSION[_LICENSE_KEY_]['user'];
 $GLOBALS['_list_of_online_members']=get_online_ids();
@@ -77,6 +78,9 @@ function check_login_member($level_code) {
 //	unset($_SESSION[_LICENSE_KEY_]['user']['timedout']);
 	if (($GLOBALS['_access_level'][$level_code]&$_SESSION[_LICENSE_KEY_]['user']['membership'])!=$_SESSION[_LICENSE_KEY_]['user']['membership']) {
 		redirect2page('info.php',array(),'type=access');	// no access to this feature
+	}
+	if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $_SESSION[_LICENSE_KEY_]['user']['pstat']<STAT_APPROVED && empty($GLOBALS['_allow_na'][$level_code])) {
+		redirect2page('info.php',array(),'type=profile_na');	// no access to this feature until the profile gets approved
 	}
 	$user_id=0;
 	$now=gmdate('YmdHis');

@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 // save in file
 	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
+	require_once _BASEPATH_.'/includes/access_levels.inc.php';
 	$query="SELECT `level_code`,`level` FROM `{$dbtable_prefix}access_levels`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$towrite="<?php\n\$GLOBALS['_access_level']=array('auth'=>65534,'all'=>65535";
@@ -62,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$towrite.=",'".$rsrow[0]."'=>".$rsrow[1];
 	}
 	$towrite.=");\n";
+	$towrite.='$GLOBALS[\'_allow_na\']='.var_export($GLOBALS['_allow_na'],true).";\n";
 	$fileop=new fileop();
 	$fileop->file_put_contents(_BASEPATH_.'/includes/access_levels.inc.php',$towrite);
 
