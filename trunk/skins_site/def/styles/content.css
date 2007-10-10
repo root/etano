@@ -26,7 +26,7 @@
 		right: 0;
 		margin: 15px 18px;
 		background: url('../images/link_more.gif') no-repeat top right;
-		padding: 0 25px 6px 3px;
+		padding: 0 25px 4px 3px;
 	}
 
 	.content_area .link_more:hover {
@@ -155,9 +155,9 @@ strong {
 /* LINKS */
 
 .content-link {
-	font-size: 11px;
+	font-size: 12px;
 	color: #c57794;
-	padding: 0 3px 6px 25px;
+	padding: 0 3px 4px 25px;
 	text-decoration: none;
 	background-position: top left;
 	background-repeat: no-repeat;
@@ -185,12 +185,12 @@ a.big:hover {
 /* ONLINE/OFFLINE ICON NEXT TO EVERY USER NAME */
 
 .member_link {
-	background: url('../images/member-offline-small.gif') no-repeat top left;
-	padding: 0 3px 0 15px;
+	background: url('../images/member_offline_medium.gif') no-repeat top left;
+	padding-left: 17px;
 }
 
 .is_online .member_link, .member_online {
-	background: url('../images/member-online-small.gif') no-repeat top left;
+	background: url('../images/member_online_medium.gif') no-repeat top left;
 }
 
 

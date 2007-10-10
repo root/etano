@@ -29,19 +29,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$default['defaults']=array();
 	if ($input['m']=='blog') {
 		require_once '../../includes/tables/blog_comments.inc.php';
-		$default=$blog_comments_default;
+		$default=&$blog_comments_default;
 		$table="`{$dbtable_prefix}blog_comments`";
 		$parent_table="`{$dbtable_prefix}blog_posts`";
 		$parent_key="`post_id`";
 	} elseif ($input['m']=='photo') {
 		require_once '../../includes/tables/photo_comments.inc.php';
-		$default=$photo_comments_default;
+		$default=&$photo_comments_default;
 		$table="`{$dbtable_prefix}photo_comments`";
 		$parent_table="`{$dbtable_prefix}user_photos`";
 		$parent_key="`photo_id`";
 	} elseif ($input['m']=='user') {
 		require_once '../../includes/tables/profile_comments.inc.php';
-		$default=$profile_comments_default;
+		$default=&$profile_comments_default;
 		$table="`{$dbtable_prefix}profile_comments`";
 	}
 	foreach ($default['types'] as $k=>$v) {

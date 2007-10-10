@@ -22,7 +22,7 @@ $qs='';
 $qs_sep='';
 $topass=array();
 $input=array();
-$input['cids']=sanitize_and_format($_GET['cids'],TYPE_INT,0,array());
+$input['cids']=sanitize_and_format_gpc($_GET,'cids',TYPE_INT,0,array());
 $input['m']=sanitize_and_format_gpc($_GET,'m',TYPE_STRING,0,'');
 $input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 
@@ -42,9 +42,18 @@ if (!empty($input['cids']) && !empty($input['m'])) {
 			break;
 
 	}
-	$query="UPDATE $table SET `status`=".STAT_APPROVED.",`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `comment_id` IN ('".join("','",$input['cids'])."')";
+	$query="UPDATE $table SET `status`=".STAT_APPROVED.",`last_changed`='".gmdate('YmdHis')."' WHERE `comment_id` IN ('".join("','",$input['cids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	on_after_approve_comment($input['cids'],$input['m']);
+	if (is_file(_BASEPATH_.'/events/processors/comment_addedit.php')) {
+		include_once _BASEPATH_.'/events/processors/comment_addedit.php';
+		if (isset($_on_after_approve)) {
+			$GLOBALS['comment_ids']=$input['cids'];
+			$GLOBALS['comment_type']=$input['m'];
+			for ($i=0;isset($_on_after_approve[$i]);++$i) {
+				call_user_func($_on_after_approve[$i]);
+			}
+		}
+	}
 
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Comment(s) approved.';

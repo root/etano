@@ -46,9 +46,17 @@ switch ($m) {
 
 }
 
-on_before_delete_comment(array($comment_id),$m);
-
 $query="DELETE FROM $table WHERE `comment_id`=$comment_id";
+if (is_file(_BASEPATH_.'/events/processors/comment_delete.php')) {
+	include_once _BASEPATH_.'/events/processors/comment_delete.php';
+	if (isset($_on_before_delete)) {
+		$GLOBALS['comment_ids']=array($comment_id);
+		$GLOBALS['comment_type']=$m;
+		for ($i=0;isset($_on_before_delete[$i]);++$i) {
+			call_user_func($_on_before_delete[$i]);
+		}
+	}
+}
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;
