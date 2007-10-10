@@ -23,16 +23,25 @@ $post_id=isset($_GET['post_id']) ? (int)$_GET['post_id'] : 0;
 // no need to urldecode because of the GET
 $return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
+$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id";
+if (is_file(_BASEPATH_.'/events/processors/blog_posts_delete.php')) {
+	include_once _BASEPATH_.'/events/processors/blog_posts_delete.php';
+	if (isset($_on_before_delete)) {
+		$GLOBALS['post_ids']=array($post_id);
+		for ($i=0;isset($_on_before_delete[$i]);++$i) {
+			call_user_func($_on_before_delete[$i]);
+		}
+	}
+}
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+
 $query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_parent_id`=$post_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-on_before_delete_blog_post(array($post_id));
-
-$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id";
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+// what to do with the cache for the deleted blog post?
 
 $topass['message']['type']=MESSAGE_INFO;
-$topass['message']['text']='Post and all related comments deleted.';     // translate
+$topass['message']['text']='Post and all related comments deleted.';
 
 if (!empty($return)) {
 	$nextpage=_BASEURL_.'/admin/'.$return;

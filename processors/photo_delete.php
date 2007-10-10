@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       processors/photos_delete.php
+File:                       processors/photo_delete.php
 $Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -14,15 +14,12 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
-require_once '../includes/triggers.inc.php';
 check_login_member('upload_photos');
 
 if (is_file(_BASEPATH_.'/events/processors/photo_delete.php')) {
 	include_once _BASEPATH_.'/events/processors/photo_delete.php';
 }
 
-$qs='';
-$qs_sep='';
 $topass=array();
 $photo_id=isset($_GET['photo_id']) ? (int)$_GET['photo_id'] : 0;
 
@@ -32,12 +29,11 @@ if (mysql_num_rows($res)) {
 	$input=mysql_fetch_assoc($res);
 	$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
 	if (isset($_on_before_delete)) {
+		$GLOBALS['photo_ids']=array($photo_id);
 		for ($i=0;isset($_on_before_delete[$i]);++$i) {
 			call_user_func($_on_before_delete[$i]);
 		}
 	}
-	on_before_delete_photo(array($photo_id));
-
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (!empty($input['photo'])) {
 		require_once '../includes/classes/fileop.class.php';
@@ -45,16 +41,15 @@ if (mysql_num_rows($res)) {
 		$fileop->delete(_PHOTOPATH_.'/t1/'.$input['photo']);
 		$fileop->delete(_PHOTOPATH_.'/t2/'.$input['photo']);
 		$fileop->delete(_PHOTOPATH_.'/'.$input['photo']);
+	}
 
-		$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_parent_id`=$photo_id";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_parent_id`=$photo_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 	// what to do with the cache for the deleted comments or photo page? clear_cache($photo_id) ????
 
-	}
-
 	$topass['message']['type']=MESSAGE_INFO;
-	$topass['message']['text']='Photo deleted.';
+	$topass['message']['text']='Photo deleted.';     // translate
 
 	if (isset($_on_after_delete)) {
 		for ($i=0;isset($_on_after_delete[$i]);++$i) {

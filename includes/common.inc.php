@@ -88,20 +88,20 @@ if (!defined('NO_SESSION')) {
 function _unset_vars(&$v) {
 	$temp=array_keys($v);
 	for ($i=0;isset($temp[$i]);++$i) {
-		if ($temp[$i]!='__v' && $temp[$i]!='__temp') {
+		if ($temp[$i]!='v' && $temp[$i]!='temp') {
 			unset($GLOBALS[$temp[$i]]);
 		}
 	}
 }
 if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=='on') {
-	$__temp=array('_GET','_POST','_SERVER','_COOKIE','_ENV','_SESSION','_REQUEST','_FILES','_SESSION');
-	foreach ($__temp as $__v) {
-		if (isset(${'HTTP'.$__v.'_VARS'}) && is_array(${'HTTP'.$__v.'_VARS'})) {
-			_unset_vars(${'HTTP'.$__v.'_VARS'});
-			unset(${'HTTP'.$__v.'_VARS'});
+	$temp=array('_GET','_POST','_SERVER','_COOKIE','_ENV','_SESSION','_REQUEST','_FILES','_SESSION');
+	foreach ($temp as $v) {
+		if (isset(${'HTTP'.$v.'_VARS'}) && is_array(${'HTTP'.$v.'_VARS'})) {
+			_unset_vars(${'HTTP'.$v.'_VARS'});
+			unset(${'HTTP'.$v.'_VARS'});
 		}
-		if (isset(${$__v}) && is_array(${$__v})) {
-			_unset_vars(${$__v});
+		if (isset(${$v}) && is_array(${$v})) {
+			_unset_vars(${$v});
 		}
 	}
 	if (isset($HTTP_POST_FILES) && is_array($HTTP_POST_FILES)) {
