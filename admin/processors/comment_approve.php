@@ -14,7 +14,6 @@ Support at:                 http://www.datemill.com/forum
 require_once '../../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../../includes/admin_functions.inc.php';
-require_once '../../includes/triggers.inc.php';
 allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 $error=false;
@@ -46,12 +45,10 @@ if (!empty($input['cids']) && !empty($input['m'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (is_file(_BASEPATH_.'/events/processors/comment_addedit.php')) {
 		include_once _BASEPATH_.'/events/processors/comment_addedit.php';
-		if (isset($_on_after_approve)) {
+		if (function_exists('on_after_approve_comment')) {
 			$GLOBALS['comment_ids']=$input['cids'];
 			$GLOBALS['comment_type']=$input['m'];
-			for ($i=0;isset($_on_after_approve[$i]);++$i) {
-				call_user_func($_on_after_approve[$i]);
-			}
+			on_after_approve_comment();
 		}
 	}
 

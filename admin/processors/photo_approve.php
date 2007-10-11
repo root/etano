@@ -14,7 +14,6 @@ Support at:                 http://www.datemill.com/forum
 require_once '../../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../../includes/admin_functions.inc.php';
-require_once '../../includes/triggers.inc.php';
 allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 $error=false;
@@ -38,7 +37,13 @@ if (!empty($_GET['photo_id'])) {
 		} else {
 			$do_stats=true;
 		}
-		on_after_approve_photo(array($input['photo_id']),$do_stats);
+		if (is_file(_BASEPATH_.'/events/processors/photos_upload.php')) {
+			include_once _BASEPATH_.'/events/processors/photos_upload.php';
+			if (function_exists('on_after_approve_photo')) {
+				$GLOBALS['photo_ids']=array($input['photo_id']);
+				on_after_approve_photo();
+			}
+		}
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']='Photo approved.';
 	}

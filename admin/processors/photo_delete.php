@@ -31,11 +31,9 @@ if (mysql_num_rows($res)) {
 	$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
 	if (is_file(_BASEPATH_.'/events/processors/photo_delete.php')) {
 		include_once _BASEPATH_.'/events/processors/photo_delete.php';
-		if (isset($_on_before_delete)) {
+		if (function_exists('on_before_delete_photo')) {
 			$GLOBALS['photo_ids']=array($photo_id);
-			for ($i=0;isset($_on_before_delete[$i]);++$i) {
-				call_user_func($_on_before_delete[$i]);
-			}
+			on_before_delete_photo();
 		}
 	}
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

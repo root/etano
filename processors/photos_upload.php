@@ -16,7 +16,6 @@ db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/classes/fileop.class.php';
 require_once '../includes/img_functions.inc.php';
-require_once '../includes/triggers.inc.php';
 check_login_member('upload_photos');
 set_time_limit(0);
 
@@ -231,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$ids=array();
+		$photo_ids=array();
 		$now=gmdate('YmdHis');
 		$force_main=false;
 		if (empty($input['is_private'])) {
@@ -255,16 +254,22 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$force_main=false;
 				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				$ids[]=mysql_insert_id();
+				$photo_ids[]=mysql_insert_id();
 			}
 		}
-		if (!empty($ids)) {
+		if (!empty($photo_ids)) {
 			if (empty($config['manual_photo_approval'])) {
-				on_after_approve_photo($ids);
+				if (isset($_on_after_approve)) {
+					$GLOBALS['photo_ids']=$photo_ids;
+					$GLOBALS['do_stats']=true;
+					for ($i=0;isset($_on_after_approve[$i]);++$i) {
+						call_user_func($_on_after_approve[$i]);
+					}
+				}
 			}
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']=sprintf('%1u photos uploaded.',count($ids));
-			$qs=$qs_sep.array2qs(array('photo_ids'=>$ids));
+			$topass['message']['text']=sprintf('%1u photos uploaded.',count($photo_ids));	// translate
+			$qs=$qs_sep.array2qs(array('photo_ids'=>$photo_ids));
 			$qs_sep='&';
 			$nextpage='photo_settings.php';
 		} else {

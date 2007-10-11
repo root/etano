@@ -26,11 +26,9 @@ $return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD
 $query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id";
 if (is_file(_BASEPATH_.'/events/processors/blog_posts_delete.php')) {
 	include_once _BASEPATH_.'/events/processors/blog_posts_delete.php';
-	if (isset($_on_before_delete)) {
+	if (function_exists('on_before_delete_blog_post')) {
 		$GLOBALS['post_ids']=array($post_id);
-		for ($i=0;isset($_on_before_delete[$i]);++$i) {
-			call_user_func($_on_before_delete[$i]);
-		}
+		on_before_delete_blog_post();
 	}
 }
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
