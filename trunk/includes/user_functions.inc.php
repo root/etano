@@ -108,16 +108,6 @@ function check_login_member($level_code) {
 }
 
 
-function allow_at_level($level_code,$membership=1) {
-	$myreturn=false;
-	$membership=(int)$membership;
-	if (isset($GLOBALS['_access_level'][$level_code]) && ($GLOBALS['_access_level'][$level_code]&$membership)==$membership) {
-		$myreturn=true;
-	}
-	return $myreturn;
-}
-
-
 function get_user_folder_name($folder_id,$user_id=null) {
 	$myreturn='';
 	global $dbtable_prefix;

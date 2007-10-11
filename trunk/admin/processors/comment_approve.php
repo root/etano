@@ -45,10 +45,12 @@ if (!empty($input['cids']) && !empty($input['m'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (is_file(_BASEPATH_.'/events/processors/comment_addedit.php')) {
 		include_once _BASEPATH_.'/events/processors/comment_addedit.php';
-		if (function_exists('on_after_approve_comment')) {
+		if (isset($_on_after_approve)) {
 			$GLOBALS['comment_ids']=$input['cids'];
 			$GLOBALS['comment_type']=$input['m'];
-			on_after_approve_comment();
+			for ($i=0;isset($_on_after_approve[$i]);++$i) {
+				call_user_func($_on_after_approve[$i]);
+			}
 		}
 	}
 

@@ -39,9 +39,11 @@ if (!empty($_GET['photo_id'])) {
 		}
 		if (is_file(_BASEPATH_.'/events/processors/photos_upload.php')) {
 			include_once _BASEPATH_.'/events/processors/photos_upload.php';
-			if (function_exists('on_after_approve_photo')) {
+			if (isset($_on_after_approve)) {
 				$GLOBALS['photo_ids']=array($input['photo_id']);
-				on_after_approve_photo();
+				for ($i=0;isset($_on_after_approve[$i]);++$i) {
+					call_user_func($_on_after_approve[$i]);
+				}
 			}
 		}
 		$topass['message']['type']=MESSAGE_INFO;
