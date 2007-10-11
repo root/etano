@@ -39,9 +39,11 @@ if (!empty($input['pids'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (is_file(_BASEPATH_.'/events/processors/blog_posts_addedit.php')) {
 		include_once _BASEPATH_.'/events/processors/blog_posts_addedit.php';
-		if (function_exists('on_after_approve_blog_post')) {
+		if (isset($_on_after_approve)) {
 			$GLOBALS['post_ids']=$input['pids'];
-			on_after_approve_blog_post();
+			for ($i=0;isset($_on_after_approve[$i]);++$i) {
+				call_user_func($_on_after_approve[$i]);
+			}
 		}
 	}
 

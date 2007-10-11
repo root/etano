@@ -49,7 +49,7 @@ TODO
 function set_seolink() {
 	global $query,$input;
 	$temp=explode(' WHERE',$query);
-	$temp[0].=",`post_url`='"._BASEURL_.'/blog/'.$input['post_id'].'/'.strtolower(preg_replace(array('/[^a-zA-Z0-9]/','/--+/'),array('-',''),$input['title'])).".html'";
+	$temp[0].=",`alt_url`='"._BASEURL_.'/blog/'.$input['post_id'].'/'.strtolower(preg_replace(array('/[^a-zA-Z0-9]/','/--+/'),array('-',''),$input['title'])).".html'";
 	$query=$temp[0].' WHERE'.$temp[1];
 }
 

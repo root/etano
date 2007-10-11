@@ -39,8 +39,11 @@ class widget_latest_blog_comments extends icontent_widget {
 
 
 	function _content() {
-		if (is_file(_BASEPATH_.'/skins_site/'.get_my_skin().'/cache/widgets/latest_blog_comments/display.html')) {
-			$this->tpl->set_file('widget.content','cache/widgets/latest_blog_comments/display.html');
+		if (is_file(_CACHEPATH_.'/widgets/latest_blog_comments/comments.inc.php')) {
+			require_once _CACHEPATH_.'/widgets/latest_blog_comments/comments.inc.php';
+			$this->tpl->set_file('widget.content','widgets/latest_blog_comments/display.html');
+			$this->tpl->set_loop('loop',$latest_comments);
+			$this->tpl->process('widget.content','widget.content',TPL_LOOP);
 		}
 	}
 
@@ -52,6 +55,9 @@ class widget_latest_blog_comments extends icontent_widget {
 		$myreturn='';
 		if ($this->tpl->get_var_silent('widget.content')!='') {
 			$widget['title']='Latest comments';	// translate this
+			if (allow_at_level('read_blogs')) {
+				$widget['title'].=' <a rel="external" href="'._BASEURL_.'/rss/latest-comments.xml" title="Subscribe to latest comments feed"><img src="'._BASEURL_.'/images/rss-icon.gif" /></a>';
+			}
 			$widget['id']='latest_blog_comments';
 			$this->tpl->set_file('temp','static/menu_widget.html');
 			$this->tpl->set_var('widget',$widget);
