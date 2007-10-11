@@ -85,8 +85,6 @@ if (!empty($_GET['bid'])) {
 }
 
 $output['return2me']="blog_view.php";
-var_dump($output);
-die;
 if (!empty($_SERVER['QUERY_STRING'])) {
 	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }

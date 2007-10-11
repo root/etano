@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007100101
+File version:				1.2007101101
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -807,21 +807,20 @@ function general_error($errlevel,$message,$file='unset',$line='unset') {
 	}
 }
 
-
-function array2qs($myarray,$excluded_keys=array()) {
-	$myreturn="";
+function array2qs($myarray,$excluded_keys=array(),$sep='&') {
+	$myreturn='';
 	while (list($k,$v)=each($myarray)) {
 		if (!in_array($k,$excluded_keys)) {
 			if (is_array($v)) {
 				while (list($subk,$subv)=each($v)) {
-					$myreturn.=$k.'%5B'.$subk.'%5D'.'='.urlencode($subv).'&';
+					$myreturn.=$k.'%5B'.$subk.'%5D'.'='.urlencode($subv).$sep;
 				}
 			} else {
-				$myreturn.=$k.'='.urlencode($v).'&';
+				$myreturn.=$k.'='.urlencode($v).$sep;
 			}
 		}
 	}
-	$myreturn=substr($myreturn,0,-1);
+	$myreturn=substr($myreturn,0,-strlen($sep));
 	return $myreturn;
 }
 
@@ -841,7 +840,7 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	$params=array();
 	$params=array_merge($_GET,$_POST);
 	unset($params['o'],$params['r'],$params['PHPSESSID']);
-	$qs=array2qs($params,array('PHPSESSID'));
+	$qs=array2qs($params,array('PHPSESSID'),'&amp;');
 	$myrand=mt_rand(1000,2000);
 	if (empty($results)) {
 		$results=10;
