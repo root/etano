@@ -5,7 +5,7 @@ $_on_after_approve[]='on_after_approve_blog_post';
 // the calling script MUST HAVE $post_ids array as GLOBALS
 function on_after_approve_blog_post() {
 	global $dbtable_prefix,$post_ids;
-	require_once 'classes/fileop.class.php';
+	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
 	$fileop=new fileop();
 	$query="SELECT `post_id`,`fk_blog_id`,`fk_user_id` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id` IN ('".join("','",$post_ids)."') AND `processed`=0";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
