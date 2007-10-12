@@ -74,6 +74,7 @@ $_on_before_delete[]='upd_latest_comm_widg';
 function upd_latest_comm_widg() {
 	global $dbtable_prefix,$comment_ids,$comment_type;
 	if ($comment_type=='blog') {
+		$max_title_length=40;
 		$config=get_site_option(array('items','enabled'),'latest_blog_comments');
 		if (!empty($config['enabled'])) {
 			$query="SELECT a.`comment_id`,a.`fk_user_id`,c.`alt_url` as `profile_url`,a.`_user`,b.`post_id`,b.`title`,b.`alt_url` as `post_url` FROM `{$dbtable_prefix}blog_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` c ON a.`fk_user_id`=c.`fk_user_id`,`{$dbtable_prefix}blog_posts` b WHERE a.`fk_parent_id`=b.`post_id` AND a.`status`=".STAT_APPROVED." AND b.`is_public`=1 AND b.`status`=".STAT_APPROVED." ORDER BY a.`date_posted` DESC LIMIT ".$config['items'];
@@ -92,6 +93,9 @@ function upd_latest_comm_widg() {
 					$loop[$i]['post_url']=$rsrow['post_url'].'#comm'.$rsrow['comment_id'];
 				}
 				$loop[$i]['user']=$rsrow['_user'];
+				if (strlen($rsrow['title'])>$max_title_length) {
+					$rsrow['title']=substr($rsrow['title'],0,$max_title_length).'...';
+				}
 				$loop[$i]['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
 				++$i;
 			}
