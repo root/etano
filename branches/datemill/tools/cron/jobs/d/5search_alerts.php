@@ -10,7 +10,7 @@ function search_alerts() {
 	$config['limit_results']=5;
 	$query_strlen=20000;
 
-	$query="SELECT a.`search_id`,a.`fk_user_id`,a.`title`,a.`search`,a.`search_qs`,a.`alert_last_id`,b.`membership`,b.`".USER_ACCOUNT_USER."` as `user`,b.`email` FROM `{$dbtable_prefix}user_searches` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND a.`alert`=1";
+	$query="SELECT a.`search_id`,a.`fk_user_id`,a.`title`,a.`search`,a.`search_qs`,a.`alert_last_id`,b.`membership`,b.`".USER_ACCOUNT_USER."` as `user`,b.`email` FROM `{$dbtable_prefix}user_searches` a,`".USER_ACCOUNTS_TABLE."` b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND a.`alert`=1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$skin=get_default_skin_dir();

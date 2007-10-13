@@ -31,7 +31,7 @@ function delete_members() {
 		$query="DELETE FROM `{$dbtable_prefix}queue_message` WHERE `fk_user_id` IN ('".join("','",$all_uids)."') OR `fk_user_id_other` IN ('".join("','",$all_uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-		$query="DELETE FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$all_uids)."')";
+		$query="DELETE FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$all_uids)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$query="DELETE FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id` IN ('".join("','",$all_uids)."')";

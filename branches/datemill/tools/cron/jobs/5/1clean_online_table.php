@@ -26,7 +26,7 @@ function clean_online_table() {
 	}
 	if (!empty($to_update)) {
 		$now=gmdate('YmdHis');
-		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='$now' WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$to_update)."')";
+		$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `last_activity`='$now' WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$to_update)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 	return true;

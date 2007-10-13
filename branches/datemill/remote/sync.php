@@ -42,7 +42,7 @@ if (!empty($input['site_id'])) {
 	// this is a login backdoor with most of the code taken from processors/login.php
 	// instead of using the user/pass combination to login we rely on the license_md5 to be provided as a $_POST parameter.
 	// there should really be a login_user($user_id) function to take care of this.
-	$query="SELECT b.`".USER_ACCOUNT_ID."` as `user_id`,b.`".USER_ACCOUNT_USER."` as `user`,b.`status`,b.`membership` FROM `user_products` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND a.`fk_site_id`=".$input['site_id'];
+	$query="SELECT b.`".USER_ACCOUNT_ID."` as `user_id`,b.`".USER_ACCOUNT_USER."` as `user`,b.`status`,b.`membership` FROM `user_products` a,`".USER_ACCOUNTS_TABLE."` b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND a.`fk_site_id`=".$input['site_id'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$user=mysql_fetch_assoc($res);

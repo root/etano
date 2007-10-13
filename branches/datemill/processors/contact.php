@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		$config=get_site_option(array('mail_from','mail_crlf'),'core');
 		if (!empty($input['fk_user_id'])) {
-			$query="SELECT `email` FROM ".USER_ACCOUNTS_TABLE." WHERE `user_id`=".$input['fk_user_id'];
+			$query="SELECT `email` FROM `".USER_ACCOUNTS_TABLE."` WHERE `user_id`=".$input['fk_user_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['email']=mysql_result($res,0,0);
 		}

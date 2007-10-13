@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `".USER_ACCOUNT_PASS."`=".PASSWORD_ENC_FUNC."('".$input['pass']."') WHERE `".USER_ACCOUNT_ID."`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+		$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `".USER_ACCOUNT_PASS."`=".PASSWORD_ENC_FUNC."('".$input['pass']."') WHERE `".USER_ACCOUNT_ID."`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 		if (isset($_on_before_update)) {
 			for ($i=0;isset($_on_before_update[$i]);++$i) {
 				call_user_func($_on_before_update[$i]);
