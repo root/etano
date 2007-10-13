@@ -38,4 +38,5 @@ $tplvars['css']='thankyou.css';
 if (is_file('thankyou_left.php')) {
 	include 'thankyou_left.php';
 }
+$no_timeout=true;
 include 'frame.php';

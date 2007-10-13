@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007092501
+File version:				1.2007101201
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -790,37 +790,39 @@ function general_error($errlevel,$message,$file='unset',$line='unset') {
 
 	require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 	new log_error($error);
-	if (defined('_DEBUG_') && _DEBUG_!=0) {
+	if (defined('_DEBUG_') && _DEBUG_!=0 && ini_get('display_errors')!=0) {
 		if (_DEBUG_==1) {
 			$error['text']=$message."\n<br /> Line: $line\n<br />File: $file\n<br />";
 		} elseif (_DEBUG_==2) {
 			// same full error
 			// $error['text']=$error['text'];
 		}
-	} else {
+		new log_error($error,array('log_mode'=>_ERRORLOG_STDOUT_));
+	} elseif ($errlevel==E_USER_ERROR) {
 		$error['text']='Sorry, a critical error has occured. If you are the site administrator please check out the error log to see the actual error.';
+		new log_error($error,array('log_mode'=>_ERRORLOG_STDOUT_));
 	}
-	new log_error($error,array('log_mode'=>_ERRORLOG_STDOUT_));
-	if ($errlevel==E_USER_ERROR || (defined('_DEBUG_') && _DEBUG_!=0)) {
+	if ($errlevel==E_USER_ERROR) {
+		exit;
+	} elseif (defined('_DEBUG_') && _DEBUG_!=0 && ini_get('display_errors')!=0) {
 		exit;
 	}
 }
 
-
-function array2qs($myarray,$excluded_keys=array()) {
-	$myreturn="";
+function array2qs($myarray,$excluded_keys=array(),$sep='&') {
+	$myreturn='';
 	while (list($k,$v)=each($myarray)) {
 		if (!in_array($k,$excluded_keys)) {
 			if (is_array($v)) {
 				while (list($subk,$subv)=each($v)) {
-					$myreturn.=$k.'%5B'.$subk.'%5D'.'='.urlencode($subv).'&';
+					$myreturn.=$k.'%5B'.$subk.'%5D'.'='.urlencode($subv).$sep;
 				}
 			} else {
-				$myreturn.=$k.'='.urlencode($v).'&';
+				$myreturn.=$k.'='.urlencode($v).$sep;
 			}
 		}
 	}
-	$myreturn=substr($myreturn,0,-1);
+	$myreturn=substr($myreturn,0,-strlen($sep));
 	return $myreturn;
 }
 
@@ -840,7 +842,7 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	$params=array();
 	$params=array_merge($_GET,$_POST);
 	unset($params['o'],$params['r'],$params['PHPSESSID']);
-	$qs=array2qs($params,array('PHPSESSID'));
+	$qs=array2qs($params,array('PHPSESSID'),'&amp;');
 	$myrand=mt_rand(1000,2000);
 	if (empty($results)) {
 		$results=10;

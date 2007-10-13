@@ -23,14 +23,13 @@ require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/strings.inc.php';
 $_pfields=array();
 $_pcats=array();
 require_once 'fields.inc.php';
-if (isset($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	$_SESSION[_LICENSE_KEY_]['user']['user_id']=(int)$_SESSION[_LICENSE_KEY_]['user']['user_id'];
-}
-if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+	$tplvars['user_logged']=true;
+} else {
 	$_SESSION[_LICENSE_KEY_]['user']['user']='guest';
 	$_SESSION[_LICENSE_KEY_]['user']['membership']=1;
-} else {
-	$tplvars['user_logged']=true;
+	$_SESSION[_LICENSE_KEY_]['user']['pstat']=STAT_PENDING;
 }
 $tplvars['myself']=$_SESSION[_LICENSE_KEY_]['user'];
 $GLOBALS['_list_of_online_members']=get_online_ids();
@@ -73,10 +72,6 @@ function check_login_member($level_code) {
 	}
 	// ask visitors to login if they land on a page that doesn't allow guests
 	if (!($GLOBALS['_access_level'][$level_code]&1) && empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
-		$mysession=session_id();
-		if (empty($mysession)) {
-			session_start();
-		}
 		$_SESSION[_LICENSE_KEY_]['user']['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
 		redirect2page('login.php');
 	}
@@ -107,16 +102,6 @@ function check_login_member($level_code) {
 		log_user_action($log);
 		rate_limiter($log);
 	}
-}
-
-
-function allow_at_level($level_code,$membership=1) {
-	$myreturn=false;
-	$membership=(int)$membership;
-	if (isset($GLOBALS['_access_level'][$level_code]) && ($GLOBALS['_access_level'][$level_code]&$membership)==$membership) {
-		$myreturn=true;
-	}
-	return $myreturn;
 }
 
 

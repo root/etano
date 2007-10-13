@@ -11,5 +11,5 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-$access_levels_default['defaults']=array('level_id'=>0,'level_code'=>'','level_diz'=>'','level'=>0);
-$access_levels_default['types']=array('level_id'=>FIELD_INT,'level_code'=>FIELD_TEXTFIELD,'level_diz'=>FIELD_TEXTFIELD,'level'=>FIELD_INT);
+$access_levels_default['defaults']=array('level_id'=>0,'level_code'=>'','level_diz'=>'','level'=>0,'allow_na'=>0);
+$access_levels_default['types']=array('level_id'=>FIELD_INT,'level_code'=>FIELD_TEXTFIELD,'level_diz'=>FIELD_TEXTFIELD,'level'=>FIELD_INT,'allow_na'=>FIELD_INT);

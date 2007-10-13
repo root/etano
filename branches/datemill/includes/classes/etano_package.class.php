@@ -223,7 +223,7 @@ class etano_package {
 					} else {
 						$force_revision=false;
 					}
-					if (!$this->_do_diff($this->package_path.'/'.$mod_command->firstChild->nodeValue,$force_revision,true)) {
+					if (!$this->_do_diff($this->package_path.'/'.$mod_command->firstChild->nodeValue,$force_revision)) {
 						$this->error=true;
 						$masize=count($this->manual_actions);
 						$this->manual_actions[$masize]['type']='diff';

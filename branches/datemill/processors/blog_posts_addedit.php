@@ -15,7 +15,6 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/blog_posts.inc.php';
-require_once '../includes/triggers.inc.php';
 check_login_member('write_blogs');
 
 if (is_file(_BASEPATH_.'/events/processors/blog_posts_addedit.php')) {
@@ -120,7 +119,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 
 			if (empty($config['manual_blog_approval'])) {
-				on_after_approve_blog_post(array($input['post_id']));
+				if (isset($_on_after_approve)) {
+					$GLOBALS['post_ids']=array($input['post_id']);
+					for ($i=0;isset($_on_after_approve[$i]);++$i) {
+						call_user_func($_on_after_approve[$i]);
+					}
+				}
 				$topass['message']['text']='Post added.';	// translate this
 			} else {
 				$topass['message']['text']='Post added. It will be reviewed and published shortly.';	// translate this
