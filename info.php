@@ -68,7 +68,7 @@ switch ($type) {
 			$active_gateways[$rsrow['module_code']]=$rsrow['module_name'];
 		}
 
-		$query="SELECT `subscr_id`,`subscr_name`,`subscr_diz` FROM `{$dbtable_prefix}subscriptions` WHERE `is_visible`=1 AND `m_value_to`>".$_SESSION[_LICENSE_KEY_]['user']['membership'];
+		$query="SELECT `subscr_id`,`subscr_name`,`subscr_diz` FROM `{$dbtable_prefix}subscriptions` WHERE `is_visible`=1";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$subscriptions=array();
 		while ($rsrow=mysql_fetch_assoc($res)) {
@@ -96,4 +96,5 @@ $tplvars['css']='info.css';
 if (is_file('info_left.php')) {
 	include 'info_left.php';
 }
+$no_timeout=true;
 include 'frame.php';

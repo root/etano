@@ -95,7 +95,7 @@ function get_module_codes_by_type($module_type) {
 // Make sure that the string is clean before calling this function
 function bbcode2html($str) {
 	$from=array('~\[url=(http://[^<">\[\]]*?)\](.*?)\[/url\]~','~\[b\](.*?)\[/b\]~s','~\[u\](.*?)\[/u\]~s','~\[quote\](.*?)\[/quote\]~s','~\[img=(http://[^<">\(\)\[\]]*?)\]~');
-	$to=array('<a class="content-link simple" target="_blank" rel="nofollow" href="$1">$2</a>','<strong>$1</strong>','<span class="underline">$1</span>','<blockquote>$1</blockquote>','<img src="$1" />');
+	$to=array('<a class="content-link simple" rel="external" href="$1">$2</a>','<strong>$1</strong>','<span class="underline">$1</span>','<blockquote>$1</blockquote>','<img src="$1" />');
 	$str=preg_replace($from,$to,$str);
 	// leftovers
 	$from=array('~\[url=(http://[^<">\(\)\[\]]*?)\]~','~\[/url\]~','~\[b\]~','~\[/b\]~','~\[u\]~','~\[/u\]~','~\[quote\]~','~\[/quote\]~','~\[img=(http://[^<">\(\)\[\]]*?)\]~');
@@ -522,6 +522,16 @@ function get_online_ids() {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
 		$myreturn[mysql_result($res,$i,0)]=1;
+	}
+	return $myreturn;
+}
+
+
+function allow_at_level($level_code,$membership=1) {
+	$myreturn=false;
+	$membership=(int)$membership;
+	if (isset($GLOBALS['_access_level'][$level_code]) && ($GLOBALS['_access_level'][$level_code]&$membership)==$membership) {
+		$myreturn=true;
 	}
 	return $myreturn;
 }

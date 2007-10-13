@@ -7,7 +7,7 @@ function clean_online_table() {
 
 	$query="SELECT `fk_user_id`,UNIX_TIMESTAMP(`last_activity`) as `last_activity` FROM `{$dbtable_prefix}online`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$time=gmmktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('Y'));
+	$time=gmmktime(date('H'));
 	$config['inactive_time']*=60; // to get seconds
 	$to_del=array();
 	$to_update=array();

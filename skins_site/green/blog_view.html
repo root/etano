@@ -7,7 +7,7 @@
 	<span class="post_by">Posted by <!--opt name="loop.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"-->{loop.user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--></span>
 	<span class="date_posted"> on {loop.date_posted}</span>
 	<!--opt name="loop.editable"--><span class="editable"><a class="content-link link_change" href="{tplvars.relative_url}blog_posts_addedit.php?post_id={loop.post_id}">Edit</a></span><!--/opt name="loop.editable"-->
-	<span class="comments"><!--opt name="loop.allow_comments"--><a class="content-link link_simple" href="{tplvars.relative_url}blog_post_view.php?bid={output.blog_id}&amp;pid={loop.post_id}">{loop.stat_comments} comments</a><!--/opt name="loop.allow_comments"--></span>
+	<span class="comments"><!--opt name="loop.allow_comments"--><a class="content-link simple" href="{tplvars.relative_url}blog_post_view.php?bid={output.blog_id}&amp;pid={loop.post_id}">{loop.stat_comments} comments</a><!--/opt name="loop.allow_comments"--></span>
 </div>
 <!--noloop name="loop"-->
 <p>Sorry, no posts yet.</p>

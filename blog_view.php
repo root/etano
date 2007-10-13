@@ -28,7 +28,7 @@ if (!empty($_GET['bid'])) {
 	if (is_file(_CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php')) {
 		include _CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php';
 	}
-	$output=&$blog;
+	$output=$blog;
 
 	$year=sanitize_and_format_gpc($_GET,'y',TYPE_INT,0,0);
 	$month=sanitize_and_format_gpc($_GET,'m',TYPE_INT,0,0);
