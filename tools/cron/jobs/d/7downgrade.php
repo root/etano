@@ -15,7 +15,7 @@ function downgrade() {
 	}
 	$query="UPDATE `{$dbtable_prefix}payments` SET `is_active`=1 WHERE `payment_id` IN ('".join("','",$payment_ids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`=2 WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$user_ids)."')";
+	$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `membership`=2 WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$user_ids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 	// it would be nice to send an email notification to these members.

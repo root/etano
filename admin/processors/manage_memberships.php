@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="SELECT max(`m_value`) FROM `{$dbtable_prefix}memberships` WHERE `m_value`<$m_value";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$lower_mvalue=mysql_result($res,0,0);
-				$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `membership`=$lower_mvalue WHERE `membership`=$m_value";
+				$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `membership`=$lower_mvalue WHERE `membership`=$m_value";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['type']=MESSAGE_INFO;
 				$topass['message']['text']='Membership deleted.';

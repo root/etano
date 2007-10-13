@@ -7,7 +7,7 @@ function upcoming_eot() {
 	$query_strlen=20000;
 
 	$now=gmdate('YmdHis');
-	$query="SELECT b.`email`,b.`".USER_ACCOUNT_USER."` as `user` FROM `{$dbtable_prefix}payments` a,".USER_ACCOUNTS_TABLE." b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND a.`paid_until`=curtime()-INTERVAL ".$config['days_before']." DAY AND a.`is_active`=1 AND a.`is_recurring`=0";
+	$query="SELECT b.`email`,b.`".USER_ACCOUNT_USER."` as `user` FROM `{$dbtable_prefix}payments` a,`".USER_ACCOUNTS_TABLE."` b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND a.`paid_until`=curtime()-INTERVAL ".$config['days_before']." DAY AND a.`is_active`=1 AND a.`is_recurring`=0";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$alerts=array();
 	while ($rsrow=mysql_fetch_assoc($res)) {

@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$log['ip']=sprintf('%u',ip2long($_SERVER['REMOTE_ADDR']));
 		log_user_action($log);
 		rate_limiter($log);
-		$query="SELECT a.`".USER_ACCOUNT_ID."` as `user_id`,a.`".USER_ACCOUNT_USER."` as `user`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity`,a.`email` FROM ".USER_ACCOUNTS_TABLE." a WHERE a.`".USER_ACCOUNT_USER."`='$user' AND a.`".USER_ACCOUNT_PASS."`=".PASSWORD_ENC_FUNC."('$pass')";
+		$query="SELECT a.`".USER_ACCOUNT_ID."` as `user_id`,a.`".USER_ACCOUNT_USER."` as `user`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity`,a.`email` FROM `".USER_ACCOUNTS_TABLE."` a WHERE a.`".USER_ACCOUNT_USER."`='$user' AND a.`".USER_ACCOUNT_PASS."`=".PASSWORD_ENC_FUNC."('$pass')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$user=mysql_fetch_assoc($res);
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if ($user['last_activity']<time()-$score_threshold) {
 					add_member_score($user['user_id'],'login');
 				}
-				$query="UPDATE ".USER_ACCOUNTS_TABLE." SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$user['user_id'];
+				$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$user['user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				unset($user['last_activity'],$user['email']);
 				$_SESSION[_LICENSE_KEY_]['user']=array_merge(isset($_SESSION[_LICENSE_KEY_]['user']) ? $_SESSION[_LICENSE_KEY_]['user'] : array(),$user);

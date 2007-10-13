@@ -130,7 +130,7 @@ if (mysql_num_rows($res)) {
 		$output['approved']=true;
 	}
 
-	$query="SELECT `status`,`skin` FROM ".USER_ACCOUNTS_TABLE." WHERE `".USER_ACCOUNT_ID."`=$uid";
+	$query="SELECT `status`,`skin` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`=$uid";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$account=mysql_fetch_assoc($res);
 	$account['status']=vector2options($accepted_astats,$account['status']);

@@ -15,7 +15,7 @@ define('_FTPPATH_','');
 define('_FTPUSER_','');
 define('_FTPPASS_','');
 $dbtable_prefix='dsb_';
-define('USER_ACCOUNTS_TABLE',"`{$dbtable_prefix}user_accounts`");
+define('USER_ACCOUNTS_TABLE',"{$dbtable_prefix}user_accounts");
 define('USER_ACCOUNT_ID','user_id');
 define('USER_ACCOUNT_USER','user');
 define('USER_ACCOUNT_PASS','pass');
