@@ -39,7 +39,7 @@ $properties=array();
 $properties['description']='Site news';
 $properties['link']=_BASEURL_;
 $properties['title']='Site news';
-$properties['dc:date']=gmmktime(date('H'));
+$properties['dc:date']=mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y'));
 $rss_writer_object->addchannel($properties);
 
 $query="SELECT `news_title`,`news_body`,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM `{$dbtable_prefix}site_news` ORDER BY `news_id` DESC";

@@ -11,9 +11,13 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-function update_stats($user_id,$stat,$add_val) {
+function update_stats($user_id,$stat,$add_val,$type='+') {
 	global $dbtable_prefix;
-	$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
+	if ($type=='+') {
+		$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
+	} else {
+		$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
+	}
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (!mysql_affected_rows()) {
 		$query="INSERT INTO `{$dbtable_prefix}user_stats` SET `fk_user_id`=$user_id,`stat`='$stat',`value`=$add_val";
@@ -514,10 +518,11 @@ function create_search_form($search_fields) {
 function get_online_ids() {
 	$myreturn=array();
 	global $dbtable_prefix;
-	$query="SELECT DISTINCT `fk_user_id` FROM `{$dbtable_prefix}online` WHERE `fk_user_id`<>0";
+	// get the user and the last login/logout time.
+	$query="SELECT DISTINCT a.`fk_user_id`,UNIX_TIMESTAMP(b.`last_activity`) as `last_activity` FROM `{$dbtable_prefix}online` a,`".USER_ACCOUNTS_TABLE."` b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND a.`fk_user_id`<>0";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
-		$myreturn[mysql_result($res,$i,0)]=1;
+		$myreturn[mysql_result($res,$i,0)]=mysql_result($res,$i,1);	// this is already a gmdate
 	}
 	return $myreturn;
 }

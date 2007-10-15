@@ -29,7 +29,6 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 } else {
 	$_SESSION[_LICENSE_KEY_]['user']['user']='guest';
 	$_SESSION[_LICENSE_KEY_]['user']['membership']=1;
-	$_SESSION[_LICENSE_KEY_]['user']['pstat']=STAT_PENDING;
 }
 $tplvars['myself']=$_SESSION[_LICENSE_KEY_]['user'];
 $GLOBALS['_list_of_online_members']=get_online_ids();

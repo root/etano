@@ -84,7 +84,7 @@ if (!empty($_GET['bid'])) {
 	}
 }
 
-$output['return2me']="blog_view.php";
+$output['return2me']='blog_view.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
 	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }

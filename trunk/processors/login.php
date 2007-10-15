@@ -40,15 +40,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$user['membership']=(int)$user['membership'];
 			$user['user_id']=(int)$user['user_id'];
 			if ($user['status']==ASTAT_ACTIVE) {
+				$time=mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y'));
 				$user['prefs']=get_user_settings($user['user_id'],'def_user_prefs',array('date_format','datetime_format','time_offset','rate_my_photos','profile_comments'));
-				if ($user['last_activity']<time()-$score_threshold) {
+				if ($user['last_activity']<$time-$score_threshold) {
 					add_member_score($user['user_id'],'login');
 				}
 				$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$user['user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				unset($user['last_activity'],$user['email']);
 				$_SESSION[_LICENSE_KEY_]['user']=array_merge(isset($_SESSION[_LICENSE_KEY_]['user']) ? $_SESSION[_LICENSE_KEY_]['user'] : array(),$user);
-				$_SESSION[_LICENSE_KEY_]['user']['loginout']=time();
+				$_SESSION[_LICENSE_KEY_]['user']['loginout']=$time;
 				if (isset($_SESSION[_LICENSE_KEY_]['user']['timedout']['url'])) {
 					$next=$_SESSION[_LICENSE_KEY_]['user']['timedout'];
 					unset($_SESSION[_LICENSE_KEY_]['user']['timedout']);

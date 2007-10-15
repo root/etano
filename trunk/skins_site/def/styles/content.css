@@ -298,6 +298,7 @@ ul.pager li.rpp {
 ul.pager li.last {
 	float:none;
 	clear:both;
+	border: none;
 }
 
 

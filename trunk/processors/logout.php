@@ -28,6 +28,10 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	}
 	@mysql_query($query);
 	add_member_score($_SESSION[_LICENSE_KEY_]['user']['user_id'],'logout');
+
+	$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$_SESSION[_LICENSE_KEY_]['user']['user_id'];
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+
 	if (isset($_on_after_insert)) {
 		for ($i=0;isset($_on_after_insert[$i]);++$i) {
 			call_user_func($_on_after_insert[$i]);
@@ -37,7 +41,7 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 
 $_SESSION[_LICENSE_KEY_]['user']=array();
 unset($_SESSION[_LICENSE_KEY_]['user']);
-$_SESSION[_LICENSE_KEY_]['user']['loginout']=time();
+$_SESSION[_LICENSE_KEY_]['user']['loginout']=mktime(gmdate('H'));
 header('Expires: Mon,26 Jul 1997 05:00:00 GMT');
 header('Last-Modified: '. gmdate('D,d M Y H:i:s').' GMT');
 header('Cache-Control: no-store,no-cache,must-revalidate',false);
