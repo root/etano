@@ -54,7 +54,7 @@ function search_alerts() {
 						}
 					}
 					if (!empty($temp)) {
-						$time=gmmktime(date('H'));
+						$time=mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y'));
 						$query="SELECT `".USER_ACCOUNT_ID."` as `uid`,UNIX_TIMESTAMP(`last_activity`) as `last_activity` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$temp)."')";
 						if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 						while ($rsrow2=mysql_fetch_assoc($res2)) {

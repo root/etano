@@ -15,8 +15,6 @@ not checked. In felul asta userul poate sa isi aleaga ce se afiseaza
 
 - cauta "translate" ca sa gasesti toate stringurile de tradus hardcodate in scripts.
 
-- de verif toate check_login_member() ca au id-urile nashpa (networks.php)
-
 - generatorul de cache care ruleaza la 10 minute ar trebui sa decida daca sa stearga site_search-ul sau nu.
 	daca nu a adaugat/modificat nici un user nu are rost...
 

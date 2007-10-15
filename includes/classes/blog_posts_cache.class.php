@@ -19,6 +19,10 @@ class blog_posts_cache {
 	}
 
 	function get_post($post_id,$short=true) {
+		global $page_last_modified_time;
+		if (!isset($page_last_modified_time)) {
+			$page_last_modified_time=0;
+		}
 		$post=array();
 		$post_id=(string)$post_id;
 		if ($short) {
@@ -28,6 +32,12 @@ class blog_posts_cache {
 		}
 		if (is_file($file)) {
 			include_once($file);
+			if ($page_last_modified_time<$post['date_posted']) {
+				$page_last_modified_time=$post['date_posted'];
+			}
+			if (isset($GLOBALS['_list_of_online_members'][$post['fk_user_id']]) && $page_last_modified_time<$GLOBALS['_list_of_online_members'][$post['fk_user_id']]) {
+				$page_last_modified_time=$GLOBALS['_list_of_online_members'][$post['fk_user_id']];
+			}
 		} else {
 			$post=false;
 		}
@@ -36,6 +46,10 @@ class blog_posts_cache {
 
 
 	function get_tpl_array($post_ids,$short=true) {
+		global $page_last_modified_time;
+		if (!isset($page_last_modified_time)) {
+			$page_last_modified_time=0;
+		}
 		$myreturn=array();
 		if (!is_array($post_ids)) {
 			$post_ids=array($post_ids);
@@ -49,6 +63,12 @@ class blog_posts_cache {
 			}
 			if (is_file($file)) {
 				include $file;
+				if ($page_last_modified_time<$post['date_posted']) {
+					$page_last_modified_time=$post['date_posted'];
+				}
+				if (isset($GLOBALS['_list_of_online_members'][$post['fk_user_id']]) && $page_last_modified_time<$GLOBALS['_list_of_online_members'][$post['fk_user_id']]) {
+					$page_last_modified_time=$GLOBALS['_list_of_online_members'][$post['fk_user_id']];
+				}
 				$myreturn[]=$post;
 			}
 		}

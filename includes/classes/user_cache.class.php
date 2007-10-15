@@ -21,17 +21,28 @@ class user_cache {
 	}
 
 	function get_cache($user_id,$part) {
+		global $page_last_modified_time;
+		if (!isset($page_last_modified_time)) {
+			$page_last_modified_time=0;
+		}
 		$myreturn='';
 		$user_id=(string)$user_id;
 		$file=$this->disk_path.$user_id{0}.'/'.$user_id.'/'.$part.'.html';
 		if (is_file($file)) {
 			$myreturn=file_get_contents($file);
 		}
+		if (isset($GLOBALS['_list_of_online_members'][(int)$user_id]) && $page_last_modified_time<$GLOBALS['_list_of_online_members'][(int)$user_id]) {
+			$page_last_modified_time=$GLOBALS['_list_of_online_members'][(int)$user_id];
+		}
 		return $myreturn;
 	}
 
 
 	function get_cache_array($user_ids,$part,$inject_by_uid=array()) {
+		global $page_last_modified_time;
+		if (!isset($page_last_modified_time)) {
+			$page_last_modified_time=0;
+		}
 		$myreturn=array();
 		for ($i=0;!empty($user_ids[$i]);++$i) {
 			$user_ids[$i]=(string)$user_ids[$i];
@@ -46,6 +57,9 @@ class user_cache {
 				} else {
 					$myreturn[]=file_get_contents($file);
 				}
+				if (isset($GLOBALS['_list_of_online_members'][(int)$user_ids[$i]]) && $page_last_modified_time<$GLOBALS['_list_of_online_members'][(int)$user_ids[$i]]) {
+					$page_last_modified_time=$GLOBALS['_list_of_online_members'][(int)$user_ids[$i]];
+				}
 			}
 		}
 		return $myreturn;
@@ -57,6 +71,10 @@ class user_cache {
 	*	$destination='tpl' to return in tpl format
 	*/
 	function get_cache_beta($user_ids,$parts,$destination='') {
+		global $page_last_modified_time;
+		if (!isset($page_last_modified_time)) {
+			$page_last_modified_time=0;
+		}
 		$myreturn='';
 		if (!is_array($user_ids)) {
 			$user_ids=array($user_ids);
@@ -74,6 +92,9 @@ class user_cache {
 						if (isset($GLOBALS['_list_of_online_members'][(int)$user_ids[$id]])) {
 							$myreturn[$id]['is_online']='is_online';
 							$myreturn[$id]['user_online_status']='is online';	// translate
+							if ($page_last_modified_time<$GLOBALS['_list_of_online_members'][(int)$user_ids[$id]]) {
+								$page_last_modified_time=$GLOBALS['_list_of_online_members'][(int)$user_ids[$id]];
+							}
 						} else {
 							$myreturn[$id]['is_online']='is_offline';
 							$myreturn[$id]['user_online_status']='is offline';	// translate

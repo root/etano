@@ -18,7 +18,7 @@ function gen_blog_feeds() {
 		$properties['description']='Latest Blogs on '._SITENAME_;
 		$properties['link']=_BASEURL_;
 		$properties['title']='Latest Blogs';
-//		$properties['dc:date']=gmmktime(date('H'));
+//		$properties['dc:date']=mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y'));
 		$rss_writer_object->addchannel($properties);
 
 		$query="SELECT `post_id`,`alt_url`,UNIX_TIMESTAMP(`date_posted`) as `date_posted`,`title`,`post_content` FROM `{$dbtable_prefix}blog_posts` WHERE `status`=".STAT_APPROVED." AND `is_public`=1 ORDER BY `date_posted` DESC LIMIT 10";
@@ -69,7 +69,7 @@ function gen_comment_feeds() {
 		$properties['description']='Latest blog comments on '._SITENAME_;
 		$properties['link']=_BASEURL_;
 		$properties['title']='Latest Blog Comments';
-//		$properties['dc:date']=gmmktime(date('H'));
+//		$properties['dc:date']=mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y'));
 		$rss_writer_object->addchannel($properties);
 
 		$query="SELECT a.`comment_id`,a.`fk_user_id`,c.`alt_url` as `profile_url`,a.`_user`,a.`comment`,b.`post_id`,b.`title`,b.`alt_url` as `post_url` FROM `{$dbtable_prefix}blog_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` c ON a.`fk_user_id`=c.`fk_user_id`,`{$dbtable_prefix}blog_posts` b WHERE a.`fk_parent_id`=b.`post_id` AND a.`status`=".STAT_APPROVED." AND b.`is_public`=1 AND b.`status`=".STAT_APPROVED." ORDER BY a.`date_posted` DESC LIMIT 10";

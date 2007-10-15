@@ -81,7 +81,7 @@
 }
 
 #mailbox_form .subject {
-	width: 415px;
+	width: 410px;
 	overflow: hidden;
 }
 
@@ -98,7 +98,7 @@
 }
 
 #mailbox_form .date {
-	width: 70px;
+	width: 75px;
 }
 
 /* PAGER */
