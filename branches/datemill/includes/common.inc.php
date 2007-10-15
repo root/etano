@@ -27,6 +27,9 @@ if (_DEBUG_!=0) {
 	ini_set('display_errors',0);
 }
 
+define('ETANO_PROD_ID',19);
+define('LK_SECRET','ema');
+
 // account status
 define('ASTAT_SUSPENDED',5);
 define('ASTAT_UNVERIFIED',10);

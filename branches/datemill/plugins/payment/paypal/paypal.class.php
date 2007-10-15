@@ -62,8 +62,8 @@ class payment_paypal extends ipayment {
 		$myreturn='<form action="https://'.$this->form_page.'/cgi-bin/webscr" method="post" id="payment_paypal">
 		<input type="hidden" name="cmd" value="_xclick-subscriptions" />
 		<input type="hidden" name="business" value="'.$this->config['paypal_email'].'" />
-		<input type="hidden" name="return" value="'._BASEURL_.'/thankyou.php?p=paypal" />
-		<input type="hidden" name="notify_url" value="'._BASEURL_.'/processors/ipn.php?p=paypal" />
+		<input type="hidden" name="return" value="'._BASEURL_.'/thankyou.php?p='.$this->module_code.'" />
+		<input type="hidden" name="notify_url" value="'._BASEURL_.'/processors/ipn.php?p='.$this->module_code.'" />
 		<input type="hidden" name="cancel_return" value="'._BASEURL_.'" />
 		<input type="hidden" name="item_name" value="'.$this->payment['subscr_name'].'" />
 		<input type="hidden" name="item_number" value="'.$this->payment['subscr_id'].'" />

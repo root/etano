@@ -44,12 +44,15 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 	}
 
 	if ($_GET['t']=='p') {
-		$query="SELECT `fk_user_id` FROM `user_products` WHERE `fk_site_id`=".$input['site_id']." AND `fk_prod_id`=".$input['id'];
+		$query="SELECT `uprod_id` FROM `user_products` WHERE `fk_site_id`=".$input['site_id']." AND `fk_prod_id`=".$input['id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (!mysql_num_rows($res)) {
 			$topass['message']['type']=MESSAGE_ERROR;
 			$topass['message']['text']='You need to buy this product first.';
 			redirect2page('purchase.php',$topass);
+		} else {
+			$query="UPDATE `user_products` SET `downloads`=`downloads`+1 WHERE `uprod_id`=".mysql_result($res,0,0);
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	}
 
