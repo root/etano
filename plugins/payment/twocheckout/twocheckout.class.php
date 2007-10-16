@@ -112,12 +112,16 @@ class payment_twocheckout extends ipayment {
 		foreach ($this->from_tco['types'] as $k=>$v) {
 			$input[$k]=sanitize_and_format_gpc($_POST,$k,$GLOBALS['__field2type'][$v],$GLOBALS['__field2format'][$v],$this->from_tco['defaults'][$k]);
 		}
+		$input['x_amount']=number_format($input['x_amount'],2,'.','');
+		$input['x_Email']=strtolower($input['x_Email']);
+		$input['card_holder_name']=ucfirst(strtolower($input['card_holder_name']));
+
 		if (strcasecmp($input['x_2checked'],'Y')==0) {
 			if ($this->config['demo_mode']==1 && strcasecmp($input['demo'],'Y')==0) {
 				$input['x_trans_id']=1;
 			}
 			if ($input['x_response_code']==1) {	// processed ok
-				if (strcasecmp($input['x_MD5_Hash'],md5($this->config['secret'].$this->config['sid'].$input['x_trans_id'].$input['x_amount']))==0) {
+				if (strcasecmp($input['x_MD5_Hash'],strtoupper(md5($this->config['secret'].$this->config['sid'].$input['x_trans_id'].$input['x_amount'])))==0) {
 					$query="SELECT `".USER_ACCOUNT_ID."` as `user_id`,`".USER_ACCOUNT_USER."` as `user` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`=".$input['user_id'];
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					if (mysql_num_rows($res)) {

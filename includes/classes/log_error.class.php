@@ -7,7 +7,7 @@ class log_error {
 	var $config=array();
 	var $module_code='log';
 
-	function log_error(&$error,$config=array()) {
+	function log_error($error,$config=array()) {
 		$this->_init();
 		$this->config=array_merge($this->config,$config);
 		$error=array_merge(array('module_name'=>'','text'=>''),$error);
