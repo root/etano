@@ -21,7 +21,7 @@ class fraud_maxmind extends ifraud {
 				$header='GET /a?l='.$this->config['license_key'].'&i='.$_SERVER['REMOTE_ADDR']." HTTP/1.0\r\n";
 				$header.="Host: www.maxmind.com\r\n";
 				$header.="Connection: close\r\n";
-				fputs($socket,$header."\r\n");
+					fputs($socket,$header."\r\n");
 				$reply='';
 				$headerdone=false;
 				while(!feof($socket)) {
@@ -36,19 +36,21 @@ class fraud_maxmind extends ifraud {
 				}
 				fclose($socket);
 				$reply=trim($reply);
-				require_once(_BASEPATH_.'/includes/iso3166.inc.php');
-				if (isset($iso3166[$reply])) {
-					if (strcasecmp($iso3166[$reply],$pay_result['country'])!=0) {
+				require_once _BASEPATH_.'/includes/iso31661a2.inc.php';
+				if (isset($iso31661a2[$reply])) {
+					if (strcasecmp($iso31661a2[$reply],$pay_result['country'])!=0) {
 						$myreturn=true;
-						$this->set_fraud_reason('Credit card from: '.$pay_result['country'].'. User IP from: '.$iso3166[$reply]);
+						$this->set_fraud_reason('Credit card from: '.$pay_result['country'].'. User IP from: '.$iso31661a2[$reply]);
 					}
 				} else {
+					$myreturn=true;
+					$this->set_fraud_reason('Invalid country code for your IP address. Please contact administrator.');
 					require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-					new log_error(get_class($this),$reply.' country code not found in iso3166.inc.php file');
+					new log_error(array('module_name'=>get_class($this),'text'=>$reply.' country code not found in iso31661a2.inc.php file or invalid answer from maxmind'));
 				}
 			} else {
 				require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-				new log_error(get_class($this),'Unable to connect to maxmind server: '.$errstr);
+				new log_error(array('module_name'=>get_class($this),'text'=>'Unable to connect to maxmind server: '.$errstr));
 			}
 		}
 		return $myreturn;

@@ -36,20 +36,59 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 		if (empty($input['active'])) {
 			die('Sorry, you\'re not allowed to download from our server.');
 		}
-		if (empty($input['baseurl'])) {
+		// to download updates we must know their baseurl
+		if (empty($input['baseurl']) && $_GET['t']=='u') {
 			$topass['message']['type']=MESSAGE_ERROR;
 			$topass['message']['text']='Please enter your site URL first.';
 			redirect2page('site_edit.php',$topass,'site_id='.$input['site_id']);
 		}
+	} else {
+		die('Sorry, we cannot figure out who you are. Please contact us if you think this is an error.');
 	}
 
 	if ($_GET['t']=='p') {
 		$query="SELECT `uprod_id` FROM `user_products` WHERE `fk_site_id`=".$input['site_id']." AND `fk_prod_id`=".$input['id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (!mysql_num_rows($res)) {
-			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='You need to buy this product first.';
-			redirect2page('purchase.php',$topass);
+			// so they do not have this product listed as purchased but maybe they're trying to download a
+			// bundle. Let's see if this prod is a bundle of already purchased prods
+			$query="SELECT `bundle_of` FROM `products` WHERE `prod_id`=".$input['id'];
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				$prods=explode('|',mysql_result($res,0,0));
+				if (!empty($prods)) {
+					$query="SELECT a.`uprod_id`,b.`filename` FROM `user_products` a LEFT JOIN `products` b ON a.`fk_prod_id`=b.`prod_id` WHERE a.`fk_site_id`=".$input['site_id']." AND a.`fk_prod_id` IN ('".join("','",$prods)."')";
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+					$dlds=array();
+					$uprod_ids=array();
+					while ($rsrow=mysql_fetch_assoc($res)) {
+						$uprod_ids[]=$rsrow['uprod_id'];
+						if (!empty($rsrow['filename'])) {
+							$dlds[]=$rsrow['uprod_id'];
+						}
+					}
+					if (count($uprod_ids)==count($prods)) {
+						// what dayaknow, it is a bundle of purchased prods!
+						$query="UPDATE `user_products` SET `downloads`=`downloads`+1 WHERE `uprod_id` IN ('".join("','",$dlds)."')";
+						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+					} else {
+						// it is a bundle but they don't own all prods of the bundle.
+						$topass['message']['type']=MESSAGE_ERROR;
+						$topass['message']['text']='You need to buy this product first.';
+						redirect2page('purchase.php',$topass);
+					}
+				} else {
+					// this is not a bundle. They really are trying to download a product they didn't purchase
+					$topass['message']['type']=MESSAGE_ERROR;
+					$topass['message']['text']='You need to buy this product first.';
+					redirect2page('purchase.php',$topass);
+				}
+			} else {
+				// not even a product. Let's redirect them to purchase anyway, maybe they change their mind
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']='You need to buy this product first.';
+				redirect2page('purchase.php',$topass);
+			}
 		} else {
 			$query="UPDATE `user_products` SET `downloads`=`downloads`+1 WHERE `uprod_id`=".mysql_result($res,0,0);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -68,6 +107,8 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 			header("Content-transfer-encoding: binary");
 			header('Content-length: '.$size);
 			readfile(_BASEPATH_.'/dafilez/'.$table.'/'.$filename);
+		} else {
+			die('No file to download for this product.');
 		}
 	}
 } else {

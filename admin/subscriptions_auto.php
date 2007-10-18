@@ -25,7 +25,7 @@ $query="SELECT count(*) FROM $from WHERE $where";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $totalrows=mysql_result($res,0,0);
 
-$date_format=get_site_option('date_format','core');
+$date_format=get_site_option('date_format','def_user_prefs');
 $subscriptions_auto=array();
 if (!empty($totalrows)) {
 	// create the $pfields helper array for easier access to fields by dbfield

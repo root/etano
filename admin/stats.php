@@ -35,6 +35,18 @@ $query="SELECT count(*) FROM `{$dbtable_prefix}blog_posts`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $output['num_blog_posts']=mysql_result($res,0,0);
 
+$query="SELECT count(*) as `stat_total`,`level_code` FROM `{$dbtable_prefix}site_log` WHERE `level_code`<>'all' AND `level_code`<>'auth' GROUP BY `level_code` ORDER BY `stat_total` DESC LIMIT 3";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$output['popular_actions']='';
+$i=1;
+while ($rsrow=mysql_fetch_assoc($res)) {
+	$output['popular_actions'].=$i.': '.$rsrow['level_code'].', ';
+	++$i;
+}
+if (!empty($output['popular_actions'])) {
+	$output['popular_actions']=substr($output['popular_actions'],0,-2);
+}
+
 $tpl->set_file('content','stats.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);

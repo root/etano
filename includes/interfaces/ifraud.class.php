@@ -28,7 +28,7 @@ class ifraud {
 	}
 
 	function set_fraud_reason($fraud_reason) {
-		$this->fraud_reason=$reason;
+		$this->fraud_reason=$fraud_reason;
 	}
 
 	function _init() {
