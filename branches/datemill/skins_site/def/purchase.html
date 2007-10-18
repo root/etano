@@ -5,14 +5,14 @@
 <dl class="product clearfix">
 	<dt><strong>Etano - community script</strong> - $180 USD</dt>
 	<dd>
-		<form target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<form target="paypal" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 		<input type="hidden" name="cmd" value="_xclick" />
 		<input type="hidden" name="business" value="paypal@sco.ro" />
 		<input type="hidden" name="return" value="{tplvars.baseurl}/thankyou.php?p=paypal" />
 		<input type="hidden" name="notify_url" value="{tplvars.baseurl}/processors/ipn.php?p=paypal&type=prod" />
 		<input type="hidden" name="cancel_return" value="{tplvars.baseurl}/purchase.php" />
 		<input type="hidden" name="item_name" value="Etano - community builder" />
-		<input type="hidden" name="item_number" value="4" />
+		<input type="hidden" name="item_number" value="19" />
 		<input type="hidden" name="custom" value="" />
 		<input type="hidden" name="amount" id="amount" value="180" />
 		<input type="hidden" name="quantity" value="1" />
@@ -32,12 +32,14 @@
 		<input type="hidden" name="x_receipt_link_url" value="{tplvars.baseurl}/thankyou.php?p=twocheckout">
 		<input type="hidden" name="x_invoice_num" value="1" />
 		<input type="hidden" name="x_amount" value="180" />
+		<input type="hidden" name="c_price" value="180" />
 		<input type="hidden" name="c_prod" value="19" />
 		<input type="hidden" name="c_name" value="Etano - community script" />
 		<input type="hidden" name="c_description" value="" />
 		<input type="hidden" name="internal_id" value="19" />
 		<input type="hidden" name="c_tangible" value="N" />
 		<input type="hidden" name="demo" value="Y" />
+		<input type="hidden" name="dm_item_type" value="prod" />
 		<input type="submit" class="button" value="Buy from 2Checkout" />
 		</form>
 	</dd>
@@ -53,7 +55,7 @@
 		<input type="hidden" name="notify_url" value="{tplvars.baseurl}/processors/ipn.php?p=paypal&type=prod">
 		<input type="hidden" name="cancel_return" value="{tplvars.baseurl}/purchase.php">
 		<input type="hidden" name="item_name" value="Etano - community builder plus INSTALL">
-		<input type="hidden" name="item_number" value="4">
+		<input type="hidden" name="item_number" value="20">
 		<input type="hidden" name="custom" value="">
 		<input type="hidden" name="amount" id="amount" value="205">
 		<input type="hidden" name="quantity" value="1">
@@ -71,13 +73,16 @@
 		<input type="hidden" name="fixed" value="Y" />
 		<input type="hidden" name="pay_method" value="CC" />
 		<input type="hidden" name="x_receipt_link_url" value="{tplvars.baseurl}/thankyou.php?p=twocheckout">
-		<input type="hidden" name="x_invoice_num" value="1" />
+		<input type="hidden" name="x_invoice_num" value="inv12345" />
 		<input type="hidden" name="x_amount" value="205" />
-		<input type="hidden" name="c_prod" value="2" />
+		<input type="hidden" name="c_price" value="205" />
+		<input type="hidden" name="c_prod" value="20" />
 		<input type="hidden" name="c_name" value="Etano - community script plus INSTALL" />
 		<input type="hidden" name="c_description" value="The Etano application plus install services provided by Datemill.com" />
 		<input type="hidden" name="c_tangible" value="N" />
 		<input type="hidden" name="demo" value="Y" />
+		<input type="hidden" name="internal_id" value="20" />
+		<input type="hidden" name="dm_item_type" value="prod" />
 		<input type="submit" class="button" value="Buy from 2Checkout" />
 		</form>
 	</dd>

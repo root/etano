@@ -30,23 +30,46 @@ if (!empty($_GET['uid'])) {
 		$memberships[$rsrow[0]]=$rsrow[1];
 	}
 
-	$config=get_site_option(array('date_format'),'core');
+	$config=get_site_option(array('date_format'),'def_user_prefs');
 
-	$query="SELECT *,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$output['uid'];
+	$query="SELECT `payment_id`,`fk_user_id`,`_user`,`gateway`,`gw_txn`,`name`,`country`,`email`,`is_subscr`,`m_value_to`,`amount_paid`,`refunded`,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until`,UNIX_TIMESTAMP(`date`) as `date`,`is_suspect`,`suspect_reason` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$output['uid'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$output['total']=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['m_value_to']=$memberships[$rsrow['m_value_to']];
-		$rsrow['paid_from']=strftime($config['date_format'],$rsrow['paid_from']);
-		$rsrow['paid_until']=strftime($config['date_format'],$rsrow['paid_until']);
+		if (!empty($rsrow['is_subscr'])) {
+			$rsrow['m_value_to']=isset($memberships[$rsrow['m_value_to']]) ? $memberships[$rsrow['m_value_to']] : '?';
+			$rsrow['paid_from']=strftime($config['date_format'],$rsrow['paid_from']);
+			$rsrow['paid_until']=strftime($config['date_format'],$rsrow['paid_until']);
+		} else {
+			$rsrow['paid_from']=strftime($config['date_format'],$rsrow['date']);
+			$rsrow['m_value_to']='Product';
+			unset($rsrow['paid_until']);
+		}
 		$output['user']=$rsrow['_user'];
-		$output['total']+=((float)$rsrow['amount_paid']);
+		if (empty($rsrow['is_suspect'])) {
+			$output['total']+=((float)$rsrow['amount_paid']-(float)$rsrow['refunded']);
+		}
+		if ($rsrow['refunded']!=0) {
+			$rsrow['refunded']='(<span class="alert">-$'.$rsrow['refunded'].'</span>)';
+		} else {
+			unset($rsrow['refunded']);
+		}
+		if (!empty($rsrow['is_suspect'])) {
+			$rsrow['suspect_reason']=sanitize_and_format($rsrow['suspect_reason'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+		} else {
+			unset($rsrow['is_suspect']);
+		}
 		$loop[]=$rsrow;
 	}
+	$output['total']=number_format($output['total'],2);
 }
-$loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-$output['total']=number_format($output['total'],2);
+//$loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
+$output['return2me']='user_payment_history.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+}
+$output['return2me']=rawurlencode($output['return2me']);
 $tpl->set_file('content','user_payment_history.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);
@@ -55,5 +78,5 @@ if (!empty($message)) {
 	$tpl->set_var('message',$message['text']);
 	$tpl->set_var('message_class',($message['type']==MESSAGE_ERROR) ? 'message_error_small' : (($message['type']==MESSAGE_INFO) ? 'message_info_small' : 'message_info_small'));
 }
-echo $tpl->process('','content',TPL_FINISH | TPL_LOOP);
+echo $tpl->process('','content',TPL_FINISH | TPL_OPTIONAL | TPL_LOOP | TPL_OPTLOOP);
 unset($_SESSION['topass']);

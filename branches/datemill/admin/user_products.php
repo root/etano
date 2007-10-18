@@ -30,7 +30,7 @@ if (!empty($_GET['uid'])) {
 		$sites[$rsrow['site_id']]=$rsrow;
 	}
 
-	$query="SELECT a.`uprod_id`,b.`prod_name`,a.`fk_site_id`,a.`processor`,a.`orderno`,UNIX_TIMESTAMP(a.`date_purchased`) as `date_purchased`,a.`license` FROM `user_products` a,`products` b WHERE a.`fk_prod_id`=b.`prod_id` AND a.`fk_user_id`=".$output['uid']." ORDER BY a.`fk_site_id`,a.`uprod_id`";
+	$query="SELECT a.`uprod_id`,b.`prod_name`,a.`fk_site_id`,c.`gateway`,c.`gw_txn`,UNIX_TIMESTAMP(c.`date`) as `date_purchased`,a.`license` FROM `user_products` a,`products` b,`{$dbtable_prefix}payments` c WHERE a.`fk_prod_id`=b.`prod_id` AND a.`fk_payment_id`=c.`payment_id` AND a.`fk_user_id`=".$output['uid']." ORDER BY a.`fk_site_id`,a.`uprod_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['prod_name']=sanitize_and_format($rsrow['prod_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
@@ -51,5 +51,5 @@ if (!empty($_GET['uid'])) {
 	$tpl->set_loop('loop',$loop);
 	$tpl->set_var('output',$output);
 	$tpl->set_var('tplvars',$tplvars);
-	print $tpl->process('content','content',TPL_MULTILOOP);
+	print $tpl->process('content','content',TPL_MULTILOOP,TPL_FINISH);
 }

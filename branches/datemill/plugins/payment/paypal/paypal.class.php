@@ -31,7 +31,7 @@ class payment_paypal extends ipayment {
 												'test_ipn'=>0,
 												'recurring'=>0,
 												'item_number'=>0,
-												'custom'=>0
+												'custom'=>''
 											),
 							'types'=>	array(	'residence_country'=>FIELD_TEXTFIELD,
 												'first_name'=>FIELD_TEXTFIELD,
@@ -48,7 +48,7 @@ class payment_paypal extends ipayment {
 												'test_ipn'=>FIELD_INT,
 												'recurring'=>FIELD_INT,
 												'item_number'=>FIELD_INT,
-												'custom'=>FIELD_INT
+												'custom'=>FIELD_TEXTFIELD
 											));
 
 	function payment_paypal() {
@@ -59,15 +59,20 @@ class payment_paypal extends ipayment {
 
 	function get_buy_button($payment=array()) {
 		$this->_set_payment($payment);
-		$myreturn='<form action="https://'.$this->form_page.'/cgi-bin/webscr" method="post" id="payment_paypal">
+		$custom=array();
+		$custom[]='dit='.$this->payment['dm_item_type'];
+		if (!empty($this->payment['user_id'])) {
+			$custom[]='uid='$this->payment['user_id'];
+		}
+		$myreturn='<form action="https://'.$this->paypal_server.'/cgi-bin/webscr" method="post" id="payment_paypal">
 		<input type="hidden" name="cmd" value="_xclick-subscriptions" />
 		<input type="hidden" name="business" value="'.$this->config['paypal_email'].'" />
 		<input type="hidden" name="return" value="'._BASEURL_.'/thankyou.php?p='.$this->module_code.'" />
 		<input type="hidden" name="notify_url" value="'._BASEURL_.'/processors/ipn.php?p='.$this->module_code.'" />
 		<input type="hidden" name="cancel_return" value="'._BASEURL_.'" />
-		<input type="hidden" name="item_name" value="'.$this->payment['subscr_name'].'" />
-		<input type="hidden" name="item_number" value="'.$this->payment['subscr_id'].'" />
-		<input type="hidden" name="custom" value="'.$this->payment['user_id'].'" />
+		<input type="hidden" name="item_name" value="'.$this->payment['internal_name'].'" />
+		<input type="hidden" name="item_number" value="'.$this->payment['internal_id'].'" />
+		<input type="hidden" name="custom" value="'.join('&',$custom).'" />
 		<input type="hidden" name="quantity" value="1" />
 		<input type="hidden" name="no_shipping" value="1" />
 		<input type="hidden" name="no_note" value="1" />
@@ -88,14 +93,19 @@ class payment_paypal extends ipayment {
 
 	function redirect2gateway($payment=array()) {
 		$this->_set_payment($payment);
+		$custom=array();
+		$custom[]='dit='.$this->payment['dm_item_type'];
+		if (!empty($this->payment['user_id'])) {
+			$custom[]='uid='$this->payment['user_id'];
+		}
 		$topass=array(	'cmd'=>'_xclick-subscriptions',
 						'business'=>$this->config['paypal_email'],
 						'return'=>_BASEURL_.'/thankyou.php?p='.$this->module_code,
 						'notify_url'=>_BASEURL_.'/processors/ipn.php?p='.$this->module_code,
 						'cancel_return'=>_BASEURL_,
-						'item_name'=>$this->payment['subscr_name'],
-						'item_number'=>$this->payment['subscr_id'],
-						'custom'=>$this->payment['user_id'],
+						'item_name'=>$this->payment['internal_name'],
+						'item_number'=>$this->payment['internal_id'],
+						'custom'=>join('&',$custom),
 						'quantity'=>1,
 						'no_shipping'=>1,
 						'no_note'=>1,
@@ -136,7 +146,18 @@ class payment_paypal extends ipayment {
 		foreach ($this->from_paypal['types'] as $k=>$v) {
 			$input[$k]=sanitize_and_format_gpc($_POST,$k,$GLOBALS['__field2type'][$v],$GLOBALS['__field2format'][$v],$this->from_paypal['defaults'][$k]);
 		}
+		// some transformations
+		parse_str($input['custom'],$temp);
+		if (!empty($temp['uid'])) {
+			$input['user_id']=$temp['uid'];
+		}
+		$input['dm_item_type']=$temp['dit'];
+		$input['business']=strtolower($input['business']);
+		$input['receiver_email']=strtolower($input['receiver_email']);
+		$input['first_name']=ucwords(strtolower($input['first_name']));
+		$input['last_name']=ucwords(strtolower($input['last_name']));
 
+		// validation
 		$postipn='cmd=_notify-validate&'.array2qs($_POST,array('p'));
 		$header="POST /cgi-bin/webscr HTTP/1.0\r\n";
 		$header.='Host: '.$this->paypal_server."\r\n";
@@ -162,56 +183,259 @@ class payment_paypal extends ipayment {
 			$reply=trim($reply);
 			if (strcasecmp($reply,'VERIFIED')==0 || strcasecmp($reply,'VERIFIED')!=0) {
 				if (strcasecmp($input['business'],$this->config['paypal_email'])==0 || strcasecmp($input['receiver_email'],$this->config['paypal_email'])==0) {
-					$query="SELECT `".USER_ACCOUNT_ID."` as `user_id`,`".USER_ACCOUNT_USER."` as `user` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`=".$input['custom'];
-					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-					if (mysql_num_rows($res)) {
-						$real_user=mysql_fetch_assoc($res);
-						if (strcasecmp($input['txn_type'],'web_accept')==0 || strcasecmp($input['txn_type'],'send_money')==0 || strcasecmp($input['txn_type'],'subscr_payment')==0) {
-							if (strcasecmp($input['payment_status'],'Completed')==0) {
-								$query="SELECT `subscr_id`,`price`,`m_value_to`,`duration` FROM `{$dbtable_prefix}subscriptions` WHERE `subscr_id`=".$input['item_number']." AND `is_visible`=1";
-								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-								if (mysql_num_rows($res)) {
-									$real_subscr=mysql_fetch_assoc($res);
-									if (number_format($real_subscr['price'],2)==number_format($input['mc_gross'],2)) {
-										if ($input['test_ipn']!=1 || ($this->config['demo_mode']==1 && $input['test_ipn']==1)) {
-											require_once(_BASEPATH_.'/includes/iso3166.inc.php');
-											if (isset($iso3166[$input['residence_country']])) {
-												$input['country']=$iso3166[$input['residence_country']];
-											}
-											$this->check_fraud($input);
-											if (!empty($real_subscr['duration'])) {
-												// if the old subscription is not over yet, we need to extend the new one with some days
-												$query="SELECT a.`payment_id`,UNIX_TIMESTAMP(a.`paid_until`) as `paid_until`,b.`price`,b.`duration` FROM `{$dbtable_prefix}payments` a LEFT JOIN `{$dbtable_prefix}subscriptions` b ON a.`fk_subscr_id`=b.`subscr_id` WHERE a.`fk_user_id`=".$real_user['user_id']." AND a.`refunded`=0 AND a.`is_active`=1 AND a.`is_subscr`=1 AND a.`m_value_to`>2 ORDER BY a.`paid_until` DESC LIMIT 1";
-												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-												if (mysql_num_rows($res)) {
-													$rsrow=mysql_fetch_assoc($res);
-													if ((int)$rsrow['paid_until']>(int)time()) {
-														$remaining_days=((int)$rsrow['paid_until']-(int)time())/86400;  //86400 seconds in a day
-														if ($remaining_days>0) {
-															$remaining_value=(((int)$rsrow['price'])/((int)$rsrow['duration']))*$remaining_days;
-															$day_value_new=((int)$real_subscr['price'])/((int)$real_subscr['duration']);
-															$days_append=round($remaining_value/$day_value_new);
-															$real_subscr['duration']=(int)$real_subscr['duration'];
-															$real_subscr['duration']+=$days_append;
+					if ($input['dm_item_type']=='subscr') {
+						$query="SELECT `".USER_ACCOUNT_ID."` as `user_id`,`".USER_ACCOUNT_USER."` as `user` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`=".$input['user_id'];
+						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+						if (mysql_num_rows($res)) {
+							$real_user=mysql_fetch_assoc($res);
+							if (strcasecmp($input['txn_type'],'web_accept')==0 || strcasecmp($input['txn_type'],'send_money')==0 || strcasecmp($input['txn_type'],'subscr_payment')==0) {
+								if (strcasecmp($input['payment_status'],'Completed')==0) {
+									$query="SELECT `subscr_id`,`price`,`m_value_to`,`duration` FROM `{$dbtable_prefix}subscriptions` WHERE `subscr_id`=".$input['item_number']." AND `is_visible`=1";
+									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+									if (mysql_num_rows($res)) {
+										$real_subscr=mysql_fetch_assoc($res);
+										if (number_format($real_subscr['price'],2)==number_format($input['mc_gross'],2)) {
+											if ($input['test_ipn']!=1 || ($this->config['demo_mode']==1 && $input['test_ipn']==1)) {
+												require_once _BASEPATH_.'/includes/iso31661a2.inc.php';
+												if (isset($iso31661a2[$input['residence_country']])) {
+													$input['country']=$iso31661a2[$input['residence_country']];
+													$input['email']=$input['payer_email'];
+													$this->check_fraud($input);
+												} else {
+													$this->is_fraud=true;
+													$this->fraud_reason='Invalid country code received from paypal. Please contact administrator.';
+													require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+													new log_error(array('module_name'=>get_class($this),'text'=>'country code received from paypal not found in iso31661a2.inc.php file'.array2qs($_POST)));
+												}
+												if (!empty($real_subscr['duration'])) {
+													// if the old subscription is not over yet, we need to extend the new one with some days
+													$query="SELECT a.`payment_id`,UNIX_TIMESTAMP(a.`paid_until`) as `paid_until`,b.`price`,b.`duration` FROM `{$dbtable_prefix}payments` a LEFT JOIN `{$dbtable_prefix}subscriptions` b ON a.`fk_subscr_id`=b.`subscr_id` WHERE a.`fk_user_id`=".$real_user['user_id']." AND a.`refunded`=0 AND a.`is_active`=1 AND a.`is_subscr`=1 AND a.`m_value_to`>2 ORDER BY a.`paid_until` DESC LIMIT 1";
+													if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+													if (mysql_num_rows($res)) {
+														$rsrow=mysql_fetch_assoc($res);
+														if ((int)$rsrow['paid_until']>(int)time()) {
+															$remaining_days=((int)$rsrow['paid_until']-(int)time())/86400;  //86400 seconds in a day
+															if ($remaining_days>0) {
+																$remaining_value=(((int)$rsrow['price'])/((int)$rsrow['duration']))*$remaining_days;
+																$day_value_new=((int)$real_subscr['price'])/((int)$real_subscr['duration']);
+																$days_append=round($remaining_value/$day_value_new);
+																$real_subscr['duration']=(int)$real_subscr['duration'];
+																$real_subscr['duration']+=$days_append;
+															}
 														}
 													}
 												}
-											}
-											// all old active subscriptions end now!
-											$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`=CURDATE(),`is_active`=0 WHERE `fk_user_id`=".$real_user['user_id']." AND `is_active`=1 AND `is_subscr`=1";
-											if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-											// insert the new subscription
-											$query="INSERT INTO `{$dbtable_prefix}payments` SET `is_active`=1,`fk_user_id`=".$real_user['user_id'].",`_user`='".$real_user['user']."',`gateway`='paypal',`is_subscr`=1,`fk_subscr_id`=".$real_subscr['subscr_id'].",`gw_txn`='".$input['txn_id']."',`name`='".$input['first_name'].' '.$input['last_name']."',`country`='".$input['country']."',`email`='".$input['payer_email']."',`m_value_to`=".$real_subscr['m_value_to'].",`amount_paid`='".$input['mc_gross']."',`is_suspect`=".(int)$this->is_fraud.",`suspect_reason`='".$this->fraud_reason."',`paid_from`=CURDATE(),`date`=now()";
-											if (!empty($real_subscr['duration'])) {
-												$query.=",`paid_until`=CURDATE()+INTERVAL ".$real_subscr['duration'].' DAY';
-											}
-											if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-											if (!$this->is_fraud) {
-												$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `membership`=".$real_subscr['m_value_to']." WHERE `".USER_ACCOUNT_ID."`=".$real_user['user_id'];
+												// all old active subscriptions end now!
+												$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`=CURDATE(),`is_active`=0 WHERE `fk_user_id`=".$real_user['user_id']." AND `is_active`=1 AND `is_subscr`=1";
 												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-												$myreturn=true;
-												require_once _BASEPATH_.'/includes/general_functions.inc.php';
-												add_member_score($real_user['user_id'],'payment');
+												// insert the new subscription
+												$query="INSERT INTO `{$dbtable_prefix}payments` SET `is_active`=1,`fk_user_id`=".$real_user['user_id'].",`_user`='".$real_user['user']."',`gateway`='".$this->module_code."',`is_subscr`=1,`fk_subscr_id`=".$real_subscr['subscr_id'].",`gw_txn`='".$input['txn_id']."',`name`='".$input['first_name'].' '.$input['last_name']."',`country`='".$input['country']."',`email`='".$input['payer_email']."',`m_value_to`=".$real_subscr['m_value_to'].",`amount_paid`='".$input['mc_gross']."',`is_suspect`=".(int)$this->is_fraud.",`suspect_reason`='".$this->fraud_reason."',`paid_from`=CURDATE(),`date`=now()";
+												if (!empty($real_subscr['duration'])) {
+													$query.=",`paid_until`=CURDATE()+INTERVAL ".$real_subscr['duration'].' DAY';
+												}
+												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+												if (!$this->is_fraud) {
+													$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `membership`=".$real_subscr['m_value_to']." WHERE `".USER_ACCOUNT_ID."`=".$real_user['user_id'];
+													if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+													$myreturn=true;
+													require_once _BASEPATH_.'/includes/general_functions.inc.php';
+													add_member_score($real_user['user_id'],'payment');
+												} else {
+													// DEPT_ADMIN from includes/admin_functions.inc.php is hardcoded below as 4
+													$query="SELECT `email` FROM `{$dbtable_prefix}admin_accounts` WHERE `dept_id`=4 ORDER BY `admin_id` DESC LIMIT 1";
+													if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+													if (mysql_num_rows($res)) {
+														send_template_email(mysql_result($res,0,0),'Possible fraud detected, please investigate','','',array(),$this->fraud_reason);
+													}
+												}
+											} else {
+												// a demo transaction when we're not in demo mode
+												require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+												new log_error(array('module_name'=>get_class($this),'text'=>'Demo transaction when demo is not enabled: '.array2qs($_POST)));
+											}
+										} else {
+											// paid price doesn't match the subscription price
+											require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+											new log_error(array('module_name'=>get_class($this),'text'=>'Invalid amount paid: '.array2qs($_POST)));
+										}
+									} else {
+										// if the subscr_id was not found
+										require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+										new log_error(array('module_name'=>get_class($this),'text'=>'Invalid subscr_id received after payment: '.array2qs($_POST)));
+									}
+								} else {
+									require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+									new log_error(array('module_name'=>get_class($this),'text'=>'Payment status not Completed: '.$input['payment_status']."\n".array2qs($_POST)));
+								}
+							} elseif (strcasecmp($input['txn_type'],'subscr_eot')==0) {
+								$query="SELECT `payment_id` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$real_user['user_id']." AND `fk_subscr_id`=".$input['item_number']." ORDER BY `payment_id` DESC LIMIT 1";
+								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+								if (mysql_num_rows($res)) {
+									$payment_id=mysql_result($res,0,0);
+									$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`=CURDATE() WHERE `payment_id`=$payment_id";
+									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+								} else {
+									// invalid eot.
+								}
+							} else {
+								// unhandled txn_type
+								require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+								new log_error(array('module_name'=>get_class($this),'text'=>'Unhandled txn_type (probably not an error): '.$input['txn_type']."\n".array2qs($_POST)));
+							}
+						} else {
+							// if the user_id was not found
+							require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+							new log_error(array('module_name'=>get_class($this),'text'=>'Invalid user_id received after payment: '.array2qs($_POST)));
+						}
+					} elseif ($input['dm_item_type']=='prod') {
+
+						if (strcasecmp($input['txn_type'],'web_accept')==0 || strcasecmp($input['txn_type'],'send_money')==0) {
+							if (strcasecmp($input['payment_status'],'Completed')==0) {
+								$real_user=array();
+								if (!empty($input['user_id'])) {
+									$query="SELECT `fk_user_id` as `user_id`,`_user` as `user`,`f2` as `email1`,`f7` as `email2`,`f8` as `email3` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=".$input['user_id'];
+									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+									if (mysql_num_rows($res)) {
+										$real_user=mysql_fetch_assoc($res);
+									}
+								}
+								// alternate method(s) of figuring out if we already have this customer in the db
+								if (empty($real_user['user_id'])) {
+									$query="SELECT `fk_user_id` as `user_id`,`_user` as `user`,`f2` as `email1`,`f7` as `email2`,`f8` as `email3` FROM `{$dbtable_prefix}user_profiles` WHERE `f2`='".$input['payer_email']."' OR `f7`='".$input['payer_email']."' OR `f8`='".$input['payer_email']."' LIMIT 1";
+									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+									if (mysql_num_rows($res)) {
+										$real_user=mysql_fetch_assoc($res);
+									}
+								}
+								$query="SELECT `prod_id`,`price`,`bundle_of` FROM `products` WHERE `prod_id`=".$input['item_number'];
+								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+								if (mysql_num_rows($res)) {
+									$real_prod=mysql_fetch_assoc($res);
+									if (number_format($real_prod['price'],2)==number_format($input['mc_gross'],2)) {
+										if ($input['test_ipn']!=1 || ($this->config['demo_mode']==1 && $input['test_ipn']==1)) {
+											require_once(_BASEPATH_.'/includes/iso31661a2.inc.php');
+											if (isset($iso31661a2[$input['residence_country']])) {
+												$input['country']=$iso31661a2[$input['residence_country']];
+												$input['email']=$input['payer_email'];
+												$this->check_fraud($input);
+											} else {
+												$this->is_fraud=true;
+												$this->fraud_reason='Invalid country code received from paypal. Please contact administrator.';
+												require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+												new log_error(array('module_name'=>get_class($this),'text'=>'country code received from paypal not found in iso31661a2.inc.php file'.array2qs($_POST)));
+											}
+											// insert the new payment
+											$query="INSERT INTO `{$dbtable_prefix}payments` SET `gateway`='".$this->module_code."',`is_subscr`=0,`is_active`=0,`fk_subscr_id`=0,`gw_txn`='".$input['txn_id']."',`name`='".$input['first_name'].' '.$input['last_name']."',`country`='".$input['residence_country']."',`email`='".$input['payer_email']."',`amount_paid`='".$input['mc_gross']."',`is_suspect`=".((int)$this->is_fraud).",`suspect_reason`='".addslashes($this->fraud_reason)."',`date`=now()";
+											if (isset($real_user['user_id'])) {
+												$query.=",`fk_user_id`=".$real_user['user_id'].",`_user`='".$real_user['user']."'";
+											}
+											if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+											$payment_id=mysql_insert_id();
+
+											$prods=array();
+											if (!empty($real_prod['bundle_of'])) {
+												$prods=explode('|',$real_prod['bundle_of']);
+											} else {
+												$prods[]=$real_prod['prod_id'];
+											}
+											// if this is a new customer, create an account and profile for him
+											if (empty($real_user['user_id'])) {
+												$input['pass']=gen_pass(6);
+												$query="INSERT IGNORE INTO `".USER_ACCOUNTS_TABLE."` SET `".USER_ACCOUNT_USER."`='".$input['payer_email']."',`".USER_ACCOUNT_PASS."`=md5('".$input['pass']."'),`email`='".$input['payer_email']."',`membership`=4";
+												if ($this->is_fraud) {
+													$query.=',`status`='.ASTAT_SUSPENDED;
+												} else {
+													$query.=',`status`='.ASTAT_ACTIVE;
+												}
+												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+												$real_user['user_id']=mysql_insert_id();
+												$real_user['user']=$input['payer_email'];
+												$now=gmdate('YmdHis');
+												$query="INSERT IGNORE INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$real_user['user_id']."',`_user`='".$real_user['user']."',`last_changed`='$now',`date_added`='$now',`status`=".STAT_APPROVED.",`f1`='".$input['first_name'].' '.$input['last_name']."',`f2`='".$input['payer_email']."',`score`='".$input['mc_gross']."'";
+												if ($this->is_fraud) {
+													$query.=",`f11`=1";	// is_blocked
+												}
+												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+												// update the payment with this user_id
+												$query="UPDATE `{$dbtable_prefix}payments` SET `fk_user_id`=".$real_user['user_id'].",`_user`='".$real_user['user']."' WHERE `payment_id`=$payment_id";
+												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+											} else {
+												// older customer found. Update score and email
+												$query="UPDATE `{$dbtable_prefix}user_profiles` SET `score`=`score`+".$input['mc_gross'];
+												if ($input['payer_email']!=$real_user['email1'] && $input['payer_email']!=$real_user['email2'] && $input['payer_email']!=$real_user['email3']) {
+													if (empty($real_user['email2'])) {
+														$query.=",`f7`='".$input['payer_email']."'";
+													} elseif (empty($real_user['email3'])) {
+														$query.=",`f8`='".$input['payer_email']."'";
+													} else {
+														$query.=",`f9`=concat(`f9`,'".$input['payer_email']."\n')";
+													}
+												}
+												$query.=" WHERE `fk_user_id`=".$real_user['user_id'];
+												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+											}
+
+											// if he bought Etano, create a new site
+											if (in_array(ETANO_PROD_ID,$prods)) {
+												$query="INSERT INTO `user_sites` SET `fk_user_id`=".$real_user['user_id'].",`active`=".((int)(!$this->is_fraud));
+												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+												$input['site_id']=mysql_insert_id();
+												$input['license']=gen_license(array('site_id'=>$input['site_id'],'name'=>$input['first_name'].' '.$input['last_name']));
+												$output['license']=$input['license'];
+												$query="UPDATE `user_sites` SET `license`='".$input['license']."',`license_md5`=md5('".$input['license']."') WHERE `site_id`=".$input['site_id'];
+												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+											} else {
+												$query="SELECT `site_id`,`license` FROM `user_sites` WHERE `fk_user_id`=".$real_user['user_id']." LIMIT 1";
+												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+												if (mysql_num_rows($res)) {
+													$input=array_merge($input,mysql_fetch_assoc($res));
+												} else {	// something must be wrong here....
+													$input['site_id']=0;
+													$input['license']='';
+												}
+											}
+
+											// insert all bought products into db
+											$query="INSERT INTO `user_products` (`fk_prod_id`,`fk_site_id`,`fk_user_id`,`processor`,`orderno`,`date_purchased`,`license`,`license_md5`) VALUES ";
+											for ($i=0;isset($prods[$i]);++$i) {
+												$query.="(".$prods[$i].",".$input['site_id'].",".$real_user['user_id'].",'".$this->module_code."','".$input['txn_id']."',now()";
+												if ($prods[$i]==ETANO_PROD_ID) {
+													$query.=",'".$input['license']."','".md5($input['license'])."'";
+												} else {
+													$query.=",'',''";
+												}
+												$query.="),";
+											}
+											$query=substr($query,0,-1);
+											if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+
+											// show the thank you page with all required details.
+											if (!$this->is_fraud) {
+												$output['name']=$input['first_name'].' '.$input['last_name'];
+												$output['license_md5']=md5($input['license']);
+												$output['prod_id']=$real_prod['prod_id'];
+												if (isset($input['pass'])) {
+													$output['pass']=$input['pass'];
+												}
+												$output['user']=$real_user['user'];
+												$output['email']=$input['payer_email'];
+												$tpl->set_file('gateway_text','gateway_ok.html');
+												$tpl->set_var('output',$output);
+												$tpl->process('gateway_text','gateway_text',TPL_OPTIONAL);
+												$tpl->drop_var('output');
+												send_template_email($input['payer_email'],sprintf('Your %s purchase details',_SITENAME_),'','',array(),$tpl->get_var_silent('gateway_text'));
+											} else {
+												$tpl->set_file('gateway_text','gateway_nok.html');
+												$output['email']=$input['payer_email'];
+												$output['name']=$input['first_name'].' '.$input['last_name'];
+												$tpl->set_var('output',$output);
+												$tpl->process('gateway_text','gateway_text');
+												// DEPT_ADMIN from includes/admin_functions.inc.php is hardcoded below as 4
+												$query="SELECT `email` FROM `{$dbtable_prefix}admin_accounts` WHERE `dept_id`=4 ORDER BY `admin_id` DESC LIMIT 1";
+												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+												if (mysql_num_rows($res)) {
+													send_template_email(mysql_result($res,0,0),'Possible fraud detected, please investigate','','',array(),$this->fraud_reason);
+												}
 											}
 										} else {
 											// a demo transaction when we're not in demo mode
@@ -219,38 +443,28 @@ class payment_paypal extends ipayment {
 											new log_error(array('module_name'=>get_class($this),'text'=>'Demo transaction when demo is not enabled: '.array2qs($_POST)));
 										}
 									} else {
-										// paid price doesn't match the subscription price
+										// paid price doesn't match the product price
 										require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 										new log_error(array('module_name'=>get_class($this),'text'=>'Invalid amount paid: '.array2qs($_POST)));
 									}
 								} else {
-									// if the subscr_id was not found
+									// if the prod_id was not found
 									require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-									new log_error(array('module_name'=>get_class($this),'text'=>'Invalid subscr_id received after payment: '.array2qs($_POST)));
+									new log_error(array('module_name'=>get_class($this),'text'=>'Invalid prod_id received after payment: '.array2qs($_POST)));
 								}
 							} else {
 								require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 								new log_error(array('module_name'=>get_class($this),'text'=>'Payment status not Completed: '.$input['payment_status']."\n".array2qs($_POST)));
-							}
-						} elseif (strcasecmp($input['txn_type'],'subscr_eot')==0) {
-							$query="SELECT `payment_id` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$real_user['user_id']." AND `fk_subscr_id`=".$input['item_number']." ORDER BY `payment_id` DESC LIMIT 1";
-							if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-							if (mysql_num_rows($res)) {
-								$payment_id=mysql_result($res,0,0);
-								$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`=CURDATE() WHERE `payment_id`=$payment_id";
-								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-							} else {
-								// invalid eot.
 							}
 						} else {
 							// unhandled txn_type
 							require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 							new log_error(array('module_name'=>get_class($this),'text'=>'Unhandled txn_type (probably not an error): '.$input['txn_type']."\n".array2qs($_POST)));
 						}
-					} else {
-						// if the user_id was not found
+					} else {	// dm_item_type is neither 'prod' nor 'subscr'
+						$gateway_text='Invalid payment received. Please contact us if you feel this is an error.';	// translate this
 						require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-						new log_error(array('module_name'=>get_class($this),'text'=>'Invalid user_id received after payment: '.array2qs($_POST)));
+						new log_error(array('module_name'=>get_class($this),'text'=>'Invalid dm_item_type: '.array2qs($_POST)));
 					}
 				} else {
 					require_once _BASEPATH_.'/includes/classes/log_error.class.php';
@@ -269,6 +483,21 @@ class payment_paypal extends ipayment {
 			new log_error(array('module_name'=>get_class($this),'text'=>'Connection to paypal server failed. '.array2qs($_POST)));
 		}
 //fclose($fp);
+	}
+
+
+	function check_fraud($pay_result) {
+		$fraud_managers=get_module_codes_by_type(MODULE_FRAUD);
+		for ($i=0;isset($fraud_managers[$i]);++$i) {
+			require_once(_BASEPATH_.'/plugins/fraud/'.$fraud_managers[$i].'/'.$fraud_managers[$i].'.class.php');
+			$class='fraud_'.$fraud_managers[$i];
+			$fraud=new $class;
+			if ($fraud->is_fraud($pay_result)) {
+				$this->is_fraud=true;
+				$this->fraud_reason=$fraud->get_fraud_reason();
+				break;
+			}
+		}
 	}
 
 

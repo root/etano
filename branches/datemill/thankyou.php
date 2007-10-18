@@ -14,7 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
-check_login_member('auth');
+//check_login_member('auth');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
