@@ -252,7 +252,7 @@ if ($do_query) {
 		}	//switch ($field['search_type'])
 	} // the for() that constructs the where
 
-	$query="SELECT a.`fk_user_id` FROM $from WHERE $where";
+	$query="SELECT a.`fk_user_id` FROM $from WHERE $where ORDER BY `_user`";
 //print $query;
 //die;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

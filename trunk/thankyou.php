@@ -17,6 +17,7 @@ require_once 'includes/user_functions.inc.php';
 check_login_member('auth');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl->set_file('content','thankyou.html');
 
 $module_code=preg_replace('[^a-zA-Z0-9_]','',sanitize_and_format_gpc($_REQUEST,'p',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],''));
 if (!empty($module_code)) {
@@ -28,7 +29,6 @@ if (!empty($module_code)) {
 	}
 }
 
-$tpl->set_file('content','thankyou.html');
 $tpl->process('content','content');
 
 $tplvars['title']='Thank you for your payment';
