@@ -399,6 +399,20 @@ ul.pager li.current_page, ul.pager li.dots {
 	width: 100%;
 }
 
+a#upper_help {
+	display: block;
+	float: right;
+	text-indent: -9999px;
+	width: 16px;
+	height: 16px;
+	margin-top: 5px;
+	background: url('../images/help_topics.gif') no-repeat top left;
+}
+
+a#upper_help:hover {
+	background-position: bottom left;
+}
+
 #rate_addedit .field {
 	width: 20%;
 }
