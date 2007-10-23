@@ -118,3 +118,21 @@ function get_user_folder_name($folder_id,$user_id=null) {
 	}
 	return $myreturn;
 }
+
+
+function get_my_skin() {
+	if (!empty($_SESSION[_LICENSE_KEY_]['user']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_SESSION[_LICENSE_KEY_]['user']['skin'])) {
+		$myreturn=$_SESSION[_LICENSE_KEY_]['user']['skin'];
+		$_COOKIE['sco_app']['skin']=$myreturn;
+	} elseif (!empty($_COOKIE['sco_app']['skin']) && preg_match('/^\w+$/',$_COOKIE['sco_app']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_COOKIE['sco_app']['skin'])) {
+		$myreturn=$_COOKIE['sco_app']['skin'];
+		// save the option in less expensive places
+		$_SESSION[_LICENSE_KEY_]['user']['skin']=$myreturn;
+	} else {
+		$myreturn=get_default_skin_dir();
+		// save the option in less expensive places
+		$_COOKIE['sco_app']['skin']=$myreturn;
+		$_SESSION[_LICENSE_KEY_]['user']['skin']=$myreturn;
+	}
+	return $myreturn;
+}

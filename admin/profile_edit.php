@@ -29,7 +29,7 @@ if (isset($_SESSION['topass']['input'])) {
 
 	$query='SELECT `fk_user_id`,`_user`';
 	foreach ($_pfields as $field_id=>$field) {
-		if ($field['editable']) {
+//		if ($field['editable']) {
 			switch ($field['field_type']) {
 
 				case FIELD_DATE:
@@ -44,7 +44,7 @@ if (isset($_SESSION['topass']['input'])) {
 					$query.=",`".$field['dbfield']."`";
 
 			}
-		}
+//		}
 	}
 	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=$uid";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -67,7 +67,7 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 	$c=0;
 	for ($i=0;isset($pcat['fields'][$i]);++$i) {
 		$field=$_pfields[$pcat['fields'][$i]];
-		if ($field['editable']) {
+//		if ($field['editable']) {
 			$cat_content[$c]['label']=$field['label'];
 			$cat_content[$c]['dbfield']=$field['dbfield'];
 			switch ($field['field_type']) {
@@ -144,7 +144,7 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 
 			}
 			++$c;
-		}
+//		}
 	}
 	$loop[$l]['cat_content']=$cat_content;
 	++$l;
