@@ -1,19 +1,31 @@
-#subscr_form dt {
-	width: 120px;
+.subscriptions .row {
+	overflow: hidden;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px dashed #ccc;
 }
 
-#subscr_form dd {
-	width: 400px;
+.subscriptions .row div {
+	float: left;
+	margin: 3px 0;
+	padding: 0 2px 0 8px;
+	overflow: hidden;
 }
 
-#subscr_form dd li label {
-	padding-left: 5px;
-}
-
-#subscr_form dd li {
+.subscriptions .header {
+	font-weight: bold;
 	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
 }
 
-#subscr_form dd li input {
-	margin: -3px 0;
+.subscriptions .price {
+	width: 70px;
+}
+
+.subscriptions .subscr_diz {
+	width: 450px;
+}
+
+.subscriptions .subscr_diz strong {
+	display: block;
 }

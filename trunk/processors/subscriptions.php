@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$query="SELECT * FROM `{$dbtable_prefix}site_options3` WHERE `config_option`='module_active' AND `config_value`=1 AND `fk_module_code`='".$input['module_code']."'";
+		$query="SELECT * FROM `{$dbtable_prefix}site_options3` WHERE `config_option`='enabled' AND `config_value`=1 AND `fk_module_code`='".$input['module_code']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$module=array();
 		if (mysql_num_rows($res)) {

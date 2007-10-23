@@ -24,4 +24,5 @@ $tplvars['title']='Privacy';
 $tplvars['page_title']='Privacy';
 $tplvars['page']='privacy';
 $tplvars['css']='privacy.css';
+$no_timeout=true;
 include 'frame.php';

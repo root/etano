@@ -54,3 +54,6 @@ $GLOBALS['_lang'][166]='';
 $GLOBALS['_lang'][174]='I am currently living';
 $GLOBALS['_lang'][175]='Living';
 $GLOBALS['_lang'][176]='';
+$GLOBALS['_lang'][195]='Slim';
+$GLOBALS['_lang'][196]='Average';
+$GLOBALS['_lang'][197]='Large';
