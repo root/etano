@@ -58,12 +58,12 @@ function get_site_option($option,$module_code) {
 	$myreturn=0;
 	global $dbtable_prefix;
 	$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code`='$module_code'";
-	if (is_array($option)) {
-		if (!empty($option)) {
+	if (!empty($option)) {
+		if (is_array($option)) {
 			$query.=" AND `config_option` IN ('".join("','",$option)."')";
+		} else {
+			$query.=" AND `config_option`='$option'";
 		}
-	} else {
-		$query.=" AND `config_option`='$option'";
 	}
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
@@ -73,6 +73,27 @@ function get_site_option($option,$module_code) {
 		}
 		if (is_string($option)) {
 			$myreturn=array_shift($myreturn);
+		}
+	}
+	return $myreturn;
+}
+
+
+function get_site_options_by_module_type($option,$module_type) {
+	$myreturn=array();
+	global $dbtable_prefix;
+	$query="SELECT a.`module_code`,b.`config_option`,b.`config_value` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='$module_type' AND a.`module_code`=b.`fk_module_code`";
+	if (!empty($option)) {
+		if (is_array($option)) {
+			$query.=" AND `config_option` IN ('".join("','",$option)."')";
+		} else {
+			$query.=" AND `config_option`='$option'";
+		}
+	}
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$myreturn[$rsrow['module_code']][$rsrow['config_option']]=$rsrow['config_value'];
 		}
 	}
 	return $myreturn;
@@ -115,24 +136,6 @@ function pager($totalrows,$offset,$results) {
 }
 
 
-function get_my_skin() {
-	if (!empty($_SESSION[_LICENSE_KEY_]['user']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_SESSION[_LICENSE_KEY_]['user']['skin'])) {
-		$myreturn=$_SESSION[_LICENSE_KEY_]['user']['skin'];
-		$_COOKIE['sco_app']['skin']=$myreturn;
-	} elseif (!empty($_COOKIE['sco_app']['skin']) && preg_match('/^\w+$/',$_COOKIE['sco_app']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_COOKIE['sco_app']['skin'])) {
-		$myreturn=$_COOKIE['sco_app']['skin'];
-		// save the option in less expensive places
-		$_SESSION[_LICENSE_KEY_]['user']['skin']=$myreturn;
-	} else {
-		$myreturn=get_default_skin_dir();
-		// save the option in less expensive places
-		$_COOKIE['sco_app']['skin']=$myreturn;
-		$_SESSION[_LICENSE_KEY_]['user']['skin']=$myreturn;
-	}
-	return $myreturn;
-}
-
-
 function get_default_skin_dir() {
 	$myreturn='';
 	global $dbtable_prefix;
@@ -166,12 +169,20 @@ function get_default_skin_code() {
 function send_template_email($to,$subject,$template,$skin,$output=array(),$message_body='') {
 	$myreturn=true;
 	if (empty($message_body)) {
-		$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$skin.'/emails/','remove_nonjs');
-		$tpl->set_file('temp',$template);
-		$tpl->set_var('output',$output);
+		if (isset($GLOBALS['tpl'])) {
+			global $tpl;
+		} else {
+			$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$skin.'/','remove_nonjs');
+		}
+		$tpl->set_file('temp','emails/'.$template);
+		if (!empty($output)) {
+			$tpl->set_var('output',$output);
+		}
 		global $tplvars;
 		$tpl->set_var('tplvars',$tplvars);
 		$message_body=$tpl->process('temp','temp',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL | TPL_FINISH);
+		$tpl->drop_var('temp');
+		$tpl->drop_var('output');
 	}
 	$config=get_site_option(array('mail_from','mail_crlf'),'core');
 	require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
@@ -193,6 +204,8 @@ function send_template_email($to,$subject,$template,$skin,$output=array(),$messa
 		$myreturn=false;
 		$GLOBALS['topass']['message']['type']=MESSAGE_ERROR;
 		$GLOBALS['topass']['message']['text']=$mail->ErrorInfo;
+		require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+		new log_error(array('module_name'=>'send_template_email','text'=>'sending mail to '.$to.' failed:'.$message_body));
 	}
 	return $myreturn;
 }

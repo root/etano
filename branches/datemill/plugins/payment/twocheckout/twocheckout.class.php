@@ -73,17 +73,17 @@ class payment_twocheckout extends ipayment {
 		<input type="hidden" name="c_price" value="'.$this->payment['price'].'" />
 		<input type="hidden" name="c_prod" value="'.$this->payment['internal_id'].'" />
 		<input type="hidden" name="c_name" value="'.$this->payment['internal_name'].'" />
-		<input type="hidden" name="c_description" value="'.$this->payment['internal_diz'].'" />
 		<input type="hidden" name="c_tangible" value="N" />
 		<input type="hidden" name="internal_id" value="'.$this->payment['internal_id'].'" />
-		<input type="hidden" name="dm_item_type" value="'.$this->payment['dm_item_type'].'" />';
+		<input type="hidden" name="dm_item_type" value="'.$this->payment['dm_item_type'].'" />
+		<input type="hidden" name="c_description" value="'.(isset($this->payment['internal_diz']) ? $this->payment['internal_diz'] : '').'" />';
 		if (!empty($this->payment['user_id'])) {
-			$myreturn.='<input type="hidden" name="user_id" value="'.$this->payment['user_id'].'" />';
+			$myreturn.="\n".'<input type="hidden" name="user_id" value="'.$this->payment['user_id'].'" />';
 		}
 		if ($this->config['demo_mode']==1) {
-			$myreturn.='<input type="hidden" name="demo" value="Y" />';
+			$myreturn.="\n".'<input type="hidden" name="demo" value="Y" />';
 		}
-		$myreturn.='<input name="submit" class="button" type="submit" value="Buy from 2Checkout" /></form>';
+		$myreturn.="\n".'<input name="submit" class="button" type="submit" value="Buy from 2Checkout" /></form>';
 		return $myreturn;
 	}
 
@@ -100,7 +100,7 @@ class payment_twocheckout extends ipayment {
 					'c_price'=>$this->payment['price'],
 					'c_prod'=>$this->payment['internal_id'],
 					'c_name'=>$this->payment['internal_name'],
-					'c_description'=>$this->payment['internal_diz'],
+					'c_description'=>isset($this->payment['internal_diz']) ? $this->payment['internal_diz'] : '',
 					'c_tangible'=>'N',
 					'internal_id'=>$this->payment['internal_id'],
 					'dm_item_type'=>$this->payment['dm_item_type'],
@@ -118,7 +118,6 @@ class payment_twocheckout extends ipayment {
 
 	function thankyou(&$tpl) {
 		$myreturn=false;
-		$gateway_text='';
 		global $dbtable_prefix;
 		$input=array();
 		$output=array();
@@ -147,8 +146,8 @@ class payment_twocheckout extends ipayment {
 								if (number_format($real_subscr['price'],2)==number_format($input['x_amount'],2)) {
 									if (strcasecmp($input['demo'],'Y')!=0 || ($this->config['demo_mode']==1 && strcasecmp($input['demo'],'Y')==0)) {
 										require_once _BASEPATH_.'/includes/iso31661a3.inc.php';
-										if (isset($iso31661a3[$input['x_Country']])) {
-											$input['country']=$iso31661a3[$input['x_Country']];	// needed for the fraud check
+										if (isset($GLOBALS['iso31661a3'][$input['x_Country']])) {
+											$input['country']=$GLOBALS['iso31661a3'][$input['x_Country']];	// needed for the fraud check
 											$input['email']=$input['x_Email'];
 											$this->check_fraud($input);
 										} else {
@@ -188,33 +187,37 @@ class payment_twocheckout extends ipayment {
 											$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `membership`=".$real_subscr['m_value_to']." WHERE `".USER_ACCOUNT_ID."`=".$real_user['user_id'];
 											if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 											$myreturn=true;
-											$gateway_text='';
 											add_member_score($real_user['user_id'],'payment');
+											$tpl->set_file('gateway_text','thankyou_subscr_ok.html');
 										} else {
+											$output['name']=$input['card_holder_name'];
+											$tpl->set_file('gateway_text','thankyou_subscr_nok.html');
+											$tpl->set_var('output',$output);
+											$tpl->process('gateway_text','gateway_text',TPL_OPTIONAL);
 											// DEPT_ADMIN from includes/admin_functions.inc.php is hardcoded below as 4
 											$query="SELECT `email` FROM `{$dbtable_prefix}admin_accounts` WHERE `dept_id`=4 ORDER BY `admin_id` DESC LIMIT 1";
 											if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 											if (mysql_num_rows($res)) {
-												send_template_email(mysql_result($res,0,0),'Possible fraud detected, please investigate','','',array(),$this->fraud_reason);
+												send_template_email(mysql_result($res,0,0),'Possible fraud detected on '._SITENAME_.', please investigate','','',array(),$this->module_code.' TXN: '.$input['x_trans_id'].': '.$this->fraud_reason);
 											}
 										}
 									} else {	// a demo transaction when we're not in demo mode
-										$gateway_text='We\'re sorry but there were some problems processing your payment. Please contact us to upgrade your subscription';	// translate this
+										$tpl->set_var('gateway_text','We\'re sorry but there were some problems processing your payment. Please contact us to upgrade your subscription');	// translate this
 										require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 										new log_error(array('module_name'=>get_class($this),'text'=>'Demo transaction when demo is not enabled: '.array2qs($input)));
 									}
 								} else {	// paid price doesn't match the subscription price
-									$gateway_text='We\'re sorry but the price you\'ve paid doesn\'t match the subscription price. Please contact us to upgrade your subscription';	// translate this
+									$tpl->set_var('gateway_text','We\'re sorry but the price you\'ve paid doesn\'t match the subscription price. Please contact us to upgrade your subscription');	// translate this
 									require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 									new log_error(array('module_name'=>get_class($this),'text'=>'Invalid amount paid: '.array2qs($input)));
 								}
 							} else {	// if the subscr_id was not found
-								$gateway_text='We\'re sorry but the system doesn\'t recognize the subscription for the payment you\'ve made. Please contact us to upgrade your subscription';	// translate this
+								$tpl->set_var('gateway_text','We\'re sorry but the system doesn\'t recognize the subscription for the payment you\'ve made. Please contact us to upgrade your subscription');	// translate this
 								require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 								new log_error(array('module_name'=>get_class($this),'text'=>'Invalid subscr_id received after payment: '.array2qs($input)));
 							}
 						} else {	// if the user_id was not found
-							$gateway_text='We\'re sorry but the system doesn\'t recognize the user for whom the payment was made. Please contact us to upgrade your subscription';	// translate this
+							$tpl->set_var('gateway_text','We\'re sorry but the system doesn\'t recognize the user for whom the payment was made. Please contact us to upgrade your subscription');	// translate this
 							require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 							new log_error(array('module_name'=>get_class($this),'text'=>'Invalid user_id received after payment: '.array2qs($input)));
 						}
@@ -325,9 +328,9 @@ class payment_twocheckout extends ipayment {
 									}
 
 									// insert all bought products into db
-									$query="INSERT INTO `user_products` (`fk_prod_id`,`fk_site_id`,`fk_user_id`,`processor`,`orderno`,`date_purchased`,`license`,`license_md5`) VALUES ";
+									$query="INSERT INTO `user_products` (`fk_prod_id`,`fk_site_id`,`fk_user_id`,`fk_payment_id`,`license`,`license_md5`) VALUES ";
 									for ($i=0;isset($prods[$i]);++$i) {
-										$query.="(".$prods[$i].",".$input['site_id'].",".$real_user['user_id'].",'".$this->module_code."','".$input['x_trans_id']."',now()";
+										$query.="(".$prods[$i].",".$input['site_id'].",".$real_user['user_id'].",$payment_id";
 										if ($prods[$i]==ETANO_PROD_ID) {
 											$query.=",'".$input['license']."','".md5($input['license'])."'";
 										} else {
@@ -348,13 +351,14 @@ class payment_twocheckout extends ipayment {
 										}
 										$output['user']=$real_user['user'];
 										$output['email']=$input['x_Email'];
-										$tpl->set_file('gateway_text','gateway_ok.html');
+										$tpl->set_file('gateway_text','thankyou_prod_ok.html');
 										$tpl->set_var('output',$output);
+										$tpl->set_var('tplvars',$GLOBALS['tplvars']);	// need this for the email below
 										$tpl->process('gateway_text','gateway_text',TPL_OPTIONAL);
 										$tpl->drop_var('output');
-										send_template_email($input['x_Email'],sprintf('Your %s purchase details',_SITENAME_),'','',array(),$tpl->get_var_silent('gateway_text'));
+										send_template_email($input['x_Email'],sprintf('Your %s purchase details',_SITENAME_),'general.html',get_my_skin(),array('content'=>$tpl->get_var_silent('gateway_text')));
 									} else {
-										$tpl->set_file('gateway_text','gateway_nok.html');
+										$tpl->set_file('gateway_text','thankyou_prod_nok.html');
 										$output['email']=$input['x_Email'];
 										$output['name']=$input['card_holder_name'];
 										$tpl->set_var('output',$output);
@@ -363,61 +367,60 @@ class payment_twocheckout extends ipayment {
 										$query="SELECT `email` FROM `{$dbtable_prefix}admin_accounts` WHERE `dept_id`=4 ORDER BY `admin_id` DESC LIMIT 1";
 										if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 										if (mysql_num_rows($res)) {
-											send_template_email(mysql_result($res,0,0),'Possible fraud detected, please investigate','','',array(),$this->fraud_reason);
+											send_template_email(mysql_result($res,0,0),'Possible fraud detected on '._SITENAME_.', please investigate','','',array(),$this->module_code.' TXN: '.$input['x_trans_id'].': '.$this->fraud_reason);
 										}
 									}
 								} else {	// a demo transaction when we're not in demo mode
-									$gateway_text='We\'re sorry but there were some problems processing your payment. Please contact us to finalize the payment.';	// translate this
+									$tpl->set_var('gateway_text','We\'re sorry but there were some problems processing your payment. Please contact us to finalize the payment.');	// translate this
 									require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 									new log_error(array('module_name'=>get_class($this),'text'=>'Demo transaction when demo is not enabled: '.array2qs($input)));
 								}
 							} else {	// paid price doesn't match the product price
-								$gateway_text='We\'re sorry but the price you\'ve paid doesn\'t match the product price. Please contact us if you feel this is an error.';	// translate this
+								$tpl->set_var('gateway_text','We\'re sorry but the price you\'ve paid doesn\'t match the product price. Please contact us if you feel this is an error.');	// translate this
 								require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 								new log_error(array('module_name'=>get_class($this),'text'=>'Invalid amount paid: '.array2qs($input)));
 							}
 						} else {	// if the prod_id was not found
-							$gateway_text='We\'re sorry but the system doesn\'t recognize the subscription for the payment you\'ve made. Please contact us to upgrade your subscription';	// translate this
+							$tpl->set_var('gateway_text','We\'re sorry but the system cannot find the product for the payment you\'ve made. Please contact us to finalize the payment.');	// translate this
 							require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 							new log_error(array('module_name'=>get_class($this),'text'=>'Invalid prod_id received after payment: '.array2qs($input)));
 						}
 					} else {	// dm_item_type is neither 'prod' nor 'subscr'
-						$gateway_text='Invalid payment received. Please contact us if you feel this is an error.';	// translate this
+						$tpl->set_var('gateway_text','Invalid payment received. Please contact us if you feel this is an error.');	// translate this
 						require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 						new log_error(array('module_name'=>get_class($this),'text'=>'Invalid dm_item_type: '.array2qs($input)));
 					}
 				} else {
-					$gateway_text='We\'re sorry but this transaction failed internal validation. Please try again.';	// translate this
+					$tpl->set_var('gateway_text','We\'re sorry but this transaction failed internal validation. Please try again.');	// translate this
 					require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 					new log_error(array('module_name'=>get_class($this),'text'=>'Invalid hash code received after payment: '.array2qs($input).'. My hash:'.strtoupper(md5($this->config['secret'].$this->config['sid'].$input['x_trans_id'].$input['x_amount']))));
 				}
 			} else {
-				$gateway_text=sprintf('We\'re sorry, but an error occurred when trying to process your Credit Card: %1$s (%2$s)',$input['x_response_reason_text'],$input['x_response_reason_code']);	// translate this
+				$tpl->set_var('gateway_text',sprintf('We\'re sorry, but an error occurred when trying to process your Credit Card: %1$s (%2$s)',$input['x_response_reason_text'],$input['x_response_reason_code']));	// translate this
 				require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 				new log_error(array('module_name'=>get_class($this),'text'=>'Gateway error: '.$input['x_response_reason_text'].'('.$input['x_response_reason_code'].")\n".array2qs($input)));
 			}
 		} else {
-			$gateway_text='We\'re sorry, but an error occurred when trying to process your Credit Card. Please contact us for details or try again.';	// translate this
+			$tpl->set_var('gateway_text','We\'re sorry, but an error occurred when trying to process your Credit Card. Please contact us for details or try again.');	// translate this
 			require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 			new log_error(array('module_name'=>get_class($this),'text'=>'Gateway error. Card not processed. '.array2qs($input)));
-		}
-		if (!empty($gateway_text)) {
-			$tpl->set_var('gateway_text',$gateway_text);
 		}
 		return $myreturn;
 	}
 
 
 	function check_fraud($pay_result) {
-		$fraud_managers=get_module_codes_by_type(MODULE_FRAUD);
-		for ($i=0;isset($fraud_managers[$i]);++$i) {
-			require_once(_BASEPATH_.'/plugins/fraud/'.$fraud_managers[$i].'/'.$fraud_managers[$i].'.class.php');
-			$class='fraud_'.$fraud_managers[$i];
-			$fraud=new $class;
-			if ($fraud->is_fraud($pay_result)) {
-				$this->is_fraud=true;
-				$this->fraud_reason=$fraud->get_fraud_reason();
-				break;
+		$fraud_managers=get_site_options_by_module_type('enabled',MODULE_FRAUD);
+		foreach ($fraud_managers as $module_code=>$v) {
+			if ($v['enabled']) {
+				require_once(_BASEPATH_.'/plugins/fraud/'.$module_code.'/'.$module_code.'.class.php');
+				$class='fraud_'.$module_code;
+				$fraud=new $class;
+				if ($fraud->is_fraud($pay_result)) {
+					$this->is_fraud=true;
+					$this->fraud_reason=$fraud->get_fraud_reason();
+					break;
+				}
 			}
 		}
 	}

@@ -30,6 +30,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	$input['module_code']=sanitize_and_format_gpc($_POST,'module_code',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$input['is_visible']=isset($_POST['is_visible']) ? 1 : 0;
+	$input['prod_id']=isset($_POST['prod_id']) ? (int)$_POST['prod_id'] : 0;
+	$input['prod_name']=sanitize_and_format_gpc($_POST,'prod_name',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$input['fk_dev_id']=isset($_POST['fk_dev_id']) ? (int)$_POST['fk_dev_id'] : 0;
+	$input['price']=isset($_POST['price']) ? (float)$_POST['price'] : 0;
+	$input['prod_diz']=sanitize_and_format_gpc($_POST,'prod_diz',TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
 
 	$filename=upload_file(_BASEPATH_.'/tmp','filename');
 	if (!empty($filename)) {
@@ -49,7 +55,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$p->_set_content($manifest_content);
 			$input['prod_type']=$p->module_type;
 			$input['module_code']=$p->module_code;
-			$input['prod_name']=$p->module_name;
+			if (empty($input['prod_name'])) {
+				$input['prod_name']=$p->module_name;
+			}
 			$input['version']=$p->version;
 			$input['filename']=$input['module_code'].$input['version'].'.zip';
 			if (is_file(_BASEPATH_.'/dafilez/products/'.$input['filename'])) {
@@ -69,11 +77,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 	}
 
-	$input['is_visible']=isset($_POST['is_visible']) ? 1 : 0;
-	$input['prod_id']=isset($_POST['prod_id']) ? (int)$_POST['prod_id'] : 0;
-	$input['fk_dev_id']=isset($_POST['fk_dev_id']) ? (int)$_POST['fk_dev_id'] : 0;
-	$input['price']=isset($_POST['price']) ? (float)$_POST['price'] : 0;
-	$input['prod_diz']=sanitize_and_format_gpc($_POST,'prod_diz',TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
 	$prod_pic=upload_file(_BASEPATH_.'/tmp','prod_pic');
 	if (!empty($prod_pic)) {
 		$ext=strtolower(substr(strrchr($prod_pic,'.'),1));

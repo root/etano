@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$ch=0;
 	$texts=array();
 	foreach ($_pfields as $field_id=>$field) {
-		if ($field['editable']) {
+//		if ($field['editable']) {
 			switch ($field['field_type']) {
 
 				case FIELD_DATE:
@@ -84,13 +84,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text']='The fields outlined below are required and must not be empty';
 				$input['error_'.$field['dbfield']]='red_border';
 			}
-		}
+//		}
 	}
 
 	if (!$error) {
 		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."',`status`=".STAT_APPROVED;
 		foreach ($_pfields as $field_id=>$field) {
-			if ($field['editable']) {
+//			if ($field['editable']) {
 				if ($field['field_type']==FIELD_LOCATION) {
 					$query.=",`".$field['dbfield']."_country`=".$input[$field['dbfield'].'_country'].",`".$field['dbfield']."_state`=".$input[$field['dbfield'].'_state'].",`".$field['dbfield']."_city`=".$input[$field['dbfield'].'_city'].",`".$field['dbfield']."_zip`='".$input[$field['dbfield'].'_zip']."'";
 				} else {
@@ -98,14 +98,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 						$query.=',`'.$field['dbfield']."`='".$input[$field['dbfield']]."'";
 					}
 				}
-			}
+//			}
 		}
 		$query.=" WHERE `fk_user_id`=".$input['uid'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (!mysql_affected_rows()) {
 			$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."',`status`=".STAT_APPROVED;
 			foreach ($_pfields as $field_id=>$field) {
-				if ($field['editable']) {
+//				if ($field['editable']) {
 					if ($field['field_type']==FIELD_LOCATION) {
 						$query.=",`".$field['dbfield']."_country`=".$input[$field['dbfield'].'_country'].",`".$field['dbfield']."_state`=".$input[$field['dbfield'].'_state'].",`".$field['dbfield']."_city`=".$input[$field['dbfield'].'_city'].",`".$field['dbfield']."_zip`='".$input[$field['dbfield'].'_zip']."'";
 					} else {
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 							$query.=',`'.$field['dbfield']."`='".$input[$field['dbfield']]."'";
 						}
 					}
-				}
+//				}
 			}
 		}
 

@@ -1,4 +1,16 @@
 <?php
+/******************************************************************************
+Etano
+===============================================================================
+File:                       plugins/fraud/maxmind/maxmind.class.php
+$Revision$
+Software by:                DateMill (http://www.datemill.com)
+Copyright by:               DateMill (http://www.datemill.com)
+Support at:                 http://www.datemill.com/forum
+*******************************************************************************
+* See the "docs/licenses/etano.txt" file for license.                         *
+******************************************************************************/
+
 require_once _BASEPATH_.'/includes/interfaces/ifraud.class.php';
 
 class fraud_maxmind extends ifraud {
@@ -11,7 +23,7 @@ class fraud_maxmind extends ifraud {
 	}
 
 
-	function is_fraud($pay_result) {
+	function is_fraud(&$pay_result) {
 		$myreturn=false;
 		$errno=0;
 		$errstr='';
@@ -37,10 +49,10 @@ class fraud_maxmind extends ifraud {
 				fclose($socket);
 				$reply=trim($reply);
 				require_once _BASEPATH_.'/includes/iso31661a2.inc.php';
-				if (isset($iso31661a2[$reply])) {
-					if (strcasecmp($iso31661a2[$reply],$pay_result['country'])!=0) {
+				if (isset($GLOBALS['iso31661a2'][$reply])) {
+					if (strcasecmp($GLOBALS['iso31661a2'][$reply],$pay_result['country'])!=0) {
 						$myreturn=true;
-						$this->set_fraud_reason('Credit card from: '.$pay_result['country'].'. User IP from: '.$iso31661a2[$reply]);
+						$this->set_fraud_reason('Credit card from: '.$pay_result['country'].'. User IP from: '.$GLOBALS['iso31661a2'][$reply]);
 					}
 				} else {
 					$myreturn=true;

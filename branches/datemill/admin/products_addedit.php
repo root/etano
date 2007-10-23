@@ -34,7 +34,7 @@ if (isset($_SESSION['topass']['input'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
-		$output['prod_name']=sanitize_and_format($output['prod_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+		$output['prod_name']=sanitize_and_format($output['prod_name'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 		$output['prod_diz']=sanitize_and_format($output['prod_diz'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 		$output['prod_type']=$accepted_module_types[$output['prod_type']];
 	}
