@@ -83,7 +83,7 @@ class payment_twocheckout extends ipayment {
 		if ($this->config['demo_mode']==1) {
 			$myreturn.="\n".'<input type="hidden" name="demo" value="Y" />';
 		}
-		$myreturn.="\n".'<input name="submit" class="button" type="submit" value="Buy from 2Checkout" /></form>';
+		$myreturn.="\n".'<input class="button large" type="submit" value="Buy from 2CO" /></form>';
 		return $myreturn;
 	}
 

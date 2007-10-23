@@ -1,25 +1,18 @@
-<form action="{tplvars.relative_url}processors/subscriptions.php" method="post" id="subscr_form" class="edit_form">
-<fieldset id="m_type">
-<dl>
-	<dt><label>Membership type:</label></dt>
-	<dd>
-		{subscriptions}
-	</dd>
-</dl>
-</fieldset>
-
-<fieldset id="payment_system">
-<dl>
-	<dt><label>Payment system:</label></dt>
-	<dd>
-		{active_gateways}
-	</dd>
-</dl>
-</fieldset>
-
-<fieldset class="controls">
-	<input type="submit" class="button medium" value="Subscribe" />
-</fieldset>
-</form>
-
-<script type="text/javascript" src="{tplvars.relative_url}js/subscriptions.js?v={tplvars.js_lib_v}"></script>
+<div class="row header">
+	<div class="price">Price</div>
+	<div class="subscr_diz">Description</div>
+	<div class="payment_links">Payment Possibilities</div>
+</div>
+<!--loop name="loop"-->
+<div class="row">
+	<div class="price">{loop.price} {loop.currency}</div>
+	<div class="subscr_diz"><strong>{loop.subscr_name}</strong>{loop.subscr_diz}</div>
+	<div class="payment_links">
+		<ul>
+			<li>
+			{loop.payment_links}
+			</li>
+		</ul>
+	</div>
+</div>
+<!--/loop name="loop"-->

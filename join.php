@@ -213,4 +213,5 @@ $tplvars['css']='join.css';
 if (is_file('join_left.php')) {
 	include 'join_left.php';
 }
+$no_timeout=true;
 include 'frame.php';

@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="INSERT INTO `{$dbtable_prefix}admin_mtpls` SET `amtpl_name`='$amtpl_name',`subject`='$subject',`message_body`='$message_body',`amtpl_type`='$amtpl_type'";
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$output.='Template saved succesfully';
+		$output.='Template saved successfully';
 	}
 }
 echo $output;
