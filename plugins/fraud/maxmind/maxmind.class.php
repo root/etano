@@ -1,4 +1,16 @@
 <?php
+/******************************************************************************
+Etano
+===============================================================================
+File:                       plugins/fraud/maxmind/maxmind.class.php
+$Revision$
+Software by:                DateMill (http://www.datemill.com)
+Copyright by:               DateMill (http://www.datemill.com)
+Support at:                 http://www.datemill.com/forum
+*******************************************************************************
+* See the "docs/licenses/etano.txt" file for license.                         *
+******************************************************************************/
+
 require_once _BASEPATH_.'/includes/interfaces/ifraud.class.php';
 
 class fraud_maxmind extends ifraud {
@@ -11,7 +23,7 @@ class fraud_maxmind extends ifraud {
 	}
 
 
-	function is_fraud($pay_result) {
+	function is_fraud(&$pay_result) {
 		$myreturn=false;
 		$errno=0;
 		$errstr='';
@@ -21,7 +33,7 @@ class fraud_maxmind extends ifraud {
 				$header='GET /a?l='.$this->config['license_key'].'&i='.$_SERVER['REMOTE_ADDR']." HTTP/1.0\r\n";
 				$header.="Host: www.maxmind.com\r\n";
 				$header.="Connection: close\r\n";
-				fputs($socket,$header."\r\n");
+					fputs($socket,$header."\r\n");
 				$reply='';
 				$headerdone=false;
 				while(!feof($socket)) {
@@ -36,15 +48,17 @@ class fraud_maxmind extends ifraud {
 				}
 				fclose($socket);
 				$reply=trim($reply);
-				require_once(_BASEPATH_.'/includes/iso3166.inc.php');
-				if (isset($iso3166[$reply])) {
-					if (strcasecmp($iso3166[$reply],$pay_result['country'])!=0) {
+				require_once _BASEPATH_.'/includes/iso31661a2.inc.php';
+				if (isset($GLOBALS['iso31661a2'][$reply])) {
+					if (strcasecmp($GLOBALS['iso31661a2'][$reply],$pay_result['country'])!=0) {
 						$myreturn=true;
-						$this->set_fraud_reason('Credit card from: '.$pay_result['country'].'. User IP from: '.$iso3166[$reply]);
+						$this->set_fraud_reason('Credit card from: '.$pay_result['country'].'. User IP from: '.$GLOBALS['iso31661a2'][$reply]);
 					}
 				} else {
+					$myreturn=true;
+					$this->set_fraud_reason('Invalid country code for your IP address. Please contact administrator.');
 					require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-					new log_error(array('module_name'=>get_class($this),'text'=>$reply.' country code not found in iso3166.inc.php file'));
+					new log_error(array('module_name'=>get_class($this),'text'=>$reply.' country code not found in iso31661a2.inc.php file or invalid answer from maxmind'));
 				}
 			} else {
 				require_once _BASEPATH_.'/includes/classes/log_error.class.php';

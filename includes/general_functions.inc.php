@@ -58,12 +58,12 @@ function get_site_option($option,$module_code) {
 	$myreturn=0;
 	global $dbtable_prefix;
 	$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code`='$module_code'";
-	if (is_array($option)) {
-		if (!empty($option)) {
+	if (!empty($option)) {
+		if (is_array($option)) {
 			$query.=" AND `config_option` IN ('".join("','",$option)."')";
+		} else {
+			$query.=" AND `config_option`='$option'";
 		}
-	} else {
-		$query.=" AND `config_option`='$option'";
 	}
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
@@ -73,6 +73,27 @@ function get_site_option($option,$module_code) {
 		}
 		if (is_string($option)) {
 			$myreturn=array_shift($myreturn);
+		}
+	}
+	return $myreturn;
+}
+
+
+function get_site_options_by_module_type($option,$module_type) {
+	$myreturn=array();
+	global $dbtable_prefix;
+	$query="SELECT a.`module_code`,b.`config_option`,b.`config_value` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`='$module_type' AND a.`module_code`=b.`fk_module_code`";
+	if (!empty($option)) {
+		if (is_array($option)) {
+			$query.=" AND `config_option` IN ('".join("','",$option)."')";
+		} else {
+			$query.=" AND `config_option`='$option'";
+		}
+	}
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$myreturn[$rsrow['module_code']][$rsrow['config_option']]=$rsrow['config_value'];
 		}
 	}
 	return $myreturn;
@@ -115,24 +136,6 @@ function pager($totalrows,$offset,$results) {
 }
 
 
-function get_my_skin() {
-	if (!empty($_SESSION[_LICENSE_KEY_]['user']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_SESSION[_LICENSE_KEY_]['user']['skin'])) {
-		$myreturn=$_SESSION[_LICENSE_KEY_]['user']['skin'];
-		$_COOKIE['sco_app']['skin']=$myreturn;
-	} elseif (!empty($_COOKIE['sco_app']['skin']) && preg_match('/^\w+$/',$_COOKIE['sco_app']['skin']) && is_dir(_BASEPATH_.'/skins_site/'.$_COOKIE['sco_app']['skin'])) {
-		$myreturn=$_COOKIE['sco_app']['skin'];
-		// save the option in less expensive places
-		$_SESSION[_LICENSE_KEY_]['user']['skin']=$myreturn;
-	} else {
-		$myreturn=get_default_skin_dir();
-		// save the option in less expensive places
-		$_COOKIE['sco_app']['skin']=$myreturn;
-		$_SESSION[_LICENSE_KEY_]['user']['skin']=$myreturn;
-	}
-	return $myreturn;
-}
-
-
 function get_default_skin_dir() {
 	$myreturn='';
 	global $dbtable_prefix;
@@ -142,7 +145,7 @@ function get_default_skin_dir() {
 		$myreturn=mysql_result($res,0,0);
 	}
 	if (empty($myreturn)) {
-		$myreturn='def';
+		$myreturn='basic';
 	}
 	return $myreturn;
 }
@@ -157,20 +160,30 @@ function get_default_skin_code() {
 		$myreturn=mysql_result($res,0,0);
 	}
 	if (empty($myreturn)) {
-		$myreturn='def';
+		$myreturn='basic';
 	}
 	return $myreturn;
 }
 
 
-function send_template_email($to,$subject,$template,$skin,$output=array()) {
+function send_template_email($to,$subject,$template,$skin,$output=array(),$message_body='') {
 	$myreturn=true;
-	$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$skin.'/emails/','remove_nonjs');
-	$tpl->set_file('temp',$template);
-	$tpl->set_var('output',$output);
-	global $tplvars;
-	$tpl->set_var('tplvars',$tplvars);
-	$message_body=$tpl->process('temp','temp',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL | TPL_FINISH);
+	if (empty($message_body)) {
+		if (isset($GLOBALS['tpl'])) {
+			global $tpl;
+		} else {
+			$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$skin.'/','remove_nonjs');
+		}
+		$tpl->set_file('temp','emails/'.$template);
+		if (!empty($output)) {
+			$tpl->set_var('output',$output);
+		}
+		global $tplvars;
+		$tpl->set_var('tplvars',$tplvars);
+		$message_body=$tpl->process('temp','temp',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL | TPL_FINISH);
+		$tpl->drop_var('temp');
+		$tpl->drop_var('output');
+	}
 	$config=get_site_option(array('mail_from','mail_crlf'),'core');
 	require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
 	$mail=new PHPMailer();
@@ -191,6 +204,8 @@ function send_template_email($to,$subject,$template,$skin,$output=array()) {
 		$myreturn=false;
 		$GLOBALS['topass']['message']['type']=MESSAGE_ERROR;
 		$GLOBALS['topass']['message']['text']=$mail->ErrorInfo;
+		require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+		new log_error(array('module_name'=>'send_template_email','text'=>'sending mail to '.$to.' failed:'.$message_body));
 	}
 	return $myreturn;
 }
@@ -385,6 +400,21 @@ function remove_banned_words($str) {
 }
 
 
+function gen_license($user) {
+	$myreturn='';
+	$secret=LK_SECRET;
+	if (isset($user['beta'])) {
+		$secret.='beta';
+	}
+	if (isset($user['site_id']) && isset($user['name'])) {
+		$myreturn=strtoupper(substr(md5($user['site_id'].$secret.$user['name']),0,22));
+	} else {
+		$myreturn=false;
+	}
+	return $myreturn;
+}
+
+
 function create_search_form($search_fields) {
 	$myreturn=array();
 	global $dbtable_prefix,$_pfields;
@@ -518,11 +548,10 @@ function create_search_form($search_fields) {
 function get_online_ids() {
 	$myreturn=array();
 	global $dbtable_prefix;
-	// get the user and the last login/logout time.
-	$query="SELECT DISTINCT a.`fk_user_id`,UNIX_TIMESTAMP(b.`last_activity`) as `last_activity` FROM `{$dbtable_prefix}online` a,`".USER_ACCOUNTS_TABLE."` b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND a.`fk_user_id`<>0";
+	$query="SELECT DISTINCT `fk_user_id` FROM `{$dbtable_prefix}online` WHERE `fk_user_id`<>0";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
-		$myreturn[mysql_result($res,$i,0)]=mysql_result($res,$i,1);	// this is already a gmdate
+		$myreturn[mysql_result($res,$i,0)]=1;
 	}
 	return $myreturn;
 }

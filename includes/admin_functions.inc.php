@@ -151,7 +151,7 @@ function regenerate_fields_array() {
 					for ($i=0;isset($rsrow['default_value'][$i]);++$i) {
 						++$rsrow['default_value'][$i];
 					}
-					$towrite.="\$GLOBALS['_pfields'][$id]['default_value']=array(".join(",",$rsrow['default_value']).");\n";
+					$towrite.="\$GLOBALS['_pfields'][$id]['default_value']=array(".join(',',$rsrow['default_value']).");\n";
 				} else {
 					$towrite.="\$GLOBALS['_pfields'][$id]['default_value']=array();\n";
 				}

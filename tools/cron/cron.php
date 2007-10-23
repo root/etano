@@ -101,7 +101,9 @@ if (!isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['argc'])) {
 	}
 
 	// every day
-	if ($hour==23 && $minute==55) {
+	// we want the minute 30 and not 55 because some jobs might read the current day and they should
+	// have some time to finish.
+	if ($hour==23 && $minute==30) {
 		if ($dh=opendir(dirname(__FILE__).'/jobs/d')) {
 			while (($file=readdir($dh))!==false) {
 				if ($file{0}!='.' && substr($file,-3)=='php') {
@@ -113,7 +115,9 @@ if (!isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['argc'])) {
 	}
 
 	// once per week: sunday 11:55 PM
-	if ($weekday==0 && $hour==23 && $minute==55) {
+	// we want the minute 35 and not 55 because some jobs might read the current day and they should
+	// have some time to finish.
+	if ($weekday==0 && $hour==23 && $minute==35) {
 		if ($dh=opendir(dirname(__FILE__).'/jobs/w')) {
 			while (($file=readdir($dh))!==false) {
 				if ($file{0}!='.' && substr($file,-3)=='php') {
