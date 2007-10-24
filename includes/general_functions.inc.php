@@ -270,6 +270,18 @@ function get_user_by_userid($user_id) {
 }
 
 
+function set_user_settings($user_id,$module_code,$option,$value) {
+	global $dbtable_prefix;
+	$query="UPDATE `{$dbtable_prefix}user_settings2` SET `config_value`='$value' WHERE `config_option`='$option' AND `fk_module_code`='$module_code' AND `fk_user_id`=$user_id";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (!mysql_affected_rows()) {
+		$query="INSERT INTO `{$dbtable_prefix}user_settings2` SET `config_value`='$value',`config_option`='$option',`fk_module_code`='$module_code',`fk_user_id`=$user_id";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
+	return true;
+}
+
+
 // it returns the defaults for non members
 function get_user_settings($user_id,$module_code,$option='') {
 	$myreturn=array();
@@ -280,7 +292,7 @@ function get_user_settings($user_id,$module_code,$option='') {
 		$remaining=array($option=>1);
 	}
 	if (!empty($user_id)) {
-		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`=$user_id";
+		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`=$user_id AND `fk_module_code`='$module_code'";
 		if (!empty($option)) {
 			if (is_array($option)) {
 				$query.=" AND `config_option` IN ('".join("','",$option)."')";
@@ -288,7 +300,6 @@ function get_user_settings($user_id,$module_code,$option='') {
 				$query.=" AND `config_option`='$option'";
 			}
 		}
-		$query.=" AND `fk_module_code`='$module_code'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			while ($rsrow=mysql_fetch_row($res)) {
@@ -300,9 +311,10 @@ function get_user_settings($user_id,$module_code,$option='') {
 
 	if (!empty($remaining)) {
 		$remaining=array_flip($remaining);
-		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE 1";
+		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code`='$module_code'";
 		$query.=" AND `config_option` IN ('".join("','",$remaining)."')";
-		$query.=" AND `fk_module_code`='$module_code' AND `per_user`=1";
+		// we don't use "AND `per_user`=1" so we can inject some other site_options into user_settings
+		// The injected values will not be editable by the user
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			while ($rsrow=mysql_fetch_row($res)) {

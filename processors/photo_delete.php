@@ -42,6 +42,10 @@ if (mysql_num_rows($res)) {
 		$fileop->delete(_PHOTOPATH_.'/t2/'.$input['photo']);
 		$fileop->delete(_PHOTOPATH_.'/'.$input['photo']);
 	}
+	$photos_remaining=get_user_settings($_SESSION[_LICENSE_KEY_]['user']['user_id'],'core_photo','max_user_photos');
+	if ($photos_remaining!=-1) {
+		set_user_settings($_SESSION[_LICENSE_KEY_]['user']['user_id'],'core_photo','max_user_photos',$photos_remaining+1);
+	}
 
 	$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_parent_id`=$photo_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

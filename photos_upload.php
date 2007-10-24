@@ -27,7 +27,12 @@ if (empty($output['max_file_size'])) {
 		$output['max_file_size']=((int)substr($output['max_file_size'],0,-1))*1024;
 	}
 }
-
+$output['photos_remaining']=get_user_settings($_SESSION[_LICENSE_KEY_]['user']['user_id'],'core_photo','max_user_photos');
+if ($output['photos_remaining']==-1) {
+	$output['photos_remaining']='You can upload an unlimited number of photos.';	// translate
+} else {
+	$output['photos_remaining']=sprintf('You can upload %s more photos.',$output['photos_remaining']);	// translate
+}
 $tpl->set_file('content','photos_upload.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content');
