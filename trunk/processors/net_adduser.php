@@ -17,6 +17,10 @@ require_once '../includes/user_functions.inc.php';
 require_once '../includes/network_functions.inc.php';
 check_login_member('manage_networks');
 
+if (is_file(_BASEPATH_.'/events/processors/net_adduser.php')) {
+	include_once _BASEPATH_.'/events/processors/net_adduser.php';
+}
+
 $error=false;
 $qs='';
 $qs_sep='';
@@ -65,6 +69,11 @@ if (!$error) {
 				$force_connect=mysql_result($res,0,0);
 			}
 		}
+		if (isset($_on_before_insert)) {
+			for ($i=0;isset($_on_before_insert[$i]);++$i) {
+				call_user_func($_on_before_insert[$i]);
+			}
+		}
 		$query="INSERT IGNORE INTO `{$dbtable_prefix}user_networks` SET `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."',`fk_net_id`=".$input['net_id'].",`fk_user_id_other`=".$input['uid'];
 		if (!empty($force_connect)) {
 			$query.=",`nconn_status`=1";
@@ -87,11 +96,16 @@ if (!$error) {
 			$request['fk_user_id_other']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 			$request['_user_other']=$_SESSION[_LICENSE_KEY_]['user']['user'];
 			$request['subject']=sprintf('Connection request from %s',$_SESSION[_LICENSE_KEY_]['user']['user']);	// translate
-			$request['message_body']=sprintf('%1$s wants to be your friend.<br><a class="content-link simple" href="friendship_requests.php">Click here</a> to see all friendship requests',$_SESSION[_LICENSE_KEY_]['user']['user']);
+			$request['message_body']=sprintf('%1$s wants to add you to his %2$s network.<br><a class="content-link simple" href="friendship_requests.php">Click here</a> to approve/deny this request and to see any other friendship requests.',$_SESSION[_LICENSE_KEY_]['user']['user'],get_net_name($input['net_id']));
 			$request['message_type']=MESS_SYSTEM;
 			queue_or_send_message($request);
 		} else {
 			$topass['message']['text']=sprintf('%1$s has been added to your %2$s',get_user_by_userid($input['uid']),get_net_name($input['net_id']));     // translate
+		}
+		if (isset($_on_after_insert)) {
+			for ($i=0;isset($_on_after_insert[$i]);++$i) {
+				call_user_func($_on_after_insert[$i]);
+			}
 		}
 	}
 }

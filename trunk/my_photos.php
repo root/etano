@@ -33,7 +33,7 @@ $totalrows=mysql_result($res,0,0);
 
 $loop_rows=array();
 if (!empty($totalrows)) {
-	if ($o>$totalrows) {
+	if ($o>=$totalrows) {
 		$o=$totalrows-$r;
 		$o=$o>=0 ? $o : 0;
 	}

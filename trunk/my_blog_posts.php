@@ -35,7 +35,7 @@ if (!empty($_GET['bid'])) {
 
 	$loop=array();
 	if (!empty($totalrows)) {
-		if ($o>$totalrows) {
+		if ($o>=$totalrows) {
 			$o=$totalrows-$r;
 			$o=$o>=0 ? $o : 0;
 		}

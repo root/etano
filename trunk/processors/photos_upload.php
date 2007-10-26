@@ -19,6 +19,10 @@ require_once '../includes/img_functions.inc.php';
 check_login_member('upload_photos');
 set_time_limit(0);
 
+if (is_file(_BASEPATH_.'/events/processors/photos_upload.php')) {
+	include_once _BASEPATH_.'/events/processors/photos_upload.php';
+}
+
 $error=false;
 $qs='';
 $qs_sep='';
@@ -307,8 +311,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$qs_sep='&';
 			$nextpage='photo_settings.php';
 		} else {
-			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']=sprintf('No photo uploaded.');
+			if (empty($topass['message'])) {
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']=sprintf('No photo uploaded.');
+			}
 		}
 	} else {
 		$nextpage='photos_upload.php';

@@ -17,6 +17,10 @@ require_once '../includes/user_functions.inc.php';
 require_once '../includes/network_functions.inc.php';
 check_login_member('manage_networks');
 
+if (is_file(_BASEPATH_.'/events/processors/net_deluser.php')) {
+	include_once _BASEPATH_.'/events/processors/net_deluser.php';
+}
+
 $error=false;
 $qs='';
 $qs_sep='';
@@ -60,7 +64,17 @@ if (!$error) {
 		if ($is_bidi) {
 			$query.=" OR (`fk_user_id`=".$input['uid']." AND `fk_net_id`=".$input['net_id']." AND `fk_user_id_other`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."')";
 		}
+		if (isset($_on_before_delete)) {
+			for ($i=0;isset($_on_before_delete[$i]);++$i) {
+				call_user_func($_on_before_delete[$i]);
+			}
+		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (isset($_on_after_delete)) {
+			for ($i=0;isset($_on_after_delete[$i]);++$i) {
+				call_user_func($_on_after_delete[$i]);
+			}
+		}
 		if ($input['net_id']==NET_BLOCK) {
 			del_message_filter(array('filter_type'=>FILTER_SENDER,'fk_user_id'=>$_SESSION[_LICENSE_KEY_]['user']['user_id'],'field_value'=>$input['uid']));
 			add_member_score($input['uid'],'unblock_member');

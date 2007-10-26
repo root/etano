@@ -43,7 +43,7 @@ class widget_latest_blog_comments extends icontent_widget {
 			require_once _CACHEPATH_.'/widgets/latest_blog_comments/comments.inc.php';
 			$this->tpl->set_file('widget.content','widgets/latest_blog_comments/display.html');
 			$this->tpl->set_loop('loop',$latest_comments);
-			$this->tpl->process('widget.content','widget.content',TPL_LOOP);
+			$this->tpl->process('widget.content','widget.content',TPL_LOOP | TPL_OPTLOOP);
 		}
 	}
 

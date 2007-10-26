@@ -31,7 +31,7 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='News post deleted.';
 
 require_once _BASEPATH_.'/includes/classes/rss_writer.class.php';
-$rss_writer_object=&new rss_writer_class();
+$rss_writer_object=new rss_writer_class();
 $rss_writer_object->specification='1.0';
 $rss_writer_object->about=_BASEURL_.'/rss/site_news.xml';
 $rss_writer_object->rssnamespaces['dc']='http://purl.org/dc/elements/1.1/';
