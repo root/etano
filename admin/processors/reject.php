@@ -73,18 +73,22 @@ if (!$error) {
 			break;
 
 		case AMTPL_REJECT_PHOTO:
+			if (is_file(_BASEPATH_.'/events/processors/photo_delete.php')) {
+				include_once _BASEPATH_.'/events/processors/photo_delete.php';
+				if (isset($_on_before_delete)) {
+					$GLOBALS['photo_ids']=array($input['id']);
+					for ($i=0;isset($_on_before_delete[$i]);++$i) {
+						call_user_func($_on_before_delete[$i]);
+					}
+				}
+			}
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `status`=".STAT_EDIT.",`last_changed`='".gmdate('YmdHis')."',`reject_reason`='".$input['reject_reason']."' WHERE `photo_id`=".$input['id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="SELECT a.`fk_user_id`,a.`is_main`,b.`email` FROM `{$dbtable_prefix}user_photos` a,`".USER_ACCOUNTS_TABLE."` b WHERE a.`photo_id`=".$input['id']." AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."`";
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			if (mysql_num_rows($res)) {
-				$temp=mysql_fetch_assoc($res);
-				if (!empty($temp['is_main'])) {
-					$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='' WHERE `fk_user_id`=".$temp['fk_user_id'];
-					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				}
-				if (!empty($input['send_email'])) {
-					$ok=queue_or_send_email(array($temp['email']),array('subject'=>$_POST['reason_title'],'message_body'=>$_POST['reject_reason']));
+			if (!empty($input['send_email'])) {
+				$query="SELECT b.`email` FROM `{$dbtable_prefix}user_photos` a,`".USER_ACCOUNTS_TABLE."` b WHERE a.`photo_id`=".$input['id']." AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."`";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				if (mysql_num_rows($res)) {
+					$ok=queue_or_send_email(array(mysql_result($res,0,0)),array('subject'=>$_POST['reason_title'],'message_body'=>$_POST['reject_reason']));
 				}
 			}
 			if ($ok) {

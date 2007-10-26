@@ -168,6 +168,12 @@ class etano_package {
 						break;
 					}
 					if (!$this->_do_diff($this->package_path.'/'.$mod_command->firstChild->nodeValue,false,true)) {
+						$this->error=true;
+						$masize=count($this->manual_actions);
+						$this->manual_actions[$masize]['type']='diff';
+						$this->manual_actions[$masize]['from']=$this->package_path.'/'.$mod_command->firstChild->nodeValue;
+						$this->manual_actions[$masize]['to']='';
+						$this->manual_actions[$masize]['error']=$this->error_text;
 						break;
 					}
 				} elseif ($mod_command->nodeName=='sql') {
@@ -398,6 +404,7 @@ class etano_package {
 				}
 				$cur_file=_BASEPATH_.'/'.trim(substr($diff_array[$i],7));
 				$file_content=file($cur_file);
+				$last_change_on_line=0;
 			} elseif (substr($diff_array[$i],0,3)=='===') {
 			} elseif (substr($diff_array[$i],0,3)=='---') {
 			} elseif (substr($diff_array[$i],0,3)=='+++') {
@@ -461,17 +468,34 @@ class etano_package {
 					break;
 				}
 				if (!empty($source)) {
-					for ($j=0;isset($source[$j]);++$j) {
-						if (trim($source[$j])!=trim($file_content[$dest_start+$j])) {
+					// where could our block be? We don't want to rely on the $dest_start read from the diff file
+					$possible_locations=array_keys($file_content,$source[0]);
+					for ($j=1;isset($source[$j]);++$j) {
+						for ($k=0;isset($possible_locations[$k]);++$k) {
+							if ($possible_locations[$k]<=$last_change_on_line || !isset($file_content[$possible_locations[$k]+$j]) || $source[$j]!=$file_content[$possible_locations[$k]+$j]) {
+								unset($possible_locations[$k]);
+							}
+						}
+					}
+					if (empty($possible_locations)) {
+						$this->error=true;
+						$this->error_text=sprintf('Cannot apply patch because the source file (%s) is changed',$cur_file);
+						break 2;
+					} elseif (count($possible_locations)>1) {
+						if (!in_array($dest_start,$possible_locations)) {
 							$this->error=true;
 							$this->error_text=sprintf('Cannot apply patch because the source file (%s) is changed',$cur_file);
 							break 2;
 						}
+					} elseif (count($possible_locations)==1) {
+						reset($possible_locations);
+						$dest_start=current($possible_locations);
 					}
 				}
 
 				// if we are here then there was no error and we can apply the diff!!!
 				array_splice($file_content,$dest_start,count($source),$dest);
+				$last_change_on_line=$dest_start+count($source);
 				$first_chunk=false;
 			}
 		}

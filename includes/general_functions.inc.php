@@ -13,15 +13,17 @@ Support at:                 http://www.datemill.com/forum
 
 function update_stats($user_id,$stat,$add_val,$type='+') {
 	global $dbtable_prefix;
-	if ($type=='+') {
-		$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
-	} else {
-		$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
-	}
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (!mysql_affected_rows()) {
-		$query="INSERT INTO `{$dbtable_prefix}user_stats` SET `fk_user_id`=$user_id,`stat`='$stat',`value`=$add_val";
+	if (!empty($user_id)) {
+		if ($type=='+') {
+			$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
+		} else {
+			$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
+		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (!mysql_affected_rows()) {
+			$query="INSERT INTO `{$dbtable_prefix}user_stats` SET `fk_user_id`=$user_id,`stat`='$stat',`value`=$add_val";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		}
 	}
 }
 
@@ -171,6 +173,8 @@ function send_template_email($to,$subject,$template,$skin,$output=array(),$messa
 	if (empty($message_body)) {
 		if (isset($GLOBALS['tpl'])) {
 			global $tpl;
+			$old_root=$tpl->get_root();
+			$tpl->set_root(_BASEPATH_.'/skins_site/'.$skin.'/');
 		} else {
 			$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$skin.'/','remove_nonjs');
 		}
@@ -206,6 +210,9 @@ function send_template_email($to,$subject,$template,$skin,$output=array(),$messa
 		$GLOBALS['topass']['message']['text']=$mail->ErrorInfo;
 		require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 		new log_error(array('module_name'=>'send_template_email','text'=>'sending mail to '.$to.' failed:'.$message_body));
+	}
+	if (isset($old_root)) {
+		$tpl->set_root($old_root);
 	}
 	return $myreturn;
 }

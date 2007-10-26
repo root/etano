@@ -95,14 +95,12 @@ div.small {
 
 	.message_info .box_content .message_text {
 		background: url('../images/symbol-success.gif') no-repeat top left;
-		height: 30px;
-		padding: 4px 0 0 40px;
+		padding: 4px 0 10px 40px;
 	}
 
 	.message_error .box_content .message_text {
 		background: url('../images/symbol-error.gif') no-repeat top left;
-		height: 30px;
-		padding: 4px 0 0 40px;
+		padding: 4px 0 10px 40px;
 	}
 
 

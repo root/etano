@@ -15,6 +15,10 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 
+if (is_file(_BASEPATH_.'/events/processors/login.php')) {
+	include_once _BASEPATH_.'/events/processors/login.php';
+}
+
 $score_threshold=600;	// seconds
 $error=false;
 $topass=array();
@@ -50,6 +54,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				unset($user['last_activity'],$user['email']);
 				$_SESSION[_LICENSE_KEY_]['user']=array_merge(isset($_SESSION[_LICENSE_KEY_]['user']) ? $_SESSION[_LICENSE_KEY_]['user'] : array(),$user);
 				$_SESSION[_LICENSE_KEY_]['user']['loginout']=$time;
+				if (isset($_on_after_login)) {
+					for ($i=0;isset($_on_after_login[$i]);++$i) {
+						call_user_func($_on_after_login[$i]);
+					}
+				}
 				if (isset($_SESSION[_LICENSE_KEY_]['user']['timedout']['url'])) {
 					$next=$_SESSION[_LICENSE_KEY_]['user']['timedout'];
 					unset($_SESSION[_LICENSE_KEY_]['user']['timedout']);

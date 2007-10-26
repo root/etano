@@ -253,6 +253,10 @@ class phemplate {
 		return true;
 	}
 
+	function get_root() {
+		return $this->root;
+	}
+
 	/**
 	*	what to do with unknown variables in template?
 	*	keep

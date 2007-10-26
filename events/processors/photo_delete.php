@@ -5,7 +5,7 @@ $_on_before_delete[]='on_before_delete_photo';
 // the calling script MUST HAVE $photo_ids array as GLOBALS
 function on_before_delete_photo() {
 	global $dbtable_prefix,$photo_ids;
-	$query="SELECT `photo_id`,`fk_user_id`,`is_main`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
+	$query="SELECT `photo_id`,`fk_user_id`,`is_main`,`photo`,`status` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$photo_ids=array();	// yup
 	$user_ids=array();
@@ -15,18 +15,20 @@ function on_before_delete_photo() {
 	$main_photos=array();
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$photo_ids[]=$rsrow['photo_id'];	// get only the not processed ones
-		if (isset($user_ids[$rsrow['fk_user_id']])) {
-			--$user_ids[$rsrow['fk_user_id']];
-		} else {
-			$user_ids[$rsrow['fk_user_id']]=-1;
-		}
-		if (isset($scores[$rsrow['fk_user_id']])) {
-			$scores[$rsrow['fk_user_id']]+=empty($rsrow['is_main']) ? $score_photo : $score_main_photo;
-		} else {
-			$scores[$rsrow['fk_user_id']]=empty($rsrow['is_main']) ? $score_photo : $score_main_photo;
-		}
-		if (!empty($rsrow['is_main'])) {
-			$main_photos[$rsrow['fk_user_id']]=$rsrow['photo'];
+		if ($rsrow['status']==STAT_APPROVED) {	// everything happens with approved photos only.
+			if (isset($user_ids[$rsrow['fk_user_id']])) {
+				--$user_ids[$rsrow['fk_user_id']];
+			} else {
+				$user_ids[$rsrow['fk_user_id']]=-1;
+			}
+			if (isset($scores[$rsrow['fk_user_id']])) {
+				$scores[$rsrow['fk_user_id']]+=empty($rsrow['is_main']) ? $score_photo : $score_main_photo;
+			} else {
+				$scores[$rsrow['fk_user_id']]=empty($rsrow['is_main']) ? $score_photo : $score_main_photo;
+			}
+			if (!empty($rsrow['is_main'])) {
+				$main_photos[$rsrow['fk_user_id']]=$rsrow['photo'];
+			}
 		}
 	}
 	foreach ($user_ids as $uid=>$num) {
