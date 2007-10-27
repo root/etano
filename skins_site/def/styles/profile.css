@@ -25,7 +25,7 @@
 #online_stat {
 	font-weight: bold;
 	font-size: 13px;
-	background: url('../images/member-online-medium-over.gif') no-repeat left center;
+	background: url('../images/member_online_medium.gif') no-repeat left top;
 	height: 22px;
 	padding-left: 20px;
 }
