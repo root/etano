@@ -13,6 +13,7 @@ Support at:                 http://www.datemill.com/forum
 
 require_once dirname(__FILE__).'/../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.class.php';
 
 $output='';
 if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && !empty($_POST['comment_id'])) {

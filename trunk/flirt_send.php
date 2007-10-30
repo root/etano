@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('flirt_send');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -26,7 +27,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['fk_user_id']=(int)$_GET['to_id'];
 	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
 } else {
-	trigger_error('No receiver specified',E_USER_ERROR);     // translate
+	trigger_error($GLOBALS['_lang'][120],E_USER_ERROR);
 }
 
 if (!isset($output['return']) && isset($_GET['return'])) {
@@ -46,8 +47,8 @@ $tpl->set_var('flirts',vector2radios($flirts,'flirt_id',0,array(),'class="flirts
 $tpl->set_var('output',$output);
 $tpl->process('content','content');
 
-$tplvars['title']='Send a flirt';     // translate
-$tplvars['page_title']='Send a flirt';
+$tplvars['title']=$GLOBALS['_lang'][121];
+$tplvars['page_title']=$GLOBALS['_lang'][121];
 $tplvars['page']='flirt_send';
 $tplvars['css']='flirt_send.css';
 if (is_file('flirt_send_left.php')) {

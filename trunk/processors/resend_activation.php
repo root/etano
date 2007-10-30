@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/join.inc.php';
 
 $qs='type=signup';
 $qssep='&';
@@ -24,7 +25,7 @@ if (!empty($uid)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$input=mysql_fetch_assoc($res);
-		send_template_email($input['email'],sprintf('%s user registration confirmation',_SITENAME_),'confirm_reg.html',get_my_skin(),$input);
+		send_template_email($input['email'],sprintf($GLOBALS['_lang'][70],_SITENAME_),'confirm_reg.html',get_my_skin(),$input);
 		$qs.=$qssep.'email='.$input['email'];
 	}
 }

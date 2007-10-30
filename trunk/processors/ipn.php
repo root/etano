@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/payment.inc.php';
 
 $module_code=preg_replace('[^a-zA-Z0-9_]','',sanitize_and_format_gpc($_REQUEST,'p',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],''));
 if (!empty($module_code)) {

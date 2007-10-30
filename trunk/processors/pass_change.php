@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/pass_change.inc.php';
 
 if (is_file(_BASEPATH_.'/events/processors/pass_change.php')) {
 	include_once _BASEPATH_.'/events/processors/pass_change.php';
@@ -33,13 +34,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if ($input['pass']!=$input['pass2']) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text'][]="The passwords do not match.";
+		$topass['message']['text'][]=$GLOBALS['_lang'][56];
 		$input['error_pass']='red_border';
 	}
 	if (empty($input['pass'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text'][]="Please enter the password.";
+		$topass['message']['text'][]=$GLOBALS['_lang'][57];
 		$input['error_pass']='red_border';
 	}
 
@@ -52,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']='Password changed.';     // translate
+		$topass['message']['text']=$GLOBALS['_lang'][88];
 		if (isset($_on_after_update)) {
 			for ($i=0;isset($_on_after_update[$i]);++$i) {
 				call_user_func($_on_after_update[$i]);

@@ -15,6 +15,7 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/message_filters.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('manage_folders');
 
 if (is_file(_BASEPATH_.'/events/processors/filters_addedit.php')) {
@@ -39,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!($input['field_value']=get_userid_by_user($input['field_value']))) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']=sprintf('User %s doesn\'t exist. Filter not saved.',$input['field_value']);     // translate
+				$topass['message']['text']=sprintf($GLOBALS['_lang'][41],$input['field_value']);
 			}
 			break;
 
@@ -79,10 +80,10 @@ if (!$error) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_affected_rows()) {
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Filter changed successfully.';     // translate
+			$topass['message']['text']=$GLOBALS['_lang'][42];
 		} else {
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Filter not changed. A similar filter already exists.';     // translate
+			$topass['message']['text']=$GLOBALS['_lang'][43];
 		}
 		if (isset($_on_after_update)) {
 			for ($i=0;isset($_on_after_update[$i]);++$i) {
@@ -106,10 +107,10 @@ if (!$error) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_affected_rows()) {
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Filter added.';     // translate
+			$topass['message']['text']=$GLOBALS['_lang'][44];
 		} else {
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Filter not added. A similar filter already exists.';     // translate
+			$topass['message']['text']=$GLOBALS['_lang'][45];
 		}
 		if (isset($_on_after_insert)) {
 			for ($i=0;isset($_on_after_insert[$i]);++$i) {

@@ -38,8 +38,8 @@ $tpl->process('content','content',TPL_LOOP);
 $tpl->drop_loop('search');
 unset($search);
 
-$tplvars['title']='Advanced Search';
-$tplvars['page_title']='Advanced search';
+$tplvars['title']=$GLOBALS['_lang'][247];
+$tplvars['page_title']=$GLOBALS['_lang'][247];
 $tplvars['page']='search_more';
 $tplvars['css']='search_more.css';
 if (is_file('search_more_left.php')) {

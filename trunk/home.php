@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/home.php';
 check_login_member('auth');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -38,7 +39,7 @@ if (mysql_num_rows($res)) {
 	$query="SELECT b.`m_name` FROM `".USER_ACCOUNTS_TABLE."` a,`{$dbtable_prefix}memberships` b WHERE a.`membership`=b.`m_value` AND a.`".USER_ACCOUNT_ID."`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$output['m_name']=mysql_result($res,0,0);
-	$output['paid_until']='Never';	// translate
+	$output['paid_until']=$GLOBALS['_lang'][123];
 }
 $my_stats=get_user_stats($_SESSION[_LICENSE_KEY_]['user']['user_id'],array('total_photos','pviews','num_friends'));
 $query="SELECT count(*) FROM `{$dbtable_prefix}user_inbox` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND `del`=0";
@@ -53,8 +54,8 @@ $tpl->set_var('output',$output);
 $tpl->set_var('my_stats',$my_stats);
 $tpl->process('content','content');
 
-$tplvars['title']='Member Home';
-$tplvars['page_title']='My Home';
+$tplvars['title']=$GLOBALS['_lang'][124];
+$tplvars['page_title']=$GLOBALS['_lang'][124];
 $tplvars['page']='home';
 $tplvars['css']='home.css';
 if (is_file('home_left.php')) {

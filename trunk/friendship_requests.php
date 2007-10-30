@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/net.inc.php';
 check_login_member('manage_networks');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -39,8 +40,8 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='Friendship Requests';
-$tplvars['page_title']='Friendship Requests';
+$tplvars['title']=$GLOBALS['_lang'][226];
+$tplvars['page_title']=$GLOBALS['_lang'][226];
 $tplvars['page']='friendship_requests';
 $tplvars['css']='friendship_requests.css';
 if (is_file('friendship_requests_left.php')) {

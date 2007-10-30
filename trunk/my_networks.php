@@ -15,6 +15,7 @@ require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/network_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/net.inc.php';
 check_login_member('manage_networks');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -47,8 +48,8 @@ $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTLOOP | TPL_NOLOOP);
 $tpl->drop_loop('networks');
 unset($networks);
 
-$tplvars['title']='My network members';
-$tplvars['page_title']='How I am connected';
+$tplvars['title']=$GLOBALS['_lang'][240];
+$tplvars['page_title']=$GLOBALS['_lang'][240];
 $tplvars['page']='my_networks';
 $tplvars['css']='my_networks.css';
 if (is_file('my_networks_left.php')) {

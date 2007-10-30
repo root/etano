@@ -15,6 +15,7 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/network_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/net.inc.php';
 check_login_member('manage_networks');
 
 if (is_file(_BASEPATH_.'/events/processors/net_adduser.php')) {
@@ -38,13 +39,13 @@ if (!empty($_GET['return'])) {
 if (empty($input['uid'])) {
 	$error=true;
 	$topass['message']['type']=MESSAGE_ERROR;
-	$topass['message']['text']='Invalid user';
+	$topass['message']['text']=$GLOBALS['_lang'][81];
 }
 
 if (empty($input['net_id'])) {
 	$error=true;
 	$topass['message']['type']=MESSAGE_ERROR;
-	$topass['message']['text']='Invalid network selected';
+	$topass['message']['text']=$GLOBALS['_lang'][82];
 }
 
 if (!$error) {
@@ -56,7 +57,7 @@ if (!$error) {
 	} else {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Invalid network selected';
+		$topass['message']['text']=$GLOBALS['_lang'][82];
 	}
 
 	if (!$error) {
@@ -91,16 +92,16 @@ if (!$error) {
 		}
 		$topass['message']['type']=MESSAGE_INFO;
 		if (!empty($is_bidi) && empty($force_connect)) {
-			$topass['message']['text']=sprintf('A confirmation request has been sent to %s',get_user_by_userid($input['uid']));     // translate
+			$topass['message']['text']=sprintf($GLOBALS['_lang'][83],get_user_by_userid($input['uid']));
 			$request['fk_user_id']=$input['uid'];
 			$request['fk_user_id_other']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 			$request['_user_other']=$_SESSION[_LICENSE_KEY_]['user']['user'];
-			$request['subject']=sprintf('Connection request from %s',$_SESSION[_LICENSE_KEY_]['user']['user']);	// translate
-			$request['message_body']=sprintf('%1$s wants to add you to his %2$s network.<br><a class="content-link simple" href="friendship_requests.php">Click here</a> to approve/deny this request and to see any other friendship requests.',$_SESSION[_LICENSE_KEY_]['user']['user'],get_net_name($input['net_id']));
+			$request['subject']=sprintf($GLOBALS['_lang'][84],$_SESSION[_LICENSE_KEY_]['user']['user']);
+			$request['message_body']=sprintf($GLOBALS['_lang'][85],$_SESSION[_LICENSE_KEY_]['user']['user'],get_net_name($input['net_id']));
 			$request['message_type']=MESS_SYSTEM;
 			queue_or_send_message($request);
 		} else {
-			$topass['message']['text']=sprintf('%1$s has been added to your %2$s',get_user_by_userid($input['uid']),get_net_name($input['net_id']));     // translate
+			$topass['message']['text']=sprintf($GLOBALS['_lang'][86],get_user_by_userid($input['uid']),get_net_name($input['net_id']));
 		}
 		if (isset($_on_after_insert)) {
 			for ($i=0;isset($_on_after_insert[$i]);++$i) {

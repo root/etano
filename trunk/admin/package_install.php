@@ -44,6 +44,7 @@ if (substr($file,0,7)=='http://') {
 $install_index=0;
 $ui_request=false;
 
+$show_finish=true;	// used to figure out if we should show the finish button in case of an error or not.
 if (!$error) {
 	// read the manifest
 	if (substr($file,-4)=='.zip') {
@@ -100,6 +101,7 @@ if (!$error) {
 			if (!isset($mcodes[$p->module_code]) || $mcodes[$p->module_code]<$p->version) {	// not installed packages/versions
 				for ($install_index=$install_index_start;isset($p->install[$install_index]);++$install_index) {
 					$req_ok=true;
+					// see if all requirements are satisfied
 					for ($k=0;isset($p->install[$install_index]['requires'][$k]);++$k) {
 						$required=$p->install[$install_index]['requires'][$k];
 						if (!isset($mcodes[$required['id']]) || (isset($required['version']) && $mcodes[$required['id']]!=$required['version']) || (isset($required['min-version']) && $mcodes[$required['id']]<$required['min-version']) || (isset($required['max-version']) && $mcodes[$required['id']]>$required['max-version'])) {
@@ -107,10 +109,28 @@ if (!$error) {
 							break;
 						}
 					}
+					if ($req_ok) {
+						// see if we're not blocked by some module
+						for ($k=0;isset($p->install[$install_index]['blockedby'][$k]);++$k) {
+							$blockedby=$p->install[$install_index]['blockedby'][$k];
+							if (isset($mcodes[$blockedby['id']]) && ((!isset($blockedby['version']) && !isset($blockedby['min-version']) && !isset($blockedby['max-version'])) || (isset($blockedby['version']) && $mcodes[$blockedby['id']]==$blockedby['version']) || (isset($blockedby['min-version']) && $mcodes[$blockedby['id']]>$blockedby['min-version') || (isset($blockedby['max-version']) && $mcodes[$blockedby['id']]<$blockedby['max-version']))) {
+								$req_ok=false;
+								break;
+							}
+						}
+					}
 					if ($req_ok) {	// if all requirements of this install are satisfied....
-						if ($p->dry_run($install_index)) {	// ...test to see if we can install the package
+						if ($changes=$p->dry_run($install_index)) {	// ...test to see if we can install the package
+							// $changes holds most of the files that will be changed
+							// "most" because can't read the changes made by 'php' or 'extract' commands
+							// in future it would be nice to list the files before install
+							if (isset($_GET['show_changes'])) {
+								function slash_count($a,$b) {$ca=substr_count($a,'/');$cb=substr_count($b,'/');if ($ca==$cb) {return strcmp($a,$b);}return ($ca<$cb)?-1:1;}
+								usort($changes,'slash_count');
+								echo join('<br>',$changes);die;
+							}
 							if ($p->install($install_index,$skip_input)) {	// ...and finally install it.
-								if (!empty($p->ui)) {
+								if (!empty($p->ui)) {	// oops, need to gather some data from user
 									$ui_request=true;
 									break;
 								} else {
@@ -136,12 +156,17 @@ if (!$error) {
 										}
 									}
 								}
-							} else {
+							} else {	// this is bad: this is an error that was not caught by dry_run()
 								break;
 							}
+						} else {
+							// dry_run() returned errors so we shouldn't show the finish button
+							$show_finish=false;
 						}
 					} else {
 						// some of the requirements of this install are not satisfied, moving on to next install instruction
+						// this shouldn't be executed but just to be sure:
+						break;
 					}
 				}
 				if (!$ui_request && !$p->error) {
@@ -165,8 +190,9 @@ if (isset($p) && $p->error && !empty($p->manual_actions)) {
 	$tpl->set_loop('manual_actions',$p->manual_actions);
 	$output['f']=$file;
 	$output['finish']=$install_index;
+	$output['show_finish']=$show_finish;
 	$tpl->set_var('output',$output);
-	$tpl->process('content','content',TPL_LOOP);
+	$tpl->process('content','content',TPL_LOOP | TPL_OPTIONAL);
 
 	$tplvars['title']='Package Manager';
 	$tplvars['page']='package_install';

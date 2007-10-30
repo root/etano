@@ -15,6 +15,7 @@ require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/user_mtpls.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('saved_messages');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -63,8 +64,8 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='Manage your saved responses';     // translate
-$tplvars['page_title']='Saved Responses';
+$tplvars['title']=$GLOBALS['_lang'][142];
+$tplvars['page_title']=$GLOBALS['_lang'][142];
 $tplvars['page']='my_responses';
 $tplvars['css']='my_responses.css';
 if (is_file('my_responses_left.php')) {

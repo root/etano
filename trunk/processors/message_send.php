@@ -16,6 +16,7 @@ db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/queue_message.inc.php';
 require_once '../includes/tables/user_outbox.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('message_write');
 
 if (is_file(_BASEPATH_.'/events/processors/message_send.php')) {
@@ -41,17 +42,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (empty($input['fk_user_id'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Message not sent because there was no receiver specified';
+		$topass['message']['text']=$GLOBALS['_lang'][75];
 	}
 	if (empty($input['subject'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Please enter the message subject';
+		$topass['message']['text']=$GLOBALS['_lang'][196];
 	}
 	if (empty($input['message_body'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Please enter the message body';
+		$topass['message']['text']=$GLOBALS['_lang'][197];
 	}
 
 	if (!$error) {
@@ -84,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		update_stats($_SESSION[_LICENSE_KEY_]['user']['user_id'],'mess_sent',1);
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']='Message sent.';
+		$topass['message']['text']=$GLOBALS['_lang'][198];
 		if (isset($_on_after_insert)) {
 			for ($i=0;isset($_on_after_insert[$i]);++$i) {
 				call_user_func($_on_after_insert[$i]);

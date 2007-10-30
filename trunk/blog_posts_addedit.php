@@ -16,6 +16,7 @@ require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/blog_posts.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -53,8 +54,8 @@ $tpl->set_file('content','blog_posts_addedit.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);
 
-$tplvars['title']='Add your post';
-$tplvars['page_title']=sprintf('Add/Edit a Post in %s',$blog['blog_name']);
+$tplvars['page_title']=sprintf($GLOBALS['_lang'][223],$blog['blog_name']);
+$tplvars['title']=$tplvars['page_title'];
 $tplvars['page']='blog_posts_addedit';
 $tplvars['css']='blog_posts_addedit.css';
 if (is_file('blog_posts_addedit_left.php')) {

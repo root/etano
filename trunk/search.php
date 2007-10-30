@@ -91,7 +91,7 @@ if (!$got_from_cache) {
 				$continue=true;
 				$input['user']=sanitize_and_format_gpc($_GET,'user',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 				if (strlen($input['user'])<=3) {
-					$topass['message']['text']='You are not allowed to search for less than 4 chars';
+					$topass['message']['text']=$GLOBALS['_lang'][8];
 					$topass['message']['type']=MESSAGE_ERROR;
 					$where='';	// force no results returned.
 				} else {
@@ -290,7 +290,7 @@ $output['totalrows']=count($user_ids);
 
 // get the results from user cache for the found user_ids
 if (!empty($output['totalrows'])) {
-	if ($o>$output['totalrows']) {
+	if ($o>=$output['totalrows']) {
 		$o=$output['totalrows']-$r;
 	}
 	$user_ids=array_slice($user_ids,$o,$r);
@@ -301,7 +301,7 @@ if (!empty($output['totalrows'])) {
 		if (!isset($_list_of_online_members[$user_ids[$i]])) {
 			$temp[]=$user_ids[$i];
 		} else {
-			$inject_by_uid[$user_ids[$i]]=array('last_online'=>'Online now!');	// translate
+			$inject_by_uid[$user_ids[$i]]=array('last_online'=>$GLOBALS['_lang'][153]);
 		}
 	}
 	if (!empty($temp)) {
@@ -311,15 +311,15 @@ if (!empty($output['totalrows'])) {
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$rsrow['last_activity']=$time-$rsrow['last_activity'];
 			if ($rsrow['last_activity']<86400) {
-				$inject_by_uid[$rsrow['uid']]=array('last_online'=>'Today.');	// translate
+				$inject_by_uid[$rsrow['uid']]=array('last_online'=>$GLOBALS['_lang'][154]);
 			} elseif ($rsrow['last_activity']<172800) {
-				$inject_by_uid[$rsrow['uid']]=array('last_online'=>'Yesterday.');	// translate
+				$inject_by_uid[$rsrow['uid']]=array('last_online'=>$GLOBALS['_lang'][155]);
 			} elseif ($rsrow['last_activity']<604800) {
-				$inject_by_uid[$rsrow['uid']]=array('last_online'=>'Last week.');	// translate
+				$inject_by_uid[$rsrow['uid']]=array('last_online'=>$GLOBALS['_lang'][156]);
 			} elseif ($rsrow['last_activity']<2419200) {
-				$inject_by_uid[$rsrow['uid']]=array('last_online'=>'Last month.');	// translate
+				$inject_by_uid[$rsrow['uid']]=array('last_online'=>$GLOBALS['_lang'][157]);
 			} else {
-				$inject_by_uid[$rsrow['uid']]=array('last_online'=>'More than a month ago.');	// translate
+				$inject_by_uid[$rsrow['uid']]=array('last_online'=>$GLOBALS['_lang'][158]);
 			}
 		}
 	}
@@ -361,8 +361,8 @@ $tpl->drop_var('output.results');
 $tpl->drop_var('output.pager2');
 unset($output['results'],$output['pager2']);
 
-$tplvars['title']='Search Results';
-$tplvars['page_title']='Search Results';
+$tplvars['title']=$GLOBALS['_lang'][107];
+$tplvars['page_title']=$GLOBALS['_lang'][107];
 $tplvars['page']='search';
 $tplvars['css']='search.css.php';
 if (is_file('search_left.php')) {

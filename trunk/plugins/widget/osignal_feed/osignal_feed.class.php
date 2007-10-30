@@ -17,6 +17,7 @@ class widget_osignal_feed extends icontent_widget {
 	var $module_code='osignal_feed';
 
 	function widget_osignal_feed() {
+		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/plugins/widget/osignal_feed/osignal_feed.class.php';
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -65,7 +66,7 @@ class widget_osignal_feed extends icontent_widget {
 	function _finish_display() {
 		$myreturn='';
 		if ($this->tpl->get_var_silent('widget.content')!='') {
-			$widget['title']='Original Signal Tech Feed';	// translate this
+			$widget['title']=$GLOBALS['_lang'][212];
 			$widget['id']='os_tech_feed';
 			if (isset($this->config['area'])) {
 				if ($this->config['area']=='admin') {
@@ -101,7 +102,7 @@ class widget_osignal_feed extends icontent_widget {
 
 
 	function _init() {
-		$this->config['module_name']='Latest Original Signal Stories';
+		$this->config['module_name']=$GLOBALS['_lang'][212];
 		$this->config['num_stories']=5;
 		$this->config['refresh_interval']=5;
 		$this->config['num_chars']=400;

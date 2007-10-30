@@ -128,12 +128,12 @@ function bbcode2html($str) {
 
 // wrapper for the create_pager2() function
 function pager($totalrows,$offset,$results) {
-	$lang_strings['page']='Pages:';					// translate this
-	$lang_strings['rpp']='Results to show:';		// translate this
-	$lang_strings['goto_first']='Go to first page';		// translate this
-	$lang_strings['goto_last']='Go to last page';		// translate this
-	$lang_strings['goto_next']='Go to next page';		// translate this
-	$lang_strings['goto_prev']='Go to previous page';		// translate this
+	$lang_strings['page']=$GLOBALS['_lang'][179];
+	$lang_strings['rpp']=$GLOBALS['_lang'][180];
+	$lang_strings['goto_first']=$GLOBALS['_lang'][181];
+	$lang_strings['goto_last']=$GLOBALS['_lang'][182];
+	$lang_strings['goto_next']=$GLOBALS['_lang'][183];
+	$lang_strings['goto_prev']=$GLOBALS['_lang'][184];
 	return create_pager2($totalrows,$offset,$results,$lang_strings);
 }
 
@@ -484,8 +484,8 @@ function create_search_form($search_fields) {
 						$field['default_search'][1]=0;
 					}
 					if ($field['field_type']==FIELD_DATE) {
-						$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'"><option value="0">Any</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][0]).'</select> - ';	// translate
-						$myreturn[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'"><option value="0">Any</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][1]).'</select>';		// translate
+						$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'"><option value="0">'.$GLOBALS['_lang'][159].'</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][0]).'</select> - ';
+						$myreturn[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'"><option value="0">'.$GLOBALS['_lang'][159].'</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][1]).'</select>';
 					} elseif ($field['field_type']==FIELD_SELECT) {
 						$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0]).'</select> - ';
 						$myreturn[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][1]).'</select>';
@@ -513,9 +513,9 @@ function create_search_form($search_fields) {
 					} else {
 						$field['default_value'][3]=0;
 					}
-					$myreturn[$s]['label']='Country';	// translate this
+					$myreturn[$s]['label']=$GLOBALS['_lang'][126];
 					$myreturn[$s]['dbfield']=$field['dbfield'].'_country';
-					$myreturn[$s]['field']='<select class="big_select" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Any</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$field['default_value'][0]).'</select>';
+					$myreturn[$s]['field']='<select class="big_select" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">'.$GLOBALS['_lang'][159].'</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$field['default_value'][0]).'</select>';
 					$prefered_input='s';
 					$num_states=0;
 					$num_cities=0;
@@ -532,27 +532,27 @@ function create_search_form($search_fields) {
 						}
 					}
 					++$s;
-					$myreturn[$s]['label']='State';	// translate this
+					$myreturn[$s]['label']=$GLOBALS['_lang'][127];
 					$myreturn[$s]['dbfield']=$field['dbfield'].'_state';
-					$myreturn[$s]['field']='<select class="big_select" name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Any</option>';	// translate this
+					$myreturn[$s]['field']='<select class="big_select" name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">'.$GLOBALS['_lang'][159].'</option>';
 					if (isset($field['default_value'][0]) && $prefered_input=='s' && !empty($num_states)) {
 						$myreturn[$s]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$field['default_value'][1],"`fk_country_id`='".$field['default_value'][0]."'");
 					}
 					$myreturn[$s]['field'].='</select>';
 					$myreturn[$s]['class']=(isset($field['default_value'][0]) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
 					++$s;
-					$myreturn[$s]['label']='City';	// translate this
+					$myreturn[$s]['label']=$GLOBALS['_lang'][128];
 					$myreturn[$s]['dbfield']=$field['dbfield'].'_city';
-					$myreturn[$s]['field']='<select class="big_select" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Any</option>';	// translate this
+					$myreturn[$s]['field']='<select class="big_select" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">'.$GLOBALS['_lang'][159].'</option>';
 					if (isset($field['default_value'][1]) && $prefered_input=='s' && !empty($num_cities)) {
 						$myreturn[$s]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$field['default_value'][2],"`fk_state_id`='".$field['default_value'][1]."'");
 					}
 					$myreturn[$s]['field'].='</select>';
 					$myreturn[$s]['class']=(isset($field['default_value'][1]) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';
 					++$s;
-					$myreturn[$s]['label']='Distance';	// translate this
+					$myreturn[$s]['label']=$GLOBALS['_lang'][185];
 					$myreturn[$s]['dbfield']=$field['dbfield'].'_zip';
-					$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_dist" id="'.$field['dbfield'].'_dist" tabindex="'.($i+4).'">'.interval2options(1,10).'</select> <label>miles from zip</label> <input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" tabindex="'.($i+4).'" size="5" value="'.$field['default_value'][3].'" />';
+					$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_dist" id="'.$field['dbfield'].'_dist" tabindex="'.($i+4).'">'.interval2options(1,10).'</select> <label>'.$GLOBALS['_lang'][186].'</label> <input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" tabindex="'.($i+4).'" size="5" value="'.$field['default_value'][3].'" />';
 					$myreturn[$s]['class']=(isset($field['default_value'][0]) && $prefered_input=='z') ? 'visible' : 'invisible';
 					break;
 

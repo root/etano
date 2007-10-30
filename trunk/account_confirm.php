@@ -15,6 +15,7 @@ define('CACHE_LIMITER','private');
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/join.inc.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $uid=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
@@ -28,7 +29,7 @@ if (!empty($uid) && !empty($secret)) {
 		redirect2page('info.php',array(),$qs);
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Sorry, your account has not been found. Maybe you have already activated your account?';
+		$topass['message']['text']=$GLOBALS['_lang'][1];
 		redirect2page('info.php',$topass);
 	}
 }

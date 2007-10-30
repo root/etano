@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/comments.inc.php';
 check_login_member('auth');
 
 if (is_file(_BASEPATH_.'/events/processors/comment_delete.php')) {
@@ -62,7 +63,7 @@ if (!empty($comment_id)) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']='Comment deleted.';     // translate
+		$topass['message']['text']=$GLOBALS['_lang'][30];
 		if (isset($_on_after_delete)) {
 			for ($i=0;isset($_on_after_delete[$i]);++$i) {
 				call_user_func($_on_after_delete[$i]);
@@ -70,7 +71,7 @@ if (!empty($comment_id)) {
 		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='You are not allowed to delete this comment.';     // translate
+		$topass['message']['text']=$GLOBALS['_lang'][31];
 	}
 }
 

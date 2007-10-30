@@ -15,6 +15,7 @@ require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/message_filters.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('manage_folders');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -39,14 +40,14 @@ if (isset($_SESSION['topass']['input'])) {
 switch ($output['filter_type']) {
 
 	case FILTER_SENDER:
-		$output['field_label']='user';	// translate this
+		$output['field_label']=$GLOBALS['_lang'][117];
 		$output['field_value']='<input type="text" name="field_value" id="field_value" value="'.get_user_by_userid($output['field_value']).'" />';
 		break;
 
 	case FILTER_SENDER_PROFILE:
 		foreach ($_pfields as $k=>$field) {
 			if ($field['dbfield']==$output['field']) {
-				$output['field_label']=sprintf('users with %s',$field['label']);	// translate this
+				$output['field_label']=sprintf($GLOBALS['_lang'][118],$field['label']);
 				$output['field_value']='<select name="field_value" id="field_value">'.vector2options($field['accepted_values'],$output['field_value'],array(0)).'</select>';
 				break;
 			}
@@ -59,7 +60,7 @@ switch ($output['filter_type']) {
 
 }
 
-$my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'SENT',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
+$my_folders=array(FOLDER_INBOX=>$GLOBALS['_lang'][110],FOLDER_OUTBOX=>$GLOBALS['_lang'][111],FOLDER_TRASH=>$GLOBALS['_lang'][112],FOLDER_SPAMBOX=>$GLOBALS['_lang'][113]);
 $query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' ORDER BY `folder` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
@@ -76,8 +77,8 @@ $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->process('content','content',TPL_OPTIONAL);
 
-$tplvars['title']='Add/Edit a filter';     // translate
-$tplvars['page_title']='Add/Edit a filter';
+$tplvars['title']=$GLOBALS['_lang'][119];
+$tplvars['page_title']=$GLOBALS['_lang'][119];
 $tplvars['page']='filters_addedit';
 $tplvars['css']='filters_addedit.css';
 if (is_file('filters_addedit_left.php')) {

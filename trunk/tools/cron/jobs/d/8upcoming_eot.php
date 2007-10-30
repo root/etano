@@ -18,7 +18,7 @@ function upcoming_eot() {
 		$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$skin.'/emails/','remove_nonjs');
 		$tpl->set_file('temp','subscr_expire_alert.html');
 		$tpl->set_var('tplvars',$tplvars);
-		$subject=sprintf("Your %s subscription is about to expire",_SITENAME_); // translate
+		$subject=sprintf($GLOBALS['_lang'][218],_SITENAME_);
 		$subject=sanitize_and_format($subject,TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTFIELD]);
 		$insert="INSERT INTO `{$dbtable_prefix}queue_email` (`to`,`subject`,`message_body`) VALUES ";
 		$iquery=$insert;

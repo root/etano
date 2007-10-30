@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/my_searches.inc.php';
 check_login_member('save_searches');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -45,8 +46,8 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='My Searches';
-$tplvars['page_title']='My Searches';
+$tplvars['title']=$GLOBALS['_lang'][242];
+$tplvars['page_title']=$GLOBALS['_lang'][242];
 $tplvars['page']='my_searches';
 $tplvars['css']='my_searches.css';
 if (is_file('my_searches_left.php')) {

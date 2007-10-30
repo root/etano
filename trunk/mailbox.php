@@ -15,6 +15,7 @@ require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/user_inbox.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('inbox');
 
 $message_types=array(MESS_MESS=>'mail',MESS_FLIRT=>'flirt',MESS_SYSTEM=>'system');
@@ -36,7 +37,7 @@ if ($ob>=0) {
 	}
 }
 
-$my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'SENT',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
+$my_folders=array(FOLDER_INBOX=>$GLOBALS['_lang'][110],FOLDER_OUTBOX=>$GLOBALS['_lang'][111],FOLDER_TRASH=>$GLOBALS['_lang'][112],FOLDER_SPAMBOX=>113);
 $query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' ORDER BY `folder` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_row($res)) {
@@ -99,7 +100,7 @@ if (!empty($totalrows)) {
 		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['is_read']=(!empty($rsrow['is_read'])) ? 'read' : 'not_read';
 		if ($rsrow['message_type']==MESS_SYSTEM && empty($rsrow['user_other'])) {
-			$rsrow['user_other']='SYSTEM';     // translate
+			$rsrow['user_other']=$GLOBALS['_lang'][135];
 		}
 		$rsrow['message_type']=$message_types[$rsrow['message_type']];
 		$loop[]=$rsrow;
@@ -121,7 +122,7 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP | TPL_OPTI
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='Read your messages';     // translate
+$tplvars['title']=$my_folders[$fid];
 $tplvars['page_title']=$my_folders[$fid];
 $tplvars['page']='mailbox';
 $tplvars['css']='mailbox.css';

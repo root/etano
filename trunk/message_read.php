@@ -15,6 +15,7 @@ require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/user_inbox.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('auth');	// allow every member for now. Finer checking is made below
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -26,7 +27,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$output['return']=rawurlencode($output['return2']);
 
-	$my_folders=array(FOLDER_INBOX=>'INBOX',FOLDER_OUTBOX=>'SENT',FOLDER_TRASH=>'Trash',FOLDER_SPAMBOX=>'SPAMBOX'); // translate this
+	$my_folders=array(FOLDER_INBOX=>$GLOBALS['_lang'][110],FOLDER_OUTBOX=>$GLOBALS['_lang'][111],FOLDER_TRASH=>$GLOBALS['_lang'][112],FOLDER_SPAMBOX=>$GLOBALS['_lang'][113]);
 	$query="SELECT `folder_id`,`folder` FROM `{$dbtable_prefix}user_folders` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_row($res)) {
@@ -91,7 +92,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 			case MESS_SYSTEM:
 				// check_login_member('auth'); this check was made at the begining
 				if (empty($output['_user_other'])) {
-					$output['_user_other']='SYSTEM';     // translate
+					$output['_user_other']=$GLOBALS['_lang'][135];
 				}
 				$tpl->set_var('spam_controls',false);
 				break;
@@ -126,17 +127,17 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='No such message.';      // translate
+		$topass['message']['text']=$GLOBALS['_lang'][5];
 		redirect2page('mailbox.php');
 	}
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
-	$topass['message']['text']='No such message.';     // translate
+	$topass['message']['text']=$GLOBALS['_lang'][5];
 	redirect2page('mailbox.php');
 }
 
-$tplvars['title']='Read message';     // translate
-$tplvars['page_title']='Read message';
+$tplvars['title']=$GLOBALS['_lang'][136];
+$tplvars['page_title']=$GLOBALS['_lang'][136];
 $tplvars['page']='message_read';
 $tplvars['css']='message_read.css';
 if (is_file('message_read_left.php')) {

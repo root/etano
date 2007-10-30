@@ -20,6 +20,7 @@ class widget_photos extends icontent_widget {
 	var $widget=array();
 
 	function widget_photos() {
+		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -95,32 +96,32 @@ class widget_photos extends icontent_widget {
 		if ($this->tpl->get_var_silent('widget.content')!='') {
 			switch ($this->config['mode']) {
 				case 'new':
-					$widget['title']='Newest Photos';	// translate this
+					$widget['title']=$GLOBALS['_lang'][144];
 					$widget['id']='widg_new_photos';
 					break;
 
 				case 'vote':
-					$widget['title']='Most Voted Photos';	// translate this
+					$widget['title']=$GLOBALS['_lang'][146];
 					$widget['id']='widg_vote_photos';
 					break;
 
 				case 'views':
-					$widget['title']='Most Popular Photos';	// translate this
+					$widget['title']=$GLOBALS['_lang'][145];
 					$widget['id']='widg_views_photos';
 					break;
 
 				case 'comm':
-					$widget['title']='Most Discussed Photos';	// translate this
+					$widget['title']=$GLOBALS['_lang'][147];
 					$widget['id']='widg_comm_photos';
 					break;
 
 				case 'user':
-					$widget['title']='Photos';	// translate this
+					$widget['title']=$GLOBALS['_lang'][213];
 					$widget['id']='widg_user_photos';
 					break;
 
 			}
-			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_url'].'photo_search.php?st='.$this->config['mode'].'" title="More Photos">More</a>';	// translate this
+			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_url'].'photo_search.php?st='.$this->config['mode'].'" title="'.$GLOBALS['_lang'][214].'">'.$GLOBALS['_lang'][214].'</a>';
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
 			} else {

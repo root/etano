@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/net.inc.php';
 check_login_member('manage_networks');
 
 $error=false;
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					update_stats($_SESSION[_LICENSE_KEY_]['user']['user_id'],'num_friends',$new_friends);
 				}
 				$topass['message']['type']=MESSAGE_INFO;
-				$topass['message']['text']=sprintf('%s connections added',count($input['nconn_id']));     // translate
+				$topass['message']['text']=sprintf($GLOBALS['_lang'][61],count($input['nconn_id']));
 				if (isset($_on_after_insert)) {
 					for ($i=0;isset($_on_after_insert[$i]);++$i) {
 						call_user_func($_on_after_insert[$i]);
@@ -68,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['type']=MESSAGE_INFO;
-				$topass['message']['text']=sprintf('%s connections declined',count($input['nconn_id']));     // translate
+				$topass['message']['text']=sprintf($GLOBALS['_lang'][62],count($input['nconn_id']));
 				if (isset($_on_after_delete)) {
 					for ($i=0;isset($_on_after_delete[$i]);++$i) {
 						call_user_func($_on_after_delete[$i]);

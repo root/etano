@@ -87,8 +87,8 @@ function gen_comment_feeds() {
 			} else {
 				$properties['link']=$rsrow['post_url'].'#comm'.$rsrow['comment_id'];
 			}
-			$rsrow['title']=sprintf('%1$s on "%2$s"',$rsrow['_user'],$rsrow['title']);
-			$properties['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
+			$rsrow['title']=sanitize_and_format($rsrow['title'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
+			$properties['title']=sprintf('%1$s on "%2$s"',$rsrow['_user'],$rsrow['title']);
 //			$properties['dc:date']=$rsrow['date_posted'];
 			$rss_writer_object->additem($properties);
 		}

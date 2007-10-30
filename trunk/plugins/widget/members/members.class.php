@@ -91,27 +91,27 @@ class widget_members extends icontent_widget {
 		if ($this->tpl->get_var_silent('widget.content')!='') {
 			switch ($this->config['mode']) {
 				case 'new':
-					$widget['title']='Newest Members';	// translate this
+					$widget['title']=$GLOBALS['_lang'][208];
 					$widget['id']='widg_new_members';
 					break;
 
 				case 'vote':
-					$widget['title']='Most Voted Members';	// translate this
+					$widget['title']=$GLOBALS['_lang'][209];
 					$widget['id']='widg_vote_members';
 					break;
 
 				case 'views':
-					$widget['title']='Most Popular Members';	// translate this
+					$widget['title']=$GLOBALS['_lang'][210];
 					$widget['id']='widg_views_members';
 					break;
 
 				case 'comm':
-					$widget['title']='Most Discussed Members';	// translate this
+					$widget['title']=$GLOBALS['_lang'][211];
 					$widget['id']='widg_comm_members';
 					break;
 
 			}
-			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_url'].'search.php?st='.$this->config['mode'].'" title="More Members">More Members</a>';	// translate this
+			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_url'].'search.php?st='.$this->config['mode'].'" title="'.$GLOBALS['_lang'][219].'">'.$GLOBALS['_lang'][219].'</a>';
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
 			} else {

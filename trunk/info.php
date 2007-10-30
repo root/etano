@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/info.php';
 global $tplvars;
 
 $type=isset($_GET['type']) ? $_GET['type'] : '';
@@ -24,25 +25,25 @@ switch ($type) {
 	case 'signup':
 		$template='info_signup.html';
 		$output['email']=isset($_SESSION[_LICENSE_KEY_]['user']['email']) ? $_SESSION[_LICENSE_KEY_]['user']['email'] : (isset($_GET['email']) ? $_GET['email'] : '');
-		$tplvars['page_title']='Signup successful!';
+		$tplvars['page_title']=$GLOBALS['_lang'][228];
 		$tplvars['page']='info_signup';
 		break;
 
 	case 'upgrade':
 		$template='info_upgrade.html';
-		$tplvars['page_title']='Upgrade';
+		$tplvars['page_title']=$GLOBALS['_lang'][229];
 		$tplvars['page']='info_upgrade';
 		break;
 
 	case 'mailsent':
 		$template='info_mailsent.html';
-		$tplvars['page_title']='Email sent';
+		$tplvars['page_title']=$GLOBALS['_lang'][230];
 		$tplvars['page']='info_mailsent';
 		break;
 
 	case 'acctactiv':	// activate account
 		$template='info_acctactiv.html';
-		$tplvars['page_title']='Activate your account';
+		$tplvars['page_title']=$GLOBALS['_lang'][231];
 		$tplvars['page']='info_acctactiv';
 		$output['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
 		$output['email']=sanitize_and_format_gpc($_GET,'email',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
@@ -50,19 +51,19 @@ switch ($type) {
 
 	case 'acctok':	// account confirmed
 		$template='info_acctok.html';
-		$tplvars['page_title']='Account successfully confirmed!';
+		$tplvars['page_title']=$GLOBALS['_lang'][232];
 		$tplvars['page']='info_acctok';
 		break;
 
 	case 'profile_na':	// profile is not approved yet
 		$template='info_profilena.html';
-		$tplvars['page_title']='No access until approved!';
+		$tplvars['page_title']=$GLOBALS['_lang'][233];
 		$tplvars['page']='info_profilena';
 		break;
 
 	case 'access':	// no access to the requested page, show the upgrade options.
 		$template='info_access.html';
-		$tplvars['page_title']='Subscribe';
+		$tplvars['page_title']=$GLOBALS['_lang'][234];
 		$tplvars['page']='info_acctok';
 
 		$query="SELECT a.`module_code`,a.`module_name`,a.`module_diz` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`=".MODULE_PAYMENT." AND b.`fk_module_code`=a.`module_code` AND b.`config_option`='enabled' AND `config_value`=1";
@@ -89,7 +90,7 @@ switch ($type) {
 
 	default:
 		$template='info.html';
-		$tplvars['page_title']='Message';
+		$tplvars['page_title']=$GLOBALS['_lang'][235];
 		$tplvars['page']='info';
 
 }
@@ -97,7 +98,7 @@ $tpl->set_file('content',$template);
 $tpl->set_var('output',$output);
 $tpl->process('content','content');
 
-$tplvars['title']='Information';
+$tplvars['title']=$GLOBALS['_lang'][227];
 $tplvars['css']='info.css';
 if (is_file('info_left.php')) {
 	include 'info_left.php';

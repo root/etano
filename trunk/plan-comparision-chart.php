@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/payment.inc.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
@@ -51,8 +52,8 @@ $tpl->set_file('content','plan-comparision-chart.html');
 $tpl->set_loop('rows',$rows);
 $tpl->process('content','content',TPL_MULTILOOP);
 
-$tplvars['title']='Compare Memberships';
-$tplvars['page_title']='Compare Memberships';
+$tplvars['title']=$GLOBALS['_lang'][245];
+$tplvars['page_title']=$GLOBALS['_lang'][245];
 $tplvars['page']='plan';
 $tplvars['css']='plan-comparision-chart.css';
 $no_timeout=true;

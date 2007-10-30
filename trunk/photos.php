@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 check_login_member('all');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -21,8 +22,8 @@ $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $tpl->set_file('content','photos.html');
 $tpl->process('content','content');
 
-$tplvars['title']='Browse Photos';
-$tplvars['page_title']='Browse Photos';
+$tplvars['title']=$GLOBALS['_lang'][213];
+$tplvars['page_title']=$GLOBALS['_lang'][213];
 $tplvars['page']='photos';
 $tplvars['css']='photos.css';
 if (is_file('photos_left.php')) {

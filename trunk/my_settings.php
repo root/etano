@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/my_settings.inc.php';
 check_login_member('auth');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -86,8 +87,8 @@ $tpl->process('content','content',TPL_LOOP);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='My Settings';
-$tplvars['page_title']='My Settings';
+$tplvars['title']=$GLOBALS['_lang'][243];
+$tplvars['page_title']=$GLOBALS['_lang'][243];
 $tplvars['page']='my_settings';
 $tplvars['css']='my_settings.css';
 if (is_file('my_settings_left.php')) {

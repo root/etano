@@ -20,6 +20,7 @@ class widget_blogs extends icontent_widget {
 	var $widget=array();
 
 	function widget_blogs() {
+		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -72,9 +73,9 @@ class widget_blogs extends icontent_widget {
 				$loop[$i]['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$loop[$i]['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 				if (isset($GLOBALS['_list_of_online_members'][$loop[$i]['fk_user_id']])) {
 					$loop[$i]['is_online']='is_online';
-					$loop[$i]['user_online_status']='is online';	// translate
+					$loop[$i]['user_online_status']=$GLOBALS['_lang'][102];
 				} else {
-					$loop[$i]['user_online_status']='is offline';	// translate
+					$loop[$i]['user_online_status']=$GLOBALS['_lang'][103];
 				}
 			}
 			if (!empty($loop)) {
@@ -98,22 +99,22 @@ class widget_blogs extends icontent_widget {
 		if ($this->tpl->get_var_silent('widget.content')!='') {
 			switch ($this->config['mode']) {
 				case 'new':
-					$widget['title']='Newest Posts';	// translate this
+					$widget['title']=$GLOBALS['_lang'][104];
 					$widget['id']='widg_new_blogs';
 					break;
 
 				case 'views':
-					$widget['title']='Most Popular Posts';	// translate this
+					$widget['title']=$GLOBALS['_lang'][105];
 					$widget['id']='widg_views_blogs';
 					break;
 
 				case 'comm':
-					$widget['title']='Most Discussed Posts';	// translate this
+					$widget['title']=$GLOBALS['_lang'][106];
 					$widget['id']='widg_comm_blogs';
 					break;
 
 			}
-			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_url'].'blog_search.php?st='.$this->config['mode'].'" title="More Blogs">More Blogs</a>';	// translate this
+			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_url'].'blog_search.php?st='.$this->config['mode'].'" title="'.$GLOBALS['_lang'][205].'">'.$GLOBALS['_lang'][205].'</a>';
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
 			} else {

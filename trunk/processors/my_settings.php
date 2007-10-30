@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/my_settings.inc.php';
 check_login_member('auth');
 
 if (is_file(_BASEPATH_.'/events/processors/my_settings.php')) {
@@ -85,6 +86,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$_SESSION[_LICENSE_KEY_]['user']['prefs']['rate_my_photos']=$input['def_user_prefs']['rate_my_photos'];
 	$_SESSION[_LICENSE_KEY_]['user']['prefs']['profile_comments']=$input['def_user_prefs']['profile_comments'];
 	$topass['message']['type']=MESSAGE_INFO;
-	$topass['message']['text']='Your preferences were saved.';
+	$topass['message']['text']=$GLOBALS['_lang'][80];
 }
 redirect2page('my_settings.php',$topass,$qs);

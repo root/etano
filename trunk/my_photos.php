@@ -14,11 +14,12 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 check_login_member('upload_photos');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 define('COLUMNS',3);
-$accepted_results_per_page=array('6'=>6,'12'=>12,'24'=>24,'48'=>48);
+$accepted_results_per_page=array(6=>6,12=>12,24=>24,48=>48);
 
 $output=array();
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
@@ -44,7 +45,7 @@ if (!empty($totalrows)) {
 	$rows=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$rsrow['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
-		$rsrow['is_private']=sprintf('%1$s',empty($rsrow['is_private']) ? 'public' : 'private');	// translate this
+		$rsrow['is_private']=empty($rsrow['is_private']) ? $GLOBALS['_lang'][139] : $GLOBALS['_lang'][138];
 		$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['class']='';
 		if ($rsrow['status']==STAT_EDIT) {
@@ -96,8 +97,8 @@ $tpl->drop_loop('loop_rows');
 unset($loop_rows);
 $tpl->drop_var('output.pager2');
 
-$tplvars['title']='My Photos';
-$tplvars['page_title']='My Photos';
+$tplvars['title']=$GLOBALS['_lang'][140];
+$tplvars['page_title']=$GLOBALS['_lang'][140];
 $tplvars['page']='my_photos';
 $tplvars['css']='my_photos.css';
 if (is_file('my_photos_left.php')) {

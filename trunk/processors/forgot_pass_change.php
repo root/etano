@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/pass_change.inc.php';
 
 if (is_file(_BASEPATH_.'/events/processors/forgot_pass_change.php')) {
 	include_once _BASEPATH_.'/events/processors/forgot_pass_change.php';
@@ -36,26 +37,26 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if ($input['pass']!=$input['pass2']) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text'][]="The passwords do not match.";
+		$topass['message']['text'][]=$GLOBALS['_lang'][56];
 		$input['error_pass']='red_border';
 	}
 	if (empty($input['pass'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text'][]="Please enter the password.";
+		$topass['message']['text'][]=$GLOBALS['_lang'][57];
 		$input['error_pass']='red_border';
 	}
 	if (empty($input['uid']) || empty($input['secret'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text'][]="Invalid parameters received.";
+		$topass['message']['text'][]=$GLOBALS['_lang'][58];
 	}
 	if (get_site_option('use_captcha','core')) {
 		$captcha=sanitize_and_format_gpc($_POST,'captcha',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 		if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]="The verification code doesn't match. Please enter the new code.";
+			$topass['message']['text'][]=$GLOBALS['_lang'][24];
 			$input['error_captcha']='red_border';
 		}
 	}
@@ -71,11 +72,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_affected_rows()) {
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Password changed, please login below.';     // translate
+			$topass['message']['text']=$GLOBALS['_lang'][59];
 		} else {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Invalid username specified. Password not changed.';     // translate
+			$topass['message']['text']=$GLOBALS['_lang'][60];
 		}
 		$nextpage='login.php';
 		if (isset($_on_after_update)) {

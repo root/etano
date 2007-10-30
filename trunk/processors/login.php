@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/login.inc.php';
 
 if (is_file(_BASEPATH_.'/events/processors/login.php')) {
 	include_once _BASEPATH_.'/events/processors/login.php';
@@ -76,15 +77,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$qssep='&';
 			} elseif ($user['status']==ASTAT_SUSPENDED) {
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='Your account is suspended.';
+				$topass['message']['text']=$GLOBALS['_lang'][71];
 			}
 		} else {
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Invalid user name or password. Please try again.';
+			$topass['message']['text']=$GLOBALS['_lang'][72];
 		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Invalid user name or password. Please try again.';
+		$topass['message']['text']=$GLOBALS['_lang'][72];
 	}
 }
 redirect2page($nextpage,$topass,$qs);
