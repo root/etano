@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once dirname(__FILE__).'/../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once dirname(__FILE__).'/../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.class.php';
 
 $output='';
 $error=false;
@@ -28,7 +29,7 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 		if (mysql_num_rows($res)) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='You cannot vote more than once a day for the same photo';
+			$topass['message']['text']=$GLOBALS['_lang'][9];
 		}
 		if (!$error) {
 			$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
@@ -36,7 +37,7 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 			if (mysql_result($res,0,0)==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='You are not allowed to vote for your own photos';
+				$topass['message']['text']=$GLOBALS['_lang'][10];
 			}
 		}
 
@@ -56,12 +57,12 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	} else {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Invalid vote received';
+		$topass['message']['text']=$GLOBALS['_lang'][11];
 	}
 } else {
 	$error=true;
 	$topass['message']['type']=MESSAGE_ERROR;
-	$topass['message']['text']='You must be logged in to rate photos.';
+	$topass['message']['text']=$GLOBALS['_lang'][12];
 }
 if (isset($_REQUEST['silent'])) {
 	if ($error) {

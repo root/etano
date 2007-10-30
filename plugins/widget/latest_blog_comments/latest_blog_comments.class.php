@@ -17,6 +17,7 @@ class widget_latest_blog_comments extends icontent_widget {
 	var $module_code='latest_blog_comments';
 
 	function widget_latest_blog_comments() {
+		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -54,9 +55,9 @@ class widget_latest_blog_comments extends icontent_widget {
 	function _finish_display() {
 		$myreturn='';
 		if ($this->tpl->get_var_silent('widget.content')!='') {
-			$widget['title']='Latest comments';	// translate this
+			$widget['title']=$GLOBALS['_lang'][207];
 			if (allow_at_level('read_blogs')) {
-				$widget['title'].=' <a rel="external" href="'._BASEURL_.'/rss/latest-comments.xml" title="Subscribe to latest comments feed"><img src="'._BASEURL_.'/images/rss-icon.gif" /></a>';
+				$widget['title'].=' <a rel="external" href="'._BASEURL_.'/rss/latest-comments.xml" title="'.$GLOBALS['_lang'][251].'"><img src="'._BASEURL_.'/images/rss-icon.gif" /></a>';
 			}
 			$widget['id']='latest_blog_comments';
 			$this->tpl->set_file('temp','static/menu_widget.html');
@@ -83,6 +84,6 @@ class widget_latest_blog_comments extends icontent_widget {
 
 
 	function _init() {
-		$this->config['module_name']='Latest Blog Comments';
+		$this->config['module_name']=$GLOBALS['_lang'][207];
 	}
 }

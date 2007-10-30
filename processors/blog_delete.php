@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
 if (is_file(_BASEPATH_.'/events/processors/blog_delete.php')) {
@@ -44,7 +45,7 @@ $query="DELETE FROM `{$dbtable_prefix}user_blogs` WHERE `blog_id`=$blog_id AND `
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;
-$topass['message']['text']='Blog and all related posts and comments deleted.';     // translate
+$topass['message']['text']=$GLOBALS['_lang'][16];
 
 $nextpage='my_blogs.php';
 if (!empty($_GET['return'])) {

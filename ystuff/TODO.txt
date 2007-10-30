@@ -13,8 +13,6 @@ not checked. In felul asta userul poate sa isi aleaga ce se afiseaza
 
 - de scos vector2checkboxes_new din admin/profile_categories_addedit si de verif ca merge fara.
 
-- cauta "translate" ca sa gasesti toate stringurile de tradus hardcodate in scripts.
-
 - generatorul de cache care ruleaza la 10 minute ar trebui sa decida daca sa stearga site_search-ul sau nu.
 	daca nu a adaugat/modificat nici un user nu are rost...
 

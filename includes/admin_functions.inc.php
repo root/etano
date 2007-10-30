@@ -20,7 +20,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'general_functions.inc.php';
 $GLOBALS['_lang']=array();
 $def_skin=isset($_SESSION[_LICENSE_KEY_]['admin']['def_skin']) ? $_SESSION[_LICENSE_KEY_]['admin']['def_skin'] : get_default_skin_dir();
-require_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/strings.inc.php';
+require_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/global.inc.php';
 $_pfields=array();
 $_pcats=array();
 require_once 'fields.inc.php';
@@ -39,6 +39,7 @@ define('LK_SITE',0);
 define('LK_FIELD',1);
 define('LK_MESSAGE',2);
 
+$accepted_months=array('month','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec');
 $accepted_fieldtype=array(FIELD_SELECT=>'Select box',FIELD_CHECKBOX_LARGE=>'Multi checks',FIELD_TEXTFIELD=>'Textfield',FIELD_TEXTAREA=>'Textarea',FIELD_DATE=>'Date',FIELD_LOCATION=>'Location',FIELD_RANGE=>'Range');
 $field_dbtypes=array(FIELD_TEXTFIELD=>"varchar(100) not null default ''",FIELD_SELECT=>'int(5) not null default 0',FIELD_FK_SELECT=>'int(10) not null default 0',FIELD_TEXTAREA=>"text not null default ''",FIELD_CHECKBOX_LARGE=>"text not null default ''",FIELD_FILE=>"varchar(64) not null default ''",FIELD_DATE=>'date not null',FIELD_INT=>'int(5) not null default 0',FIELD_FLOAT=>'double not null default 0');
 $accepted_admin_depts=array(DEPT_ADMIN=>'Administrator',DEPT_MODERATOR=>'Moderator');
@@ -238,20 +239,32 @@ function regenerate_langstrings_array($skin_module_code='') {
 		$skins[]=$rsrow;
 	}
 	for ($i=0;isset($skins[$i]);++$i) {
-		$towrite="<?php\n";
+		$towrite=array();
+		$towrite[''][]='<?php';
 		$query="SELECT b.`codes` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}locales` b WHERE a.`config_option`='fk_locale_id' AND a.`config_value`=b.`locale_id` AND a.`fk_module_code`='".$skins[$i]['module_code']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$temp=mysql_result($res,0,0);
-			$towrite.="setlocale(LC_TIME,array('".str_replace(',',"','",$temp)."'));\n";
+			$towrite[''][]="setlocale(LC_TIME,array('".str_replace(',',"','",$temp)."'));";
 		}
-		$query="SELECT a.`lk_id`,b.`lang_value`,a.`lk_use` FROM `{$dbtable_prefix}lang_keys` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`lk_id`=b.`fk_lk_id` AND b.`skin`='".$skins[$i]['module_code']."')";
+		$query="SELECT a.`lk_id`,a.`alt_id_text`,b.`lang_value`,a.`lk_use`,a.`save_file` FROM `{$dbtable_prefix}lang_keys` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`lk_id`=b.`fk_lk_id` AND b.`skin`='".$skins[$i]['module_code']."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT] | FORMAT_ADDSLASH,'');
-			$towrite.="\$GLOBALS['_lang'][".$rsrow['lk_id']."]='".$rsrow['lang_value']."';\n";
+			if (!empty($rsrow['alt_id_text'])) {
+				$rsrow['lk_id']="'".$rsrow['alt_id_text']."'";
+			}
+			if (!isset($towrite[$rsrow['save_file']])) {
+				$towrite[$rsrow['save_file']][]='<?php';
+			}
+			$towrite[$rsrow['save_file']][]="\$GLOBALS['_lang'][".$rsrow['lk_id']."]='".$rsrow['lang_value']."';";
 		}
-		$fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/strings.inc.php',$towrite);
+		foreach ($towrite as $file=>$arr) {
+			if (empty($file)) {
+				$file='global.inc.php';
+			}
+			$fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/'.$file,join("\n",$arr));
+		}
 	}
 }
 

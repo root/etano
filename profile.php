@@ -128,9 +128,9 @@ if (!empty($output)) {
 		} else {
 			if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
 				$rsrow['is_online']='is_online';
-				$rsrow['user_online_status']='is online';	// translate
+				$rsrow['user_online_status']=$GLOBALS['_lang'][102];
 			} else {
-				$rsrow['user_online_status']='is offline';	// translate
+				$rsrow['user_online_status']=$GLOBALS['_lang'][103];
 			}
 		}
 		if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
@@ -174,11 +174,11 @@ if (!empty($output)) {
 	}
 
 	$output['pic_width']=get_site_option('pic_width','core_photo');
-	$tplvars['title']=sprintf('%s Profile',$output['user']);
+	$tplvars['title']=sprintf($GLOBALS['_lang'][152],$output['user']);
 	$tplvars['page_title']=$output['user'];
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
-	$topass['message']['text']='Member not found';
+	$topass['message']['text']=$GLOBALS['_lang'][7];
 	redirect2page('info.php',$topass);
 }
 

@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/contact.inc.php';
 check_login_member('contact');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -39,8 +40,8 @@ $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_OPTIONAL);
 
-$tplvars['title']='Contact Us';
-$tplvars['page_title']='Contact Us';
+$tplvars['title']=$GLOBALS['_lang'][206];
+$tplvars['page_title']=$GLOBALS['_lang'][206];
 $tplvars['page']='contact';
 $tplvars['css']='contact.css';
 include 'frame.php';

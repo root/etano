@@ -135,7 +135,7 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 			case FIELD_TEXTAREA:
 				$loop[$i]['field']='<textarea name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.(isset($user_details[$field['dbfield']]) ? $user_details[$field['dbfield']] : '').'</textarea>';
 				if (!empty($config['ta_len'])) {
-					$loop[$i]['field'].='<p class="comment char_counter">Remaining chars: <span id="'.$field['dbfield'].'_chars">'.($config['ta_len']-strlen($user_details[$field['dbfield']])).'</span></p>'; //translate
+					$loop[$i]['field'].='<p class="comment char_counter">'.$GLOBALS['_lang'][125].' <span id="'.$field['dbfield'].'_chars">'.($config['ta_len']-strlen($user_details[$field['dbfield']])).'</span></p>';
 				}
 				break;
 
@@ -149,16 +149,16 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 
 			case FIELD_DATE:
 				$loop[$i]['field']='<select name="'.$field['dbfield'].'_month" id="'.$field['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$user_details[$field['dbfield'].'_month']).'</select>';
-				$loop[$i]['field'].='<select name="'.$field['dbfield'].'_day" id="'.$field['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">day</option>'.interval2options(1,31,$user_details[$field['dbfield'].'_day']).'</select>'; // translate
-				$loop[$i]['field'].='<select name="'.$field['dbfield'].'_year" id="'.$field['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">year</option>'.interval2options($field['accepted_values'][1],$field['accepted_values'][2],$user_details[$field['dbfield'].'_year'],array(),1,2).'</select>'; // translate
+				$loop[$i]['field'].='<select name="'.$field['dbfield'].'_day" id="'.$field['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">'.$GLOBALS['_lang'][131].'</option>'.interval2options(1,31,$user_details[$field['dbfield'].'_day']).'</select>';
+				$loop[$i]['field'].='<select name="'.$field['dbfield'].'_year" id="'.$field['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">'.$GLOBALS['_lang'][132].'</option>'.interval2options($field['accepted_values'][1],$field['accepted_values'][2],$user_details[$field['dbfield'].'_year'],array(),1,2).'</select>';
 				break;
 
 			case FIELD_LOCATION:
 				$country_id=$user_details[$field['dbfield'].'_country'];
 				$state_id=$user_details[$field['dbfield'].'_state'];
-				$loop[$i]['label']='Country';	//translate this
+				$loop[$i]['label']=$GLOBALS['_lang'][126];
 				$loop[$i]['dbfield']=$field['dbfield'].'_country';
-				$loop[$i]['field']='<select class="full_width" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$user_details[$field['dbfield'].'_country']).'</select>';	// translate this
+				$loop[$i]['field']='<select class="full_width" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">'.$GLOBALS['_lang'][126].'</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$user_details[$field['dbfield'].'_country']).'</select>';
 				$prefered_input='s';
 				$num_states=0;
 				$num_cities=0;
@@ -177,25 +177,25 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 					}
 				}
 				++$i;
-				$loop[$i]['label']='State';	//translate this
+				$loop[$i]['label']=$GLOBALS['_lang'][127];
 				$loop[$i]['dbfield']=$field['dbfield'].'_state';
-				$loop[$i]['field']='<select class="full_width" name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option>';	// translate this
+				$loop[$i]['field']='<select class="full_width" name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">'.$GLOBALS['_lang'][127].'</option>';
 				if (!empty($country_id) && $prefered_input=='s' && !empty($num_states)) {
 					$loop[$i]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$state_id,"`fk_country_id`=$country_id");
 				}
 				$loop[$i]['field'].='</select>';
 				$loop[$i]['class']=(!empty($country_id) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
 				++$i;
-				$loop[$i]['label']='City';	//translate this
+				$loop[$i]['label']=$GLOBALS['_lang'][128];
 				$loop[$i]['dbfield']=$field['dbfield'].'_city';
-				$loop[$i]['field']='<select class="full_width" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option>';	// translate this
+				$loop[$i]['field']='<select class="full_width" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">'.$GLOBALS['_lang'][134].'</option>';
 				if (!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) {
 					$loop[$i]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$user_details[$field['dbfield'].'_city'],"`fk_state_id`=$state_id");
 				}
 				$loop[$i]['field'].='</select>';
 				$loop[$i]['class']=(!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';
 				++$i;
-				$loop[$i]['label']='Zip code';	//translate this
+				$loop[$i]['label']=$GLOBALS['_lang'][129];
 				$loop[$i]['dbfield']=$field['dbfield'].'_zip';
 				$loop[$i]['field']='<input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" value="'.$user_details[$field['dbfield'].'_zip'].'" tabindex="'.($i+4).'" />';
 				$loop[$i]['class']=(!empty($country_id) && $prefered_input=='z') ? 'visible' : 'invisible';
@@ -217,8 +217,8 @@ $tpl->drop_loop('loop');
 $tpl->drop_loop('js_loop');
 unset($loop,$js_loop);
 
-$tplvars['title']=sprintf('Edit My %s',$_pcats[$cid]['pcat_name']);
-$tplvars['page_title']=sprintf('<a href="'.$tplvars['relative_url'].'my_profile.php">My Profile</a> - %s',$_pcats[$cid]['pcat_name']);
+$tplvars['title']=$GLOBALS['_lang'][141].' - '.$_pcats[$cid]['pcat_name'];
+$tplvars['page_title']='<a href="'.$tplvars['relative_url'].'my_profile.php">'.$GLOBALS['_lang'][141].'</a> - '.$_pcats[$cid]['pcat_name'];
 $tplvars['page']='profile_edit';
 $tplvars['css']='profile_edit.css';
 if (is_file('profile_edit_left.php')) {

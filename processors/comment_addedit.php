@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/comments.inc.php';
 check_login_member('write_comments');
 
 if (is_file(_BASEPATH_.'/events/processors/comment_addedit.php')) {
@@ -67,14 +68,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (empty($input['comment'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']="Please enter your comment.";	// translate
+		$topass['message']['text']=$GLOBALS['_lang'][23];
 	}
 	if (!$error && $input['fk_user_id']==0 && get_site_option('use_captcha','core')) {
 		$captcha=sanitize_and_format_gpc($_POST,'captcha',TYPE_STRING,0,'');
 		if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']="The verification code doesn't match. Please enter the new code.";	// translate
+			$topass['message']['text']=$GLOBALS['_lang'][24];
 			$input['error_captcha']='red_border';
 		}
 	}
@@ -86,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!empty($input['comment_id'])) {
 			// only members can edit their comments
 			if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
-				$input['comment'].="\n\nLast edited by ".$_SESSION[_LICENSE_KEY_]['user']['user'].' on '.gmdate('Y-m-d H:i').' GMT';
+				$input['comment'].="\n\n".sprintf($GLOBALS['_lang'][203],$_SESSION[_LICENSE_KEY_]['user']['user'],gmdate('Y-m-d H:i'));
 				$query="UPDATE `$table` SET `last_changed`='".gmdate('YmdHis')."'";
 				if ($config['manual_com_approval']==1) {
 					$query.=",`status`=".STAT_PENDING;
@@ -107,9 +108,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['type']=MESSAGE_INFO;
 				if (empty($config['manual_com_approval'])) {
-					$topass['message']['text']='Comment changed successfully.';
+					$topass['message']['text']=$GLOBALS['_lang'][25];
 				} else {
-					$topass['message']['text']='Comment changed but needs to be reviewed first.';
+					$topass['message']['text']=$GLOBALS['_lang'][26];
 				}
 				if (isset($_on_after_update)) {
 					for ($i=0;isset($_on_after_update[$i]);++$i) {
@@ -118,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			} else {
 				$topass['message']['type']=MESSAGE_INFO;
-				$topass['message']['text']='You are not allowed to edit comments';
+				$topass['message']['text']=$GLOBALS['_lang'][27];
 			}
 		} else {
 			unset($input['comment_id']);
@@ -143,10 +144,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input['comment_id']=mysql_insert_id();
 			$topass['message']['type']=MESSAGE_INFO;
 			if (empty($config['manual_com_approval'])) {
-				$topass['message']['text']='Comment added.';	// translate this
+				$topass['message']['text']=$GLOBALS['_lang'][28];
 				$nextpage.='#comm'.$input['comment_id'];
 			} else {
-				$topass['message']['text']='Comment added but needs to be reviewed first.';	// translate this
+				$topass['message']['text']=$GLOBALS['_lang'][29];
 			}
 			if (isset($_on_after_insert)) {
 				for ($i=0;isset($_on_after_insert[$i]);++$i) {

@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/pass_change.inc.php';
 
 $error=false;
 $qs='';
@@ -29,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]="The verification code doesn't match. Please enter the new code.";
+			$topass['message']['text'][]=$GLOBALS['_lang'][24];
 			$input['error_captcha']='red_border';
 		}
 	}
@@ -44,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input['ipaddr']=$_SERVER['REMOTE_ADDR'];
 			$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `temp_pass`='".$input['temp_pass']."' WHERE `".USER_ACCOUNT_ID."`=".$input['uid'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			send_template_email($input['email'],sprintf('%s password reset confirmation',_SITENAME_),'pass_reset.html',get_my_skin(),$input);
+			send_template_email($input['email'],sprintf($GLOBALS['_lang'][225],_SITENAME_),'pass_reset.html',get_my_skin(),$input);
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='An email with steps required to reset your password has been sent to your address.';     // translate
+			$topass['message']['text']=$GLOBALS['_lang'][89];
 		} else {
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='The email address you entered was not found.';     // translate
+			$topass['message']['text']=$GLOBALS['_lang'][90];
 		}
 	} else {
 // 		you must re-read all textareas from $_POST like this:

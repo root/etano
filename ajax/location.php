@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (mysql_num_rows($res)) {
 					$output.="{$actual_field}country|{$actual_field}state\n";	//2
 					$output.="state\n";											//3
-					$output.='0|'.'Any';				// translate this
+					$output.='0|'.$GLOBALS['_lang'][159];
 					while ($rsrow=mysql_fetch_row($res)) {
 						$rsrow[1]=sanitize_and_format($rsrow[1],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 						$output.="\n".$rsrow[0].'|'.$rsrow[1];
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (mysql_num_rows($res)) {
 			$output.="{$actual_field}country|{$actual_field}state|{$actual_field}city\n";	//2
 			$output.="city\n";																//3
-			$output.='0|'.'Any';				// translate this
+			$output.='0|'.$GLOBALS['_lang'][159];
 			while ($rsrow=mysql_fetch_row($res)) {
 				$output.="\n".$rsrow[0].'|'.$rsrow[1];
 			}

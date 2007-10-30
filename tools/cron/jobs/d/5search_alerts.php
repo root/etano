@@ -17,7 +17,7 @@ function search_alerts() {
 		$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$skin.'/emails/','remove_nonjs');
 		$tpl->set_file('temp','search_alert.html');
 		$tpl->set_var('tplvars',$tplvars);
-		$subject=sprintf('New matches for you on %s',_SITENAME_);	// translate
+		$subject=sprintf($GLOBALS['_lang'][217],_SITENAME_);
 		$subject=sanitize_and_format($subject,TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTFIELD]);
 		require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
 		$user_cache=new user_cache($skin);
@@ -50,7 +50,7 @@ function search_alerts() {
 						if (!isset($GLOBALS['_list_of_online_members'][$user_ids[$i]])) {
 							$temp[]=$user_ids[$i];
 						} else {
-							$inject_by_uid[$user_ids[$i]]=array('last_online'=>'Online now!');	// translate
+							$inject_by_uid[$user_ids[$i]]=array('last_online'=>$GLOBALS['_lang'][153]);
 						}
 					}
 					if (!empty($temp)) {
@@ -60,15 +60,15 @@ function search_alerts() {
 						while ($rsrow2=mysql_fetch_assoc($res2)) {
 							$rsrow2['last_activity']=$time-$rsrow2['last_activity'];
 							if ($rsrow2['last_activity']<86400) {
-								$inject_by_uid[$rsrow2['uid']]=array('last_online'=>'Today.');	// translate
+								$inject_by_uid[$rsrow2['uid']]=array('last_online'=>$GLOBALS['_lang'][154]);
 							} elseif ($rsrow2['last_activity']<172800) {
-								$inject_by_uid[$rsrow2['uid']]=array('last_online'=>'Yesterday.');	// translate
+								$inject_by_uid[$rsrow2['uid']]=array('last_online'=>$GLOBALS['_lang'][155]);
 							} elseif ($rsrow2['last_activity']<604800) {
-								$inject_by_uid[$rsrow2['uid']]=array('last_online'=>'Last week.');	// translate
+								$inject_by_uid[$rsrow2['uid']]=array('last_online'=>$GLOBALS['_lang'][156]);
 							} elseif ($rsrow2['last_activity']<2419200) {
-								$inject_by_uid[$rsrow2['uid']]=array('last_online'=>'Last month.');	// translate
+								$inject_by_uid[$rsrow2['uid']]=array('last_online'=>$GLOBALS['_lang'][157]);
 							} else {
-								$inject_by_uid[$rsrow2['uid']]=array('last_online'=>'More than a month ago.');	// translate
+								$inject_by_uid[$rsrow2['uid']]=array('last_online'=>$GLOBALS['_lang'][158]);
 							}
 						}
 					}

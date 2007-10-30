@@ -15,6 +15,7 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/network_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/net.inc.php';
 check_login_member('manage_networks');
 
 if (is_file(_BASEPATH_.'/events/processors/net_deluser.php')) {
@@ -38,13 +39,13 @@ if (!empty($_GET['return'])) {
 if (empty($input['uid'])) {
 	$error=true;
 	$topass['message']['type']=MESSAGE_ERROR;
-	$topass['message']['text']='Invalid user';
+	$topass['message']['text']=$GLOBALS['_lang'][81];
 }
 
 if (empty($input['net_id'])) {
 	$error=true;
 	$topass['message']['type']=MESSAGE_ERROR;
-	$topass['message']['text']='Invalid network selected';
+	$topass['message']['text']=$GLOBALS['_lang'][82];
 }
 
 if (!$error) {
@@ -56,7 +57,7 @@ if (!$error) {
 	} else {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Invalid network selected';
+		$topass['message']['text']=$GLOBALS['_lang'][82];
 	}
 
 	if (!$error) {
@@ -80,7 +81,7 @@ if (!$error) {
 			add_member_score($input['uid'],'unblock_member');
 		}
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']=sprintf('%1$s has been removed from your %2$s',get_user_by_userid($input['uid']),get_net_name($input['net_id']));     // translate
+		$topass['message']['text']=sprintf($GLOBALS['_lang'][87],get_user_by_userid($input['uid']),get_net_name($input['net_id']));
 	}
 }
 

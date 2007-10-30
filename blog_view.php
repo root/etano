@@ -15,6 +15,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('read_blogs');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -74,9 +75,9 @@ if (!empty($_GET['bid'])) {
 				} else {
 					if (isset($_list_of_online_members[$loop[$i]['fk_user_id']])) {
 						$loop[$i]['is_online']='is_online';
-						$loop[$i]['user_online_status']='is online';	// translate
+						$loop[$i]['user_online_status']=$GLOBALS['_lang'][102];
 					} else {
-						$loop[$i]['user_online_status']='is offline';	// translate
+						$loop[$i]['user_online_status']=$GLOBALS['_lang'][103];
 					}
 				}
 			}
@@ -96,7 +97,7 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP | TPL_OPTLOOP);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='Blog posts';
+$tplvars['title']=$GLOBALS['_lang'][109];
 $tplvars['page_title']=isset($blog['blog_name']) ? $blog['blog_name'] : '';
 $tplvars['page']='blog_view';
 $tplvars['css']='blog_view.css';

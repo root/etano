@@ -15,6 +15,7 @@ require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/user_blogs.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -43,8 +44,8 @@ $tpl->set_file('content','blog_addedit.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content');
 
-$tplvars['title']='Manage my blogs';
-$tplvars['page_title']='Add/Edit a Blog';
+$tplvars['title']=$GLOBALS['_lang'][220];
+$tplvars['page_title']=$GLOBALS['_lang'][220];
 $tplvars['page']='blog_addedit';
 $tplvars['css']='blog_addedit.css';
 if (is_file('blog_addedit_left.php')) {

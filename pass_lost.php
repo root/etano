@@ -15,6 +15,7 @@ require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/classes/sco_captcha.class.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/pass_change.inc.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $output=array();
@@ -32,8 +33,8 @@ $tpl->set_file('content','pass_lost.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);
 
-$tplvars['title']='Lost Password';
-$tplvars['page_title']='Lost Password';
+$tplvars['title']=$GLOBALS['_lang'][244];
+$tplvars['page_title']=$GLOBALS['_lang'][244];
 $tplvars['page']='pass_lost';
 $tplvars['css']='pass_lost.css';
 $no_timeout=true;

@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/my_searches.inc.php';
 check_login_member('save_searches');
 
 $topass=array();
@@ -23,7 +24,7 @@ $query="DELETE FROM `{$dbtable_prefix}user_searches` WHERE `search_id`=$search_i
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;
-$topass['message']['text']='Your search has been deleted';     // translate
+$topass['message']['text']=$GLOBALS['_lang'][101];
 
 $nextpage='my_searches.php';
 if (!empty($_GET['return'])) {

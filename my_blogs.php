@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -42,8 +43,8 @@ $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='Blog posts';
-$tplvars['page_title']='My Blogs';
+$tplvars['title']=$GLOBALS['_lang'][239];
+$tplvars['page_title']=$GLOBALS['_lang'][239];
 $tplvars['page']='my_blogs';
 $tplvars['css']='my_blogs.css';
 if (is_file('my_blogs_left.php')) {

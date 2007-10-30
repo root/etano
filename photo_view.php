@@ -15,6 +15,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 check_login_member('view_photo');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -77,9 +78,9 @@ if (!empty($photo_id)) {
 				} else {
 					if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
 						$rsrow['is_online']='is_online';
-						$rsrow['user_online_status']='is online';	// translate
+						$rsrow['user_online_status']=$GLOBALS['_lang'][102];
 					} else {
-						$rsrow['user_online_status']='is offline';	// translate
+						$rsrow['user_online_status']=$GLOBALS['_lang'][103];
 					}
 				}
 				if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
@@ -134,17 +135,17 @@ if (!empty($photo_id)) {
 			}
 		} else {
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Invalid photo selected';
+			$topass['message']['text']=$GLOBALS['_lang'][6];
 			redirect2page('info.php',$topass);
 		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Invalid photo selected';
+		$topass['message']['text']=$GLOBALS['_lang'][6];
 		redirect2page('info.php',$topass);
 	}
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
-	$topass['message']['text']='Invalid photo selected';
+	$topass['message']['text']=$GLOBALS['_lang'][6];
 	redirect2page('info.php',$topass);
 }
 
@@ -168,8 +169,8 @@ $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='View photos';
-$tplvars['page_title']=sprintf('%s\'s photos','<a href="'.$tplvars['relative_url'].'photo_search.php?st=user&amp;uid='.$output['fk_user_id'].'">'.$output['user'].'</a>');	// translate this
+$tplvars['title']=sprintf($GLOBALS['_lang'][143],$output['user']);
+$tplvars['page_title']=sprintf($GLOBALS['_lang'][143],'<a href="'.$tplvars['relative_url'].'photo_search.php?st=user&amp;uid='.$output['fk_user_id'].'">'.$output['user'].'</a>');
 $tplvars['page']='photo_view';
 $tplvars['css']='photo_view.css';
 if (is_file('photo_view_left.php')) {

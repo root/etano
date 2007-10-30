@@ -91,13 +91,13 @@ class user_cache {
 						$myreturn[$id]['uid']=$user_ids[$id];
 						if (isset($GLOBALS['_list_of_online_members'][(int)$user_ids[$id]])) {
 							$myreturn[$id]['is_online']='is_online';
-							$myreturn[$id]['user_online_status']='is online';	// translate
+							$myreturn[$id]['user_online_status']=$GLOBALS['_lang'][102];
 							if ($page_last_modified_time<$GLOBALS['_list_of_online_members'][(int)$user_ids[$id]]) {
 								$page_last_modified_time=$GLOBALS['_list_of_online_members'][(int)$user_ids[$id]];
 							}
 						} else {
 							$myreturn[$id]['is_online']='is_offline';
-							$myreturn[$id]['user_online_status']='is offline';	// translate
+							$myreturn[$id]['user_online_status']=$GLOBALS['_lang'][103];
 						}
 					} else {
 						$myreturn[$parts[$p]]=file_get_contents($file);

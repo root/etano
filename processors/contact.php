@@ -15,6 +15,7 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/blog_comments.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/contact.inc.php';
 check_login_member('contact');
 
 if (is_file(_BASEPATH_.'/events/processors/contact.php')) {
@@ -38,17 +39,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (empty($input['subject'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']="Please enter the message subject.";
+		$topass['message']['text']=$GLOBALS['_lang'][32];
 	}
 	if (empty($input['fk_user_id']) && empty($input['email'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']="Please enter your email address where we can contact you back.";
+		$topass['message']['text']=$GLOBALS['_lang'][33];
 	}
 	if (empty($input['message_body'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']="Please enter the message.";
+		$topass['message']['text']=$GLOBALS['_lang'][34];
 	}
 
 	if (!$error && empty($input['fk_user_id']) && get_site_option('use_captcha','core')) {
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']="The verification code doesn't match. Please enter the new code.";
+			$topass['message']['text']=$GLOBALS['_lang'][24];
 			$input['error_captcha']='red_border';
 		}
 	}
@@ -98,10 +99,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!$mail->Send()) {
 			$myreturn=false;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Your message could not be sent: '.$mail->ErrorInfo;
+			$topass['message']['text']=sprintf($GLOBALS['_lang'][35],$mail->ErrorInfo);
 		} else {
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Message sent successfully.';
+			$topass['message']['text']=$GLOBALS['_lang'][36];
 		}
 		if (!$error) {
 			if (isset($_on_after_insert)) {

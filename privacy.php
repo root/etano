@@ -14,14 +14,15 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/privacy.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
 $tpl->set_file('content','privacy.html');
 $tpl->process('content','content');
 
-$tplvars['title']='Privacy';
-$tplvars['page_title']='Privacy';
+$tplvars['title']=$GLOBALS['_lang'][246];
+$tplvars['page_title']=$GLOBALS['_lang'][246];
 $tplvars['page']='privacy';
 $tplvars['css']='privacy.css';
 $no_timeout=true;

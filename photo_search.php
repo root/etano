@@ -15,6 +15,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 define('COLUMNS',3);
@@ -40,25 +41,25 @@ if (isset($_GET['st'])) {
 
 		case 'new':
 			//$orderby="a.`date_posted` DESC";	// default
-			$tplvars['page_title']='Browse Newest Photos';
+			$tplvars['page_title']=$GLOBALS['_lang'][144];
 			break;
 
 		case 'views':
 			$input['acclevel_code']='search_photo';
 			$orderby="a.`stat_views` DESC";
-			$tplvars['page_title']='Browse Most Popular Photos';
+			$tplvars['page_title']=$GLOBALS['_lang'][145];
 			break;
 
 		case 'vote':
 			$input['acclevel_code']='search_photo';
 			$orderby="a.`stat_votes_total` DESC";
-			$tplvars['page_title']='Browse Most Voted Photos';
+			$tplvars['page_title']=$GLOBALS['_lang'][146];
 			break;
 
 		case 'comm':
 			$input['acclevel_code']='search_photo';
 			$orderby="a.`stat_comments` DESC";
-			$tplvars['page_title']='Browse Most Discussed Photos';
+			$tplvars['page_title']=$GLOBALS['_lang'][147];
 			break;
 
 		case 'user':
@@ -72,7 +73,7 @@ if (isset($_GET['st'])) {
 			} else {
 				$error=true;
 			}
-			$tplvars['page_title']=sprintf('%s\'s Photos',get_user_by_userid($input['uid']));	// translate
+			$tplvars['page_title']=sprintf($GLOBALS['_lang'][143],get_user_by_userid($input['uid']));
 			break;
 
 		case 'field':
@@ -93,7 +94,7 @@ if (isset($_GET['st'])) {
 					$from.=",`{$dbtable_prefix}user_profiles` b";
 					$where="a.`fk_user_id`=b.`fk_user_id` AND ".$where." AND b.`".$input['f']."`='".$input['v']."'";
 					$field_value=isset($_pfields[$fid]['accepted_values'][$input['v']]) ? $_pfields[$fid]['accepted_values'][$input['v']] : '';
-					$tplvars['page_title']=sprintf('Browse %s Photos',$field_value);	// translate
+					$tplvars['page_title']=sprintf($GLOBALS['_lang'][143],$field_value);
 				} else {
 					$error=true;
 				}
@@ -111,10 +112,11 @@ if (isset($_GET['st'])) {
 			} else {
 				$error=true;
 			}
-			$tplvars['page_title']=sprintf('Results for "%s"',$tags);
+			$tplvars['page_title']=sprintf($GLOBALS['_lang'][148],$tags);
 			break;
 
 		default:
+			$tplvars['page_title']='';
 			break;
 
 	}
@@ -125,15 +127,8 @@ $totalrows=0;
 $loop_rows=array();
 if (!$error) {
 	$query="SELECT count(*) FROM $from WHERE $where";
-	$temp=md5($query);
-	if (isset($_SESSION[_LICENSE_KEY_]['user']['cache'][$temp]['time']) && $_SESSION[_LICENSE_KEY_]['user']['cache'][$temp]['time']>=time()-150) {
-		$totalrows=$_SESSION[_LICENSE_KEY_]['user']['cache'][$temp]['count'];
-	} else {
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$totalrows=mysql_result($res,0,0);
-		$_SESSION[_LICENSE_KEY_]['user']['cache'][$temp]['time']=time();
-		$_SESSION[_LICENSE_KEY_]['user']['cache'][$temp]['count']=$totalrows;
-	}
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$totalrows=mysql_result($res,0,0);
 
 	if (!empty($totalrows)) {
 		if ($o>=$totalrows) {
@@ -148,7 +143,7 @@ if (!$error) {
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$photo_ids[]=$rsrow['photo_id'];
 			$rsrow['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$rsrow['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
-			$rsrow['is_private']=sprintf('%1$s',empty($rsrow['is_private']) ? 'public' : 'private');	// translate this
+			$rsrow['is_private']=empty($rsrow['is_private']) ? $GLOBALS['_lang'][139] : $GLOBALS['_lang'][138];
 			$rsrow['caption']=sanitize_and_format($rsrow['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			$rsrow['class']='';
 			if ($i%COLUMNS==1) {
@@ -156,9 +151,9 @@ if (!$error) {
 			}
 			if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
 				$rsrow['class'].=' is_online';
-				$rsrow['user_online_status']='is online';	// translate
+				$rsrow['user_online_status']=$GLOBALS['_lang'][102];
 			} else {
-				$rsrow['user_online_status']='is offline';	// translate
+				$rsrow['user_online_status']=$GLOBALS['_lang'][103];
 			}
 			$loop_items[]=$rsrow;
 			if ($i%COLUMNS==0) {
@@ -198,7 +193,7 @@ $tpl->drop_loop('loop_rows');
 $tpl->drop_var('output.pager2');
 unset($loop_rows);
 
-$tplvars['title']='Photos';
+$tplvars['title']=$tplvars['page_title'];
 $tplvars['page']='photo_search';
 $tplvars['css']='photo_search.css';
 if (is_file('photo_search_left.php')) {

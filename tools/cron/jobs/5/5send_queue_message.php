@@ -19,7 +19,7 @@ function send_queue_message() {
 			$temp['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
 			$temp['_user_other']=$rsrow['_user_other'];
 			if (empty($temp['_user_other']) && $rsrow['message_type']==MESS_SYSTEM) {
-				$temp['_user_other']='SYSTEM';	// translate
+				$temp['_user_other']=$GLOBALS['_lang'][135];
 			}
 			$temp['email']=$rsrow['email'];
 			$temp['user']=$rsrow['user'];

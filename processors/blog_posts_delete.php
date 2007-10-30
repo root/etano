@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
 if (is_file(_BASEPATH_.'/events/processors/blog_posts_delete.php')) {
@@ -42,7 +43,7 @@ if (mysql_num_rows($res)) {
 	// what to do with the cache for the deleted blog post?
 
 	$topass['message']['type']=MESSAGE_INFO;
-	$topass['message']['text']='Post deleted.';     // translate
+	$topass['message']['text']=$GLOBALS['_lang'][22];
 
 	if (isset($_on_after_delete)) {
 		for ($i=0;isset($_on_after_delete[$i]);++$i) {

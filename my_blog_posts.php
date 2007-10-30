@@ -15,6 +15,7 @@ require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/blog_posts.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -70,8 +71,8 @@ if (!empty($_GET['bid'])) {
 	unset($loop);
 }
 
-$tplvars['title']='Blog Posts';
-$tplvars['page_title']=sprintf('Posts in %s',$output['blog_name']);
+$tplvars['title']=$GLOBALS['_lang'][109];
+$tplvars['page_title']=sprintf($GLOBALS['_lang'][238],$output['blog_name']);
 $tplvars['page']='my_blog_posts';
 $tplvars['css']='my_blog_posts.css';
 if (is_file('my_blog_posts_left.php')) {

@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/email_change.inc.php';
 
 $error=false;
 $qs='';
@@ -29,23 +30,33 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if ($input['email']!=$input['email2']) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text'][]="The emails do not match.";
+		$topass['message']['text'][]=$GLOBALS['_lang'][194];
 		$input['error_email']='red_border';
 	}
 	if (empty($input['email'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text'][]="Please enter the new email address you wish to use.";
+		$topass['message']['text'][]=$GLOBALS['_lang'][38];
 		$input['error_email']='red_border';
+	}
+	if (!$error) {
+		$query="SELECT `".USER_ACCOUNT_ID."` FROM `".USER_ACCOUNTS_TABLE."` WHERE `email`='".$input['email']."' LIMIT 1";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (mysql_num_rows($res)) {
+			$error=true;
+			$topass['message']['type']=MESSAGE_ERROR;
+			$topass['message']['text'][]=sprintf($GLOBALS['_lang'][204],$input['email']);
+			$input['error_email']='red_border';
+		}
 	}
 
 	if (!$error) {
 		$query="REPLACE INTO `{$dbtable_prefix}user_settings2` SET `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."',`config_option`='new_email',`config_value`='".$input['email']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$input['email2']=rawurlencode($input['email']);
-		send_template_email($input['email'],sprintf('%s email change confirmation',_SITENAME_),'email_change_confirm.html',get_my_skin(),$input);
+		send_template_email($input['email'],sprintf($GLOBALS['_lang'][40],_SITENAME_),'email_change_confirm.html',get_my_skin(),$input);
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text'][]="An email has been sent to the email address you specified.";
+		$topass['message']['text'][]=$GLOBALS['_lang'][39];
 	} else {
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);

@@ -95,18 +95,18 @@ function on_after_approve_comment() {
 		switch ($comment_type) {
 
 			case 'blog':
-				$notification['subject']='New comment on one of your blogs';	// translate
-				$notification['message_body']=sprintf('%1$s posted a comment on one of your blog posts.<br><a class="content-link simple" href="blog_post_view.php?pid=%2$s#comm%3$s">Click here</a> to view the comment',$v['comment_poster'],$v['parent_id'],$v['comment_id']);	// translate
+				$notification['subject']=$GLOBALS['_lang'][160];
+				$notification['message_body']=sprintf($GLOBALS['_lang'][161],$v['comment_poster'],$v['parent_id'],$v['comment_id']);
 				break;
 
 			case 'photo':
-				$notification['subject']='New comment on one of your photos';	// translate
-				$notification['message_body']=sprintf('%1$s posted a comment on one of your photos.<br><a class="content-link simple" href="photo_view.php?photo_id=%2$s#comm%3$s">Click here</a> to view the comment',$v['comment_poster'],$v['parent_id'],$v['comment_id']);	// translate
+				$notification['subject']=$GLOBALS['_lang'][162];
+				$notification['message_body']=sprintf($GLOBALS['_lang'][163],$v['comment_poster'],$v['parent_id'],$v['comment_id']);
 				break;
 
 			case 'user':
-				$notification['subject']='New comment on your profile';	// translate
-				$notification['message_body']=sprintf('%1$s posted a comment on your profile.<br><a class="content-link simple" href="my_profile.php#comm%2$s">Click here</a> to view the comment',$v['comment_poster'],$v['comment_id']);	// translate
+				$notification['subject']=$GLOBALS['_lang'][164];
+				$notification['message_body']=sprintf($GLOBALS['_lang'][165],$v['comment_poster'],$v['comment_id']);
 				break;
 
 		}

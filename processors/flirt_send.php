@@ -15,6 +15,7 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/queue_message.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('flirt_send');
 
 if (is_file(_BASEPATH_.'/events/processors/flirt_send.php')) {
@@ -40,12 +41,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (empty($input['fk_user_id'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Flirt not sent because there was no receiver specified';
+		$topass['message']['text']=$GLOBALS['_lang'][47];
 	}
 	if (empty($input['flirt_id'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Please select a flirt to send';
+		$topass['message']['text']=$GLOBALS['_lang'][48];
 	}
 
 	if (!$error) {
@@ -56,14 +57,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		} else {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text']='Could not find flirt in database. Please select another flirt';
+			$topass['message']['text']=$GLOBALS['_lang'][49];
 		}
 	}
 
 	if (!$error) {
 		$input['fk_user_id_other']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 		$input['_user_other']=$_SESSION[_LICENSE_KEY_]['user']['user'];
-		$input['subject']=sprintf('%s sent you a flirt',$_SESSION[_LICENSE_KEY_]['user']['user']);	// translate
+		$input['subject']=sprintf($GLOBALS['_lang'][216],$_SESSION[_LICENSE_KEY_]['user']['user']);
 		$input['message_type']=MESS_FLIRT;
 		$query="INSERT INTO `{$dbtable_prefix}queue_message` SET `date_sent`='".gmdate('YmdHis')."'";
 		foreach ($queue_message_default['defaults'] as $k=>$v) {
@@ -79,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		update_stats($_SESSION[_LICENSE_KEY_]['user']['user_id'],'flirts_sent',1);
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']='Flirt sent.';
+		$topass['message']['text']=$GLOBALS['_lang'][50];
 		if (isset($_on_after_insert)) {
 			for ($i=0;isset($_on_after_insert[$i]);++$i) {
 				call_user_func($_on_after_insert[$i]);

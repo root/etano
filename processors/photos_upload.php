@@ -16,6 +16,7 @@ db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/classes/fileop.class.php';
 require_once '../includes/img_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 check_login_member('upload_photos');
 set_time_limit(0);
 
@@ -47,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!isset($_FILES) || empty($_FILES)) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text'][]='Sorry, an error has occured. Try uploading less photos at once or smaller photos.';
+		$topass['message']['text'][]=$GLOBALS['_lang'][93];
 	}
 
 	if (!$error) {
@@ -61,13 +62,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$input['file1']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The first photo was not uploaded because the minimum allowed size for photos is %1$s bytes.',$config['min_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][94],1,$config['min_size']);
 				} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file1'])>$config['max_size']) {
 					$input['file1']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The first photo was not uploaded because the maximum allowed size for photos is %1$s bytes.',$config['max_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][95],1,$config['max_size']);
 				} else {
+					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
 					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
 					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
@@ -96,13 +98,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$input['file2']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The second photo was not uploaded because the minimum allowed size for photos is %1$s bytes.',$config['min_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][94],2,$config['min_size']);
 				} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file2'])>$config['max_size']) {
 					$input['file2']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The second photo was not uploaded because the maximum allowed size for photos is %1$s bytes.',$config['max_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][95],2,$config['max_size']);
 				} else {
+					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
 					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
 					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
@@ -131,12 +134,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$input['file3']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The third photo was not uploaded because the minimum allowed size for photos is %1$s bytes.',$config['min_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][94],3,$config['min_size']);
 				} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file3'])>$config['max_size']) {
 					$input['file3']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The third photo was not uploaded because the maximum allowed size for photos is %1$s bytes.',$config['max_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][95],3,$config['max_size']);
 				} else {
 					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
@@ -167,13 +170,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$input['file4']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The fourth photo was not uploaded because the minimum allowed size for photos is %1$s bytes.',$config['min_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][94],4,$config['min_size']);
 				} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file4'])>$config['max_size']) {
 					$input['file4']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The fourth photo was not uploaded because the maximum allowed size for photos is %1$s bytes.',$config['max_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][95],4,$config['max_size']);
 				} else {
+					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
 					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
 					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
@@ -202,13 +206,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$input['file5']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The fifth photo was not uploaded because the minimum allowed size for photos is %1$s bytes.',$config['min_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][94],5,$config['min_size']);
 				} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file5'])>$config['max_size']) {
 					$input['file5']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The fifth photo was not uploaded because the maximum allowed size for photos is %1$s bytes.',$config['max_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][95],5,$config['max_size']);
 				} else {
+					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
 					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
 					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
@@ -237,13 +242,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$input['file6']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The sixth photo was not uploaded because the minimum allowed size for photos is %1$s bytes.',$config['min_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][94],6,$config['min_size']);
 				} elseif (!empty($config['max_size']) && filesize(_BASEPATH_.'/tmp/'.$input['file6'])>$config['max_size']) {
 					$input['file6']='';
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text'][]=sprintf('The sixth photo was not uploaded because the maximum allowed size for photos is %1$s bytes.',$config['max_size']);
+					$topass['message']['text'][]=sprintf($GLOBALS['_lang'][95],6,$config['max_size']);
 				} else {
+					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
 					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
 					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
@@ -306,14 +312,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']=sprintf('%1u photos uploaded.',count($photo_ids));	// translate
+			$topass['message']['text']=sprintf($GLOBALS['_lang'][96],count($photo_ids));
 			$qs=$qs_sep.array2qs(array('photo_ids'=>$photo_ids));
 			$qs_sep='&';
 			$nextpage='photo_settings.php';
 		} else {
 			if (empty($topass['message'])) {
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']=sprintf('No photo uploaded.');
+				$topass['message']['text']=$GLOBALS['_lang'][97];
 			}
 		}
 	} else {

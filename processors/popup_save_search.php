@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/my_searches.inc.php';
 check_login_member('save_searches');
 
 $error=false;
@@ -30,12 +31,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (empty($input['search'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='No search selected.';	// translate this
+		$topass['message']['text']=$GLOBALS['_lang'][98];
 	}
 	if (empty($input['title'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Please enter a title for this search.';	// translate this
+		$topass['message']['text']=$GLOBALS['_lang'][78];
 	}
 
 	if (!$error) {
@@ -48,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="INSERT INTO `{$dbtable_prefix}user_searches` (`fk_user_id`,`title`,`search_qs`,`search`,`alert`) VALUES ('".$_SESSION[_LICENSE_KEY_]['user']['user_id']."','".$input['title']."','".array2qs($search,array(),'&amp;')."','$ser_search',1)";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Search saved.';
+			$topass['message']['text']=$GLOBALS['_lang'][99];
 		}
 	} else {
 // 		you must re-read all textareas from $_POST like this:

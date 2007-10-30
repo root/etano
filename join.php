@@ -15,6 +15,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/join.inc.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
@@ -113,7 +114,7 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 		case FIELD_TEXTAREA:
 			$loop[$j]['field']='<textarea name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'" cols="" rows="">'.$output[$field['dbfield']].'</textarea>';
 			if (!empty($config['ta_len'])) {
-				$loop[$j]['field'].='<p class="comment char_counter">Remaining chars: <span id="'.$field['dbfield'].'_chars">'.($config['ta_len']-strlen($output[$field['dbfield']])).'</span></p>'; //translate
+				$loop[$j]['field'].='<p class="comment char_counter">'.$GLOBALS['_lang'][125].' <span id="'.$field['dbfield'].'_chars">'.($config['ta_len']-strlen($output[$field['dbfield']])).'</span></p>';
 			}
 			break;
 
@@ -127,16 +128,16 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 
 		case FIELD_DATE:
 			$loop[$j]['field']='<select name="'.$field['dbfield'].'_month" id="'.$field['dbfield'].'_month" tabindex="'.($i+4).'">'.vector2options($accepted_months,$output[$field['dbfield'].'_month']).'</select>';
-			$loop[$j]['field'].='<select name="'.$field['dbfield'].'_day" id="'.$field['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">day</option>'.interval2options(1,31,$output[$field['dbfield'].'_day']).'</select>';	// translate
-			$loop[$j]['field'].='<select name="'.$field['dbfield'].'_year" id="'.$field['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">year</option>'.interval2options($field['accepted_values'][1],$field['accepted_values'][2],$output[$field['dbfield'].'_year'],array(),1,2).'</select>'; // translate
+			$loop[$j]['field'].='<select name="'.$field['dbfield'].'_day" id="'.$field['dbfield'].'_day" tabindex="'.($i+4).'"><option value="">'.$GLOBALS['_lang'][131].'</option>'.interval2options(1,31,$output[$field['dbfield'].'_day']).'</select>';
+			$loop[$j]['field'].='<select name="'.$field['dbfield'].'_year" id="'.$field['dbfield'].'_year" tabindex="'.($i+4).'"><option value="">'.$GLOBALS['_lang'][132].'</option>'.interval2options($field['accepted_values'][1],$field['accepted_values'][2],$output[$field['dbfield'].'_year'],array(),1,2).'</select>';
 			break;
 
 		case FIELD_LOCATION:
 			$country_id=$output[$field['dbfield'].'_country'];
 			$state_id=$output[$field['dbfield'].'_state'];
-			$loop[$j]['label']='Country';	// translate this
+			$loop[$j]['label']=$GLOBALS['_lang'][126];
 			$loop[$j]['dbfield']=$field['dbfield'].'_country';
-			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output[$field['dbfield'].'_country']).'</select>';
+			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">'.$GLOBALS['_lang'][195].'</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output[$field['dbfield'].'_country']).'</select>';
 			$prefered_input='s';
 			$num_states=0;
 			$num_cities=0;
@@ -155,25 +156,25 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 				}
 			}
 			++$j;
-			$loop[$j]['label']='State';	// translate this
+			$loop[$j]['label']=$GLOBALS['_lang'][127];
 			$loop[$j]['dbfield']=$field['dbfield'].'_state';
-			$loop[$j]['field']='<select name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option>';	// translate this
+			$loop[$j]['field']='<select name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">'.$GLOBALS['_lang'][133].'</option>';
 			if (!empty($country_id) && $prefered_input=='s' && !empty($num_states)) {
 				$loop[$j]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$state_id,"`fk_country_id`=$country_id");
 			}
 			$loop[$j]['field'].='</select>';
 			$loop[$j]['class']=(!empty($country_id) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
 			++$j;
-			$loop[$j]['label']='City';	// translate this
+			$loop[$j]['label']=$GLOBALS['_lang'][128];
 			$loop[$j]['dbfield']=$field['dbfield'].'_city';
-			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">Select city</option>';	// translate this
+			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">'.$GLOBALS['_lang'][134].'</option>';
 			if (!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) {
 				$loop[$j]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$output[$field['dbfield'].'_city'],"`fk_state_id`=$state_id");
 			}
 			$loop[$j]['field'].='</select>';
 			$loop[$j]['class']=(!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';
 			++$j;
-			$loop[$j]['label']='Zip';	// translate this
+			$loop[$j]['label']=$GLOBALS['_lang'][129];
 			$loop[$j]['dbfield']=$field['dbfield'].'_zip';
 			$loop[$j]['field']='<input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" value="'.$output[$field['dbfield'].'_zip'].'" tabindex="'.($i+4).'" />';
 			$loop[$j]['class']=(!empty($country_id) && $prefered_input=='z') ? 'visible' : 'invisible';
@@ -206,8 +207,8 @@ $tpl->drop_loop('loop');
 $tpl->drop_loop('js_loop');
 unset($loop,$js_loop);
 
-$tplvars['title']='Registration';
-$tplvars['page_title']='Registration';
+$tplvars['title']=$GLOBALS['_lang'][130];
+$tplvars['page_title']=$GLOBALS['_lang'][130];
 $tplvars['page']='join';
 $tplvars['css']='join.css';
 if (is_file('join_left.php')) {

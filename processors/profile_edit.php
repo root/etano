@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (isset($field['required']) && ((empty($input[$field['dbfield']]) && $field['field_type']!=FIELD_LOCATION) || ($field['field_type']==FIELD_LOCATION && empty($input[$field['dbfield'].'_country'])))) {
 					$error=true;
 					$topass['message']['type']=MESSAGE_ERROR;
-					$topass['message']['text']='The fields outlined below are required and must not be empty.';
+					$topass['message']['text']=$GLOBALS['_lang'][69];
 					$input['error_'.$field['dbfield']]='red_border';
 				}
 			}	// if ($field['editable'])
@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Your profile has been changed.';
+			$topass['message']['text']=$GLOBALS['_lang'][100];
 		} else {
 			$nextpage='profile_edit.php';
 //	 		you must re-read all textareas from $_POST like this:

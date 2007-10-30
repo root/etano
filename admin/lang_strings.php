@@ -21,34 +21,45 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $content='';
 if (isset($_GET['s'])) {
 	$skin=sanitize_and_format($_GET['s'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
-	$query="SELECT * FROM `{$dbtable_prefix}lang_keys` ORDER BY `lk_id` ASC";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$i=0;
-	$lang_strings=array();
-	$temp=array();
-	while ($rsrow=mysql_fetch_assoc($res)) {
-		$lang_strings[$i]=$rsrow;
-		$lang_strings[$i]['lang_value']='';
-		if ($rsrow['lk_type']==FIELD_TEXTFIELD) {
-			$lang_strings[$i]['tf']=true;
-		}
-		$temp[$rsrow['lk_id']]=$i;
-		++$i;
-	}
-	$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$skin'";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	while ($rsrow=mysql_fetch_assoc($res)) {
-		$lang_strings[$temp[$rsrow['fk_lk_id']]]['lang_value']=$rsrow['lang_value'];
-	}
-	$lang_strings=sanitize_and_format($lang_strings,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
-
-	$tpl->set_file('content','lang_strings.html');
-	$tpl->set_loop('lang_strings',$lang_strings);
-	$tpl->set_var('skin',$skin);
-	$tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP);
-	$tpl->drop_loop('lang_strings');
-	unset($lang_strings);
+} else {
+	$skin=get_default_skin_code();
 }
+$output['skin']=$skin;
+
+$query="SELECT * FROM `{$dbtable_prefix}lang_keys` ORDER BY `lk_id` ASC";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$i=0;
+$loop=array();
+$temp=array();
+while ($rsrow=mysql_fetch_assoc($res)) {
+	$rsrow['lk']=empty($rsrow['alt_id_text']) ? $rsrow['lk_id'] : sanitize_and_format($rsrow['alt_id_text'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+	$rsrow['save_file']=empty($rsrow['save_file']) ? 'global.inc.php' : $rsrow['save_file'];
+	$loop[$i]=$rsrow;
+	$loop[$i]['lang_value']='';
+	if ($rsrow['lk_type']==FIELD_TEXTFIELD) {
+		$loop[$i]['tf']=true;
+	}
+	$temp[$rsrow['lk_id']]=$i;
+	++$i;
+}
+$query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$skin'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+while ($rsrow=mysql_fetch_assoc($res)) {
+	$loop[$temp[$rsrow['fk_lk_id']]]['lang_value']=$rsrow['lang_value'];
+}
+$loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
+
+$output['return2me']='lang_strings.php';
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
+}
+$output['return2me']=rawurlencode($output['return2me']);
+$tpl->set_file('content','lang_strings.html');
+$tpl->set_loop('loop',$loop);
+$tpl->set_var('output',$output);
+$tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP);
+$tpl->drop_loop('loop');
+unset($loop);
 
 $tplvars['title']='Language Strings';
 $tplvars['page']='lang_strings';

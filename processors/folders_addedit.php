@@ -15,6 +15,7 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/user_folders.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('manage_folders');
 
 if (is_file(_BASEPATH_.'/events/processors/folders_addedit.php')) {
@@ -52,10 +53,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_affected_rows()) {
 				$topass['message']['type']=MESSAGE_INFO;
-				$topass['message']['text']='Folder renamed.';     // translate
+				$topass['message']['text']=$GLOBALS['_lang'][51];
 			} else {
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='Folder not changed. This folder name already exists.';     // translate
+				$topass['message']['text']=$GLOBALS['_lang'][52];
 			}
 			if (isset($_on_after_update)) {
 				for ($i=0;isset($_on_after_update[$i]);++$i) {
@@ -82,10 +83,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 			if (mysql_affected_rows()) {
 				$topass['message']['type']=MESSAGE_INFO;
-				$topass['message']['text']='Folder added.';     // translate
+				$topass['message']['text']=$GLOBALS['_lang'][53];
 			} else {
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='Folder not added. This folder name already exists.';     // translate
+				$topass['message']['text']=$GLOBALS['_lang'][54];
 			}
 			if (isset($_on_after_insert)) {
 				for ($i=0;isset($_on_after_insert[$i]);++$i) {

@@ -40,7 +40,7 @@ if (isset($_GET['m'])) {
 	if ($continue) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
-			print mysql_result($res,0,0);
+			echo mysql_result($res,0,0);
 		}
 	}
 }

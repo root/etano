@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 check_login_member('upload_photos');
 
 if (is_file(_BASEPATH_.'/events/processors/photo_delete.php')) {
@@ -53,7 +54,7 @@ if (mysql_num_rows($res)) {
 	// what to do with the cache for the deleted comments or photo page? clear_cache($photo_id) ????
 
 	$topass['message']['type']=MESSAGE_INFO;
-	$topass['message']['text']='Photo deleted.';     // translate
+	$topass['message']['text']=$GLOBALS['_lang'][91];
 
 	if (isset($_on_after_delete)) {
 		for ($i=0;isset($_on_after_delete[$i]);++$i) {

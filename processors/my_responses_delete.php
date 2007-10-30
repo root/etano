@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('saved_messages');
 
 if (is_file(_BASEPATH_.'/events/processors/my_responses_delete.php')) {
@@ -32,7 +33,7 @@ if (isset($_on_before_delete)) {
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 $topass['message']['type']=MESSAGE_INFO;
-$topass['message']['text']='Response deleted.';     // translate
+$topass['message']['text']=$GLOBALS['_lang'][76];
 
 if (!empty($_GET['return'])) {
 	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');

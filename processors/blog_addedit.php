@@ -15,6 +15,7 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/user_blogs.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
 if (is_file(_BASEPATH_.'/events/processors/blog_addedit.php')) {
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (empty($input['blog_name'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Please enter the title of the blog';
+		$topass['message']['text']=$GLOBALS['_lang'][13];
 	}
 
 	if (!$error) {
@@ -70,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Blog details changed.';     // translate
+			$topass['message']['text']=$GLOBALS['_lang'][14];
 			$input['blog_id']=(string)$input['blog_id'];
 			if (isset($_on_after_update)) {
 				for ($i=0;isset($_on_after_update[$i]);++$i) {
@@ -106,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$temp='<?php $blog_archive=array();';
 			$fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'].'/blog_archive.inc.php',$temp);
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Blog created.';     // translate
+			$topass['message']['text']=$GLOBALS['_lang'][15];
 			if (isset($_on_after_insert)) {
 				for ($i=0;isset($_on_after_insert[$i]);++$i) {
 					call_user_func($_on_after_insert[$i]);

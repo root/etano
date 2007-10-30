@@ -123,9 +123,9 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	} else {
 		if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
 			$rsrow['is_online']='is_online';
-			$rsrow['user_online_status']='is online';	// translate
+			$rsrow['user_online_status']=$GLOBALS['_lang'][102];
 		} else {
-			$rsrow['user_online_status']='is offline';	// translate
+			$rsrow['user_online_status']=$GLOBALS['_lang'][103];
 		}
 	}
 	if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
@@ -173,8 +173,8 @@ $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 unset($categs);
 
-$tplvars['title']='My Profile';
-$tplvars['page_title']='My Profile';
+$tplvars['title']=$GLOBALS['_lang'][141];
+$tplvars['page_title']=$GLOBALS['_lang'][141];
 $tplvars['page']='my_profile';
 $tplvars['css']='my_profile.css';
 if (is_file('my_profile_left.php')) {

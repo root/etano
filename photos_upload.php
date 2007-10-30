@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 check_login_member('upload_photos');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -29,16 +30,16 @@ if (empty($output['max_file_size'])) {
 }
 $output['photos_remaining']=get_user_settings($_SESSION[_LICENSE_KEY_]['user']['user_id'],'core_photo','max_user_photos');
 if ($output['photos_remaining']==-1) {
-	$output['photos_remaining']='You can upload an unlimited number of photos.';	// translate
+	$output['photos_remaining']=$GLOBALS['_lang'][149];
 } else {
-	$output['photos_remaining']=sprintf('You can upload %s more photos.',$output['photos_remaining']);	// translate
+	$output['photos_remaining']=sprintf($GLOBALS['_lang'][150],$output['photos_remaining']);
 }
 $tpl->set_file('content','photos_upload.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content');
 
-$tplvars['title']='Upload photos';
-$tplvars['page_title']='Upload photos';
+$tplvars['title']=$GLOBALS['_lang'][151];
+$tplvars['page_title']=$GLOBALS['_lang'][151];
 $tplvars['page']='photos_upload';
 $tplvars['css']='photos_upload.css';
 if (is_file('photos_upload_left.php')) {

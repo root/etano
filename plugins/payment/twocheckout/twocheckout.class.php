@@ -55,6 +55,7 @@ class payment_twocheckout extends ipayment {
 											'user_id'=>FIELD_INT));
 
 	function payment_twocheckout() {
+		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/payment.inc.php';
 		$this->ipayment();
 		$this->_init();
 	}
@@ -202,22 +203,22 @@ class payment_twocheckout extends ipayment {
 											}
 										}
 									} else {	// a demo transaction when we're not in demo mode
-										$tpl->set_var('gateway_text','We\'re sorry but there were some problems processing your payment. Please contact us to upgrade your subscription');	// translate this
+										$tpl->set_var('gateway_text',$GLOBALS['_lang'][187]);
 										require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 										new log_error(array('module_name'=>get_class($this),'text'=>'Demo transaction when demo is not enabled: '.array2qs($input)));
 									}
 								} else {	// paid price doesn't match the subscription price
-									$tpl->set_var('gateway_text','We\'re sorry but the price you\'ve paid doesn\'t match the subscription price. Please contact us to upgrade your subscription');	// translate this
+									$tpl->set_var('gateway_text',$GLOBALS['_lang'][188]);
 									require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 									new log_error(array('module_name'=>get_class($this),'text'=>'Invalid amount paid: '.array2qs($input)));
 								}
 							} else {	// if the subscr_id was not found
-								$tpl->set_var('gateway_text','We\'re sorry but the system doesn\'t recognize the subscription for the payment you\'ve made. Please contact us to upgrade your subscription');	// translate this
+								$tpl->set_var('gateway_text',$GLOBALS['_lang'][189]);
 								require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 								new log_error(array('module_name'=>get_class($this),'text'=>'Invalid subscr_id received after payment: '.array2qs($input)));
 							}
 						} else {	// if the user_id was not found
-							$tpl->set_var('gateway_text','We\'re sorry but the system doesn\'t recognize the user for whom the payment was made. Please contact us to upgrade your subscription');	// translate this
+							$tpl->set_var('gateway_text',$GLOBALS['_lang'][192]);
 							require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 							new log_error(array('module_name'=>get_class($this),'text'=>'Invalid user_id received after payment: '.array2qs($input)));
 						}
@@ -227,22 +228,22 @@ class payment_twocheckout extends ipayment {
 						// no product support for now in Etano
 
 					} else {	// dm_item_type is neither 'prod' nor 'subscr'
-						$tpl->set_var('gateway_text','Invalid payment received. Please contact us if you feel this is an error.');	// translate this
+						$tpl->set_var('gateway_text',$GLOBALS['_lang'][193]);
 						require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 						new log_error(array('module_name'=>get_class($this),'text'=>'Invalid dm_item_type: '.array2qs($input)));
 					}
 				} else {
-					$tpl->set_var('gateway_text','We\'re sorry but this transaction failed internal validation. Please try again.');	// translate this
+					$tpl->set_var('gateway_text',$GLOBALS['_lang'][199]);
 					require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 					new log_error(array('module_name'=>get_class($this),'text'=>'Invalid hash code received after payment: '.array2qs($input).'. My hash:'.strtoupper(md5($this->config['secret'].$this->config['sid'].$input['x_trans_id'].$input['x_amount']))));
 				}
 			} else {
-				$tpl->set_var('gateway_text',sprintf('We\'re sorry, but an error occurred when trying to process your Credit Card: %1$s (%2$s)',$input['x_response_reason_text'],$input['x_response_reason_code']));	// translate this
+				$tpl->set_var('gateway_text',sprintf($GLOBALS['_lang'][200],$input['x_response_reason_text'],$input['x_response_reason_code']));
 				require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 				new log_error(array('module_name'=>get_class($this),'text'=>'Gateway error: '.$input['x_response_reason_text'].'('.$input['x_response_reason_code'].")\n".array2qs($input)));
 			}
 		} else {
-			$tpl->set_var('gateway_text','We\'re sorry, but an error occurred when trying to process your Credit Card. Please contact us for details or try again.');	// translate this
+			$tpl->set_var('gateway_text',$GLOBALS['_lang'][201]);
 			require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 			new log_error(array('module_name'=>get_class($this),'text'=>'Gateway error. Card not processed. '.array2qs($input)));
 		}

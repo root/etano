@@ -15,6 +15,7 @@ Support at:                 http://www.datemill.com/forum
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
@@ -50,18 +51,18 @@ if (!empty($output['search_md5'])) {
 		switch ($_GET['st']) {
 
 			case 'new':
-				$tplvars['page_title']='Latest Blogs';	// translate
+				$tplvars['page_title']=$GLOBALS['_lang'][104];
 				//$orderby="a.`date_posted` DESC";	// default
 				break;
 
 			case 'views':
-				$tplvars['page_title']='Most Popular Blogs';	// translate
+				$tplvars['page_title']=$GLOBALS['_lang'][105];
 				$input['acclevel_code']='search_blog';
 				$orderby="a.`stat_views` DESC";
 				break;
 
 			case 'comm':
-				$tplvars['page_title']='Most Discussed Blogs';	// translate
+				$tplvars['page_title']=$GLOBALS['_lang'][106];
 				$input['acclevel_code']='search_blog';
 				$orderby="a.`stat_comments` DESC";
 				break;
@@ -69,13 +70,13 @@ if (!empty($output['search_md5'])) {
 			case 'uid':
 				$input['acclevel_code']='search_blog';
 				$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
-				$tplvars['page_title']=sprintf('<a href="'.$tplvars['relative_url'].'profile.php?uid=%1$s">%2$s</a>\'s Blogs',$input['uid'],get_user_by_userid($input['uid']));	// translate
+				$tplvars['page_title']=sprintf($GLOBALS['_lang'][108],get_user_by_userid($input['uid']));
 				$where="a.`fk_user_id`=".$input['uid']." AND ".$where;
 				$orderby="a.`post_id` DESC";
 				break;
 
 			case 'tag':
-				$tplvars['page_title']='Search Results';
+				$tplvars['page_title']=$GLOBALS['_lang'][107];
 				$input['acclevel_code']='search_blog';
 				$input['tags']=isset($_GET['tags']) ? $_GET['tags'] : '';
 				// remove extra spaces and words with less than 3 chars
@@ -119,7 +120,7 @@ $output['totalrows']=count($post_ids);
 // get the results from user cache for the found post_ids
 $loop=array();
 if (!empty($output['totalrows'])) {
-	if ($o>$output['totalrows']) {
+	if ($o>=$output['totalrows']) {
 		$o=$output['totalrows']-$r;
 	}
 	$post_ids=array_slice($post_ids,$o,$r);
@@ -138,9 +139,9 @@ if (!empty($output['totalrows'])) {
 		$loop[$i]['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$loop[$i]['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
 		if (isset($_list_of_online_members[$loop[$i]['fk_user_id']])) {
 			$loop[$i]['is_online']='is_online';
-			$loop[$i]['user_online_status']='is online';	// translate
+			$loop[$i]['user_online_status']=$GLOBALS['_lang'][102];
 		} else {
-			$loop[$i]['user_online_status']='is offline';	// translate
+			$loop[$i]['user_online_status']=$GLOBALS['_lang'][103];
 		}
 		if (!is_file(_PHOTOPATH_.'/t1/'.$loop[$i]['photo'])) {
 			$loop[$i]['photo']='no_photo.gif';
@@ -165,7 +166,7 @@ $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_NOLOOP | TPL_OPTI
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='Search Results';
+$tplvars['title']=$GLOBALS['_lang'][107];
 $tplvars['page']='blog_search';
 $tplvars['css']='blog_search.css';
 if (is_file('blog_search_left.php')) {

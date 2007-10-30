@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 define('CACHE_LIMITER','private');
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/email_change.inc.php';
 require_once 'includes/user_functions.inc.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -28,13 +29,13 @@ if (!empty($uid) && !empty($email)) {
 		$query="DELETE FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`=$uid AND `config_option`='new_email'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']='Your email address has been changed.';
+		$topass['message']['text']=$GLOBALS['_lang'][3];
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Invalid email change request.';
+		$topass['message']['text']=$GLOBALS['_lang'][4];
 	}
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
-	$topass['message']['text']='Invalid email change request.';
+	$topass['message']['text']=$GLOBALS['_lang'][4];
 }
 redirect2page('info.php',$topass);

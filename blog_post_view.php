@@ -15,6 +15,7 @@ define('CACHE_LIMITER','private');
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('read_blogs');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
@@ -42,9 +43,9 @@ if (!empty($post_id)) {
 		}
 		if (isset($_list_of_online_members[$output['fk_user_id']])) {
 			$output['is_online']='member_online';
-			$output['user_online_status']='is online';	// translate
+			$output['user_online_status']=$GLOBALS['_lang'][102];
 		} else {
-			$output['user_online_status']='is offline';	// translate
+			$output['user_online_status']=$GLOBALS['_lang'][103];
 		}
 
 		$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
@@ -78,9 +79,9 @@ if (!empty($post_id)) {
 			} else {
 				if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
 					$rsrow['is_online']='is_online';
-					$rsrow['user_online_status']='is online';	// translate
+					$rsrow['user_online_status']=$GLOBALS['_lang'][102];
 				} else {
-					$rsrow['user_online_status']='is offline';	// translate
+					$rsrow['user_online_status']=$GLOBALS['_lang'][103];
 				}
 			}
 			if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
@@ -123,12 +124,12 @@ if (!empty($post_id)) {
 		}
 	} else {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Invalid blog selected';
+		$topass['message']['text']=$GLOBALS['_lang'][2];
 		redirect2page('info.php',$topass);
 	}
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
-	$topass['message']['text']='Invalid blog selected';
+	$topass['message']['text']=$GLOBALS['_lang'][2];
 	redirect2page('info.php',$topass);
 }
 
@@ -148,8 +149,8 @@ $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']=sprintf('Blogs - %1$s - %2$s',$output['blog_name'],$output['title']);
-$tplvars['page_title']=sprintf('%1$s : %2$s','<a href="'.$tplvars['relative_url'].'blog_view.php?bid='.$output['fk_blog_id'].'">'.$output['blog_name'].'</a>',$output['title']);	// translate this
+$tplvars['title']=sprintf($GLOBALS['_lang'][222],$output['blog_name'],$output['title']);
+$tplvars['page_title']=sprintf($GLOBALS['_lang'][221],'<a href="'.$tplvars['relative_url'].'blog_view.php?bid='.$output['fk_blog_id'].'">'.$output['blog_name'].'</a>',$output['title']);
 $tplvars['page']='blog_post_view';
 $tplvars['css']='blog_post_view.css';
 if (is_file('blog_post_view_left.php')) {

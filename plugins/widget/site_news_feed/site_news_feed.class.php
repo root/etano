@@ -17,6 +17,7 @@ class widget_site_news_feed extends icontent_widget {
 	var $module_code='site_news_feed';
 
 	function widget_site_news_feed() {
+		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/plugins/widget/site_news/site_news.class.php';
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -66,7 +67,7 @@ class widget_site_news_feed extends icontent_widget {
 	function _finish_display() {
 		$myreturn='';
 		if ($this->tpl->get_var_silent('widget.content')!='') {
-			$widget['title']='News';	// translate this
+			$widget['title']=$GLOBALS['_lang'][215];
 			$widget['id']='site_news_feed';
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
@@ -96,7 +97,7 @@ class widget_site_news_feed extends icontent_widget {
 
 
 	function _init() {
-		$this->config['module_name']='Site news';
+		$this->config['module_name']=$GLOBALS['_lang'][215];
 		$this->config['total']=3;
 	}
 }

@@ -15,6 +15,7 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/blog_posts.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
 if (is_file(_BASEPATH_.'/events/processors/blog_posts_addedit.php')) {
@@ -46,12 +47,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (empty($input['title'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Please add a title for this post';
+		$topass['message']['text']=$GLOBALS['_lang'][17];
 	}
 	if (empty($input['post_content'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Please write something in the post';
+		$topass['message']['text']=$GLOBALS['_lang'][18];
 	}
 
 	if (!$error) {
@@ -88,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Post changed successfully.';
+			$topass['message']['text']=$GLOBALS['_lang'][19];
 			if (isset($_on_after_update)) {
 				for ($i=0;isset($_on_after_update[$i]);++$i) {
 					call_user_func($_on_after_update[$i]);
@@ -125,9 +126,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 						call_user_func($_on_after_approve[$i]);
 					}
 				}
-				$topass['message']['text']='Post added.';	// translate this
+				$topass['message']['text']=$GLOBALS['_lang'][20];
 			} else {
-				$topass['message']['text']='Post added. It will be reviewed and published shortly.';	// translate this
+				$topass['message']['text']=$GLOBALS['_lang'][21];
 			}
 
 			if (isset($_on_after_insert)) {

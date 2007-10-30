@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/join.inc.php';
 
 if (is_file(_BASEPATH_.'/events/processors/join.php')) {
 	include_once _BASEPATH_.'/events/processors/join.php';
@@ -38,31 +39,31 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!preg_match('/^[a-z0-9_]+$/',$input['user']) || strlen($input['user'])<4 || strlen($input['user'])>20) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]='Please use only letters and digits for your username. 4-20 chars.';//translate
+			$topass['message']['text'][]=$GLOBALS['_lang'][63];
 			$input['error_user']='red_border';
 		}
 		if (!$error && ($input['user']=='guest' || get_userid_by_user($input['user']))) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]='This account already exists. Please choose another one.';
+			$topass['message']['text'][]=$GLOBALS['_lang'][64];
 			$input['error_user']='red_border';
 		}
 		if (!$error && empty($input['pass'])) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]='Password cannot be empty. Please enter your password.';
+			$topass['message']['text'][]=$GLOBALS['_lang'][65];
 			$input['error_pass']='red_border';
 		}
 		if (!$error && $input['email']!=$input['email2']) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]='Emails do not match. Please check the emails.';
+			$topass['message']['text'][]=$GLOBALS['_lang'][37];
 			$input['error_email']='red_border';
 		}
 		if (!$error && !preg_match('/^[a-z0-9\-\._]+@[a-z0-9\-]+(\.[a-z0-9\-]+)+$/',$input['email'])) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]='Invalid email entered. Please check your email.';
+			$topass['message']['text'][]=$GLOBALS['_lang'][66];
 			$input['error_email']='red_border';
 		}
 		if (!$error) {
@@ -71,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (mysql_num_rows($res)) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text'][]=sprintf('The email address %s is already in use.',$input['email']);
+				$topass['message']['text'][]=sprintf($GLOBALS['_lang'][67],$input['email']);
 				$input['error_email']='red_border';
 			}
 		}
@@ -80,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!$error && (!isset($_SESSION['captcha_word']) || strcasecmp($captcha,$_SESSION['captcha_word'])!=0)) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text'][]="The verification code doesn't match. Please enter the new code.";
+				$topass['message']['text'][]=$GLOBALS['_lang'][24];
 				$input['error_captcha']='red_border';
 			}
 		}
@@ -88,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!$error && empty($input['agree'])) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
-			$topass['message']['text'][]="You must agree to the terms of services before joining the site.";
+			$topass['message']['text'][]=$GLOBALS['_lang'][68];
 			$input['error_agree']='red_border';
 		}
 	}
@@ -181,12 +182,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (empty($input[$field['dbfield']]) && $field['field_type']!=FIELD_LOCATION) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text'][]="The fields outlined below are required and must not be empty.";
+				$topass['message']['text'][]=$GLOBALS['_lang'][69];
 				$input['error_'.$field['dbfield']]='red_border';
 			} elseif ($field['field_type']==FIELD_LOCATION && empty($input[$field['dbfield'].'_country'])) {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text'][]='The fields outlined below are required and must not be empty.';
+				$topass['message']['text'][]=$GLOBALS['_lang'][69];
 				$input['error_'.$field['dbfield'].'_country']='red_border';
 			}
 		}
@@ -201,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$_SESSION[_LICENSE_KEY_]['user']['user']=$input['user'];	// for `dsb_payments`
 			$_SESSION[_LICENSE_KEY_]['user']['email']=$input['email'];	// for info_signup.html
 			$input['uid']=$_SESSION[_LICENSE_KEY_]['user']['reg_id'];
-			send_template_email($input['email'],sprintf('%s user registration confirmation',_SITENAME_),'confirm_reg.html',get_my_skin(),$input);
+			send_template_email($input['email'],sprintf($GLOBALS['_lang'][70],_SITENAME_),'confirm_reg.html',get_my_skin(),$input);
 		}
 		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['reg_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

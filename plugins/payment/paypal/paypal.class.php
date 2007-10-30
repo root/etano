@@ -52,6 +52,7 @@ class payment_paypal extends ipayment {
 											));
 
 	function payment_paypal() {
+		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/payment.inc.php';
 		$this->ipayment();
 		$this->_init();
 	}
@@ -275,8 +276,8 @@ class payment_paypal extends ipayment {
 
 	function process(&$input,$type) {
 		global $dbtable_prefix;
-		require_once _BASEPATH_.'/includes/classes/log_error.class.php';
-		new log_error(array('module_name'=>get_class($this),'text'=>$type.': new notif from paypal: $_POST:'.var_export($_POST,true).' $_GET:'.var_export($_GET,true).' $input:'.var_export($input,true)));
+//		require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+//		new log_error(array('module_name'=>get_class($this),'text'=>$type.': new notif from paypal: $_POST:'.var_export($_POST,true).' $_GET:'.var_export($_GET,true).' $input:'.var_export($input,true)));
 		if (strcasecmp($input['business'],$this->config['paypal_email'])==0 || strcasecmp($input['receiver_email'],$this->config['paypal_email'])==0) {
 			// some transformations
 			parse_str($input['custom'],$temp);
@@ -388,7 +389,7 @@ class payment_paypal extends ipayment {
 											} else {
 												// a demo transaction when we're not in demo mode
 												if ($type=='pdt') {
-													$GLOBALS['tpl']->set_var('gateway_text','We\'re sorry but there were some problems processing your payment. Please contact us to upgrade your subscription');	// translate this
+													$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][187]);
 												}
 												require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 												new log_error(array('module_name'=>get_class($this),'text'=>'Demo transaction when demo is not enabled: '.array2qs($_POST)));
@@ -396,7 +397,7 @@ class payment_paypal extends ipayment {
 										} else {
 											// paid price doesn't match the subscription price
 											if ($type=='pdt') {
-												$GLOBALS['tpl']->set_var('gateway_text','We\'re sorry but the price you\'ve paid doesn\'t match the subscription price. Please contact us to upgrade your subscription');	// translate this
+												$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][188]);
 											}
 											require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 											new log_error(array('module_name'=>get_class($this),'text'=>'Invalid amount paid: '.array2qs($_POST)));
@@ -404,14 +405,14 @@ class payment_paypal extends ipayment {
 									} else {
 										// if the subscr_id was not found
 										if ($type=='pdt') {
-											$GLOBALS['tpl']->set_var('gateway_text','We\'re sorry but the system doesn\'t recognize the subscription for the payment you\'ve made. Please contact us to upgrade your subscription');	// translate this
+											$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][189]);
 										}
 										require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 										new log_error(array('module_name'=>get_class($this),'text'=>'Invalid subscr_id received after payment: '.array2qs($_POST)));
 									}
 								} else {
 									if ($type=='pdt') {
-										$GLOBALS['tpl']->set_var('gateway_text','Thank you for your payment. The transaction is still <strong>pending</strong> at the moment. As soon as the payment clears, a receipt for your purchase will be emailed to you and your membership will be upgraded.<br>You may log into your account at http://www.paypal.com to view details of this transaction.');	// translate this
+										$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][190]);
 									}
 									require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 									new log_error(array('module_name'=>get_class($this),'text'=>'Payment status not Completed: '.$input['payment_status']."\n".array2qs($_POST)));
@@ -431,7 +432,7 @@ class payment_paypal extends ipayment {
 							} else {
 								// unhandled txn_type
 								if ($type=='pdt') {
-									$GLOBALS['tpl']->set_var('gateway_text','Error: Unhandled transaction type received from Paypal.');	// translate this
+									$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][191]);
 								}
 								require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 								new log_error(array('module_name'=>get_class($this),'text'=>'Unhandled txn_type (probably not an error): '.$input['txn_type']."\n".array2qs($_POST)));
@@ -439,7 +440,7 @@ class payment_paypal extends ipayment {
 						} else {
 							// if the user_id was not found
 							if ($type=='pdt') {
-								$GLOBALS['tpl']->set_var('gateway_text','Error: Sorry, your username could not be found. Please contact us to upgrade your membership.');	// translate this
+								$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][192]);
 							}
 							require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 							new log_error(array('module_name'=>get_class($this),'text'=>'Invalid user_id received after payment: '.array2qs($_POST)));
@@ -453,7 +454,7 @@ class payment_paypal extends ipayment {
 
 					} else {	// dm_item_type is neither 'prod' nor 'subscr'
 						if ($type=='pdt') {
-							$GLOBALS['tpl']->set_var('gateway_text','Invalid payment received. Please contact us if you feel this is an error.');	// translate this
+							$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][193]);
 						}
 						require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 						new log_error(array('module_name'=>get_class($this),'text'=>'Invalid dm_item_type: '.array2qs($_POST)));
