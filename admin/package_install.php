@@ -113,7 +113,7 @@ if (!$error) {
 						// see if we're not blocked by some module
 						for ($k=0;isset($p->install[$install_index]['blockedby'][$k]);++$k) {
 							$blockedby=$p->install[$install_index]['blockedby'][$k];
-							if (isset($mcodes[$blockedby['id']]) && ((!isset($blockedby['version']) && !isset($blockedby['min-version']) && !isset($blockedby['max-version'])) || (isset($blockedby['version']) && $mcodes[$blockedby['id']]==$blockedby['version']) || (isset($blockedby['min-version']) && $mcodes[$blockedby['id']]>$blockedby['min-version') || (isset($blockedby['max-version']) && $mcodes[$blockedby['id']]<$blockedby['max-version']))) {
+							if (isset($mcodes[$blockedby['id']]) && ((!isset($blockedby['version']) && !isset($blockedby['min-version']) && !isset($blockedby['max-version'])) || (isset($blockedby['version']) && $mcodes[$blockedby['id']]==$blockedby['version']) || (isset($blockedby['min-version']) && $mcodes[$blockedby['id']]>$blockedby['min-version']) || (isset($blockedby['max-version']) && $mcodes[$blockedby['id']]<$blockedby['max-version']))) {
 								$req_ok=false;
 								break;
 							}
