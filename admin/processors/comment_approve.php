@@ -44,6 +44,7 @@ if (!empty($input['cids']) && !empty($input['m'])) {
 	$query="UPDATE $table SET `status`=".STAT_APPROVED.",`last_changed`='".gmdate('YmdHis')."' WHERE `comment_id` IN ('".join("','",$input['cids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (is_file(_BASEPATH_.'/events/processors/comment_addedit.php')) {
+		include_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/comments.inc.php';
 		include_once _BASEPATH_.'/events/processors/comment_addedit.php';
 		if (isset($_on_after_approve)) {
 			$GLOBALS['comment_ids']=$input['cids'];
