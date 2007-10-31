@@ -61,8 +61,6 @@ if (!isset($output['pending_profiles'])&& !isset($output['pending_blogs']) && !i
 	$output['none_pending']=true;
 }
 
-
-
 $tpl->set_file('content','cpanel.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);

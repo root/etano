@@ -10,7 +10,7 @@ function add_membership() {
 }
 
 function del_membership(val) {
-	myval=confirm('Are you sure you want to delete this membership?');
+	myval=confirm('Are you sure you want to delete this membership?\nNote that this will also delete all subscriptions upgrading to this membership!');
 	if (myval) {
 		the=document.getElementById('manage_memberships');
 		the.act.value='del';

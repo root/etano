@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['update_id']=isset($_POST['update_id']) ? (int)$_POST['update_id'] : 0;
 	$input['update_diz']=sanitize_and_format_gpc($_POST,'update_diz',TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
 	if (empty($input['update_diz']) && isset($p->install[0]['text'])) {
-		$input['update_diz']=$p->install[0]['text'];
+		$input['update_diz']=sanitize_and_format($p->install[0]['text'],TYPE_STRING,FORMAT_ADDSLASH);
 	}
 
 	if (!empty($_POST['return'])) {

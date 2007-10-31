@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 }
 
-if (empty($_POST['silent'])) {
+if (!isset($_POST['silent'])) {
 	$nextpage=_BASEURL_.'/admin/'.$nextpage;
 	redirect2page($nextpage,$topass,'',true);
 } else {

@@ -15,8 +15,16 @@
 <!--/loop name="manual_actions"-->
 </table>
 
+<!--opt name="output.show_finish"-->
 <form action="package_install.php" method="get">
 	<input type="hidden" name="f" value="{output.f}" />
 	<input type="hidden" name="finish" value="{output.finish}" />
 	<input type="submit" value="Finish" /> <span>Warning!! Click on Finish only if you solved the errors above (if any)</span>
 </form>
+<!--/opt name="output.show_finish"-->
+
+<!--opt name="!output.show_finish"-->
+<form action="packages.php" method="get">
+	<input type="submit" value="Cancel" />
+</form>
+<!--/opt name="!output.show_finish"-->

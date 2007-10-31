@@ -14,7 +14,6 @@ Support at:                 http://www.datemill.com/forum
 require_once '../../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../../includes/admin_functions.inc.php';
-require_once '../../includes/triggers.inc.php';
 allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 $error=false;
@@ -38,7 +37,16 @@ $input['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field
 if (!empty($input['pids'])) {
 	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `status`=".STAT_APPROVED.",`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `post_id` IN ('".join("','",$input['pids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	on_after_approve_blog_post($input['pids']);
+	if (is_file(_BASEPATH_.'/events/processors/blog_posts_addedit.php')) {
+		include_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/blogs.inc.php';
+		include_once _BASEPATH_.'/events/processors/blog_posts_addedit.php';
+		if (isset($_on_after_approve)) {
+			$GLOBALS['post_ids']=$input['pids'];
+			for ($i=0;isset($_on_after_approve[$i]);++$i) {
+				call_user_func($_on_after_approve[$i]);
+			}
+		}
+	}
 
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='Blog post(s) approved. They will appear on site as soon as the cache is generated';

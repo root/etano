@@ -21,9 +21,6 @@ $qs_sep='';
 $topass=array();
 $payment_id=isset($_GET['payment_id']) ? (int)$_GET['payment_id'] : 0;
 $act=isset($_GET['act']) ? $_GET['act'] : '';
-if (!empty($_GET['return'])) {
-	$nextpage=sanitize_and_format($_GET['return'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
-}
 
 if (!empty($payment_id)) {
 	if ($act=='s') {	// mark as fraud
@@ -40,9 +37,9 @@ if (!empty($payment_id)) {
 	}
 }
 
-if (empty($_GET['silent'])) {
-	if (!empty($nextpage)) {
-		$nextpage=_BASEURL_.'/admin/'.$nextpage;
+if (!isset($_GET['silent'])) {
+	if (!empty($return)) {
+		$nextpage=_BASEURL_.'/admin/'.$return;
 	} else {
 		$nextpage=_BASEURL_.'/admin/payment_history.php';
 	}

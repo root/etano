@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$towrite.="\n\t`".$rsrow['Field'].'` '.$rsrow['Type'];
-			if ($rsrow['Extra']!='auto_increment') {
+			if ($rsrow['Extra']!='auto_increment' && $rsrow['Default']!=null) {
 				$towrite.=" DEFAULT '".$rsrow['Default']."'";
 			}
 			if ($rsrow['Null']!='YES') {
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		ob_flush();
 		flush();
 		$towrite='';
-		$query_char_limit=10000;
+		$query_char_limit=20000;
 		for ($i=0;isset($tables[$i]);++$i) {
 			$query="SELECT * FROM `".$tables[$i]."`";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

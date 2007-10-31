@@ -37,13 +37,15 @@ if (isset($_SESSION['topass']['input'])) {
 			$output['what']=long2ip($output['what']);
 		}
 	}
-	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	$output['return']=rawurlencode($output['return2']);
 }
 
 $output['ban_type']=vector2radios($accepted_punishments,'ban_type',$output['ban_type'],array(_PUNISH_ERROR_));
 $output['default_skin']=get_default_skin_name();
 
+if (empty($output['return'])) {
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
+}
 $tpl->set_file('content','site_bans_addedit.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content');

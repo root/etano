@@ -15,6 +15,8 @@ require_once '../../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../../includes/admin_functions.inc.php';
 allow_dept(DEPT_ADMIN);
+set_time_limit(0);
+ignore_user_abort(true);
 
 $error=false;
 $qs='';
