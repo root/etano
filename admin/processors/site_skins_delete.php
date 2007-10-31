@@ -29,8 +29,11 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $query="DELETE FROM `{$dbtable_prefix}modules` WHERE `module_code`='$module_code'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
+$query="DELETE FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$module_code'";
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+
 if (!empty($config['is_default'])) {
-	$query="SELECT `module_code` FROM `{$dbtable_prefix}modules` WHERE `module_type`=".MODULE_SKIN;
+	$query="SELECT `module_code` FROM `{$dbtable_prefix}modules` WHERE `module_type`=".MODULE_SKIN." LIMIT 1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$module_code=mysql_result($res,0,0);

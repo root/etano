@@ -5,3 +5,8 @@
 .mod_name a {
 	font-weight: bold;
 }
+
+.reqs strong {
+	color: #f00;
+	font-weight: normal;
+}

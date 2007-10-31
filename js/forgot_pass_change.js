@@ -7,17 +7,17 @@ $(function() {
 
 function check_form(the) {
 	if (use_captcha && the.captcha.value=='') {
-		alert('Please enter the code from the image');
+		alert(lang[0]);
 		the.captcha.focus();
 		return false;
 	}
 	if (the.pass.value=='') {
-		alert('Please enter the new password');
+		alert(lang[1]);
 		the.pass.focus();
 		return false;
 	}
 	if (the.pass.value!=the.pass2.value) {
-		alert('Passwords do not match!');
+		alert(lang[2]);
 		the.pass.focus();
 		return false;
 	}

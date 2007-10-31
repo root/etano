@@ -8,22 +8,22 @@ $(function() {
 
 function check_form(the) {
 	if (the.subject.value=='') {
-		alert('Please enter the subject of the message');
+		alert(lang[0]);
 		the.subject.focus();
 		return false;
 	}
 	if (typeof(the.email)!='undefined' && !validate_email(the.email.value)) {
-		alert('Please enter your email address where we can contact you back');
+		alert(lang[1]);
 		the.email.focus();
 		return false;
 	}
 	if (the.message_body.value=='') {
-		alert('Please enter the message');
+		alert(lang[2]);
 		the.message_body.focus();
 		return false;
 	}
 	if (typeof(the.captcha)!='undefined' && the.captcha.value=='') {
-		alert('Please enter the code from the image');
+		alert(lang[3]);
 		the.captcha.focus();
 		return false;
 	}

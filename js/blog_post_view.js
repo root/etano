@@ -1,8 +1,8 @@
 $(function() {
 	$('div.comment a.link_change[@id^=editme_]').bind('click',function() {
 		c_id=$(this).attr('id').substr(7);
-		$.post('ajax/get_blog_comment.php',
-				{'comment_id':c_id},
+		$.post('ajax/get_comment.php',
+				{'comment_id':c_id,'t':'blog'},
 				function(data) {
 					if (data!=null && data!='') {
 						data=data.split('|');
@@ -24,7 +24,7 @@ $(function() {
 	});
 
 	$('.comment_delete').bind('click',function() {
-		return confirm('Are you sure you want to remove this comment?');
+		return confirm(lang[0]);
 	});
 });
 

@@ -65,14 +65,14 @@ function req_check_username() {
 				{'user':user},
 				function(data) {
 					if (data!=null && data!='') {
-						alert('You cannot use "'+user+'" as your username because it is already taken.');
+						alert(lang[0]);
 					} else {
-						alert('You can use "'+user+'" as your username.');
+						alert(lang[1]);
 					}
 				}
 		);
 	} else {
-		alert('Please use only letters and digits for your username. 4-20 chars');
+		alert(lang[2]);
 	}
 }
 
@@ -81,27 +81,27 @@ function check_form(theform) {
 if (empty($_GET['page']) || $_GET['page']==1) {
 ?>
 	if (!validate_user(theform.user.value)) {
-		alert('Please use only letters and digits for your username. 4-20 chars');
+		alert(lang[2]);
 		theform.user.focus();
 		return false;
 	}
 	if (theform.email.value!=theform.email2.value) {
-		alert('Emails don\'t match');
+		alert(lang[3]);
 		theform.email.focus();
 		return false;
 	}
 	if (!validate_email(theform.email.value)) {
-		alert('Invalid email entered');
+		alert(lang[4]);
 		theform.email.focus();
 		return false;
 	}
 	if (typeof(theform.captcha)!='undefined' && theform.captcha.value=='') {
-		alert('Please enter the code you see in the image');
+		alert(lang[5]);
 		theform.captcha.focus();
 		return false;
 	}
 	if (!theform.agree.checked) {
-		alert('You must agree with our terms and conditions before joining the site');
+		alert(lang[6]);
 		theform.agree.focus();
 		return false;
 	}
@@ -118,7 +118,7 @@ if (empty($_GET['page']) || $_GET['page']==1) {
 		}
 	}
 	if (is_error) {
-		alert('The fields outlined below must not be empty');
+		alert(lang[7]);
 	}
 	return !is_error;
 }

@@ -132,6 +132,7 @@ if (!empty($post_id)) {
 	$topass['message']['text']=$GLOBALS['_lang'][2];
 	redirect2page('info.php',$topass);
 }
+$output['lang_256']=sanitize_and_format($GLOBALS['_lang'][256],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $output['return2me']='blog_post_view.php';
 if (!empty($_SERVER['QUERY_STRING'])) {

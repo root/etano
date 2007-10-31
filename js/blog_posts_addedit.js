@@ -7,12 +7,12 @@ $(function() {
 
 function check_form(theform) {
 	if (theform.title.value=='') {
-		alert('Please add a title for this post');
+		alert(lang[0]);
 		theform.title.focus();
 		return false;
 	}
 	if (theform.post_content.value=='') {
-		alert('Please write something in the post');
+		alert(lang[1]);
 		theform.post_content.focus();
 		return false;
 	}

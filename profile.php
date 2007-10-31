@@ -181,6 +181,9 @@ if (!empty($output)) {
 	$topass['message']['text']=$GLOBALS['_lang'][7];
 	redirect2page('info.php',$topass);
 }
+$output['lang_273']=sanitize_and_format($GLOBALS['_lang'][273],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_274']=sanitize_and_format($GLOBALS['_lang'][274],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_256']=sanitize_and_format($GLOBALS['_lang'][256],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $output['return2me']='profile.php';
 if (!empty($_SERVER['QUERY_STRING'])) {

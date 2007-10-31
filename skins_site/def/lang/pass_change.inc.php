@@ -10,3 +10,6 @@ $GLOBALS['_lang'][90]='The email address you entered was not found.';
 $GLOBALS['_lang'][224]='Change Password';
 $GLOBALS['_lang'][225]='%s password reset confirmation';
 $GLOBALS['_lang'][244]='Lost Password';
+$GLOBALS['_lang'][258]='Please enter the email address you used to register with us.';
+$GLOBALS['_lang'][265]='Please enter the new password.';
+$GLOBALS['_lang'][266]='The passwords do not match.';

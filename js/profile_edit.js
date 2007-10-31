@@ -64,7 +64,7 @@ function check_form(theform) {
 		}
 	}
 	if (is_error) {
-		alert('The fields outlined below must not be empty');
+		alert(lang[0]);
 	}
 	return !is_error;
 }

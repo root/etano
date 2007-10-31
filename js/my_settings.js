@@ -17,15 +17,14 @@ $(function() {
 
 function check_passchange(the) {
 	if (the.pass.value=='') {
-		alert('Please enter the new password');
+		alert(lang[0]);
 		the.pass.focus();
 		return false;
 	}
 	if (the.pass.value!=the.pass2.value) {
-		alert('The passwords do not match');
+		alert(lang[1]);
 		the.pass2.focus();
 		return false;
 	}
 	return true;
 }
-

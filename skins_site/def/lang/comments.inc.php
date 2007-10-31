@@ -14,3 +14,4 @@ $GLOBALS['_lang'][163]='%1$s posted a comment on one of your photos.&lt;br&gt;&l
 $GLOBALS['_lang'][164]='New comment on your profile';
 $GLOBALS['_lang'][165]='%1$s posted a comment on your profile.&lt;br&gt;&lt;a class=&quot;content-link simple&quot; href=&quot;my_profile.php#comm%2$s&quot;&gt;Click here&lt;/a&gt; to view the comment';
 $GLOBALS['_lang'][203]='Last edited by %1$s on %2$s GMT';
+$GLOBALS['_lang'][252]='You are not allowed to edit this comment.';

@@ -56,7 +56,7 @@
 	<input type="hidden" name="comment_id" id="comment_id" value="{output.comment_id}" />
 	<input type="hidden" name="fk_parent_id" value="{tplvars.myself.user_id}" />
 	<input type="hidden" name="return" value="{output.return2me}" />
-	<a name="postarea" id="postarea"><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea></a>
+	<a name="postarea" id="postarea"></a><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea>
 </fieldset>
 <!--opt name="!tplvars.user_logged"-->
 <!--opt name="output.use_captcha"-->
@@ -78,11 +78,12 @@
 </form>
 <!--/opt name="output.allow_comments"-->
 
+<script type="text/javascript">
+	bbcode_field_id='#comment';
+	var lang=new Array('{output.lang_256}');
+</script>
 <script type="text/javascript" src="{tplvars.relative_url}js/scrollto.js?v={tplvars.js_lib_v}"></script>
 <script type="text/javascript" src="{tplvars.relative_url}js/my_profile.js?v={tplvars.js_lib_v}"></script>
 <!--opt name="output.bbcode_comments"-->
-<script type="text/javascript">
-	bbcode_field_id='#comment';
-</script>
 <script type="text/javascript" src="{tplvars.relative_url}js/bbcode.js?v={tplvars.js_lib_v}"></script>
 <!--/opt name="output.bbcode_comments"-->

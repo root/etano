@@ -34,6 +34,8 @@ if ($output['photos_remaining']==-1) {
 } else {
 	$output['photos_remaining']=sprintf($GLOBALS['_lang'][150],$output['photos_remaining']);
 }
+$output['lang_257']=sanitize_and_format($GLOBALS['_lang'][257],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+
 $tpl->set_file('content','photos_upload.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content');

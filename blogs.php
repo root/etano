@@ -19,7 +19,9 @@ check_login_member('all');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
+$output['lang_271']=sanitize_and_format($GLOBALS['_lang'][271],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $tpl->set_file('content','blogs.html');
+$tpl->set_var('output',$output);
 $tpl->process('content','content');
 
 $tplvars['title']=$GLOBALS['_lang'][202];

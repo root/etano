@@ -19,6 +19,7 @@ class etano_package {
 	var $module_name=null;
 	var $version=null;
 	var $module_type=null;
+	var $is_helper=false;
 	var $install=array();
 	var $error=true;
 	var $error_text='';
@@ -54,6 +55,10 @@ class etano_package {
 			$install_counter=0;
 			while ($install) {
 				if ($install->nodeName=='install') {
+					$attrs=$install->attributes;
+					if (isset($attrs['type']) && $attrs['type']=='helper') {
+						$this->is_helper=true;
+					}
 					$setting=$install->firstChild;
 					while ($setting) {
 						if ($setting->nodeName=='requires') {
@@ -187,7 +192,7 @@ class etano_package {
 						$this->manual_actions[$masize]['error']=sprintf('Couldn\'t find %1$s diff file required by %2$s',$mod_command->firstChild->nodeValue,$modfile);
 						break;
 					}
-					if (!($diff_files=$this->_do_diff($this->package_path.'/'.$mod_command->firstChild->nodeValue,false,true))) {
+					if (($diff_files=$this->_do_diff($this->package_path.'/'.$mod_command->firstChild->nodeValue,false,true))===false) {
 						$this->error=true;
 						$masize=count($this->manual_actions);
 						$this->manual_actions[$masize]['type']='diff';

@@ -30,6 +30,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$loop[]=$rsrow;
 }
 $loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_262']=sanitize_and_format($GLOBALS['_lang'][262],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $output['return2me']='my_blogs.php';
 if (!empty($_SERVER['QUERY_STRING'])) {

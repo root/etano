@@ -25,3 +25,5 @@ $GLOBALS['_lang'][151]='Upload Photos';
 $GLOBALS['_lang'][213]='Photos';
 $GLOBALS['_lang'][214]='More Photos';
 $GLOBALS['_lang'][241]='Photo Settings';
+$GLOBALS['_lang'][255]='Thank you for your vote.';
+$GLOBALS['_lang'][257]='Please select at least one photo to upload!';

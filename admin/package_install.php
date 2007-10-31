@@ -104,7 +104,7 @@ if (!$error) {
 					// see if all requirements are satisfied
 					for ($k=0;isset($p->install[$install_index]['requires'][$k]);++$k) {
 						$required=$p->install[$install_index]['requires'][$k];
-						if (!isset($mcodes[$required['id']]) || (isset($required['version']) && $mcodes[$required['id']]!=$required['version']) || (isset($required['min-version']) && $mcodes[$required['id']]<$required['min-version']) || (isset($required['max-version']) && $mcodes[$required['id']]>$required['max-version'])) {
+						if (!isset($mcodes[$required['id']]) || (isset($required['version']) && ((float)$mcodes[$required['id']])!=((float)$required['version'])) || (isset($required['min-version']) && ((float)$mcodes[$required['id']])<((float)$required['min-version'])) || (isset($required['max-version']) && ((float)$mcodes[$required['id']]>$required['max-version']))) {
 							$req_ok=false;
 							break;
 						}
@@ -113,14 +113,14 @@ if (!$error) {
 						// see if we're not blocked by some module
 						for ($k=0;isset($p->install[$install_index]['blockedby'][$k]);++$k) {
 							$blockedby=$p->install[$install_index]['blockedby'][$k];
-							if (isset($mcodes[$blockedby['id']]) && ((!isset($blockedby['version']) && !isset($blockedby['min-version']) && !isset($blockedby['max-version'])) || (isset($blockedby['version']) && $mcodes[$blockedby['id']]==$blockedby['version']) || (isset($blockedby['min-version']) && $mcodes[$blockedby['id']]>$blockedby['min-version']) || (isset($blockedby['max-version']) && $mcodes[$blockedby['id']]<$blockedby['max-version']))) {
+							if (isset($mcodes[$blockedby['id']]) && ((!isset($blockedby['version']) && !isset($blockedby['min-version']) && !isset($blockedby['max-version'])) || (isset($blockedby['version']) && ((float)$mcodes[$blockedby['id']])==((float)$blockedby['version'])) || (isset($blockedby['min-version']) && ((float)$mcodes[$blockedby['id']]>$blockedby['min-version'])) || (isset($blockedby['max-version']) && ((float)$mcodes[$blockedby['id']]<$blockedby['max-version'])))) {
 								$req_ok=false;
 								break;
 							}
 						}
 					}
 					if ($req_ok) {	// if all requirements of this install are satisfied....
-						if ($changes=$p->dry_run($install_index)) {	// ...test to see if we can install the package
+						if (($changes=$p->dry_run($install_index))!==false) {	// ...test to see if we can install the package
 							// $changes holds most of the files that will be changed
 							// "most" because can't read the changes made by 'php' or 'extract' commands
 							// in future it would be nice to list the files before install
@@ -169,7 +169,7 @@ if (!$error) {
 						break;
 					}
 				}
-				if (!$ui_request && !$p->error) {
+				if (!$ui_request && !$p->error && !$p->is_helper) {
 					$p->finish();
 				}
 			}

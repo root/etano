@@ -29,6 +29,9 @@ if (get_site_option('use_captcha','core')) {
 	$output['rand']=make_seed();
 	$output['use_captcha']=true;
 }
+$output['lang_258']=sanitize_and_format($GLOBALS['_lang'][258],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_259']=sanitize_and_format($GLOBALS['_lang'][259],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+
 $tpl->set_file('content','pass_lost.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);

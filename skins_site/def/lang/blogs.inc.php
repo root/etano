@@ -25,3 +25,5 @@ $GLOBALS['_lang'][223]='Add/Edit a Post in %s';
 $GLOBALS['_lang'][238]='Posts in %s';
 $GLOBALS['_lang'][239]='My Blogs';
 $GLOBALS['_lang'][251]='Subscribe to latest blog comments feed';
+$GLOBALS['_lang'][262]='Are you sure you want to permanently delete this blog? All posts in this blog will also be deleted!';
+$GLOBALS['_lang'][271]='Please enter a search term.';

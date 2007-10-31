@@ -1,8 +1,8 @@
 $(function() {
 	$('div.comment a.link_change[@id^=editme_]').bind('click',function() {
 		c_id=$(this).attr('id').substr(7);
-		$.post('ajax/get_profile_comment.php',
-				{'comment_id':c_id},
+		$.post('ajax/get_comment.php',
+				{'comment_id':c_id,'t':'user'},
 				function(data) {
 					if (data!=null && data!='') {
 						data=data.split('|');
@@ -24,13 +24,13 @@ $(function() {
 	});
 
 	$('#link_block').bind('click',function() {
-		return confirm('Are you sure you want to block this member?');
+		return confirm(lang[0]);
 	});
 	$('#link_unblock').bind('click',function() {
-		return confirm('Are you sure you want to unblock this member?');
+		return confirm(lang[1]);
 	});
 
 	$('.comment_delete').bind('click',function() {
-		return confirm('Are you sure you want to remove this comment?');
+		return confirm(lang[2]);
 	});
 });
