@@ -79,17 +79,21 @@ class fileop {
 // $source should have a full basepath (for 'disk' op mode)
 	function delete($source) {
 		$myreturn=false;
-		if ($this->op_mode=='disk') {
-			$myreturn=$this->_disk_delete($source);
-		} elseif ($this->op_mode=='ftp') {
-			if (is_dir($source) && substr($source,-1)!='/') {
-				$source.='/';
+		if (file_exists($source)) {
+			if ($this->op_mode=='disk') {
+				$myreturn=$this->_disk_delete($source);
+			} elseif ($this->op_mode=='ftp') {
+				if (is_dir($source) && substr($source,-1)!='/') {
+					$source.='/';
+				}
+				$source=str_replace(_BASEPATH_.'/',_FTPPATH_,$source);
+				$old_de=ini_get('display_errors');
+				ini_set('display_errors',0);
+				$myreturn=$this->_ftp_delete($source);
+				ini_set('display_errors',$old_de);
 			}
-			$source=str_replace(_BASEPATH_.'/',_FTPPATH_,$source);
-			$old_de=ini_get('display_errors');
-			ini_set('display_errors',0);
-			$myreturn=$this->_ftp_delete($source);
-			ini_set('display_errors',$old_de);
+		} else {
+			$myreturn=true;
 		}
 		return $myreturn;
 	}

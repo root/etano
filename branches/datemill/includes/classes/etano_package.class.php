@@ -19,6 +19,7 @@ class etano_package {
 	var $module_name=null;
 	var $version=null;
 	var $module_type=null;
+	var $is_helper=false;
 	var $install=array();
 	var $error=true;
 	var $error_text='';
@@ -54,6 +55,10 @@ class etano_package {
 			$install_counter=0;
 			while ($install) {
 				if ($install->nodeName=='install') {
+					$attrs=$install->attributes;
+					if (isset($attrs['type']) && $attrs['type']=='helper') {
+						$this->is_helper=true;
+					}
 					$setting=$install->firstChild;
 					while ($setting) {
 						if ($setting->nodeName=='requires') {
@@ -75,6 +80,22 @@ class etano_package {
 							if (isset($attrs['change-version'])) {
 								$this->install[$install_counter]['requires'][$i]['change-version']=$attrs['change-version'];
 							}
+						} elseif ($setting->nodeName=='blockedby') {
+							$attrs=$setting->attributes;
+							if (!isset($this->install[$install_counter]['blockedby'])) {
+								$this->install[$install_counter]['blockedby']=array();
+							}
+							$i=count($this->install[$install_counter]['blockedby']);
+							$this->install[$install_counter]['blockedby'][$i]['id']=$attrs['id'];
+							if (!empty($attrs['version'])) {
+								$this->install[$install_counter]['blockedby'][$i]['version']=$attrs['version'];
+							}
+							if (isset($attrs['min-version'])) {
+								$this->install[$install_counter]['blockedby'][$i]['min-version']=$attrs['min-version'];
+							}
+							if (isset($attrs['max-version'])) {
+								$this->install[$install_counter]['blockedby'][$i]['max-version']=$attrs['max-version'];
+							}
 						} elseif ($setting->nodeName=='modfile') {
 							$this->install[$install_counter]['file']=$setting->firstChild->nodeValue;
 						} elseif ($setting->nodeName=='text') {
@@ -94,6 +115,7 @@ class etano_package {
 
 
 	function dry_run($install_index) {
+		$files_to_change=array();	// keeps the files that will be changed to be listed before install
 		$modfile=$this->package_path.'/'.$this->install[$install_index]['file'];
 		if (is_file($modfile)) {
 			$mod_content=file_get_contents($modfile);
@@ -123,8 +145,11 @@ class etano_package {
 						$this->manual_actions[$masize]['to']='';
 						$this->manual_actions[$masize]['error']=sprintf('Couldn\'t find %1$s file required by %2$s',$attrs['from'],$modfile);
 						break;
+					} else {
+						$files_to_change[]=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['to']);
 					}
 				} elseif ($mod_command->nodeName=='delete') {
+					$files_to_change[]=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['to']);
 				} elseif ($mod_command->nodeName=='mkdir') {
 				} elseif ($mod_command->nodeName=='extract') {
 					$attrs=$mod_command->attributes;
@@ -167,8 +192,16 @@ class etano_package {
 						$this->manual_actions[$masize]['error']=sprintf('Couldn\'t find %1$s diff file required by %2$s',$mod_command->firstChild->nodeValue,$modfile);
 						break;
 					}
-					if (!$this->_do_diff($this->package_path.'/'.$mod_command->firstChild->nodeValue,false,true)) {
+					if (($diff_files=$this->_do_diff($this->package_path.'/'.$mod_command->firstChild->nodeValue,false,true))===false) {
+						$this->error=true;
+						$masize=count($this->manual_actions);
+						$this->manual_actions[$masize]['type']='diff';
+						$this->manual_actions[$masize]['from']=$this->package_path.'/'.$mod_command->firstChild->nodeValue;
+						$this->manual_actions[$masize]['to']='';
+						$this->manual_actions[$masize]['error']=$this->error_text;
 						break;
+					} else {
+						$files_to_change=array_merge($files_to_change,$diff_files);
 					}
 				} elseif ($mod_command->nodeName=='sql') {
 					if (isset($mod_command->attributes['type']) && $mod_command->attributes['type']=='file') {
@@ -193,7 +226,11 @@ class etano_package {
 			$this->manual_actions[$masize]['to']='';
 			$this->manual_actions[$masize]['error']=sprintf('Couldn\'t find %s mod file',$modfile);
 		}
-		return !$this->error;
+		if (!$this->error) {
+			return $files_to_change;
+		} else {
+			return false;
+		}
 	}
 
 
@@ -372,6 +409,7 @@ class etano_package {
 
 
 	function _do_diff($diff_file,$force_revision=false,$test_only=false) {
+		$files_to_change=array();	// keeps the files that are/will be changed in the diff
 		$fileop=new fileop();
 		$diff_array=file($diff_file);
 		$cur_file='';
@@ -397,7 +435,13 @@ class etano_package {
 					}
 				}
 				$cur_file=_BASEPATH_.'/'.trim(substr($diff_array[$i],7));
-				$file_content=file($cur_file);
+				if (is_file($cur_file)) {
+					$file_content=file($cur_file);
+				} else {
+					$file_content=array();
+				}
+				$files_to_change[]=$cur_file;
+				$last_change_on_line=-1;
 			} elseif (substr($diff_array[$i],0,3)=='===') {
 			} elseif (substr($diff_array[$i],0,3)=='---') {
 			} elseif (substr($diff_array[$i],0,3)=='+++') {
@@ -461,17 +505,34 @@ class etano_package {
 					break;
 				}
 				if (!empty($source)) {
-					for ($j=0;isset($source[$j]);++$j) {
-						if (trim($source[$j])!=trim($file_content[$dest_start+$j])) {
+					// where could our block be? We don't want to rely on the $dest_start read from the diff file
+					$possible_locations=array_keys($file_content,$source[0]);
+					for ($j=1;isset($source[$j]);++$j) {
+						for ($k=0;isset($possible_locations[$k]);++$k) {
+							if ($possible_locations[$k]<=$last_change_on_line || !isset($file_content[$possible_locations[$k]+$j]) || $source[$j]!=$file_content[$possible_locations[$k]+$j]) {
+								unset($possible_locations[$k]);
+							}
+						}
+					}
+					if (empty($possible_locations)) {
+						$this->error=true;
+						$this->error_text=sprintf('Cannot apply patch because the source file (%s) is changed.',$cur_file);
+						break;
+					} elseif (count($possible_locations)>1) {
+						if (!in_array($dest_start,$possible_locations)) {
 							$this->error=true;
 							$this->error_text=sprintf('Cannot apply patch because the source file (%s) is changed',$cur_file);
-							break 2;
+							break;
 						}
+					} elseif (count($possible_locations)==1) {
+						reset($possible_locations);
+						$dest_start=current($possible_locations);
 					}
 				}
 
 				// if we are here then there was no error and we can apply the diff!!!
 				array_splice($file_content,$dest_start,count($source),$dest);
+				$last_change_on_line=$dest_start+count($source);
 				$first_chunk=false;
 			}
 		}
@@ -486,7 +547,11 @@ class etano_package {
 				$fileop->file_put_contents($cur_file,$file_content);
 			}
 		}
-		return !$this->error;
+		if (!$this->error) {
+			return $files_to_change;
+		} else {
+			return false;
+		}
 	}	// _do_diff()
 
 

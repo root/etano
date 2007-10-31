@@ -56,6 +56,17 @@ function search_results($search,$my_membership=1) {
 				}
 				break;
 
+			case 'user':
+				$input['acclevel_code']='search_advanced';
+				$continue=true;
+				$input['user']=sanitize_and_format_gpc($search,'user',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+				if (strlen($input['user'])<=3) {
+					$where='';	// force no results returned.
+				} else {
+					$where.=" AND a.`_user` LIKE '".$input['user']."%'";
+				}
+				break;
+
 			case 'net':
 				$input['acclevel_code']='search_basic';
 				$continue=true;
@@ -100,7 +111,7 @@ function search_results($search,$my_membership=1) {
 					$input[$field['dbfield']]=sanitize_and_format_gpc($search,$field['dbfield'],TYPE_INT,0,0);
 					if (!empty($input[$field['dbfield']])) {
 						if ($field['field_type']==FIELD_SELECT) {
-							$where.=" AND `".$field['dbfield']."`='".$input[$field['dbfield']]."'";
+							$where.=" AND `".$field['dbfield']."`=".$input[$field['dbfield']];
 						} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
 							$where.=" AND `".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']]."|%'";
 						}
@@ -116,7 +127,7 @@ function search_results($search,$my_membership=1) {
 							if (count($input[$field['dbfield']])) {
 								$where.=" AND (";
 								for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
-									$where.="`".$field['dbfield']."`='".$input[$field['dbfield']][$j]."' OR ";
+									$where.="`".$field['dbfield']."`=".$input[$field['dbfield']][$j]." OR ";
 								}
 								$where=substr($where,0,-4);	// substract the last ' OR '
 								$where.=')';
@@ -189,15 +200,16 @@ function search_results($search,$my_membership=1) {
 								$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($search,$field['dbfield'].'_zip',TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTFIELD],'');
 								$input[$field['dbfield'].'_dist']=sanitize_and_format_gpc($search,$field['dbfield'].'_dist',TYPE_INT,0,0);
 								if (!empty($input[$field['dbfield'].'_zip']) && !empty($input[$field['dbfield'].'_dist'])) {
-									$query="SELECT RADIANS(`latitude`),RADIANS(`longitude`) FROM `{$dbtable_prefix}loc_zips` WHERE `zipcode`='".$input[$field['dbfield'].'_zip']."'";
+									$query="SELECT `rad_latitude`,`rad_longitude` FROM `{$dbtable_prefix}loc_zips` WHERE `zipcode`='".$input[$field['dbfield'].'_zip']."'";
 									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 									if (mysql_num_rows($res)) {
-										list($latitude,$longitude)=mysql_fetch_row($res);
+										list($rad_latitude,$rad_longitude)=mysql_fetch_row($res);
+										// WE USE ONLY MILES HERE. IF YOU WANT KM YOU NEED TO CONVERT MILES TO KM
 										// earth radius=3956 miles =6367 km; 3956*2=7912
 										// Haversine Formula: (more exact for small distances)
-										$where.=" AND (`latitude`+`longitude`)<>0 AND (7912*asin(sqrt(pow(sin((".(float)$latitude."-RADIANS(`latitude`))/2),2)+cos(".(float)$latitude.")*cos(RADIANS(`latitude`))*pow(sin((".(float)$longitude."-RADIANS(`longitude`))/2),2))))<=".(int)$input[$field['dbfield'].'_dist'];
+										$where.=" AND a.`latitude`<>-a.`longitude` AND asin(sqrt(pow(sin((".(float)$rad_latitude."-a.`rad_latitude`)/2),2)+cos(".(float)$rad_latitude.")*cos(a.`rad_latitude`)*pow(sin((".(float)$rad_longitude."-a.`rad_longitude`)/2),2)))<=".(((int)$input[$field['dbfield'].'_dist'])/7912);
 										// Law of Cosines for Spherical Trigonometry; 60*1.1515=69.09; 1.1515 miles in a degree
-	//										$where.=" AND (69.09*DEGREES(ACOS(SIN(".(float)$latitude.")*SIN(RADIANS(`latitude`))+COS(".(float)$latitude.")*COS(RADIANS(`latitude`))*COS(".(float)$longitude."-RADIANS(`longitude`)))))<=".(int)$input[$field['dbfield'].'_dist'];
+	//										$where.=" AND (69.09*DEGREES(ACOS(SIN(".(float)$rad_latitude.")*SIN(a.`rad_latitude`)+COS(".(float)$rad_latitude.")*COS(a.`rad_latitude`)*COS(".(float)$rad_longitude."-a.`rad_longitude`))))<=".(int)$input[$field['dbfield'].'_dist'];
 									} else {
 	// should not return any result or at least warn the member that the zip code was not found.
 									}
@@ -214,10 +226,12 @@ function search_results($search,$my_membership=1) {
 			}	//switch ($field['search_type'])
 		} // the for() that constructs the where
 
-		$query="SELECT $select FROM $from WHERE $where $orderby";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		for ($i=0;$i<mysql_num_rows($res);++$i) {
-			$myreturn[]=mysql_result($res,$i,0);
+		if (!empty($where)) {	// if $where is empty then a condition above prevents us from searching.
+			$query="SELECT $select FROM $from WHERE $where $orderby";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			for ($i=0;$i<mysql_num_rows($res);++$i) {
+				$myreturn[]=mysql_result($res,$i,0);
+			}
 		}
 	}
 	return $myreturn;
