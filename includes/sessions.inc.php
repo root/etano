@@ -49,6 +49,7 @@ if (isset($_GET['skin'])) {
 	if (preg_match('/^\w+$/',$_GET['skin'])) {
 		$_SESSION[_LICENSE_KEY_]['user']['skin']=$_GET['skin'];
 		setcookie('sco_app[skin]',$_GET['skin'],mktime(0,0,0,date('m'),date('d'),date('Y')+1),'/',$cookie_domain);
+		$GLOBALS['page_last_modified_time']=gmdate('YmdHis');
 	}
 }
 
@@ -56,5 +57,6 @@ if (isset($_GET['skin'])) {
 if (isset($_SESSION[_LICENSE_KEY_]['user']['skin']) && isset($_COOKIE['sco_app']['skin']) && $_COOKIE['sco_app']['skin']!=$_SESSION[_LICENSE_KEY_]['user']['skin']) {
 	if (preg_match('/^\w+$/',$_COOKIE['sco_app']['skin'])) {
 		$_SESSION[_LICENSE_KEY_]['user']['skin']=$_COOKIE['sco_app']['skin'];
+		$GLOBALS['page_last_modified_time']=gmdate('YmdHis');
 	}
 }

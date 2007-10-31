@@ -13,15 +13,17 @@ Support at:                 http://www.datemill.com/forum
 
 function update_stats($user_id,$stat,$add_val,$type='+') {
 	global $dbtable_prefix;
-	if ($type=='+') {
-		$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
-	} else {
-		$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
-	}
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (!mysql_affected_rows()) {
-		$query="INSERT INTO `{$dbtable_prefix}user_stats` SET `fk_user_id`=$user_id,`stat`='$stat',`value`=$add_val";
+	if (!empty($user_id)) {
+		if ($type=='+') {
+			$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=`value`+$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
+		} else {
+			$query="UPDATE `{$dbtable_prefix}user_stats` SET `value`=$add_val WHERE `fk_user_id`=$user_id AND `stat`='$stat' LIMIT 1";
+		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (!mysql_affected_rows()) {
+			$query="INSERT INTO `{$dbtable_prefix}user_stats` SET `fk_user_id`=$user_id,`stat`='$stat',`value`=$add_val";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		}
 	}
 }
 
@@ -115,11 +117,11 @@ function get_module_codes_by_type($module_type) {
 // This function does NOT convert html to text.
 // Make sure that the string is clean before calling this function
 function bbcode2html($str) {
-	$from=array('~\[url=(http://[^<">\[\]]*?)\](.*?)\[/url\]~','~\[b\](.*?)\[/b\]~s','~\[u\](.*?)\[/u\]~s','~\[quote\](.*?)\[/quote\]~s','~\[img=(http://[^<">\(\)\[\]]*?)\]~');
+	$from=array('~\[url=(http://[^<">\[\]]*?)\](.*?)\[/url\]~','~\[b\](.*?)\[/b\]~s','~\[u\](.*?)\[/u\]~s','~\[quote\](.*?)\[/quote\]~s','~\[img=(http://[a-zA-Z0-9\-_\.]*?)\]~');
 	$to=array('<a class="content-link simple" rel="external" href="$1">$2</a>','<strong>$1</strong>','<span class="underline">$1</span>','<blockquote>$1</blockquote>','<img src="$1" />');
 	$str=preg_replace($from,$to,$str);
 	// leftovers
-	$from=array('~\[url=(http://[^<">\(\)\[\]]*?)\]~','~\[/url\]~','~\[b\]~','~\[/b\]~','~\[u\]~','~\[/u\]~','~\[quote\]~','~\[/quote\]~','~\[img=(http://[^<">\(\)\[\]]*?)\]~');
+	$from=array('~\[url=(http://.*?)\]~','~\[/url\]~','~\[b\]~','~\[/b\]~','~\[u\]~','~\[/u\]~','~\[quote\]~','~\[/quote\]~','~\[img=(http://.*?)\]~');
 	return preg_replace($from,'',$str);
 }
 
@@ -171,6 +173,8 @@ function send_template_email($to,$subject,$template,$skin,$output=array(),$messa
 	if (empty($message_body)) {
 		if (isset($GLOBALS['tpl'])) {
 			global $tpl;
+			$old_root=$tpl->get_root();
+			$tpl->set_root(_BASEPATH_.'/skins_site/'.$skin.'/');
 		} else {
 			$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$skin.'/','remove_nonjs');
 		}
@@ -206,6 +210,9 @@ function send_template_email($to,$subject,$template,$skin,$output=array(),$messa
 		$GLOBALS['topass']['message']['text']=$mail->ErrorInfo;
 		require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 		new log_error(array('module_name'=>'send_template_email','text'=>'sending mail to '.$to.' failed:'.$message_body));
+	}
+	if (isset($old_root)) {
+		$tpl->set_root($old_root);
 	}
 	return $myreturn;
 }
@@ -270,6 +277,18 @@ function get_user_by_userid($user_id) {
 }
 
 
+function set_user_settings($user_id,$module_code,$option,$value) {
+	global $dbtable_prefix;
+	$query="UPDATE `{$dbtable_prefix}user_settings2` SET `config_value`='$value' WHERE `config_option`='$option' AND `fk_module_code`='$module_code' AND `fk_user_id`=$user_id";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (!mysql_affected_rows()) {
+		$query="INSERT INTO `{$dbtable_prefix}user_settings2` SET `config_value`='$value',`config_option`='$option',`fk_module_code`='$module_code',`fk_user_id`=$user_id";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
+	return true;
+}
+
+
 // it returns the defaults for non members
 function get_user_settings($user_id,$module_code,$option='') {
 	$myreturn=array();
@@ -280,7 +299,7 @@ function get_user_settings($user_id,$module_code,$option='') {
 		$remaining=array($option=>1);
 	}
 	if (!empty($user_id)) {
-		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`=$user_id";
+		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}user_settings2` WHERE `fk_user_id`=$user_id AND `fk_module_code`='$module_code'";
 		if (!empty($option)) {
 			if (is_array($option)) {
 				$query.=" AND `config_option` IN ('".join("','",$option)."')";
@@ -288,7 +307,6 @@ function get_user_settings($user_id,$module_code,$option='') {
 				$query.=" AND `config_option`='$option'";
 			}
 		}
-		$query.=" AND `fk_module_code`='$module_code'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			while ($rsrow=mysql_fetch_row($res)) {
@@ -300,9 +318,10 @@ function get_user_settings($user_id,$module_code,$option='') {
 
 	if (!empty($remaining)) {
 		$remaining=array_flip($remaining);
-		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE 1";
+		$query="SELECT `config_option`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code`='$module_code'";
 		$query.=" AND `config_option` IN ('".join("','",$remaining)."')";
-		$query.=" AND `fk_module_code`='$module_code' AND `per_user`=1";
+		// we don't use "AND `per_user`=1" so we can inject some other site_options into user_settings
+		// The injected values will not be editable by the user
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			while ($rsrow=mysql_fetch_row($res)) {

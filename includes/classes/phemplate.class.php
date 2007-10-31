@@ -253,6 +253,10 @@ class phemplate {
 		return true;
 	}
 
+	function get_root() {
+		return $this->root;
+	}
+
 	/**
 	*	what to do with unknown variables in template?
 	*	keep
@@ -340,7 +344,7 @@ class phemplate {
 	*	value of $handle, no error if no handle
 	*/
 	function get_var_silent($handle) {
-		if (!isset($this->vars[$handle])) { $this->vars[$handle] = ''; return ''; }
+		if (!isset($this->vars[$handle])) { $this->vars[$handle] = '';}
 		return $this->vars[$handle];
 	}
 
