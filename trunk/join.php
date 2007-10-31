@@ -198,6 +198,14 @@ if ($page==1) {
 $output['page']=$page;
 $output['ta_len']=$config['ta_len'];
 
+$output['lang_64']=sanitize_and_format($GLOBALS['_lang'][64],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_272']=sanitize_and_format($GLOBALS['_lang'][272],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_63']=sanitize_and_format($GLOBALS['_lang'][63],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_37']=sanitize_and_format($GLOBALS['_lang'][37],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_66']=sanitize_and_format($GLOBALS['_lang'][66],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_259']=sanitize_and_format($GLOBALS['_lang'][259],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_68']=sanitize_and_format($GLOBALS['_lang'][68],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_69']=sanitize_and_format($GLOBALS['_lang'][69],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $tpl->set_file('content','join.html');
 $tpl->set_loop('loop',$loop);
 $tpl->set_loop('js_loop',$js_loop);

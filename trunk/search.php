@@ -353,6 +353,8 @@ if (!empty($output['totalrows'])) {
 } else {
 	unset($output['totalrows']);
 }
+$output['lang_253']=sanitize_and_format($GLOBALS['_lang'][253],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_254']=sanitize_and_format($GLOBALS['_lang'][254],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $tpl->set_file('content','search.html');
 $tpl->set_var('output',$output);

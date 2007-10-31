@@ -154,6 +154,7 @@ if ($_SESSION[_LICENSE_KEY_]['user']['prefs']['profile_comments']) {
 		}
 	}
 }
+$output['lang_256']=sanitize_and_format($GLOBALS['_lang'][256],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $output['return2me']='my_profile.php';
 if (!empty($_SERVER['QUERY_STRING'])) {

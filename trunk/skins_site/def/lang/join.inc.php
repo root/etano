@@ -9,3 +9,4 @@ $GLOBALS['_lang'][67]='The email address %s is already in use.';
 $GLOBALS['_lang'][68]='You must agree to the terms of services before joining the site.';
 $GLOBALS['_lang'][70]='%s user registration confirmation';
 $GLOBALS['_lang'][130]='Registration';
+$GLOBALS['_lang'][272]='The chosen username is OK and can be used.';

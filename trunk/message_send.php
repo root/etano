@@ -56,6 +56,10 @@ if (isset($_SESSION['topass']['input'])) {
 } else {
 	trigger_error($GLOBALS['_lang'][120],E_USER_ERROR);
 }
+$output['lang_263']=sanitize_and_format($GLOBALS['_lang'][263],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_264']=sanitize_and_format($GLOBALS['_lang'][264],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_196']=sanitize_and_format($GLOBALS['_lang'][196],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_197']=sanitize_and_format($GLOBALS['_lang'][197],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 if (!isset($output['return']) && isset($_GET['return'])) {
 	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUENCODE,'');

@@ -13,7 +13,7 @@ $(function() {
 						$('li.current_rating').css('width',percent+'%').html(opts[1]+' / 5');
 						$('#rate_num').html(opts[1]);
 						$('#votes_num').html(opts[2]);
-						alert('Thank you for your vote');
+						alert(lang[0]);
 					}
 				}
 			}

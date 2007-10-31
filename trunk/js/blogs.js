@@ -6,7 +6,7 @@ $(function() {
 
 function check_form(the) {
 	if (the.tags.value=='') {
-		alert('Please enter a search term');
+		alert(lang[0]);
 		return false;
 	}
 	return true;

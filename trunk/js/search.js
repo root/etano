@@ -11,7 +11,7 @@ $(function() {
 	});
 	$('#save_search').bind('click',function() {
 		myval='';
-		myval=prompt('Please enter a name to remember this search:',myval);
+		myval=prompt(lang[0],myval);
 		if (!myval || myval=='') {
 			return false;
 		} else {
@@ -22,7 +22,7 @@ $(function() {
 							alert(data);
 							document.location=document.location;
 						} else {
-							alert('There has been an error saving your search. Please try again later.');
+							alert(lang[1]);
 						}
 					}
 			);

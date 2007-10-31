@@ -148,6 +148,8 @@ if (!empty($photo_id)) {
 	$topass['message']['text']=$GLOBALS['_lang'][6];
 	redirect2page('info.php',$topass);
 }
+$output['lang_255']=sanitize_and_format($GLOBALS['_lang'][255],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_256']=sanitize_and_format($GLOBALS['_lang'][256],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $output['return2me']='photo_view.php';
 if (!empty($_SERVER['QUERY_STRING'])) {

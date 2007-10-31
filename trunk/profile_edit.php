@@ -205,6 +205,7 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 		++$i;
 	}
 }
+$output['lang_69']=sanitize_and_format($GLOBALS['_lang'][69],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 $output['ta_len']=$config['ta_len'];
 $tpl->set_file('content','profile_edit.html');

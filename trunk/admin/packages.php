@@ -82,20 +82,50 @@ for ($i=0;isset($packages[$i]);++$i) {
 		for ($j=0;isset($p->install[$j]);++$j) {
 			$req_ok=true;
 			for ($k=0;isset($p->install[$j]['requires'][$k]);++$k) {
-				if (!isset($mcodes[$p->install[$j]['requires'][$k]['id']]) || (isset($p->install[$j]['requires'][$k]['version']) && ((float)$mcodes[$p->install[$j]['requires'][$k]['id']])!=((float)$p->install[$j]['requires'][$k]['version']))) {
+				$required=$p->install[$j]['requires'][$k];
+				if (!isset($mcodes[$required['id']])) {
 					$req_ok=false;
-					$reasons[$j][]=$p->install[$j]['requires'][$k]['id'].(isset($p->install[$j]['requires'][$k]['version']) ? ' ('.$p->install[$j]['requires'][$k]['version'].')' : '');
+					$reasons[$j][]=$required['id'];
+				} else {
+					if (isset($required['version']) && ((float)$mcodes[$required['id']])!=((float)$required['version'])) {
+						$req_ok=false;
+						$reasons[$j][]=$required['id'].' '.$required['version'];
+					} elseif (isset($required['min-version']) && ((float)$mcodes[$required['id']])<((float)$required['min-version'])) {
+						$req_ok=false;
+						$reasons[$j][]=$required['id'].'>='.$required['min-version'];
+					} elseif (isset($required['max-version']) && ((float)$mcodes[$required['id']]>$required['max-version'])) {
+						$req_ok=false;
+						$reasons[$j][]=$required['id'].'<='.$required['max-version'];
+					}
+				}
+			}
+			for ($k=0;isset($p->install[$j]['blockedby'][$k]);++$k) {
+				$blockedby=$p->install[$j]['blockedby'][$k];
+				if (isset($mcodes[$blockedby['id']])) {
+					if (!isset($blockedby['version']) && !isset($blockedby['min-version']) && !isset($blockedby['max-version'])) {
+						$req_ok=false;
+						$reasons[$j][]='blocked by '.$blockedby['id'];
+					} elseif (isset($blockedby['version']) && ((float)$mcodes[$blockedby['id']])==((float)$blockedby['version'])) {
+						$req_ok=false;
+						$reasons[$j][]='blocked by '.$blockedby['id'].' '.$blockedby['version'];
+					} elseif (isset($blockedby['min-version']) && ((float)$mcodes[$blockedby['id']]>=$blockedby['min-version'])) {
+						$req_ok=false;
+						$reasons[$j][]='blocked by '.$blockedby['id'].'>='.$blockedby['min-version'];
+					} elseif (isset($blockedby['max-version']) && ((float)$mcodes[$blockedby['id']]<=$blockedby['max-version'])) {
+						$req_ok=false;
+						$reasons[$j][]='blocked by '.$blockedby['id'].'<='.$blockedby['max-version'];
+					}
 				}
 			}
 			$install_req_satisfied|=(int)$req_ok;
-			if ($relevant_install && $req_ok) {
+			if ($relevant_install) {
 				$not_installed[$m]['text']=$p->install[$j]['text'];
 				$relevant_install=false;
 			}
 		}
 		if ($install_req_satisfied) {
 			$not_installed[$m]['valid']=true;
-			$not_installed[$m]['reasons']='No requirements. Package is valid.';
+			$not_installed[$m]['reasons']='All satisfied.';
 		} else {
 			for ($n=0;isset($reasons[$n]);++$n) {
 				$reasons[$n]=join(', ',$reasons[$n]);

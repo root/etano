@@ -32,7 +32,11 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$my_folders[$rsrow['folder_id']]=$rsrow['folder'];
 }
 
+$output['lang_267']=sanitize_and_format($GLOBALS['_lang'][267],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_268']=sanitize_and_format($GLOBALS['_lang'][268],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_269']=sanitize_and_format($GLOBALS['_lang'][269],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $tpl->set_file('content','folders.html');
+$tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);
 $tpl->drop_loop('loop');

@@ -35,6 +35,10 @@ if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	}
 }
 
+$output['lang_32']=sanitize_and_format($GLOBALS['_lang'][32],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_33']=sanitize_and_format($GLOBALS['_lang'][33],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_34']=sanitize_and_format($GLOBALS['_lang'][34],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_259']=sanitize_and_format($GLOBALS['_lang'][259],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $tpl->set_file('content','contact.html');
 $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);

@@ -7,12 +7,12 @@ $(function() {
 
 function check_form(the) {
 	if (!validate_email(the.email.value)) {
-		alert('Please enter the email address you used to register with us.');
+		alert(lang[0]);
 		the.email.focus();
 		return false;
 	}
 	if (use_captcha && the.captcha.value=='') {
-		alert('Please enter the code from the image');
+		alert(lang[1]);
 		the.captcha.focus();
 		return false;
 	}

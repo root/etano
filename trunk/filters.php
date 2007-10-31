@@ -103,8 +103,10 @@ if (!empty($totalrows)) {
 	$tpl->set_var('pager2',pager($totalrows,$o,$r));
 }
 
+$output['lang_270']=sanitize_and_format($GLOBALS['_lang'][270],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $tpl->set_file('content','filters.html');
 $tpl->set_loop('loop',$loop);
+$tpl->set_var('output',$output);
 $tpl->set_var('o',$o);
 $tpl->set_var('r',$r);
 $tpl->process('content','content',TPL_LOOP | TPL_NOLOOP);

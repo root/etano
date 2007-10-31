@@ -26,9 +26,9 @@ function save_as_template() {
 				{'subject':escape(theform.subject.value),'message_body':escape(theform.message_body.value)},
 				function(data) {
 					if (data==1) {
-						alert('Message saved as template');
+						alert(lang[0]);
 					} else if (data==2) {
-						alert('You are not allowed to save message templates');
+						alert(lang[1]);
 					}
 				}
 		);
@@ -38,14 +38,14 @@ function save_as_template() {
 function check_form(theform,silent_mode) {
 	if (theform.subject.value=='') {
 		if (!silent_mode) {
-			alert('Please enter a subject');
+			alert(lang[2]);
 			theform.subject.focus();
 		}
 		return false;
 	}
 	if (theform.message_body.value=='') {
 		if (!silent_mode) {
-			alert('Please enter the message');
+			alert(lang[3]);
 			theform.message_body.focus();
 		}
 		return false;
