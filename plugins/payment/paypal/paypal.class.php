@@ -123,13 +123,18 @@ class payment_paypal extends ipayment {
 						'currency_code'=>$this->payment['currency'],
 						);
 		if ($this->payment['dm_item_type']=='subscr') {
-			$topass['cmd']='_xclick-subscriptions';
-			$topass['p3']=$this->payment['duration'];
-			$topass['t3']='DAY';
-			$topass['a3']=$this->payment['price'];
-			$topass['sra']=1;
-			if ($this->payment['is_recurent']==1) {
-				$topass['src']=1;
+			if (empty($this->payment['duration']) || !$this->payment['is_recurent']) {
+				$topass['cmd']='_xclick';
+				$topass['amount']=$this->payment['price'];
+			} else {
+				$topass['cmd']='_xclick-subscriptions';
+				$topass['p3']=$this->payment['duration'];
+				$topass['t3']='DAY';
+				$topass['a3']=$this->payment['price'];
+				$topass['sra']=1;
+				if ($this->payment['is_recurent']==1) {
+					$topass['src']=1;
+				}
 			}
 		} elseif ($this->payment['dm_item_type']=='prod') {
 			$topass['cmd']='_xclick';

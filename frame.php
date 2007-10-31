@@ -39,7 +39,7 @@ if (isset($_on_before_display)) {
 
 if (!empty($page_last_modified_time)) {
 	header('Cache-Control: private, max-age=0',true);
-	header('Last-Modified: '. date('D,d M Y H:i:s',$page_last_modified_time).' GMT',true);
+	header('Last-Modified: '.date('D,d M Y H:i:s',$page_last_modified_time).' GMT',true);
 }
 echo $tpl->process('frame','frame',TPL_FINISH | TPL_OPTIONAL | TPL_INCLUDE);
 if (isset($_SESSION['topass'])) {
