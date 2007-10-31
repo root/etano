@@ -38,6 +38,7 @@ if (!empty($input['pids'])) {
 	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `status`=".STAT_APPROVED.",`reject_reason`='',`last_changed`='".gmdate('YmdHis')."' WHERE `post_id` IN ('".join("','",$input['pids'])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (is_file(_BASEPATH_.'/events/processors/blog_posts_addedit.php')) {
+		include_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/blogs.inc.php';
 		include_once _BASEPATH_.'/events/processors/blog_posts_addedit.php';
 		if (isset($_on_after_approve)) {
 			$GLOBALS['post_ids']=$input['pids'];

@@ -48,6 +48,7 @@ switch ($m) {
 
 $query="DELETE FROM $table WHERE `comment_id`=$comment_id";
 if (is_file(_BASEPATH_.'/events/processors/comment_delete.php')) {
+	include_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/comments.inc.php';
 	include_once _BASEPATH_.'/events/processors/comment_delete.php';
 	if (isset($_on_before_delete)) {
 		$GLOBALS['comment_ids']=array($comment_id);

@@ -25,6 +25,7 @@ $return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD
 
 $query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id";
 if (is_file(_BASEPATH_.'/events/processors/blog_posts_delete.php')) {
+	include_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/blogs.inc.php';
 	include_once _BASEPATH_.'/events/processors/blog_posts_delete.php';
 	if (isset($_on_before_delete)) {
 		$GLOBALS['post_ids']=array($post_id);

@@ -38,6 +38,7 @@ if (!empty($_GET['photo_id'])) {
 			$do_stats=true;
 		}
 		if (is_file(_BASEPATH_.'/events/processors/photos_upload.php')) {
+			include_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/photos.inc.php';
 			include_once _BASEPATH_.'/events/processors/photos_upload.php';
 			if (isset($_on_after_approve)) {
 				$GLOBALS['photo_ids']=array($input['photo_id']);

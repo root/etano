@@ -30,6 +30,7 @@ if (mysql_num_rows($res)) {
 
 	$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
 	if (is_file(_BASEPATH_.'/events/processors/photo_delete.php')) {
+		include_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/photos.inc.php';
 		include_once _BASEPATH_.'/events/processors/photo_delete.php';
 		if (isset($_on_before_delete)) {
 			$GLOBALS['photo_ids']=array($photo_id);
