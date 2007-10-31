@@ -36,4 +36,5 @@ $tplvars['title']='Lost Password';
 $tplvars['page_title']='Lost Password';
 $tplvars['page']='pass_lost';
 $tplvars['css']='pass_lost.css';
+$no_timeout=true;
 include 'frame.php';

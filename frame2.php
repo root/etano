@@ -24,12 +24,30 @@ if (!empty($message)) {
 	$tpl->set_var('message',$message);
 }
 $tpl->set_var('tplvars',$tplvars);
+if (empty($no_timeout)) {
+	$_SESSION[_LICENSE_KEY_]['user']['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
+}
+
+if (is_file(_BASEPATH_.'/events/frame.php')) {
+	include_once _BASEPATH_.'/events/frame.php';
+}
+if (isset($_on_before_display)) {
+	for ($i=0;isset($_on_before_display[$i]);++$i) {
+		call_user_func($_on_before_display[$i]);
+	}
+}
+
 if (!empty($page_last_modified_time)) {
 	header('Cache-Control: private, max-age=0',true);
-	header('Last-Modified: '. gmdate('D,d M Y H:i:s',$page_last_modified_time).' GMT',true);
+	header('Last-Modified: '.date('D,d M Y H:i:s',$page_last_modified_time).' GMT',true);
 }
 echo $tpl->process('frame','frame',TPL_FINISH | TPL_OPTIONAL | TPL_INCLUDE);
 if (isset($_SESSION['topass'])) {
 	unset($_SESSION['topass']);
 }
 ob_end_flush();
+if (isset($_on_after_display)) {
+	for ($i=0;isset($_on_after_display[$i]);++$i) {
+		call_user_func($_on_after_display[$i]);
+	}
+}

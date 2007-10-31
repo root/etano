@@ -83,7 +83,9 @@ function upd_latest_comm_widg() {
 			$i=0;
 			while ($rsrow=mysql_fetch_assoc($res)) {
 				if (empty($rsrow['profile_url'])) {
-					$loop[$i]['profile_url']=_BASEURL_.'/profile.php?uid='.$rsrow['fk_user_id'];
+					if (!empty($rsrow['fk_user_id'])) {
+						$loop[$i]['profile_url']=_BASEURL_.'/profile.php?uid='.$rsrow['fk_user_id'];
+					}
 				} else {
 					$loop[$i]['profile_url']=$rsrow['profile_url'];
 				}
