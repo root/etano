@@ -64,6 +64,22 @@ if (empty($user_details)) {
 		if ($_pfields[$field_id]['editable']) {
 			switch ($_pfields[$field_id]['field_type']) {
 
+				case FIELD_SELECT:
+					if (!empty($_pfields[$field_id]['default_value'])) {
+						$user_details[$_pfields[$field_id]['dbfield']]=$_pfields[$field_id]['default_value'][0];
+					} else {
+						$user_details[$_pfields[$field_id]['dbfield']]=0;
+					}
+					break;
+
+				case FIELD_CHECKBOX_LARGE:
+					if (!empty($_pfields[$field_id]['default_value'])) {
+						$user_details[$_pfields[$field_id]['dbfield']]=$_pfields[$field_id]['default_value'];
+					} else {
+						$user_details[$_pfields[$field_id]['dbfield']]=array();
+					}
+					break;
+
 				case FIELD_DATE:
 					$user_details[$_pfields[$field_id]['dbfield'].'_month']=0;
 					$user_details[$_pfields[$field_id]['dbfield'].'_day']=0;

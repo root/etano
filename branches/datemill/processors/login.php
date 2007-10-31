@@ -15,6 +15,10 @@ require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 
+if (is_file(_BASEPATH_.'/events/processors/login.php')) {
+	include_once _BASEPATH_.'/events/processors/login.php';
+}
+
 $score_threshold=600;	// seconds
 $error=false;
 $topass=array();
@@ -40,15 +44,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$user['membership']=(int)$user['membership'];
 			$user['user_id']=(int)$user['user_id'];
 			if ($user['status']==ASTAT_ACTIVE) {
+				$time=mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y'));
 				$user['prefs']=get_user_settings($user['user_id'],'def_user_prefs',array('date_format','datetime_format','time_offset'));
-				if ($user['last_activity']<time()-$score_threshold) {
+				if ($user['last_activity']<$time-$score_threshold) {
 					add_member_score($user['user_id'],'login');
 				}
 				$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$user['user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				unset($user['last_activity'],$user['email']);
 				$_SESSION[_LICENSE_KEY_]['user']=array_merge(isset($_SESSION[_LICENSE_KEY_]['user']) ? $_SESSION[_LICENSE_KEY_]['user'] : array(),$user);
-				$_SESSION[_LICENSE_KEY_]['user']['loginout']=time();
+				$_SESSION[_LICENSE_KEY_]['user']['loginout']=$time;
+				if (isset($_on_after_login)) {
+					for ($i=0;isset($_on_after_login[$i]);++$i) {
+						call_user_func($_on_after_login[$i]);
+					}
+				}
 				if (isset($_SESSION[_LICENSE_KEY_]['user']['timedout']['url'])) {
 					$next=$_SESSION[_LICENSE_KEY_]['user']['timedout'];
 					unset($_SESSION[_LICENSE_KEY_]['user']['timedout']);

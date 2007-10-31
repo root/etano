@@ -1,4 +1,4 @@
-<p>If you want to see the updates available for your site please check <a href="my_updates.php" title="Community script updates">my Etano updates page</a>.</p>
+<p>If you want to see the updates available for your site please check <a href="site_updates.php" title="Community script updates">my Etano updates page</a>.</p>
 
 <ul id="prod_list" class="clearfix">
 <!--loop name="loop"-->
@@ -9,25 +9,7 @@
 	<div class="prod_diz justify">{loop.prod_diz}</div>
 	<ul class="price clearfix">
 		<li class="first">Price: <strong>{loop.price}</strong></li>
-		<li>
-			<form target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-			<input type="hidden" name="cmd" value="_xclick">
-			<input type="hidden" name="business" value="dan@rdsct.ro">
-			<input type="hidden" name="return" value="{tplvars.baseurl}/thankyou.php?p=paypal">
-			<input type="hidden" name="notify_url" value="{tplvars.baseurl}/processors/ipn.php?p=paypal&type=prod">
-			<input type="hidden" name="cancel_return" value="{tplvars.baseurl}/purchase.php">
-			<input type="hidden" name="item_name" value="{loop.prod_name}">
-			<input type="hidden" name="item_number" value="{loop.prod_id}">
-			<input type="hidden" name="custom" value="">
-			<input type="hidden" name="amount" id="amount" value="{loop.price}">
-			<input type="hidden" name="quantity" value="1">
-			<input type="hidden" name="no_shipping" value="1">
-			<input type="hidden" name="no_note" value="1">
-			<input type="hidden" name="rm" value="2">
-			<input type="hidden" name="currency_code" value="USD">
-			<input type="image" src="{tplvars.tplurl}/images/paypal_buynow.gif" name="submit" alt="Pay with payPal">
-			</form>
-		</li>
+		<li></li>
 		<li></li>
 	</ul>
 </li>

@@ -64,7 +64,7 @@ class payment_paypal extends ipayment {
 		if (!empty($this->payment['user_id'])) {
 			$custom[]='uid='.$this->payment['user_id'];
 		}
-		$myreturn='<form action="https://'.$this->paypal_server.'/cgi-bin/webscr" method="post" id="payment_paypal">
+		$myreturn='<form action="https://'.$this->paypal_server.'/cgi-bin/webscr" method="post">
 		<input type="hidden" name="business" value="'.$this->config['paypal_email'].'" />
 		<input type="hidden" name="return" value="'._BASEURL_.'/thankyou.php?p='.$this->module_code.'" />
 		<input type="hidden" name="notify_url" value="'._BASEURL_.'/processors/ipn.php?p='.$this->module_code.'" />
@@ -78,13 +78,18 @@ class payment_paypal extends ipayment {
 		<input type="hidden" name="rm" value="2" />
 		<input type="hidden" name="currency_code" value="'.$this->payment['currency'].'" />';
 		if ($this->payment['dm_item_type']=='subscr') {
-			$myreturn.="\n".'<input type="hidden" name="cmd" value="_xclick-subscriptions" />
-			<input type="hidden" name="p3" value="'.$this->payment['duration'].'" />
-			<input type="hidden" name="t3" value="DAY" />
-			<input type="hidden" name="a3" value="'.$this->payment['price'].'" />
-			<input type="hidden" name="sra" value="1" />';
-			if ($this->payment['is_recurent']==1) {
-				$myreturn.="\n".'<input type="hidden" name="src" value="1" />';
+			if (empty($this->payment['duration']) || !$this->payment['is_recurent']) {
+				$myreturn.="\n".'<input type="hidden" name="cmd" value="_xclick" />
+				<input type="hidden" name="amount" value="'.$this->payment['price'].'" />';
+			} else {
+				$myreturn.="\n".'<input type="hidden" name="cmd" value="_xclick-subscriptions" />
+				<input type="hidden" name="p3" value="'.$this->payment['duration'].'" />
+				<input type="hidden" name="t3" value="DAY" />
+				<input type="hidden" name="a3" value="'.$this->payment['price'].'" />
+				<input type="hidden" name="sra" value="1" />';
+				if ($this->payment['is_recurent']==1) {
+					$myreturn.="\n".'<input type="hidden" name="src" value="1" />';
+				}
 			}
 		} elseif ($this->payment['dm_item_type']=='prod') {
 			$myreturn.="\n".'<input type="hidden" name="cmd" value="_xclick" />
@@ -117,13 +122,18 @@ class payment_paypal extends ipayment {
 						'currency_code'=>$this->payment['currency'],
 						);
 		if ($this->payment['dm_item_type']=='subscr') {
-			$topass['cmd']='_xclick-subscriptions';
-			$topass['p3']=$this->payment['duration'];
-			$topass['t3']='DAY';
-			$topass['a3']=$this->payment['price'];
-			$topass['sra']=1;
-			if ($this->payment['is_recurent']==1) {
-				$topass['src']=1;
+			if (empty($this->payment['duration']) || !$this->payment['is_recurent']) {
+				$topass['cmd']='_xclick';
+				$topass['amount']=$this->payment['price'];
+			} else {
+				$topass['cmd']='_xclick-subscriptions';
+				$topass['p3']=$this->payment['duration'];
+				$topass['t3']='DAY';
+				$topass['a3']=$this->payment['price'];
+				$topass['sra']=1;
+				if ($this->payment['is_recurent']==1) {
+					$topass['src']=1;
+				}
 			}
 		} elseif ($this->payment['dm_item_type']=='prod') {
 			$topass['cmd']='_xclick';
@@ -182,6 +192,10 @@ class payment_paypal extends ipayment {
 				require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 				new log_error(array('module_name'=>get_class($this),'text'=>'Connection to paypal server failed with error: '.$errstr."\n".array2qs($_GET)));
 			}
+		} else {
+			$tpl->set_var('gateway_text','Paypal module not configured!');
+			require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+			new log_error(array('module_name'=>get_class($this),'text'=>'PDT token not set or PDT not activated in Paypal: '."\n".array2qs($_GET)));
 		}
 	}
 
@@ -282,14 +296,18 @@ class payment_paypal extends ipayment {
 			$query="SELECT get_lock('".$input['txn_id']."',10)";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_result($res,0,0)==1) {
-				$query="SELECT `payment_id`,`is_subscr`,`name` FROM `{$dbtable_prefix}payments` WHERE `gw_txn`='".$input['txn_id']."' AND `date`>=now()-INTERVAL 1 DAY";
+				$query="SELECT `payment_id`,`is_subscr`,`name`,`is_suspect` FROM `{$dbtable_prefix}payments` WHERE `gw_txn`='".$input['txn_id']."' AND `date`>=now()-INTERVAL 1 DAY";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {	// the other process already did the job. Let's release the lock
 					if ($type=='pdt') {
 						$output=mysql_fetch_assoc($res);
 						// tell member that he will receive everything by email
 						if ($output['is_subscr']) {
-							$GLOBALS['tpl']->set_file('gateway_text','thankyou_subscr_nok.html');
+							if ($output['is_suspect']) {
+								$GLOBALS['tpl']->set_file('gateway_text','thankyou_subscr_nok.html');
+							} else {
+								$GLOBALS['tpl']->set_file('gateway_text','thankyou_subscr_ok.html');
+							}
 						} else {
 							$GLOBALS['tpl']->set_file('gateway_text','thankyou_prod_nok.html');
 						}

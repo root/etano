@@ -22,5 +22,11 @@ if (!empty($module_code)) {
 		$class='payment_'.$module_code;
 		$pay=new $class;
 		$pay->ipn();
+	} else {
+		require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+		new log_error(array('module_name'=>'ipn','text'=>'Received a payment IPN for unexisting module: $_REQUEST:'.var_export($_REQUEST,true)));
 	}
+} else {
+	require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+	new log_error(array('module_name'=>'ipn','text'=>'Received a payment IPN without module code: $_REQUEST:'.var_export($_REQUEST,true)));
 }
