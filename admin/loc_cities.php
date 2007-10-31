@@ -44,7 +44,7 @@ if (!empty($state_id) && !empty($country_id)) {
 	$totalrows=mysql_result($res,0,0);
 
 	if (!empty($totalrows)) {
-		if ($o>$totalrows) {
+		if ($o>=$totalrows) {
 			$o=$totalrows-$r;
 			$o=$o>=0 ? $o : 0;
 		}

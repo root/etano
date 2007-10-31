@@ -134,7 +134,7 @@ if (mysql_num_rows($res)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$account=mysql_fetch_assoc($res);
 	$account['status']=vector2options($accepted_astats,$account['status']);
-	$account['skin']=dbtable2options("`{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b",'a.`module_code`','b.`config_value`','b.`config_value`',isset($account['skin']) ? $account['skin'] : '',"a.`module_code`=b.`fk_module_code` AND a.`module_type`=".MODULE_SKIN." AND b.`config_option`='skin_name'");
+	$account['skin']=dbtable2options("`{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b",'a.`module_code`','b.`config_value`','b.`config_value`',$account['skin'],"a.`module_code`=b.`fk_module_code` AND a.`module_type`=".MODULE_SKIN." AND b.`config_option`='skin_name'");
 }
 
 $output['pic_width']=get_site_option('pic_width','core_photo');

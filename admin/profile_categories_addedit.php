@@ -39,8 +39,6 @@ if (isset($_SESSION['topass']['input'])) {
 		$output['pcat_name']=mysql_result($res,0,0);
 	}
 	$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
-	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	$output['return']=rawurlencode($output['return2']);
 }
 
 $query="SELECT `m_value`,`m_name` FROM `{$dbtable_prefix}memberships`";
@@ -53,6 +51,10 @@ while ($rsrow=mysql_fetch_row($res)) {
 $output['access_level']=vector2checkboxes_new($memberships,array(),'access_level',$output['access_level'],3);
 $output['default_skin']=get_default_skin_name();
 
+if (empty($output['return'])) {
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
+}
 $tpl->set_file('content','profile_categories_addedit.html');
 $tpl->set_var('output',$output);
 $tpl->process('content','content');

@@ -43,7 +43,7 @@ if (!empty($input['uids'])) {
 			$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `status`=".$input['status']." WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$input['uids'])."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Account status changed succesfully';
+			$topass['message']['text']='Account status changed successfully';
 			break;
 
 		case 'skin':
@@ -59,7 +59,7 @@ if (!empty($input['uids'])) {
 			$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `".USER_ACCOUNT_PASS."`=md5('".$input['pass']."') WHERE `".USER_ACCOUNT_ID."`=".$input['uids'][0]."";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Password changed succesfully';
+			$topass['message']['text']='Password changed successfully';
 			break;
 
 	}

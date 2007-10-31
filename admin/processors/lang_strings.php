@@ -14,14 +14,15 @@ Support at:                 http://www.datemill.com/forum
 require_once '../../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../../includes/admin_functions.inc.php';
-require_once '../../includes/tables/rate_limiter.inc.php';
 allow_dept(DEPT_ADMIN);
 
 $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-$nextpage='admin/site_skins.php';
+//$nextpage='admin/site_skins.php';
+$nextpage='admin/lang_strings.php';
+$qs='#bottom';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it

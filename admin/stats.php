@@ -40,7 +40,7 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $output['popular_actions']='';
 $i=1;
 while ($rsrow=mysql_fetch_assoc($res)) {
-	$output['popular_actions'].=$i.': '.$rsrow['level_code'].', ';
+	$output['popular_actions'].=$i.': '.$rsrow['level_code'].' ('.$rsrow['stat_total'].'), ';
 	++$i;
 }
 if (!empty($output['popular_actions'])) {

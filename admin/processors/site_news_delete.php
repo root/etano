@@ -31,7 +31,7 @@ $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='News post deleted.';
 
 require_once _BASEPATH_.'/includes/classes/rss_writer.class.php';
-$rss_writer_object=&new rss_writer_class();
+$rss_writer_object=new rss_writer_class();
 $rss_writer_object->specification='1.0';
 $rss_writer_object->about=_BASEURL_.'/rss/site_news.xml';
 $rss_writer_object->rssnamespaces['dc']='http://purl.org/dc/elements/1.1/';
@@ -39,7 +39,7 @@ $properties=array();
 $properties['description']='Site news';
 $properties['link']=_BASEURL_;
 $properties['title']='Site news';
-$properties['dc:date']=gmmktime(date('H'),date('i'),date('s'),date('m'),date('d'),date('Y'));
+$properties['dc:date']=mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y'));
 $rss_writer_object->addchannel($properties);
 
 $query="SELECT `news_title`,`news_body`,UNIX_TIMESTAMP(`date_posted`) as `date_posted` FROM `{$dbtable_prefix}site_news` ORDER BY `news_id` DESC";
