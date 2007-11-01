@@ -5,10 +5,10 @@
 			<ul>
 				<!--loop name="loop"-->
 				<li class="year {loop.is_current}">
-					<a class="content-link simple group_name" id="year_{loop.year}" href="{tplvars.relative_url}blog_view.php?bid={blog.blog_id}&amp;y={loop.year}">{loop.year}</a> ({loop.num_posts})
+					<a class="content-link simple group_name" id="year_{loop.year}" href="{tplvars.relative_url}blog_view.php?bid={blog.blog_id}&amp;y={loop.year}" title="{loop.year} blog archives">{loop.year}</a> ({loop.num_posts})
 					<ul class="months" id="months_{loop.year}">
 						<!--loop name="months"-->
-						<li><a class="content-link simple" href="{tplvars.relative_url}blog_view.php?bid={blog.blog_id}&amp;y={loop.year}&amp;m={months.month}">{months.month_name} {loop.year}</a> ({months.num_posts})</li>
+						<li><a class="content-link simple" href="{tplvars.relative_url}blog_view.php?bid={blog.blog_id}&amp;y={loop.year}&amp;m={months.month}" title="{months.month_name} {loop.year} blog archives">{months.month_name} {loop.year}</a> ({months.num_posts})</li>
 						<!--/loop name="months"-->
 					</ul>
 				</li>
