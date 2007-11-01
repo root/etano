@@ -48,7 +48,7 @@ ul.features li.last {
 	list-style-image: url('../images/bullet2.gif');
 }
 
-#content h3 a.totop {
+#content_column1 h3 a.totop {
 	float: right;
 	font-size: 80%;
 }

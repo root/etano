@@ -1,3 +1,4 @@
+@import url('content2.css');
 @import url('bbcode.css');
 
 #main_photo {
@@ -75,5 +76,3 @@ textarea#comment {
 .comment .controls {
 	float: right;
 }
-
-

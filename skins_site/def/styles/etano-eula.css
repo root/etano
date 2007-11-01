@@ -1,31 +1,31 @@
-#content ol {
+#content_column1 ol {
 	list-style-type: decimal;
 	margin-left: 20px;
 }
 
-#content ul {
+#content_column1 ul {
 	list-style-type: disc;
 }
 
-#content ol ol {
+#content_column1 ol ol {
 	list-style-type: upper-latin;
 	margin-left: 30px;
 }
 
-#content ol ul {
+#content_column1 ol ul {
 	margin-left: 40px;
 }
 
-#content ol li {
+#content_column1 ol li {
 	margin-bottom: 20px;
 	text-align: justify;
 }
 
-#content ol li li {
+#content_column1 ol li li {
 	margin-bottom: 10px;
 }
 
-#content li p {
+#content_column1 li p {
 	margin-bottom: 10px;
 }
 
