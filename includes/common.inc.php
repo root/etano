@@ -133,4 +133,4 @@ if (isset($_SERVER['PHP_SELF'])) {
 $accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
 
 $tplvars['js_lib_v']=4;	// change this when you update any .js file. This should force a reload of the js scripts.
-$tplvars['remote_site']='http://www.datemill.com/new';
+$tplvars['remote_site']='http://www.datemill.com';

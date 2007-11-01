@@ -20,8 +20,8 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
-//$nextpage='admin/site_skins.php';
-$nextpage='admin/lang_strings.php';
+$nextpage='admin/site_skins.php';
+//$nextpage='admin/lang_strings.php';
 $qs='#bottom';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
