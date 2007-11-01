@@ -1,6 +1,15 @@
+#content-container {
+	padding: 0;
+	font-size: 100%;
+}
+
+#content {
+	padding: 10px 45px;
+	position: relative;
+	font-size: 95%;
+}
+
 /*============================PROMO================================*/
-
-
 #promo {
 	height: 280px;
 	background: url('../images/promo_bg.gif') no-repeat top left;

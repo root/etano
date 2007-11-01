@@ -25,11 +25,11 @@
 	margin-left: 10px;
 }
 
-#content h3 a {
+#content_column1 h3 a {
 	color: #96821D;
 }
 
-#content h4 {
+#content_column1 h4 {
 	margin-top: 0px;
 }
 
@@ -50,7 +50,7 @@ ul.articles li p {
 	font-weight: bold;
 }
 
-#content p a.totop {
+#content_column1 p a.totop {
 	float: right;
 	font-size: 80%;
 }

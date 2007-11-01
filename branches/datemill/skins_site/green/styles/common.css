@@ -208,12 +208,12 @@ ul.pager li {
 	margin: 0 1px;
 }
 
-#content ul.pager li a {
+ul.pager li a {
 	text-decoration: none;
 	padding: 2px 10px;
 	border: 1px solid #ccc;
 }
-#content ul.pager li a:hover {
+ul.pager li a:hover {
 	text-decoration: underline;
 }
 
@@ -235,6 +235,40 @@ ul.pager li.last {
 	float:none;
 	clear:both;
 }
+
+
+/* INFO+ERROR MESSAGES */
+
+#message_wrapper {
+	margin-left: 18px;
+	font-size: 13px;
+	font-weight: bold;
+	overflow: hidden;
+}
+
+.message_info {
+	color: #42BE34;
+}
+
+.message_error {
+	color: #fd617b;
+}
+
+	#message_wrapper .box_content {
+		padding: 0 0 10px 20px;
+	}
+
+	.message_info .box_content .message_text {
+		background: url('../images/symbol-success.gif') no-repeat top left;
+		height: 30px;
+		padding: 4px 0 0 40px;
+	}
+
+	.message_error .box_content .message_text {
+		background: url('../images/symbol-error.gif') no-repeat top left;
+		height: 30px;
+		padding: 4px 0 0 40px;
+	}
 
 
 /*============================HEADER================================*/
@@ -332,30 +366,26 @@ ul.pager li.last {
 
 /*============================CONTENT================================*/
 
-#content {
+#content-container {
 	padding: 10px 45px;
 	position: relative;
+	font-size: 95%;
 }
 
-#content a {
+a {
 	font-weight: bold;
 	text-decoration: underline;
 	color: #9c4711;
 	font-size: 95%;
 }
 
-#content a:hover {
+a:hover {
 	color: #286d03;
 }
 
 .justify {
 	text-align: justify;
 }
-
-#content {
-	font-size: 95%;
-}
-
 
 /*============================FOOTER================================*/
 
