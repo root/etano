@@ -18,6 +18,7 @@ allow_dept(DEPT_ADMIN);
 
 regenerate_langstrings_array();
 regenerate_fields_array();
+regenerate_skin_cache();
 
 $query="SELECT `dbfield`,`field_type`,`search_type` FROM `{$dbtable_prefix}profile_fields` WHERE `searchable`=1 AND `for_basic`=1 ORDER BY `order_num`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

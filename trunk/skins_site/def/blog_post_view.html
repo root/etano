@@ -12,7 +12,7 @@
 <div class="comment {loop.is_online}">
 	<!--opt name="loop.fk_user_id"--><a href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user} {loop.user_online_status}" /><!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"-->
 	<span class="controls"><!--opt name="loop.editme"--><a id="editme_{loop.comment_id}" class="content-link link_change" href="{tplvars.relative_url}blog_post_view.php?pid={output.post_id}&amp;return={output.return2me}&amp;edit_comment={loop.comment_id}#postarea" title="Edit comment">edit</a><!--/opt name="loop.editme"--> <!--opt name="output.post_owner"--><a class="content-link link_delete comment_delete" href="{tplvars.relative_url}processors/comment_delete.php?comment_id={loop.comment_id}&amp;comment_type=blog&amp;return={output.return2me}" title="Remove comment">delete</a><!--/opt name="output.post_owner"--><a class="content-link" href="#pagetop">top</a></span> <!--opt name="loop.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"-->{loop.user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--> said on {loop.date_posted} :
-	<a name="comm{loop.comment_id}"></a><p>{loop.comment}</p>
+	<a name="comm{loop.comment_id}"></a><p id="comment_{loop.comment_id}">{loop.comment}</p>
 	<div class="clear"></div>
 </div>
 <!--/loop name="loop"-->
