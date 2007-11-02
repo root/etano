@@ -50,18 +50,18 @@ if (!empty($output['search_md5'])) {
 		switch ($_GET['st']) {
 
 			case 'new':
-				$tplvars['page_title']='Latest Blogs';	// translate
+				$tplvars['page_title']='Etano Community Builder Blogs';
 				//$orderby="a.`date_posted` DESC";	// default
 				break;
 
 			case 'views':
-				$tplvars['page_title']='Most Popular Blogs';	// translate
+				$tplvars['page_title']='Etano Community Builder Blogs: Most Popular';
 				$input['acclevel_code']='search_blog';
 				$orderby="a.`stat_views` DESC";
 				break;
 
 			case 'comm':
-				$tplvars['page_title']='Most Discussed Blogs';	// translate
+				$tplvars['page_title']='Etano Community Builder Blogs: Most Discussed';
 				$input['acclevel_code']='search_blog';
 				$orderby="a.`stat_comments` DESC";
 				break;
@@ -69,13 +69,13 @@ if (!empty($output['search_md5'])) {
 			case 'uid':
 				$input['acclevel_code']='search_blog';
 				$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
-				$tplvars['page_title']=sprintf('<a href="'.$tplvars['relative_url'].'profile.php?uid=%1$s">%2$s</a>\'s Blogs',$input['uid'],get_user_by_userid($input['uid']));	// translate
+				$tplvars['page_title']='Etano Community Builder Blogs';
 				$where="a.`fk_user_id`=".$input['uid']." AND ".$where;
 				$orderby="a.`post_id` DESC";
 				break;
 
 			case 'tag':
-				$tplvars['page_title']='Search Results';
+				$tplvars['page_title']='Etano Community Builder Blogs: Search Results';
 				$input['acclevel_code']='search_blog';
 				$input['tags']=isset($_GET['tags']) ? $_GET['tags'] : '';
 				// remove extra spaces and words with less than 3 chars
@@ -119,7 +119,7 @@ $output['totalrows']=count($post_ids);
 // get the results from user cache for the found post_ids
 $loop=array();
 if (!empty($output['totalrows'])) {
-	if ($o>$output['totalrows']) {
+	if ($o>=$output['totalrows']) {
 		$o=$output['totalrows']-$r;
 	}
 	$post_ids=array_slice($post_ids,$o,$r);
@@ -136,15 +136,6 @@ if (!empty($output['totalrows'])) {
 	}
 	for ($i=0;isset($loop[$i]);++$i) {
 		$loop[$i]['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$loop[$i]['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
-		if (isset($_list_of_online_members[$loop[$i]['fk_user_id']])) {
-			$loop[$i]['is_online']='is_online';
-			$loop[$i]['user_online_status']='is online';	// translate
-		} else {
-			$loop[$i]['user_online_status']='is offline';	// translate
-		}
-		if (!is_file(_PHOTOPATH_.'/t1/'.$loop[$i]['photo'])) {
-			$loop[$i]['photo']='no_photo.gif';
-		}
 		// fancy word coloring - lightning fast now :)
 		if (isset($input['tags'])) {
 			$loop[$i]['title_clean']=$loop[$i]['title'];
@@ -165,7 +156,7 @@ $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_NOLOOP | TPL_OPTI
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']='Search Results';
+$tplvars['title']='Etano Community Builder Blogs';
 $tplvars['page']='blog_search';
 $tplvars['css']='blog_search.css';
 if (is_file('blog_search_left.php')) {

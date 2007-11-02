@@ -1,27 +1,16 @@
 @import url('content2.css');
 
-h2 {
-	font-size: 20px;
+.postedby {
+	border:1px dotted #ddd;
+	background: #eee;
+	margin-top: 10px;
+	margin-bottom: 50px;
+	padding: 5px;
+	font-size: 85%;
 }
 
-.blog_view h3 {
-	padding: 20px 0 5px 0;
-}
-
-.post_content {
-	font-size: 14px;
-	margin-bottom: 10px;
-	text-align: justify;
-}
-
-.post_by {
-	font-size: 12px;
-	color: #777;
-}
-
-.date_posted {
-	font-size: 12px;
-	color: #777;
+.read-more {
+	font-size: 85%;
 }
 
 /* LEFT MENU */

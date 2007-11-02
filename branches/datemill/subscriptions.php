@@ -71,4 +71,4 @@ $tplvars['css']='subscriptions.css';
 if (is_file('subscriptions_left.php')) {
 	include 'subscriptions_left.php';
 }
-include 'frame2.php';
+include 'frame.php';

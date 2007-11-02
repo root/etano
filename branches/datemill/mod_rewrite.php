@@ -25,13 +25,17 @@ if (($pos=strpos(_BASEURL_,'/',8))!==false) {
 $request_uri=trim($request_uri,'/');
 $uri_parts=explode('/',$request_uri);
 
-if ($uri_parts[0]=='blog' && isset($uri_parts[1])) {
+if ($uri_parts[0]=='blogpost' && isset($uri_parts[1])) {
 	$_GET['pid']=$uri_parts[1];
 	require_once 'blog_post_view.php';
 	die;
-} elseif ($uri_parts[0]=='devblog' && isset($uri_parts[1])) {
+} elseif ($uri_parts[0]=='blog' && isset($uri_parts[1])) {
 	$_GET['bid']=$uri_parts[1];
 	require_once 'blog_view.php';
+	die;
+} elseif ($uri_parts[0]=='devblog' && isset($uri_parts[1]) && $uri_parts[1]=='community-builder') {
+	$_GET['st']='new';
+	require_once 'blog_search.php';
 	die;
 } elseif ($uri_parts[0]=='inbox') {
 	require_once 'mailbox.php';

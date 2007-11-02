@@ -63,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$towrite.=",'".$rsrow[0]."'=>".$rsrow[1];
 	}
 	$towrite.=");\n";
-	$towrite.='$GLOBALS[\'_allow_na\']='.var_export($GLOBALS['_allow_na'],true).";\n";
 	$fileop=new fileop();
 	$fileop->file_put_contents(_BASEPATH_.'/includes/access_levels.inc.php',$towrite);
 

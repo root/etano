@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
 	foreach ($kb_categs_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$kb_categs_default['defaults'][$k]);
+		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v] | FORMAT_RUDECODE,$kb_categs_default['defaults'][$k]);
 	}
 	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');

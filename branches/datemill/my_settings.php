@@ -89,4 +89,4 @@ $tplvars['css']='my_settings.css';
 if (is_file('my_settings_left.php')) {
 	include 'my_settings_left.php';
 }
-include 'frame2.php';
+include 'frame.php';

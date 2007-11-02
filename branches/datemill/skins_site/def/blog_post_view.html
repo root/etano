@@ -1,10 +1,7 @@
 <div class="post_content">
 {output.post_content}
 </div>
-<div class="post_details">
-	<span class="post_by">Posted by <!--opt name="output.fk_user_id"--><a class="content-link member_link {output.is_online}" href="{tplvars.relative_url}profile.php?uid={output.fk_user_id}" title="{output.user} {output.user_online_status}"><!--/opt name="output.fk_user_id"-->{output.user}<!--opt name="output.fk_user_id"--></a><!--/opt name="output.fk_user_id"--></span>
-	<span class="date_posted"> on {output.date_posted}</span>
-</div>
+<div class="postedby">Posted on {output.date_posted} by <em>{output.user}</em> in <a href="{output.blog_url}" title="{output.blog_name}">{output.blog_name}</a></div>
 
 <!--opt name="output.show_comments"-->
 <!--opt name="output.num_comments"--><h3 class="subtitle">Comments ({output.num_comments})</h3><!--/opt name="output.num_comments"-->
@@ -20,6 +17,13 @@
 <!--opt name="output.allow_comments"-->
 <h3 class="subtitle">Leave your comment</h3>
 
+<form action="{tplvars.relative_url}processors/comment_addedit.php" method="post" id="blogcomment_form">
+<fieldset>
+	<dl class="required">
+		<dt>Your Name:</dt>
+		<dd><input type="text" name="user" value="{output.user}" /></dd>
+	</dl>
+</fieldset>
 <!--opt name="output.bbcode_comments"-->
 <div id="bb_tools">
 	<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
@@ -29,13 +33,11 @@
 	<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
 </div>
 <!--/opt name="output.bbcode_comments"-->
-<form action="{tplvars.relative_url}processors/comment_addedit.php" method="post" id="blogcomment_form">
 <fieldset>
 	<input type="hidden" name="comment_type" value="blog" />
 	<input type="hidden" name="comment_id" id="comment_id" value="{output.comment_id}" />
 	<input type="hidden" name="fk_parent_id" value="{output.post_id}" />
 	<input type="hidden" name="return" value="{output.return2me}" />
-	<input type="text" name="user" value="{output.user}" />
 	<a name="postarea" id="postarea"></a><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea>
 </fieldset>
 <!--opt name="!tplvars.user_logged"-->

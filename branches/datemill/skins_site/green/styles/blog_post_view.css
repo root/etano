@@ -1,3 +1,4 @@
+@import url('content2.css');
 @import url('bbcode.css');
 
 .post_content {
@@ -5,14 +6,13 @@
 	text-align: justify;
 }
 
-.post_by {
-	font-size: 12px;
-	color: #777;
-}
-
-.date_posted {
-	font-size: 12px;
-	color: #777;
+.postedby {
+	border:1px dotted #ddd;
+	background: #eee;
+	margin-top: 10px;
+	margin-bottom: 50px;
+	padding: 5px;
+	font-size: 85%;
 }
 
 .comment {

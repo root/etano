@@ -56,9 +56,10 @@ switch ($type) {
 
 	case 'access':	// no access to the requested page, show the upgrade options.
 		$template='info_access.html';
-		$tplvars['page_title']='Subscribe';
+		$tplvars['page_title']='No Access';
 		$tplvars['page']='info_access';
 
+/*
 		$query="SELECT a.`module_code`,a.`module_name`,a.`module_diz` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`=".MODULE_PAYMENT." AND b.`fk_module_code`=a.`module_code` AND b.`config_option`='enabled' AND `config_value`=1";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$active_gateways=array();
@@ -99,6 +100,7 @@ switch ($type) {
 			$loop[]=$rsrow;
 		}
 		$tpl->set_loop('loop',$loop);
+*/
 		break;
 
 	default:

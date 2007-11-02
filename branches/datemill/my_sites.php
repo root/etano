@@ -34,7 +34,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	if (empty($rsrow['baseurl'])) {
 		$rsrow['baseurl']='<a href="site_edit.php?site_id='.$rsrow['site_id'].'" onclick="return assign_site(\''.$rsrow['license'].'\')">Assign now</a>';
 	} else {
-		$rsrow['baseurl']='<a target="_blank" href="'.$rsrow['baseurl'].'">'.$rsrow['baseurl'].'</a>';
+		$rsrow['baseurl']='<a rel="external" href="'.$rsrow['baseurl'].'">'.$rsrow['baseurl'].'</a>';
 	}
 	$rsrow['is_featured']=(!empty($rsrow['is_featured']) && !empty($rsrow['screenshot']) && !empty($rsrow['baseurl'])) ? 'Yes' : 'No';
 	$loop[]=$rsrow;
@@ -59,4 +59,4 @@ $tplvars['css']='my_sites.css';
 if (is_file('my_sites_left.php')) {
 	include 'my_sites_left.php';
 }
-include 'frame2.php';
+include 'frame.php';

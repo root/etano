@@ -59,4 +59,4 @@ $tplvars['page']='site_edit';
 if (is_file('site_edit_left.php')) {
 	include 'site_edit_left.php';
 }
-include 'frame2.php';
+include 'frame.php';
