@@ -71,13 +71,6 @@ class user_cache {
 					if ($destination=='tpl') {
 						$myreturn[$id][$parts[$p]]=file_get_contents($file);
 						$myreturn[$id]['uid']=$user_ids[$id];
-						if (isset($GLOBALS['_list_of_online_members'][(int)$user_ids[$id]])) {
-							$myreturn[$id]['is_online']='is_online';
-							$myreturn[$id]['user_online_status']='is online';	// translate
-						} else {
-							$myreturn[$id]['is_online']='is_offline';
-							$myreturn[$id]['user_online_status']='is offline';	// translate
-						}
 					} else {
 						$myreturn[$parts[$p]]=file_get_contents($file);
 					}

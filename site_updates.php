@@ -146,4 +146,4 @@ $tplvars['css']='site_updates.css';
 if (is_file('site_updates_left.php')) {
 	include 'site_updates_left.php';
 }
-include 'frame2.php';
+include 'frame.php';

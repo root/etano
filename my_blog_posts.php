@@ -39,7 +39,7 @@ if (!empty($_GET['bid'])) {
 			$o=$totalrows-$r;
 			$o=$o>=0 ? $o : 0;
 		}
-		$query="SELECT a.`post_id`,a.`title`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`blog_name`,b.`blog_url` FROM $from WHERE $where ORDER BY a.`date_posted` DESC LIMIT $o,$r";
+		$query="SELECT a.`post_id`,a.`title`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`blog_name` FROM $from WHERE $where ORDER BY a.`date_posted` DESC LIMIT $o,$r";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$rsrow['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$rsrow['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);

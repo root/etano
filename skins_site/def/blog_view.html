@@ -1,15 +1,16 @@
 <div class="blog_diz">{output.blog_diz}</div>
 
+<ul class="blogs_small">
 <!--loop name="loop"-->
-<h3>{loop.title}</h3>
-<div class="post_content">{loop.post_content}</div>
-<div class="post_details {loop.is_online}">
-	<span class="post_by">Posted by <!--opt name="loop.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"-->{loop.user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--></span>
-	<span class="date_posted"> on {loop.date_posted}</span>
-	<!--opt name="loop.editable"--><span class="editable"><a class="content-link link_change" href="{tplvars.relative_url}blog_posts_addedit.php?post_id={loop.post_id}">Edit</a></span><!--/opt name="loop.editable"-->
-	<span class="comments"><!--opt name="loop.allow_comments"--><a class="content-link simple" href="{tplvars.relative_url}blog_post_view.php?bid={output.blog_id}&amp;pid={loop.post_id}">{loop.stat_comments} comments</a><!--/opt name="loop.allow_comments"--></span>
-</div>
-<!--noloop name="loop"-->
-<p>Sorry, no posts yet.</p>
-<!--/noloop name="loop"-->
+	<li class="{loop.class}">
+		<h3><a class="content-link blog-title" href="{loop.alt_url}" title="{loop.title}">{loop.title}</a></h3>
+		<div>{loop.post_content}
+			... <a class="content-link read-more" href="{tplvars.relative_url}blog_post_view.php?pid={loop.post_id}" title="Read more on {loop.title}">read more</a>
+		</div>
+		<div class="postedby">Posted on {loop.date_posted} by <em>{loop.user}</em> in <a href="{loop.blog_url}" title="{loop.blog_name}">{loop.blog_name}</a></div>
+		<!--noloop name="loop"-->
+			<p class="no_results">No blogs found matching your search criteria. Please refine your search and try again.</p>
+		<!--/noloop name="loop"-->
+	</li>
 <!--/loop name="loop"-->
+</ul>

@@ -98,4 +98,4 @@ if (is_file('my_profile_left.php')) {
 	include 'my_profile_left.php';
 }
 unset($page_last_modified_time);	// we want everything fresh on this page.
-include 'frame2.php';
+include 'frame.php';

@@ -33,7 +33,7 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	$_SESSION[_LICENSE_KEY_]['user']['pstat']=STAT_PENDING;
 }
 $tplvars['myself']=$_SESSION[_LICENSE_KEY_]['user'];
-$GLOBALS['_list_of_online_members']=get_online_ids();
+//$GLOBALS['_list_of_online_members']=get_online_ids();
 $GLOBALS['page_last_modified_time']=isset($_SESSION[_LICENSE_KEY_]['user']['loginout']) ? $_SESSION[_LICENSE_KEY_]['user']['loginout'] : 0;	// need this for cache control - the Last-Modified header
 
 if (!isset($_SESSION[_LICENSE_KEY_]['user']['prefs'])) {

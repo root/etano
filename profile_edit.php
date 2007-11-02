@@ -224,4 +224,4 @@ $tplvars['css']='profile_edit.css';
 if (is_file('profile_edit_left.php')) {
 	include 'profile_edit_left.php';
 }
-include 'frame2.php';
+include 'frame.php';

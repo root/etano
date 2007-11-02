@@ -40,12 +40,6 @@ if (!empty($post_id)) {
 		if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $output['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 			$output['post_owner']=true;
 		}
-		if (isset($_list_of_online_members[$output['fk_user_id']])) {
-			$output['is_online']='member_online';
-			$output['user_online_status']='is online';	// translate
-		} else {
-			$output['user_online_status']='is offline';	// translate
-		}
 
 		$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
 		// comments
@@ -75,13 +69,6 @@ if (!empty($post_id)) {
 
 			if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
 				unset($rsrow['fk_user_id']);
-			} else {
-				if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
-					$rsrow['is_online']='is_online';
-					$rsrow['user_online_status']='is online';	// translate
-				} else {
-					$rsrow['user_online_status']='is offline';	// translate
-				}
 			}
 			if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
 				$rsrow['photo']='no_photo.gif';
@@ -148,8 +135,8 @@ $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']=sprintf('Blogs - %1$s - %2$s',$output['blog_name'],$output['title']);
-$tplvars['page_title']=sprintf('%1$s : %2$s','<a href="'.$tplvars['relative_url'].'blog_view.php?bid='.$output['fk_blog_id'].'">'.$output['blog_name'].'</a>',$output['title']);	// translate this
+$tplvars['title']=$output['blog_name'].' '.$output['title'];
+$tplvars['page_title']=$output['title'];
 $tplvars['page']='blog_post_view';
 $tplvars['css']='blog_post_view.css';
 if (is_file('blog_post_view_left.php')) {

@@ -71,13 +71,6 @@ if (!empty($_GET['bid'])) {
 				$loop[$i]['allow_comments']=$temp[$loop[$i]['post_id']]['allow_comments'];
 				if (empty($loop[$i]['fk_user_id'])) {	// for the link to member profile
 					unset($loop[$i]['fk_user_id']);
-				} else {
-					if (isset($_list_of_online_members[$loop[$i]['fk_user_id']])) {
-						$loop[$i]['is_online']='is_online';
-						$loop[$i]['user_online_status']='is online';	// translate
-					} else {
-						$loop[$i]['user_online_status']='is offline';	// translate
-					}
 				}
 			}
 		}
