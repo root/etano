@@ -115,6 +115,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 
+		$towrite['fk_user_id']=$input['fk_user_id'];
+		unset($towrite['return']);
 		$towrite='<?php $blog='.var_export($towrite,true).';';
 		$fileop->file_put_contents(_CACHEPATH_.'/blogs/'.$input['blog_id']{0}.'/'.$input['blog_id'].'/blog.inc.php',$towrite);
 	} else {

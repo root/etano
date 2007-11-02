@@ -296,6 +296,7 @@ function regenerate_skin_cache($skin_module_code='') {
 		}
 	}
 
+	$config=get_site_option(array('bbcode_profile','use_smilies'),'core');
 	$query="SELECT $select FROM `{$dbtable_prefix}user_profiles` WHERE `status`=".STAT_APPROVED;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($profile=mysql_fetch_assoc($res)) {
