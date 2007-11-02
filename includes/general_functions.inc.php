@@ -469,18 +469,18 @@ function create_search_form($search_fields) {
 					} elseif (empty($field['default_search'])) {
 						$field['default_search']=array();
 					}
-					$myreturn[$s]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],$field['default_search'],2,true,'tabindex="'.($i+4).'"');
+					$myreturn[$s]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],$field['default_search'],2,true,'tabindex="'.($i+4).'" class="check"');
 					break;
 
 				case FIELD_RANGE:
 					if (isset($user_defaults[$field['dbfield'].'_min'])) {
 						$field['default_search'][0]=$user_defaults[$field['dbfield'].'_min'];
-					} else {
+					} elseif (!isset($field['default_search'][0])) {
 						$field['default_search'][0]=0;
 					}
 					if (isset($user_defaults[$field['dbfield'].'_max'])) {
 						$field['default_search'][1]=$user_defaults[$field['dbfield'].'_max'];
-					} else {
+					} elseif (!isset($field['default_search'][1])) {
 						$field['default_search'][1]=0;
 					}
 					if ($field['field_type']==FIELD_DATE) {
