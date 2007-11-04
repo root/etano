@@ -119,14 +119,9 @@ if (!empty($post_id)) {
 	redirect2page('info.php',$topass);
 }
 
-$output['return2me']='blog_post_view.php';
-if (!empty($_SERVER['QUERY_STRING'])) {
-	if (!empty($edit_comment)) {
-		$_SERVER['QUERY_STRING']=str_replace('&edit_comment='.$edit_comment,'',$_SERVER['QUERY_STRING']);
-	}
-	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
-}
+$output['return2me']=str_replace(_BASEURL_.'/','','http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 $output['return2me']=rawurlencode($output['return2me']);
+$output['user']=isset($_COOKIE['sco_app']['anon_name']) ? $_COOKIE['sco_app']['anon_name'] : '';
 $tpl->set_file('content','blog_post_view.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);

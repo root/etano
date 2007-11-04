@@ -21,7 +21,7 @@
 <fieldset>
 	<dl class="required">
 		<dt>Your Name:</dt>
-		<dd><input type="text" name="user" value="{output.user}" /></dd>
+		<dd><input type="text" name="user" id="user" value="{output.user}" tabindex="10" /></dd>
 	</dl>
 </fieldset>
 <!--opt name="output.bbcode_comments"-->
@@ -38,7 +38,7 @@
 	<input type="hidden" name="comment_id" id="comment_id" value="{output.comment_id}" />
 	<input type="hidden" name="fk_parent_id" value="{output.post_id}" />
 	<input type="hidden" name="return" value="{output.return2me}" />
-	<a name="postarea" id="postarea"></a><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea>
+	<a name="postarea" id="postarea"></a><textarea rows="" cols="" id="comment" name="comment" tabindex="11">{output.comment}</textarea>
 </fieldset>
 <!--opt name="!tplvars.user_logged"-->
 <!--opt name="output.use_captcha"-->

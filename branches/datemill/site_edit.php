@@ -55,7 +55,7 @@ $tpl->process('content','content');
 $tplvars['title']='Etano - site details';
 $tplvars['page_title']='License Details';
 $tplvars['page']='site_edit';
-//$tplvars['css']='site_edit.css';
+$tplvars['css']='site_edit.css';
 if (is_file('site_edit_left.php')) {
 	include 'site_edit_left.php';
 }

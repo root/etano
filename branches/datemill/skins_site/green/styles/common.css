@@ -131,7 +131,7 @@ form.edit_form dl {
 		padding: 0px;
 	}
 
-	form.edit_form dd input {
+	form.edit_form dd input.text {
 		width: 90%;
 	}
 
@@ -385,6 +385,18 @@ a:hover {
 
 .justify {
 	text-align: justify;
+}
+
+#latest_blog_comments {
+	font-size: 80%;
+}
+
+* html #latest_blog_comments {
+	font-size: 90%;
+}
+
+#latest_blog_comments li {
+	padding-bottom: 5px;
 }
 
 /*============================FOOTER================================*/

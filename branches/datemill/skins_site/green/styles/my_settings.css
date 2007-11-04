@@ -17,3 +17,7 @@
 #passchange_form dl, #passchange_form dt {
 	padding: 0;
 }
+
+form.edit_form dd input {
+	width: 110px;
+}

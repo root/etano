@@ -1,13 +1,11 @@
 <ul class="blogs_small">
 <!--loop name="loop"-->
-	<li class="{loop.class} {loop.is_online}">
-		<!--opt name="loop.fk_user_id"--><a href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"--><img class="user_photo thumb1" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user} {loop.user_online_status}" /><!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"-->
-		<a class="content-link blog-title" href="blog_post_view.php?pid={loop.post_id}" title="{loop.title}">{loop.title}</a>
-		<strong>Posted on {loop.date_posted} by <!--opt name="loop.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"-->{loop.user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--></strong>
-		<p>{loop.post_content}
-			...<a class="content-link read-more" href="blog_post_view.php?pid={loop.post_id}" title="Read more">Read more</a>
-		</p>
-		<div class="clear"></div>
+	<li class="{loop.class}">
+		<h3><a class="content-link blog-title" href="{loop.alt_url}" title="{loop.title}">{loop.title}</a></h3>
+		<div>{loop.post_content}
+			... <a class="content-link read-more" href="{loop.alt_url}" title="Read more on {loop.title}">read more</a>
+		</div>
+		<div class="postedby">Posted on {loop.date_posted} by <em>{loop.user}</em> in <a href="{loop.blog_url}" title="{loop.blog_name}">{loop.blog_name}</a></div>
 	</li>
 <!--/loop name="loop"-->
 </ul>

@@ -68,3 +68,7 @@ textarea#comment {
 	display: block;
 }
 
+.login_tease {
+	font-size: 120%;
+	margin-top: 20px;
+}

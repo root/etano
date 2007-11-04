@@ -388,6 +388,18 @@ a:hover {
 	text-align: justify;
 }
 
+#latest_blog_comments {
+	font-size: 80%;
+}
+
+* html #latest_blog_comments {
+	font-size: 90%;
+}
+
+#latest_blog_comments li {
+	padding-bottom: 5px;
+}
+
 /*============================FOOTER================================*/
 
 #footer-container {

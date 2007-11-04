@@ -92,7 +92,7 @@ class widget_blogs extends icontent_widget {
 		if ($this->tpl->get_var_silent('widget.content')!='') {
 			switch ($this->config['mode']) {
 				case 'new':
-					$widget['title']='Newest Posts';	// translate this
+					$widget['title']='Latest blog posts';	// translate this
 					$widget['id']='widg_new_blogs';
 					break;
 
@@ -107,7 +107,7 @@ class widget_blogs extends icontent_widget {
 					break;
 
 			}
-			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_url'].'blog_search.php?st='.$this->config['mode'].'" title="More Blogs">More Blogs</a>';	// translate this
+			$widget['action']='<a class="content-link link_more" href="'.$GLOBALS['tplvars']['relative_url'].'devblog/community-builder" title="More Blogs">more blogs</a>';	// translate this
 			if (isset($this->config['area']) && $this->config['area']=='front') {
 				$this->tpl->set_file('temp','static/front_widget.html');
 			} else {
