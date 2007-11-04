@@ -62,6 +62,7 @@ switch ($type) {
 		break;
 
 	case 'access':	// no access to the requested page, show the upgrade options.
+		check_login_member('auth');	// make sure they logged in
 		$template='info_access.html';
 		$tplvars['page_title']=$GLOBALS['_lang'][234];
 		$tplvars['page']='info_access';
