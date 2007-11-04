@@ -18,6 +18,8 @@ allow_dept(DEPT_ADMIN);
 
 regenerate_langstrings_array();
 regenerate_fields_array();
+unset($GLOBALS['_pfields'],$GLOBALS['_pcats'],$GLOBALS['basic_search_fields']);
+require '../../includes/fields.inc.php';
 regenerate_skin_cache();
 
 $query="SELECT `dbfield`,`field_type`,`search_type` FROM `{$dbtable_prefix}profile_fields` WHERE `searchable`=1 AND `for_basic`=1 ORDER BY `order_num`";
