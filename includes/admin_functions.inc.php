@@ -250,7 +250,12 @@ function regenerate_langstrings_array($skin_module_code='') {
 		$query="SELECT a.`lk_id`,a.`alt_id_text`,b.`lang_value`,a.`lk_use`,a.`save_file` FROM `{$dbtable_prefix}lang_keys` a LEFT JOIN `{$dbtable_prefix}lang_strings` b ON (a.`lk_id`=b.`fk_lk_id` AND b.`skin`='".$skins[$i]['module_code']."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
-			$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT] | FORMAT_ADDSLASH,'');
+			if ($rsrow['lk_use']!=LK_FIELD) {
+				$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,FORMAT_OLD_ADDSLASH,'');
+			} else {
+				// field related strings cannot contain html code
+				$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT],'');
+			}
 			if (!empty($rsrow['alt_id_text'])) {
 				$rsrow['lk_id']="'".$rsrow['alt_id_text']."'";
 			}

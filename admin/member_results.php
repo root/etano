@@ -285,8 +285,7 @@ if (!empty($totalrows)) {
 	}
 	$user_ids=array_slice($user_ids,$o,$r);
 	$query="SELECT `fk_user_id`,`_user`,`_photo`,`status`,`del`";
-	for ($i=0;isset($basic_search_fields[$i]);++$i) {
-		$field=$_pfields[$basic_search_fields[$i]];
+	foreach ($_pfields as $k=>$field) {
 		switch ($field['field_type']) {
 
 			case FIELD_LOCATION:
@@ -301,8 +300,7 @@ if (!empty($totalrows)) {
 	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id` IN ('".join("','",$user_ids)."') ORDER BY `_user`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		for ($i=0;isset($basic_search_fields[$i]);++$i) {
-			$field=$_pfields[$basic_search_fields[$i]];
+		foreach ($_pfields as $k=>$field) {
 			$rsrow[$field['dbfield'].'_label']=$field['label'];
 			switch ($field['field_type']) {
 

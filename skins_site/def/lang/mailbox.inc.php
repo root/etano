@@ -1,6 +1,6 @@
 <?php
 $GLOBALS['_lang'][5]='No such message.';
-$GLOBALS['_lang'][41]='User %s doesn&#039;t exist. Filter not saved.';
+$GLOBALS['_lang'][41]='User %s doesn\'t exist. Filter not saved.';
 $GLOBALS['_lang'][42]='Filter changed successfully.';
 $GLOBALS['_lang'][43]='Filter not changed. A similar filter already exists.';
 $GLOBALS['_lang'][44]='Filter added.';
