@@ -29,12 +29,6 @@ switch ($type) {
 		$tplvars['page']='info_signup';
 		break;
 
-	case 'upgrade':
-		$template='info_upgrade.html';
-		$tplvars['page_title']=$GLOBALS['_lang'][229];
-		$tplvars['page']='info_upgrade';
-		break;
-
 	case 'mailsent':
 		$template='info_mailsent.html';
 		$tplvars['page_title']=$GLOBALS['_lang'][230];

@@ -14,7 +14,8 @@ Support at:                 http://www.datemill.com/forum
 define('_PUNISH_ERROR_',1);
 define('_PUNISH_BANUSER_',2);
 define('_PUNISH_BANIP_',3);
-$accepted_punishments=array(_PUNISH_ERROR_=>'Sorry page',_PUNISH_BANUSER_=>'Ban user',_PUNISH_BANIP_=>'Ban IP');
+define('_PUNISH_UPGRADE_',4);
+$accepted_punishments=array(_PUNISH_ERROR_=>'Sorry page',_PUNISH_UPGRADE_=>'Membership Upgrade Options',_PUNISH_BANUSER_=>'Ban user',_PUNISH_BANIP_=>'Ban IP');
 
 function log_user_action(&$log) {
 	global $dbtable_prefix;
@@ -56,6 +57,12 @@ function rate_limiter(&$log) {
 	if (isset($punish[_PUNISH_ERROR_])) {
 		$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
 		$_SESSION['topass']['message']['text']=$GLOBALS['_lang'][$punish[_PUNISH_ERROR_]];
+		include 'info.php';
+		die;
+	} elseif (isset($punish[_PUNISH_UPGRADE_])) {
+		$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
+		$_SESSION['topass']['message']['text']=$GLOBALS['_lang'][$punish[_PUNISH_ERROR_]];
+		$_GET['type']='access';
 		include 'info.php';
 		die;
 	}
