@@ -43,4 +43,5 @@ $tplvars['title']='Contact Us';
 $tplvars['page_title']='Contact Us';
 $tplvars['page']='contact';
 $tplvars['css']='contact.css';
+$tplvars['menu_contact']='active';
 include 'frame.php';

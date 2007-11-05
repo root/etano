@@ -564,18 +564,6 @@ function create_search_form($search_fields) {
 }
 
 
-function get_online_ids() {
-	$myreturn=array();
-	global $dbtable_prefix;
-	$query="SELECT DISTINCT `fk_user_id` FROM `{$dbtable_prefix}online` WHERE `fk_user_id`<>0";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	for ($i=0;$i<mysql_num_rows($res);++$i) {
-		$myreturn[mysql_result($res,$i,0)]=1;
-	}
-	return $myreturn;
-}
-
-
 function allow_at_level($level_code,$membership=1) {
 	$myreturn=false;
 	$membership=(int)$membership;

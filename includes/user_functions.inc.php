@@ -32,7 +32,6 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	$_SESSION[_LICENSE_KEY_]['user']['membership']=1;
 }
 $tplvars['myself']=$_SESSION[_LICENSE_KEY_]['user'];
-//$GLOBALS['_list_of_online_members']=get_online_ids();
 $GLOBALS['page_last_modified_time']=isset($_SESSION[_LICENSE_KEY_]['user']['loginout']) ? $_SESSION[_LICENSE_KEY_]['user']['loginout'] : 0;	// need this for cache control - the Last-Modified header
 
 if (!isset($_SESSION[_LICENSE_KEY_]['user']['prefs'])) {
@@ -84,12 +83,6 @@ function check_login_member($level_code) {
 	if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 		$_SESSION[_LICENSE_KEY_]['user']['user_id']=(int)$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 		$user_id=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
-	}
-	$query="UPDATE `{$dbtable_prefix}online` SET `last_activity`='$now' WHERE `fk_user_id`=$user_id AND `sess`='".session_id()."'";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (!mysql_affected_rows()) {
-		$query="REPLACE INTO `{$dbtable_prefix}online` SET `fk_user_id`=$user_id,`sess`='".session_id()."',`last_activity`='$now'";
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 	// log and rate limit
 	$log['level']=$level_code;
