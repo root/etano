@@ -36,3 +36,4 @@ if (!empty($GLOBALS['page_last_modified_time'])) {
 	header('Last-Modified: '.date('D,d M Y H:i:s',$page_last_modified_time).' GMT',true);
 }
 echo $tpl->process('content','content',TPL_FINISH);
+unset($_SESSION[_LICENSE_KEY_]['user']['timedout']);

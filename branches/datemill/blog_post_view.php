@@ -25,10 +25,17 @@ $output=array();
 $loop=array();
 if (!empty($post_id)) {
 	// no need to check the status of the post ( AND `status`=".STAT_APPROVED)
-	$query="SELECT `fk_user_id`,`allow_comments` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id";
+	$query="SELECT `fk_user_id`,`allow_comments`,`alt_url` FROM `{$dbtable_prefix}blog_posts` WHERE `post_id`=$post_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
+		if (_BASEURL_.'/'.$tplvars['relative_request_uri']!=$output['alt_url']) {
+			header('HTTP/1.0 404 Not Found',true);
+			$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
+			$_SESSION['topass']['message']['text']='Sorry, the page you are looking for could not be found.';
+			require_once 'info.php';
+			die;
+		}
 		require_once _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
 		$blog_posts_cache=new blog_posts_cache();
 		$output=array_merge($output,$blog_posts_cache->get_post($post_id,false));
@@ -119,7 +126,7 @@ if (!empty($post_id)) {
 	redirect2page('info.php',$topass);
 }
 
-$output['return2me']=str_replace(_BASEURL_.'/','','http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+$output['return2me']=$tplvars['relative_request_uri'];
 $output['return2me']=rawurlencode($output['return2me']);
 $output['user']=isset($_COOKIE['sco_app']['anon_name']) ? $_COOKIE['sco_app']['anon_name'] : '';
 $tpl->set_file('content','blog_post_view.html');

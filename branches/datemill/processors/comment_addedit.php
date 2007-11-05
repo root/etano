@@ -65,6 +65,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['return']='';
 	}
 
+	if ($input['user']=='datemill' && $input['fk_user_id']!=96) {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Please use another name or login if you really are "datemill".';
+	}
 	if (empty($input['comment'])) {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
