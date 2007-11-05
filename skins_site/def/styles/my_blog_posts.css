@@ -51,6 +51,7 @@ a.view_blog:hover {
 	display: block;
 	padding: 0;
 	text-indent: -9999px;
+	background: url('../images/link_block.gif') no-repeat top left;
 }
 
 .my_blog_posts a.link_change {
@@ -60,6 +61,11 @@ a.view_blog:hover {
 	display: block;
 	padding: 0;
 	text-indent: -9999px;
+	background: url('../images/link_change.gif') no-repeat top left;
+}
+
+.my_blog_posts a.link_delete:hover, .my_blog_posts a.link_change:hover {
+	background-position: bottom left;
 }
 
 .my_blog_posts .row .title {

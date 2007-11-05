@@ -25,7 +25,9 @@ if (($pos=strpos(_BASEURL_,'/',8))!==false) {
 $request_uri=trim($request_uri,'/');
 $uri_parts=explode('/',$request_uri);
 
-if ($uri_parts[0]=='blogpost' && isset($uri_parts[1])) {
+if (empty($request_uri)) {
+	require_once 'index.php';
+} elseif ($uri_parts[0]=='blogpost' && isset($uri_parts[1])) {
 	$_GET['pid']=$uri_parts[1];
 	require_once 'blog_post_view.php';
 	die;
@@ -33,16 +35,9 @@ if ($uri_parts[0]=='blogpost' && isset($uri_parts[1])) {
 	$_GET['bid']=$uri_parts[1];
 	require_once 'blog_view.php';
 	die;
-} elseif ($uri_parts[0]=='devblog' && isset($uri_parts[1]) && $uri_parts[1]=='community-builder') {
+} elseif ($uri_parts[0]=='devblog' && isset($uri_parts[1]) && $uri_parts[1]=='community-builder' && !isset($uri_parts[2])) {
 	$_GET['st']='new';
 	require_once 'blog_search.php';
-	die;
-} elseif ($uri_parts[0]=='inbox') {
-	require_once 'mailbox.php';
-	die;
-} elseif ($uri_parts[0]=='photo' && isset($uri_parts[1])) {
-	$_GET['photo_id']=$uri_parts[1];
-	require_once 'photo_view.php';
 	die;
 } elseif ($uri_parts[0]=='kb') {
 	if (isset($uri_parts[1])) {
@@ -53,5 +48,9 @@ if ($uri_parts[0]=='blogpost' && isset($uri_parts[1])) {
 	require_once 'support.php';
 	die;
 } else {
-	redirect2page('index.php');
+	header('HTTP/1.0 404 Not Found',true);
+	$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
+	$_SESSION['topass']['message']['text']='Sorry, the page you are looking for could not be found.';
+	require_once 'info.php';
+	die;
 }

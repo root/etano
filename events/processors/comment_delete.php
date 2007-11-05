@@ -68,7 +68,7 @@ function on_before_delete_comment() {
 	}
 }
 
-$_on_before_delete[]='upd_latest_comm_widg';
+$_on_after_delete[]='upd_latest_comm_widg';
 
 // the calling script MUST HAVE $comment_ids array and $comment_type as GLOBALS
 function upd_latest_comm_widg() {

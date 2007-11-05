@@ -29,6 +29,13 @@ if (!empty($_GET['bid'])) {
 		include _CACHEPATH_.'/blogs/'.$blog_id{0}.'/'.$blog_id.'/blog.inc.php';
 	}
 	$output=$blog;
+	if (_BASEURL_.'/'.$tplvars['relative_request_uri']!=$blog['alt_url']) {
+		header('HTTP/1.0 404 Not Found',true);
+		$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
+		$_SESSION['topass']['message']['text']='Sorry, the page you are looking for could not be found.';
+		require_once 'info.php';
+		die;
+	}
 
 	$year=sanitize_and_format_gpc($_GET,'y',TYPE_INT,0,0);
 	$month=sanitize_and_format_gpc($_GET,'m',TYPE_INT,0,0);
