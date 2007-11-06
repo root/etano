@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$mail->IsHTML(false);
 		$mail->From=$input['email'];
 		$mail->Sender=$input['email'];
-		if (isset($_SESSION[_LICENSE_KEY_]['user']['user'])) {
+		if (isset($_SESSION[_LICENSE_KEY_]['user']['user']) && $_SESSION[_LICENSE_KEY_]['user']['user']!='guest') {
 			$mail->FromName=$_SESSION[_LICENSE_KEY_]['user']['user'];
 		} elseif (!empty($input['name'])) {
 			$mail->FromName=$input['name'];
