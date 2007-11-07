@@ -45,9 +45,8 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 $query="SELECT `fk_lk_id`,`lang_value` FROM `{$dbtable_prefix}lang_strings` WHERE `skin`='$skin'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_assoc($res)) {
-	$loop[$temp[$rsrow['fk_lk_id']]]['lang_value']=$rsrow['lang_value'];
+	$loop[$temp[$rsrow['fk_lk_id']]]['lang_value']=str_replace(array('{','}'),array('&#x007B;','&#x007D;'),sanitize_and_format($rsrow['lang_value'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]));
 }
-$loop=sanitize_and_format($loop,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 
 $output['return2me']='lang_strings.php';
 if (!empty($_SERVER['QUERY_STRING'])) {

@@ -251,10 +251,10 @@ function regenerate_langstrings_array($skin_module_code='') {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			if ($rsrow['lk_use']!=LK_FIELD) {
-				$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,FORMAT_OLD_ADDSLASH,'');
+				$rsrow['lang_value']=addcslashes($rsrow['lang_value'],"'\\");
 			} else {
 				// field related strings cannot contain html code
-				$rsrow['lang_value']=sanitize_and_format_gpc($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT],'');
+				$rsrow['lang_value']=sanitize_and_format($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]);
 			}
 			if (!empty($rsrow['alt_id_text'])) {
 				$rsrow['lk_id']="'".$rsrow['alt_id_text']."'";
