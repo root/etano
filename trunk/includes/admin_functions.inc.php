@@ -254,7 +254,7 @@ function regenerate_langstrings_array($skin_module_code='') {
 				$rsrow['lang_value']=addcslashes($rsrow['lang_value'],"'\\");
 			} else {
 				// field related strings cannot contain html code
-				$rsrow['lang_value']=sanitize_and_format($rsrow,'lang_value',TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]);
+				$rsrow['lang_value']=sanitize_and_format($rsrow['lang_value'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]);
 			}
 			if (!empty($rsrow['alt_id_text'])) {
 				$rsrow['lk_id']="'".$rsrow['alt_id_text']."'";
