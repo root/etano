@@ -29,7 +29,7 @@ if (!empty($post_id)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
-		if (_BASEURL_.'/'.$tplvars['relative_request_uri']!=$output['alt_url']) {
+		if (isset($output['alt_url']) && _BASEURL_.'/'.$tplvars['relative_request_uri']!=$output['alt_url']) {
 			header('HTTP/1.0 404 Not Found',true);
 			$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
 			$_SESSION['topass']['message']['text']='Sorry, the page you are looking for could not be found.';
