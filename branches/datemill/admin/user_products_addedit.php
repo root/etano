@@ -41,6 +41,13 @@ if (isset($_SESSION['topass']['input'])) {
 	redirect2page('admin/cpanel.php');
 }
 
+$query="SELECT `gateway`,`gw_txn`,`amount_paid`,UNIX_TIMESTAMP(`date`) as `date` FROM `{$dbtable_prefix}payments` WHERE `payment_id`=".$output['fk_payment_id'];
+if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+if (mysql_num_rows($res)) {
+	$output=array_merge($output,mysql_fetch_assoc($res));
+	$output['date']=date('Y-m-d',$output['date']);
+}
+
 $output['fk_prod_id']=dbtable2options('`products`','`prod_id`','`prod_name`','`prod_name`',$output['fk_prod_id']);
 $output['fk_site_id']=dbtable2options('`user_sites`','`site_id`',"CONCAT(`site_id`,' - ',`baseurl`)",'`site_id`',$output['fk_site_id'],'`fk_user_id`='.$output['fk_user_id']);
 
