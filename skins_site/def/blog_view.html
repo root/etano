@@ -5,7 +5,7 @@
 	<li class="{loop.class}">
 		<h3><a class="content-link blog-title" href="{loop.alt_url}" title="{loop.title}">{loop.title}</a></h3>
 		<div>{loop.post_content}
-			... <a class="content-link read-more" href="{tplvars.relative_url}blog_post_view.php?pid={loop.post_id}" title="Read more on {loop.title}">read more</a>
+			... <a class="content-link read-more" href="{loop.alt_url}" title="Read more on {loop.title}">read more</a>
 		</div>
 		<div class="postedby">Posted on {loop.date_posted} by <em>{loop.user}</em> in <a href="{loop.blog_url}" title="{loop.blog_name}">{loop.blog_name}</a></div>
 		<!--noloop name="loop"-->
