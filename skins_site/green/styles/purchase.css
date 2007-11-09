@@ -20,3 +20,15 @@
 	width: 130px;
 }
 
+#payment_forms {
+	margin-top: 20px;
+}
+
+#tco_payment {
+	margin-top: 5px;
+}
+
+#disclaimer {
+	margin-top: 30px;
+	font-size: 85%;
+}
