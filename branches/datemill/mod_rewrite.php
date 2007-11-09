@@ -50,7 +50,7 @@ if (empty($request_uri)) {
 } else {
 	header('HTTP/1.0 404 Not Found',true);
 	$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
-	$_SESSION['topass']['message']['text']='Sorry, the page you are looking for could not be found.';
+	$_SESSION['topass']['message']['text']='Hmmm...the page you are looking for could not be found.';
 	require_once 'info.php';
 	die;
 }
