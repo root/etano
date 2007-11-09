@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<url>
+  <loc>http://www.datemill.com/</loc>
+  <priority>0.4</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/devblog/community-builder</loc>
+  <priority>0.5</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/features.php</loc>
+  <priority>0.2</priority>
+  <changefreq>yearly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/kb/0/knowledge-base</loc>
+  <priority>0.2</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/purchase.php</loc>
+  <priority>0.4</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/contact.php</loc>
+  <priority>0.1</priority>
+  <changefreq>yearly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/friendy/</loc>
+  <priority>0.4</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/pass_lost.php</loc>
+  <priority>0.1</priority>
+  <changefreq>yearly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/42/etano-community-builder-released-today</loc>
+  <priority>0.4</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blog/1/development-news</loc>
+  <priority>0.5</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/tos.php</loc>
+  <priority>0.1</priority>
+  <changefreq>yearly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/40/latest-update-what-it-does-and-why-should-i-care</loc>
+  <priority>0.4</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/31/etano-beta</loc>
+  <priority>0.4</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/28/blog-mania</loc>
+  <priority>0.4</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/24/last-update-before-beta</loc>
+  <priority>0.4</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/23/good-news</loc>
+  <priority>0.2</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/22/just-for-fun</loc>
+  <priority>0.2</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/21/mmm-search-defaults</loc>
+  <priority>0.2</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/19/tweaks</loc>
+  <priority>0.2</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/18/site-updated</loc>
+  <priority>0.2</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/forum/</loc>
+  <priority>0.4</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/kb/1/presale</loc>
+  <priority>0.3</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/kb/3/license-related</loc>
+  <priority>0.3</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/etano-eula.php</loc>
+  <priority>0.1</priority>
+  <changefreq>yearly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/bugtracker/</loc>
+  <priority>0.1</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/14/update-time-again</loc>
+  <priority>0.2</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/17/today-i-hate-programming</loc>
+  <priority>0.2</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/9/today-s-update-take-2</loc>
+  <priority>0.2</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/5/today-s-update</loc>
+  <priority>0.2</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/3/now-what</loc>
+  <priority>0.2</priority>
+  <changefreq>weekly</changefreq>
+</url>
+</urlset>

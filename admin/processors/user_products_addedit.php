@@ -53,7 +53,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['license_md5']=md5($input['license']);
 	}
 
+	$input['gateway']=sanitize_and_format_gpc($_POST,'gateway',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$input['gw_txn']=sanitize_and_format_gpc($_POST,'gw_txn',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$input['amount_paid']=isset($_POST['amount_paid']) ? (float)$_POST['amount_paid'] : 0;
+
 	if (!$error) {
+		if (!empty($input['fk_payment_id'])) {
+			$query="UPDATE `{$dbtable_prefix}payments` SET `gateway`='".$input['gateway']."',`gw_txn`='".$input['gw_txn']."',`amount_paid`='".$input['amount_paid']."' WHERE `payment_id`=".$input['fk_payment_id'];
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		} else {
+			$query="INSERT INTO `{$dbtable_prefix}payments` SET `gateway`='".$input['gateway']."',`gw_txn`='".$input['gw_txn']."',`amount_paid`='".$input['amount_paid']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$input['fk_payment_id']=mysql_insert_id();
+		}
 		if (!empty($input['uprod_id'])) {
 			$query="UPDATE `user_products` SET ";
 			foreach ($user_products_default['defaults'] as $k=>$v) {

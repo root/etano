@@ -24,6 +24,7 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
+$nextpage='index.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 	$input['user']=sanitize_and_format_gpc($_POST,'user',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');

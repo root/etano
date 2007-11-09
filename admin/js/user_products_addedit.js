@@ -1,4 +1,4 @@
 $(function() {
 	$.datePicker.setDateFormat('ymd','-');
-	$('#date_purchased').datePicker();
+	$('#date').datePicker({startDate:'1995-01-01'});
 });
