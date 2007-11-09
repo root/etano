@@ -28,6 +28,10 @@
 	margin-top: 5px;
 }
 
+#x_amount, #amount {
+	width: 50px;
+}
+
 #disclaimer {
 	margin-top: 30px;
 	font-size: 85%;
