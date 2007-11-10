@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		} else {
 			$user=get_user_by_userid($input['fk_user_id']);
-			$query="INSERT INTO `{$dbtable_prefix}payments` SET `fk_user_id`=".$input['fk_user_id'].",`date`='".$input['date']."',`gateway`='".$input['gateway']."',`gw_txn`='".$input['gw_txn']."',`amount_paid`='".$input['amount_paid']."'";
+			$query="INSERT INTO `{$dbtable_prefix}payments` SET `fk_user_id`=".$input['fk_user_id'].",`_user`='$user',`date`='".$input['date']."',`gateway`='".$input['gateway']."',`gw_txn`='".$input['gw_txn']."',`amount_paid`='".$input['amount_paid']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['fk_payment_id']=mysql_insert_id();
 		}
