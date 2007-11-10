@@ -17,19 +17,24 @@
 
 .product dd {
 	float: left;
-	width: 130px;
+	width: 110px;
 }
 
 #payment_forms {
 	margin-top: 20px;
 }
 
-#tco_payment {
+#tco_payment, #paypal_payment {
 	margin-top: 5px;
 }
 
 #x_amount, #amount {
 	width: 50px;
+}
+
+.cp_label {
+	width: 200px;
+	float: left;
 }
 
 #disclaimer {
