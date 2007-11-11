@@ -1,0 +1,12 @@
+<p>The following products are assigned to license <strong>{output.license}</strong>:</p>
+
+<ul id="products_list">
+<!--loop name="loop"-->
+	<li><strong>{loop.prod_name}</strong> <a href="{tplvars.baseurl}/remote/download.php?t=p&amp;id={loop.prod_id}&amp;lk={output.license_md5}">Download</a></li>
+<!--noloop name="loop"-->
+	<strong><br />No products are assigned to this license.</strong>
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
+</ul>
+
+<script type="text/javascript" src="{tplvars.relative_url}js/site_products.js?v={tplvars.js_lib_v}"></script>
