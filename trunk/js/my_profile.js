@@ -1,7 +1,7 @@
 $(function() {
 	$('div.comment a.link_change[@id^=editme_]').bind('click',function() {
 		c_id=$(this).attr('id').substr(7);
-		$.post('ajax/get_comment.php',
+		$.post(baseurl+'/ajax/get_comment.php',
 				{'comment_id':c_id,'t':'user'},
 				function(data) {
 					if (data!=null && data!='') {

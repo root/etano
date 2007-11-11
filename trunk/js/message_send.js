@@ -22,7 +22,7 @@ $(function() {
 function save_as_template() {
 	theform=$('#msend_form')[0];
 	if (check_form(theform)) {
-		$.post('ajax/save_user_tpl.php',
+		$.post(baseurl+'/ajax/save_user_tpl.php',
 				{'subject':escape(theform.subject.value),'message_body':escape(theform.message_body.value)},
 				function(data) {
 					if (data==1) {
