@@ -1,0 +1,6 @@
+@import url('content2.css');
+
+ul#products_list {
+	list-style-image: url('../images/bullet2.gif');
+	margin: 20px 0;
+}

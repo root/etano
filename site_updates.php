@@ -35,8 +35,8 @@ if (mysql_num_rows($res)) {
 	$output=mysql_fetch_assoc($res);
 	if (empty($output['baseurl'])) {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Please enter your site URL first.';
-		redirect2page('site_edit.php',$topass,'site_id='.$output['site_id'].'&return=site_updates.php');
+		$topass['message']['text']='In order to have access to updates you need to enter your site URL first.';
+		redirect2page('site_edit.php',$topass,'site_id='.$output['site_id']);
 	}
 } else {
 	// problem, why don't we have this license in our database?
