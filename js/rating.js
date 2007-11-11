@@ -1,7 +1,7 @@
 $(function() {
 	$('a.rate1,a.rate2,a.rate3,a.rate4,a.rate5').bind('click',function() {
 		vote=$(this).attr('class').substr(4);
-		$.post('ajax/rate_photo.php',
+		$.post(baseurl+'/ajax/rate_photo.php',
 			{'photo_id':photo_id,'vote':vote,'silent':1},
 			function(data) {
 				if (data && data!='') {

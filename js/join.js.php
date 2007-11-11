@@ -31,7 +31,7 @@ $(function() {
 });
 
 function req_update_location(str_field,val) {
-	$.post('ajax/location.php',
+	$.post(baseurl+'/ajax/location.php',
 			{'field':str_field,'val':val},
 			function(data) {
 				if (data!=null && data!='') {
@@ -61,7 +61,7 @@ function req_update_location(str_field,val) {
 function req_check_username() {
 	user=$('#user').val();
 	if (validate_user(user)) {
-		$.post('ajax/user_exists.php',
+		$.post(baseurl+'/ajax/user_exists.php',
 				{'user':user},
 				function(data) {
 					if (data!=null && data!='') {

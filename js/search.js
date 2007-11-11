@@ -15,7 +15,7 @@ $(function() {
 		if (!myval || myval=='') {
 			return false;
 		} else {
-			$.post('processors/popup_save_search.php',
+			$.post(baseurl+'/processors/popup_save_search.php',
 					{'search':search_md5,'title':escape(myval),'silent':1},
 					function(data) {
 						if (data!=null && data!='') {
