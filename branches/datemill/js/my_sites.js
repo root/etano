@@ -4,7 +4,7 @@ function assign_site(lk) {
 		return false;
 	} else {
 		if (baseurl.substr(0,6)!='http://') {
-			$.post('ajax/save_baseurl.php',
+			$.post(baseurl+'/ajax/save_baseurl.php',
 					{'lk':lk,'baseurl':baseurl},
 					function(data) {
 						if (data!=null) {

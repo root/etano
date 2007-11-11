@@ -1,5 +1,5 @@
 function req_update_location(str_field,val) {
-	$.post('ajax/location.php',
+	$.post(baseurl+'/ajax/location.php',
 			{'field':str_field,'val':val},
 			function(data) {
 				if (data!=null && data!='') {
