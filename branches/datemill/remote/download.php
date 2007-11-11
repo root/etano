@@ -69,7 +69,7 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 					}
 					if (count($uprod_ids)==count($prods)) {
 						// what dayaknow, it is a bundle of purchased prods!
-						$query="UPDATE `user_products` SET `downloads`=`downloads`+1 WHERE `uprod_id` IN ('".join("','",$dlds)."')";
+						$query="UPDATE `user_products` SET `downloads`=`downloads`+1,`last_download`=now() WHERE `uprod_id` IN ('".join("','",$dlds)."')";
 						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					} else {
 						// it is a bundle but they don't own all prods of the bundle.
@@ -90,7 +90,7 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 				redirect2page('purchase.php',$topass);
 			}
 		} else {
-			$query="UPDATE `user_products` SET `downloads`=`downloads`+1 WHERE `uprod_id`=".mysql_result($res,0,0);
+			$query="UPDATE `user_products` SET `downloads`=`downloads`+1,`last_download`=now() WHERE `uprod_id`=".mysql_result($res,0,0);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	}

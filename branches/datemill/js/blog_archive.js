@@ -1,5 +1,5 @@
 $(function() {
-	$('a.group_name').attr('href','javascript&#058;;').toggle(
+	$('a.group_name').attr('href','#').toggle(
 		function() {
 			$(this).parent('.year').toggleClass('current');
 		},
