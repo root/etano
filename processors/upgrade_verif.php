@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$return=curl_exec($ch);
 			if (!curl_errno($ch) && strpos($return,'HTTP/1.1 200 OK')===0) {
 				$query="UPDATE `dsb2_upgrades` SET `is_verified`=1 WHERE `upid`=".$input['upid'];
-//				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['type']=MESSAGE_INFO;
 				$topass['message']['text']='Your site has been authenticated and your request received. We will contact you shortly for details on how to upgrade your site.';
 			} else {
