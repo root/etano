@@ -47,6 +47,23 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				$topass['message']['type']=MESSAGE_INFO;
 				$topass['message']['text']='Your site has been authenticated and your request received. We will contact you shortly for details on how to upgrade your site.';
+				$config=get_site_option(array('mail_from','mail_crlf'),'core');
+				require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
+				$mail=new PHPMailer();
+				$mail->IsHTML(false);
+				$mail->From=$config['mail_from'];
+				$mail->Sender=$config['mail_from'];
+				$mail->FromName=$input['name'];
+				if ($config['mail_crlf']) {
+					$mail->LE="\r\n";
+				} else {
+					$mail->LE="\n";
+				}
+				$mail->IsMail();
+				$mail->AddAddress($config['mail_from']);
+				$mail->Subject='DSB to Etano upgrade request';
+				$mail->Body=var_export($input,true);
+				@$mail->Send();
 			} else {
 				$error=true;
 				$topass['message']['type']=MESSAGE_ERROR;
