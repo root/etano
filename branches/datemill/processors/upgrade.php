@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input['email']=sanitize_and_format_gpc($_POST,'email',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$input['txn']=sanitize_and_format_gpc($_POST,'txn',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$input['old_url']=sanitize_and_format_gpc($_POST,'old_url',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$input['old_url']=trim($input['old_url'],'/');
 
 	if (empty($input['name'])) {
 		$error=true;
@@ -43,10 +44,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='Please enter your DSB purchase transaction number.';
 	}
-	if (empty($input['old_url']) || $input['old_url']=='http://' || substr($input['old_url'],0,7)!='http://' || substr($input['old_url'],7)==gethostbyname(substr($input['old_url'],7))) {
+	if (empty($input['old_url']) || $input['old_url']=='http://' || substr($input['old_url'],0,7)!='http://') {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='Please enter the address of your DSB site.';
+	}
+	$domain=explode('/',substr($input['old_url'],7));
+	$domain=$domain[0];
+	if ($domain==gethostbyname($domain)) {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Invalid site entered.';
 	}
 
 	if (!$error) {
