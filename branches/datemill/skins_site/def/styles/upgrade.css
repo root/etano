@@ -1,0 +1,35 @@
+#upgrade_form {
+	margin: 20px 0;
+}
+
+#upgrade_form fieldset {
+	width: 400px;
+}
+
+.warning {
+	border: 1px solid #ccc;
+	margin-top: 20px;
+	margin-left: 20px;
+	padding: 10px;
+	font-size: 80%;
+}
+
+form.edit_form fieldset {
+	margin-bottom: 5px;
+	padding-bottom: 0px;
+}
+
+form.edit_form .controls {
+	padding-left: 10px;
+}
+
+.controls span {
+	float: right;
+	color: #f00;
+	padding-right: 30px;
+}
+
+dt sup {
+	color: #f00;
+	font-weight: bold;
+}

@@ -1,0 +1,34 @@
+<p>If you are a customer who purchased Dating Site Builder from us and want to upgrade to Etano for free you need to
+answer a few questions for us. Please note that we might contact you for additional information if needed.</p>
+
+<p class="justify warning">From the time you receive the temporary license number and download link for Etano from us you will be given 2 months to migrate your current site to the new site. After 2 months, your temporary license will be invalidated.
+Once you finish the migration process you need to <a href="contact.php" title="Contact Us">contact us</a> to receive your final license number.<br />
+After you finish the migration process, you must <strong>take down your DSB site</strong> and have only the Etano site up. If you want to keep your DSB site and have another one based on Etano, you <strong>must purchase one Etano license</strong>.
+</p>
+
+<form action="processors/upgrade.php" method="post" id="upgrade_form" class="edit_form">
+<fieldset>
+<dl class="clearfix">
+	<dt>Your name:</dt>
+	<dd><input type="text" class="text" name="name" value="{output.name}" /></dd>
+</dl>
+<dl class="clearfix">
+	<dt>Your email:</dt>
+	<dd><input type="text" class="text" name="email" value="{output.email}" /></dd>
+</dl>
+<dl class="clearfix">
+	<dt>Your DSB purchase<br />transaction number:</dt>
+	<dd><input type="text" class="text" name="txn" value="{output.txn}" /></dd>
+</dl>
+<dl class="clearfix">
+	<dt>Your current DSB site<sup>1</sup>:</dt>
+	<dd><input type="text" class="text" name="old_url" value="{output.old_url}" /></dd>
+</dl>
+</fieldset>
+<fieldset class="controls">
+	<span>All fields are mandatory!</span>
+	<p><input type="submit" class="button" value="Next" /></p>
+</fieldset>
+</form>
+
+<p><sup>1</sup> If you don't have a DSB site you must enter the site where you will install Etano. In the next step we must verify that you are the owner of this site.</p>

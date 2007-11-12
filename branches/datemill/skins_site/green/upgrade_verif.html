@@ -1,0 +1,15 @@
+<p>To authenticate your site ownership you must upload a verification file to your site.</p>
+
+<ol id="verif_steps">
+	<li>
+		Please create the file <strong>dm_{output.upkey}.html</strong> at the root level of your site directory. The content of the file is not important - it could be an empty file.<br />
+		The expected file path is <a href="{output.upsite}/dm_{output.upkey}.html">{output.upsite}/dm_{output.upkey}.html</a>.
+	</li>
+	<li>
+		When the file is uploaded, please click the button below to authenticate your site:<br />
+		<form action="processors/upgrade_verif.php" method="post">
+		<input type="hidden" name="upid" value="{output.upid}" />
+		<input type="submit" value="Authenticate" />
+		</form>
+	</li>
+</ol>

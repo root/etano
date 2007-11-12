@@ -1,0 +1,9 @@
+#verif_steps {
+	margin-left: 25px;
+	margin-top: 25px;
+	list-style-type: decimal;
+}
+
+#verif_steps li {
+	margin-bottom: 15px;
+}
