@@ -55,7 +55,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 if ($rss_writer_object->writerss($towrite)) {
 	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
 	$fileop=new fileop();
-	$fileop->file_put_contents(_BASEPATH_.'/rss/site_news.xml',$towrite);
+	$fileop->file_put_contents(_BASEPATH_.'/remote/feeds/admin.xml',$towrite);
 } else {
 	$error=true;
 	$topass['message']['type']=MESSAGE_ERROR;
