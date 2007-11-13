@@ -504,12 +504,7 @@ class payment_paypal extends ipayment {
 											// if this is a new customer, create an account and profile for him
 											if (empty($real_user['user_id'])) {
 												$input['pass']=gen_pass(6);
-												$query="INSERT IGNORE INTO `".USER_ACCOUNTS_TABLE."` SET `".USER_ACCOUNT_USER."`='".$input['payer_email']."',`".USER_ACCOUNT_PASS."`=md5('".$input['pass']."'),`email`='".$input['payer_email']."',`membership`=4";
-												if ($this->is_fraud) {
-													$query.=',`status`='.ASTAT_SUSPENDED;
-												} else {
-													$query.=',`status`='.ASTAT_ACTIVE;
-												}
+												$query="INSERT IGNORE INTO `".USER_ACCOUNTS_TABLE."` SET `".USER_ACCOUNT_USER."`='".$input['payer_email']."',`".USER_ACCOUNT_PASS."`=md5('".$input['pass']."'),`email`='".$input['payer_email']."',`membership`=4,`status`=".ASTAT_ACTIVE;
 												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 												$real_user['user_id']=mysql_insert_id();
 												$real_user['user']=$input['payer_email'];
