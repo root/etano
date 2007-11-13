@@ -52,6 +52,10 @@ if (!empty($output['search_md5'])) {
 	if (empty($input['license'])) {
 		unset($input['license']);
 	}
+	$input['with_prod']=sanitize_and_format_gpc($_GET,'with_prod',TYPE_INT,0,0);
+	if (empty($input['with_prod'])) {
+		unset($input['with_prod']);
+	}
 	$input['astat']=sanitize_and_format_gpc($_GET,'astat',TYPE_INT,0,0);
 	if (empty($input['astat'])) {
 		unset($input['astat']);
@@ -142,6 +146,10 @@ if ($do_query) {
 	if (isset($input['license'])) {
 		$from.=",`user_products` c";
 		$where.=" AND a.`fk_user_id`=c.`fk_user_id` AND (c.`license`='".$input['license']."' OR c.`license_md5`='".$input['license']."')";
+	}
+	if (isset($input['with_prod'])) {
+		$from.=",`user_products` c";
+		$where.=" AND a.`fk_user_id`=c.`fk_user_id` AND c.`fk_prod_id`='".$input['with_prod']."'";
 	}
 	if (isset($input['pstat'])) {	// profile status
 		$where.=" AND a.`status`=".$input['pstat'];
