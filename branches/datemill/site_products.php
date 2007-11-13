@@ -45,7 +45,7 @@ if (mysql_num_rows($res)) {
 }
 
 $loop=array();
-$query="SELECT b.`prod_id`,b.`prod_name`,b.`version` FROM `user_products` a,`products` b WHERE a.`fk_prod_id`=b.`prod_id` AND a.`fk_site_id`=".$output['site_id']." AND a.`fk_user_id`=".$_SESSION[_LICENSE_KEY_]['user']['user_id'];
+$query="SELECT b.`prod_id`,b.`prod_name`,b.`version` FROM `user_products` a,`products` b WHERE a.`fk_prod_id`=b.`prod_id` AND a.`fk_site_id`=".$output['site_id']." AND a.`is_visible`=1 AND a.`fk_user_id`=".$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['prod_name']=sanitize_and_format($rsrow['prod_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
