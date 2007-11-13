@@ -25,8 +25,7 @@ $output['membership']=dbtable2options("`{$dbtable_prefix}memberships`",'`m_value
 
 $loop=array();
 $s=0;
-for ($i=0;isset($basic_search_fields[$i]);++$i) {
-	$field=$_pfields[$basic_search_fields[$i]];
+foreach ($_pfields as $k=>$field) {
 	$loop[$s]['label']=$field['search_label'];
 	$loop[$s]['dbfield']=$field['dbfield'];
 	switch ($field['search_type']) {
