@@ -152,7 +152,7 @@ if ($do_query) {
 		$where.=" AND a.`fk_user_id`=c.`fk_user_id` AND (c.`license`='".$input['license']."' OR c.`license_md5`='".$input['license']."')";
 	}
 	if (isset($input['gw_txn'])) {
-		$from.=",`payments` d";
+		$from.=",`{$dbtable_prefix}payments` d";
 		$where.=" AND a.`fk_user_id`=d.`fk_user_id` AND LOWER(d.`gw_txn`) LIKE LOWER('%".$input['gw_txn']."%')";
 	}
 	if (isset($input['with_prod'])) {
