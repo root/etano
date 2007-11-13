@@ -12,7 +12,9 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 require_once '../includes/common.inc.php';
-db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
+if (!isset($ident_return)) {
+	db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
+}
 
 $output=array();
 $input=array();

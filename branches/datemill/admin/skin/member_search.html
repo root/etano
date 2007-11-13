@@ -10,18 +10,6 @@
 	</div>
 </div>
 
-<form action="member_results.php" method="get" class="edit_form">
-<fieldset>
-<dl>
-	<dt><label for="texts">Texts:</label></dt>
-	<dd><input type="text" name="texts" id="texts" tabindex="1" /></dd>
-</dl>
-</fieldset>
-<fieldset class="controls">
-	<input type="submit" value="Search" tabindex="50" />
-</fieldset>
-</form>
-
 <form action="member_results.php" method="get" id="member_search_form" class="edit_form">
 <fieldset>
 <dl>
@@ -29,9 +17,17 @@
 	<dd><input type="text" name="user" id="user" tabindex="1" /></dd>
 </dl>
 <dl>
+	<dt><label for="texts">Texts:</label></dt>
+	<dd><input type="text" name="texts" id="texts" tabindex="2" /></dd>
+</dl>
+<dl>
+	<dt><label for="texts">License:</label></dt>
+	<dd><input type="text" name="license" id="license" tabindex="2" /></dd>
+</dl>
+<dl>
 	<dt><label for="astat">Account status:</label></dt>
 	<dd>
-		<select name="astat" id="astat" tabindex="2">
+		<select name="astat" id="astat" tabindex="3">
 		<option value="0">-</option>
 		{output.astat}
 		</select>

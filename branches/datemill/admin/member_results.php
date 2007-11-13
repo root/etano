@@ -44,6 +44,14 @@ if (!empty($output['search_md5'])) {
 	if (empty($input['user'])) {
 		unset($input['user']);
 	}
+	$input['texts']=sanitize_and_format_gpc($_GET,'texts',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	if (empty($input['texts'])) {
+		unset($input['texts']);
+	}
+	$input['license']=sanitize_and_format_gpc($_GET,'license',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	if (empty($input['license'])) {
+		unset($input['license']);
+	}
 	$input['astat']=sanitize_and_format_gpc($_GET,'astat',TYPE_INT,0,0);
 	if (empty($input['astat'])) {
 		unset($input['astat']);
@@ -126,7 +134,14 @@ if ($do_query) {
 	$from="`{$dbtable_prefix}user_profiles` a";
 
 	if (isset($input['user'])) {
-		$where.=" AND a.`_user` LIKE '".$input['user']."%'";
+		$where.=" AND a.`_user` LIKE '%".$input['user']."%'";
+	}
+	if (isset($input['texts'])) {
+		$where.=" AND (a.`_user` LIKE '%".$input['texts']."%' OR a.`f1` LIKE '%".$input['texts']."%' OR a.`f2` LIKE '%".$input['texts']."%' OR a.`f3` LIKE '%".$input['texts']."%' OR a.`f4` LIKE '%".$input['texts']."%' OR a.`f5` LIKE '%".$input['texts']."%' OR a.`f7` LIKE '%".$input['texts']."%' OR a.`f8` LIKE '%".$input['texts']."%' OR a.`f9` LIKE '%".$input['texts']."%')";
+	}
+	if (isset($input['license'])) {
+		$from.=",`user_products` c";
+		$where.=" AND a.`fk_user_id`=c.`fk_user_id` AND (c.`license`='".$input['license']."' OR c.`license_md5`='".$input['license']."')";
 	}
 	if (isset($input['pstat'])) {	// profile status
 		$where.=" AND a.`status`=".$input['pstat'];
