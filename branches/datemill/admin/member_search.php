@@ -22,6 +22,7 @@ $output=array();
 $output['astat']=vector2options($accepted_astats);
 $output['pstat']=vector2options($accepted_pstats);
 $output['membership']=dbtable2options("`{$dbtable_prefix}memberships`",'`m_value`','`m_name`','`m_value`');
+$output['with_prod']=dbtable2options("`products`",'`prod_id`','`prod_name`','`prod_name`');
 
 $loop=array();
 $s=0;
