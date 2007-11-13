@@ -27,7 +27,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['return']=rawurlencode($output['return']);
 } elseif (!empty($_GET['uprod_id'])) {
 	$uprod_id=(int)$_GET['uprod_id'];
-	$query="SELECT `uprod_id`,`fk_prod_id`,`fk_site_id`,`fk_user_id`,`fk_payment_id`,`license` FROM `user_products` WHERE `uprod_id`=$uprod_id";
+	$query="SELECT `uprod_id`,`fk_prod_id`,`fk_site_id`,`fk_user_id`,`fk_payment_id`,`license`,`license_md5` FROM `user_products` WHERE `uprod_id`=$uprod_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
