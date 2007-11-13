@@ -1,0 +1,35 @@
+<h2>Edit Comment</h2>
+
+<form action="processors/comment_addedit.php" method="post" id="comment_addedit_form">
+<fieldset>
+	<input type="hidden" name="comment_id" value="{output.comment_id}" />
+	<input type="hidden" name="m" value="{output.m}" />
+	<input type="hidden" name="fk_parent_id" value="{output.fk_parent_id}" />
+	<input type="hidden" name="return" value="{output.return}" />
+</fieldset>
+<!--opt name="output.bbcode_comments"-->
+<div id="bb_tools">
+	<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a>
+	<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
+</div>
+<!--/opt name="output.bbcode_comments"-->
+<fieldset>
+	<textarea name="comment" id="comment" tabindex="1">{output.comment}</textarea>
+</fieldset>
+<fieldset class="controls">
+	<input class="button" type="submit" value="Save" />
+</fieldset>
+</form>
+
+<div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
+
+<script type="text/javascript" src="js/comment_addedit.js?v={tplvars.js_lib_v}"></script>
+<!--opt name="output.bbcode_comments"-->
+<script type="text/javascript">
+	bbcode_field_id='#comment';
+</script>
+<script type="text/javascript" src="js/bbcode.js?v={tplvars.js_lib_v}"></script>
+<!--/opt name="output.bbcode_comments"-->
