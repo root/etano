@@ -34,9 +34,11 @@ if (isset($_SESSION['topass']['input'])) {
 	}
 } elseif (!empty($_GET['sid'])) {
 	$output['fk_site_id']=(int)$_GET['sid'];
-	$query="SELECT `fk_user_id` FROM `user_sites` WHERE `site_id`=".$output['fk_site_id'];
+	$query="SELECT a.`fk_user_id`,b.`f1` FROM `user_sites` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`site_id`=".$output['fk_site_id'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$output['fk_user_id']=mysql_result($res,0,0);
+	$output['key']=gen_license(array('site_id'=>$output['fk_site_id'],'name'=>mysql_result($res,0,1)));
+	$output['key_beta']=gen_license(array('site_id'=>$output['fk_site_id'],'name'=>mysql_result($res,0,1),'beta'=>1));
 } else {
 	redirect2page('admin/cpanel.php');
 }
