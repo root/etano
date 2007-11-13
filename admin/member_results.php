@@ -56,6 +56,10 @@ if (!empty($output['search_md5'])) {
 	if (empty($input['with_prod'])) {
 		unset($input['with_prod']);
 	}
+	$input['gw_txn']=sanitize_and_format_gpc($_GET,'gw_txn',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	if (empty($input['gw_txn'])) {
+		unset($input['gw_txn']);
+	}
 	$input['astat']=sanitize_and_format_gpc($_GET,'astat',TYPE_INT,0,0);
 	if (empty($input['astat'])) {
 		unset($input['astat']);
@@ -146,6 +150,10 @@ if ($do_query) {
 	if (isset($input['license'])) {
 		$from.=",`user_products` c";
 		$where.=" AND a.`fk_user_id`=c.`fk_user_id` AND (c.`license`='".$input['license']."' OR c.`license_md5`='".$input['license']."')";
+	}
+	if (isset($input['gw_txn'])) {
+		$from.=",`payments` d";
+		$where.=" AND a.`fk_user_id`=d.`fk_user_id` AND LOWER(d.`gw_txn`) LIKE LOWER('%".$input['gw_txn']."%')";
 	}
 	if (isset($input['with_prod'])) {
 		$from.=",`user_products` c";
