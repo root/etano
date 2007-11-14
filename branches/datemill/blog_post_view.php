@@ -50,7 +50,7 @@ if (!empty($post_id)) {
 
 		$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
 		// comments
-		$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}blog_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`=".$output['post_id']." AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
+		$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,a.`website`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}blog_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`=".$output['post_id']." AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			if ($rsrow['date_posted']>$page_last_modified_time) {
@@ -72,6 +72,10 @@ if (!empty($post_id)) {
 			// allow showing the edit links to rightfull owners
 			if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
 				$rsrow['editme']=true;
+			}
+
+			if (!empty($rsrow['website'])) {
+				$rsrow['user']='<a rel="external" href="'.$rsrow['website'].'">'.$rsrow['user'].'</a>';
 			}
 
 			if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
@@ -129,6 +133,7 @@ if (!empty($post_id)) {
 $output['return2me']=$tplvars['relative_request_uri'];
 $output['return2me']=rawurlencode($output['return2me']);
 $output['user']=isset($_COOKIE['sco_app']['anon_name']) ? $_COOKIE['sco_app']['anon_name'] : '';
+$output['website']=isset($_COOKIE['sco_app']['anon_site']) ? $_COOKIE['sco_app']['anon_site'] : '';
 $tpl->set_file('content','blog_post_view.html');
 $tpl->set_var('output',$output);
 $tpl->set_loop('loop',$loop);

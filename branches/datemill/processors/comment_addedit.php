@@ -28,6 +28,7 @@ $nextpage='index.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 	$input['user']=sanitize_and_format_gpc($_POST,'user',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$input['website']=sanitize_and_format_gpc($_POST,'website',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$input['comment_type']=sanitize_and_format_gpc($_POST,'comment_type',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	switch ($input['comment_type']) {
 
@@ -80,6 +81,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$error=true;
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']='Please enter your name.';	// translate
+	}
+	if (!empty($input['website']) && (substr($input['website'],0,7)!='http://' || strpos($input['website'],'javascript')!==false || preg_match('/[\(\)\[\]\'"\{\}]/',$input['website']))) {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='The website you enter is invalid.';
 	}
 	if (!$error && $input['fk_user_id']==0 && get_site_option('use_captcha','core')) {
 		$captcha=sanitize_and_format_gpc($_POST,'captcha',TYPE_STRING,0,'');
@@ -135,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		} else {
 			unset($input['comment_id']);
 			$now=gmdate('YmdHis');
-			$query="INSERT INTO `$table` SET `_user`='".$input['user']."',`date_posted`='$now',`last_changed`='$now'";
+			$query="INSERT INTO `$table` SET `_user`='".$input['user']."',`website`='".$input['website']."',`date_posted`='$now',`last_changed`='$now'";
 			if ($config['manual_com_approval']==1) {
 				$query.=",`status`=".STAT_PENDING;
 			} else {
@@ -176,6 +182,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 		setcookie('sco_app[anon_name]',$input['user'],mktime(0,0,0,date('m'),date('d'),date('Y')+1),'/',$cookie_domain);
+		if (!empty($input['website'])) {
+			setcookie('sco_app[anon_site]',$input['website'],mktime(0,0,0,date('m'),date('d'),date('Y')+1),'/',$cookie_domain);
+		}
 	} else {
 		$input['comment']=addslashes_mq($_POST['comment']);
 		$input['return']=rawurlencode($input['return']);
