@@ -25,7 +25,7 @@ if (!empty($_POST['dbhost']) && !empty($_POST['dbuser']) && !empty($_POST['dbpas
 		$link=@mysql_connect($dbhost,$dbuser,$dbpass);
 		if ($link) {
 			if (@mysql_select_db($dbname,$link)) {
-				$output='Connection successful';
+				$output='Connection successfull';
 			} else {
 				$output='Database Host, user and password are ok but the database name is wrong.';
 			}
