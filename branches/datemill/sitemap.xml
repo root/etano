@@ -6,6 +6,11 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
+  <loc>http://www.datemill.com/blogpost/43/how-to-create-a-new-skin-the-easy-way</loc>
+  <priority>0.4</priority>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
   <loc>http://www.datemill.com/</loc>
   <priority>0.4</priority>
   <changefreq>weekly</changefreq>
