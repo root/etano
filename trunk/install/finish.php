@@ -15,10 +15,16 @@ require_once '../includes/defines.inc.php';
 require_once '../includes/sessions.inc.php';
 require_once '../includes/sco_functions.inc.php';
 require_once '../includes/classes/phemplate.class.php';
+require_once '../includes/classes/fileop.class.php';
 
 $output=array();
 $tpl=new phemplate('skin/','remove_nonjs');
 $tpl->set_file('content','finish.html');
+
+$fileop=new fileop();
+if ($fileop->delete(_BASEPATH_.'/install')) {
+	$output['success']=true;
+}
 
 $output['notify']='http://www.datemill.com/remote/install_notify.php?lk='.md5(_LICENSE_KEY_).'&v='._INTERNAL_VERSION_.'&bu='.rawurlencode(base64_encode(_BASEURL_));
 if (!empty($_SESSION['install']['phpbin'])) {
@@ -26,10 +32,6 @@ if (!empty($_SESSION['install']['phpbin'])) {
 } else {
 	$output['nophpbin']=true;
 	$output['phpbin']='/path/to/php';
-}
-
-if (!empty($_GET['mt']) && $_GET['mt']==MESSAGE_INFO) {
-	$output['success']=true;
 }
 
 $output['basepath']=_BASEPATH_;
