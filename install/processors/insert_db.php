@@ -11,6 +11,7 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
+define('_LICENSE_KEY_','');
 require_once '../../includes/sessions.inc.php';
 require_once '../../includes/sco_functions.inc.php';
 set_time_limit(0);
