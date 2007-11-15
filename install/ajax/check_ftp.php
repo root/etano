@@ -26,9 +26,9 @@ if (!empty($_POST['ftphost']) && !empty($_POST['ftpuser']) && !empty($_POST['ftp
 		if ($link) {
 			if (@ftp_login($link,$user,$pass)) {
 				if (@ftp_chdir($link,$path.'media/pics/t1/0')) {	// a pretty unique path
-					$output='Connection successful. The FTP Path is ok.';
+					$output='Connection successfull. The FTP Path is ok.';
 				} else {
-					$output='The connection was successful but the FTP Path is wrong.';
+					$output='The connection was successfull but the FTP Path is wrong.';
 				}
 			} else {
 				$output='FTP Host is ok but either the user or the password are wrong.';
