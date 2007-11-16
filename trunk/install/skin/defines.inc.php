@@ -22,7 +22,7 @@ define('USER_ACCOUNT_PASS','pass');
 define('PASSWORD_ENC_FUNC','md5');
 
 define('_LICENSE_KEY_','{input.license_key}'); // md5()={input.license_key_md5}
-define('_INTERNAL_VERSION_','1.01');
+define('_INTERNAL_VERSION_','1.02');
 
 $accepted_results_per_page=array(10=>10,5=>5,15=>15,20=>20);
 $accepted_images=array('jpg','jpeg','png');
