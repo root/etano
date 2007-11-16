@@ -6,7 +6,7 @@ function clean_errors() {
 
 	if (function_exists('curl_init')) {
 		$config=get_site_option(array('collect_errors'),'adv_features');
-		if (!empty($config['collect_errors'])) {
+		if (!empty($config['collect_errors']) && function_exists('curl_init')) {
 			$query="SELECT `log_id`,`module`,`error` FROM `{$dbtable_prefix}error_log` ORDER BY `log_id`";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
