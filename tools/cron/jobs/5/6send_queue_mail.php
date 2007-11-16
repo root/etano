@@ -21,7 +21,11 @@ function send_queue_mail() {
 		} else {
 			$mail->LE="\n";
 		}
-		$mail->IsMail();
+		$mail->IsSMTP();
+		$mail->Host='mail.oaki.ro:587';
+		$mail->SMTPAuth=true;
+		$mail->Username='dan@sco.ro';
+		$mail->Password='diskedit';
 
 		$mail_ids=array();
 		$errors=array();
