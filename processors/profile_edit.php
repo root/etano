@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // execute the on_change triggers of every field
 			for ($i=0;isset($on_changes[$i]);++$i) {
 				if (function_exists($on_changes[$i]['fn'])) {
-					eval($on_changes[$i]['fn'].'($_SESSION[\'user\'][\'user_id\'],$on_changes[$i][\'param2\'],$on_changes[$i][\'param3\']);');
+					call_user_func($on_changes[$i]['fn'],$_SESSION[_LICENSE_KEY_]['user']['user_id'],$on_changes[$i]['param2'],$on_changes[$i]['param3']);
 				}
 			}
 
