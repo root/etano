@@ -11,6 +11,14 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
+function change_email($user_id,$field,$field_name='') {
+	if (preg_match('/[a-zA-Z0-9\.\-_]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z0-9\.\-]+/',$field)) {
+		$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `email`='$field' WHERE `fk_user_id`='$user_id'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
+}
+
+
 function update_location($user_id,$field,$field_name='') {
 	global $dbtable_prefix;
 	$latitude=0;
