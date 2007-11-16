@@ -56,10 +56,22 @@ if (!empty($input['uids'])) {
 
 		case 'pass':
 			$input['pass']=sanitize_and_format_gpc($_POST,'pass',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-			$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `".USER_ACCOUNT_PASS."`=md5('".$input['pass']."') WHERE `".USER_ACCOUNT_ID."`=".$input['uids'][0]."";
+			$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `".USER_ACCOUNT_PASS."`=md5('".$input['pass']."') WHERE `".USER_ACCOUNT_ID."`=".$input['uids'][0];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Password changed successfully';
+			break;
+
+		case 'user':
+			$input['user']=sanitize_and_format_gpc($_POST,'user',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+			$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `".USER_ACCOUNT_USER."`='".$input['user']."' WHERE `".USER_ACCOUNT_ID."`=".$input['uids'][0];
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_user`='".$input['user']."' WHERE `fk_user_id`=".$input['uids'][0];
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$query="UPDATE `{$dbtable_prefix}payments` SET `_user`='".$input['user']."' WHERE `fk_user_id`=".$input['uids'][0];
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$topass['message']['type']=MESSAGE_INFO;
+			$topass['message']['text']='User changed successfully';
 			break;
 
 	}
