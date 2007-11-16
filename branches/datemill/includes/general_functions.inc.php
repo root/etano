@@ -191,7 +191,6 @@ function send_template_email($to,$subject,$template,$skin,$output=array(),$messa
 	$config=get_site_option(array('mail_from','mail_crlf'),'core');
 	require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
 	$mail=new PHPMailer();
-	$mail->IsHTML(true);
 	$mail->From=$config['mail_from'];
 	$mail->Sender=$config['mail_from'];
 	$mail->FromName=_SITENAME_;
@@ -200,10 +199,16 @@ function send_template_email($to,$subject,$template,$skin,$output=array(),$messa
 	} else {
 		$mail->LE="\n";
 	}
-	$mail->IsMail();
+	$mail->IsSMTP();
+//	$mail->SMTPDebug=true;
+	$mail->Host='mail.oaki.ro:587';
+	$mail->SMTPAuth=true;
+	$mail->Username='dan@sco.ro';
+	$mail->Password='diskedit';
+
 	$mail->AddAddress($to);
 	$mail->Subject=$subject;
-	$mail->Body=$message_body;
+	$mail->MsgHTML($message_body);
 	if (!$mail->Send()) {
 		$myreturn=false;
 		$GLOBALS['topass']['message']['type']=MESSAGE_ERROR;

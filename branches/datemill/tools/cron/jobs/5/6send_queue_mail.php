@@ -21,6 +21,7 @@ function send_queue_mail() {
 			$mail->LE="\n";
 		}
 		$mail->IsSMTP();
+//		$mail->SMTPDebug=true;
 		$mail->Host='mail.oaki.ro:587';
 		$mail->SMTPAuth=true;
 		$mail->Username='dan@sco.ro';
@@ -35,6 +36,8 @@ function send_queue_mail() {
 			$mail->MsgHTML($rsrow['message_body']);
 			if (!$mail->Send()) {
 				$errors[]='mail_id: '.$rsrow['mail_id'].' error: '.$mail->ErrorInfo;
+				require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+				new log_error(array('module_name'=>'send_template_email','text'=>'sending mail to '.$rsrow['to'].' failed:'.$rsrow['message_body']));
 			} else {
 				$mail_ids[]=$rsrow['mail_id'];
 			}

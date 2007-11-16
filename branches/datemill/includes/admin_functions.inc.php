@@ -428,7 +428,6 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 		$email['message_body']=sanitize_and_format($email['message_body'],TYPE_STRING,FORMAT_STRIP_MQ);
 		require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
 		$mail=new PHPMailer();
-		$mail->IsHTML(true);
 		$mail->From=$config['mail_from'];
 		$mail->Sender=$config['mail_from'];
 		$mail->FromName=_SITENAME_;
@@ -437,12 +436,18 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 		} else {
 			$mail->LE="\n";
 		}
-		$mail->IsMail();
+		$mail->IsSMTP();
+//		$mail->SMTPDebug=true;
+		$mail->Host='mail.oaki.ro:587';
+		$mail->SMTPAuth=true;
+		$mail->Username='dan@sco.ro';
+		$mail->Password='diskedit';
+
 		for ($i=0;isset($email_addrs[$i]);++$i) {
 			$mail->ClearAddresses();
 			$mail->AddAddress($email_addrs[$i]);
 			$mail->Subject=$email['subject'];
-			$mail->Body=$email['message_body'];
+			$mail->MsgHTML($email['message_body']);
 			if (!$mail->Send()) {
 				$myreturn=false;
 				$GLOBALS['topass']['message']['type']=MESSAGE_ERROR;
