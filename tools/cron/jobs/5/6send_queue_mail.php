@@ -12,7 +12,6 @@ function send_queue_mail() {
 		$config=get_site_option(array('mail_from','mail_crlf'),'core');
 		require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
 		$mail=new PHPMailer();
-		$mail->IsHTML(true);
 		$mail->From=$config['mail_from'];
 		$mail->Sender=$config['mail_from'];
 		$mail->FromName=_SITENAME_;
@@ -33,7 +32,7 @@ function send_queue_mail() {
 			$mail->ClearAddresses();
 			$mail->AddAddress($rsrow['to']);
 			$mail->Subject=$rsrow['subject'];
-			$mail->Body=$rsrow['message_body'];
+			$mail->MsgHTML($rsrow['message_body']);
 			if (!$mail->Send()) {
 				$errors[]='mail_id: '.$rsrow['mail_id'].' error: '.$mail->ErrorInfo;
 			} else {
