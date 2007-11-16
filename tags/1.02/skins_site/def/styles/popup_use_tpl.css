@@ -1,0 +1,38 @@
+#content-container {
+	width: 750px;
+}
+
+* html .row {
+	height: 1%;
+}
+.row {
+	overflow: hidden;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px dashed #ccc;
+}
+
+.row div {
+	border-left: 1px solid #DEDEDE;
+	float: left;
+	margin: 3px 0;
+	padding: 0 2px 0 8px;
+	overflow: hidden;
+}
+
+.header {
+	font-weight: bold;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.row .subject {
+	border-left: none;
+	width: 200px;
+	overflow: hidden;
+}
+
+.row .message_body {
+	width: 480px;
+	overflow: hidden;
+}

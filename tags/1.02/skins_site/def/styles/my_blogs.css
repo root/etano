@@ -1,0 +1,74 @@
+* html .my_blogs .row {
+	height: 1%;
+}
+
+.my_blogs .row {
+	overflow: hidden;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px dashed #ccc;
+	font-size: 14px;
+}
+
+.my_blogs .row div {
+	border-left: 1px solid #DEDEDE;
+	float: left;
+	margin: 3px 0;
+	padding: 0 2px 5px 8px;
+	overflow: hidden;
+}
+
+.my_blogs .header {
+	font-weight: bold;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.my_blogs .row .control {
+	width: 60px;
+	border-left: 0;
+	background-position: top right;
+	background-repeat: no-repeat;
+}
+
+.my_blogs a.link_delete {
+	float: left;
+	width: 22px;
+	height: 22px;
+	display: block;
+	padding: 0;
+	text-indent: -9999px;
+}
+
+.my_blogs a.link_change {
+	float: right;
+	width: 22px;
+	height: 22px;
+	display: block;
+	padding: 0;
+	text-indent: -9999px;
+}
+
+.my_blogs .row .blog_name {
+	width: 300px;
+	overflow: hidden;
+}
+
+.my_blogs .row .blog_name .content-link {
+	font-size: 14px;
+}
+
+.my_blogs .row .blog_name .blog_diz {
+	font-size: 11px;
+}
+
+.my_blogs .row .num_posts {
+	width: 120px;
+	overflow: hidden;
+	text-align: center;
+}
+
+div.controls {
+	padding-top: 15px;
+	margin-top: 15px;
+}
