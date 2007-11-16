@@ -120,7 +120,7 @@ class PHPMailer
      * is in a different directory than the PHP include path.
      * @var string
      */
-    var $PluginDir         = "";
+    var $PluginDir         = _BASEPATH_.'/includes/classes/';
 
     /**
      *  Holds PHPMailer version.
