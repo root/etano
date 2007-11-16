@@ -21,11 +21,6 @@ $output=array();
 $tpl=new phemplate('skin/','remove_nonjs');
 $tpl->set_file('content','finish.html');
 
-$fileop=new fileop();
-if ($fileop->delete(_BASEPATH_.'/install')) {
-	$output['success']=true;
-}
-
 $output['notify']='http://www.datemill.com/remote/install_notify.php?lk='.md5(_LICENSE_KEY_).'&v='._INTERNAL_VERSION_.'&bu='.rawurlencode(base64_encode(_BASEURL_));
 if (!empty($_SESSION['install']['phpbin'])) {
 	$output['phpbin']=$_SESSION['install']['phpbin'];
@@ -44,4 +39,20 @@ $tplvars['page']='finish';
 $tpl->set_var('output',$output);
 $tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_OPTIONAL);
-include 'frame.php';
+$tpl->set_file('frame','frame.html');
+$message=isset($message) ? $message : (isset($topass['message']) ? $topass['message'] : (isset($_SESSION['topass']['message']) ? $_SESSION['topass']['message'] : array()));
+if (!empty($message)) {
+	$message['type']=(!isset($message['type']) || $message['type']==MESSAGE_ERROR) ? 'message_error' : 'message_info';
+	if (is_array($message['text'])) {
+		$message['text']=join('<br>',$message['text']);
+	}
+	$tpl->set_var('message',$message);
+}
+$tpl->set_var('tplvars',$tplvars);
+echo $tpl->process('frame','frame',TPL_FINISH | TPL_OPTIONAL | TPL_INCLUDE);
+if (isset($_SESSION['topass'])) {
+	unset($_SESSION['topass']);
+}
+
+$fileop=new fileop();
+$fileop->delete(_BASEPATH_.'/install');
