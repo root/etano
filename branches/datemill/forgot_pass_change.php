@@ -39,10 +39,14 @@ if (!empty($output['uid']) && !empty($output['secret'])) {
 			unset($output['use_captcha']);
 		}
 	} else {
-		trigger_error('Invalid user');
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Invalid user';
+		redirect2page('info.php',$topass);
 	}
 } else {
-	trigger_error('Invalid user');
+	$topass['message']['type']=MESSAGE_ERROR;
+	$topass['message']['text']='Invalid user';
+	redirect2page('info.php',$topass);
 }
 
 $tpl->set_file('content','forgot_pass_change.html');
