@@ -1,0 +1,42 @@
+@import url('thickbox.css');
+@import url('datePicker.css');
+
+* html dl {
+	height: 1%;
+}
+
+#range_form {
+	padding-bottom: 10px;
+}
+
+dl {
+	clear:both;
+	float: none;
+}
+
+dl dt, dl dd {
+	float: left;
+}
+
+#date_start, #date_end {
+	width: 80px;
+	float: left;
+}
+
+.stdate, .enddate {
+	width: 130px;
+}
+
+.results_table .is_suspect td {
+	border-bottom: none;
+}
+
+.results_table .is_suspect {
+	color: #f00;
+}
+
+.results_table .reason {
+	border-bottom: 1px dashed #ccc;
+	font-weight: bold;
+}
+

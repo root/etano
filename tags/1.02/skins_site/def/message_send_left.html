@@ -1,0 +1,28 @@
+<div id="menu_folders" class="content_area small">
+	<h3>My Folders</h3>
+	<div class="box_content">
+		<ul class="menu">
+			<!--loop name="loopfolders"-->
+			<li><a class="content-link link_folder" href="{tplvars.relative_url}mailbox.php?fid={loopfolders.fid}">{loopfolders.folder}</a></li>
+			<!--/loop name="loopfolders"-->
+			<li class="controls"><a class="content-link link_add" href="{tplvars.relative_url}folders.php">Add new folder</a></li>
+			<li><a class="content-link link_filters" href="{tplvars.relative_url}filters.php">Manage filters</a></li>
+		</ul>
+	</div>
+</div>
+
+<div class="content_area small">
+	<h3>My Account</h3>
+	<div class="box_content">
+		<ul class="menu">
+			<li class="first"><a class="content-link link_profile" href="{tplvars.relative_url}my_profile.php">My Profile</a></li>
+			<li><a class="content-link link_photos" href="{tplvars.relative_url}my_photos.php">My Photos</a></li>
+			<li><a class="content-link link_blogs" href="{tplvars.relative_url}my_blogs.php">My Blogs</a></li>
+			<li><a class="content-link link_friends" href="{tplvars.relative_url}my_networks.php">My Connections</a></li>
+			<li><a class="content-link link_mail" href="{tplvars.relative_url}mailbox.php">My Messages</a></li>
+			<li><a class="content-link link_view" href="{tplvars.relative_url}my_searches.php">My Saved Searches</a></li>
+			<li><a class="content-link link_mail" href="{tplvars.relative_url}my_responses.php">My Saved Responses</a></li>
+			<li><a class="content-link link_change" href="{tplvars.relative_url}my_settings.php">My Settings</a></li>
+		</ul>
+	</div>
+</div>
