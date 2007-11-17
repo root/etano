@@ -20,6 +20,7 @@ require_once '../../includes/classes/fileop.class.php';
 allow_dept(DEPT_ADMIN);
 
 $updates_default['defaults']=array('update_id'=>0,'update_name'=>'','update_diz'=>'','filename'=>'');
+$found=false;
 $error=false;
 $qs='';
 $qs_sep='';
@@ -33,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!empty($filename)) {
 		$zipfile=new zipfile();
 		$zipfile->read_zip(_BASEPATH_.'/tmp/'.$filename);
-		$found=false;
 		$manifest_content='';
 		foreach ($zipfile->files as $zfile) {
 			if ($zfile['name']=='manifest.xml' && $zfile['dir']=='/') {
@@ -50,15 +50,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$requires=array();
 			for ($i=0;isset($p->install[0]['requires'][$i]);++$i) {
 				$requires[]=$p->install[0]['requires'][$i];
-			}
-			if (is_file(_BASEPATH_.'/dafilez/updates/'.$input['filename'])) {
-				$fileop->delete(_BASEPATH_.'/dafilez/updates/'.$input['filename']);
-			}
-			if (!$fileop->rename(_BASEPATH_.'/tmp/'.$filename,_BASEPATH_.'/dafilez/updates/'.$input['filename'])) {
-				$error=true;
-				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='Could not move the package to final destination';
-				$fileop->delete(_BASEPATH_.'/tmp/'.$filename);
 			}
 		} else {
 			$error=true;
@@ -82,25 +73,57 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		$now=gmdate('YmdHis');
 		if (!empty($input['update_id'])) {
-			$query="UPDATE `updates` SET `last_changed`='$now'";
-			foreach ($updates_default['defaults'] as $k=>$v) {
-				if (isset($input[$k])) {
-					$query.=",`$k`='".$input[$k]."'";
+			if ($found) {
+				$input['filename']=$input['update_id'].$input['filename'];
+				if (is_file(_BASEPATH_.'/dafilez/updates/'.$input['filename'])) {
+					$fileop->delete(_BASEPATH_.'/dafilez/updates/'.$input['filename']);
+				}
+				if (!$fileop->rename(_BASEPATH_.'/tmp/'.$filename,_BASEPATH_.'/dafilez/updates/'.$input['filename'])) {
+					$error=true;
+					$topass['message']['type']=MESSAGE_ERROR;
+					$topass['message']['text']='Could not move the package to final destination';
+					$fileop->delete(_BASEPATH_.'/tmp/'.$filename);
 				}
 			}
-			$query.=" WHERE `update_id`=".$input['update_id'];
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Update changed.';
+			if (!$error) {
+				$query="UPDATE `updates` SET `last_changed`='$now'";
+				foreach ($updates_default['defaults'] as $k=>$v) {
+					if (isset($input[$k])) {
+						$query.=",`$k`='".$input[$k]."'";
+					}
+				}
+				$query.=" WHERE `update_id`=".$input['update_id'];
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$topass['message']['type']=MESSAGE_INFO;
+				$topass['message']['text']='Update changed.';
+			}
 		} else {
-			$query="INSERT INTO `updates` SET `last_changed`='$now'";
-			foreach ($updates_default['defaults'] as $k=>$v) {
-				if (isset($input[$k])) {
-					$query.=",`$k`='".$input[$k]."'";
+			if ($found && !$error) {
+				unset($updates_default['defaults']['filename']);
+				$query="INSERT INTO `updates` SET `last_changed`='$now'";
+				foreach ($updates_default['defaults'] as $k=>$v) {
+					if (isset($input[$k])) {
+						$query.=",`$k`='".$input[$k]."'";
+					}
+				}
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$input['update_id']=mysql_insert_id();
+				$input['filename']=$input['update_id'].$input['filename'];
+				if (is_file(_BASEPATH_.'/dafilez/updates/'.$input['filename'])) {
+					$fileop->delete(_BASEPATH_.'/dafilez/updates/'.$input['filename']);
+				}
+				if ($fileop->rename(_BASEPATH_.'/tmp/'.$filename,_BASEPATH_.'/dafilez/updates/'.$input['filename'])) {
+					$query="UPDATE `updates` SET `filename`='".$input['filename']."' WHERE `update_id`=".$input['update_id'];
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				} else {
+					$error=true;
+					$topass['message']['type']=MESSAGE_ERROR;
+					$topass['message']['text']='Could not move the package to final destination';
+					$fileop->delete(_BASEPATH_.'/tmp/'.$filename);
+					$query="DELETE FROM `updates` WHERE `update_id`=".$input['update_id'];
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				}
 			}
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$input['update_id']=mysql_insert_id();
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Update added.';
 		}
