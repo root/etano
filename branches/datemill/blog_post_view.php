@@ -142,8 +142,8 @@ $tpl->process('content','content',TPL_LOOP | TPL_OPTLOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loop');
 unset($loop);
 
-$tplvars['title']=$output['blog_name'].' '.$output['title'];
-$tplvars['page_title']=$output['title'];
+$tplvars['title']=$output['title'].' : '.$output['blog_name'];
+$tplvars['page_title']='<a href="'.$output['alt_url'].'" title="Permanent Link: '.$output['title'].'" rel="bookmark">'.$output['title'].'</a>';
 $tplvars['page']='blog_post_view';
 $tplvars['css']='blog_post_view.css';
 if (is_file('blog_post_view_left.php')) {

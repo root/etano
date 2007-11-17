@@ -48,13 +48,12 @@ function pingback_ping($args) {
 				if (curl_errno($ch) || strpos($return,'HTTP/1.1 200 OK')!==0) {
 					$myreturn=16;	//The source URI does not exist.
 				}
-				$temp=str_replace(array('/','.','-'),array('\/','\.','\-'),$my_page);
-				if (preg_match('/(.{100})href=(\'|")'.$temp.'(\'|")(.{100})/',$return,$m)) {
-	return $m;
+				$temp=str_replace(array('/','.','-'),array('\/','\.','\-'),$my_page);	// for regexp
+				if (preg_match('/href=(\'|")'.$temp.'(\'|")/',$return,$m)) {
 					$query="INSERT INTO `pingback` SET `other_page`='".md5($other_page)."',`my_page`='".md5($my_page)."'";
 	//				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				} else {
-					$myreturn=17;	//The source URI does not contain a link to the target URI, and so cannot be used as a source.
+					$myreturn=$temp;	//The source URI does not contain a link to the target URI, and so cannot be used as a source.
 				}
 			}
 		}
