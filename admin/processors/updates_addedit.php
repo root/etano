@@ -127,6 +127,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Update added.';
 		}
+	}
+	if (!$error) {
 		if (isset($requires)) {
 			$query="DELETE FROM `update_requirements` WHERE `fk_update_id`=".$input['update_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
