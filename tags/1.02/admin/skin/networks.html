@@ -1,0 +1,32 @@
+<h2>Manage networks</h2>
+
+<ul class="content_submenu">
+	<li><a href="profile_fields.php">Profile Fields</a></li>
+	<li><a href="profile_categories.php">Profile Categories</a></li>
+</ul>
+<div class="hint"><strong>Add, edit, remove networks:</strong></div>
+
+<div id="pager_holder_top">{pager1}</div>
+<table id="pcats_list" class="results_table">
+<tr>
+	<th width="3%"></th>
+	<th width="15%">Category <a href="profile_categories.php?o={o}&amp;r={r}&amp;ob=1&amp;od=0" title="Order ascending"><img src="skin/images/up.gif" alt="up" /></a> <a href="profile_categories.php?o={o}&amp;r={r}&amp;ob=1&amp;od=1" title="Order descending"><img src="skin/images/down.gif" alt="down" /></a></th>
+	<th>Access Level <a href="profile_categories.php?o={o}&amp;r={r}&amp;ob=2&amp;od=0" title="Order ascending"><img src="skin/images/up.gif" alt="up" /></a> <a href="profile_categories.php?o={o}&amp;r={r}&amp;ob=2&amp;od=1" title="Order descending"><img src="skin/images/down.gif" alt="down" /></a></th>
+	<th width="40%"></th>
+</tr>
+<!--loop name="profile_categories"-->
+<tr align="center" class="{profile_categories.myclass}">
+	<td align="center"><a href="processors/profile_categories_delete.php?pcat_id={profile_categories.pcat_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" onclick="return(confirm('Are you sure you want to delete this category?'))" title="Delete this category"><img alt="Delete this category" src="skin/images/del.gif" /></a></td>
+	<td><a href="profile_categories_addedit.php?pcat_id={profile_categories.pcat_id}&amp;o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" title="Edit this category">{profile_categories.pcat_name}</a></td>
+	<td align="left">{profile_categories.access_level}</td>
+	<td></td>
+</tr>
+<!--noloop name="profile_categories"-->
+<tr>
+	<td colspan="4" class="no_result_item">No categories found!</td>
+</tr>
+<!--/noloop name="profile_categories"-->
+<!--/loop name="profile_categories"-->
+</table>
+<div id="pager_holder_btm">{pager2}</div>
+<div id="bottom_links"><a class="add" href="profile_categories_addedit.php?o={o}&amp;r={r}&amp;ob={ob}&amp;od={od}" title="Add new category">Add new</a></div>
