@@ -231,6 +231,8 @@ class fileop {
 				$myreturn=@ftp_mkdir($this->ftp_id,$ftp_fullpath);
 				ini_set('display_errors',$old_de);
 			}
+		} else {
+			$myreturn=true;
 		}
 		return $myreturn;
 	}
@@ -241,7 +243,7 @@ class fileop {
 		$myreturn=false;
 		if (is_dir($source)) {
 			if (!is_dir($destination)) {
-				@mkdir($destination,0755);
+				$this->mkdir($destination);
 			}
 			$d=dir($source);
 			while ($file=$d->read()) {
@@ -320,7 +322,7 @@ class fileop {
 			if ($files!==false) {
 				for ($i=0;isset($files[$i]);++$i) {
 					if ($files[$i]!='./' && $files[$i]!='../') {
-						$myreturn=$this->_ftp_delete($source.$files[$i]);	// $source already has an ending slash
+						$myreturn=$this->_ftp_delete($source.'/'.$files[$i]);
 					}
 				}
 				$myreturn=@ftp_rmdir($this->ftp_id,$source);

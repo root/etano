@@ -273,16 +273,16 @@ class etano_package {
 					$attrs['from']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['from']);
 					$attrs['to']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['to']);
 					if (isset($attrs['type']) && $attrs['type']=='skin') {
-						for ($i=0;isset($GLOBALS['skins'][$i]);++$i) {
-							$temp=str_replace('{skin}',$GLOBALS['skins'][$i],$attrs['from']);
-							$temp1=str_replace('{skin}',$GLOBALS['skins'][$i],$attrs['to']);
+						foreach ($GLOBALS['skins'] as $mc=>$mdir) {
+							$temp=str_replace('{skin}',$mdir,$attrs['from']);
+							$temp1=str_replace('{skin}',$mdir,$attrs['to']);
 							if (!$fileop->copy($temp,$temp1)) {
 								$this->error=true;
 								$masize=count($this->manual_actions);
 								$this->manual_actions[$masize]['type']='copy';
 								$this->manual_actions[$masize]['from']=$temp;
 								$this->manual_actions[$masize]['to']=$temp1;
-								$this->manual_actions[$masize]['error']=sprintf("Unable to copy file '%1$s' to '%2$s'",$temp,$temp1);
+								$this->manual_actions[$masize]['error']=sprintf('Unable to copy file %1$s to %2$s',$temp,$temp1);
 							}
 						}
 					} else {
@@ -292,22 +292,22 @@ class etano_package {
 							$this->manual_actions[$masize]['type']='copy';
 							$this->manual_actions[$masize]['from']=$attrs['from'];
 							$this->manual_actions[$masize]['to']=$attrs['to'];
-							$this->manual_actions[$masize]['error']=sprintf("Unable to copy file '%1$s' to '%2$s'",$attrs['from'],$attrs['to']);
+							$this->manual_actions[$masize]['error']=sprintf('Unable to copy file %1$s to %2$s',$attrs['from'],$attrs['to']);
 						}
 					}
 				} elseif ($mod_command->nodeName=='delete') {
 					$attrs=$mod_command->attributes;
 					$attrs['file']=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['file']);
 					if (isset($attrs['type']) && $attrs['type']=='skin') {
-						for ($i=0;isset($GLOBALS['skins'][$i]);++$i) {
-							$temp=str_replace('{skin}',$GLOBALS['skins'][$i],$attrs['file']);
+						foreach ($GLOBALS['skins'] as $mc=>$mdir) {
+							$temp=str_replace('{skin}',$mdir,$attrs['file']);
 							if (!$fileop->delete($temp)) {
 								$this->error=true;
 								$masize=count($this->manual_actions);
 								$this->manual_actions[$masize]['type']='delete';
 								$this->manual_actions[$masize]['from']=$temp;
 								$this->manual_actions[$masize]['to']='';
-								$this->manual_actions[$masize]['error']="Unable to automatically delete file.";
+								$this->manual_actions[$masize]['error']='Unable to automatically delete file.';
 							}
 						}
 					} else {
@@ -343,15 +343,17 @@ class etano_package {
 							$path='';
 							$temp=explode('/',$temp1);
 							for ($i=0;isset($temp[$i]);++$i) {
-								$path.='/'.$temp[$i];
-								if (!is_dir($path) && !$fileop->mkdir($path)) {
-									$this->error=true;
-									$masize=count($this->manual_actions);
-									$this->manual_actions[$masize]['type']='mkdir';
-									$this->manual_actions[$masize]['from']=$temp1;
-									$this->manual_actions[$masize]['to']='';
-									$this->manual_actions[$masize]['error']='Unable to automatically create directory.';
-									break;
+								if (!empty($temp[$i])) {
+									$path.='/'.$temp[$i];
+									if (!is_dir($path) && !$fileop->mkdir($path)) {
+										$this->error=true;
+										$masize=count($this->manual_actions);
+										$this->manual_actions[$masize]['type']='mkdir';
+										$this->manual_actions[$masize]['from']=$temp1;
+										$this->manual_actions[$masize]['to']='';
+										$this->manual_actions[$masize]['error']='Unable to automatically create directory.';
+										break;
+									}
 								}
 							}
 						}
@@ -359,15 +361,17 @@ class etano_package {
 						$path='';
 						$temp=explode('/',$attrs['path']);
 						for ($i=0;isset($temp[$i]);++$i) {
-							$path.='/'.$temp[$i];
-							if (!is_dir($path) && !$fileop->mkdir($path)) {
-								$this->error=true;
-								$masize=count($this->manual_actions);
-								$this->manual_actions[$masize]['type']='mkdir';
-								$this->manual_actions[$masize]['from']=$attrs['path'];
-								$this->manual_actions[$masize]['to']='';
-								$this->manual_actions[$masize]['error']='Unable to automatically create directory.';
-								break;
+							if (!empty($temp[$i])) {
+								$path.='/'.$temp[$i];
+								if (!is_dir($path) && !$fileop->mkdir($path)) {
+									$this->error=true;
+									$masize=count($this->manual_actions);
+									$this->manual_actions[$masize]['type']='mkdir';
+									$this->manual_actions[$masize]['from']=$attrs['path'];
+									$this->manual_actions[$masize]['to']='';
+									$this->manual_actions[$masize]['error']='Unable to automatically create directory.';
+									break;
+								}
 							}
 						}
 					}
