@@ -7,6 +7,7 @@ function send_queue_message() {
 	$limit=50;	// number of messages in a batch
 
 	global $dbtable_prefix;
+	include_once _BASEPATH_.'/skins_site/'.get_default_skin_dir().'/lang/mailbox.inc.php';
 	$filters=array();
 	$notifs=array();
 	$emails=array();
