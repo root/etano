@@ -320,7 +320,7 @@ class fileop {
 			if ($files!==false) {
 				for ($i=0;isset($files[$i]);++$i) {
 					if ($files[$i]!='./' && $files[$i]!='../') {
-						$myreturn=$this->_ftp_delete($source.'/'.$files[$i]);
+						$myreturn=$this->_ftp_delete($source.$files[$i]);	// $source already has an ending slash
 					}
 				}
 				$myreturn=@ftp_rmdir($this->ftp_id,$source);
