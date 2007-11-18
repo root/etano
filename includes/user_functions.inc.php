@@ -44,6 +44,30 @@ if (function_exists('error_handler')) {
 	set_error_handler('general_error');
 }
 
+function general_error($errlevel,$message,$file='unset',$line='unset') {
+	$error=array();
+	$error['text']=$message."\n<br />";
+	if (!empty($GLOBALS['query'])) {
+		$error['text'].='Last query run: '.$GLOBALS['query']."\n<br />";
+	}
+	ob_start();
+	echo '<pre>';
+	print_r(debug_backtrace());
+	echo '</pre>';
+	$error['text'].=ob_get_contents();
+	ob_end_clean();
+
+	require_once _BASEPATH_.'/includes/classes/log_error.class.php';
+	new log_error($error);
+	if ($errlevel==E_USER_ERROR) {
+		$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
+		$_SESSION['topass']['message']['text']='Sorry, a critical error has occured. If you are the site administrator please check out the error log to see the actual error.';
+		include _BASEPATH_.'/info.php';
+		exit;
+	}
+}
+
+
 function get_userid_by_user($user) {
 	$myreturn=0;
 	if (!empty($user)) {
