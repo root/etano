@@ -44,7 +44,7 @@ if (function_exists('error_handler')) {
 	set_error_handler('general_error');
 }
 
-function general_error($errlevel,$message,$file='unset',$line='unset') {
+function error_handler($errlevel,$message,$file='unset',$line='unset') {
 	$error=array();
 	$error['text']=$message."\n<br />";
 	if (!empty($GLOBALS['query'])) {
