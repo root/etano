@@ -1,0 +1,34 @@
+<h2>Banned Members</h2>
+
+<div class="hint"><strong>Add, edit, remove bans:</strong></div>
+
+<table id="bans_list" class="results_table">
+<tr>
+	<th width="50"></th>
+	<th>Ban</th>
+	<th>Since</th>
+	<th>Reason</th>
+</tr>
+<!--loop name="loop"-->
+<tr class="{loop.myclass}">
+	<td>
+		<a class="item_del" href="processors/site_bans_delete.php?ban_id={loop.ban_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to delete this ban?'))" title="Delete ban">Delete ban</a>
+		<a class="item_edit" href="site_bans_addedit.php?ban_id={loop.ban_id}&amp;return={output.return2me}" title="Edit this ban">Edit ban</a>
+	</td>
+	<td>{loop.ban_type}: {loop.what}</td>
+	<td>{loop.since}</td>
+	<td>{loop.reason}</td>
+</tr>
+<!--noloop name="loop"-->
+<tr>
+	<td colspan="4" class="no_result_item">No bans found!</td>
+</tr>
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
+</table>
+
+{output.pager2}
+
+<div id="bottom_links">
+	<a class="add" href="site_bans_addedit.php?return={output.return2me}" title="Add new ban">Add new ban</a>
+</div>
