@@ -60,9 +60,9 @@ function error_handler($errlevel,$message,$file='unset',$line='unset') {
 	require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 	new log_error($error);
 	if ($errlevel==E_USER_ERROR) {
-		$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
-		$_SESSION['topass']['message']['text']='Sorry, a critical error has occured. If you are the site administrator please check out the error log to see the actual error.';
-		include _BASEPATH_.'/info.php';
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Sorry, a critical error has occured. If you are the site administrator please check out the error log to see the actual error.';
+		redirect2page('info.php',$topass);
 		exit;
 	}
 }
