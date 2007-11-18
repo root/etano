@@ -127,7 +127,7 @@ $tplvars['photourl']=_PHOTOURL_;
 
 if (isset($_SERVER['PHP_SELF'])) {
 	$_SERVER['PHP_SELF']=preg_replace('~//+~','/',$_SERVER['PHP_SELF']);
-	$relative_path=@str_repeat('../',substr_count($_SERVER['PHP_SELF'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
+	$relative_path=@str_repeat('../',substr_count($_SERVER['SCRIPT_NAME'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
 	$_SERVER['REQUEST_URI']=preg_replace('~//+~','/',$_SERVER['REQUEST_URI']);
 	$tplvars['relative_url']=@str_repeat('../',substr_count($_SERVER['REQUEST_URI'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
 	$tplvars['relative_request_uri']=str_replace(_BASEURL_.'/','','http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
