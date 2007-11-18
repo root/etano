@@ -61,7 +61,7 @@ function error_handler($errlevel,$message,$file='unset',$line='unset') {
 	new log_error($error);
 	if ($errlevel==E_USER_ERROR) {
 		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text']='Sorry, a critical error has occured. If you are the site administrator please check out the error log to see the actual error.';
+		$topass['message']['text']='Sorry, there has been an error processing your request. For more info regarding Etano community builder or other dating and social networking products please see the links above.';
 		redirect2page('info.php',$topass);
 		exit;
 	}
