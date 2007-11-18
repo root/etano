@@ -3,9 +3,11 @@ $jobs[]='search_alerts';
 
 function search_alerts() {
 	global $dbtable_prefix,$tplvars;
-	$tplvars['tplrelpath']=_BASEPATH_.'/skins_site/def';
+	$skin=get_default_skin_dir();
 	require_once _BASEPATH_.'/includes/search_functions.inc.php';
-	require_once _BASEPATH_.'/includes/user_functions.inc.php';
+	require_once _BASEPATH_.'/includes/access_levels.inc.php';
+//	require_once _BASEPATH_.'/includes/user_functions.inc.php';
+	$tplvars['tplrelpath']=_BASEPATH_.'/skins_site/'.$skin;
 
 	$config['limit_results']=5;
 	$query_strlen=20000;
@@ -13,7 +15,6 @@ function search_alerts() {
 	$query="SELECT a.`search_id`,a.`fk_user_id`,a.`title`,a.`search`,a.`search_qs`,a.`alert_last_id`,UNIX_TIMESTAMP(a.`alert_last_sent`) as `alert_last_sent`,b.`membership`,b.`".USER_ACCOUNT_USER."` as `user`,b.`email` FROM `{$dbtable_prefix}user_searches` a,`".USER_ACCOUNTS_TABLE."` b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND a.`alert`=1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$skin=get_default_skin_dir();
 		$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$skin.'/emails/','remove_nonjs');
 		$tpl->set_file('temp','search_alert.html');
 		$tpl->set_var('tplvars',$tplvars);
@@ -35,6 +36,7 @@ function search_alerts() {
 				$rsrow['search']['min_user_id']=$rsrow['alert_last_id'];
 				$user_ids=search_results($rsrow['search'],$rsrow['membership']);
 				if (!empty($user_ids)) {
+					$GLOBALS['_list_of_online_members']=get_online_ids();
 					$last_user_id=0;
 					for ($i=0;isset($user_ids[$i]);++$i) {
 						if ($user_ids[$i]>$last_user_id) {
