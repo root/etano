@@ -39,7 +39,7 @@ while ($rsrow=mysql_fetch_row($res)) {
 
 $config=get_site_option(array('date_format'),'def_user_prefs');
 
-$query="SELECT `payment_id`,`fk_user_id`,`_user`,`gateway`,`gw_txn`,`name`,`country`,`email`,`is_subscr`,`m_value_to`,`amount_paid`,`refunded`,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until`,UNIX_TIMESTAMP(`date`) as `date`,`is_suspect`,`suspect_reason` FROM `{$dbtable_prefix}payments` WHERE `date`>='".$output['date_start']."' AND `date`<='".$output['date_end']."' ORDER BY `payment_id`";
+$query="SELECT `payment_id`,`fk_user_id`,`_user`,`gateway`,`gw_txn`,`name`,`country`,`email`,`is_subscr`,`m_value_to`,`amount_paid`,`refunded`,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until`,UNIX_TIMESTAMP(`date`) as `date`,`is_suspect`,`suspect_reason` FROM `{$dbtable_prefix}payments` WHERE `date`>='".$output['date_start']."' AND `date`<='".$output['date_end']."' ORDER BY `payment_id` DESC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $output['total']=0;
 $loop=array();

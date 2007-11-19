@@ -16,6 +16,7 @@ require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 check_login_member('read_blogs');
+header('X-Pingback: '._BASEURL_.'/xmlrpc.php');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $post_id=sanitize_and_format_gpc($_GET,'pid',TYPE_INT,0,0);

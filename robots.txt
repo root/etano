@@ -3,6 +3,7 @@ Crawl-delay: 10
 Allow: /
 Sitemap: http://www.datemill.com/sitemap.xml
 Disallow: /cc
+Disallow: /products/dsb
 Disallow: /admin
 Disallow: /ajax
 Disallow: /events
