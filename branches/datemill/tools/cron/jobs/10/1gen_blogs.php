@@ -46,5 +46,42 @@ function gen_blogposts_cache() {
 		$towrite='<?php $post='.var_export($blog,true).';';
 		$fileop->file_put_contents(_CACHEPATH_.'/blogs/posts/'.$blog['post_id']{0}.'/'.$blog['post_id'].'_short.inc.php',$towrite);
 	}
+
+	if (!empty($post_ids)) {
+		pingback_ping($post_ids);
+	}
 	return true;
+}
+
+
+function pingback_ping($post_ids) {
+	for ($i=0;isset($post_ids[$i]);++$i) {
+		if (is_file(_CACHEPATH_.'/blogs/posts/'.$post_ids[$i]{0}.'/'.$post_ids[$i].'.inc.php')) {
+			include_once _CACHEPATH_.'/blogs/posts/'.$post_ids[$i]{0}.'/'.$post_ids[$i].'.inc.php';
+			if (!empty($post['alt_url'])) {
+				$my_page=$post['alt_url'];
+			} else {
+				$my_page=_BASEURL_.'/blog_post_view.php?pid='.$post['post_id'];
+			}
+			if (preg_match_all('/href="(.+?)"/',$post['post_content'],$m)) {
+				$ch=curl_init();
+				curl_setopt($ch,CURLOPT_HEADER,true);
+				curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+				curl_setopt($ch,CURLOPT_NOBODY,true);
+				for ($j=0;isset($m[1][$j]);++$j) {
+					$other_page=$m[1][$j];
+					curl_setopt($ch,CURLOPT_URL,$other_page);
+					$other_page_response=curl_exec($ch);
+					if (!curl_errno($ch) && strpos($other_page_response,'HTTP/1.1 200 OK')===0) {
+						if (preg_match('/X-Pingback: ([^\r\n]+)\r?\n/m',$other_page_response,$x)) {
+							$rpc_url=$x[1];
+							require_once _BASEPATH_.'/includes/classes/IXR_Library.class.php';
+							$client=new IXR_Client($rpc_url);
+							$client->query('pingback.ping',$my_page,$other_page);
+						}
+					}
+				}
+			}
+		}
+	}
 }

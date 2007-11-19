@@ -58,6 +58,7 @@ function on_after_approve_blog_post() {
 	}
 }
 
+
 $_on_before_update[]='update_seolink';
 
 function update_seolink() {
