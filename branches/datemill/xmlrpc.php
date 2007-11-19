@@ -17,12 +17,15 @@ function pingback_ping($args) {
 		if (mysql_num_rows($res)) {
 			$myreturn=48; //The pingback has already been registered.
 		} else {
+			$post_id=0;
 			$where='';
 			$ping_to='';
 			if (preg_match('/blog_post_view\.php\?pid=(\d+)?/',$my_page,$m)) {
+				$post_id=$m[1];
 				$where.='`post_id`='.$m[1];
 				$ping_to='id';
 			} elseif (preg_match('/\/blogpost\/(\d+)\//',$my_page,$m)) {
+				$post_id=$m[1];
 				$where.="`post_id`=".$m[1];
 				$ping_to='alt';
 			} else {
@@ -44,16 +47,33 @@ function pingback_ping($args) {
 				$ch=curl_init($other_page);
 				curl_setopt($ch,CURLOPT_HEADER, true);
 				curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-				$return=curl_exec($ch);
-				if (curl_errno($ch) || strpos($return,'HTTP/1.1 200 OK')!==0) {
+				$other_page_content=curl_exec($ch);
+				if (curl_errno($ch) || strpos($other_page_content,'HTTP/1.1 200 OK')!==0) {
 					$myreturn=16;	//The source URI does not exist.
 				}
 				$temp=str_replace(array('/','.','-'),array('\/','\.','\-'),$my_page);	// for regexp
-				if (preg_match('/href=(\'|")'.$temp.'(\'|")/',$return,$m)) {
-					$query="INSERT INTO `pingback` SET `other_page`='".md5($other_page)."',`my_page`='".md5($my_page)."'";
-	//				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				if (preg_match('/(.{0,100})href=[\'"]?'.$temp.'[\'"]?(.{0,100})/',$other_page_content,$m)) {
+					$query="INSERT INTO `pingbacks` SET `other_page`='".md5($other_page)."',`my_page`='".md5($my_page)."'";
+//					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+//print 'acu:'.$m[2];
+					$m[1]=trim(preg_replace(array('/<.+?>/','/.*>/','/<.*/'),'',$m[1]));
+					$m[2]=trim(preg_replace(array('/<.+?>/','/.*>/','/<.*/'),'',$m[2]));
+//print 'si acu:'.$m[2];die;
+					$other_page=sanitize_and_format($other_page,TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTFIELD]);
+					$user='';
+					if (preg_match('/<title>(.+)<\/title>/',$other_page_content,$x)) {
+						$user=$x[1];
+					} else {
+						$user=substr($other_page,7,strpos($other_page,'/',8));
+					}
+					if (strlen($user)>200) {
+						$user=substr($user,0,200).'...';
+					}
+					$query="INSERT INTO `{$dbtable_prefix}blog_comments` SET `fk_parent_id`=$post_id,`_user`='$user',`website`='$other_page',`comment`='[...] ".$m[1].' '.$m[2]." [...]',`date_posted`='".gmdate('YmdHis')."',`status`=".STAT_APPROVED.",`processed`=1";
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+					return 'ok';
 				} else {
-					$myreturn=$temp;	//The source URI does not contain a link to the target URI, and so cannot be used as a source.
+					$myreturn=17;	//The source URI does not contain a link to the target URI, and so cannot be used as a source.
 				}
 			}
 		}
