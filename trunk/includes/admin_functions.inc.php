@@ -268,7 +268,8 @@ function regenerate_langstrings_array($skin_module_code='') {
 			if (empty($file)) {
 				$file='global.inc.php';
 			}
-			$fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/'.$file,join("\n",$arr));
+			$temp=join("\n",$arr);
+			$fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$i]['skin_dir'].'/lang/'.$file,$temp);
 		}
 	}
 }

@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='State info changed.';
 		} else {
+			unset($input['state_id']);
 			$query="INSERT INTO `{$dbtable_prefix}loc_states` SET ";
 			foreach ($states_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {

@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Subscription assignment changed.';
 		} else {
+			unset($input['asubscr_id']);
 			$query="INSERT INTO `{$dbtable_prefix}subscriptions_auto` SET ";
 			foreach ($subscriptions_auto_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {

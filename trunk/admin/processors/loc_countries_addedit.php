@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Country info changed.';
 		} else {
+			unset($input['country_id']);
 			$query="INSERT INTO `{$dbtable_prefix}loc_countries` SET ";
 			foreach ($countries_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {

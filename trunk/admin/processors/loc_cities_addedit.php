@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='City info changed.';
 		} else {
+			unset($input['city_id']);
 			$query="INSERT INTO `{$dbtable_prefix}loc_cities` SET ";
 			foreach ($cities_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {

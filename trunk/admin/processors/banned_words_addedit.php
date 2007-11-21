@@ -57,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text']='Word not changed. Perhaps this word already exists?';
 			}
 		} else {
+			unset($input['word_id']);
 			$query="INSERT INTO `{$dbtable_prefix}banned_words` SET ";
 			foreach ($banned_words_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {

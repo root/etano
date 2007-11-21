@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='News changed.';
 		} else {
+			unset($input['news_id']);
 			$input['date_posted']=gmdate('YmdHis');
 			$query="INSERT INTO `{$dbtable_prefix}site_news` SET ";
 			foreach ($site_news_default['defaults'] as $k=>$v) {
