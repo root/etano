@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Flirt changed.';
 		} else {
+			unset($input['flirt_id']);
 			$query="INSERT INTO `{$dbtable_prefix}flirts` SET ";
 			foreach ($flirts_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {

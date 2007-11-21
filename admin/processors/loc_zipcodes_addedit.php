@@ -69,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Zip code changed.';
 		} else {
+			unset($input['zip_id']);
 			$query="INSERT INTO `{$dbtable_prefix}loc_zips` SET ";
 			foreach ($zips_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {

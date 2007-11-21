@@ -85,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Account info changed.';
 		} else {
+			unset($input['admin_id']);
 			$query="INSERT INTO `{$dbtable_prefix}admin_accounts` SET ";
 			foreach ($admin_accounts_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {

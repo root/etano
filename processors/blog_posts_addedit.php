@@ -117,8 +117,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['post_id']=mysql_insert_id();
-			$topass['message']['type']=MESSAGE_INFO;
 
+			if (isset($_on_after_insert)) {
+				for ($i=0;isset($_on_after_insert[$i]);++$i) {
+					call_user_func($_on_after_insert[$i]);
+				}
+			}
+			$topass['message']['type']=MESSAGE_INFO;
 			if (empty($config['manual_blog_approval'])) {
 				if (isset($_on_after_approve)) {
 					$GLOBALS['post_ids']=array($input['post_id']);
@@ -129,12 +134,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$topass['message']['text']=$GLOBALS['_lang'][20];
 			} else {
 				$topass['message']['text']=$GLOBALS['_lang'][21];
-			}
-
-			if (isset($_on_after_insert)) {
-				for ($i=0;isset($_on_after_insert[$i]);++$i) {
-					call_user_func($_on_after_insert[$i]);
-				}
 			}
 		}
 		if (!isset($input['return']) || empty($input['return'])) {

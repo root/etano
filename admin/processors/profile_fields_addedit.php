@@ -162,6 +162,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Field changed.';
 		} else {
+			unset($input['pfield_id']);
 			$dbfield_index=get_site_option('dbfield_index','core');
 			$input['dbfield']='f'.$dbfield_index;
 // language keys&strings for this field
