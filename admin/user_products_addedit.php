@@ -27,10 +27,12 @@ if (isset($_SESSION['topass']['input'])) {
 	$output['return']=rawurlencode($output['return']);
 } elseif (!empty($_GET['uprod_id'])) {
 	$uprod_id=(int)$_GET['uprod_id'];
-	$query="SELECT `uprod_id`,`fk_prod_id`,`fk_site_id`,`fk_user_id`,`fk_payment_id`,`license`,`license_md5` FROM `user_products` WHERE `uprod_id`=$uprod_id";
+	$query="SELECT a.`uprod_id`,a.`fk_prod_id`,a.`fk_site_id`,a.`fk_user_id`,a.`fk_payment_id`,a.`license`,a.`license_md5`,b.`f1` as `name` FROM `user_products` a,`{$dbtable_prefix}user_profiles` b WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`uprod_id`=$uprod_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
+		$output['key']=gen_license(array('site_id'=>$output['fk_site_id'],'name'=>$output['name']));
+		$output['key_beta']=gen_license(array('site_id'=>$output['fk_site_id'],'name'=>$output['name'],'beta'=>1));
 	}
 } elseif (!empty($_GET['sid'])) {
 	$output['fk_site_id']=(int)$_GET['sid'];
