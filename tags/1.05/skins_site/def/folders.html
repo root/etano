@@ -1,0 +1,33 @@
+<div class="row header">
+	<div class="control">Action</div>
+	<div class="folder_name">Folder</div>
+	<div class="total_messages">Total Messages</div>
+	<div class="new_messages">New Messages</div>
+</div>
+
+<!--loop name="loop"-->
+<div class="row">
+	<div class="control">
+		<a class="content-link link_delete" href="{tplvars.relative_url}processors/folders_delete.php?fid={loop.folder_id}" title="Delete item">Delete</a>
+		<a class="content-link link_change" href="javascript:;" title="Edit folder" onclick="rename_folder('{loop.folder_id}','{loop.encoded_folder}')">Rename</a>
+	</div>
+	<div class="folder_name"><a class="content-link simple" href="{tplvars.relative_url}mailbox.php?fid={loop.folder_id}">{loop.folder}</a></div>
+	<div class="total_messages">{loop.total}</div>
+	<div class="new_messages">{loop.not_read}</div>
+	<!--noloop name="loop"-->
+	<p class="no_result_item">You have no folders yet.</p>
+	<!--/noloop name="loop"-->
+</div>
+<!--/loop name="loop"-->
+
+<div id="controls">
+	<form action="{tplvars.relative_url}processors/folders_addedit.php" method="post" id="folders_form">
+	<input type="hidden" name="folder_id" />
+	New folder: <input type="text" name="folder" /> <input class="button medium" type="submit" value="Add" />
+	</form>
+</div>
+
+<script type="text/javascript">
+	var lang=new Array('{output.lang_267}','{output.lang_268}','{output.lang_269}');
+</script>
+<script type="text/javascript" src="{tplvars.relative_url}js/folders.js?v={tplvars.js_lib_v}"></script>
