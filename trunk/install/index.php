@@ -141,7 +141,7 @@ if (extension_loaded('gd') && function_exists('gd_info')) {
 		$error=true;
 		$output['gd2']='state_red';
 	}
-	if (!isset($temp['FreeType Support']) && $temp['FreeType Support']) {
+	if (isset($temp['FreeType Support']) && $temp['FreeType Support']) {
 		$output['gd2type']='state_green';
 	} else {
 		$output['gd2type']='state_yellow';
