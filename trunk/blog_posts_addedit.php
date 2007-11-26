@@ -51,6 +51,7 @@ if (empty($output['bbcode_blogs'])) {
 $output['lang_17']=sanitize_and_format($GLOBALS['_lang'][17],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $output['lang_18']=sanitize_and_format($GLOBALS['_lang'][18],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $output['fk_blog_id']=(string)$output['fk_blog_id'];
+$blog['blog_name']='';
 include _CACHEPATH_.'/blogs/'.$output['fk_blog_id']{0}.'/'.$output['fk_blog_id'].'/blog.inc.php';
 $tpl->set_file('content','blog_posts_addedit.html');
 $tpl->set_var('output',$output);
