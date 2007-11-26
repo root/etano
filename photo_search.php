@@ -28,6 +28,7 @@ $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 // It will only make sense if we start caching photo data as we do with the profile and blog data.
 //$output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
+$tplvars['page_title']='';
 $input['acclevel_code']='search_photo'; // default access level
 $from="`{$dbtable_prefix}user_photos` a";
 $where="a.`is_private`=0 AND a.`status`=".STAT_APPROVED." AND a.`del`=0";
@@ -113,10 +114,6 @@ if (isset($_GET['st'])) {
 				$error=true;
 			}
 			$tplvars['page_title']=sprintf($GLOBALS['_lang'][148],$tags);
-			break;
-
-		default:
-			$tplvars['page_title']='';
 			break;
 
 	}
