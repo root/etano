@@ -1,0 +1,42 @@
+<h2>Access Levels</h2>
+
+<ul class="content_submenu">
+	<li class="active">Access Levels</li>
+	<li><a href="rate_limiter.php">Rate Limiter</a></li>
+</ul>
+<div class="hint"><strong>Change access levels and add new membership types if needed:</strong></div>
+
+<form action="processors/access_levels.php" method="post" id="access_levels">
+<table cellspacing="0" id="acc_levels" class="results_table">
+<tr>
+	<th>Level Code</th>
+<!--loop name="memberships"-->
+	<th>{memberships.m_name}</th>
+<!--/loop name="memberships"-->
+	<th><a href="javascript:;" onclick="add_membership()" title="Add new membership"><img src="skin/images/right.gif" alt="Add new membership" /></a></th>
+</tr>
+<!--loop name="access_levels"-->
+<tr align="center" class="{access_levels.myclass}">
+	{access_levels.row}
+	<td></td>
+</tr>
+<!--/loop name="access_levels"-->
+</table>
+<div id="bottom_links"><span><a class="add" href="access_levels_addedit.php">Add new</a></span> <input type="submit" value="Save" /></div>
+</form>
+
+<br>
+<p>There are two more predefined access levels:
+	<ul>
+		<li><strong>auth</strong> for Members Only</li>
+		<li><strong>all</strong> for Everyone</li>
+	</ul>
+</p>
+
+<form action="processors/manage_memberships.php" method="post" id="manage_memberships">
+<input type="hidden" name="act" value="" />
+<input type="hidden" name="m_id" value="" />
+<input type="hidden" name="m_name" value="" />
+</form>
+
+<script type="text/javascript" src="js/access_levels.js?v={tplvars.js_lib_v}"></script>

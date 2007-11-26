@@ -1,0 +1,78 @@
+<h2>Search Members</h2>
+
+<div id="member_submenu" class="menu_box">
+	<h3>Quick links</h3>
+	<div class="box_content">
+		<ul>
+		<li><a href="member_results.php">Browse all</a></li>
+		<li><a href="member_results.php?pstat=5">Awaiting approval</a></li>
+		</ul>
+	</div>
+</div>
+
+<form action="member_results.php" method="get" id="member_search_form" class="edit_form">
+<fieldset>
+<dl>
+	<dt><label for="user">Username:</label></dt>
+	<dd><input type="text" name="user" id="user" tabindex="1" /></dd>
+</dl>
+<dl>
+	<dt><label for="astat">Account status:</label></dt>
+	<dd>
+		<select name="astat" id="astat" tabindex="2">
+		<option value="0">-</option>
+		{output.astat}
+		</select>
+	<dd>
+</dl>
+<dl>
+	<dt><label class="mainlabel" for="pstat">Profile status:</label></dt>
+	<dd>
+		<select name="pstat" id="pstat" tabindex="3">
+		<option value="0">-</option>
+		{output.pstat}
+		</select>
+	<dd>
+</dl>
+<dl>
+	<dt><label class="mainlabel" for="membership">Membership:</label></dt>
+	<dd>
+		<select name="membership" id="membership" tabindex="4">
+		<option value="0">-</option>
+		{output.membership}
+		</select>
+	<dd>
+</dl>
+
+<!--loop name="loop"-->
+<dl id="row_{loop.dbfield}" class="{loop.class}">
+	<dt><label class="mainlabel" for="{loop.dbfield}">{loop.label}:</label></dt>
+	<dd>{loop.field}</dd>
+</dl>
+<!--/loop name="loop"-->
+
+<dl>
+	<dt><label class="mainlabel" for="photo">Main Photo:</label></dt>
+	<dd>
+		<select name="photo" id="photo" tabindex="30">
+		<option value="0">-</option>
+		<option value="1">With main photo</option>
+		<option value="-1">Without main photo</option>
+		</select>
+	<dd>
+</dl>
+<dl>
+	<dt><label class="mainlabel" for="album">With album:</label></dt>
+	<dd>
+		<input type="checkbox" name="album" id="album" value="1" tabindex="32" />
+	<dd>
+</dl>
+</fieldset>
+
+<fieldset class="controls">
+	<input type="submit" value="Search" tabindex="50" />
+</fieldset>
+</form>
+<div class="clear"></div>
+
+<script type="text/javascript" src="js/member_search.js?v={tplvars.js_lib_v}"></script>
