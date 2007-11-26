@@ -1,0 +1,2 @@
+The installation process is docummented online at:
+http://www.datemill.com/etano/wiki/installation

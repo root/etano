@@ -1,0 +1,45 @@
+<h2>Language strings</h2>
+
+<div class="hint"><strong>Change the language strings for the '{output.skin}' skin:</strong></div>
+
+<form action="processors/lang_strings.php" id="langstrings_form" method="post">
+<input type="hidden" name="skin" value="{output.skin}" />
+<table id="translate_field" class="results_table">
+<tr>
+	<th width="3%">Key</th>
+	<th>String</th>
+	<th>Description</th>
+	<th>Goes to</th>
+</tr>
+<!--loop name="loop"-->
+<tr>
+	<td align="center"><a href="lang_keys_addedit.php?lk_id={loop.lk_id}&amp;return={output.return2me}">{loop.lk}</a></td>
+	<td>
+		<!--opt name="loop.tf"-->
+			<input style="width:95%" type="text" name="lang_strings[{loop.lk_id}]" id="lang_strings_{loop.lk_id}" size="50" value="{loop.lang_value}" />
+		<!--/opt name="loop.tf"-->
+		<!--opt name="!loop.tf"-->
+			<textarea style="width:95%" name="lang_strings[{loop.lk_id}]" id="lang_strings_{loop.lk_id}" cols="2" rows="2">{loop.lang_value}</textarea>
+		<!--/opt name="!loop.tf"-->
+	</td>
+	<td>{loop.lk_diz}</td>
+	<td>{loop.save_file}</td>
+</tr>
+<!--/loop name="loop"-->
+<tr>
+	<td></td>
+	<td><input type="submit" value="Save" /></td>
+	<td></td>
+	<td></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links">
+	<a name="bottom" class="back" href="site_skins.php">Back to skins</a>
+	<a class="add" href="lang_keys_addedit.php?return={output.return2me}">Add new key</a>
+</div>
+
+<script type="text/javascript">
+	document.getElementById('langstrings_form').elements[1].focus();
+</script>

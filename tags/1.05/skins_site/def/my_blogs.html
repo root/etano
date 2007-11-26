@@ -1,0 +1,35 @@
+<div class="row header">
+	<div class="control">Manage</div>
+	<div class="blog_name">Blog</div>
+	<div class="num_posts">Total Posts</div>
+	<div class="control2">&nbsp;</div>
+</div>
+
+<!--loop name="loop"-->
+<div class="row">
+	<div class="control">
+		<a class="content-link link_delete" href="{tplvars.relative_url}processors/blog_delete.php?bid={loop.blog_id}&amp;return={output.return2me}" title="Delete blog">Delete</a>
+		<a class="content-link link_change" href="{tplvars.relative_url}blog_addedit.php?bid={loop.blog_id}&amp;return={output.return2me}" title="Change blog details">Edit details</a>
+	</div>
+	<div class="blog_name">
+		<strong>{loop.blog_name}</strong>
+		<p class="blog_diz">{loop.blog_diz}</p>
+	</div>
+	<div class="num_posts">{loop.stat_posts}</div>
+	<div class="control2"><a class="content-link link_add" href="{tplvars.relative_url}blog_posts_addedit.php?bid={loop.blog_id}">New post</a> <a class="content-link link_next" href="{tplvars.relative_url}my_blog_posts.php?bid={loop.blog_id}">View posts</a></div>
+</div>
+<!--noloop name="loop"-->
+<div class="row">
+	<p class="no_result_item">You have no blogs defined yet.</p>
+</div>
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
+
+<div class="controls">
+	<a class="content-link link_add" id="link_add_blog" href="{tplvars.relative_url}blog_addedit.php">Create new blog</a>
+</div>
+
+<script type="text/javascript">
+	var lang=new Array('{output.lang_262}');
+</script>
+<script type="text/javascript" src="{tplvars.relative_url}js/my_blogs.js?v={tplvars.js_lib_v}"></script>

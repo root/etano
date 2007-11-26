@@ -1,0 +1,29 @@
+#footer_holder {
+	clear: both;
+	margin: 0px 20px;
+	padding: 10px 0px;
+	text-align: center;
+}
+
+#footer_holder a {
+	text-decoration: none;
+}
+
+#footer_holder a:hover {
+	text-decoration: underline;
+}
+
+#copyright {
+	margin-top: 10px;
+	color: #666;
+}
+
+#nav {
+	line-height: 150%;
+	color: #ccc;
+	font-size: 85%;
+}
+
+#nav a {
+	font-weight: bold;
+}
