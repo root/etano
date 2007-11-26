@@ -1,0 +1,68 @@
+#bb_tools {
+	width: 150px;
+	height: 28px;
+	margin: 15px 0 10px;
+	position:relative;
+}
+
+#bb_tools a {
+	float: left;
+	height: 28px;
+	width: 28px;
+	background-position: top left;
+	background-repeat: no-repeat;
+	text-indent: -9999px;
+}
+
+#bb_tools a:hover {
+	background-position: bottom center;
+}
+
+#bb_tools a#bold {
+	background-image: url('../images/bbcode_bold.gif');
+}
+
+#bb_tools a#underline {
+	background-image: url('../images/bbcode_underline.gif');
+}
+
+#bb_tools a#hyperlink {
+	background-image: url('../images/bbcode_hyperlink.gif');
+}
+
+#bb_tools a#quote {
+	background-image: url('../images/bbcode_quote.gif');
+}
+
+#bb_tools a#smileys {
+	background-image: url('../images/bbcode_smiley.gif');
+}
+
+#smiley_set {
+	display: none;
+	position: absolute;
+	z-index: 2;
+	top: -100px;
+	left: 140px;
+	padding: 4px;
+	border: 2px solid #000;
+	background: #fff;
+	color: #000;
+	overflow: hidden;
+	width: 190px;
+}
+
+#smiley_set a {
+	text-indent:0;
+	padding: 0px;
+	margin:0;
+	width:28px;
+}
+
+#smiley_set a:hover {
+	background-color: #eee;
+}
+
+#smiley_set a img {
+	padding:3px 0 0 3px;
+}

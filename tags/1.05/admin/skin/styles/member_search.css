@@ -1,0 +1,30 @@
+#member_submenu {
+	float: left;
+	width: 200px;
+	margin-right: 10px;
+}
+
+.edit_form dl {
+	clear: both;
+}
+
+* html .edit_form dl {
+	height: 1%;
+}
+
+.edit_form dt, .edit_form dd {
+	float: left;
+	margin: 5px 0;
+}
+
+.edit_form dt {
+	width: 150px;
+}
+
+.controls {
+	margin: 10px 0 10px 360px;
+}
+
+* html .controls {
+	margin: 10px 0 10px 185px;
+}

@@ -1,0 +1,50 @@
+@import url('thickbox.css');
+
+#message_wrapper {
+	margin-left: 210px;
+}
+
+#profile_menu {
+	width: 200px;
+	position: absolute;
+	top:10px;
+	left:195px;
+}
+	#profile_menu li.controls {
+		background: none;
+		padding-left: 0;
+		margin-top: 20px;
+	}
+
+#profile_area {
+	margin-left: 210px;
+}
+
+#search_nav {
+	margin-bottom: 20px;
+}
+
+#profile_pic {
+	float: left;
+}
+
+.profile_cat {
+	padding-bottom: 10px;
+}
+
+.profile_cat h3 {
+	padding-left: 0;
+	padding-bottom: 5px;
+	color: #009FDA;
+	border-bottom: 1px dashed #ccc;
+	font-weight: bold;
+}
+
+.profile_cat li label {
+	font-weight: normal;
+}
+
+.profile_cat li p {
+	display: inline;
+}
+
