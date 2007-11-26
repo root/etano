@@ -1,9 +1,9 @@
 <?php
-require_once '../../includes/common.inc.php';
+require_once dirname(__FILE__).'/../../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
-require_once '../../includes/classes/phemplate.class.php';
-require_once '../../includes/user_functions.inc.php';
-require_once '../../includes/classes/fileop.class.php';
+require_once dirname(__FILE__).'/../../includes/classes/phemplate.class.php';
+require_once dirname(__FILE__).'/../../includes/user_functions.inc.php';
+require_once dirname(__FILE__).'/../../includes/classes/fileop.class.php';
 
 $short_blog_chars=1000;
 $config=get_site_option(array('bbcode_blogs','use_smilies'),'core_blog');

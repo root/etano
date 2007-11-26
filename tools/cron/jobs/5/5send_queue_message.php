@@ -6,8 +6,13 @@ $jobs[]='send_queue_message';
 function send_queue_message() {
 	$limit=50;	// number of messages in a batch
 
-	global $dbtable_prefix;
-	include_once _BASEPATH_.'/skins_site/'.get_default_skin_dir().'/lang/mailbox.inc.php';
+	unset($_on_before_insert,$_on_after_insert);
+	if (is_file(_BASEPATH_.'/events/cronjobs/send_queue_message.php')) {
+		include_once _BASEPATH_.'/events/cronjobs/send_queue_message.php';
+	}
+
+	global $dbtable_prefix,$def_skin;
+	include_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/mailbox.inc.php';
 	$filters=array();
 	$notifs=array();
 	$emails=array();
@@ -70,7 +75,17 @@ function send_queue_message() {
 									$query.="`$k`='$v',";
 								}
 								$query=substr($query,0,-1);
+								if (isset($_on_before_insert)) {
+									for ($i=0;isset($_on_before_insert[$i]);++$i) {
+										call_user_func($_on_before_insert[$i],$rsrow);
+									}
+								}
 								if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+								if (isset($_on_after_insert)) {
+									for ($i=0;isset($_on_after_insert[$i]);++$i) {
+										call_user_func($_on_after_insert[$i],$rsrow);
+									}
+								}
 								$was_sent=true;
 							}
 							break 2;	// exit the filters for() too
@@ -85,7 +100,17 @@ function send_queue_message() {
 					$query.="`$k`='$v',";
 				}
 				$query=substr($query,0,-1);
+				if (isset($_on_before_insert)) {
+					for ($i=0;isset($_on_before_insert[$i]);++$i) {
+						call_user_func($_on_before_insert[$i],$rsrow);
+					}
+				}
 				if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				if (isset($_on_after_insert)) {
+					for ($i=0;isset($_on_after_insert[$i]);++$i) {
+						call_user_func($_on_after_insert[$i],$rsrow);
+					}
+				}
 			}
 
 			if ($notifs[$rsrow['fk_user_id']] && $notify) {
@@ -116,7 +141,6 @@ function send_queue_message() {
 
 	// send the notification emails
 	if (!empty($emails)) {
-		$def_skin=get_default_skin_dir();
 		for ($i=0;isset($emails[$i]);++$i) {
 			send_template_email($emails[$i]['email'],$emails[$i]['subject'],'new_message.html',$def_skin,$emails[$i]);
 		}

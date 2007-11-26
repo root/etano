@@ -419,21 +419,6 @@ function remove_banned_words($str) {
 }
 
 
-function gen_license($user) {
-	$myreturn='';
-	$secret=LK_SECRET;
-	if (isset($user['beta'])) {
-		$secret.='beta';
-	}
-	if (isset($user['site_id']) && isset($user['name'])) {
-		$myreturn=strtoupper(substr(md5($user['site_id'].$secret.$user['name']),0,22));
-	} else {
-		$myreturn=false;
-	}
-	return $myreturn;
-}
-
-
 function create_search_form($search_fields) {
 	$myreturn=array();
 	global $dbtable_prefix,$_pfields;
