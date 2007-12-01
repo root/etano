@@ -247,8 +247,8 @@ class payment_twocheckout extends ipayment {
 							if (number_format($real_prod['price'],2)==number_format($input['x_amount'],2)) {
 								if (strcasecmp($input['demo'],'Y')!=0 || ($this->config['demo_mode']==1 && strcasecmp($input['demo'],'Y')==0)) {
 									require_once _BASEPATH_.'/includes/iso31661a3.inc.php';
-									if (isset($iso31661a3[$input['x_Country']])) {
-										$input['country']=$iso31661a3[$input['x_Country']];	// needed for the fraud check
+									if (isset($GLOBALS['iso31661a3'][$input['x_Country']])) {
+										$input['country']=$GLOBALS['iso31661a3'][$input['x_Country']];	// needed for the fraud check
 										$input['email']=$input['x_Email'];
 										$this->check_fraud($input);
 									} else {
