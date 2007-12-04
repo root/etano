@@ -56,14 +56,14 @@ function rate_limiter(&$log) {
 	}
 	if (isset($punish[_PUNISH_ERROR_])) {
 		$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
-		$_SESSION['topass']['message']['text']=$GLOBALS['_lang'][$punish[_PUNISH_ERROR_]];
-		include 'info.php';
+		$_SESSION['topass']['message']['text']=isset($GLOBALS['_lang'][$punish[_PUNISH_ERROR_]]) ? $GLOBALS['_lang'][$punish[_PUNISH_ERROR_]] : '';
+		include _BASEPATH_.'/info.php';
 		die;
 	} elseif (isset($punish[_PUNISH_UPGRADE_])) {
 		$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
-		$_SESSION['topass']['message']['text']=$GLOBALS['_lang'][$punish[_PUNISH_ERROR_]];
+		$_SESSION['topass']['message']['text']=isset($GLOBALS['_lang'][$punish[_PUNISH_UPGRADE_]]) ? $GLOBALS['_lang'][$punish[_PUNISH_UPGRADE_]] : '';
 		$_GET['type']='access';
-		include 'info.php';
+		include _BASEPATH_.'/info.php';
 		die;
 	}
 	return $myreturn;

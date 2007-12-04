@@ -23,7 +23,8 @@ function gen_blogposts_cache() {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($blog=mysql_fetch_assoc($res)) {
 		$post_ids[]=$blog['post_id'];
-		$blog['title']=sanitize_and_format($blog['title'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]);
+		$blog['title']=remove_banned_words(sanitize_and_format($blog['title'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]));
+		$blog['post_content']=remove_banned_words($blog['post_content']);
 		$post_content_short=substr($blog['post_content'],0,strrpos(substr($blog['post_content'],0,$short_blog_chars),' '));
 		$post_content_short=sanitize_and_format($post_content_short,TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
 		$blog['post_content']=sanitize_and_format($blog['post_content'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);

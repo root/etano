@@ -16,7 +16,6 @@ db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/user_spambox.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
-check_login_member('message_write');
 
 $error=false;
 $topass=array();
@@ -30,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if ($_POST['act']=='del') {
+		check_login_member('inbox');
 		$input['fid']=sanitize_and_format($_POST['fid'],TYPE_INT,0,0);
 		$num_messages=0;
 		if (!empty($input['mail_id'])) {
@@ -67,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']=sprintf($GLOBALS['_lang'][73],$num_messages);
 	} elseif ($_POST['act']=='move') {
+		check_login_member('inbox');
 		$input['fid']=sanitize_and_format_gpc($_POST,'fid',TYPE_INT,0,0);
 		$input['moveto_fid']=sanitize_and_format_gpc($_POST,'moveto_fid',TYPE_INT,0,0);
 		$num_messages=0;
@@ -95,11 +96,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']=sprintf($GLOBALS['_lang'][74],$num_messages);
 	} elseif ($_POST['act']=='spam') {	// user_inbox to user_spambox
+		check_login_member('inbox');
 		$query="INSERT INTO `{$dbtable_prefix}user_spambox` (`is_read`,`fk_user_id`,`fk_user_id_other`,`_user_other`,`subject`,`message_body`,`date_sent`,`message_type`) SELECT `is_read`,`fk_user_id`,`fk_user_id_other`,`_user_other`,`subject`,`message_body`,`date_sent`,`message_type` FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('".$input['mail_id']."') AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('".$input['mail_id']."') AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	} elseif ($_POST['act']=='reply') {
+		check_login_member('message_write');
 		$nextpage='message_send.php?mail_id='.$input['mail_id'];
 		if (!empty($input['return'])) {
 			$nextpage.='&return='.rawurlencode($input['return']);

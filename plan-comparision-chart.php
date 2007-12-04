@@ -39,7 +39,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	$cols=array();
 	$rows[$j]['level_diz']=$rsrow['level_diz'];
 	for ($i=0;isset($memberships[$i]);++$i) {
-		if ($rsrow['level']&$memberships[$i]) {
+		if (((int)$rsrow['level'])&((int)$memberships[$i])) {
 			$cols[]['content']='<img src="'.$tplvars['tplrelpath'].'/images/check.gif" />';
 		} else {
 			$cols[]['content']='&nbsp;';

@@ -129,7 +129,7 @@ if (isset($_SERVER['PHP_SELF'])) {
 	$tplvars['relative_url']=@str_repeat('../',substr_count(preg_replace('~//+~','/',$_SERVER['REQUEST_URI']),'/')-(substr_count(_BASEURL_,'/')-2)-1);
 }
 
-$accepted_currencies=array('USD'=>'USD','EUR'=>'EUR');
+$accepted_currencies=array('USD'=>'USD','EUR'=>'EUR','GBP'=>'GBP');
 
 $tplvars['js_lib_v']=4;	// change this when you update any .js file. This should force a reload of the js scripts.
 $tplvars['remote_site']='http://www.datemill.com';
