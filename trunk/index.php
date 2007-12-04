@@ -20,6 +20,7 @@ check_login_member('all');
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $tpl->set_file('content','index.html');
 
+sort($basic_search_fields,SORT_NUMERIC);
 $search_loop=create_search_form($basic_search_fields);
 
 $tplvars['title']=$tplvars['sitename'];

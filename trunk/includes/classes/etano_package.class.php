@@ -149,7 +149,6 @@ class etano_package {
 						$files_to_change[]=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['to']);
 					}
 				} elseif ($mod_command->nodeName=='delete') {
-					$files_to_change[]=str_replace(array('{package_path}','{basepath}'),array($this->package_path,_BASEPATH_),$attrs['to']);
 				} elseif ($mod_command->nodeName=='mkdir') {
 				} elseif ($mod_command->nodeName=='extract') {
 					$attrs=$mod_command->attributes;

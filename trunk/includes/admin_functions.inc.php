@@ -311,9 +311,9 @@ function regenerate_skin_cache($skin_module_code='') {
 			if ($field['visible']) {
 				$profile[$field['dbfield'].'_label']=$field['label'];
 				if ($field['field_type']==FIELD_TEXTFIELD) {
-					$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					$profile[$field['dbfield']]=sanitize_and_format(remove_banned_words($profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 				} elseif ($field['field_type']==FIELD_TEXTAREA) {
-					$profile[$field['dbfield']]=sanitize_and_format($profile[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					$profile[$field['dbfield']]=sanitize_and_format(remove_banned_words($profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 					if ($config['bbcode_profile']) {
 						$profile[$field['dbfield']]=bbcode2html($profile[$field['dbfield']]);
 					}
@@ -323,7 +323,7 @@ function regenerate_skin_cache($skin_module_code='') {
 				} elseif ($field['field_type']==FIELD_SELECT) {
 					// if we sanitize here " will be rendered as &quot; which is not what we want
 	//				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-					$profile[$field['dbfield']]=$field['accepted_values'][$profile[$field['dbfield']]];
+					$profile[$field['dbfield']]=isset($field['accepted_values'][$profile[$field['dbfield']]]) ? $field['accepted_values'][$profile[$field['dbfield']]] : '?';
 				} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
 					$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 				} elseif ($field['field_type']==FIELD_INT || $field['field_type']==FIELD_FLOAT) {
