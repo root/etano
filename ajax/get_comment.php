@@ -42,9 +42,7 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && !empty($_POST['commen
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$output=mysql_fetch_assoc($res);
-	//		$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2EDIT] | FORMAT_RUENCODE);
-			// don't sanitize it cause it works without
-//			$output=sanitize_and_format($output,TYPE_STRING,FORMAT_RUENCODE);
+			$output=sanitize_and_format($output,TYPE_STRING,FORMAT_RUENCODE);
 			$output='0|'.$output['comment_id'].'|'.$output['comment'];
 		} else {
 			$output='1|'.$GLOBALS['_lang'][252];
