@@ -1,0 +1,23 @@
+#prefix {
+	font-size: 14px;
+	padding-bottom: 10px;
+}
+
+form.edit_form fieldset.controls {
+	margin-bottom: 15px;
+}
+
+
+/* LEFT MENU */
+
+#menu_folders ul.menu li {
+	border: none;
+	padding: 0;
+}
+
+#menu_folders ul.menu li.controls {
+	border-top: 1px dashed #ccc;
+	padding-top: 10px;
+	margin-top: 5px;
+}
+
