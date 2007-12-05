@@ -44,9 +44,6 @@ class widget_datemill_feed extends icontent_widget {
 			$ok=$fr->parseFeed();
 			if ($ok) {
 				$items=$fr->getFeedOutputData();
-				for ($i=0;isset($items['item'][$i]);++$i) {
-					$items['item'][$i]['description']=substr($items['item'][$i]['description'],0,$this->config['num_chars']);
-				}
 				$this->tpl->set_file('widget.content','widgets/datemill_feed/display.html');
 				$this->tpl->set_loop('loop',array_slice($items['item'],0,$this->config['num_stories']));
 				$this->tpl->process('widget.content','widget.content',TPL_LOOP);
