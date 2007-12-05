@@ -55,16 +55,13 @@ function rate_limiter(&$log) {
 		regenerate_ban_array();
 	}
 	if (isset($punish[_PUNISH_ERROR_])) {
-		$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
-		$_SESSION['topass']['message']['text']=isset($GLOBALS['_lang'][$punish[_PUNISH_ERROR_]]) ? $GLOBALS['_lang'][$punish[_PUNISH_ERROR_]] : '';
-		include _BASEPATH_.'/info.php';
-		die;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']=isset($GLOBALS['_lang'][$punish[_PUNISH_ERROR_]]) ? $GLOBALS['_lang'][$punish[_PUNISH_ERROR_]] : '';
+		redirect2page('info.php',$topass);
 	} elseif (isset($punish[_PUNISH_UPGRADE_])) {
-		$_SESSION['topass']['message']['type']=MESSAGE_ERROR;
-		$_SESSION['topass']['message']['text']=isset($GLOBALS['_lang'][$punish[_PUNISH_UPGRADE_]]) ? $GLOBALS['_lang'][$punish[_PUNISH_UPGRADE_]] : '';
-		$_GET['type']='access';
-		include _BASEPATH_.'/info.php';
-		die;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']=isset($GLOBALS['_lang'][$punish[_PUNISH_UPGRADE_]]) ? $GLOBALS['_lang'][$punish[_PUNISH_UPGRADE_]] : '';
+		redirect2page(_BASEURL_.'/info.php?type=access',$topass,'',true);
 	}
 	return $myreturn;
 }
