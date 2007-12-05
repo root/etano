@@ -1,0 +1,36 @@
+<div id="login_tease">
+	<p><strong>New to {tplvars.sitename}?</strong> <a class="content-link simple big" href="{tplvars.relative_url}join.php">Sign up FREE</a></p>
+	<div>As a member, you'll be able to:
+		<ul>
+		<li>Use advanced searches to find someone near you</li>
+		<li>Post blogs, photos</li>
+		<li>Talk to other members</li>
+		<li>Send messages and flirts</li>
+		<li>Set up notification alerts to know when someone of interest signs up</li>
+		<li>And much more...</li>
+		</ul>
+	</div>
+</div>
+
+<form action="{tplvars.relative_url}processors/login.php" method="post" id="relogin">
+<fieldset>
+	<dl>
+		<dt><label for="username2">Username:</label></dt>
+		<dd><input type="text" id="username2" name="user" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="password2">Password:</label></dt>
+		<dd><input type="password" id="password2" name="pass" /></dd>
+	</dl>
+	<dl class="controls">
+		<dt>&nbsp;</dt>
+		<dd><input type="submit" class="button medium" id="btn_login" value="Login" />
+			<a class="content-link simple" href="{tplvars.relative_url}pass_lost.php" title="Lost password?">Lost password?</a>
+		</dd>
+	</dl>
+</fieldset>
+</form>
+
+<div class="clear"></div>
+
+<script type="text/javascript" src="{tplvars.relative_url}js/login.js?v={tplvars.js_lib_v}"></script>
