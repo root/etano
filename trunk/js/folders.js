@@ -12,7 +12,7 @@ $(function() {
 });
 
 function rename_folder(fid,defval) {
-	new_name=prompt(lang[2],unescape(defval));
+	new_name=prompt(lang[2],unescape(decodeURI(defval)));
 	if (new_name && new_name!='' && new_name!=defval) {
 		$('#folders_form')[0].folder_id.value=fid;
 		$('#folders_form')[0].folder.value=new_name;

@@ -9,7 +9,7 @@ $(function() {
 });
 
 function set_tpl(theid) {
-	parent.$('#subject').val(unescape(subjects[theid]));
-	parent.$('#message_body').val(unescape(message_bodies[theid]));
+	parent.$('#subject').val(unescape(decodeURI(subjects[theid])));
+	parent.$('#message_body').val(unescape(decodeURI(message_bodies[theid])));
 	window.close();
 }

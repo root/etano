@@ -9,7 +9,7 @@ $(function() {
 						if (typeof(data[0])!='undefined') {
 							if (data[0]==0) {
 								$('#comment_id').val(unescape(data[1]));
-								$('#comment').val(unescape(data[2]));
+								$('#comment').val(unescape(decodeURI(data[2])));
 								$('#postarea').ScrollTo(800);
 							} else {
 								alert(data[1]);
