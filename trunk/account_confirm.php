@@ -24,6 +24,9 @@ $secret=sanitize_and_format_gpc($_GET,'secret',TYPE_STRING,$__field2format[FIELD
 if (!empty($uid) && !empty($secret)) {
 	$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `status`=".ASTAT_ACTIVE.",`temp_pass`='".gen_pass(7)."' WHERE `".USER_ACCOUNT_ID."`=$uid AND `status`=".ASTAT_UNVERIFIED." AND `temp_pass`='$secret' LIMIT 1";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (isset($_SESSION[_LICENSE_KEY_]['user']['timedout'])) {
+		unset($_SESSION[_LICENSE_KEY_]['user']['timedout']);
+	}
 	if (mysql_affected_rows()) {
 		$qs='type=acctok';
 		redirect2page('info.php',array(),$qs);
