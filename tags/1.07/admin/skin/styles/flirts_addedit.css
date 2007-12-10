@@ -1,0 +1,15 @@
+@import url('bbcode.css');
+
+.form_table {
+	width: 100%;
+}
+
+.form_table .field {
+	width: 90%;
+}
+
+.form_table .field ul li {
+	float: left;
+	list-style-type: none;
+	margin-right: 10px;
+}

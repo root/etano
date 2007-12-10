@@ -1,0 +1,59 @@
+<h2>Manage the profile fields</h2>
+
+<ul class="content_submenu">
+	<li class="active">Profile Fields</li>
+	<li><a href="profile_categories.php">Profile Categories</a></li>
+</ul>
+<div class="hint">
+	<strong>Add, edit, remove the fields available in member profiles:</strong>
+	<p>Note: If you make changes to your fields please <a href="processors/apply_field_changes.php">click here</a> when you're done to apply the changes.</p>
+</div>
+
+<table cellspacing="0" id="pfields_list" class="results_table">
+<tr>
+	<th class="control"></th>
+	<th class="plabel">Label</th>
+	<th class="field_type">Html Type</th>
+	<th class="searchable">Searchable</th>
+	<th class="at_reg">On Join</th>
+	<th class="required">Required</th>
+	<th class="pcat">Category</th>
+	<th class="order">Order</th>
+</tr>
+<!--loop name="loop"-->
+<tr class="result_item {loop.myclass}" align="center">
+	<td class="control">
+		<a class="item_del" href="processors/profile_fields_delete.php?pfield_id={loop.pfield_id}&amp;return={output.return2me}" onclick="return(confirm('Are you sure you want to remove this field?'))" title="Delete field">Delete field</a>
+		<a class="item_edit" href="profile_fields_addedit.php?pfield_id={loop.pfield_id}&amp;return={output.return2me}" title="Change field">Change field</a>
+	</td>
+	<td class="plabel">({loop.dbfield}) {loop.label}</td>
+	<td class="field_type">{loop.field_type}</td>
+	<td class="searchable">{loop.searchable}</td>
+	<td class="at_reg">{loop.reg_page}</td>
+	<td class="required">{loop.required}</td>
+	<td class="pcat">{loop.fk_pcat_id}</td>
+	<td class="order">
+		<a class="item_movedown" href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=d&amp;return={output.return2me}" title="move down">Move down</a>
+		<a class="item_moveup" href="processors/profile_fields_sort.php?pfield_id={loop.pfield_id}&amp;move=u&amp;return={output.return2me}" title="move up">Move up</a>
+	</td>
+</tr>
+<!--noloop name="loop"-->
+<tr>
+	<td colspan="8" class="no_result_item">No fields found!</td>
+</tr>
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
+</table>
+
+{output.pager2}
+
+<div id="bottom_links">
+	Add new field
+	<form action="profile_fields_addedit.php" method="get">
+	<input type="hidden" name="return" value="{output.return2me2}" />
+	<select name="field_type">
+	{output.field_type}
+	</select>
+	<input type="submit" class="button" value="add" />
+	</form>
+</div>

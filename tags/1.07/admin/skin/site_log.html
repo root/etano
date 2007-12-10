@@ -1,0 +1,22 @@
+<h2>Site Activity Log</h2>
+
+<div class="hint">Logs are kept for 30 days then they are automatically deleted.</div>
+
+<ul id="action">
+	<li id="action_header">
+		<div class="user">User</div>
+		<div class="ip">From</div>
+		<div class="level_code">Action</div>
+		<div class="time">Time</div>
+	</li>
+<!--loop name="loop"-->
+	<li id="log_{loop.log_id}">
+		<div class="user">{loop.user}</div>
+		<div class="ip">{loop.ip}</div>
+		<div class="level_code">{loop.level_code}</div>
+		<div class="time">{loop.time}</div>
+	</li>
+<!--/loop name="loop"-->
+</ul>
+
+{output.pager2}
