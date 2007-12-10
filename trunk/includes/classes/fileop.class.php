@@ -293,7 +293,6 @@ class fileop {
 			while (false!==($file=$d->read())) {
 				if ($file!='.' && $file!='..') {
 					$myreturn=$this->_disk_delete($source.'/'.$file);
-					if (!$myreturn) {print $source.'/'.$file;die;}
 				}
 			}
 			$d->close();
