@@ -188,7 +188,7 @@ class fileop {
 					$temp=explode('/',$zipfile->dirs[$i]);
 					$sub_path=$path;
 					for ($j=0;isset($temp[$j]);++$j) {
-						if (!empty($temp[$j])) {
+						if ($temp[$j]!='') {
 							$sub_path.='/'.$temp[$j];
 							if (!is_dir($sub_path)) {
 								$this->mkdir($sub_path);
@@ -246,7 +246,7 @@ class fileop {
 				$this->mkdir($destination);
 			}
 			$d=dir($source);
-			while ($file=$d->read()) {
+			while (false!==($file=$d->read())) {
 				if ($file!='.' && $file!='..') {
 					$myreturn=$this->_disk_copy($source.'/'.$file, $destination.'/'.$file);
 				}
@@ -270,7 +270,7 @@ class fileop {
 				ftp_mkdir($this->ftp_id,$destination);
 			}
 			$d=dir($source);
-			while ($file=$d->read()) {
+			while (false!==($file=$d->read())) {
 				if ($file!='.' && $file!='..') {
 					$myreturn=$this->_ftp_copy($source.'/'.$file, $destination.'/'.$file);
 				}
@@ -290,9 +290,10 @@ class fileop {
 		$myreturn=false;
 		if (is_dir($source)) {
 			$d=dir($source);
-			while ($file=$d->read()) {
+			while (false!==($file=$d->read())) {
 				if ($file!='.' && $file!='..') {
 					$myreturn=$this->_disk_delete($source.'/'.$file);
+					if (!$myreturn) {print $source.'/'.$file;die;}
 				}
 			}
 			$d->close();
