@@ -1,0 +1,98 @@
+<div id="photo_nav">
+<!--opt name="output.previous"-->
+<a class="content-link link_previous" href="photo_view.php?photo_id={output.previous}">previous</a>
+<!--/opt name="output.previous"-->
+<!--opt name="output.next"-->
+<a class="content-link link_next" href="photo_view.php?photo_id={output.next}">next</a>
+<!--/opt name="output.next"-->
+</div>
+<!--opt name="output.allow_rating"-->
+<span>Rate this photo: </span>
+<ul class="rating">
+	<li class="current_rating" style="width: {output.rate_percent}%">{output.rate_num}/5</li>
+	<li><a href="{tplvars.relative_url}ajax/rate_photo.php?photo_id={output.photo_id}&amp;vote=1" class="rate1">1</a></li>
+	<li><a href="{tplvars.relative_url}ajax/rate_photo.php?photo_id={output.photo_id}&amp;vote=2" class="rate2">2</a></li>
+	<li><a href="{tplvars.relative_url}ajax/rate_photo.php?photo_id={output.photo_id}&amp;vote=3" class="rate3">3</a></li>
+	<li><a href="{tplvars.relative_url}ajax/rate_photo.php?photo_id={output.photo_id}&amp;vote=4" class="rate4">4</a></li>
+	<li><a href="{tplvars.relative_url}ajax/rate_photo.php?photo_id={output.photo_id}&amp;vote=5" class="rate5">5</a></li>
+</ul>
+<p id="rating_stat">Current rating: <span id="rate_num">{output.rate_num}</span> / 5 (<span id="votes_num">{output.stat_votes}</span> votes)</p>
+<!--/opt name="output.allow_rating"-->
+
+<a href="javascript:;" onclick="popWin('{tplvars.relative_url}popup_photo_view.php?photo_id={output.photo_id}','photo',{output.pic_width},{output.pic_width},1)" title="Click to enlarge"><img class="user_photo thumb2" src="{tplvars.photourl}/t2/{output.photo}" alt="{output.user}" /></a>
+<p id="photo_caption">{output.caption}</p>
+
+<!--opt name="output.show_comments"-->
+<!--opt name="output.num_comments"--><h3 class="subtitle">Comments ({output.num_comments})</h3><!--/opt name="output.num_comments"-->
+<!--loop name="loop"-->
+<div class="comment {loop.is_online}">
+	<!--opt name="loop.fk_user_id"--><a href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user} {loop.user_online_status}" /><!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"-->
+	<span class="controls"><!--opt name="loop.editme"--><a id="editme_{loop.comment_id}" class="content-link link_change" href="{tplvars.relative_url}photo_view.php?photo_id={output.photo_id}&amp;return={output.return2me}&amp;edit_comment={loop.comment_id}#postarea" title="Edit comment">edit</a><!--/opt name="loop.editme"--> <!--opt name="output.photo_owner"--><a class="content-link link_delete comment_delete" href="{tplvars.relative_url}processors/comment_delete.php?comment_id={loop.comment_id}&amp;comment_type=photo&amp;return={output.return2me}" title="Remove comment">delete</a><!--/opt name="output.photo_owner"--><a class="content-link" href="#pagetop">top</a></span> <!--opt name="loop.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"-->{loop.user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--> said on {loop.date_posted} :
+	<a name="comm{loop.comment_id}"></a><p id="comment_{loop.comment_id}">{loop.comment}</p>
+	<div class="clear"></div>
+</div>
+<!--/loop name="loop"-->
+<!--/opt name="output.show_comments"-->
+
+<!--opt name="output.allow_comments"-->
+<h3 class="subtitle">Leave your comment</h3>
+
+<!--opt name="output.bbcode_comments"-->
+<div id="bb_tools">
+	<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a>
+	<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
+</div>
+<!--/opt name="output.bbcode_comments"-->
+<form action="{tplvars.relative_url}processors/comment_addedit.php" method="post" id="photocomment_form">
+<fieldset>
+	<input type="hidden" name="comment_type" value="photo" />
+	<input type="hidden" name="comment_id" id="comment_id" value="{output.comment_id}" />
+	<input type="hidden" name="fk_parent_id" value="{output.photo_id}" />
+	<input type="hidden" name="return" value="{output.return2me}" />
+	<a name="postarea" id="postarea"></a><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea>
+</fieldset>
+<!--opt name="!tplvars.user_logged"-->
+<!--opt name="output.use_captcha"-->
+<fieldset>
+	<dl class="required">
+		<dt>Verification code:</dt>
+		<dd><img src="{tplvars.relative_url}show_captcha.php?{output.rand}" /></dd>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><input type="text" name="captcha" id="captcha" size="4" tabindex="50" /> <span class="field-help">Enter the characters from above.</span></dd>
+	</dl>
+</fieldset>
+<!--/opt name="output.use_captcha"-->
+<!--/opt name="!tplvars.user_logged"-->
+<fieldset class="controls">
+	<input class="button large" id="post-button" type="submit" value="Post comment" />
+</fieldset>
+</form>
+<!--/opt name="output.allow_comments"-->
+<!--opt name="!output.allow_comments"-->
+	<!--opt name="!tplvars.user_logged"-->
+	<div class="login_tease"><a class="content-link simple big" href="{tplvars.relative_url}login.php">Login</a> or <a class="content-link simple big" href="join.php">register</a> to post comments!</div>
+	<!--/opt name="!tplvars.user_logged"-->
+<!--/opt name="!output.allow_comments"-->
+
+<div id="bottom_links">
+	<a class="content-link link_previous" href="{tplvars.relative_url}{output.return2}" title="Back">Back</a>
+</div>
+
+<script type="text/javascript">
+	photo_id={output.photo_id};
+	bbcode_field_id='#comment';
+	var lang=new Array('{output.lang_255}','{output.lang_256}');
+</script>
+<script type="text/javascript" src="{tplvars.relative_url}js/scrollto.js?v={tplvars.js_lib_v}"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/photo_view.js?v={tplvars.js_lib_v}"></script>
+<!--opt name="output.bbcode_comments"-->
+<script type="text/javascript" src="{tplvars.relative_url}js/bbcode.js?v={tplvars.js_lib_v}"></script>
+<!--/opt name="output.bbcode_comments"-->
+<!--opt name="output.allow_rating"-->
+<script type="text/javascript" src="{tplvars.relative_url}js/rating.js?v={tplvars.js_lib_v}"></script>
+<!--/opt name="output.allow_rating"-->
