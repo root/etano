@@ -86,5 +86,5 @@ if (!isset($_POST['silent'])) {
 		// thickbox
 		parent.location=parent.location;
 	</script>
-	<?
+	<?php
 }

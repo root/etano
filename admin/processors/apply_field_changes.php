@@ -16,8 +16,8 @@ db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../../includes/admin_functions.inc.php';
 allow_dept(DEPT_ADMIN);
 
-regenerate_langstrings_array();
 regenerate_fields_array();
+regenerate_langstrings_array();
 unset($GLOBALS['_pfields'],$GLOBALS['_pcats'],$GLOBALS['basic_search_fields']);
 require '../../includes/fields.inc.php';
 regenerate_skin_cache();

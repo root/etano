@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 	$pass2=sanitize_and_format_gpc($_POST,'pass2',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 	$input['change_pass']=sanitize_and_format_gpc($_POST,'change_pass',TYPE_INT,0,0);
+	$input['user']=strtolower($input['user']);
 
 // check for input errors
 	if (empty($input['user'])) {
@@ -86,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text']='Account info changed.';
 		} else {
 			unset($input['admin_id']);
-			$query="INSERT INTO `{$dbtable_prefix}admin_accounts` SET ";
+			$query="INSERT IGNORE INTO `{$dbtable_prefix}admin_accounts` SET ";
 			foreach ($admin_accounts_default['defaults'] as $k=>$v) {
 				if (isset($input[$k])) {
 					$query.="`$k`='".$input[$k]."',";
@@ -94,8 +95,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 			$query=substr($query,0,-1);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$topass['message']['type']=MESSAGE_INFO;
-			$topass['message']['text']='Account added.';
+			if (mysql_affected_rows()) {
+				$topass['message']['type']=MESSAGE_INFO;
+				$topass['message']['text']='Account added.';
+			} else {
+				$topass['message']['type']=MESSAGE_ERROR;
+				$topass['message']['text']='Error: account not added.';
+			}
 		}
 	} else {
 		$nextpage='admin/admin_accounts_addedit.php';
