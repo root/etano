@@ -1,4 +1,4 @@
-<?
+<?php
 $jobs[]='gen_user_cache';
 
 function gen_user_cache() {

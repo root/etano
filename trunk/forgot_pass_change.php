@@ -57,4 +57,5 @@ $tplvars['title']=$GLOBALS['_lang'][224];
 $tplvars['page_title']=$GLOBALS['_lang'][224];
 $tplvars['page']='forgot_pass_change';
 $tplvars['css']='forgot_pass_change.css';
+$no_timeout=true;
 include 'frame.php';

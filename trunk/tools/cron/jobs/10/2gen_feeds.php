@@ -1,4 +1,4 @@
-<?
+<?php
 $jobs[]='gen_blog_feeds';
 $jobs[]='gen_comment_feeds';
 

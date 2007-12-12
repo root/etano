@@ -1,4 +1,4 @@
-<?
+<?php
 $jobs[]='gen_blogposts_cache';
 
 function gen_blogposts_cache() {
