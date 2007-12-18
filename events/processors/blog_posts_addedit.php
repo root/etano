@@ -63,7 +63,7 @@ $_on_before_update[]='update_seolink';
 
 function update_seolink() {
 	global $query,$input;
-	$input['alt_url']=_BASEURL_.'/blogpost/'.$input['post_id'].'/'.strtolower(preg_replace(array('/[^a-zA-Z0-9]+/','/(^-)|(-$)/'),array('-',''),$input['title']));
+	$input['alt_url']=_BASEURL_.'/blogpost/'.$input['post_id'].'/'.strtolower(preg_replace(array('/[^a-zA-Z0-9]+/','/(^-)|(-$)/'),array('_',''),$input['title']));
 	$temp=explode(' WHERE',$query);
 	$temp[0].=",`alt_url`='".$input['alt_url']."'";
 	$query=$temp[0].' WHERE'.$temp[1];
@@ -73,7 +73,7 @@ $_on_after_insert[]='insert_seolink';
 
 function insert_seolink() {
 	global $input,$dbtable_prefix;
-	$input['alt_url']=_BASEURL_.'/blogpost/'.$input['post_id'].'/'.strtolower(preg_replace(array('/[^a-zA-Z0-9]+/','/(^-)|(-$)/'),array('-',''),$input['title']));
+	$input['alt_url']=_BASEURL_.'/blogpost/'.$input['post_id'].'/'.strtolower(preg_replace(array('/[^a-zA-Z0-9]+/','/(^-)|(-$)/'),array('_',''),$input['title']));
 	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `alt_url`='".$input['alt_url']."' WHERE `post_id`=".$input['post_id'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
