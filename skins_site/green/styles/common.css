@@ -62,6 +62,12 @@ em {
 	clear: both;
 	visibility: hidden;
 }
+.clearfix {
+    display: inline-block;
+}
+html[xmlns] .clearfix {
+    display: block;
+}
 * html>body .clearfix {
 	display: inline-block;
 	width: 100%;
