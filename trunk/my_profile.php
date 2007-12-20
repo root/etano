@@ -37,7 +37,7 @@ if (mysql_num_rows($res)) {
 			} elseif ($field['field_type']==FIELD_SELECT) {
 				// if we sanitize here " will be rendered as &quot; which is not what we want
 	//			$output[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$output[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-				$output[$field['dbfield']]=$field['accepted_values'][$output[$field['dbfield']]];
+				$output[$field['dbfield']]=isset($field['accepted_values'][$output[$field['dbfield']]]) ? $field['accepted_values'][$output[$field['dbfield']]] : '?';
 			} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
 				$output[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$output[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			} elseif ($field['field_type']==FIELD_INT || $field['field_type']==FIELD_FLOAT) {

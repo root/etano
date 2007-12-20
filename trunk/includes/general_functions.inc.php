@@ -328,7 +328,7 @@ function get_user_settings($user_id,$module_code,$option='') {
 				$myreturn[$rsrow[0]]=$rsrow[1];
 			}
 			if (!empty($user_id)) {
-				$query="INSERT INTO `{$dbtable_prefix}user_settings2` (`fk_user_id`,`config_option`,`config_value`,`fk_module_code`) VALUES ";
+				$query="INSERT IGNORE INTO `{$dbtable_prefix}user_settings2` (`fk_user_id`,`config_option`,`config_value`,`fk_module_code`) VALUES ";
 				foreach ($remaining as $k=>$v) {
 					$query.="('$user_id','$v','".$myreturn[$v]."','$module_code'),";
 				}
