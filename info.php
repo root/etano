@@ -94,6 +94,7 @@ switch ($type) {
 			$payment['is_recurent']=$rsrow['is_recurent'];
 			$payment['duration']=$rsrow['duration'];
 			$payment['currency']=$rsrow['currency'];
+			$rsrow['payment_links']=array();
 			for ($i=0;isset($active_gateways[$i]);++$i) {
 				$rsrow['payment_links'][]=$active_gateways[$i]['call']->get_buy_button($payment);
 			}

@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       pass_change_confirm.php
+File:                       email_change_confirm.php
 $Revision: 207 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -14,8 +14,8 @@ Support at:                 http://www.datemill.com/forum
 define('CACHE_LIMITER','private');
 require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/email_change.inc.php';
 require_once 'includes/user_functions.inc.php';
+require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/email_change.inc.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 $uid=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
