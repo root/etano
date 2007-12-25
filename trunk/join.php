@@ -23,10 +23,11 @@ $output=array();
 $page=1;
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
-	unset($_SESSION['topass']['input']);
+	$page=$output['page'];
 	if ($page==1 && $output['agree']==1) {
 		$output['agree']='checked="checked"';
 	}
+	unset($_SESSION['topass']['input'],$output['page']);
 } elseif (!empty($_GET['p'])) {
 	$page=(int)$_GET['p'];
 }
