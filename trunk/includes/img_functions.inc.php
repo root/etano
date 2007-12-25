@@ -111,5 +111,11 @@ function save_thumbnail($image,$size,$save_path,$save_name,$config=array()) {
 	} else {
 		$myreturn=false;
 	}
+	if (!empty($myimg)) {
+		imagedestroy($myimg);
+	}
+	if (!empty($mynewimg)) {
+		imagedestroy($mynewimg);
+	}
 	return $myreturn;
 }
