@@ -59,7 +59,7 @@ function search_results($search,$my_membership=1) {
 			case 'user':
 				$input['acclevel_code']='search_advanced';
 				$continue=true;
-				$input['user']=sanitize_and_format_gpc($search,'user',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+				$input['user']=sanitize_and_format_gpc($search,'user',TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTFIELD],'');
 				if (strlen($input['user'])<=3) {
 					$where='';	// force no results returned.
 				} else {
