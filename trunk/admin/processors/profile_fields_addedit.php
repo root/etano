@@ -44,10 +44,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['def_end']=sanitize_and_format_gpc($_POST,'def_end',TYPE_INT,0,0);
 	}
 
-	// other formatting
-	$input['label']=ucfirst(strtolower($input['label']));
-	$input['search_label']=ucfirst(strtolower($input['search_label']));
-
 // check for input errors
 	if (empty($input['label'])) {
 		$error=true;
