@@ -35,9 +35,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$nextpage=$input['return'];
 	}
 
-	// other formatting
-	$input['pcat_name']=ucwords(strtolower($input['pcat_name']));
-
 // check for input errors
 	if (empty($input['pcat_name'])) {
 		$error=true;
