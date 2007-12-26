@@ -315,7 +315,7 @@ if (!empty($totalrows)) {
 				case FIELD_SELECT:
 				// if we sanitize here " will be rendered as &quot; which is not what we want
 				//	$rsrow[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$rsrow[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-					$rsrow[$field['dbfield']]=$field['accepted_values'][$rsrow[$field['dbfield']]];
+					$rsrow[$field['dbfield']]=isset($field['accepted_values'][$rsrow[$field['dbfield']]]) ? $field['accepted_values'][$rsrow[$field['dbfield']]] : '?';
 					break;
 
 				case FIELD_CHECKBOX_LARGE:

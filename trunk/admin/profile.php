@@ -90,7 +90,7 @@ if (mysql_num_rows($res)) {
 				case FIELD_SELECT:
 					// if we sanitize here " will be rendered as &quot; which is not what we want
 					//$cat_content[$i]['field']=sanitize_and_format($field['accepted_values'][$output[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-					$cat_content[$i]['field']=$field['accepted_values'][$output[$field['dbfield']]];
+					$cat_content[$i]['field']=isset($field['accepted_values'][$output[$field['dbfield']]]) ? $field['accepted_values'][$output[$field['dbfield']]] : '?';
 					break;
 
 				case FIELD_CHECKBOX_LARGE:
