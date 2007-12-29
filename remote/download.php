@@ -57,11 +57,15 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 			if (mysql_num_rows($res)) {
 				$prods=explode('|',mysql_result($res,0,0));
 				if (!empty($prods)) {
-					$query="SELECT a.`uprod_id`,b.`filename` FROM `user_products` a LEFT JOIN `products` b ON a.`fk_prod_id`=b.`prod_id` WHERE a.`fk_site_id`=".$input['site_id']." AND a.`fk_prod_id` IN ('".join("','",$prods)."')";
+					$query="SELECT a.`uprod_id`,b.`filename`,TO_DAYS(now())-TO_DAYS(`last_download`) as `last_download` FROM `user_products` a LEFT JOIN `products` b ON a.`fk_prod_id`=b.`prod_id` WHERE a.`fk_site_id`=".$input['site_id']." AND a.`fk_prod_id` IN ('".join("','",$prods)."')";
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					$dlds=array();
 					$uprod_ids=array();
 					while ($rsrow=mysql_fetch_assoc($res)) {
+						if ($rsrow['last_download']<=1) {
+							echo 'Sorry, you are limited to 1 download a day for each product.';
+							die;
+						}
 						$uprod_ids[]=$rsrow['uprod_id'];
 						if (!empty($rsrow['filename'])) {
 							$dlds[]=$rsrow['uprod_id'];
@@ -90,6 +94,10 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 				redirect2page('purchase.php',$topass);
 			}
 		} else {
+			if ($rsrow['last_download']<=1) {
+				echo 'Sorry, you are limited to 1 download a day for each product.';
+				die;
+			}
 			$query="UPDATE `user_products` SET `downloads`=`downloads`+1,`last_download`=now() WHERE `uprod_id`=".mysql_result($res,0,0);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
