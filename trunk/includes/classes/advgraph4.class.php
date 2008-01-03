@@ -912,7 +912,11 @@ class graph {
 		}
 
 		@($this->setProp("xSclInc",(($this->getProp("xsclmax")-$this->getProp("xsclmin"))/(float)$this->getProp("xsclpts"))*$this->width/(float)($this->getProp("xsclmax")-$this->getProp("xsclmin"))));
-		@($this->setProp("ySclInc",(($this->getProp("ysclmax")-$this->getProp("ysclmin"))/(float)$this->getProp("ysclpts"))*$this->height/(float)($this->getProp("ysclmax")-$this->getProp("ysclmin"))));
+		if ($this->getProp('ysclmax')!=$this->getProp('ysclmin')) {
+			@($this->setProp('ySclInc',(($this->getProp("ysclmax")-$this->getProp("ysclmin"))/(float)$this->getProp("ysclpts"))*$this->height/(float)($this->getProp("ysclmax")-$this->getProp("ysclmin"))));
+		} else {
+			@($this->setProp('ySclInc',0));
+		}
 
 		$this->xPts = array();
 		$this->yPts = array();
