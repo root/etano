@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       admin/processors/apply_field_changes.php
+File:                       admin/processors/field_changes_manual.php
 $Revision: 221 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -39,10 +39,6 @@ if (!empty($fields)) {
 	$query="ALTER TABLE `{$dbtable_prefix}user_profiles` ADD INDEX `searchkey` (`".join("`,`",$fields)."`)";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
-
-unset($GLOBALS['_pfields'],$GLOBALS['_pcats'],$GLOBALS['basic_search_fields']);
-require '../../includes/fields.inc.php';
-regenerate_skin_cache();
 
 $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Field and category changes applied successfully.';
