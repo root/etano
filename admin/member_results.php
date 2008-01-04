@@ -19,9 +19,14 @@ allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 $tpl=new phemplate('skin/','remove_nonjs');
 $output=array();
 
+$sorts=array('`_user`','`score` DESC','`fk_user_id` DESC');
+$sort_names=array('alphabetically','by score (higer first)','newest first');
+
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 $output['search_md5']=sanitize_and_format_gpc($_GET,'search',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+$sortby=(isset($_GET['sortby']) && isset($sorts[(int)$_GET['sortby']])) ? (int)$_GET['sortby'] : 0;
+$output['sortby']=vector2options($sort_names,$sortby);
 
 $input=array();
 $user_ids=array();
@@ -126,8 +131,8 @@ if (!empty($output['search_md5'])) {
 }
 
 if ($do_query) {
-	$where='1';
-	$from="`{$dbtable_prefix}user_profiles` a";
+	$where="a.`fk_user_id`=b.`".USER_ACCOUNT_ID."`";
+	$from="`{$dbtable_prefix}user_profiles` a,`".USER_ACCOUNTS_TABLE."` b";
 
 	if (isset($input['user'])) {
 		$where.=" AND a.`_user` LIKE '".$input['user']."%'";
@@ -136,22 +141,13 @@ if ($do_query) {
 		$where.=" AND a.`status`=".$input['pstat'];
 	}
 	if (isset($input['astat'])) {	// account status
-		$where.=" AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND b.`status`=".$input['astat'];
-		$from.=",`".USER_ACCOUNTS_TABLE."` b";
+		$where.=" AND b.`status`=".$input['astat'];
 	}
 	if (isset($input['membership'])) {
 		$where.=" AND b.`membership`=".$input['membership'];
-		if (!isset($input['astat'])) {
-			$where.=" AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."`";
-			$from.=",`".USER_ACCOUNTS_TABLE."` b";
-		}
 	}
 	if (isset($input['email'])) {
 		$where.=" AND b.`email`='".$input['email']."'";
-		if (!isset($input['astat'])) {
-			$where.=" AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."`";
-			$from.=",`".USER_ACCOUNTS_TABLE."` b";
-		}
 	}
 	if (isset($input['photo'])) {
 		if ($input['photo']==1) {	// only members with main photo
@@ -263,7 +259,7 @@ if ($do_query) {
 		}	//switch ($field['search_type'])
 	} // the for() that constructs the where
 
-	$query="SELECT a.`fk_user_id` FROM $from WHERE $where ORDER BY a.`_user`";
+	$query="SELECT a.`fk_user_id` FROM $from WHERE $where";
 //print $query;
 //die;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -308,7 +304,7 @@ if (!empty($totalrows)) {
 
 		}
 	}
-	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id` IN ('".join("','",$user_ids)."') ORDER BY `_user`";
+	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id` IN ('".join("','",$user_ids)."') ORDER BY ".$sorts[$sortby];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		foreach ($_pfields as $k=>$field) {
