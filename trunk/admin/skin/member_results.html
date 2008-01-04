@@ -19,6 +19,19 @@
 		<input type="button" onclick="handle_mass_member($('#sel1'),$('#act1'))" value="Go" />
 	</p>
 </div>
+
+<div class="mass_members">
+	<h3>Sort results:</h3>
+	<p>
+	<form action="member_results.php" method="get">
+	<input type="hidden" name="search" value="{output.search_md5}" />
+	<select name="sortby">
+	{output.sortby}
+	</select>
+	<input type="submit" value="Go" />
+	</form>
+	</p>
+</div>
 <!--/opt name="output.totalrows"-->
 
 <form action="" method="post" id="mass_member_form">
