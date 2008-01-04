@@ -61,6 +61,17 @@
 		<!--opt name="!output.has_photo"--><img class="user_photo thumb1" src="{tplvars.photourl}/t1/no_photo.gif" /><!--/opt name="!output.has_photo"-->
 	</div>
 
+	<div class="profile_cat">
+		<ul class="cat_content">
+			<li><label>Join Date:</label> <p>{output.date_added}</p></li>
+			<li><label>Last Activity:</label> <p>{account.last_activity}</p></li>
+			<li><label>Email:</label> <p>{account.email}</p></li>
+			<li><label>Score:</label> <p>{output.score}</p></li>
+			<li><label>Current Membership:</label> <p>{account.membership}</p></li>
+		</ul>
+	</div>
+	<div class="clear"></div>
+
 	<!--loop name="categs"-->
 	<div class="profile_cat">
 		<h3>{categs.pcat_name}</h3>
