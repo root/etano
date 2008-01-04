@@ -46,14 +46,16 @@ if (!empty($_GET['uid'])) {
 	redirect2page('admin/cpanel.php',$topass);
 }
 
-$config=get_site_option(array('bbcode_profile'),'core');
+$config=get_site_option(array('bbcode_profile','datetime_format','time_offset'),'core');
+$config=array_merge($config,get_site_option(array('datetime_format','time_offset'),'def_user_prefs'));
 
 $categs=array();
 $account=array();
-$query="SELECT * FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=$uid";
+$query="SELECT *,UNIX_TIMESTAMP(`date_added`) as `date_added` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=$uid";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output=array_merge($output,mysql_fetch_assoc($res));
+	$output['date_added']=strftime($config['datetime_format'],$output['date_added']+$config['time_offset']);
 	if (empty($output['del'])) {
 		unset($output['del']);
 	}
@@ -130,9 +132,10 @@ if (mysql_num_rows($res)) {
 		$output['approved']=true;
 	}
 
-	$query="SELECT `status`,`skin` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`=$uid";
+	$query="SELECT `email`,UNIX_TIMESTAMP(`last_activity`) as `last_activity`,`status`,`skin` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`=$uid";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$account=mysql_fetch_assoc($res);
+	$account['last_activity']=strftime($config['datetime_format'],$account['last_activity']+$config['time_offset']);
 	$account['status']=vector2options($accepted_astats,$account['status']);
 	$account['skin']=dbtable2options("`{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b",'a.`module_code`','b.`config_value`','b.`config_value`',$account['skin'],"a.`module_code`=b.`fk_module_code` AND a.`module_type`=".MODULE_SKIN." AND b.`config_option`='skin_name'");
 }
