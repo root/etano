@@ -44,6 +44,10 @@ if (!empty($output['search_md5'])) {
 	if (empty($input['user'])) {
 		unset($input['user']);
 	}
+	$input['email']=sanitize_and_format_gpc($_GET,'email',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	if (empty($input['email'])) {
+		unset($input['email']);
+	}
 	$input['astat']=sanitize_and_format_gpc($_GET,'astat',TYPE_INT,0,0);
 	if (empty($input['astat'])) {
 		unset($input['astat']);
@@ -137,6 +141,13 @@ if ($do_query) {
 	}
 	if (isset($input['membership'])) {
 		$where.=" AND b.`membership`=".$input['membership'];
+		if (!isset($input['astat'])) {
+			$where.=" AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."`";
+			$from.=",`".USER_ACCOUNTS_TABLE."` b";
+		}
+	}
+	if (isset($input['email'])) {
+		$where.=" AND b.`email`='".$input['email']."'";
 		if (!isset($input['astat'])) {
 			$where.=" AND a.`fk_user_id`=b.`".USER_ACCOUNT_ID."`";
 			$from.=",`".USER_ACCOUNTS_TABLE."` b";
