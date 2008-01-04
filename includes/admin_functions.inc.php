@@ -275,7 +275,8 @@ function regenerate_langstrings_array($skin_module_code='') {
 }
 
 
-function regenerate_skin_cache($skin_module_code='') {
+function regenerate_skin_cache($skin_module_code='',$last_id=0) {
+	$timeout=120;
 	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
 	global $dbtable_prefix,$_pfields,$_pcats,$__field2format;
 	$tpl=new phemplate(_BASEPATH_.'/skins_site/','remove_nonjs');
@@ -304,7 +305,12 @@ function regenerate_skin_cache($skin_module_code='') {
 
 	$config=get_site_option(array('bbcode_profile','use_smilies'),'core');
 	$query="SELECT $select FROM `{$dbtable_prefix}user_profiles` WHERE `status`=".STAT_APPROVED;
+	if (!empty($last_id)) {
+		$query.=" AND `fk_user_id`>$last_id";
+	}
+	$query.=" ORDER BY `fk_user_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$start_time=(int)time();
 	while ($profile=mysql_fetch_assoc($res)) {
 	// set all the fields to their real (readable) values
 		foreach ($_pfields as $field_id=>$field) {
@@ -388,6 +394,18 @@ function regenerate_skin_cache($skin_module_code='') {
 			}
 		}
 		$tpl->drop_var('profile');
+		if (((int)time())-$start_time>$timeout) {
+			echo 'To prevent timeouts this script interrupts every few minutes. Press the continue button to resume.<br />';
+			echo 'Last user ID processed: ',$profile['fk_user_id'],'<br />';
+			echo '<form action="regenerate_skin.php" method="get">';
+			echo '<input type="hidden" name="last_id" value="',$profile['fk_user_id'],'" />';
+			if (!empty($skin_module_code)) {
+				echo '<input type="hidden" name="s" value="',$skin_module_code,'" />';
+			}
+			echo '<input type="submit" value="Continue" />';
+			echo '</form>';
+			die;
+		}
 	}
 }
 
