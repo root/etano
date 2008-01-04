@@ -17,9 +17,13 @@
 	<dd><input type="text" name="user" id="user" tabindex="1" /></dd>
 </dl>
 <dl>
+	<dt><label for="user">Email:</label></dt>
+	<dd><input type="text" name="email" id="email" tabindex="2" /></dd>
+</dl>
+<dl>
 	<dt><label for="astat">Account status:</label></dt>
 	<dd>
-		<select name="astat" id="astat" tabindex="2">
+		<select name="astat" id="astat" tabindex="4">
 		<option value="0">-</option>
 		{output.astat}
 		</select>
@@ -28,7 +32,7 @@
 <dl>
 	<dt><label class="mainlabel" for="pstat">Profile status:</label></dt>
 	<dd>
-		<select name="pstat" id="pstat" tabindex="3">
+		<select name="pstat" id="pstat" tabindex="5">
 		<option value="0">-</option>
 		{output.pstat}
 		</select>
@@ -37,7 +41,7 @@
 <dl>
 	<dt><label class="mainlabel" for="membership">Membership:</label></dt>
 	<dd>
-		<select name="membership" id="membership" tabindex="4">
+		<select name="membership" id="membership" tabindex="6">
 		<option value="0">-</option>
 		{output.membership}
 		</select>
