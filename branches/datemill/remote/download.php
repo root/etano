@@ -62,7 +62,7 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 					$dlds=array();
 					$uprod_ids=array();
 					while ($rsrow=mysql_fetch_assoc($res)) {
-						if ($rsrow['last_download'] && $rsrow['last_download']<=1) {
+						if ($rsrow['last_download']!=null && $rsrow['last_download']<=1) {
 							echo 'Sorry, you are limited to 1 download a day for each product.';
 							die;
 						}
@@ -95,7 +95,7 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 			}
 		} else {
 			$rsrow=mysql_fetch_assoc($res);
-			if ($rsrow['last_download'] && $rsrow['last_download']<=1) {
+			if ($rsrow['last_download']!=null && $rsrow['last_download']<=1) {
 				echo 'Sorry, you are limited to 1 download a day for each product.';
 				die;
 			}
