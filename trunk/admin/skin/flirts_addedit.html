@@ -9,7 +9,7 @@
 <tr>
 	<td class="label">Flirt:</td>
 	<td class="field">
-		<textarea name="flirt_text" id="flirt_text" tabindex="1">{output.flirt_text}</textarea>
+		<textarea name="flirt_text" cols="" rows="" id="flirt_text" tabindex="1">{output.flirt_text}</textarea>
 	</td>
 </tr>
 <tr>
@@ -25,5 +25,15 @@
 
 <div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
 
-<script type="text/javascript" src="fckeditor/fckeditor.js?v={tplvars.js_lib_v}"></script>
+<script language="javascript" type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript">
+	tinyMCE.init({
+		mode : "exact",
+		elements : "flirt_text",
+		theme : "advanced",
+		relative_urls : false,
+		convert_urls : false,
+		content_css : "skin/styles/content.css"
+	});
+</script>
 <script type="text/javascript" src="js/flirts_addedit.js?v={tplvars.js_lib_v}"></script>

@@ -1,5 +1,3 @@
-@import url('bbcode.css');
-
 .form_table {
 	width: 100%;
 }
@@ -12,4 +10,9 @@
 	float: left;
 	list-style-type: none;
 	margin-right: 10px;
+}
+
+#flirt_text {
+	width: 80%;
+	height: 400px;
 }
