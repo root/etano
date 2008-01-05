@@ -151,7 +151,7 @@ if (extension_loaded('gd') && function_exists('gd_info')) {
 	$output['gd2']='state_red';
 }
 
-if (php_sapi_name()=='apache') {
+if (strpos(php_sapi_name(),'apache')!==false) {
 	$output['sapi']='state_green';
 } else {
 	$output['sapi']='state_yellow';

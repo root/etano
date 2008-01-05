@@ -132,12 +132,20 @@ if (mysql_num_rows($res)) {
 		$output['approved']=true;
 	}
 
-	$query="SELECT `email`,UNIX_TIMESTAMP(`last_activity`) as `last_activity`,`status`,`skin` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`=$uid";
+	$query="SELECT a.`email`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity`,a.`status`,a.`skin`,b.`m_name` as `membership` FROM `".USER_ACCOUNTS_TABLE."` a,`{$dbtable_prefix}memberships` b WHERE a.`membership`=b.`m_value` AND a.`".USER_ACCOUNT_ID."`=$uid";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$account=mysql_fetch_assoc($res);
 	$account['last_activity']=strftime($config['datetime_format'],$account['last_activity']+$config['time_offset']);
 	$account['status']=vector2options($accepted_astats,$account['status']);
 	$account['skin']=dbtable2options("`{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b",'a.`module_code`','b.`config_value`','b.`config_value`',$account['skin'],"a.`module_code`=b.`fk_module_code` AND a.`module_type`=".MODULE_SKIN." AND b.`config_option`='skin_name'");
+	$query="SELECT UNIX_TIMESTAMP(`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=$uid AND `is_subscr`=1 AND `is_active`=1";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		$account['paid_until']=mysql_result($res,0,0);
+		$account['paid_until']=strftime($config['datetime_format'],$account['paid_until']+$config['time_offset']);
+	} else {
+		$account['paid_until']='-';
+	}
 }
 
 $output['pic_width']=get_site_option('pic_width','core_photo');
