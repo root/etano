@@ -32,18 +32,6 @@ if (is_file($file)) {
 }
 
 $tpl->set_file('content','file_edit.html');
-if ($mode==2) {
-//	$output['richedit']=true;
-	$output['richedit']=false;	// should be true if you want to use always use the wysiwyg editor
-								// but since it's pretty useless on skins, you shouldn't want that.
-	if (substr($output['file'],-10)=='frame.html') {
-		$output['fullpage']=true;
-	}
-	if (strpos($output['file'],'/emails/')) {
-		$output['fullpage']=true;
-		$output['richedit']=true;	// ok, we can enable richedit for emails.
-	}
-}
 $output['path']=urlencode(pathinfo($output['file'],PATHINFO_DIRNAME));
 $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_OPTIONAL);

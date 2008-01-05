@@ -30,7 +30,7 @@ $input=array();
 $input['t']=sanitize_and_format_gpc($_POST,'t',TYPE_INT,0,0);
 $input['id']=sanitize_and_format_gpc($_POST,'id',TYPE_INT,0,0);
 $input['send_email']=sanitize_and_format_gpc($_POST,'send_email',TYPE_INT,0,0);
-$input['reject_reason']=sanitize_and_format_gpc($_POST,'reject_reason',TYPE_STRING,$__field2format[FIELD_TEXTAREA],'');
+$input['reject_reason']=isset($_POST['reject_reason']) ? $_POST['reject_reason'] : '';
 $input['reason_title']=sanitize_and_format_gpc($_POST,'reason_title',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 if (!empty($_POST['return'])) {
 	$input['return']=sanitize_and_format($_POST['return'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE);
@@ -51,6 +51,16 @@ if (!empty($input['send_email'])) {
 }
 
 if (!$error) {
+	$tpl=new phemplate(_BASEPATH_.'/skins_site/'.$def_skin.'/','remove_nonjs');
+	$tpl->set_file('temp','emails/general.html');
+	$tpl->set_var('output.content',$input['reject_reason']);
+	$tpl->set_var('tplvars',$tplvars);
+	$input['reject_reason']=$tpl->process('temp','temp',TPL_FINISH | TPL_OPTIONAL | TPL_INCLUDE);
+	$tpl->drop_var('temp');
+	$tpl->drop_var('output.content');
+	$reject_reason_email=$input['reject_reason'];	// for email
+	$input['reject_reason']=sanitize_and_format($input['reject_reason'],TYPE_STRING,$__field2format[FIELD_TEXTAREA]);
+
 	switch ($input['t']) {
 
 		case AMTPL_REJECT_MEMBER:
@@ -60,7 +70,7 @@ if (!$error) {
 				$query="SELECT `email` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`=".$input['id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (mysql_num_rows($res)) {
-					$ok=queue_or_send_email(array(mysql_result($res,0,0)),array('subject'=>$_POST['reason_title'],'message_body'=>$_POST['reject_reason']));
+					$ok=queue_or_send_email(array(mysql_result($res,0,0)),array('subject'=>$_POST['reason_title'],'message_body'=>$reject_reason_email));
 				}
 			}
 			if ($ok) {

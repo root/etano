@@ -1,4 +1,4 @@
-<h2>Send Email</h2>
+<h2>Send Newsletter Email</h2>
 
 <form action="processors/newsletter.php" method="post" id="newsletter_form">
 <input type="hidden" name="return" id="return" value="{output.return}" />
@@ -28,5 +28,13 @@
 
 <div id="bottom_links"><a class="back" href="{output.return2}">Back</a></div>
 
-<script type="text/javascript" src="fckeditor/fckeditor.js?v={tplvars.js_lib_v}"></script>
+<script language="javascript" type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript">
+	tinyMCE.init({
+		mode : "exact",
+		elements : "message_body",
+		theme : "advanced",
+		content_css : "skin/styles/content.css"
+	});
+</script>
 <script type="text/javascript" src="js/newsletter.js?v={tplvars.js_lib_v}"></script>

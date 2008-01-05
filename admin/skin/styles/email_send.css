@@ -5,3 +5,8 @@
 #email_send_table .field {
 	width: 80%;
 }
+
+#message_body {
+	height: 400px;
+	width: 80%;
+}
