@@ -915,7 +915,7 @@ class graph {
 		if ($this->getProp('ysclmax')!=$this->getProp('ysclmin')) {
 			@($this->setProp('ySclInc',(($this->getProp("ysclmax")-$this->getProp("ysclmin"))/(float)$this->getProp("ysclpts"))*$this->height/(float)($this->getProp("ysclmax")-$this->getProp("ysclmin"))));
 		} else {
-			@($this->setProp('ySclInc',0);
+			@($this->setProp('ySclInc',0));
 		}
 
 		$this->xPts = array();
