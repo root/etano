@@ -47,7 +47,7 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 	}
 
 	if ($_GET['t']=='p') {
-		$query="SELECT `uprod_id` FROM `user_products` WHERE `fk_site_id`=".$input['site_id']." AND `fk_prod_id`=".$input['id'];
+		$query="SELECT `uprod_id`,TO_DAYS(now())-TO_DAYS(`last_download`) as `last_download` FROM `user_products` WHERE `fk_site_id`=".$input['site_id']." AND `fk_prod_id`=".$input['id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (!mysql_num_rows($res)) {
 			// so they do not have this product listed as purchased but maybe they're trying to download a
@@ -62,7 +62,7 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 					$dlds=array();
 					$uprod_ids=array();
 					while ($rsrow=mysql_fetch_assoc($res)) {
-						if ($rsrow['last_download']<=1) {
+						if ($rsrow['last_download'] && $rsrow['last_download']<=1) {
 							echo 'Sorry, you are limited to 1 download a day for each product.';
 							die;
 						}
@@ -94,11 +94,12 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 				redirect2page('purchase.php',$topass);
 			}
 		} else {
-			if ($rsrow['last_download']<=1) {
+			$rsrow=mysql_fetch_assoc($res);
+			if ($rsrow['last_download'] && $rsrow['last_download']<=1) {
 				echo 'Sorry, you are limited to 1 download a day for each product.';
 				die;
 			}
-			$query="UPDATE `user_products` SET `downloads`=`downloads`+1,`last_download`=now() WHERE `uprod_id`=".mysql_result($res,0,0);
+			$query="UPDATE `user_products` SET `downloads`=`downloads`+1,`last_download`=now() WHERE `uprod_id`=".$rsrow['uprod_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	}
