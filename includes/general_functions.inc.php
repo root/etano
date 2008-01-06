@@ -498,7 +498,6 @@ function create_search_form($search_fields) {
 					} else {
 						$field['default_value'][3]=0;
 					}
-					$myreturn[$s]['label']=$GLOBALS['_lang'][126];
 					$myreturn[$s]['dbfield']=$field['dbfield'].'_country';
 					$myreturn[$s]['field']='<select class="big_select" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">'.$GLOBALS['_lang'][159].'</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$field['default_value'][0]).'</select>';
 					$prefered_input='s';
