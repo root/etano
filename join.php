@@ -136,7 +136,6 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 		case FIELD_LOCATION:
 			$country_id=$output[$field['dbfield'].'_country'];
 			$state_id=$output[$field['dbfield'].'_state'];
-			$loop[$j]['label']=$GLOBALS['_lang'][126];
 			$loop[$j]['dbfield']=$field['dbfield'].'_country';
 			$loop[$j]['field']='<select class="text" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">'.$GLOBALS['_lang'][195].'</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output[$field['dbfield'].'_country']).'</select>';
 			$prefered_input='s';
