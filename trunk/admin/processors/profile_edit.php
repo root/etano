@@ -26,7 +26,7 @@ $nextpage='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$input['uid']=sanitize_and_format_gpc($_POST,'uid',TYPE_INT,0,0);
+	$input['fk_user_id']=sanitize_and_format_gpc($_POST,'fk_user_id',TYPE_INT,0,0);
 	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 
 	$on_changes=array();
@@ -100,10 +100,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 		}
-		$query.=" WHERE `fk_user_id`=".$input['uid'];
+		$query.=" WHERE `fk_user_id`=".$input['fk_user_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (!mysql_affected_rows()) {
-			$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."',`status`=".STAT_APPROVED;
+			$query="INSERT IGNORE INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$input['fk_user_id']."',`last_changed`='".gmdate('YmdHis')."',`status`=".STAT_APPROVED;
 			foreach ($_pfields as $field_id=>$field) {
 				if ($field['editable']) {
 					if ($field['field_type']==FIELD_LOCATION) {
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 		for ($i=0;isset($on_changes[$i]);++$i) {
 			if (function_exists($on_changes[$i]['fn'])) {
-				call_user_func($on_changes[$i]['fn'],$input['uid'],$on_changes[$i]['param2'],$on_changes[$i]['param3']);
+				call_user_func($on_changes[$i]['fn'],$input['fk_user_id'],$on_changes[$i]['param2'],$on_changes[$i]['param3']);
 			}
 		}
 
