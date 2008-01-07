@@ -32,7 +32,7 @@
 }
 
 .profile_cat dl {
-	clear: both;
+	overflow: hidden;
 	padding: 5px;
 }
 
