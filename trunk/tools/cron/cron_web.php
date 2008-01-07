@@ -17,6 +17,7 @@ db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../../includes/admin_functions.inc.php';
 set_error_handler('general_error');
 set_time_limit(0);
+ignore_user_abort(true);
 ob_end_flush();
 
 if (isset($_SERVER['REMOTE_ADDR'])) {
