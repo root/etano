@@ -24,6 +24,11 @@ if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 	$output['return2']=$output['return'];
 	$output['return']=rawurlencode($output['return']);
+	$query="SELECT `_user` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=".$output['uid'];
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	if (mysql_num_rows($res)) {
+		$output['_user']=mysql_result($res,0,0);
+	}
 } elseif (!empty($_GET['uid'])) {
 	$uid=(int)$_GET['uid'];
 
@@ -67,6 +72,10 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 	$c=0;
 	for ($i=0;isset($pcat['fields'][$i]);++$i) {
 		$field=$_pfields[$pcat['fields'][$i]];
+		if (isset($output['error_'.$field['dbfield']])) {
+			$cat_content[$c]['class_error']=$output['error_'.$field['dbfield']];
+			unset($output['error_'.$field['dbfield']]);
+		}
 //		if ($field['editable']) {
 			$cat_content[$c]['label']=$field['label'];
 			$cat_content[$c]['dbfield']=$field['dbfield'];
@@ -97,9 +106,8 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 				case FIELD_LOCATION:
 					$country_id=$output[$field['dbfield'].'_country'];
 					$state_id=$output[$field['dbfield'].'_state'];
-					$cat_content[$c]['label']='Country';	//translate this
 					$cat_content[$c]['dbfield']=$field['dbfield'].'_country';
-					$cat_content[$c]['field']='<select name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)" class="full_width"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output[$field['dbfield'].'_country']).'</select>';	// translate this
+					$cat_content[$c]['field']='<select name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)" class="full_width"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output[$field['dbfield'].'_country']).'</select>';
 					$prefered_input='s';
 					$num_states=0;
 					$num_cities=0;
@@ -120,23 +128,23 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 					++$c;
 					$cat_content[$c]['label']='State';	//translate this
 					$cat_content[$c]['dbfield']=$field['dbfield'].'_state';
-					$cat_content[$c]['field']='<select name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" class="full_width"><option value="0">Select state</option>';	// translate this
+					$cat_content[$c]['field']='<select name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" class="full_width" onchange="req_update_location(this.id,this.value)"><option value="0">Select state</option>';	// translate this
 					if (!empty($country_id) && $prefered_input=='s' && !empty($num_states)) {
-						$cat_content[$c]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$output[$field['dbfield'].'_state'],"`fk_country_id`=$country_id");
+						$cat_content[$c]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$state_id,"`fk_country_id`=$country_id");
 					}
 					$cat_content[$c]['field'].='</select>';
 					$cat_content[$c]['class']=(!empty($country_id) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
 					++$c;
 					$cat_content[$c]['label']='City';	//translate this
 					$cat_content[$c]['dbfield']=$field['dbfield'].'_city';
-					$cat_content[$c]['field']='<select name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'" class="full_width"><option value="0">Select city</option>';	// translate this
+					$cat_content[$c]['field']='<select name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'" class="full_width"><option value="0">Select city</option>';
 					if (!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) {
 						$cat_content[$c]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$output[$field['dbfield'].'_city'],"`fk_state_id`=$state_id");
 					}
 					$cat_content[$c]['field'].='</select>';
 					$cat_content[$c]['class']=(!empty($state_id) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';
 					++$c;
-					$cat_content[$c]['label']='Zip code';	//translate this
+					$cat_content[$c]['label']='Zip code';
 					$cat_content[$c]['dbfield']=$field['dbfield'].'_zip';
 					$cat_content[$c]['field']='<input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" value="'.$output[$field['dbfield'].'_zip'].'" tabindex="'.($i+4).'" />';
 					$cat_content[$c]['class']=(!empty($country_id) && $prefered_input=='z') ? 'visible' : 'invisible';
@@ -158,7 +166,7 @@ $tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_MULTILOOP | TPL_OPTIONAL);
 $tpl->drop_loop('categs');
 
-$tplvars['title']=sprintf('%1$s Member Profile',isset($output['_user']) ? $output['_user'] : '');	// translate
+$tplvars['title']=sprintf('%1$s Member Profile',isset($output['_user']) ? $output['_user'] : '');
 $tplvars['page']='profile_edit';
 $tplvars['css']='profile_edit.css';
 include 'frame.php';

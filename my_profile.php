@@ -43,7 +43,9 @@ if (mysql_num_rows($res)) {
 			} elseif ($field['field_type']==FIELD_INT || $field['field_type']==FIELD_FLOAT) {
 	//			$output[$field['dbfield']]=$output[$field['dbfield']];
 			} elseif ($field['field_type']==FIELD_DATE) {
-	//			$output[$field['dbfield']]=$output[$field['dbfield']];
+				if ($output[$field['dbfield']]=='0000-00-00') {
+					$output[$field['dbfield']]='-';
+				}
 			} elseif ($field['field_type']==FIELD_LOCATION) {
 				$output[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$output[$field['dbfield'].'_country'],'-');
 				if (!empty($output[$field['dbfield'].'_state'])) {

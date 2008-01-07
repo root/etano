@@ -9,7 +9,7 @@
 <fieldset class="profile_cat">
 	<h3>{loop.pcat_name}</h3>
 	<!--loop name="cat_content"-->
-	<dl class="cat_content" id="row_{cat_content.dbfield}">
+	<dl class="cat_content {cat_content.class} {cat_content.class_error}" id="row_{cat_content.dbfield}">
 		<dt>{cat_content.label}:</dt>
 		<dd>{cat_content.field}</dd>
 	</dl>

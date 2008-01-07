@@ -13,18 +13,14 @@ function req_update_location(str_field,val) {
 					allopts=data.split("\n");
 					str_field=allopts[0];
 					toshow=allopts[1].split('|');
-					$('#row_'+str_field+'state').removeClass('visible');
-					$('#row_'+str_field+'state').addClass('invisible');
-					$('#row_'+str_field+'city').removeClass('visible');
-					$('#row_'+str_field+'city').addClass('invisible');
-					$('#row_'+str_field+'zip').removeClass('visible');
-					$('#row_'+str_field+'zip').addClass('invisible');
+					$('#row_'+str_field+'state').addClass('invisible').removeClass('visible');
+					$('#row_'+str_field+'city').addClass('invisible').removeClass('visible');
+					$('#row_'+str_field+'zip').addClass('invisible').removeClass('visible');
 					for (i=0;i<toshow.length;i++) {
-						$('#row_'+toshow[i]).removeClass('invisible');
-						$('#row_'+toshow[i]).addClass('visible');
+						$('#row_'+toshow[i]).addClass('visible').removeClass('invisible');
 					}
 					if (allopts.length>3) {
-						to_update=document.getElementById(str_field+allopts[2]);
+						to_update=$('#'+str_field+allopts[2])[0];
 						to_update.options.length=0;
 						for (i=3;i<allopts.length;i++) {
 							oneopt=allopts[i].split('|');

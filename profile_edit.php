@@ -156,7 +156,6 @@ foreach ($_pcats[$cid]['fields'] as $field_id) {
 			case FIELD_LOCATION:
 				$country_id=$user_details[$field['dbfield'].'_country'];
 				$state_id=$user_details[$field['dbfield'].'_state'];
-				$loop[$i]['label']=$GLOBALS['_lang'][126];
 				$loop[$i]['dbfield']=$field['dbfield'].'_country';
 				$loop[$i]['field']='<select class="full_width" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">'.$GLOBALS['_lang'][126].'</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$user_details[$field['dbfield'].'_country']).'</select>';
 				$prefered_input='s';
