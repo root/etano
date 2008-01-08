@@ -445,6 +445,7 @@ function create_search_form($search_fields) {
 					} elseif (empty($field['default_search'])) {
 						$field['default_search'][0]=0;
 					}
+					$field['accepted_values'][0]=$GLOBALS['_lang'][159];
 					$myreturn[$s]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0]).'</select>';
 					break;
 
