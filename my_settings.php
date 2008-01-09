@@ -81,6 +81,7 @@ $output['email']=mysql_result($res,0,0);
 
 $output['lang_260']=sanitize_and_format($GLOBALS['_lang'][260],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $output['lang_261']=sanitize_and_format($GLOBALS['_lang'][261],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+$output['lang_276']=sanitize_and_format($GLOBALS['_lang'][276],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $output['gmtime']=gmdate('F d, Y, h:i:s A');
 $tpl->set_file('content','my_settings.html');
 $tpl->set_loop('loop',$loop);

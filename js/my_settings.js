@@ -12,6 +12,10 @@ $(function() {
 	$('#prefs_form input:visible:first').focus();
 
 	$('#passchange_form').bind('submit',function() {return check_passchange(this)});
+
+	$('#cancel_link').click(function() {
+		return confirm(lang[2]);
+	});
 });
 
 
