@@ -77,14 +77,20 @@ if (isset($input['stat'])) {
 	$where.=" AND a.`status`=".$input['stat'];
 }
 
-$query="SELECT $select,b.`fk_user_id` as `owner_id`,b.`_user` as `owner_user`,a.`comment_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user`,a.`comment`,a.`status`,a.`fk_parent_id` FROM $from WHERE $where ORDER BY a.`comment_id` LIMIT $o,$r";
-//print $query;
-//die;
+$query="SELECT count(*) FROM $from WHERE $where";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+$totalrows=mysql_result($res,0,0);
+
 $loop=array();
-if (mysql_num_rows($res)) {
+if (!empty($totalrows)) {
 	$config=get_site_option(array('bbcode_comments','smilies_comm'),'core');
 	$config=array_merge($config,get_site_option(array('datetime_format','time_offset'),'def_user_prefs'));
+	if ($o>=$totalrows) {
+		$o=$totalrows-$r;
+		$o=$o>=0 ? $o : 0;
+	}
+	$query="SELECT $select,b.`fk_user_id` as `owner_id`,b.`_user` as `owner_user`,a.`comment_id`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,a.`fk_user_id`,a.`_user`,a.`comment`,a.`status`,a.`fk_parent_id` FROM $from WHERE $where ORDER BY a.`comment_id` LIMIT $o,$r";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		if (!empty($config['bbcode_comments'])) {
@@ -114,11 +120,8 @@ if (mysql_num_rows($res)) {
 		}
 		$loop[]=$rsrow;
 	}
-	$totalrows=count($loop);
 	$output['pager2']=pager($totalrows,$o,$r);
-}
-
-if (empty($loop)) {
+} else {
 	$topass['message']['type']=MESSAGE_INFO;
 	$topass['message']['text']='No comments found meeting your search criteria.';
 	redirect2page('admin/comment_search.php',$topass);
