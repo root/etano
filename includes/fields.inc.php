@@ -1,4 +1,8 @@
 <?php
+if (!defined('_LICENSE_KEY_')) {
+	die('Hacking attempt');
+}
+
 $GLOBALS['_pfields'][1]['label']=$GLOBALS['_lang'][2282];
 $GLOBALS['_pfields'][1]['field_type']=FIELD_SELECT;
 $GLOBALS['_pfields'][1]['searchable']=true;

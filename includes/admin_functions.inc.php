@@ -11,6 +11,10 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
+if (!defined('_LICENSE_KEY_')) {
+	die('Hacking attempt');
+}
+
 //if (function_exists('admin_error')) {
 //	set_error_handler('admin_error');
 //} elseif (function_exists('general_error')) {
@@ -105,7 +109,8 @@ function regenerate_fields_array() {
 	global $dbtable_prefix;
 	$query="SELECT * FROM `{$dbtable_prefix}profile_fields` ORDER BY `order_num` ASC";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$towrite="<?php\n";
+	$towrite="<?php\nif (!defined('_LICENSE_KEY_')) {\n\tdie('Hacking attempt');\n}\n\n";
+
 	$profile_categs=array();
 	$basic_search_fields=array();
 	while ($rsrow=mysql_fetch_assoc($res)) {

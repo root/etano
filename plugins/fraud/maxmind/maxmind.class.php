@@ -11,6 +11,10 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
+if (!defined('_LICENSE_KEY_')) {
+	die('Hacking attempt');
+}
+
 require_once _BASEPATH_.'/includes/interfaces/ifraud.class.php';
 
 class fraud_maxmind extends ifraud {
