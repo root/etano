@@ -11,6 +11,10 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
+if (!defined('_LICENSE_KEY_')) {
+	die('Hacking attempt');
+}
+
 include 'logs.inc.php';
 include 'site_bans.inc.php';
 $_access_level=array();

@@ -11,6 +11,10 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 *******************************************************************************/
 
+if (!defined('_LICENSE_KEY_')) {
+	die('Hacking attempt');
+}
+
 // _BASEPATH_ must be hardcoded below in order to allow a custom save path for session files.
 // this would solve the 'permanent relogin issue' happening because the /tmp partition is full.
 //ini_set('session.save_path',_BASEPATH_.'/tmp/sessions');
