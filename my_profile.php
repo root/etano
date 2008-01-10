@@ -84,7 +84,7 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 	$fields=array();
 	for ($j=0;isset($pcat['fields'][$j]);++$j) {
 		if ($_pfields[$pcat['fields'][$j]]['visible']) {
-			$fields[]=array('label'=>$_pfields[$pcat['fields'][$j]]['label'],'field'=>isset($output[$_pfields[$pcat['fields'][$j]]['dbfield']]) ? $output[$_pfields[$pcat['fields'][$j]]['dbfield']] : '?');
+			$fields[]=array('label'=>$_pfields[$pcat['fields'][$j]]['label'],'field'=>isset($output[$_pfields[$pcat['fields'][$j]]['dbfield']]) ? $output[$_pfields[$pcat['fields'][$j]]['dbfield']] : '?','dbfield'=>$_pfields[$pcat['fields'][$j]]['dbfield']);
 		}
 	}
 	$categs[$i]['pcat_name']=$pcat['pcat_name'];
