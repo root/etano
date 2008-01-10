@@ -76,12 +76,14 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
 		$output['date_sent']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$output['date_sent']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
-		$output['subject']=sanitize_and_format($output['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+// it was saved sanitized so no need to resanitize here
+//		$output['subject']=sanitize_and_format($output['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 		switch ($output['message_type']) {
 
 			case MESS_MESS:
-				$output['message_body']=sanitize_and_format($output['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+// it was saved sanitized so no need to resanitize here
+//				$output['message_body']=sanitize_and_format($output['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 				check_login_member('message_read');
 				break;
 

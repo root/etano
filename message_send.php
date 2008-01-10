@@ -49,7 +49,8 @@ if (isset($_SESSION['topass']['input'])) {
 			$output=array_merge($output,mysql_fetch_assoc($res));
 		}
 	}
-	$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
+// no need to sanitize
+//	$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	if ($output['message_type']==MESS_FLIRT) {
 		$output['flirt_reply']=true;
 	}

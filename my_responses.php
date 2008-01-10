@@ -41,8 +41,9 @@ if (!empty($totalrows)) {
 	$query="SELECT `mtpl_id`,`subject`,`message_body` FROM $from WHERE $where LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-		$rsrow['message_body']=sanitize_and_format($rsrow['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+// no need to sanitize
+//		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+//		$rsrow['message_body']=sanitize_and_format($rsrow['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		if ($config['bbcode_message']) {
 			$rsrow['message_body']=bbcode2html($rsrow['message_body']);
 		}
