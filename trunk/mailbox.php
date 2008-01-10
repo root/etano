@@ -97,7 +97,8 @@ if (!empty($totalrows)) {
 			$page_last_modified_time=$rsrow['date_sent'];
 		}
 		$rsrow['date_sent']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['date_format'],$rsrow['date_sent']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
-		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+// no need to sanitize
+//		$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		$rsrow['is_read']=(!empty($rsrow['is_read'])) ? 'read' : 'not_read';
 		if ($rsrow['message_type']==MESS_SYSTEM && empty($rsrow['user_other'])) {
 			$rsrow['user_other']=$GLOBALS['_lang'][135];
