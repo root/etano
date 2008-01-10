@@ -1,0 +1,31 @@
+<h2>Error Log</h2>
+
+<div class="hint"><strong>Inspect the error log</strong></div>
+
+<table class="results_table">
+<tr>
+	<th width="3%"></th>
+	<th>Date</th>
+	<th>Module</th>
+	<th>Error</th>
+</tr>
+<!--loop name="loop"-->
+<tr align="center" class="{loop.myclass}">
+	<td></td>
+	<td>{loop.error_date}</td>
+	<td>{loop.module}</td>
+	<td>{loop.error}... <a class="thickbox" href="error_log_view.php?log_id={loop.log_id}&amp;keepThis=true&amp;TB_iframe=true&amp;width=900">more</a></td>
+</tr>
+<!--noloop name="loop"-->
+<tr>
+	<td colspan="4" class="no_result_item">No errors found!</td>
+</tr>
+<!--/noloop name="loop"-->
+<!--/loop name="loop"-->
+</table>
+
+{output.pager2}
+
+<div id="bottom_links"><a class="del" href="processors/error_log_delete.php?act=all" title="Empty the error log">Empty the log</a></div>
+
+<script type="text/javascript" src="../js/thickbox.js?v={tplvars.js_lib_v}"></script>
