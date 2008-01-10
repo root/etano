@@ -72,10 +72,12 @@ if (mysql_num_rows($res)) {
 	$c=0;
 	foreach ($_pcats as $pcat_id=>$pcat) {
 		$categs[$c]['pcat_name']=$pcat['pcat_name'];
+		$categs[$c]['pcat_id']=$pcat_id;
 		$cat_content=array();
 		for ($i=0;isset($pcat['fields'][$i]);++$i) {
 			$field=$_pfields[$pcat['fields'][$i]];
 			$cat_content[$i]['label']=$field['label'];
+			$cat_content[$i]['dbfield']=$field['dbfield'];
 			switch ($field['field_type']) {
 
 				case FIELD_TEXTFIELD:

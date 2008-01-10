@@ -61,7 +61,7 @@
 		<!--opt name="!output.has_photo"--><img class="user_photo thumb1" src="{tplvars.photourl}/t1/no_photo.gif" /><!--/opt name="!output.has_photo"-->
 	</div>
 
-	<div class="profile_cat">
+	<div class="profile_cat" id="cat_account">
 		<ul class="cat_content">
 			<li><label>Join Date:</label> <p>{output.date_added}</p></li>
 			<li><label>Last Activity:</label> <p>{account.last_activity}</p></li>
@@ -73,11 +73,11 @@
 	<div class="clear"></div>
 
 	<!--loop name="categs"-->
-	<div class="profile_cat">
+	<div class="profile_cat" id="cat_{categs.pcat_id}">
 		<h3>{categs.pcat_name}</h3>
 		<ul class="cat_content">
 			<!--loop name="cat_content"-->
-			<li><label>{cat_content.label}:</label> <p>{cat_content.field}</p></li>
+			<li id="row_{cat_content.dbfield}"><label>{cat_content.label}:</label> <p>{cat_content.field}</p></li>
 			<!--/loop name="cat_content"-->
 		</ul>
 	</div>
