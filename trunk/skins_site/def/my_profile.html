@@ -19,7 +19,7 @@
 		<h3 class="subtitle">{categs.pcat_name} <a class="content-link link_change" href="{tplvars.relative_url}profile_edit.php?cid={categs.pcat_id}" title="Edit this info">edit</a></h3>
 		<ul class="cat_content">
 			<!--loop name="fields"-->
-			<li><label>{fields.label}:</label> <p>{fields.field}</p></li>
+			<li id="row_{fields.dbfield}"><label>{fields.label}:</label> <p>{fields.field}</p></li>
 			<!--/loop name="fields"-->
 		</ul>
 	</div>
