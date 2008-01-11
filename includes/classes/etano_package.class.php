@@ -468,7 +468,7 @@ class etano_package {
 					}
 				} else {
 					$this->error=true;
-					$this->error_text=sprintf('Invalid diff file: %s',$diff_file);
+					$this->error_text=sprintf('Invalid diff file: %s. Line %s in diff file',$diff_file,$i);
 					break;
 				}
 			} elseif ($diff_array[$i]{0}==' ' || $diff_array[$i]{0}=='-' || $diff_array[$i]{0}=='+' || $diff_array[$i]{0}=='\\') {
@@ -496,7 +496,7 @@ class etano_package {
 						--$dst_size;
 					} else {
 						$this->error=true;
-						$this->error_text=sprintf('Invalid diff file: %s.',$diff_file);
+						$this->error_text=sprintf('Invalid diff file: %s. Line %s in diff file. Unknown diff marker.',$diff_file,$i);
 						break 2;
 					}
 					++$i;
@@ -504,7 +504,7 @@ class etano_package {
 				--$i;	// the outer for() would increment it again and we don't want this.
 				if (!empty($src_size) || !empty($dst_size) || (empty($source) && empty($dest))) {
 					$this->error=true;
-					$this->error_text=sprintf('Invalid diff file: %s.',$diff_file);
+					$this->error_text=sprintf('Invalid diff file: %s. Unexpected end of block at line %s',$diff_file,$i);
 					break;
 				}
 				if (!empty($source)) {
