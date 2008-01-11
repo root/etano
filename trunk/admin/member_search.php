@@ -50,7 +50,6 @@ for ($i=0;isset($basic_search_fields[$i]);++$i) {
 			break;
 
 		case FIELD_LOCATION:
-			$loop[$s]['label']='Country';	// translate this
 			$loop[$s]['dbfield']=$field['dbfield'].'_country';
 			$loop[$s]['field']='<select name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">Select country</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`').'</select>';
 			$prefered_input='s';

@@ -240,6 +240,7 @@ function regenerate_langstrings_array($skin_module_code='') {
 		$query="SELECT `fk_module_code` as `module_code`,`config_value` as `skin_dir` FROM `{$dbtable_prefix}site_options3` WHERE `config_option`='skin_dir' AND `fk_module_code`='$skin_module_code'";
 	}
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$skins=array();
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$skins[]=$rsrow;
 	}
