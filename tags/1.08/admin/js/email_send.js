@@ -1,3 +1,0 @@
-$(function() {
-	$('#subject').focus();
-});
