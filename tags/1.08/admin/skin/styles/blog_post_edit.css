@@ -1,0 +1,15 @@
+@import url('bbcode.css');
+
+textarea#post_content {
+	width: 90%;
+	height: 240px;
+}
+
+#post_form .controls {
+	padding-top: 15px;
+	margin-top: 15px;
+}
+
+#title {
+	width: 80%;
+}

@@ -1,0 +1,27 @@
+<h2>Add / Edit a Profile Category</h2>
+
+<div class="hint">Please enter the name of the category:</div>
+<form action="processors/profile_categories_addedit.php" method="post" id="profile_categories_addedit">
+<input type="hidden" name="pcat_id" value="{output.pcat_id}" />
+<input type="hidden" name="fk_lk_id_pcat" value="{output.fk_lk_id_pcat}" />
+<input type="hidden" name="return" value="{output.return}" />
+<table id="pcat_addedit" class="form_table">
+<tr>
+	<td class="label"><label for="pcat_name">Category:</label></td>
+	<td class="field {output.error_pcat_name}"><input type="text" name="pcat_name" id="pcat_name" value="{output.pcat_name}" tabindex="1" /></td>
+	<td class="comment">Note: the value you enter here is for the default skin ({output.default_skin}) <a class="translate" href="javascript:;" onclick="popWin('popup_lang_string.php?lk_id={output.fk_lk_id_pcat}','translate',450,300,1,1)">Translate!</a></td>
+</tr>
+<tr>
+	<td class="label"><label>Access Level:</label></td>
+	<td colspan="2" class="field {output.error_access_level}">{output.access_level}</td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+<div id="bottom_links"><a class="back" href="{output.return2}">Back to list</a></div>
+
+<script type="text/javascript" src="js/profile_categories_addedit.js?v={tplvars.js_lib_v}"></script>

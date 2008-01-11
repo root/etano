@@ -1,0 +1,17 @@
+<h2>Edit a File</h2>
+
+<h3>File: {output.file}</h3>
+
+<form action="processors/file_edit.php" method="post" onsubmit="return(check_form(this))">
+<fieldset>
+<input type="hidden" name="file" value="{output.file}" />
+<textarea name="file_content" id="file_content" cols="" rows="" wrap="off">{output.file_content}</textarea>
+</fieldset>
+<fieldset class="controls">
+	<input class="button" type="submit" value="Save" />	<input class="button" type="reset" value="Reset" />
+</fieldset>
+</form>
+
+<div id="bottom_links"><a class="back" href="file_browser.php?path={output.path}">Back to list</a></div>
+
+<script type="text/javascript" src="js/file_edit.js?v={tplvars.js_lib_v}"></script>
