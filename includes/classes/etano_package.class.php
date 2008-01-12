@@ -344,6 +344,9 @@ class etano_package {
 							for ($i=0;isset($temp[$i]);++$i) {
 								if (!empty($temp[$i])) {
 									$path.='/'.$temp[$i];
+									if (strpos($path,_BASEPATH_)===false) {
+										continue;
+									}
 									if (!is_dir($path) && !$fileop->mkdir($path)) {
 										$this->error=true;
 										$masize=count($this->manual_actions);
@@ -362,6 +365,9 @@ class etano_package {
 						for ($i=0;isset($temp[$i]);++$i) {
 							if (!empty($temp[$i])) {
 								$path.='/'.$temp[$i];
+								if (strpos($path,_BASEPATH_)===false) {
+									continue;
+								}
 								if (!is_dir($path) && !$fileop->mkdir($path)) {
 									$this->error=true;
 									$masize=count($this->manual_actions);
@@ -519,12 +525,12 @@ class etano_package {
 					}
 					if (empty($possible_locations)) {
 						$this->error=true;
-						$this->error_text=sprintf('Cannot apply patch because the source file (%s) is changed.',$cur_file);
+						$this->error_text=sprintf('Cannot apply patch because the source file (%s) is changed. Line %s in diff file.',$cur_file,$i);
 						break;
 					} elseif (count($possible_locations)>1) {
 						if (!in_array($dest_start,$possible_locations)) {
 							$this->error=true;
-							$this->error_text=sprintf('Cannot apply patch because the source file (%s) is changed',$cur_file);
+							$this->error_text=sprintf('Cannot apply patch because the source file (%s) is changed. More possible locations in diff file at line %s.',$cur_file,$i);
 							break;
 						}
 					} elseif (count($possible_locations)==1) {
