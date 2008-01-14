@@ -209,7 +209,7 @@ function search_results($search,$my_membership=1) {
 										// Haversine Formula: (more exact for small distances)
 										$where.=" AND a.`latitude`<>-a.`longitude` AND asin(sqrt(pow(sin((".(float)$rad_latitude."-a.`rad_latitude`)/2),2)+cos(".(float)$rad_latitude.")*cos(a.`rad_latitude`)*pow(sin((".(float)$rad_longitude."-a.`rad_longitude`)/2),2)))<=".(((int)$input[$field['dbfield'].'_dist'])/7912);
 										// Law of Cosines for Spherical Trigonometry; 60*1.1515=69.09; 1.1515 miles in a degree
-	//										$where.=" AND (69.09*DEGREES(ACOS(SIN(".(float)$rad_latitude.")*SIN(a.`rad_latitude`)+COS(".(float)$rad_latitude.")*COS(a.`rad_latitude`)*COS(".(float)$rad_longitude."-a.`rad_longitude`))))<=".(int)$input[$field['dbfield'].'_dist'];
+	//										$where.=" AND DEGREES(ACOS(SIN(".(float)$rad_latitude.")*SIN(a.`rad_latitude`)+COS(".(float)$rad_latitude.")*COS(a.`rad_latitude`)*COS(".(float)$rad_longitude."-a.`rad_longitude`)))<=".(int)$input[$field['dbfield'].'_dist']/69.09;
 									} else {
 	// should not return any result or at least warn the member that the zip code was not found.
 									}

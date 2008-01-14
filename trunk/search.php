@@ -239,9 +239,9 @@ if (!$got_from_cache) {
 									// WE USE ONLY MILES HERE. IF YOU WANT KM YOU NEED TO CONVERT MILES TO KM
 									// earth radius=3956 miles =6367 km; 3956*2=7912
 									// Haversine Formula: (more exact for small distances)
-									$where.=" AND a.`latitude`<>-a.`longitude` AND asin(sqrt(pow(sin((".(float)$rad_latitude."-a.`rad_latitude`)/2),2)+cos(".(float)$rad_latitude.")*cos(a.`rad_latitude`)*pow(sin((".(float)$rad_longitude."-a.`rad_longitude`)/2),2)))<=".(((int)$input[$field['dbfield'].'_dist'])/7912);
+									$where.=" AND a.`rad_latitude`<>-a.`rad_longitude` AND asin(sqrt(pow(sin((".(float)$rad_latitude."-a.`rad_latitude`)/2),2)+cos(".(float)$rad_latitude.")*cos(a.`rad_latitude`)*pow(sin((".(float)$rad_longitude."-a.`rad_longitude`)/2),2)))<=".(((int)$input[$field['dbfield'].'_dist'])/7912);
 									// Law of Cosines for Spherical Trigonometry; 60*1.1515=69.09; 1.1515 miles in a degree
-//										$where.=" AND (69.09*DEGREES(ACOS(SIN(".(float)$rad_latitude.")*SIN(a.`rad_latitude`)+COS(".(float)$rad_latitude.")*COS(a.`rad_latitude`)*COS(".(float)$rad_longitude."-a.`rad_longitude`))))<=".(int)$input[$field['dbfield'].'_dist'];
+//									$where.=" AND DEGREES(ACOS(SIN(".(float)$rad_latitude.")*SIN(a.`rad_latitude`)+COS(".(float)$rad_latitude.")*COS(a.`rad_latitude`)*COS(".(float)$rad_longitude."-a.`rad_longitude`)))<=".(int)$input[$field['dbfield'].'_dist']/69.09;
 								} else {
 // should not return any result or at least warn the member that the zip code was not found.
 								}
@@ -260,11 +260,12 @@ if (!$got_from_cache) {
 
 	if (!empty($where)) {	// if $where is empty then a condition above prevents us from searching. There must be a message to display.
 		$serialized_input=serialize($input);
-		$output['search_md5']=md5($serialized_input);
+		$query="SELECT $select FROM $from WHERE $where $orderby";
+		$output['search_md5']=md5($query);
 		if (!$skip_cache) {
 			// let's give the cache one more chance. This is useful for the first page of results when we didn't know the search_md5 until now
-			$query="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."' AND `search_type`=".SEARCH_USER;
-			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$query2="SELECT `results` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."' AND `search_type`=".SEARCH_USER;
+			if (!($res=@mysql_query($query2))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$user_ids=mysql_result($res,0,0);
 				$user_ids=explode(',',$user_ids);
@@ -272,7 +273,6 @@ if (!$got_from_cache) {
 			}
 		}
 		if (!$got_from_cache) {	// this is where we absolutely must search the users...it's the most expensive search
-			$query="SELECT $select FROM $from WHERE $where $orderby";
 	//print $query;die;
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			for ($i=0;$i<mysql_num_rows($res);++$i) {

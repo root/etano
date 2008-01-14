@@ -29,7 +29,7 @@ function gen_user_cache() {
 	$fileop=new fileop();
 
 	$now=gmdate('YmdHis');
-	$select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`longitude`,`latitude`';
+	$select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`rad_longitude`,`rad_latitude`';
 	foreach ($_pfields as $field_id=>$field) {
 		if ($field['field_type']==FIELD_DATE) {
 			$select.=",DATE_FORMAT('$now','%Y')-DATE_FORMAT(`".$field['dbfield']."`,'%Y')-(DATE_FORMAT('$now','%m%d')<DATE_FORMAT(`".$field['dbfield']."`,'%m%d')) as `".$field['dbfield']."`";
