@@ -30,12 +30,14 @@ if (!empty($_GET['mail_id'])) {
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
 		$output['date_sent']=strftime($config['datetime_format'],$output['date_sent']+$config['time_offset']);
-		$output['subject']=sanitize_and_format($output['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+		// no need to sanitize
+//		$output['subject']=sanitize_and_format($output['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
 		switch ($output['message_type']) {
 
 			case MESS_MESS:
-				$output['message_body']=sanitize_and_format($output['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+				// no need to sanitize
+//				$output['message_body']=sanitize_and_format($output['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 				break;
 
 			case MESS_FLIRT:
