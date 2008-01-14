@@ -20,7 +20,7 @@ $tpl=new phemplate('skin/','remove_nonjs');
 $output=array();
 
 $sorts=array('`_user`','`score` DESC','`fk_user_id` DESC');
-$sort_names=array('alphabetically','by score (higer first)','newest first');
+$sort_names=array('alphabetically','by score (highest first)','newest first');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
