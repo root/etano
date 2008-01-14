@@ -44,7 +44,8 @@ if (!empty($_GET['uid'])) {
 			} else {
 				$rsrow['_user_other']=sanitize_and_format($rsrow['_user_other'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			}
-			$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+			// no need to sanitize
+//			$rsrow['subject']=sanitize_and_format($rsrow['subject'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			$rsrow['date_sent']=strftime($config['datetime_format'],$rsrow['date_sent']+$config['time_offset']);
 			if ($rsrow['is_read']) {
 				$rsrow['is_read']='mail_read';
