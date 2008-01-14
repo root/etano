@@ -45,6 +45,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$query.="`$k`='".$input[$k]."',";
 				}
 			}
+			if (!empty($input['latitude'])) {
+				$query.="`rad_latitude`=RADIANS(".$input['latitude']."),";
+			}
+			if (!empty($input['longitude'])) {
+				$query.="`rad_longitude`=RADIANS(".$input['longitude']."),";
+			}
 			$query=substr($query,0,-1);
 			$query.=" WHERE `city_id`=".$input['city_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -57,6 +63,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				if (isset($input[$k])) {
 					$query.="`$k`='".$input[$k]."',";
 				}
+			}
+			if (!empty($input['latitude'])) {
+				$query.="`rad_latitude`=RADIANS(".$input['latitude']."),";
+			}
+			if (!empty($input['longitude'])) {
+				$query.="`rad_longitude`=RADIANS(".$input['longitude']."),";
 			}
 			$query=substr($query,0,-1);
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

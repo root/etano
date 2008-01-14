@@ -18,13 +18,13 @@ function update_location($user_id,$field,$field_name='') {
 	$state_id=0;
 	$city_id=0;
 	if (!empty($field['city']) && empty($field['zip'])) {
-		$query="SELECT `latitude`,`longitude` FROM `{$dbtable_prefix}loc_cities` WHERE `city_id`='".$field['city']."'";
+		$query="SELECT `rad_latitude`,`rad_longitude` FROM `{$dbtable_prefix}loc_cities` WHERE `city_id`='".$field['city']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			list($latitude,$longitude)=mysql_fetch_row($res);
 		}
 	} elseif (!empty($field['zip'])) {
-		$query="SELECT `latitude`,`longitude`,`fk_state_id`,`fk_city_id` FROM `{$dbtable_prefix}loc_zips` WHERE `zipcode`='".$field['zip']."'";
+		$query="SELECT `rad_latitude`,`rad_longitude`,`fk_state_id`,`fk_city_id` FROM `{$dbtable_prefix}loc_zips` WHERE `zipcode`='".$field['zip']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			list($latitude,$longitude,$state_id,$city_id)=mysql_fetch_row($res);
@@ -33,10 +33,10 @@ function update_location($user_id,$field,$field_name='') {
 	if (!empty($latitude) || !empty($longitude) || !empty($state_id) || !empty($city_id)) {
 		$query="UPDATE `{$dbtable_prefix}user_profiles` SET ";
 		if (!empty($latitude)) {
-			$query.="`latitude`='$latitude',";
+			$query.="`rad_latitude`='$latitude',";
 		}
 		if (!empty($longitude)) {
-			$query.="`longitude`='$longitude',";
+			$query.="`rad_longitude`='$longitude',";
 		}
 		if (!empty($state_id)) {
 			$query.="`{$field_name}_state`=$state_id,";

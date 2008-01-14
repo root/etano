@@ -297,7 +297,7 @@ function regenerate_skin_cache($skin_module_code='',$last_id=0) {
 		$skins[]=mysql_result($res,$i,0);
 	}
 
-	$select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`longitude`,`latitude`';
+	$select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`rad_longitude`,`rad_latitude`';
 	$now=gmdate('YmdHis');
 	foreach ($_pfields as $field_id=>$field) {
 		if ($field['field_type']==FIELD_DATE) {
