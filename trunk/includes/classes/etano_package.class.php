@@ -420,8 +420,17 @@ class etano_package {
 	function _do_diff($diff_file,$force_revision=false,$test_only=false) {
 		$files_to_change=array();	// keeps the files that are/will be changed in the diff
 		$fileop=new fileop();
-		$diff_array=file($diff_file);
+		if (!function_exists('striprn')) {
+			function striprn(&$v,$k) {$v=rtrim($v,"\r\n");}
+		}
+		if (defined('FILE_IGNORE_NEW_LINES')) {
+			$diff_array=file($diff_file,FILE_IGNORE_NEW_LINES);
+		} else {
+			$diff_array=file($diff_file);
+			array_walk($diff_array,'striprn');
+		}
 		$cur_file='';
+		$cur_ext='';
 		$file_content=array();
 		$src_size=-1;
 		$src_start=0;
@@ -430,13 +439,22 @@ class etano_package {
 		$new_revision=0;
 		$this->error=false;
 		$first_chunk=true;
+		$last_line_rn=false;
 		for ($i=0;isset($diff_array[$i]);++$i) {
 			if (substr($diff_array[$i],0,7)=='Index: ') {	// a new file
 				if (!$first_chunk && !$test_only) {
 					if (empty($file_content)) {
 						$fileop->delete($cur_file);
 					} else {
-						$file_content=join('',$file_content);
+						if ($cur_ext=='html') {
+							$LE="\r\n";
+						} else {
+							$LE="\n";
+						}
+						$file_content=join($LE,$file_content);
+						if ($last_line_rn) {
+							$file_content.=$LE;
+						}
 						if ($force_revision) {
 							$file_content=preg_replace('/\$Revision: \d+ \$/','$Revision: '.$new_revision.' $',$file_content);
 						}
@@ -444,8 +462,16 @@ class etano_package {
 					}
 				}
 				$cur_file=_BASEPATH_.'/'.trim(substr($diff_array[$i],7));
+				$cur_ext=strtolower(substr(strrchr($cur_file,'.'),1));
 				if (is_file($cur_file)) {
 					$file_content=file($cur_file);
+					$temp=substr($file_content[count($file_content)-1],-1);
+					if ($temp=="\n" || $temp=="\r") {
+						$last_line_rn=true;
+					} else {
+						$last_line_rn=false;
+					}
+					array_walk($file_content,'striprn');
 				} else {
 					$file_content=array();
 				}
@@ -549,7 +575,15 @@ class etano_package {
 			if (empty($file_content)) {
 				$fileop->delete($cur_file);
 			} else {
-				$file_content=join('',$file_content);
+				if ($cur_ext=='html') {
+					$LE="\r\n";
+				} else {
+					$LE="\n";
+				}
+				$file_content=join($LE,$file_content);
+				if ($last_line_rn) {
+					$file_content.=$LE;
+				}
 				if ($force_revision) {
 					$file_content=preg_replace('/\$Revision: \d+ \$/','$Revision: '.$new_revision.' $',$file_content);
 				}
