@@ -19,6 +19,8 @@ if (is_file(_BASEPATH_.'/events/processors/logout.php')) {
 	include_once _BASEPATH_.'/events/processors/logout.php';
 }
 
+$time=mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y'));
+$score_threshold=600;	// seconds
 if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	$query="DELETE FROM `{$dbtable_prefix}online` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 	if (isset($_on_before_insert)) {
@@ -27,7 +29,10 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 		}
 	}
 	@mysql_query($query);
-	add_member_score($_SESSION[_LICENSE_KEY_]['user']['user_id'],'logout');
+
+	if ($_SESSION[_LICENSE_KEY_]['user']['loginout']<$time-$score_threshold) {
+		add_member_score($_SESSION[_LICENSE_KEY_]['user']['user_id'],'logout');
+	}
 
 	$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -41,7 +46,7 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 
 $_SESSION[_LICENSE_KEY_]['user']=array();
 unset($_SESSION[_LICENSE_KEY_]['user']);
-$_SESSION[_LICENSE_KEY_]['user']['loginout']=mktime(gmdate('H'));
+$_SESSION[_LICENSE_KEY_]['user']['loginout']=$time;
 header('Expires: Mon,26 Jul 1997 05:00:00 GMT');
 header('Last-Modified: '. gmdate('D,d M Y H:i:s').' GMT');
 header('Cache-Control: no-store,no-cache,must-revalidate',false);
