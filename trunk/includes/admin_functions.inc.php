@@ -125,8 +125,8 @@ function regenerate_fields_array() {
 		if (!empty($rsrow['searchable'])) {
 			$towrite.="\$GLOBALS['_pfields'][$id]['searchable']=true;\n";
 			$towrite.="\$GLOBALS['_pfields'][$id]['search_type']=".$GLOBALS['inverse_fields'][$rsrow['search_type']].";\n";
-			$towrite.="\$GLOBALS['_pfields'][$id]['search_label']=\$GLOBALS['_lang'][".$rsrow['fk_lk_id_search']."];\n";
 		}
+		$towrite.="\$GLOBALS['_pfields'][$id]['search_label']=\$GLOBALS['_lang'][".$rsrow['fk_lk_id_search']."];\n";
 		if (!empty($rsrow['at_registration'])) {
 			$towrite.="\$GLOBALS['_pfields'][$id]['reg_page']=".$rsrow['reg_page'].";\n";
 		}
