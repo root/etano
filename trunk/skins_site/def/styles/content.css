@@ -232,7 +232,6 @@ ul.pager li a {
 	text-decoration: none;
 	font-weight: bold;
 	padding: 2px 10px;
-	text-indent: -9999px;
 }
 ul.pager li a:hover {
 	text-decoration: underline;
@@ -244,6 +243,7 @@ ul.pager li.goto_previous a {
 	height: 22px;
 	padding: 0;
 	background-image: url('../images/link_previous.gif');
+	text-indent: -9999px;
 }
 
 ul.pager li.goto_next a {
@@ -252,6 +252,7 @@ ul.pager li.goto_next a {
 	height: 22px;
 	padding: 0;
 	background-image: url('../images/link_next.gif');
+	text-indent: -9999px;
 }
 
 ul.pager li.goto_first a {
@@ -260,6 +261,7 @@ ul.pager li.goto_first a {
 	height: 22px;
 	padding: 0;
 	background-image: url('../images/link_first.gif');
+	text-indent: -9999px;
 }
 
 ul.pager li.goto_last a {
@@ -268,6 +270,7 @@ ul.pager li.goto_last a {
 	height: 22px;
 	padding: 0;
 	background-image: url('../images/link_last.gif');
+	text-indent: -9999px;
 }
 
 	ul.pager li.goto_previous a:hover, ul.pager li.goto_next a:hover, ul.pager li.goto_first a:hover, ul.pager li.goto_last a:hover {
