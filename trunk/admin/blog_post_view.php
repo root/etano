@@ -30,6 +30,9 @@ if (!empty($post_id)) {
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
 		$config=get_site_option(array('bbcode_blogs','use_smilies'),'core_blog');
+		$output['blog_name']=sanitize_and_format($output['blog_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+		$output['title']=sanitize_and_format($output['title'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+		$output['post_content']=sanitize_and_format($output['post_content'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 		if (!empty($config['bbcode_blogs'])) {
 			$output['post_content']=bbcode2html($output['post_content']);
 		}
