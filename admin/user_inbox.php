@@ -20,8 +20,8 @@ $tpl=new phemplate('skin/','remove_nonjs');
 
 if (!empty($_GET['uid'])) {
 	$output['uid']=(int)$_GET['uid'];
-	$output['o']=isset($_GET['o']) ? (int)$_GET['o'] : 0;
-	$output['r']=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
+	$o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
+	$r=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 	$output['user']=get_user_by_userid($output['uid']);
 	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
@@ -35,7 +35,7 @@ if (!empty($_GET['uid'])) {
 	$loop=array();
 	if (!empty($totalrows)) {
 		$config=get_site_option(array('datetime_format','time_offset'),'def_user_prefs');
-		$query="SELECT `mail_id`,`is_read`,`fk_user_id_other`,`_user_other`,`subject`,UNIX_TIMESTAMP(`date_sent`) as `date_sent`,`message_type` FROM $from WHERE $where ORDER BY `date_sent` ASC LIMIT ".$output['o'].','.$output['r'];
+		$query="SELECT `mail_id`,`is_read`,`fk_user_id_other`,`_user_other`,`subject`,UNIX_TIMESTAMP(`date_sent`) as `date_sent`,`message_type` FROM $from WHERE $where ORDER BY `date_sent` DESC LIMIT $o,$r";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$i=0;
 		while ($rsrow=mysql_fetch_assoc($res)) {
@@ -58,7 +58,7 @@ if (!empty($_GET['uid'])) {
 			$loop[]=$rsrow;
 			++$i;
 		}
-		$output['pager2']=pager($totalrows,$output['o'],$output['r']);
+		$output['pager2']=pager($totalrows,$o,$r);
 	}
 
 	$output['return2me']='user_inbox.php';
