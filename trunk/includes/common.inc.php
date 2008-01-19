@@ -79,12 +79,12 @@ define('NET_FRIENDS',1);
 define('NET_BLOCK',2);
 define('NET_FAVES',3);
 
-require_once 'defines.inc.php';
+require_once dirname(__FILE__).'/defines.inc.php';
 if (!defined('NO_SESSION')) {
-	require_once 'sessions.inc.php';
+	require_once _BASEPATH_.'/includes/sessions.inc.php';
 }
 
-// Unset globally registered vars. this should protect us agains any remote file inclusion attack
+// Unset globally registered vars. this should protect us against any remote file inclusion attack
 function _unset_vars(&$v) {
 	$temp=array_keys($v);
 	for ($i=0;isset($temp[$i]);++$i) {
@@ -110,12 +110,12 @@ if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=
 	}
 }
 
-require_once 'sco_functions.inc.php';
+require_once _BASEPATH_.'/includes/sco_functions.inc.php';
 define('FIELD_LOCATION',107);
 $__field2type[FIELD_LOCATION]=TYPE_INT;
 $__field2format[FIELD_LOCATION]=0;
 define('FIELD_RANGE',108);
-require_once 'classes/phemplate.class.php';
+require_once _BASEPATH_.'/includes/classes/phemplate.class.php';
 if (is_dir(dirname(__FILE__).'/../install')) {
 	die('Please remove the install folder.');
 }
