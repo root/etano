@@ -24,8 +24,8 @@ require_once dirname(__FILE__).'/../includes/user_functions.inc.php';
 
 $output='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-	$field=$_POST['field'];
-	$val=(int)$_POST['val'];
+	$field=isset($_POST['field']) ? $_POST['field'] : '';
+	$val=isset($_POST['val']) ? (int)$_POST['val'] : 0;
 	$actual_field='';
 	if (strpos($field,'country')) {
 		$actual_field=substr($field,0,-7);
