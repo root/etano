@@ -100,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			while ($rsrow=mysql_fetch_row($res)) {
 				if (strlen($towrite)<$query_char_limit) {
 					$rsrow=sanitize_and_format($rsrow,TYPE_STRING,FORMAT_ADDSLASH);
-					$towrite.="('".join("','",$rsrow)."'),";
 					$is_insert=true;
 				} else {
 					$towrite=substr($towrite,0,-1).";\n";
@@ -110,6 +109,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$towrite=$querystart;
 					$is_insert=false;
 				}
+				$towrite.="('".join("','",$rsrow)."'),";
 			}
 			if ($is_insert) {
 				$towrite=substr($towrite,0,-1).";\n\n";
