@@ -16,7 +16,6 @@ db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/user_inbox.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
-check_login_member('message_write');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
@@ -25,10 +24,19 @@ if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
 	unset($_SESSION['topass']['input']);
+	$temp='message_write';
+	if (isset($_SESSION[_LICENSE_KEY_]['user'][$output['refnum']])) {
+		$temp=$_SESSION[_LICENSE_KEY_]['user'][$output['refnum']];
+	}
+	check_login_member($temp);
 } elseif (!empty($_GET['to_id'])) {
 	$output['fk_user_id']=(int)$_GET['to_id'];
 	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
+	check_login_member('message_write');
 } elseif (!empty($_GET['mail_id'])) {
+	$output['refnum']=mt_rand(10000,99999);
+	$_SESSION[_LICENSE_KEY_]['user'][$output['refnum']]='message_reply';
+	check_login_member('message_reply');
 	$mail_id=(int)$_GET['mail_id'];
 	$query="SELECT `mail_id`,`fk_user_id_other` as `fk_user_id`,`subject`,`message_body`,`_user_other`,`message_type` FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id`=$mail_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
