@@ -17,7 +17,6 @@ require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/queue_message.inc.php';
 require_once '../includes/tables/user_outbox.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
-check_login_member('message_write');
 
 if (is_file(_BASEPATH_.'/events/processors/message_send.php')) {
 	include_once _BASEPATH_.'/events/processors/message_send.php';
@@ -37,6 +36,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
 	}
+	if (!empty($_POST['refnum']) && isset($_SESSION[_LICENSE_KEY_]['user'][$_POST['refnum']])) {
+		$input['refnum']=$_SESSION[_LICENSE_KEY_]['user'][$_POST['refnum']];
+	} else {
+		$input['refnum']='message_write';
+	}
+	check_login_member($input['refnum']);
 
 // check for input errors
 	if (empty($input['fk_user_id'])) {
@@ -91,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				call_user_func($_on_after_insert[$i]);
 			}
 		}
+		unset($_SESSION[_LICENSE_KEY_]['user'][$_POST['refnum']]);
 	} else {
 		$nextpage='message_send.php';
 // 		you must re-read all textareas from $_POST like this:

@@ -16,7 +16,6 @@ db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/queue_message.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
-check_login_member('flirt_send');
 
 if (is_file(_BASEPATH_.'/events/processors/flirt_send.php')) {
 	include_once _BASEPATH_.'/events/processors/flirt_send.php';
@@ -50,10 +49,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$query="SELECT `flirt_text` FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`=".$input['flirt_id'];
+		$query="SELECT `flirt_text` as `message_body`,`flirt_type` as `ft` FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`=".$input['flirt_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
-			$input['message_body']=sanitize_and_format(mysql_result($res,0,0),TYPE_STRING,$__field2format[TEXT_DB2DB]);
+			$input=array_merge($input,mysql_fetch_assoc($res));
+			if ($input['flirt_type']==FLIRT_INIT) {
+				$input['ft']='flirt_send';
+			} else {
+				$input['ft']='flirt_reply';
+			}
+			check_login_member($input['ft']);
+			$input['message_body']=sanitize_and_format($input['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DB]);
 		} else {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
@@ -90,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$nextpage='flirt_send.php';
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
+		unset($input['message_body']);
 		$input['return']=rawurlencode($input['return']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;

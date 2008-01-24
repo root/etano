@@ -15,7 +15,6 @@ require_once 'includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
-check_login_member('flirt_send');
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
 
@@ -23,6 +22,7 @@ $output=array();
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];
 	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
+	$_GET['ft']=$output['ft'];
 } elseif (!empty($_GET['to_id'])) {
 	$output['fk_user_id']=(int)$_GET['to_id'];
 	$output['_user_other']=get_user_by_userid($output['fk_user_id']);
@@ -34,6 +34,11 @@ if (!isset($output['return']) && isset($_GET['return'])) {
 	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUENCODE,'');
 }
 $flirt_type=sanitize_and_format_gpc($_GET,'ft',TYPE_INT,0,0);
+if ($flirt_type==FLIRT_INIT) {
+	check_login_member('flirt_send');
+} else {
+	check_login_member('flirt_reply');
+}
 
 $flirts=array();
 $query="SELECT `flirt_id`,`flirt_text` FROM `{$dbtable_prefix}flirts` WHERE `flirt_type`=$flirt_type";

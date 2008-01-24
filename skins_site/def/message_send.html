@@ -2,6 +2,7 @@
 <fieldset>
 	<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
 	<input type="hidden" name="return" value="{output.return}" />
+	<input type="hidden" name="refnum" value="{output.refnum}" />
 	<label for="subject">Subject: </label><input class="text" type="text" name="subject" id="subject" value="{output.subject}" tabindex="1" />
 	<!--opt name="output.flirt_reply"--><p><a class="content-link link_flirt" href="{tplvars.relative_url}flirt_send.php?to_id={output.fk_user_id}&amp;ft=1&amp;return={output.return}">Reply with a flirt instead</a></p><!--/opt name="output.flirt_reply"-->
 </fieldset>

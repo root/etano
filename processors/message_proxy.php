@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('".$input['mail_id']."') AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	} elseif ($_POST['act']=='reply') {
-		check_login_member('message_write');
+		check_login_member('message_reply');
 		$nextpage='message_send.php?mail_id='.$input['mail_id'];
 		if (!empty($input['return'])) {
 			$nextpage.='&return='.rawurlencode($input['return']);
