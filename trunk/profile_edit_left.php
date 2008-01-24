@@ -12,4 +12,5 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 $tpl->set_file('left_content','profile_edit_left.html');
-$tpl->process('left_content','left_content');
+$tpl->set_var('tplvars',$tplvars);
+$tpl->process('left_content','left_content',TPL_OPTIONAL);

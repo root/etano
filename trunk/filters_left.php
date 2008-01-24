@@ -31,6 +31,7 @@ foreach ($my_folders as $k=>$v) {
 	++$i;
 }
 $tpl->set_loop('loopfolders',$loopfolders);
+$tpl->set_var('tplvars',$tplvars);
 $tpl->process('left_content','left_content',TPL_LOOP | TPL_OPTIONAL);
 $tpl->drop_loop('loopfolders');
 unset($loopfolders);
