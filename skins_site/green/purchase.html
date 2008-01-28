@@ -9,11 +9,9 @@
 		<p class="comment">version {loop.version} by {loop.dev_name}</p>
 	</dt>
 	<dd>
-		{loop.paypal_button}
-	</dd>
-	<dd>
 		{loop.2co_button}
 	</dd>
+	<dd class="comment">(paypal or credit card)</dd>
 </dl>
 <!--/loop name="loop"-->
 <br />
@@ -21,7 +19,7 @@
 <h3>Custom payment and fees</h3>
 <p>Our fee for custom work is <strong>$15 USD / hour</strong>. We charge in 30 minutes increments ($7.5 / 30 minutes).
 For web site design or volume work please <a href="contact.php" title="Request custom work quote">request a quote</a>. We also offer discounts for multiple products purchased. <a href="contact.php" title="Discount for Etano community builder">Contact us</a> to see if you're eligible for discount.</p>
-<div id="payment_forms">Please use one of the forms below if you need to make a payment to us:
+<div id="payment_forms">Please use the form below if you need to make a payment to us:
 	<form method="post" id="tco_payment" action="https://www2.2checkout.com/2co/buyer/purchase">
 	<input type="hidden" name="x_login" value="117760" />
 	<input type="hidden" name="id_type" value="1" />
@@ -35,25 +33,8 @@ For web site design or volume work please <a href="contact.php" title="Request c
 	<input type="hidden" name="dm_item_type" value="prod" />
 	<input type="hidden" name="c_description" value="Payment for Web Development" />
 	<div>
-		<div class="cp_label">Amount to pay by credit card:</div>
+		<div class="cp_label">Amount to pay:</div>
 		<div>$<input type="text" name="x_amount" id="x_amount" value="" /> <input type="submit" value="Continue to 2CheckOut" /></div>
-	</div>
-	</form>
-<p>or</p>
-	<form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="paypal_payment">
-	<input type="hidden" name="business" value="paypal@sco.ro" />
-	<input type="hidden" name="return" value="http://www.datemill.com/thankyou.php?p=paypal" />
-	<input type="hidden" name="item_name" value="Payment for Web Development" />
-	<input type="hidden" name="custom" value="dit=prod" />
-	<input type="hidden" name="quantity" value="1" />
-	<input type="hidden" name="no_shipping" value="1" />
-	<input type="hidden" name="no_note" value="1" />
-	<input type="hidden" name="rm" value="2" />
-	<input type="hidden" name="currency_code" value="USD" />
-	<input type="hidden" name="cmd" value="_xclick" />
-	<div>
-		<div class="cp_label">Amount to pay with Paypal:</div>
-		<div>$<input type="text" name="amount" id="amount" value="" /> <input type="submit" value="Pay with PayPal" /></div>
 	</div>
 	</form>
 </div>

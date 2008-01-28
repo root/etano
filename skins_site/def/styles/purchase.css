@@ -17,7 +17,12 @@
 
 .product dd {
 	float: left;
-	width: 110px;
+	width: 130px;
+}
+
+.product dd.comment {
+	float: left;
+	width: 160px;
 }
 
 #payment_forms {
@@ -33,7 +38,7 @@
 }
 
 .cp_label {
-	width: 200px;
+	width: 110px;
 	float: left;
 }
 
