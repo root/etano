@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					//$query.=",`status`=".STAT_APPROVED;
 				}
 			} else {		// insert here
-				$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."'";
+				$query="INSERT INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."',`last_changed`='".gmdate('YmdHis')."',`_user`='".$_SESSION[_LICENSE_KEY_]['user']['user']."'";
 				if (!empty($config['manual_profile_approval'])) {
 					$query.=",`status`=".STAT_PENDING;
 				} else {
