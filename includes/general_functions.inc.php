@@ -504,12 +504,12 @@ function create_search_form($search_fields) {
 					$prefered_input='s';
 					$num_states=0;
 					$num_cities=0;
-					if (isset($field['default_value'][0])) {
+					if (!empty($field['default_value'][0])) {
 						$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='".$field['default_value'][0]."'";
 						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 						list($prefered_input,$num_states)=mysql_fetch_row($res);
 					}
-					if (isset($field['default_value'][1])) {
+					if (!empty($field['default_value'][1])) {
 						$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`='".$field['default_value'][1]."'";
 						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 						if (mysql_num_rows($res)) {
