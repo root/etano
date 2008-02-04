@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2007101201
+File version:				1.2008020401
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -841,8 +841,8 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	global $accepted_results_per_page;
 	$params=array();
 	$params=array_merge($_GET,$_POST);
-	unset($params['o'],$params['r'],$params['PHPSESSID']);
-	$qs=array2qs($params,array('PHPSESSID'),'&amp;');
+	unset($params['o'],$params['r'],$params[session_name()]);
+	$qs=array2qs($params,array(session_name()),'&amp;');
 	$myrand=mt_rand(1000,2000);
 	if (empty($results)) {
 		$results=10;
