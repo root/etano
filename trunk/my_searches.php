@@ -52,4 +52,5 @@ $tplvars['css']='my_searches.css';
 if (is_file('my_searches_left.php')) {
 	include 'my_searches_left.php';
 }
+unset($page_last_modified_time);	// we want everything fresh on this page.
 include 'frame.php';

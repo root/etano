@@ -71,4 +71,5 @@ $tplvars['css']='my_responses.css';
 if (is_file('my_responses_left.php')) {
 	include 'my_responses_left.php';
 }
+unset($page_last_modified_time);	// we want everything fresh on this page.
 include 'frame.php';

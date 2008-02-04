@@ -60,4 +60,5 @@ $tplvars['css']='home.css';
 if (is_file('home_left.php')) {
 	include 'home_left.php';
 }
+unset($page_last_modified_time);	// we want everything fresh on this page.
 include 'frame.php';
