@@ -51,6 +51,7 @@ $output['lang_265']=sanitize_and_format($GLOBALS['_lang'][265],TYPE_STRING,$__fi
 $output['lang_266']=sanitize_and_format($GLOBALS['_lang'][266],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $tpl->set_file('content','forgot_pass_change.html');
 $tpl->set_var('output',$output);
+$tpl->set_var('tplvars',$tplvars);
 $tpl->process('content','content',TPL_OPTIONAL);
 
 $tplvars['title']=$GLOBALS['_lang'][224];
