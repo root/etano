@@ -84,6 +84,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 // it was saved sanitized so no need to resanitize here
 //				$output['message_body']=sanitize_and_format($output['message_body'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 				check_login_member('message_read');
+				$output['message_body']=nl2br($output['message_body']);
 				break;
 
 			case MESS_FLIRT:

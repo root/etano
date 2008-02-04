@@ -158,6 +158,9 @@ function sanitize_and_format($input,$input_type,$format=0,$empty_value=null) {
 		if ($format&FORMAT_TRIM) {	// must come before FORMAT_ADDSLASH
 			$input=trim($input);
 		}
+		if ($format&FORMAT_NL2BR) {
+			$input=nl2br($input);
+		}
 		if ($format&FORMAT_ADDSLASH) {	// must come after text2html
 			$input=mysql_real_escape_string($input);	// due to this function there must always be a db_connect() before calling sanitize_and_format
 		}
@@ -185,9 +188,6 @@ function sanitize_and_format($input,$input_type,$format=0,$empty_value=null) {
 // 2 decimals with '.' as the decimal separator
 		if ($format&FORMAT_FLOAT) {
 			$input=number_format($input,2);
-		}
-		if ($format&FORMAT_NL2BR) {
-			$input=nl2br($input);
 		}
 		if ($format&FORMAT_RUENCODE) {		// must come last
 			$input=rawurlencode($input);
@@ -219,13 +219,7 @@ function unhtmlspecialchars($value) {
 			$myreturn[unhtmlspecialchars($k)]=unhtmlspecialchars($v);
 		}
 	} else {
-		$myreturn=str_replace('&amp;amp;','&',$value);
-		$myreturn=str_replace('&amp;','&',$myreturn);
-		$myreturn=str_replace('&lt;','<',$myreturn);
-		$myreturn=str_replace('&gt;','>',$myreturn);
-		$myreturn=str_replace('&quot;','"',$myreturn);
-		$myreturn=str_replace('&#39;',"'",$myreturn);
-		$myreturn=str_replace('&#039;',"'",$myreturn);
+		$myreturn=str_replace(array('&amp;amp;','&amp;','&lt;','&gt;','&quot;','&#39;','&#039;','&nbsp;'),array('&','&','<','>','"',"'","'",' '),$value);
 	}
 	return $myreturn;
 }
@@ -240,11 +234,7 @@ function htmlspecialchars_uni($value) {
 	} else {
 //		$myreturn=preg_replace("/&(?!#[0-9]+;)/si",'&amp;amp;',$value); // fix & but allow unicode
 		$myreturn=preg_replace("/&(?!#[0-9]+;)/si",'&amp;',$value); // fix & but allow unicode
-		$myreturn=str_replace('<','&lt;',$myreturn);
-		$myreturn=str_replace('>','&gt;',$myreturn);
-		$myreturn=str_replace('"','&quot;',$myreturn);
-		$myreturn=str_replace("'",'&#039;',$myreturn);
-		$myreturn=str_replace('  ',' &nbsp;',$myreturn);
+		$myreturn=str_replace(array('<','>','"',"'",'  '),array('&lt;','&gt;','&quot;','&#039;',' &nbsp;'),$myreturn);
 	}
 	return $myreturn;
 }
