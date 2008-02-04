@@ -258,7 +258,7 @@ if (!$got_from_cache) {
 	} // the for() that constructs the where
 
 	if (!empty($where)) {	// if $where is empty then a condition above prevents us from searching. There must be a message to display.
-		$serialized_input=serialize($input);
+		$serialized_input=mysql_real_escape_string(serialize($input));
 		$query="SELECT $select FROM $from WHERE $where $orderby";
 		$output['search_md5']=md5($query);
 		if (!$skip_cache) {
