@@ -387,6 +387,7 @@ function regenerate_skin_cache($skin_module_code='',$last_id=0) {
 					if (!empty($profile[$_pfields[$pcat['fields'][$i]]['dbfield']])) {
 						$fields[$i]['label']=$profile[$_pfields[$pcat['fields'][$i]]['dbfield'].'_label'];
 						$fields[$i]['field']=$profile[$_pfields[$pcat['fields'][$i]]['dbfield']];
+						$fields[$i]['dbfield']=$_pfields[$pcat['fields'][$i]]['dbfield'];
 					}
 				}
 				$categs['pcat_name']=$pcat['pcat_name'];
