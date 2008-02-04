@@ -13,7 +13,6 @@ Support at:                 http://www.datemill.com/forum
 
 define('NO_SESSION',1);
 require_once '../../includes/common.inc.php';
-db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../../includes/admin_functions.inc.php';
 set_error_handler('general_error');
 set_time_limit(0);

@@ -12,7 +12,6 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 require_once '../includes/common.inc.php';
-db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
 require_once '../includes/tables/queue_message.inc.php';
 require_once '../includes/tables/user_outbox.inc.php';
