@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 ob_start();
 ini_set('include_path','.');
 ini_set('session.use_cookies',1);
+ini_set('url_rewriter.tags', '');
 ini_set('session.use_trans_sid',0);
 ini_set('date.timezone','GMT');	// temporary fix for the php 5.1+ TZ compatibility
 ini_set('error_reporting',2047);
@@ -79,7 +80,12 @@ define('NET_FRIENDS',1);
 define('NET_BLOCK',2);
 define('NET_FAVES',3);
 
+// activate db sessions?
+define('USE_DB_SESSIONS',0);
+
 require_once dirname(__FILE__).'/defines.inc.php';
+require_once _BASEPATH_.'/includes/sco_functions.inc.php';
+db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 if (!defined('NO_SESSION')) {
 	require_once _BASEPATH_.'/includes/sessions.inc.php';
 }
@@ -110,7 +116,6 @@ if (ini_get('register_globals')=='1' || strtolower(ini_get('register_globals'))=
 	}
 }
 
-require_once _BASEPATH_.'/includes/sco_functions.inc.php';
 define('FIELD_LOCATION',107);
 $__field2type[FIELD_LOCATION]=TYPE_INT;
 $__field2format[FIELD_LOCATION]=0;
