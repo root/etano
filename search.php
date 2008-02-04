@@ -15,7 +15,6 @@ Support at:                 http://www.datemill.com/forum
 
 //define('CACHE_LIMITER','private');
 require_once 'includes/common.inc.php';
-db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once 'includes/user_functions.inc.php';
 
 $tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');

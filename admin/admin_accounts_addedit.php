@@ -12,7 +12,6 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 require_once '../includes/common.inc.php';
-db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/admin_functions.inc.php';
 require_once '../includes/tables/admin_accounts.inc.php';
 allow_dept(DEPT_ADMIN);

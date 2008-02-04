@@ -12,7 +12,6 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 require_once dirname(__FILE__).'/../includes/common.inc.php';
-db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once dirname(__FILE__).'/../includes/user_functions.inc.php';
 
 $output='';

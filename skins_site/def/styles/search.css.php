@@ -1,7 +1,6 @@
 <?php
 require_once '../../../includes/general_functions.inc.php';
 require_once '../../../includes/common.inc.php';
-db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 
 header('Content-Type: text/css');
 $t1width=get_site_option('t1_width','core_photo');
