@@ -47,4 +47,5 @@ $tplvars['title']=$GLOBALS['_lang'][206];
 $tplvars['page_title']=$GLOBALS['_lang'][206];
 $tplvars['page']='contact';
 $tplvars['css']='contact.css';
+unset($page_last_modified_time);	// we want everything fresh on this page.
 include 'frame.php';

@@ -103,4 +103,5 @@ $tplvars['css']='my_photos.css';
 if (is_file('my_photos_left.php')) {
 	include 'my_photos_left.php';
 }
+unset($page_last_modified_time);	// we want everything fresh on this page.
 include 'frame.php';

@@ -96,4 +96,5 @@ $tplvars['css']='my_settings.css';
 if (is_file('my_settings_left.php')) {
 	include 'my_settings_left.php';
 }
+unset($page_last_modified_time);	// we want everything fresh on this page.
 include 'frame.php';
