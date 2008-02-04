@@ -18,31 +18,34 @@ allow_dept(DEPT_ADMIN);
 set_time_limit(0);
 
 regenerate_fields_array();
-regenerate_langstrings_array();
+if (empty($_GET['fields_only'])) {
+	regenerate_langstrings_array();
 
-$query="SELECT `dbfield`,`field_type`,`search_type` FROM `{$dbtable_prefix}profile_fields` WHERE `searchable`=1 AND `for_basic`=1 ORDER BY `order_num`";
-if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-$fields=array();
-while ($rsrow=mysql_fetch_assoc($res)) {
-	if ($rsrow['field_type']==FIELD_LOCATION) {
-		$fields[]=$rsrow['dbfield'].'_country';
-	} elseif ($rsrow['field_type']==FIELD_CHECKBOX_LARGE) {
-	} else {
-		$fields[]=$rsrow['dbfield'];
-	}
-}
-
-$query="ALTER TABLE `{$dbtable_prefix}user_profiles` DROP INDEX `searchkey`";
-@mysql_query($query);
-
-if (!empty($fields)) {
-	$query="ALTER TABLE `{$dbtable_prefix}user_profiles` ADD INDEX `searchkey` (`".join("`,`",$fields)."`)";
+	$query="SELECT `dbfield`,`field_type`,`search_type` FROM `{$dbtable_prefix}profile_fields` WHERE `searchable`=1 AND `for_basic`=1 ORDER BY `order_num`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-}
+	$fields=array();
+	while ($rsrow=mysql_fetch_assoc($res)) {
+		if ($rsrow['field_type']==FIELD_LOCATION) {
+			$fields[]=$rsrow['dbfield'].'_country';
+		} elseif ($rsrow['field_type']==FIELD_CHECKBOX_LARGE) {
+		} else {
+			$fields[]=$rsrow['dbfield'];
+		}
+	}
 
-unset($GLOBALS['_pfields'],$GLOBALS['_pcats'],$GLOBALS['basic_search_fields']);
-require '../../includes/fields.inc.php';
-regenerate_skin_cache();
+	$query="ALTER TABLE `{$dbtable_prefix}user_profiles` DROP INDEX `searchkey`";
+	@mysql_query($query);
+
+	if (!empty($fields)) {
+		$query="ALTER TABLE `{$dbtable_prefix}user_profiles` ADD INDEX `searchkey` (`".join("`,`",$fields)."`)";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	}
+
+	unset($GLOBALS['_pfields'],$GLOBALS['_pcats'],$GLOBALS['basic_search_fields']);
+	require _BASEPATH_.'/skins_site/'.$def_skin.'/lang/global.inc.php';
+	require _BASEPATH_.'/includes/fields.inc.php';
+	regenerate_skin_cache();
+}
 
 $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Field and category changes applied successfully.';
