@@ -33,7 +33,11 @@ if (!empty($_REQUEST['search'])) {
 }
 
 $act=isset($_REQUEST['act']) ? (int)$_REQUEST['act'] : 1;
-$input['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
+if ($_SERVER['REQUEST_METHOD']=='POST') {
+	$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
+} else {
+	$input['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+}
 
 if (!empty($input['uids'])) {
 	if ($act==1) {

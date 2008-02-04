@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!empty($input['duration'])) {
 				$query.=",'$now'+INTERVAL '".$input['duration']."' DAY";
 			} else {
-				$query.=",'0000-00-00'"
+				$query.=",'0000-00-00'";
 			}
 			$query.=",now()),";
 		}

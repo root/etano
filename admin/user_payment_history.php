@@ -31,14 +31,18 @@ if (!empty($_GET['uid'])) {
 
 	$config=get_site_option(array('date_format','time_offset'),'def_user_prefs');
 
-	$query="SELECT `payment_id`,`fk_user_id`,`_user`,`gateway`,`gw_txn`,`name`,`country`,`email`,`is_subscr`,`m_value_to`,`amount_paid`,`refunded`,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until`,UNIX_TIMESTAMP(`date`) as `date`,`is_suspect`,`suspect_reason` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$output['uid'];
+	$query="SELECT `payment_id`,`fk_user_id`,`_user`,`gateway`,`gw_txn`,`name`,`country`,`email`,`is_subscr`,`m_value_to`,`amount_paid`,`refunded`,UNIX_TIMESTAMP(`paid_from`) as `paid_from`,UNIX_TIMESTAMP(`paid_until`) as `paid_until`,UNIX_TIMESTAMP(`date`) as `date`,`is_suspect`,`suspect_reason` FROM `{$dbtable_prefix}payments` WHERE `fk_user_id`=".$output['uid']." ORDER BY `payment_id`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$output['total']=0;
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		if (!empty($rsrow['is_subscr'])) {
 			$rsrow['m_value_to']=isset($memberships[$rsrow['m_value_to']]) ? $memberships[$rsrow['m_value_to']] : '?';
 			$rsrow['paid_from']=strftime($config['date_format'],$rsrow['paid_from']+$config['time_offset']);
-			$rsrow['paid_until']=strftime($config['date_format'],$rsrow['paid_until']+$config['time_offset']);
+			if (!empty($rsrow['paid_until'])) {
+				$rsrow['paid_until']=strftime($config['date_format'],$rsrow['paid_until']+$config['time_offset']);
+			} else {
+				$rsrow['paid_until']='forever';
+			}
 		} else {
 			$rsrow['paid_from']=strftime($config['date_format'],$rsrow['date']);
 			$rsrow['m_value_to']='Product';

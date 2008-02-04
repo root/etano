@@ -29,8 +29,8 @@ if (!empty($_REQUEST['search'])) {
 } elseif (!empty($_REQUEST['uids'])) {
 	$output['uids']=sanitize_and_format($_REQUEST['uids'],TYPE_INT,0,array());
 }
-$output['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-$output['return2']=rawurldecode($output['return']);
+$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+$output['return']=rawurlencode($output['return2']);
 
 if (!empty($output['uids'])) {
 	$output['m_value']=dbtable2options("`{$dbtable_prefix}memberships`",'`m_value`','`m_name`','`m_value`',4,'`m_value`<>1');

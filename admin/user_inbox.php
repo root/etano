@@ -22,7 +22,8 @@ if (!empty($_GET['uid'])) {
 	$o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 	$r=isset($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 	$output['user']=get_user_by_userid($output['uid']);
-	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
 
 	$where="`fk_user_id`=".$output['uid']." AND `del`=0";
 	$from="`{$dbtable_prefix}user_inbox`";
