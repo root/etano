@@ -146,7 +146,7 @@ switch ($output['field_type']) {
 		$output['row_st']='visible';
 		$output['search_type']=vector2options($accepted_fieldtype,$output['search_type'],array(FIELD_TEXTFIELD,FIELD_TEXTAREA,FIELD_SELECT,FIELD_CHECKBOX_LARGE,FIELD_DATE,FIELD_RANGE));
 		$output['row_accval_location']=true;
-		$output['default_value']=dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output['default_value']);
+		$output['default_value']='<option value="0">Any</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output['default_value']);
 		break;
 
 }
