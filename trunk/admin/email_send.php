@@ -50,8 +50,13 @@ if (!empty($output['uids'])) {
 }
 
 if (empty($output['return'])) {
-	$output['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	$output['return2']=rawurldecode($output['return']);
+	if ($_SERVER['REQUEST_METHOD']=='GET') {
+		$output['return2']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+		$output['return']=rawurlencode($output['return2']);
+	} else {
+		$output['return']=sanitize_and_format_gpc($_REQUEST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+		$output['return2']=rawurldecode($output['return']);
+	}
 }
 $tpl->set_file('content','email_send.html');
 $tpl->set_var('output',$output);

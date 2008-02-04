@@ -143,7 +143,11 @@ if (mysql_num_rows($res)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$account['paid_until']=mysql_result($res,0,0);
-		$account['paid_until']=strftime($config['datetime_format'],$account['paid_until']+$config['time_offset']);
+		if ($account['paid_until']==0) {
+			$account['paid_until']='FOREVER';
+		} else {
+			$account['paid_until']=strftime($config['datetime_format'],$account['paid_until']+$config['time_offset']);
+		}
 	} else {
 		$account['paid_until']='-';
 	}
@@ -165,6 +169,9 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
+if (isset($_GET['return'])) {
+	$output['return2']=sanitize_and_format($_GET['return'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
+}
 $tpl->set_file('content','profile.html');
 $tpl->set_loop('categs',$categs);
 $tpl->set_var('output',$output);

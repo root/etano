@@ -12,14 +12,13 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 require_once '../includes/common.inc.php';
-db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/admin_functions.inc.php';
 allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 $tpl=new phemplate('skin/','remove_nonjs');
 $output=array();
 
-$sorts=array('`_user`','`score` DESC','`fk_user_id` DESC');
+$sorts=array('a.`_user`','a.`score` DESC','a.`fk_user_id` DESC');
 $sort_names=array('alphabetically','by score (highest first)','newest first');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
@@ -36,9 +35,9 @@ if (!empty($output['search_md5'])) {
 	$query="SELECT `results`,`search` FROM `{$dbtable_prefix}site_searches` WHERE `search_md5`='".$output['search_md5']."' AND `search_type`=".SEARCH_USER;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
-		$user_ids=mysql_result($res,0,0);
+		list($user_ids,$input)=mysql_fetch_row($res);
 		$user_ids=explode(',',$user_ids);
-		$input=unserialize(mysql_result($res,0,1));	// sanitized already
+		$input=unserialize($input);	// sanitized already
 	}
 	if (!isset($_GET['refresh'])) {
 		$do_query=false;
@@ -130,145 +129,148 @@ if (!empty($output['search_md5'])) {
 	} // for() each $basic_search_fields
 }
 
-if ($do_query) {
-	$where="a.`fk_user_id`=b.`".USER_ACCOUNT_ID."`";
-	$from="`{$dbtable_prefix}user_profiles` a,`".USER_ACCOUNTS_TABLE."` b";
+// we build the query but run it only if this is a first run, otherwise we already know the results
+// we need the query though for the md5
+$where="a.`fk_user_id`=b.`".USER_ACCOUNT_ID."`";
+$from="`{$dbtable_prefix}user_profiles` a,`".USER_ACCOUNTS_TABLE."` b";
 
-	if (isset($input['user'])) {
-		$where.=" AND a.`_user` LIKE '".$input['user']."%'";
+if (isset($input['user'])) {
+	$where.=" AND a.`_user` LIKE '".$input['user']."%'";
+}
+if (isset($input['pstat'])) {	// profile status
+	$where.=" AND a.`status`=".$input['pstat'];
+}
+if (isset($input['astat'])) {	// account status
+	$where.=" AND b.`status`=".$input['astat'];
+}
+if (isset($input['membership'])) {
+	$where.=" AND b.`membership`=".$input['membership'];
+}
+if (isset($input['email'])) {
+	$where.=" AND b.`email`='".$input['email']."'";
+}
+if (isset($input['photo'])) {
+	if ($input['photo']==1) {	// only members with main photo
+		$where.=" AND a.`_photo`<>''";
+	} elseif ($input['photo']==-1) {	// only members without main photo
+		$where.=" AND a.`_photo`=''";
 	}
-	if (isset($input['pstat'])) {	// profile status
-		$where.=" AND a.`status`=".$input['pstat'];
-	}
-	if (isset($input['astat'])) {	// account status
-		$where.=" AND b.`status`=".$input['astat'];
-	}
-	if (isset($input['membership'])) {
-		$where.=" AND b.`membership`=".$input['membership'];
-	}
-	if (isset($input['email'])) {
-		$where.=" AND b.`email`='".$input['email']."'";
-	}
-	if (isset($input['photo'])) {
-		if ($input['photo']==1) {	// only members with main photo
-			$where.=" AND a.`_photo`<>''";
-		} elseif ($input['photo']==-1) {	// only members without main photo
-			$where.=" AND a.`_photo`=''";
-		}
-	}
-	if (isset($input['album'])) {	// only members with photo album
-		$where.=" AND a.`fk_user_id`=c.`fk_user_id` GROUP BY a.`fk_user_id`";
-		$from.=",`{$dbtable_prefix}user_photos` c";
-	}
+}
+if (isset($input['album'])) {	// only members with photo album
+	$where.=" AND a.`fk_user_id`=c.`fk_user_id` GROUP BY a.`fk_user_id`";
+	$from.=",`{$dbtable_prefix}user_photos` c";
+}
 
-	// continue building the where clause of the query based on the input values we have.
-	for ($i=0;isset($basic_search_fields[$i]);++$i) {
-		$field=$_pfields[$basic_search_fields[$i]];
-		switch ($field['search_type']) {
+// continue building the where clause of the query based on the input values we have.
+for ($i=0;isset($basic_search_fields[$i]);++$i) {
+	$field=$_pfields[$basic_search_fields[$i]];
+	switch ($field['search_type']) {
 
-			case FIELD_SELECT:
-				if (isset($input[$field['dbfield']])) {
-					if ($field['field_type']==FIELD_SELECT) {
-						$where.=" AND a.`".$field['dbfield']."`='".$input[$field['dbfield']]."'";
-					} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
-						$where.=" AND a.`".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']]."|%'";
-					}
+		case FIELD_SELECT:
+			if (isset($input[$field['dbfield']])) {
+				if ($field['field_type']==FIELD_SELECT) {
+					$where.=" AND a.`".$field['dbfield']."`='".$input[$field['dbfield']]."'";
+				} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
+					$where.=" AND a.`".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']]."|%'";
 				}
-				break;
+			}
+			break;
 
-			case FIELD_CHECKBOX_LARGE:
-				if (isset($input[$field['dbfield']])) {
-					if ($field['field_type']==FIELD_SELECT) {
-						if (count($input[$field['dbfield']])) {
-							$where.=" AND (";
-							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
-								$where.="a.`".$field['dbfield']."`='".$input[$field['dbfield']][$j]."' OR ";
-							}
-							$where=substr($where,0,-4);	// substract the last ' OR '
-							$where.=')';
+		case FIELD_CHECKBOX_LARGE:
+			if (isset($input[$field['dbfield']])) {
+				if ($field['field_type']==FIELD_SELECT) {
+					if (count($input[$field['dbfield']])) {
+						$where.=" AND (";
+						for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
+							$where.="a.`".$field['dbfield']."`='".$input[$field['dbfield']][$j]."' OR ";
 						}
-					} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
-						if (count($input[$field['dbfield']])) {
-							$where.=" AND (";
-							for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
-								$where.="a.`".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']][$j]."|%' OR ";
-							}
-							$where=substr($where,0,-4);	// substract the last ' OR '
-							$where.=')';
+						$where=substr($where,0,-4);	// substract the last ' OR '
+						$where.=')';
+					}
+				} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
+					if (count($input[$field['dbfield']])) {
+						$where.=" AND (";
+						for ($j=0;isset($input[$field['dbfield']][$j]);++$j) {
+							$where.="a.`".$field['dbfield']."` LIKE '%|".$input[$field['dbfield']][$j]."|%' OR ";
 						}
+						$where=substr($where,0,-4);	// substract the last ' OR '
+						$where.=')';
 					}
 				}
-				break;
+			}
+			break;
 
-			case FIELD_RANGE:
-				$now=gmdate('YmdHis');
-				if (isset($input[$field['dbfield'].'_max'])) {
-					if ($field['field_type']==FIELD_DATE) {
-						$where.=" AND a.`".$field['dbfield']."`>=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
-					} elseif ($field['field_type']==FIELD_SELECT) {
-						$where.=" AND `".$field['dbfield']."`<=".$input[$field['dbfield'].'_max'];
-					}
+		case FIELD_RANGE:
+			$now=gmdate('YmdHis');
+			if (isset($input[$field['dbfield'].'_max'])) {
+				if ($field['field_type']==FIELD_DATE) {
+					$where.=" AND a.`".$field['dbfield']."`>=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_max']." YEAR)";
+				} elseif ($field['field_type']==FIELD_SELECT) {
+					$where.=" AND `".$field['dbfield']."`<=".$input[$field['dbfield'].'_max'];
 				}
-				if (isset($input[$field['dbfield'].'_min'])) {
-					if ($field['field_type']==FIELD_DATE) {
-						$where.=" AND a.`".$field['dbfield']."`<=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
-					} elseif ($field['field_type']==FIELD_SELECT) {
-						$where.=" AND `".$field['dbfield']."`>=".$input[$field['dbfield'].'_min'];
-					}
+			}
+			if (isset($input[$field['dbfield'].'_min'])) {
+				if ($field['field_type']==FIELD_DATE) {
+					$where.=" AND a.`".$field['dbfield']."`<=DATE_SUB('$now',INTERVAL ".$input[$field['dbfield'].'_min']." YEAR)";
+				} elseif ($field['field_type']==FIELD_SELECT) {
+					$where.=" AND `".$field['dbfield']."`>=".$input[$field['dbfield'].'_min'];
 				}
-				break;
+			}
+			break;
 
-			case FIELD_LOCATION:
-				if (isset($input[$field['dbfield'].'_country'])) {
-					$where.=" AND a.`".$field['dbfield']."_country`=".$input[$field['dbfield'].'_country'];
-					$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=".$input[$field['dbfield'].'_country'];
-					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-					if (mysql_num_rows($res)) {
-						list($prefered_input,$num_states)=mysql_fetch_row($res);
-						if ($prefered_input=='s' && !empty($num_states)) {
-							if (isset($input[$field['dbfield'].'_state'])) {
-								$where.=" AND a.`".$field['dbfield']."_state`=".$input[$field['dbfield'].'_state'];
-								$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`=".$input[$field['dbfield'].'_state'];
-								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-								if (mysql_num_rows($res)) {
-									if (isset($input[$field['dbfield'].'_city'])) {
-										$where.=" AND a.`".$field['dbfield']."_city`=".$input[$field['dbfield'].'_city'];
-									}
+		case FIELD_LOCATION:
+			if (isset($input[$field['dbfield'].'_country'])) {
+				$where.=" AND a.`".$field['dbfield']."_country`=".$input[$field['dbfield'].'_country'];
+				$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`=".$input[$field['dbfield'].'_country'];
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				if (mysql_num_rows($res)) {
+					list($prefered_input,$num_states)=mysql_fetch_row($res);
+					if ($prefered_input=='s' && !empty($num_states)) {
+						if (isset($input[$field['dbfield'].'_state'])) {
+							$where.=" AND a.`".$field['dbfield']."_state`=".$input[$field['dbfield'].'_state'];
+							$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`=".$input[$field['dbfield'].'_state'];
+							if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+							if (mysql_num_rows($res)) {
+								if (isset($input[$field['dbfield'].'_city'])) {
+									$where.=" AND a.`".$field['dbfield']."_city`=".$input[$field['dbfield'].'_city'];
 								}
 							}
-						} elseif ($prefered_input=='z') {
-							if (isset($input[$field['dbfield'].'_zip']) && isset($input[$field['dbfield'].'_dist'])) {
-								$query="SELECT RADIANS(`latitude`),RADIANS(`longitude`) FROM `{$dbtable_prefix}loc_zips` WHERE `zipcode`='".$input[$field['dbfield'].'_zip']."'";
-								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-								if (mysql_num_rows($res)) {
-									list($latitude,$longitude)=mysql_fetch_row($res);
-									// earth radius=3956 miles =6367 km; 3956*2=7912
-									// Haversine Formula: (more exact for small distances)
-									$where.=" AND (a.`latitude`+a.`longitude`)<>0 AND (7912*asin(sqrt(pow(sin((".(float)$latitude."-RADIANS(a.`latitude`))/2),2)+cos(".(float)$latitude.")*cos(RADIANS(a.`latitude`))*pow(sin((".(float)$longitude."-RADIANS(a.`longitude`))/2),2))))<=".(int)$input[$field['dbfield'].'_dist'];
-									// Law of Cosines for Spherical Trigonometry; 60*1.1515=69.09; 1.1515=miles in a degree
-//									$where.=" AND (69.09*DEGREES(ACOS(SIN(".(float)$latitude.")*SIN(RADIANS(`latitude`))+COS(".(float)$latitude.")*COS(RADIANS(`latitude`))*COS(".(float)$longitude."-RADIANS(`longitude`)))))<=".(int)$input[$field['dbfield'].'_dist'];
-								} else {
+						}
+					} elseif ($prefered_input=='z') {
+						if (isset($input[$field['dbfield'].'_zip']) && isset($input[$field['dbfield'].'_dist'])) {
+							$query="SELECT `rad_latitude`,`rad_longitude` FROM `{$dbtable_prefix}loc_zips` WHERE `zipcode`='".$input[$field['dbfield'].'_zip']."'";
+							if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+							if (mysql_num_rows($res)) {
+								list($rad_latitude,$rad_longitude)=mysql_fetch_row($res);
+								// WE USE ONLY MILES HERE. IF YOU WANT KM YOU NEED TO CONVERT MILES TO KM
+								// earth radius=3956 miles =6367 km; 3956*2=7912
+								// Haversine Formula: (more exact for small distances)
+								$where.=" AND a.`rad_latitude`<>-a.`rad_longitude` AND asin(sqrt(pow(sin((".(float)$rad_latitude."-a.`rad_latitude`)/2),2)+cos(".(float)$rad_latitude.")*cos(a.`rad_latitude`)*pow(sin((".(float)$rad_longitude."-a.`rad_longitude`)/2),2)))<=".(((int)$input[$field['dbfield'].'_dist'])/7912);
+								// Law of Cosines for Spherical Trigonometry; 60*1.1515=69.09; 1.1515=miles in a degree
+//									$where.=" AND DEGREES(ACOS(SIN(".(float)$rad_latitude.")*SIN(a.`rad_latitude`)+COS(".(float)$rad_latitude.")*COS(a.`rad_latitude`)*COS(".(float)$rad_longitude."-a.`rad_longitude`)))<=".(int)$input[$field['dbfield'].'_dist']/69.09;
+							} else {
 // should not return any result or at least warn the user that the zip code he entered was not found.
-								}
 							}
 						}
 					}
-				}	// if (!empty($input[$field['dbfield'].'_country']))
-				break;
+				}
+			}	// if (!empty($input[$field['dbfield'].'_country']))
+			break;
 
-		}	//switch ($field['search_type'])
-	} // the for() that constructs the where
+	}	//switch ($field['search_type'])
+} // the for() that constructs the where
 
-	$query="SELECT a.`fk_user_id` FROM $from WHERE $where";
-//print $query;
-//die;
+$query="SELECT a.`fk_user_id` FROM $from WHERE $where";
+//print $query;die;
+$new_md5=md5($query);
+if ($output['search_md5']!=$new_md5) {
+	$output['search_md5']=$new_md5;
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$user_ids=array();
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
 		$user_ids[]=mysql_result($res,$i,0);
 	}
-	$serialized_input=serialize($input);
-	$output['search_md5']=md5($serialized_input);
+	$serialized_input=mysql_real_escape_string(serialize($input));
 	$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='".$output['search_md5']."',`search_type`=".SEARCH_USER.",`search`='$serialized_input',`results`='".join(',',$user_ids)."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
@@ -290,21 +292,20 @@ if (!empty($totalrows)) {
 			redirect2page('admin/profile.php',array(),'uid='.$uid.'&search='.$output['search_md5']);
 		}
 	}
-	$user_ids=array_slice($user_ids,$o,$r);
-	$query="SELECT `fk_user_id`,`_user`,`_photo`,`status`,`del`";
+	$query="SELECT a.`fk_user_id`,a.`_user`,a.`_photo`,a.`status`,a.`del`";
 	foreach ($_pfields as $k=>$field) {
 		switch ($field['field_type']) {
 
 			case FIELD_LOCATION:
-				$query.=',`'.$field['dbfield'].'_country`,`'.$field['dbfield'].'_state`,`'.$field['dbfield'].'_city`,`'.$field['dbfield'].'_zip`';
+				$query.=',a.`'.$field['dbfield'].'_country`,a.`'.$field['dbfield'].'_state`,a.`'.$field['dbfield'].'_city`,a.`'.$field['dbfield'].'_zip`';
 				break;
 
 			default:
-				$query.=',`'.$field['dbfield'].'`';
+				$query.=',a.`'.$field['dbfield'].'`';
 
 		}
 	}
-	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id` IN ('".join("','",$user_ids)."') ORDER BY ".$sorts[$sortby];
+	$query.=" FROM `{$dbtable_prefix}user_profiles` a WHERE a.`fk_user_id` IN ('".join("','",$user_ids)."') ORDER BY ".$sorts[$sortby]." LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		foreach ($_pfields as $k=>$field) {
@@ -336,7 +337,10 @@ if (!empty($totalrows)) {
 					break;
 
 				case FIELD_LOCATION:
-					$rsrow[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$rsrow[$field['dbfield'].'_country'],'-');
+					$rsrow[$field['dbfield']]='';
+					if (!empty($rsrow[$field['dbfield'].'_country'])) {
+						$rsrow[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$rsrow[$field['dbfield'].'_country'],'-');
+					}
 					if (!empty($rsrow[$field['dbfield'].'_state'])) {
 						$rsrow[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$rsrow[$field['dbfield'].'_state'],'-');
 					}
@@ -362,7 +366,7 @@ if (!empty($totalrows)) {
 		$loop[]=$rsrow;
 	}
 
-	$_GET=array('search'=>$output['search_md5']);
+	$_GET=array('search'=>$output['search_md5'],'sortby'=>$sortby);
 	$output['pager2']=pager($totalrows,$o,$r);
 	$output['totalrows']=$totalrows;
 }
@@ -375,7 +379,7 @@ if (empty($loop)) {
 
 $output['return2me']='member_results.php';
 if (!empty($output['search_md5'])) {
-	$output['return2me'].='?search='.$output['search_md5'];
+	$output['return2me'].='?search='.$output['search_md5']."&sortby={$sortby}&o={$o}&r={$r}";
 } elseif (!empty($_SERVER['QUERY_STRING'])) {
 	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }

@@ -56,8 +56,8 @@ if (isset($_SESSION['topass']['input'])) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
 		$output=sanitize_and_format($output,TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
 	}
-	$output['return']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-	$output['return2']=rawurldecode($output['return']);
+	$output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
+	$output['return']=rawurlencode($output['return2']);
 } else {
 	$topass['message']['type']=MESSAGE_ERROR;
 	$topass['message']['text']='No user selected';

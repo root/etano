@@ -31,7 +31,7 @@
 				<a class="item_edit" href="payments_addedit.php?payment_id={loop.payment_id}&amp;return={output.return2me}" title="Edit payment details"></a>
 				|
 				<!--opt name="!loop.is_suspect"--><a href="javascript:;" onclick="mark_as_fraud({loop.payment_id})" title="Mark as fraud"><img src="skin/images/reject.gif" alt="Mark as fraud" /></a><!--/opt name="!loop.is_suspect"-->
-				<!--opt name="loop.is_suspect"--><a href="processors/payments.php?act=a&amp;payment_id={loop.payment_id}&amp;return={output.return2me}" title="Not fraud"><img src="skin/images/approve.gif" alt="Not fraud" /></a><!--/opt name="loop.is_suspect"-->
+				<!--opt name="loop.is_suspect"--><a href="javascript:;" onclick="mark_as_not_fraud({loop.payment_id})" title="Not fraud"><img src="skin/images/approve.gif" alt="Not fraud" /></a><!--/opt name="loop.is_suspect"-->
 			</td>
 			<td align="right">${loop.amount_paid} {loop.refunded}</td>
 			<td>{loop.m_value_to}</td>
