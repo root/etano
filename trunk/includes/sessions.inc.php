@@ -46,6 +46,60 @@ if (defined('CACHE_LIMITER')) {
 } else {
 	session_cache_limiter('nocache');
 }
+
+if (defined('USE_DB_SESSIONS') && USE_DB_SESSIONS!=0) {
+	session_name('dmsessid');
+	unset($_GET['dmsessid'],$_POST['dmsessid']);
+	function dm_session_open($save_path,$sess_name) {
+		return true;
+	}
+	function dm_session_close() {
+		return true;
+	}
+	function dm_session_read($sess_id) {
+		global $dbtable_prefix;
+		$myreturn='';
+		if (preg_match('/^[A-Za-z0-9]{16,32}$/',$sess_id)) {
+			$query="SELECT `sess_data` FROM `{$dbtable_prefix}online` WHERE `sess`='$sess_id' LIMIT 1";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				$myreturn=mysql_result($res,0,0);
+			}
+		} else {
+			$myreturn='';
+		}
+		return $myreturn;
+	}
+	function dm_session_write($sess_id,$sess_data) {
+		global $dbtable_prefix;
+		$myreturn=false;
+		if (preg_match('/^[A-Za-z0-9]{16,32}$/',$sess_id)) {
+			$sess_data=mysql_real_escape_string($sess_data);
+			$now=gmdate('YmdHis');
+			$query="UPDATE `{$dbtable_prefix}online` SET `last_activity`='$now',`sess_data`='$sess_data' WHERE `sess`='$sess_id'";
+			$myreturn=@mysql_query($query);
+			if ($myreturn && !mysql_affected_rows()) {
+				$query="INSERT INTO `{$dbtable_prefix}online` SET `last_activity`='$now',`sess`='$sess_id',`sess_data`='$sess_data'";
+				$myreturn=@mysql_query($query);
+			}
+		}
+		return $myreturn;
+	}
+	function dm_session_destroy($sess_id) {
+		global $dbtable_prefix;
+		$myreturn=false;
+		if (preg_match('/^[A-Za-z0-9]{16,32}$/',$sess_id)) {
+			$query="DELETE FROM `{$dbtable_prefix}online` WHERE `sess`='$sess_id'";
+			$myreturn=@mysql_query($query);
+		}
+		return $myreturn;
+	}
+	function dm_session_gc($max_lifetime) {
+		// rely on the clean_online_table cron job.
+		return true;
+	}
+	session_set_save_handler('dm_session_open', 'dm_session_close', 'dm_session_read', 'dm_session_write', 'dm_session_destroy', 'dm_session_gc');
+}
 session_start();
 header('Content-Type: text/html; charset=utf-8',true);	// overwrite possible apache headers
 

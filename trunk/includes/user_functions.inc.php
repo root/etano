@@ -109,17 +109,15 @@ function check_login_member($level_code) {
 	if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $_SESSION[_LICENSE_KEY_]['user']['pstat']<STAT_APPROVED && empty($GLOBALS['_allow_na'][$level_code])) {
 		redirect2page('info.php',array(),'type=profile_na');	// no access to this feature until the profile gets approved
 	}
-	$user_id=0;
-	$now=gmdate('YmdHis');
-	if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
-		$_SESSION[_LICENSE_KEY_]['user']['user_id']=(int)$_SESSION[_LICENSE_KEY_]['user']['user_id'];
-		$user_id=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
-	}
-	$query="UPDATE `{$dbtable_prefix}online` SET `last_activity`='$now' WHERE `fk_user_id`=$user_id AND `sess`='".session_id()."'";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (!mysql_affected_rows()) {
-		$query="REPLACE INTO `{$dbtable_prefix}online` SET `fk_user_id`=$user_id,`sess`='".session_id()."',`last_activity`='$now'";
+	$user_id=!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) ? $_SESSION[_LICENSE_KEY_]['user']['user_id'] : 0;
+	if (USE_DB_SESSIONS==0) {
+		$now=gmdate('YmdHis');
+		$query="UPDATE `{$dbtable_prefix}online` SET `last_activity`='$now' WHERE `fk_user_id`=$user_id AND `sess`='".session_id()."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		if (!mysql_affected_rows()) {
+			$query="REPLACE INTO `{$dbtable_prefix}online` SET `fk_user_id`=$user_id,`sess`='".session_id()."',`last_activity`='$now'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		}
 	}
 	// log and rate limit
 	$log['level']=$level_code;
