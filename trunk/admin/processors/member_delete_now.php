@@ -34,7 +34,7 @@ $all_uids=array_merge($uids[1],$uids[2]);
 
 // actions to do for all deleted members
 if (!empty($all_uids)) {
-	$query="DELETE FROM `{$dbtable_prefix}online` WHERE `fk_user_id` IN ('".join("','",$uids[1])."')";
+	$query="DELETE FROM `{$dbtable_prefix}online` WHERE `fk_user_id` IN ('".join("','",$all_uids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 	$query="DELETE FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id` IN ('".join("','",$all_uids)."')";
