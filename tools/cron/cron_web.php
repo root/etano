@@ -118,7 +118,7 @@ print "time: $hour:$minute<br>";
 			}
 		}
 
-		// once per week: sunday 11:55 PM
+		// once per week: sunday 11:35 PM
 		// we want the minute 35 and not 55 because some jobs might read the current day and they should
 		// have some time to finish.
 		if ($weekday==0 && $hour==23 && $minute==35) {

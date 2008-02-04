@@ -257,7 +257,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `membership`=".$rsrow['m_value_to']." WHERE `".USER_ACCOUNT_ID."`='".$_SESSION[_LICENSE_KEY_]['user']['reg_id']."'";
 					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					// save as a payment with amount 0
-					$query="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`fk_subscr_id`,`is_recurring`,`email`,`m_value_to`,`paid_from`,`paid_until`) VALUES ('".$_SESSION[_LICENSE_KEY_]['user']['reg_id']."','".$_SESSION[_LICENSE_KEY_]['user']['user']."','".$rsrow['subscr_id']."','".$rsrow['is_recurent']."','".$_SESSION[_LICENSE_KEY_]['user']['email']."','".$rsrow['m_value_to']."',now(),now()+INTERVAL ".$rsrow['duration'].' DAY)';
+					$query="INSERT INTO `{$dbtable_prefix}payments` (`fk_user_id`,`_user`,`fk_subscr_id`,`is_recurring`,`email`,`m_value_to`,`paid_from`,`paid_until`) VALUES ('".$_SESSION[_LICENSE_KEY_]['user']['reg_id']."','".$_SESSION[_LICENSE_KEY_]['user']['user']."','".$rsrow['subscr_id']."','".$rsrow['is_recurent']."','".$_SESSION[_LICENSE_KEY_]['user']['email']."','".$rsrow['m_value_to']."','$now','$now'+INTERVAL ".$rsrow['duration'].' DAY)';
 					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					break;
 				}
