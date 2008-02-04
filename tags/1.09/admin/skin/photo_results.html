@@ -1,0 +1,30 @@
+<h2>Search Results - Photos</h2>
+
+<!--loop name="loop"-->
+<dl class="photo_details">
+	<dd>
+		<a class="link_bare thickbox" href="popup_photo_view.php?photo_id={loop.photo_id}&amp;keepThis=true&amp;TB_iframe=true&amp;height={output.pic_width}&amp;width={output.pic_width}"><img class="user_photo" src="{tplvars.photourl}/t1/{loop.photo}" /></a>
+		<p>Owner: <a href="profile.php?uid={loop.fk_user_id}">{loop._user}</a></p>
+		<p>Caption: {loop.caption}</p>
+		<p>Mode: {loop.is_private}</p>
+		<p>Status: <!--opt name="loop.pending"--><span class="alert_ppending">Needs your approval</span><!--/opt name="loop.pending"--><!--opt name="loop.need_edit"--><span class="alert_pedit">Needs editing</span><!--/opt name="loop.need_edit"--><!--opt name="loop.approved"--><span class="alert_papproved">Approved</span><!--/opt name="loop.approved"--></p>
+		<p>Comments: {loop.stat_comments}</p>
+		<p>Views: {loop.stat_views}</p>
+	</dd>
+	<dd class="actions">
+		<a class="item_del" href="processors/photo_delete.php?photo_id={loop.photo_id}&amp;return={output.return2me}" title="Delete" onclick="return(confirm('Are you sure you want to delete this photo?'))">Delete photo</a>
+		<a class="item_edit" href="photo_edit.php?photo_id={loop.photo_id}&amp;return={output.return2me}" title="Edit">Edit</a>
+		<!--opt name="!loop.approved"--><a class="item_approve" href="processors/photo_approve.php?photo_id={loop.photo_id}&amp;return={output.return2me}" title="Approve">Approve</a><!--/opt name="!loop.approved"-->
+		<!--opt name="!loop.need_edit"--><a class="item_reject" href="reject.php?t=2&id={loop.photo_id}&amp;return={output.return2me}" title="Reject">Reject</a><!--/opt name="!loop.need_edit"-->
+	</dd>
+	<div class="clear"></div>
+<!--noloop name="loop"-->
+	No photos found meeting your search criteria.
+<!--/noloop name="loop"-->
+</dl>
+<!--/loop name="loop"-->
+
+{output.pager2}
+
+<script type="text/javascript" src="../js/thickbox.js?v={tplvars.js_lib_v}"></script>
+<script type="text/javascript" src="js/photo_results.js?v={tplvars.js_lib_v}"></script>

@@ -1,0 +1,37 @@
+<h2>Search Comments</h2>
+
+<form action="comment_results.php" method="get" id="comment_search_form" class="edit_form">
+<fieldset>
+<dl>
+	<dt><label for="m">Comment type:</label></dt>
+	<dd>
+		<select name="m" id="m" tabindex="1">
+			<option value="blog">Blog</option>
+			<option value="user">Profile</option>
+			<option value="photo">Photo</option>
+		</select>
+	</dd>
+</dl>
+<dl>
+	<dt><label for="stat">Comment status:</label></dt>
+	<dd>
+		<select name="stat" id="stat" tabindex="1">
+		<option value="0">-</option>
+		{output.stat}
+		</select>
+	</dd>
+</dl>
+</fieldset>
+
+<fieldset class="controls">
+	<input type="submit" value="Search" tabindex="2" />
+</fieldset>
+</form>
+<div class="clear"></div>
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<script type="text/javascript" src="js/comment_search.js?v={tplvars.js_lib_v}"></script>
