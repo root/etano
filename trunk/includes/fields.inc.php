@@ -66,6 +66,7 @@ $GLOBALS['_pfields'][4]['help_text']=$GLOBALS['_lang'][2295];
 
 $GLOBALS['_pfields'][5]['label']=$GLOBALS['_lang'][2296];
 $GLOBALS['_pfields'][5]['field_type']=FIELD_TEXTAREA;
+$GLOBALS['_pfields'][5]['search_label']=$GLOBALS['_lang'][2297];
 $GLOBALS['_pfields'][5]['reg_page']=2;
 $GLOBALS['_pfields'][5]['editable']=true;
 $GLOBALS['_pfields'][5]['visible']=true;
