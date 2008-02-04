@@ -30,7 +30,7 @@ if (empty($output['photo'])) {
 	$output['photo']='no_photo.gif';
 }
 
-$query="SELECT b.`m_name`,UNIX_TIMESTAMP(a.`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` a,`{$dbtable_prefix}memberships` b WHERE a.`m_value_to`=b.`m_value` AND a.`fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND a.`paid_until`>'".date('Ymd',time())."' AND a.`refunded`=0 AND a.`is_active`=1 ORDER BY a.`paid_until` DESC LIMIT 1";
+$query="SELECT b.`m_name`,UNIX_TIMESTAMP(a.`paid_until`) as `paid_until` FROM `{$dbtable_prefix}payments` a,`{$dbtable_prefix}memberships` b WHERE a.`m_value_to`=b.`m_value` AND a.`fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND a.`paid_until`>'".gmdate('Ymd')."' AND a.`refunded`=0 AND a.`is_active`=1 ORDER BY a.`paid_until` DESC LIMIT 1";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output=array_merge($output,mysql_fetch_assoc($res));

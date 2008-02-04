@@ -284,7 +284,10 @@ class payment_paypal extends ipayment {
 
 
 	function process(&$input,$type) {
-		global $dbtable_prefix;
+		global $dbtable_prefix,$tpl;
+		if (!isset($tpl)) {
+			$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
+		}
 //		require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 //		new log_error(array('module_name'=>get_class($this),'text'=>$type.': new notif from paypal: $_POST:'.var_export($_POST,true).' $_GET:'.var_export($_GET,true).' $input:'.var_export($input,true)));
 		if (strcasecmp($input['business'],$this->config['paypal_email'])==0 || strcasecmp($input['receiver_email'],$this->config['paypal_email'])==0) {
@@ -309,15 +312,15 @@ class payment_paypal extends ipayment {
 						// tell member that he will receive everything by email
 						if ($output['is_subscr']) {
 							if ($output['is_suspect']) {
-								$GLOBALS['tpl']->set_file('gateway_text','thankyou_subscr_nok.html');
+								$tpl->set_file('gateway_text','thankyou_subscr_nok.html');
 							} else {
-								$GLOBALS['tpl']->set_file('gateway_text','thankyou_subscr_ok.html');
+								$tpl->set_file('gateway_text','thankyou_subscr_ok.html');
 							}
 						} else {
-							$GLOBALS['tpl']->set_file('gateway_text','thankyou_prod_nok.html');
+							$tpl->set_file('gateway_text','thankyou_prod_nok.html');
 						}
-						$GLOBALS['tpl']->set_var('output',$output);
-						$GLOBALS['tpl']->process('gateway_text','gateway_text',TPL_OPTIONAL);
+						$tpl->set_var('output',$output);
+						$tpl->process('gateway_text','gateway_text',TPL_OPTIONAL);
 					}
 					$query="SELECT release_lock('".$input['txn_id']."')";
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -352,8 +355,9 @@ class payment_paypal extends ipayment {
 													if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 													if (mysql_num_rows($res)) {
 														$rsrow=mysql_fetch_assoc($res);
-														if ((int)$rsrow['paid_until']>(int)time()) {
-															$remaining_days=((int)$rsrow['paid_until']-(int)time())/86400;  //86400 seconds in a day
+														$time=mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y'));
+														if ((int)$rsrow['paid_until']>(int)$time) {
+															$remaining_days=((int)$rsrow['paid_until']-(int)$time)/86400;  //86400 seconds in a day
 															if ($remaining_days>0) {
 																$remaining_value=(((int)$rsrow['price'])/((int)$rsrow['duration']))*$remaining_days;
 																$day_value_new=((int)$real_subscr['price'])/((int)$real_subscr['duration']);
@@ -364,13 +368,14 @@ class payment_paypal extends ipayment {
 														}
 													}
 												}
+												$now=gmdate('Ymd');
 												// all old active subscriptions end now!
-												$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`=CURDATE(),`is_active`=0 WHERE `fk_user_id`=".$real_user['user_id']." AND `is_active`=1 AND `is_subscr`=1";
+												$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`='$now',`is_active`=0 WHERE `fk_user_id`=".$real_user['user_id']." AND `is_active`=1 AND `is_subscr`=1";
 												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 												// insert the new subscription
-												$query="INSERT INTO `{$dbtable_prefix}payments` SET `is_active`=1,`fk_user_id`=".$real_user['user_id'].",`_user`='".$real_user['user']."',`gateway`='".$this->module_code."',`is_subscr`=1,`fk_subscr_id`=".$real_subscr['subscr_id'].",`gw_txn`='".$input['txn_id']."',`name`='".$input['first_name'].' '.$input['last_name']."',`country`='".$input['country']."',`email`='".$input['payer_email']."',`m_value_to`=".$real_subscr['m_value_to'].",`amount_paid`='".$input['mc_gross']."',`is_suspect`=".(int)$this->is_fraud.",`suspect_reason`='".$this->fraud_reason."',`paid_from`=CURDATE(),`date`=now()";
+												$query="INSERT INTO `{$dbtable_prefix}payments` SET `is_active`=1,`fk_user_id`=".$real_user['user_id'].",`_user`='".$real_user['user']."',`gateway`='".$this->module_code."',`is_subscr`=1,`fk_subscr_id`=".$real_subscr['subscr_id'].",`gw_txn`='".$input['txn_id']."',`name`='".$input['first_name'].' '.$input['last_name']."',`country`='".$input['country']."',`email`='".$input['payer_email']."',`m_value_to`=".$real_subscr['m_value_to'].",`amount_paid`='".$input['mc_gross']."',`is_suspect`=".(int)$this->is_fraud.",`suspect_reason`='".$this->fraud_reason."',`paid_from`='$now',`date`=now()";
 												if (!empty($real_subscr['duration'])) {
-													$query.=",`paid_until`=CURDATE()+INTERVAL ".$real_subscr['duration'].' DAY';
+													$query.=",`paid_until`='$now'+INTERVAL ".$real_subscr['duration'].' DAY';
 												}
 												if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 												if (!$this->is_fraud) {
@@ -379,14 +384,14 @@ class payment_paypal extends ipayment {
 													$myreturn=true;
 													add_member_score($real_user['user_id'],'payment');
 													if ($type=='pdt') {
-														$GLOBALS['tpl']->set_file('gateway_text','thankyou_subscr_ok.html');
+														$tpl->set_file('gateway_text','thankyou_subscr_ok.html');
 													}
 												} else {
 													if ($type=='pdt') {
 														$output['name']=$input['card_holder_name'];
-														$GLOBALS['tpl']->set_file('gateway_text','thankyou_subscr_nok.html');
-														$GLOBALS['tpl']->set_var('output',$output);
-														$GLOBALS['tpl']->process('gateway_text','gateway_text',TPL_OPTIONAL);
+														$tpl->set_file('gateway_text','thankyou_subscr_nok.html');
+														$tpl->set_var('output',$output);
+														$tpl->process('gateway_text','gateway_text',TPL_OPTIONAL);
 													}
 													// DEPT_ADMIN from includes/admin_functions.inc.php is hardcoded below as 4
 													$query="SELECT `email` FROM `{$dbtable_prefix}admin_accounts` WHERE `dept_id`=4 ORDER BY `admin_id` DESC LIMIT 1";
@@ -398,7 +403,7 @@ class payment_paypal extends ipayment {
 											} else {
 												// a demo transaction when we're not in demo mode
 												if ($type=='pdt') {
-													$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][187]);
+													$tpl->set_var('gateway_text',$GLOBALS['_lang'][187]);
 												}
 												require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 												new log_error(array('module_name'=>get_class($this),'text'=>'Demo transaction when demo is not enabled: '.array2qs($_POST)));
@@ -406,7 +411,7 @@ class payment_paypal extends ipayment {
 										} else {
 											// paid price doesn't match the subscription price
 											if ($type=='pdt') {
-												$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][188]);
+												$tpl->set_var('gateway_text',$GLOBALS['_lang'][188]);
 											}
 											require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 											new log_error(array('module_name'=>get_class($this),'text'=>'Invalid amount paid: '.array2qs($_POST)));
@@ -414,14 +419,14 @@ class payment_paypal extends ipayment {
 									} else {
 										// if the subscr_id was not found
 										if ($type=='pdt') {
-											$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][189]);
+											$tpl->set_var('gateway_text',$GLOBALS['_lang'][189]);
 										}
 										require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 										new log_error(array('module_name'=>get_class($this),'text'=>'Invalid subscr_id received after payment: '.array2qs($_POST)));
 									}
 								} else {
 									if ($type=='pdt') {
-										$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][190]);
+										$tpl->set_var('gateway_text',$GLOBALS['_lang'][190]);
 									}
 									require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 									new log_error(array('module_name'=>get_class($this),'text'=>'Payment status not Completed: '.$input['payment_status']."\n".array2qs($_POST)));
@@ -431,7 +436,8 @@ class payment_paypal extends ipayment {
 								if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 								if (mysql_num_rows($res)) {
 									$payment_id=mysql_result($res,0,0);
-									$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`=CURDATE() WHERE `payment_id`=$payment_id";
+									$now=gmdate('Ymd');
+									$query="UPDATE `{$dbtable_prefix}payments` SET `paid_until`='$now' WHERE `payment_id`=$payment_id";
 									if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 								} else {
 									// invalid eot.
@@ -441,7 +447,7 @@ class payment_paypal extends ipayment {
 							} else {
 								// unhandled txn_type
 								if ($type=='pdt') {
-									$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][191]);
+									$tpl->set_var('gateway_text',$GLOBALS['_lang'][191]);
 								}
 								require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 								new log_error(array('module_name'=>get_class($this),'text'=>'Unhandled txn_type (probably not an error): '.$input['txn_type']."\n".array2qs($_POST)));
@@ -449,7 +455,7 @@ class payment_paypal extends ipayment {
 						} else {
 							// if the user_id was not found
 							if ($type=='pdt') {
-								$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][192]);
+								$tpl->set_var('gateway_text',$GLOBALS['_lang'][192]);
 							}
 							require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 							new log_error(array('module_name'=>get_class($this),'text'=>'Invalid user_id received after payment: '.array2qs($_POST)));
@@ -463,7 +469,7 @@ class payment_paypal extends ipayment {
 
 					} else {	// dm_item_type is neither 'prod' nor 'subscr'
 						if ($type=='pdt') {
-							$GLOBALS['tpl']->set_var('gateway_text',$GLOBALS['_lang'][193]);
+							$tpl->set_var('gateway_text',$GLOBALS['_lang'][193]);
 						}
 						require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 						new log_error(array('module_name'=>get_class($this),'text'=>'Invalid dm_item_type: '.array2qs($_POST)));
