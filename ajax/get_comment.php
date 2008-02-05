@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       ajax/get_comment.php
-$Revision: 327 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum

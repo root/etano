@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       plugins/widget/latest_blog_comments/latest_blog_comments.class.php
-$Revision: 327 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
