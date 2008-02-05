@@ -1,0 +1,34 @@
+<h2>Site Skins</h2>
+
+<div class="hint"><strong>Configure the site skins:</strong></div>
+
+<table cellspacing="0" id="skins_list" class="results_table">
+<tr>
+	<th width="1%"></th>
+	<th>Skin Name</th>
+	<th>Skin Folder</th>
+	<th>Default</th>
+	<th></th>
+	<th width="30%"></th>
+</tr>
+<!--loop name="site_skins"-->
+<tr align="center" class="{site_skins.myclass}">
+	<td><a href="processors/site_skins_delete.php?module_code={site_skins.module_code}" onclick="return(confirm('Are you sure you want to delete this skin?'))" title="Delete this skin"><img alt="Delete this skin" src="skin/images/del.gif" alt="Delete" /></a></td>
+	<td><a href="site_skins_addedit.php?module_code={site_skins.module_code}" title="Edit this skin settings">{site_skins.skin_name}</a></td>
+	<td>{site_skins.skin_dir}</td>
+	<td>{site_skins.is_default}<!--opt name="!site_skins.is_default"--><a href="processors/skin_default.php?module_code={site_skins.module_code}">Make default</a><!--/opt name="!site_skins.is_default"--></td>
+	<td><a href="lang_strings.php?s={site_skins.module_code}">Translate</a> | <a href="processors/regenerate_skin.php?s={site_skins.module_code}">Regenerate</a></td>
+	<td></td>
+</tr>
+<!--noloop name="site_skins"-->
+<tr>
+	<td colspan="6" class="no_result_item">No skin found!</td>
+</tr>
+<!--/noloop name="site_skins"-->
+<!--/loop name="site_skins"-->
+</table>
+
+<div id="bottom_links">
+	<a href="processors/regenerate_skin.php">Regenerate all skins</a>
+	<p class="comment">Please note that regenerating a skin (or all) is a lengthy and resource intensive process. Use it wisely and don't abuse it. Usually, the only time when you need to regenerate a skin is after you install a new skin.</p>
+</div>

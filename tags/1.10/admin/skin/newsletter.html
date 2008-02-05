@@ -1,0 +1,42 @@
+<h2>Send Newsletter Email</h2>
+
+<form action="processors/newsletter.php" method="post" id="newsletter_form">
+<input type="hidden" name="return" id="return" value="{output.return}" />
+<table id="newsletter_table" class="form_table">
+<tr>
+	<td colspan="2"><label for="subject">Subject:</label></td>
+</tr>
+<tr>
+	<td class="field {profile_fields.error_subject}"><input type="text" name="subject" id="subject" value="{output.subject}" size="50" tabindex="1" /></td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td colspan="2"><label for="message_body">Message:</label></td>
+</tr>
+<tr>
+	<td class="field {profile_fields.error_message_body}">
+		<textarea name="message_body" id="message_body" cols="" rows="" wrap="off" tabindex="2">{output.message_body}</textarea>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td><input class="button" type="submit" value="Send" /></td>
+	<td class="comment"></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links"><a class="back" href="{output.return2}">Back</a></div>
+
+<script language="javascript" type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript">
+	tinyMCE.init({
+		mode : "exact",
+		elements : "message_body",
+		theme : "advanced",
+		relative_urls : false,
+		convert_urls : false,
+		content_css : "skin/styles/content.css"
+	});
+</script>
+<script type="text/javascript" src="js/newsletter.js?v={tplvars.js_lib_v}"></script>
