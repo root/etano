@@ -423,12 +423,8 @@ class etano_package {
 		if (!function_exists('striprn')) {
 			function striprn(&$v,$k) {$v=rtrim($v,"\r\n");}
 		}
-		if (defined('FILE_IGNORE_NEW_LINES')) {
-			$diff_array=file($diff_file,FILE_IGNORE_NEW_LINES);
-		} else {
-			$diff_array=file($diff_file);
-			array_walk($diff_array,'striprn');
-		}
+		$diff_array=file($diff_file);
+		array_walk($diff_array,'striprn');
 		$cur_file='';
 		$cur_ext='';
 		$file_content=array();
