@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       processors/cancel_account.php
-$Revision: 365 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum

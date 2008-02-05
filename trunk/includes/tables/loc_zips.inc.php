@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       includes/tables/loc_zips.inc.php
-$Revision: 207 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum

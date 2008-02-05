@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       includes/classes/etano_package.class.php
-$Revision: 312 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
@@ -456,7 +456,7 @@ class etano_package {
 							$file_content.=$LE;
 						}
 						if ($force_revision) {
-							$file_content=preg_replace('/\$Revision: \d+ \$/','$Revision: '.$new_revision.' $',$file_content);
+							$file_content=preg_replace('/\$Revision$',$file_content);
 						}
 						$fileop->file_put_contents($cur_file,$file_content);
 					}
@@ -585,7 +585,7 @@ class etano_package {
 					$file_content.=$LE;
 				}
 				if ($force_revision) {
-					$file_content=preg_replace('/\$Revision: \d+ \$/','$Revision: '.$new_revision.' $',$file_content);
+					$file_content=preg_replace('/\$Revision$',$file_content);
 				}
 				$fileop->file_put_contents($cur_file,$file_content);
 			}

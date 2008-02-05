@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       admin/processors/payments.php
-$Revision: 217 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum

@@ -3,7 +3,7 @@
 Etano
 ===============================================================================
 File:                       admin/processors/error_log_delete.php
-$Revision: 217 $
+$Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
 Support at:                 http://www.datemill.com/forum
