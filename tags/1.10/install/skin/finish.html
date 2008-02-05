@@ -1,0 +1,17 @@
+<h3>Installation Complete</h3>
+
+<div>Installation finished successfully. Please proceed to <a class="content-link simple" href="{output.baseurl}/admin/index.php">admin panel</a> to configure your site.</div>
+
+<iframe width="0" height="0" frameborder="0" src="{output.notify}"></iframe>
+<div id="lastdiv">There are a lot of maintenance related tasks which need to be executed regularly for your site to function correctly. These tasks are executed with the help of the so called 'cron' program (under Unix) or 'scheduled tasks' (under Windows).<br />
+The main task ({output.basepath}/tools/cron/cron.php) has to run <strong>every 5 minutes</strong>.<br />
+<br />
+The command to be run by cron is:<br />
+<blockquote>{output.phpbin} -f {output.basepath}/tools/cron/cron.php</blockquote>
+
+<!--opt name="output.nophpbin"-->
+<p>Please note that the path to the php binary could not be detected automatically. You need to replace "{output.phpbin}" in the command above with the actual path.</p>
+<!--/opt name="output.nophpbin"-->
+<p>Also check out the <a class="content-link simple" href="http://www.datemill.com/etano/wiki/installation#set_up_the_periodic_maintenance_task">available documentation</a> on this subject.</p>
+</div>
+

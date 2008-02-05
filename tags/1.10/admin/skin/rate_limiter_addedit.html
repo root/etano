@@ -1,0 +1,61 @@
+<h2>Add / Edit Limits</h2>
+
+<div class="hint">Please enter all limit info:</div>
+
+<form action="processors/rate_limiter_addedit.php" method="post" id="rate_limiter_addedit" onsubmit="return(check_form(this))">
+<input type="hidden" name="rate_id" value="{output.rate_id}" />
+<input type="hidden" name="fk_lk_id_error_message" value="{output.fk_lk_id_error_message}" />
+<table id="rate_addedit" class="form_table">
+<tr>
+	<td class="label"><label for="m_value">Membership:</label></td>
+	<td class="field {output.error_m_value}">
+		<select name="m_value" id="m_value" tabindex="1">
+		{output.m_value}
+		</select>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="level_code">Level:</label></td>
+	<td class="field {output.error_level_code}">
+		<select name="level_code" id="level_code" tabindex="2">
+		{output.level_code}
+		</select>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="limit">Times:</label></td>
+	<td class="field {output.error_limit}"><input type="text" name="limit" id="limit" value="{output.limit}" tabindex="3" size="3" /></td>
+	<td class="comment">How many times is this membership allowed to this level?</td>
+</tr>
+<tr>
+	<td class="label"><label for="interval">Time interval:</label></td>
+	<td class="field {output.error_interval}"><input type="text" name="interval" id="interval" value="{output.interval}" tabindex="4" size="3" /> minutes</td>
+	<td class="comment">Time interval for this limit in minutes.</td>
+</tr>
+<tr>
+	<td class="label"><label for="punishment">Punishment:</label></td>
+	<td class="field {output.error_punishment}">
+		<select name="punishment" id="punishment" tabindex="5">
+		{output.punishment}
+		</select>
+	</td>
+	<td class="comment">What to do if the limit is reached in this time interval</td>
+</tr>
+<tr>
+	<td class="label"><label for="error_message">Error Message:</label></td>
+	<td class="field {output.error_error_message}"><input class="text fullwidth" type="text" name="error_message" id="error_message" value="{output.error_message}" tabindex="1" /></td>
+	<td class="comment">Note: the value you enter here is for the default skin ({output.default_skin}) <a class="translate" href="javascript:;" onclick="popWin('popup_lang_string.php?lk_id={output.fk_lk_id_error_message}','translate',450,300,1,1)">Translate!</a></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links"><a class="back" href="rate_limiter.php">Back to list</a></div>
+
+<script type="text/javascript" src="js/rate_limiter_addedit.js?v={tplvars.js_lib_v}"></script>

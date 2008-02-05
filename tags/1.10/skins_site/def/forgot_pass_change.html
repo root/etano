@@ -1,0 +1,43 @@
+<form action="{tplvars.relative_url}processors/forgot_pass_change.php" method="post" id="forgot_pass_change" class="edit_form">
+<fieldset>
+	<input type="hidden" name="uid" value="{output.uid}" />
+	<input type="hidden" name="secret" value="{output.secret}" />
+	<dl>
+		<dt><label for="user">User:</label></dt>
+		<dd><input type="text" id="user" name="user" value="{output.user}" tabindex="1" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="user">New password:</label></dt>
+		<dd><input type="password" id="pass" name="pass" tabindex="2" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="user">Retype password:</label></dt>
+		<dd><input type="password" id="pass2" name="pass2" tabindex="3" /></dd>
+	</dl>
+</fieldset>
+
+<!--opt name="output.use_captcha"-->
+<script type="text/javascript">
+	use_captcha=true;
+</script>
+<fieldset>
+	<dl>
+		<dt>Security image:</dt>
+		<dd><img src="{tplvars.relative_url}show_captcha.php?{output.rand}" /></dd>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><input type="text" name="captcha" id="captcha" size="4" tabindex="4" /> <span class="field-help">Enter the characters from above.</span></dd>
+	</dl>
+</fieldset>
+<!--/opt name="output.use_captcha"-->
+
+<fieldset class="controls">
+	<input type="submit" class="button large" value="Change" />
+</fieldset>
+</form>
+
+<script type="text/javascript">
+	var lang=new Array('{output.lang_259}','{output.lang_265}','{output.lang_266}');
+</script>
+<script type="text/javascript" src="{tplvars.relative_url}js/forgot_pass_change.js?v={tplvars.js_lib_v}"></script>

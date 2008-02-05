@@ -1,0 +1,11 @@
+ol#backup_note {
+	list-style-type: decimal;
+	margin-left: 20px;
+	padding-left: 20px;
+	margin-bottom: 30px;
+}
+
+ol#backup_note li {
+	list-style-type: decimal;
+	margin-left: 20px;
+}
