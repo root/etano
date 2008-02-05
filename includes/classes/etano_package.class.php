@@ -452,7 +452,7 @@ class etano_package {
 							$file_content.=$LE;
 						}
 						if ($force_revision) {
-							$file_content=preg_replace('/\$Revision$',$file_content);
+							$file_content=preg_replace('/'.chr(38).'Revision: \d+ '.chr(38).'/',chr(38).'Revision: '.$new_revision.' '.chr(38),$file_content);
 						}
 						$fileop->file_put_contents($cur_file,$file_content);
 					}
