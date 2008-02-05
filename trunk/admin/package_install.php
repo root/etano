@@ -12,6 +12,7 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 require_once '../includes/common.inc.php';
+db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/admin_functions.inc.php';
 require_once '../includes/classes/fileop.class.php';
 require_once '../includes/classes/etano_package.class.php';
@@ -147,7 +148,7 @@ if (!$error) {
 												$skins[]=$rsrow['module_code'];
 											}
 										}
-										$query="SELECT `fk_module_code`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code` IN ('".join("','",$skins)."') AND `config_option`=`skin_dir`";
+										$query="SELECT `fk_module_code`,`config_value` FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code` IN ('".join("','",$skins)."') AND `config_option`='skin_dir'";
 										if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 										$skins=array();
 										while ($rsrow=mysql_fetch_assoc($res)) {

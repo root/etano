@@ -544,7 +544,7 @@ class etano_package {
 					$possible_locations=array_keys($file_content,$source[0]);
 					for ($j=1;isset($source[$j]);++$j) {
 						for ($k=0;isset($possible_locations[$k]);++$k) {
-							if ($possible_locations[$k]<=$last_change_on_line || !isset($file_content[$possible_locations[$k]+$j]) || $source[$j]!=$file_content[$possible_locations[$k]+$j]) {
+							if ($possible_locations[$k]<$last_change_on_line || !isset($file_content[$possible_locations[$k]+$j]) || $source[$j]!=$file_content[$possible_locations[$k]+$j]) {
 								unset($possible_locations[$k]);
 							}
 						}
@@ -567,7 +567,7 @@ class etano_package {
 
 				// if we are here then there was no error and we can apply the diff!!!
 				array_splice($file_content,$dest_start,count($source),$dest);
-				$last_change_on_line=$dest_start+count($source);
+				$last_change_on_line=$dest_start+count($dest);
 				$first_chunk=false;
 			}
 		}
