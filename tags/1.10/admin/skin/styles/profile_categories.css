@@ -1,0 +1,15 @@
+.hint p {
+	color: #f00;
+	font-weight: bold;
+}
+
+.control {
+	width: 6%;
+}
+
+.pcat_name {
+	width: 15%;
+}
+
+.access_level {
+}
