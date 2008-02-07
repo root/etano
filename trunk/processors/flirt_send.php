@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		$query="SELECT `flirt_text` as `message_body`,`flirt_type` as `ft` FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`=".$input['flirt_id'];
+		$query="SELECT `flirt_text` as `message_body`,`flirt_type` FROM `{$dbtable_prefix}flirts` WHERE `flirt_id`=".$input['flirt_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$input=array_merge($input,mysql_fetch_assoc($res));
