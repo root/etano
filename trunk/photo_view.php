@@ -122,12 +122,12 @@ if (!empty($photo_id)) {
 			}
 
 			// prev/next stuff
-			$query="SELECT max(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`<$photo_id AND `fk_user_id`=".$output['fk_user_id'];
+			$query="SELECT max(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`<$photo_id AND `is_private`=0 AND `fk_user_id`=".$output['fk_user_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$output['previous']=mysql_result($res,0,0);
 			}
-			$query="SELECT min(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`>$photo_id AND `fk_user_id`=".$output['fk_user_id'];
+			$query="SELECT min(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`>$photo_id AND `is_private`=0 AND `fk_user_id`=".$output['fk_user_id'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$output['next']=mysql_result($res,0,0);
