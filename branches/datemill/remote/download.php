@@ -14,6 +14,8 @@ Support at:                 http://www.datemill.com/forum
 require_once '../includes/common.inc.php';
 db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 require_once '../includes/user_functions.inc.php';
+session_write_close();
+ob_end_clean();
 
 $input=array();
 $input['lk']=sanitize_and_format_gpc($_GET,'lk',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
@@ -96,7 +98,7 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 		} else {
 			$rsrow=mysql_fetch_assoc($res);
 			if ($rsrow['last_download']!=null && $rsrow['last_download']<=1) {
-				echo 'Sorry, you are limited to 1 download a day for each product.';
+				echo 'Sorry, you are limited to 1 download a day for each product...';
 				die;
 			}
 			$query="UPDATE `user_products` SET `downloads`=`downloads`+1,`last_download`=now() WHERE `uprod_id`=".$rsrow['uprod_id'];
@@ -116,6 +118,7 @@ if (!empty($input['lk']) && !empty($input['id']) && isset($_GET['t'])) {
 			header("Content-transfer-encoding: binary");
 			header('Content-length: '.$size);
 			readfile(_BASEPATH_.'/dafilez/'.$table.'/'.$filename);
+			die;
 		} else {
 			die('No file to download for this product.');
 		}
