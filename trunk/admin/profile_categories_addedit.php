@@ -59,7 +59,6 @@ $tpl->set_var('output',$output);
 $tpl->process('content','content');
 
 $tplvars['title']='Profile Categories Management';
-$tplvars['css']='profile_categories_addedit.css';
 $tplvars['page']='profile_categories_addedit';
 include 'frame.php';
 
