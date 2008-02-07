@@ -1,0 +1,12 @@
+@import url('news.css');
+
+#my_photo {
+	float: left;
+	margin: 0 10px 10px 0;
+	display: block;
+}
+
+#s {
+	clear: both;
+	margin-bottom: 10px;
+}

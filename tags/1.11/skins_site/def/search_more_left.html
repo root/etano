@@ -1,0 +1,56 @@
+<div class="content_area small">
+	<h3>Other Searches</h3>
+	<div class="box_content">
+		<ul class="menu">
+			<li class="first"><a class="content-link link_search" href="{tplvars.relative_url}search.php?st=new">Latest members</a></li>
+			<li><a class="content-link link_search" href="{tplvars.relative_url}search.php?st=online">Online members</a></li>
+		</ul>
+		<form action="{tplvars.relative_url}search.php" method="get" id="name_search">
+		<input type="hidden" name="st" value="user" />
+		<dl>
+			<dt>By Name:</dt>
+			<dd><input type="text" name="user" id="byname" /> <input type="submit" class="button small" value="Go" /></dd>
+		</dl>
+		</form>
+	</div>
+</div>
+
+<div id="my_searches" class="content_area small">
+	<h3>My Searches</h3>
+	<div class="box_content">
+		<!--opt name="tplvars.user_logged"-->
+		<ul class="menu">
+			<!--loop name="my_searches"-->
+			<li><a class="content-link link_search" href="{tplvars.relative_url}search.php?{my_searches.search_qs}">{my_searches.title}</a></li>
+
+			<!--noloop name="my_searches"-->
+			<li>No saved searches yet</li>
+			<!--/noloop name="my_searches"-->
+
+			<!--/loop name="my_searches"-->
+			<li class="controls"><a class="content-link link_view" href="{tplvars.relative_url}my_searches.php">View All</a></li>
+		</ul>
+		<!--/opt name="tplvars.user_logged"-->
+		<!--opt name="!tplvars.user_logged"-->
+			<a class="content-link simple" href="{tplvars.relative_url}login.php">Login</a> or <a class="content-link simple" href="{tplvars.relative_url}join.php">sign up</a> to save this search
+		<!--/opt name="!tplvars.user_logged"-->
+	</div>
+</div>
+
+<!--opt name="tplvars.user_logged"-->
+<div class="content_area small">
+	<h3>My Account</h3>
+	<div class="box_content">
+		<ul class="menu">
+			<li class="first"><a class="content-link link_profile" href="{tplvars.relative_url}my_profile.php">My Profile</a></li>
+			<li><a class="content-link link_photos" href="{tplvars.relative_url}my_photos.php">My Photos</a></li>
+			<li><a class="content-link link_blogs" href="{tplvars.relative_url}my_blogs.php">My Blogs</a></li>
+			<li><a class="content-link link_friends" href="{tplvars.relative_url}my_networks.php">My Connections</a></li>
+			<li><a class="content-link link_mail" href="{tplvars.relative_url}mailbox.php">My Messages</a></li>
+			<li><a class="content-link link_view" href="{tplvars.relative_url}my_searches.php">My Saved Searches</a></li>
+			<li><a class="content-link link_mail" href="{tplvars.relative_url}my_responses.php">My Saved Responses</a></li>
+			<li><a class="content-link link_change" href="{tplvars.relative_url}my_settings.php">My Settings</a></li>
+		</ul>
+	</div>
+</div>
+<!--/opt name="tplvars.user_logged"-->
