@@ -538,10 +538,12 @@ class etano_package {
 				if (!empty($source)) {
 					// where could our block be? We don't want to rely on the $dest_start read from the diff file
 					$possible_locations=array_keys($file_content,$source[0]);
-					for ($j=1;isset($source[$j]);++$j) {
-						for ($k=0;isset($possible_locations[$k]);++$k) {
-							if ($possible_locations[$k]<$last_change_on_line || !isset($file_content[$possible_locations[$k]+$j]) || $source[$j]!=$file_content[$possible_locations[$k]+$j]) {
-								unset($possible_locations[$k]);
+					for ($k=0,$plcount=count($possible_locations);$k<$plcount;++$k) {
+						for ($j=1,$scount=count($source);$j<$scount;++$j) {
+							if (isset($source[$j]) && isset($possible_locations[$k])) {
+								if ($possible_locations[$k]<$last_change_on_line || !isset($file_content[$possible_locations[$k]+$j]) || $source[$j]!=$file_content[$possible_locations[$k]+$j]) {
+									unset($possible_locations[$k]);
+								}
 							}
 						}
 					}
