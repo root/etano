@@ -644,6 +644,10 @@ class etano_package {
 
 
 	// all installable mods are installed successfully at this point so we should add ourselves to the list of installed modules
+	// if we have options set in $_SESSION[_LICENSE_KEY_]['admin']['install_options'], they must be in the form
+	// array[0]=array('config_option'=>xxx,'config_value'=>xxx,'option_type'=>xxx....);
+	// array[1]=array('config_option'=>xxx,'config_value'=>xxx,'option_type'=>xxx....);
+	// ....
 	function finish() {
 		global $dbtable_prefix;
 		$query="SELECT max(`sort`)+1 FROM `{$dbtable_prefix}modules`";
@@ -654,6 +658,17 @@ class etano_package {
 		if (!mysql_affected_rows()) {
 // if the insert failed then this is was just an update and the new version should have been set with change-version in one
 // of the requires
+		}
+		if (!empty($_SESSION[_LICENSE_KEY_]['admin']['install_options'])) {
+			$query="INSERT IGNORE INTO `{$dbtable_prefix}site_options3` (`config_option`,`config_value`,`config_diz`,`option_type`,`choices`,`fk_module_code`,`per_user`) VALUES ";
+			foreach ($_SESSION[_LICENSE_KEY_]['admin']['install_options'] as $v) {
+				$query="INSERT IGNORE INTO `{$dbtable_prefix}site_options3` SET `fk_module_code`='".$this->module_code."'";
+				foreach ($v as $vk=>$vv) {
+					$query.=",`$vk`='$vv'";
+				}
+				@mysql_query($query);
+			}
+			unset($_SESSION[_LICENSE_KEY_]['admin']['install_options']);
 		}
 		$fileop=new fileop();
 		$fileop->delete($this->package_path);

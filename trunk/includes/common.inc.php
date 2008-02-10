@@ -63,6 +63,7 @@ define('MODULE_PAYMENT',1);
 define('MODULE_FRAUD',2);
 define('MODULE_WIDGET',3);
 define('MODULE_SKIN',4);
+define('MODULE_3RD',5);
 
 // filter types
 define('FILTER_SENDER',1);
