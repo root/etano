@@ -61,15 +61,15 @@ class fileop {
 
 
 // both params should have a full basepath (for 'disk' op mode)
-	function copy($source,$destination) {
+	function copy($source,$destination,$exclude=array()) {
 		$myreturn=false;
 		if ($this->op_mode=='disk') {
-			$myreturn=$this->_disk_copy($source,$destination);
+			$myreturn=$this->_disk_copy($source,$destination,$exclude);
 		} elseif ($this->op_mode=='ftp') {
 			$destination=str_replace(_BASEPATH_.'/',_FTPPATH_,$destination);
 			$old_de=ini_get('display_errors');
 			ini_set('display_errors',0);
-			$myreturn=$this->_ftp_copy($source,$destination);
+			$myreturn=$this->_ftp_copy($source,$destination,$exclude);
 			ini_set('display_errors',$old_de);
 		}
 		return $myreturn;
@@ -239,8 +239,13 @@ class fileop {
 
 // internal function, do not call from outside. Call fileop->copy() instead
 // both params should have a full basepath
-	function _disk_copy($source,$destination) {
+	function _disk_copy($source,$destination,$exclude=array()) {
 		$myreturn=false;
+		for ($i=0;isset($exclude[$i]);++$i) {
+			if (strpos($source,$exclude[$i])!==false) {
+				return true;
+			}
+		}
 		if (is_dir($source)) {
 			if (!is_dir($destination)) {
 				$this->mkdir($destination);
@@ -248,7 +253,7 @@ class fileop {
 			$d=dir($source);
 			while (false!==($file=$d->read())) {
 				if ($file!='.' && $file!='..') {
-					$myreturn=$this->_disk_copy($source.'/'.$file, $destination.'/'.$file);
+					$myreturn=$this->_disk_copy($source.'/'.$file, $destination.'/'.$file,$exclude);
 				}
 			}
 			$d->close();
@@ -262,8 +267,13 @@ class fileop {
 
 // internal function, do not call from outside. Call fileop->copy() instead
 // source must have a disk path and destination must have a ftp path
-	function _ftp_copy($source,$destination) {
+	function _ftp_copy($source,$destination,$exclude=array()) {
 		$myreturn=false;
+		for ($i=0;isset($exclude[$i]);++$i) {
+			if (strpos($source,$exclude[$i])!==false) {
+				return true;
+			}
+		}
 		if (is_dir($source)) {
 			// dir to dir copy
 			if (!@ftp_chdir($this->ftp_id,$destination)) {
@@ -272,7 +282,7 @@ class fileop {
 			$d=dir($source);
 			while (false!==($file=$d->read())) {
 				if ($file!='.' && $file!='..') {
-					$myreturn=$this->_ftp_copy($source.'/'.$file, $destination.'/'.$file);
+					$myreturn=$this->_ftp_copy($source.'/'.$file, $destination.'/'.$file,$exclude);
 				}
 			}
 			$d->close();
