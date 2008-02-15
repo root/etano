@@ -24,6 +24,7 @@ $error=false;
 $qs='';
 $qs_sep='';
 $topass=array();
+$nextpage='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 	$input['comment_type']=sanitize_and_format_gpc($_POST,'comment_type',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
@@ -50,11 +51,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$table="{$dbtable_prefix}profile_comments";
 			break;
 
+		default:
+			$error=true;
+			break;
 	}
 
 // get the input we need and sanitize it
-	foreach ($item_default['types'] as $k=>$v) {
-		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$item_default['defaults'][$k]);
+	if (!$error) {
+		foreach ($item_default['types'] as $k=>$v) {
+			$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$item_default['defaults'][$k]);
+		}
 	}
 	$input['fk_user_id']=!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) ? $_SESSION[_LICENSE_KEY_]['user']['user_id'] : 0;
 	if (!empty($_POST['return'])) {
@@ -164,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 	} else {
-		$input['comment']=addslashes_mq($_POST['comment']);
+		$input['comment']=isset($_POST['comment']) ? addslashes_mq($_POST['comment']) : '';
 		$input['return']=rawurlencode($input['return']);
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
