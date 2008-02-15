@@ -86,7 +86,7 @@ define('USE_DB_SESSIONS',0);
 
 require_once dirname(__FILE__).'/defines.inc.php';
 require_once _BASEPATH_.'/includes/sco_functions.inc.php';
-db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
+$etano_dblink=db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 if (!defined('NO_SESSION')) {
 	require_once _BASEPATH_.'/includes/sessions.inc.php';
 }
