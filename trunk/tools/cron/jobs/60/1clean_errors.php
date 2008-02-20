@@ -8,10 +8,9 @@ function clean_excess_errors() {
 	$threshold=50;
 
 	$query="SELECT count(`log_id`) FROM `{$dbtable_prefix}error_log`";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	if (mysql_result($res,0,0)>=$threshold) {
+	if ($res=@mysql_query($query) && mysql_result($res,0,0)>=$threshold) {
 		$query="DELETE FROM `{$dbtable_prefix}error_log` ORDER BY `log_id` LIMIT ".((int)($threshold/2));
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		@mysql_query($query);
 	}
 	return true;
 }
