@@ -40,7 +40,7 @@
 						<a style="display:block;width:100%;clear:both;" href="processors/send_prodinfo_manual.php?uprod_id={loop2.uprod_id}&amp;t=new&amp;return={output.return2me}" title="Manually Send Download Link" onclick="return(confirm('Are you sure you want to send this customer the download link?\nThis will also approve the related payment, change the password of the account and allow the site to make downloads!'))">Send new DL</a>
 						<a style="display:block;width:100%;clear:both;" href="processors/send_prodinfo_manual.php?uprod_id={loop2.uprod_id}&amp;t=up&amp;return={output.return2me}" title="Manually Send Download Link" onclick="return(confirm('Are you sure you want to send this customer the UPGRADE link?\nThis will also approve the related payment, change the password of the account and allow the site to make downloads!'))">Send DSB.UPG</a>
 					</td>
-					<td>{loop2.prod_name}</td>
+					<td>{loop2.prod_name}<br />dl: {loop2.downloads}</td>
 					<td>{loop2.license}</td>
 					<td>{loop2.gateway}</td>
 					<td>{loop2.gw_txn}</td>

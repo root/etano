@@ -405,6 +405,18 @@ a:hover {
 	padding-bottom: 5px;
 }
 
+.underline {
+	text-decoration: underline;
+}
+
+blockquote {
+	border: 1px solid #ccc;
+	background: #f5f5f5;
+	margin: 5px 0px 5px 30px;
+	padding: 5px;
+    text-align: left;
+}
+
 /*============================FOOTER================================*/
 
 #footer-container {

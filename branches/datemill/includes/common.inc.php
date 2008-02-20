@@ -20,7 +20,7 @@ ini_set('error_reporting',2047);
 
 setlocale(LC_CTYPE,'C');
 setlocale(LC_COLLATE,'C');
-define('_DEBUG_',2);// Set to 0 for production! 0-No,1-Yes,2-Verbose. Used for debug in case of errors.
+define('_DEBUG_',0);// Set to 0 for production! 0-No,1-Yes,2-Verbose. Used for debug in case of errors.
 if (_DEBUG_!=0) {
 	ini_set('display_errors',1);
 } else {
@@ -65,6 +65,7 @@ define('MODULE_PAYMENT',1);
 define('MODULE_FRAUD',2);
 define('MODULE_WIDGET',3);
 define('MODULE_SKIN',4);
+define('MODULE_3RD',5);
 
 // filter types
 define('FILTER_SENDER',1);
