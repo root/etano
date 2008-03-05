@@ -1,0 +1,34 @@
+/* Profile form */
+
+#join_form .controls p {
+	width: 200px;
+	float: right;
+	margin: 0;
+	text-align: right;
+	font-size: 14px;
+	color: #878787;
+}
+
+#join_form .controls p span {
+	color: #4383D3;
+}
+
+.text {
+	width: 100%;
+}
+
+#join-tease ul {
+	padding-left: 20px;
+}
+
+#join-tease li {
+	list-style-type: disc;
+}
+
+.char_counter {
+	text-align: right;
+}
+
+.red_border {
+	outline: 1px solid #f00;
+}

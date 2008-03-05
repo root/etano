@@ -1,0 +1,37 @@
+#content_column1 {
+	float: none;
+}
+
+* html .plan .row {
+	height: 1%;
+}
+.plan .row {
+	overflow: hidden;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px dashed #ccc;
+}
+.plan .header {
+	font-weight: bold;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.plan .row dd {
+	border-left: 1px solid #DEDEDE;
+	float: left;
+	margin: 3px 0;
+	padding: 0 2px 0 8px;
+	overflow: hidden;
+}
+
+.plan .row dd.level_diz {
+	border-left: 0;
+	width: 200px;
+}
+
+.plan .row dd.cell {
+	width: 100px;
+	text-align: center;
+}
+
