@@ -11,7 +11,7 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-define('CACHE_LIMITER','private');
+//define('CACHE_LIMITER','private');
 require_once 'includes/common.inc.php';
 require_once 'includes/user_functions.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
