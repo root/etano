@@ -24,7 +24,9 @@ $skin=sanitize_and_format_gpc($_GET,'s',TYPE_STRING,$__field2format[FIELD_TEXTFI
 $last_id=isset($_GET['last_id']) ? (int)$_GET['last_id'] : 0;
 
 if (!$error) {
-	regenerate_langstrings_array($skin);
+	if ($last_id==0) {
+		regenerate_langstrings_array($skin);
+	}
 	regenerate_skin_cache($skin,$last_id);
 
 	$topass['message']['type']=MESSAGE_INFO;
