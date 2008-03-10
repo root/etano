@@ -314,63 +314,68 @@ function regenerate_skin_cache($skin_module_code='',$last_id=0) {
 	}
 
 	$config=get_site_option(array('bbcode_profile','use_smilies'),'core');
-	$query="SELECT $select FROM `{$dbtable_prefix}user_profiles` WHERE `status`=".STAT_APPROVED;
-	if (!empty($last_id)) {
-		$query.=" AND `fk_user_id`>$last_id";
-	}
-	$query.=" ORDER BY `fk_user_id`";
-	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$start_time=(int)time();
-	while ($profile=mysql_fetch_assoc($res)) {
-	// set all the fields to their real (readable) values
-		foreach ($_pfields as $field_id=>$field) {
-			if ($field['visible']) {
-				$profile[$field['dbfield'].'_label']=$field['label'];
-				if ($field['field_type']==FIELD_TEXTFIELD) {
-					$profile[$field['dbfield']]=sanitize_and_format(remove_banned_words($profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-				} elseif ($field['field_type']==FIELD_TEXTAREA) {
-					$profile[$field['dbfield']]=sanitize_and_format(remove_banned_words($profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-					if ($config['bbcode_profile']) {
-						$profile[$field['dbfield']]=bbcode2html($profile[$field['dbfield']]);
+	// create the cache in every skin
+	for ($s=0;isset($skins[$s]);++$s) {
+		$GLOBALS['_lang']=array();
+		$GLOBALS['_pfields']=array();
+		$GLOBALS['_pcats']=array();
+		include _BASEPATH_.'/skins_site/'.$skins[$s].'/lang/global.inc.php';
+		include _BASEPATH_.'/includes/fields.inc.php';
+		$query="SELECT $select FROM `{$dbtable_prefix}user_profiles` WHERE `status`=".STAT_APPROVED;
+		if (!empty($last_id)) {
+			$query.=" AND `fk_user_id`>$last_id";
+		}
+		$query.=" ORDER BY `fk_user_id`";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$start_time=(int)time();
+		while ($profile=mysql_fetch_assoc($res)) {
+			// set all the fields to their real (readable) values
+			foreach ($_pfields as $field_id=>$field) {
+				if ($field['visible']) {
+					$profile[$field['dbfield'].'_label']=$field['label'];
+					if ($field['field_type']==FIELD_TEXTFIELD) {
+						$profile[$field['dbfield']]=sanitize_and_format(remove_banned_words($profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					} elseif ($field['field_type']==FIELD_TEXTAREA) {
+						$profile[$field['dbfield']]=sanitize_and_format(remove_banned_words($profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+						if ($config['bbcode_profile']) {
+							$profile[$field['dbfield']]=bbcode2html($profile[$field['dbfield']]);
+						}
+						if ($config['use_smilies']) {
+							$profile[$field['dbfield']]=text2smilies($profile[$field['dbfield']]);
+						}
+					} elseif ($field['field_type']==FIELD_SELECT) {
+						// if we sanitize here " will be rendered as &quot; which is not what we want
+		//				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+						$profile[$field['dbfield']]=isset($field['accepted_values'][$profile[$field['dbfield']]]) ? $field['accepted_values'][$profile[$field['dbfield']]] : '?';
+					} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
+						$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+					} elseif ($field['field_type']==FIELD_INT || $field['field_type']==FIELD_FLOAT) {
+			//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
+					} elseif ($field['field_type']==FIELD_DATE) {
+						$profile[$field['dbfield'].'_label']=$field['search_label'];
+						if ($profile[$field['dbfield']]>110) {
+							$profile[$field['dbfield']]='?';
+						}
+					} elseif ($field['field_type']==FIELD_LOCATION) {
+						$profile[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$profile[$field['dbfield'].'_country'],'-');
+						if (!empty($profile[$field['dbfield'].'_state'])) {
+							$profile[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$profile[$field['dbfield'].'_state'],'-');
+						}
+						if (!empty($profile[$field['dbfield'].'_city'])) {
+							$profile[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$profile[$field['dbfield'].'_city'],'-');
+						}
 					}
-					if ($config['use_smilies']) {
-						$profile[$field['dbfield']]=text2smilies($profile[$field['dbfield']]);
-					}
-				} elseif ($field['field_type']==FIELD_SELECT) {
-					// if we sanitize here " will be rendered as &quot; which is not what we want
-	//				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-					$profile[$field['dbfield']]=isset($field['accepted_values'][$profile[$field['dbfield']]]) ? $field['accepted_values'][$profile[$field['dbfield']]] : '?';
-				} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
-					$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-				} elseif ($field['field_type']==FIELD_INT || $field['field_type']==FIELD_FLOAT) {
-		//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
-				} elseif ($field['field_type']==FIELD_DATE) {
-					$profile[$field['dbfield'].'_label']=$field['search_label'];
-					if ($profile[$field['dbfield']]>110) {
-						$profile[$field['dbfield']]='?';
-					}
-				} elseif ($field['field_type']==FIELD_LOCATION) {
-					$profile[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$profile[$field['dbfield'].'_country'],'-');
-					if (!empty($profile[$field['dbfield'].'_state'])) {
-						$profile[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$profile[$field['dbfield'].'_state'],'-');
-					}
-					if (!empty($profile[$field['dbfield'].'_city'])) {
-						$profile[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$profile[$field['dbfield'].'_city'],'-');
-					}
+				} else {
+					unset($profile[$field['dbfield']]);
 				}
-			} else {
-				unset($profile[$field['dbfield']]);
 			}
-		}
-		if (empty($profile['_photo']) || !is_file(_PHOTOPATH_.'/t1/'.$profile['_photo']) || !is_file(_PHOTOPATH_.'/t2/'.$profile['_photo']) || !is_file(_PHOTOPATH_.'/'.$profile['_photo'])) {
-			$profile['_photo']='no_photo.gif';
-		} else {
-			$profile['has_photo']=true;
-		}
+			if (empty($profile['_photo']) || !is_file(_PHOTOPATH_.'/t1/'.$profile['_photo']) || !is_file(_PHOTOPATH_.'/t2/'.$profile['_photo']) || !is_file(_PHOTOPATH_.'/'.$profile['_photo'])) {
+				$profile['_photo']='no_photo.gif';
+			} else {
+				$profile['has_photo']=true;
+			}
 
-		$tpl->set_var('profile',$profile);
-		// create the cache in every skin
-		for ($s=0;isset($skins[$s]);++$s) {
+			$tpl->set_var('profile',$profile);
 			// create the user cache folder if it doesn't exist
 			if (!is_dir(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'])) {
 				$fileop->mkdir(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id']);
@@ -403,19 +408,19 @@ function regenerate_skin_cache($skin_module_code='',$last_id=0) {
 				$tpl->drop_loop('fields');
 				$tpl->drop_var('categs');
 			}
-		}
-		$tpl->drop_var('profile');
-		if (((int)time())-$start_time>$timeout) {
-			echo 'To prevent timeouts this script interrupts every few minutes. Press the continue button to resume.<br />';
-			echo 'Last user ID processed: ',$profile['fk_user_id'],'<br />';
-			echo '<form action="regenerate_skin.php" method="get">';
-			echo '<input type="hidden" name="last_id" value="',$profile['fk_user_id'],'" />';
-			if (!empty($skin_module_code)) {
-				echo '<input type="hidden" name="s" value="',$skin_module_code,'" />';
+			$tpl->drop_var('profile');
+			if (((int)time())-$start_time>$timeout) {
+				echo 'To prevent timeouts this script interrupts every few minutes. Press the continue button to resume.<br />';
+				echo 'Last user ID processed: ',$profile['fk_user_id'],'<br />';
+				echo '<form action="regenerate_skin.php" method="get">';
+				echo '<input type="hidden" name="last_id" value="',$profile['fk_user_id'],'" />';
+				if (!empty($skin_module_code)) {
+					echo '<input type="hidden" name="s" value="',$skin_module_code,'" />';
+				}
+				echo '<input type="submit" value="Continue" />';
+				echo '</form>';
+				die;
 			}
-			echo '<input type="submit" value="Continue" />';
-			echo '</form>';
-			die;
 		}
 	}
 }
