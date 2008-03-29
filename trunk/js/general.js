@@ -220,6 +220,7 @@ function popWin(script,winname,wwidth,wheight,wresizable,wscrollbars,wmenubar,wt
 	}
 	newPopup=window.open(script,winname,strWindowFeatures);
 	newPopup.focus();
+	return newPopup;
 }
 
 /* mmmm...cookies :) */
