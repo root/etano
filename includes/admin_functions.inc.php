@@ -383,7 +383,7 @@ function regenerate_skin_cache($skin_module_code='',$last_id=0) {
 
 			// generate the user details for result lists
 			$tpl->set_file('temp',$skins[$s].'/static/result_user.html');
-			$towrite=$tpl->process('','temp');
+			$towrite=$tpl->process('','temp',TPL_OPTIONAL);
 			$fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/result_user.html',$towrite);
 
 			// generate the categories to be used on profile.php page
