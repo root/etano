@@ -22,7 +22,7 @@ $module_code=sanitize_and_format_gpc($_GET,'module_code',TYPE_STRING,$__field2fo
 
 $query="SELECT count(*) FROM `{$dbtable_prefix}modules` WHERE `module_type`=".MODULE_SKIN;
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-if (mysql_num_rows($res)>1) {
+if (mysql_result($res,0,0)>1) {
 	$config=get_site_option(array('is_default','skin_dir'),$module_code);
 
 	$query="DELETE FROM `{$dbtable_prefix}site_options3` WHERE `fk_module_code`='$module_code'";
