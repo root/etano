@@ -679,15 +679,13 @@ class phemplate {
 		if ($mode & TPL_APPEND) {
 			$this->set_var($target, $app . $this->get_var_silent($target));
 		}
-		if ($mode & TPL_INCLUDE) {
-			$this->set_var($target, $this->include_widget($target));
-		}
 // parse the whole string again in case of finish for leftovers (Dan Caragea)
 		if ($mode & TPL_FINISH) {
+			$this->set_var($target, $this->parse($this->get_var($target)));
 			if ($mode & TPL_INCLUDE) {
 				$this->set_var($target, $this->include_widget($target));
 			}
-			$this->set_var($target, $this->finish($this->parse($this->get_var($target))));
+			$this->set_var($target, $this->finish($this->get_var($target)));
 		}
 		return $this->get_var($target);
 	}
