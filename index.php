@@ -25,11 +25,11 @@ $search_loop=create_search_form($basic_search_fields);
 $tplvars['title']=$tplvars['sitename'];
 $tpl->set_loop('search',$search_loop);
 $tpl->set_var('tplvars',$tplvars);
-$tpl->process('content','content',TPL_OPTIONAL | TPL_LOOP | TPL_INCLUDE);
+$tpl->process('content','content',TPL_OPTIONAL | TPL_LOOP);
 if (!empty($GLOBALS['page_last_modified_time'])) {
 //	header('Expires: '. gmdate('D,d M Y H:i:s',time()+1209600).' GMT',true);	// +14 days
 //	header('Expires: -1',true);
 	header('Cache-Control: private, max-age=0',true);
-	header('Last-Modified: '.date('D,d M Y H:i:s',$page_last_modified_time).' GMT',true);
+	header('Last-Modified: '.date('D,d M Y H:i:s',$GLOBALS['page_last_modified_time']).' GMT',true);
 }
-echo $tpl->process('content','content',TPL_FINISH);
+echo $tpl->process('content','content',TPL_FINISH | TPL_INCLUDE);
