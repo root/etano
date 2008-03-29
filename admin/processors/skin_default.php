@@ -31,6 +31,9 @@ $query="UPDATE `{$dbtable_prefix}site_options3` SET `config_value`=0 WHERE `fk_m
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $query="UPDATE `{$dbtable_prefix}site_options3` SET `config_value`=1 WHERE `fk_module_code`='$module_code' AND `config_option`='is_default'";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+
+$_SESSION[_LICENSE_KEY_]['admin']['def_skin']=get_default_skin_dir();
+
 $topass['message']['type']=MESSAGE_INFO;
 $topass['message']['text']='Skin updated.';
 
