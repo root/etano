@@ -17,7 +17,7 @@ require_once 'includes/network_functions.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/net.inc.php';
 check_login_member('manage_networks');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
 $user_cache=new user_cache(get_my_skin());

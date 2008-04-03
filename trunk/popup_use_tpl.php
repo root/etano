@@ -15,7 +15,7 @@ require_once 'includes/common.inc.php';
 require_once 'includes/user_functions.inc.php';
 check_login_member('saved_messages');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 // just for the non-js solution
 $output['return2']=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');

@@ -17,7 +17,7 @@ require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/info.php';
 global $tplvars;
 
 $type=isset($_GET['type']) ? $_GET['type'] : '';
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $output=array();
 switch ($type) {

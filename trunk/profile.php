@@ -17,7 +17,7 @@ require_once 'includes/user_functions.inc.php';
 require_once 'includes/network_functions.inc.php';
 check_login_member('profile_view');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $uid=0;
 if (!empty($_GET['uid'])) {

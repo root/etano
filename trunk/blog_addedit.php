@@ -17,7 +17,7 @@ require_once 'includes/tables/user_blogs.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $output=$user_blogs_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {

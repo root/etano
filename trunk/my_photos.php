@@ -16,7 +16,7 @@ require_once 'includes/user_functions.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 check_login_member('upload_photos');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 define('COLUMNS',3);
 $accepted_results_per_page=array(6=>6,12=>12,24=>24,48=>48);
 

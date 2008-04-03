@@ -17,7 +17,7 @@ require_once 'includes/tables/user_inbox.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('manage_folders');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $my_folders=array(FOLDER_INBOX=>$GLOBALS['_lang'][110],FOLDER_OUTBOX=>$GLOBALS['_lang'][111],FOLDER_TRASH=>$GLOBALS['_lang'][112],FOLDER_SPAMBOX=>$GLOBALS['_lang'][113]);
 $query="SELECT a.`folder_id`,a.`folder`,count(DISTINCT b.`mail_id`) as `total`,count(DISTINCT c.`mail_id`) as `not_read` FROM `{$dbtable_prefix}user_folders` a LEFT JOIN `{$dbtable_prefix}user_inbox` b ON a.`fk_user_id`=b.`fk_user_id` AND a.`folder_id`=b.`fk_folder_id` LEFT JOIN `{$dbtable_prefix}user_inbox` c ON a.`fk_user_id`=c.`fk_user_id` AND a.`folder_id`=c.`fk_folder_id` AND c.`is_read`=0 WHERE a.`fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' GROUP BY a.`folder_id`";

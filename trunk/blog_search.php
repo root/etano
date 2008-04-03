@@ -16,7 +16,7 @@ require_once 'includes/common.inc.php';
 require_once 'includes/user_functions.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $output=array();
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;

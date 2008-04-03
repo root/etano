@@ -19,7 +19,7 @@ check_login_member('inbox');
 
 $message_types=array(MESS_MESS=>'mail',MESS_FLIRT=>'flirt',MESS_SYSTEM=>'system');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);

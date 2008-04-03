@@ -16,7 +16,7 @@ require_once 'includes/user_functions.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/home.php';
 check_login_member('auth');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 $output=array();
 
 $query="SELECT `_photo` as `photo`,UNIX_TIMESTAMP(`date_added`) as `date_added` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
