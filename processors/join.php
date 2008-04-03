@@ -286,7 +286,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // 		you must re-read all textareas from $_POST like this:
 //		$input['x']=addslashes_mq($_POST['x']);
 		for ($i=0;isset($textareas[$i]);++$i) {
-			$input[$textareas[$i]]=addslashes_mq($_POST[$textareas[$i]]);
+			$input[$textareas[$i]]=isset($_POST[$textareas[$i]]) ? addslashes_mq($_POST[$textareas[$i]]) : '';
 		}
 		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
 		$topass['input']=$input;
