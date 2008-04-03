@@ -17,7 +17,7 @@ require_once 'includes/tables/user_inbox.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('auth');	// allow every member for now. Finer checking is made below
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $content='';
 if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {

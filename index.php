@@ -16,7 +16,7 @@ require_once 'includes/common.inc.php';
 require_once 'includes/user_functions.inc.php';
 check_login_member('all');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 $tpl->set_file('content','index.html');
 
 sort($basic_search_fields,SORT_NUMERIC);

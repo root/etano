@@ -16,7 +16,7 @@ require_once 'includes/common.inc.php';
 require_once 'includes/user_functions.inc.php';
 check_login_member('search_advanced');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $search_fields=array();
 foreach ($_pcats as $pcat_id=>$pcat) {

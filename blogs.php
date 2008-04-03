@@ -16,7 +16,7 @@ require_once 'includes/user_functions.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('all');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $output['lang_271']=sanitize_and_format($GLOBALS['_lang'][271],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 $tpl->set_file('content','blogs.html');

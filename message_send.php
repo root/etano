@@ -16,7 +16,7 @@ require_once 'includes/user_functions.inc.php';
 require_once 'includes/tables/user_inbox.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $output=$user_inbox_default['defaults'];
 if (isset($_SESSION['topass']['input'])) {

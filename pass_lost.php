@@ -16,7 +16,7 @@ require_once 'includes/user_functions.inc.php';
 require_once 'includes/classes/sco_captcha.class.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/pass_change.inc.php';
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 $output=array();
 if (isset($_SESSION['topass']['input'])) {
 	$output=$_SESSION['topass']['input'];

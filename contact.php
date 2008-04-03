@@ -16,7 +16,7 @@ require_once 'includes/user_functions.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/contact.inc.php';
 check_login_member('contact');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $config=get_site_option(array('use_captcha'),'core');
 $output=array();

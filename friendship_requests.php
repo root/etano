@@ -16,7 +16,7 @@ require_once 'includes/user_functions.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/net.inc.php';
 check_login_member('manage_networks');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $output=array();
 $query="SELECT a.`nconn_id`,a.`fk_user_id`,b.`_user` as `user`,c.`network` FROM `{$dbtable_prefix}user_networks` a,`{$dbtable_prefix}user_profiles` b,`{$dbtable_prefix}networks` c WHERE a.`fk_user_id`=b.`fk_user_id` AND a.`fk_net_id`=c.`net_id` AND a.`fk_user_id_other`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."' AND a.`nconn_status`=0";

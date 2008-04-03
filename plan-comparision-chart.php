@@ -15,7 +15,7 @@ require_once 'includes/common.inc.php';
 require_once 'includes/user_functions.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/payment.inc.php';
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $query="SELECT `m_name`,`m_value` FROM `{$dbtable_prefix}memberships` WHERE `m_value`<>1 ORDER BY `m_value`";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

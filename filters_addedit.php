@@ -17,7 +17,7 @@ require_once 'includes/tables/message_filters.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('manage_folders');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
 $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 

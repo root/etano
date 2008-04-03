@@ -16,7 +16,7 @@ require_once 'includes/user_functions.inc.php';
 require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/my_settings.inc.php';
 check_login_member('auth');
 
-$tpl=new phemplate($tplvars['tplrelpath'].'/','remove_nonjs');
+$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $query="SELECT `config_option`,`config_value`,`config_diz`,`option_type`,`choices`,`fk_module_code` FROM `{$dbtable_prefix}site_options3` WHERE `per_user`=1 ORDER BY `fk_module_code` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
