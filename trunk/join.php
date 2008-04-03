@@ -175,7 +175,7 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 			++$j;
 			$loop[$j]['label']=$GLOBALS['_lang'][129];
 			$loop[$j]['dbfield']=$field['dbfield'].'_zip';
-			$loop[$j]['field']='<input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" value="'.$output[$field['dbfield'].'_zip'].'" tabindex="'.($i+4).'" />';
+			$loop[$j]['field']='<input type="text" class="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" value="'.$output[$field['dbfield'].'_zip'].'" tabindex="'.($i+4).'" />';
 			$loop[$j]['class']=(!empty($country_id) && $prefered_input=='z') ? 'visible' : 'invisible';
 			break;
 

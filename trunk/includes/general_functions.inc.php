@@ -537,7 +537,7 @@ function create_search_form($search_fields) {
 					++$s;
 					$myreturn[$s]['label']=$GLOBALS['_lang'][185];
 					$myreturn[$s]['dbfield']=$field['dbfield'].'_zip';
-					$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_dist" id="'.$field['dbfield'].'_dist" tabindex="'.($i+4).'">'.interval2options(1,10).'</select> <label>'.$GLOBALS['_lang'][186].'</label> <input type="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" tabindex="'.($i+4).'" size="5" value="'.$field['default_value'][3].'" />';
+					$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_dist" id="'.$field['dbfield'].'_dist" tabindex="'.($i+4).'">'.interval2options(1,10).'</select> <label for="'.$field['dbfield'].'_zip" class="in_field_label">'.$GLOBALS['_lang'][186].'</label> <input type="text" class="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" tabindex="'.($i+4).'" size="5" value="'.$field['default_value'][3].'" />';
 					$myreturn[$s]['class']=(isset($field['default_value'][0]) && $prefered_input=='z') ? 'visible' : 'invisible';
 					break;
 
