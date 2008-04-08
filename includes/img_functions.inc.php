@@ -35,7 +35,9 @@ function save_thumbnail($image,$size,$save_path,$save_name,$config=array()) {
 		if ($imginfo[2]==IMAGETYPE_GIF && function_exists('imagecreatefromgif')) {			//gif
 			$myimg=@imagecreatefromgif($image);
 		} elseif ($imginfo[2]==IMAGETYPE_JPEG && function_exists('imagecreatefromjpeg')) {	//jpg
+			ob_start();
 			$myimg=@imagecreatefromjpeg($image);
+			ob_end_flush();
 		} elseif ($imginfo[2]==IMAGETYPE_PNG && function_exists('imagecreatefrompng')) {	//png
 			$myimg=@imagecreatefrompng($image);
 		}
@@ -92,12 +94,14 @@ function save_thumbnail($image,$size,$save_path,$save_name,$config=array()) {
 
 			if (!empty($config['watermark_image']) && is_file($config['watermark_image'])) {
 				$wm_image=@imagecreatefrompng($config['watermark_image']);
-				$wm_image_x=imagesx($wm_image);
-				$wm_image_y=imagesy($wm_image);
+				$wm_image_width=imagesx($wm_image);
+				$wm_image_height=imagesy($wm_image);
+				$wm_image_x=(int)(($size[0]-$new_size[0])/2)+5;
+				$wm_image_y=$new_size[1]+(int)(($size[1]-$new_size[1])/2)-$wm_image_height;
 				if (defined('BICUBIC_RESAMPLE')) {
-					imagecopyresamplebicubic($mynewimg,$wm_image,5,$new_size[1]-$wm_image_y-20,0,0,$wm_image_x,$wm_image_y,$wm_image_x,$wm_image_y);
+					imagecopyresamplebicubic($mynewimg,$wm_image,$wm_image_x,$wm_image_y,0,0,$wm_image_width,$wm_image_height,$wm_image_width,$wm_image_height);
 				} else {
-					fastimagecopyresampled($mynewimg,$wm_image,5,$new_size[1]-$wm_image_y-20,0,0,$wm_image_x,$wm_image_y,$wm_image_x,$wm_image_y);
+					fastimagecopyresampled($mynewimg,$wm_image,$wm_image_x,$wm_image_y,0,0,$wm_image_width,$wm_image_height,$wm_image_width,$wm_image_height);
 				}
 			}
 
