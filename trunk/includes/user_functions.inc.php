@@ -74,8 +74,9 @@ function error_handler($errlevel,$message,$file='unset',$line='unset') {
 
 function get_userid_by_user($user) {
 	$myreturn=0;
+	global $dbtable_prefix;
 	if (!empty($user)) {
-		$query="SELECT `".USER_ACCOUNT_ID."` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_USER."`='$user'";
+		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `_user`='$user'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$myreturn=mysql_result($res,0,0);
