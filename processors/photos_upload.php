@@ -33,13 +33,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // get the input we need and sanitize it
 	$input['is_private']=sanitize_and_format_gpc($_POST,'is_private',TYPE_INT,0,0);
 
-	$config=get_site_option(array('round_corners','watermark_text','watermark_text_color','t1_width','t2_width','pic_width','manual_photo_approval','min_size','max_size'),'core_photo');
+	$config=get_site_option(array('round_corners','watermark_text','watermark_text_color','watermark_image','t1_width','t2_width','pic_width','manual_photo_approval','min_size','max_size'),'core_photo');
 	$config['padding_type']=PAD_NONE;
 	$config_t1=$config;
 	$config_t1['padding_type']=PAD_2SIDES;
 	$config_t2=$config;
 	$config_t2['padding_type']=PAD_1SIDE;
-	unset($config['round_corners']);
+	unset($config_t1['watermark_text'],$config_t1['watermark_image'],$config['round_corners']);
 	$curtime=time();
 
 	$fileop=new fileop();
@@ -70,16 +70,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				} else {
 					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
-					@unlink(_BASEPATH_.'/tmp/'.$input['file1']);
-					$input['file1']=$rand.'/'.$filename.'.jpg';
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file1']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file1']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file1']);
-					if ($photos_remaining>0) {
-						--$photos_remaining;
+					if (save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file1'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config)) {
+						@unlink(_BASEPATH_.'/tmp/'.$input['file1']);
+						$input['file1']=$rand.'/'.$filename.'.jpg';
+						if (!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file1']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file1']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file1'])) {
+							$error=true;
+						}
+						if ($photos_remaining>0) {
+							--$photos_remaining;
+						}
+					} else {
+						$error=true;
 					}
 				}
 			} elseif ($input['file1']===false) {
@@ -88,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 
-		if ($photos_remaining>0 || $photos_remaining==-1) {
+		if (!$error && ($photos_remaining>0 || $photos_remaining==-1)) {
 			$filename=$_SESSION[_LICENSE_KEY_]['user']['user_id'].'_2'.$curtime;
 			$input['file2']=upload_file(_BASEPATH_.'/tmp','file2',$filename);
 			mt_srand(make_seed());
@@ -106,16 +111,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				} else {
 					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
-					@unlink(_BASEPATH_.'/tmp/'.$input['file2']);
-					$input['file2']=$rand.'/'.$filename.'.jpg';
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file2']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file2']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file2']);
-					if ($photos_remaining>0) {
-						--$photos_remaining;
+					if (save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file2'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config)) {
+						@unlink(_BASEPATH_.'/tmp/'.$input['file2']);
+						$input['file2']=$rand.'/'.$filename.'.jpg';
+						if (!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file2']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file2']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file2'])) {
+							$error=true;
+						}
+						if ($photos_remaining>0) {
+							--$photos_remaining;
+						}
+					} else {
+						$error=true;
 					}
 				}
 			} elseif ($input['file2']===false) {
@@ -124,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 
-		if ($photos_remaining>0 || $photos_remaining==-1) {
+		if (!$error && ($photos_remaining>0 || $photos_remaining==-1)) {
 			$filename=$_SESSION[_LICENSE_KEY_]['user']['user_id'].'_3'.$curtime;
 			$input['file3']=upload_file(_BASEPATH_.'/tmp','file3',$filename);
 			mt_srand(make_seed());
@@ -142,16 +152,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				} else {
 					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
-					@unlink(_BASEPATH_.'/tmp/'.$input['file3']);
-					$input['file3']=$rand.'/'.$filename.'.jpg';
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file3']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file3']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file3']);
-					if ($photos_remaining>0) {
-						--$photos_remaining;
+					if (save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file3'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config)) {
+						@unlink(_BASEPATH_.'/tmp/'.$input['file3']);
+						$input['file3']=$rand.'/'.$filename.'.jpg';
+						if (!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file3']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file3']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file3'])) {
+							$error=true;
+						}
+						if ($photos_remaining>0) {
+							--$photos_remaining;
+						}
+					} else {
+						$error=true;
 					}
 				}
 			} elseif ($input['file3']===false) {
@@ -160,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 
-		if ($photos_remaining>0 || $photos_remaining==-1) {
+		if (!$error && ($photos_remaining>0 || $photos_remaining==-1)) {
 			$filename=$_SESSION[_LICENSE_KEY_]['user']['user_id'].'_4'.$curtime;
 			$input['file4']=upload_file(_BASEPATH_.'/tmp','file4',$filename);
 			mt_srand(make_seed());
@@ -178,16 +193,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				} else {
 					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
-					@unlink(_BASEPATH_.'/tmp/'.$input['file4']);
-					$input['file4']=$rand.'/'.$filename.'.jpg';
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file4']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file4']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file4']);
-					if ($photos_remaining>0) {
-						--$photos_remaining;
+					if (save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file4'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config)) {
+						@unlink(_BASEPATH_.'/tmp/'.$input['file4']);
+						$input['file4']=$rand.'/'.$filename.'.jpg';
+						if (!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file4']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file4']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file4'])) {
+							$error=true;
+						}
+						if ($photos_remaining>0) {
+							--$photos_remaining;
+						}
+					} else {
+						$error=true;
 					}
 				}
 			} elseif ($input['file4']===false) {
@@ -196,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 
-		if ($photos_remaining>0 || $photos_remaining==-1) {
+		if (!$error && ($photos_remaining>0 || $photos_remaining==-1)) {
 			$filename=$_SESSION[_LICENSE_KEY_]['user']['user_id'].'_5'.$curtime;
 			$input['file5']=upload_file(_BASEPATH_.'/tmp','file5',$filename);
 			mt_srand(make_seed());
@@ -214,16 +234,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				} else {
 					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
-					@unlink(_BASEPATH_.'/tmp/'.$input['file5']);
-					$input['file5']=$rand.'/'.$filename.'.jpg';
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file5']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file5']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file5']);
-					if ($photos_remaining>0) {
-						--$photos_remaining;
+					if (save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file5'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config)) {
+						@unlink(_BASEPATH_.'/tmp/'.$input['file5']);
+						$input['file5']=$rand.'/'.$filename.'.jpg';
+						if (!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file5']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file5']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file5'])) {
+							$error=true;
+						}
+						if ($photos_remaining>0) {
+							--$photos_remaining;
+						}
+					} else {
+						$error=true;
 					}
 				}
 			} elseif ($input['file5']===false) {
@@ -232,7 +257,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 
-		if ($photos_remaining>0 || $photos_remaining==-1) {
+		if (!$error && ($photos_remaining>0 || $photos_remaining==-1)) {
 			$filename=$_SESSION[_LICENSE_KEY_]['user']['user_id'].'_6'.$curtime;
 			$input['file6']=upload_file(_BASEPATH_.'/tmp','file6',$filename);
 			mt_srand(make_seed());
@@ -250,16 +275,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				} else {
 					mt_srand(make_seed());
 					$rand=mt_rand(0,9);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2);
-					save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config);
-					@unlink(_BASEPATH_.'/tmp/'.$input['file6']);
-					$input['file6']=$rand.'/'.$filename.'.jpg';
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file6']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file6']);
-					$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file6']);
-					if ($photos_remaining>0) {
-						--$photos_remaining;
+					if (save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t1_width'],_BASEPATH_.'/tmp',$filename.'_1',$config_t1) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['t2_width'],_BASEPATH_.'/tmp',$filename.'_2',$config_t2) &&
+							save_thumbnail(_BASEPATH_.'/tmp/'.$input['file6'],$config['pic_width'],_BASEPATH_.'/tmp',$filename.'_3',$config)) {
+						@unlink(_BASEPATH_.'/tmp/'.$input['file6']);
+						$input['file6']=$rand.'/'.$filename.'.jpg';
+						if (!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_1.jpg',_PHOTOPATH_.'/t1/'.$input['file6']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_2.jpg',_PHOTOPATH_.'/t2/'.$input['file6']) ||
+								!$fileop->rename(_BASEPATH_.'/tmp/'.$filename.'_3.jpg',_PHOTOPATH_.'/'.$input['file6'])) {
+							$error=true;
+						}
+						if ($photos_remaining>0) {
+							--$photos_remaining;
+						}
+					} else {
+						$error=true;
 					}
 				}
 			} elseif ($input['file6']===false) {
