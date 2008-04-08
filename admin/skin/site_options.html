@@ -1,6 +1,6 @@
 <h2>Site Features and Options</h2>
 
-<form action="processors/site_options.php" method="post">
+<form action="processors/site_options.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="module_code" id="module_code" value="{module_code}" />
 <!--loop name="site_options"-->
 <div class="module_content {site_options.class}" id="mcontent_{site_options.fk_module_code}">

@@ -90,6 +90,10 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 			$rsrow['field']='<select name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'">'.vector2options($rsrow['choices'],$rsrow['config_value']).'</select>';
 			break;
 
+		case FIELD_FILE:
+			$rsrow['field']='<input class="text" type="file" name="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" id="'.$rsrow['fk_module_code'].'_'.$rsrow['config_option'].'" /> <a class="remove_upl_file" href="processors/site_options_del_file.php?cid='.$rsrow['config_id'].'"><span>Remove</span></a> <p>'.$rsrow['config_value'].'</p>';
+			break;
+
 	}
 	if (isset($rsrow['field'])) {
 		$site_options[$i]['options'][]=$rsrow;
