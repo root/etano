@@ -43,7 +43,7 @@ if (!empty($all_uids)) {
 	$query="UPDATE `{$dbtable_prefix}payments` SET `fk_user_id`=0 WHERE `fk_user_id` IN ('".join("','",$all_uids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-	$query="DELETE FROM `{$dbtable_prefix}profile_comments` WHERE `fk_parent_id` IN ('".join("','",$all_uids)."')";
+	$query="DELETE FROM `{$dbtable_prefix}comments_profile` WHERE `fk_parent_id` IN ('".join("','",$all_uids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 	$query="DELETE FROM `{$dbtable_prefix}queue_message` WHERE `fk_user_id` IN ('".join("','",$all_uids)."') OR `fk_user_id_other` IN ('".join("','",$all_uids)."')";
@@ -99,7 +99,7 @@ if (!empty($uids[1])) {
 			$post_ids[]=mysql_result($res,$i,0);
 		}
 		if (!empty($post_ids)) {
-			$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_parent_id` IN ('".join("','",$post_ids)."')";
+			$query="DELETE FROM `{$dbtable_prefix}comments_blog` WHERE `fk_parent_id` IN ('".join("','",$post_ids)."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$query="DELETE FROM `{$dbtable_prefix}blog_posts` WHERE `post_id` IN ('".join("','",$post_ids)."')";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -108,13 +108,13 @@ if (!empty($uids[1])) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 
-	$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_user_id` IN ('".join("','",$uids[1])."')";
+	$query="DELETE FROM `{$dbtable_prefix}comments_blog` WHERE `fk_user_id` IN ('".join("','",$uids[1])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 	$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `fk_user_id_other` IN ('".join("','",$uids[1])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-	$query="DELETE FROM `{$dbtable_prefix}profile_comments` WHERE `fk_user_id` IN ('".join("','",$uids[1])."')";
+	$query="DELETE FROM `{$dbtable_prefix}comments_profile` WHERE `fk_user_id` IN ('".join("','",$uids[1])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 	$query="SELECT `photo_id`,`photo` FROM `{$dbtable_prefix}user_photos` WHERE `fk_user_id` IN ('".join("','",$uids[1])."')";
@@ -131,9 +131,9 @@ if (!empty($uids[1])) {
 	}
 	$query="DELETE FROM `{$dbtable_prefix}user_photos` WHERE `photo_id` IN ('".join("','",$photo_ids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_parent_id` IN ('".join("','",$photo_ids)."')";
+	$query="DELETE FROM `{$dbtable_prefix}comments_photo` WHERE `fk_parent_id` IN ('".join("','",$photo_ids)."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-	$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_user_id` IN ('".join("','",$uids[1])."')";
+	$query="DELETE FROM `{$dbtable_prefix}comments_photo` WHERE `fk_user_id` IN ('".join("','",$uids[1])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 
@@ -144,10 +144,10 @@ if (!empty($uids[2])) {
 	$query="UPDATE `{$dbtable_prefix}blog_posts` SET `fk_user_id`=0 WHERE `fk_user_id` IN ('".join("','",$uids[2])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-	$query="UPDATE `{$dbtable_prefix}blog_comments` SET `fk_user_id`=0 WHERE `fk_user_id` IN ('".join("','",$uids[2])."')";
+	$query="UPDATE `{$dbtable_prefix}comments_blog` SET `fk_user_id`=0 WHERE `fk_user_id` IN ('".join("','",$uids[2])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-	$query="UPDATE `{$dbtable_prefix}profile_comments` SET `fk_user_id`=0 WHERE `fk_user_id` IN ('".join("','",$uids[2])."')";
+	$query="UPDATE `{$dbtable_prefix}comments_profile` SET `fk_user_id`=0 WHERE `fk_user_id` IN ('".join("','",$uids[2])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 	$query="UPDATE `{$dbtable_prefix}user_inbox` SET `fk_user_id_other`=0 WHERE `fk_user_id_other` IN ('".join("','",$uids[2])."')";
@@ -156,7 +156,7 @@ if (!empty($uids[2])) {
 	$query="UPDATE `{$dbtable_prefix}user_photos` SET `fk_user_id`=0 WHERE `fk_user_id` IN ('".join("','",$uids[2])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-	$query="UPDATE `{$dbtable_prefix}photo_comments` SET `fk_user_id`=0 WHERE `fk_user_id` IN ('".join("','",$uids[2])."')";
+	$query="UPDATE `{$dbtable_prefix}comments_photo` SET `fk_user_id`=0 WHERE `fk_user_id` IN ('".join("','",$uids[2])."')";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 }
 

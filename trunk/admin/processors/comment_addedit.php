@@ -27,21 +27,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	$default['defaults']=array();
 	if ($input['m']=='blog') {
-		require_once '../../includes/tables/blog_comments.inc.php';
-		$default=&$blog_comments_default;
-		$table="`{$dbtable_prefix}blog_comments`";
+		require _BASEPATH_.'/includes/tables/comments_blog.inc.php';
+		$default=&$comments_blog_default;
+		$table="`{$dbtable_prefix}comments_blog`";
 		$parent_table="`{$dbtable_prefix}blog_posts`";
 		$parent_key="`post_id`";
 	} elseif ($input['m']=='photo') {
-		require_once '../../includes/tables/photo_comments.inc.php';
-		$default=&$photo_comments_default;
-		$table="`{$dbtable_prefix}photo_comments`";
+		require _BASEPATH_.'/includes/tables/comments_photo.inc.php';
+		$default=&$comments_photo_default;
+		$table="`{$dbtable_prefix}comments_photo`";
 		$parent_table="`{$dbtable_prefix}user_photos`";
 		$parent_key="`photo_id`";
 	} elseif ($input['m']=='user') {
-		require_once '../../includes/tables/profile_comments.inc.php';
-		$default=&$profile_comments_default;
-		$table="`{$dbtable_prefix}profile_comments`";
+		require _BASEPATH_.'/includes/tables/comments_profile.inc.php';
+		$default=&$comments_profile_default;
+		$table="`{$dbtable_prefix}comments_profile`";
 	}
 	foreach ($default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$default['defaults'][$k]);
