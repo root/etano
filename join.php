@@ -12,9 +12,9 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 //define('CACHE_LIMITER','private');
-require_once 'includes/common.inc.php';
-require_once 'includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/join.inc.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/join.inc.php';
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
@@ -187,7 +187,7 @@ for ($i=0;isset($my_fields[$i]);++$i) {
 if ($page==1) {
 	$output['page1']=true;
 	if (get_site_option('use_captcha','core')) {
-		require_once 'includes/classes/sco_captcha.class.php';
+		require _BASEPATH_.'/includes/classes/sco_captcha.class.php';
 		$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
 		$_SESSION['captcha_word']=$c->gen_rnd_string(4);
 		$output['rand']=make_seed();

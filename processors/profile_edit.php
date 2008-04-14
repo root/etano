@@ -11,9 +11,9 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once '../includes/common.inc.php';
-require_once '../includes/user_functions.inc.php';
-require_once '../includes/field_functions.inc.php';
+require '../includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/includes/field_functions.inc.php';
 check_login_member('auth');
 
 $error=false;

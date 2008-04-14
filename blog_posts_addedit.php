@@ -12,10 +12,10 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 //define('CACHE_LIMITER','private');
-require_once 'includes/common.inc.php';
-require_once 'includes/user_functions.inc.php';
-require_once 'includes/tables/blog_posts.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/includes/tables/blog_posts.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');

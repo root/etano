@@ -12,9 +12,9 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 //define('CACHE_LIMITER','private');
-require_once 'includes/common.inc.php';
-require_once 'includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 check_login_member('upload_photos');
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');

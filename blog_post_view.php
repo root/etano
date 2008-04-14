@@ -12,9 +12,9 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 //define('CACHE_LIMITER','private');
-require_once 'includes/common.inc.php';
-require_once 'includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('read_blogs');
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
@@ -29,7 +29,7 @@ if (!empty($post_id)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=mysql_fetch_assoc($res);
-		require_once _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
+		require _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
 		$blog_posts_cache=new blog_posts_cache();
 		$output=array_merge($output,$blog_posts_cache->get_post($post_id,false));
 		unset($blog_posts_cache);
@@ -49,7 +49,7 @@ if (!empty($post_id)) {
 
 		$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
 		// comments
-		$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}blog_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`=".$output['post_id']." AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
+		$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `{$dbtable_prefix}comments_blog` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`=".$output['post_id']." AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			if ($rsrow['date_posted']>$page_last_modified_time) {
@@ -99,7 +99,7 @@ if (!empty($post_id)) {
 			if (allow_at_level('write_comments',$_SESSION[_LICENSE_KEY_]['user']['membership'])) {
 				if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 					if ($config['use_captcha']) {
-						require_once 'includes/classes/sco_captcha.class.php';
+						require _BASEPATH_.'/includes/classes/sco_captcha.class.php';
 						$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
 						$_SESSION['captcha_word']=$c->gen_rnd_string(4);
 						$output['rand']=make_seed();

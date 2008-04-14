@@ -11,10 +11,10 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once 'includes/common.inc.php';
-require_once 'includes/user_functions.inc.php';
-require_once 'includes/tables/user_inbox.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/includes/tables/user_inbox.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 check_login_member('auth');	// allow every member for now. Finer checking is made below
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
@@ -107,7 +107,7 @@ if (!empty($_GET['mail_id']) && isset($_GET['fid'])) {
 		if (empty($output['other_id'])) {
 			unset($output['other_id']);
 		} else {
-			require_once 'includes/network_functions.inc.php';
+			require _BASEPATH_.'/includes/network_functions.inc.php';
 			if (is_network_member($_SESSION[_LICENSE_KEY_]['user']['user_id'],$output['other_id'],NET_BLOCK)) {
 				$output['is_blocked']=true;
 			}

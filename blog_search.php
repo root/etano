@@ -12,9 +12,9 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 //define('CACHE_LIMITER','private');
-require_once 'includes/common.inc.php';
-require_once 'includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
@@ -123,7 +123,7 @@ if (!empty($output['totalrows'])) {
 		$o=$output['totalrows']-$r;
 	}
 	$post_ids=array_slice($post_ids,$o,$r);
-	require_once _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
+	require _BASEPATH_.'/includes/classes/blog_posts_cache.class.php';
 	$blog_posts_cache=new blog_posts_cache();
 	$loop=$blog_posts_cache->get_tpl_array($post_ids);
 	unset($blog_posts_cache);

@@ -11,14 +11,14 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once '../includes/common.inc.php';
-require_once '../includes/user_functions.inc.php';
-require_once '../includes/tables/user_blogs.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
+require '../includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/includes/tables/user_blogs.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
 if (is_file(_BASEPATH_.'/events/processors/blog_addedit.php')) {
-	include_once _BASEPATH_.'/events/processors/blog_addedit.php';
+	include _BASEPATH_.'/events/processors/blog_addedit.php';
 }
 
 $error=false;
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		$input['blog_name']=remove_banned_words($input['blog_name']);
 		$input['blog_diz']=remove_banned_words($input['blog_diz']);
-		require_once '../includes/classes/fileop.class.php';
+		require _BASEPATH_.'/includes/classes/fileop.class.php';
 		$fileop=new fileop();
 		$towrite=array();	// what to write in the cache file
 		if (!empty($input['blog_id'])) {

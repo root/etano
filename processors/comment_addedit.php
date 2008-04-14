@@ -11,13 +11,13 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once '../includes/common.inc.php';
-require_once '../includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/comments.inc.php';
+require '../includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/comments.inc.php';
 check_login_member('write_comments');
 
 if (is_file(_BASEPATH_.'/events/processors/comment_addedit.php')) {
-	include_once _BASEPATH_.'/events/processors/comment_addedit.php';
+	include _BASEPATH_.'/events/processors/comment_addedit.php';
 }
 
 $error=false;
@@ -31,24 +31,31 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	switch ($input['comment_type']) {
 
 		case 'blog':
-			require_once '../includes/tables/blog_comments.inc.php';
-			$item_default=&$blog_comments_default;
+			require _BASEPATH_.'/includes/tables/comments_blog.inc.php';
+			$item_default=&$comments_blog_default;
 			$nextpage='blog_post_view.php';
-			$table="{$dbtable_prefix}blog_comments";
+			$table="{$dbtable_prefix}comments_blog";
 			break;
 
 		case 'photo':
-			require_once '../includes/tables/photo_comments.inc.php';
-			$item_default=&$photo_comments_default;
+			require _BASEPATH_.'/includes/tables/comments_photo.inc.php';
+			$item_default=&$comments_photo_default;
 			$nextpage='photo_view.php';
-			$table="{$dbtable_prefix}photo_comments";
+			$table="{$dbtable_prefix}comments_photo";
 			break;
 
 		case 'user':
-			require_once '../includes/tables/profile_comments.inc.php';
-			$item_default=&$profile_comments_default;
+			require _BASEPATH_.'/includes/tables/comments_profile.inc.php';
+			$item_default=&$comments_profile_default;
 			$nextpage='profile.php';
-			$table="{$dbtable_prefix}profile_comments";
+			$table="{$dbtable_prefix}comments_profile";
+			break;
+
+		case 'video':
+			require _BASEPATH_.'/includes/tables/comments_video.inc.php';
+			$item_default=&$comments_video_default;
+			$nextpage='video_view.php';
+			$table="{$dbtable_prefix}comments_video";
 			break;
 
 		default:

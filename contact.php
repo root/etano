@@ -11,9 +11,9 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once 'includes/common.inc.php';
-require_once 'includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/contact.inc.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/contact.inc.php';
 check_login_member('contact');
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
@@ -26,7 +26,7 @@ if (isset($_SESSION['topass']['input'])) {
 
 if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	if ($config['use_captcha']) {
-		require_once 'includes/classes/sco_captcha.class.php';
+		require _BASEPATH_.'/includes/classes/sco_captcha.class.php';
 		$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
 		$_SESSION['captcha_word']=$c->gen_rnd_string(4);
 		$output['rand']=make_seed();

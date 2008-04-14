@@ -11,13 +11,13 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once '../includes/common.inc.php';
-require_once '../includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/my_searches.inc.php';
+require '../includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/my_searches.inc.php';
 check_login_member('save_searches');
 
 if (is_file(_BASEPATH_.'/events/processors/my_searches_rename.php')) {
-	include_once _BASEPATH_.'/events/processors/my_searches_rename.php';
+	include _BASEPATH_.'/events/processors/my_searches_rename.php';
 }
 
 $error=false;
