@@ -18,16 +18,16 @@ if (!defined('_LICENSE_KEY_')) {
 include _BASEPATH_.'/includes/logs.inc.php';
 include _BASEPATH_.'/includes/site_bans.inc.php';
 $_access_level=array();
-require_once _BASEPATH_.'/includes/access_levels.inc.php';
+require _BASEPATH_.'/includes/access_levels.inc.php';
 require_once _BASEPATH_.'/includes/general_functions.inc.php';
 $tplvars['tplurl']=_BASEURL_.'/skins_site/'.get_my_skin();
 $tplvars['tplrelpath']=$GLOBALS['relative_path'].'skins_site/'.get_my_skin();
 $GLOBALS['_lang']=array();
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/global.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/global.inc.php';
 $accepted_months=array($GLOBALS['_lang'][166],$GLOBALS['_lang'][167],$GLOBALS['_lang'][168],$GLOBALS['_lang'][169],$GLOBALS['_lang'][170],$GLOBALS['_lang'][171],$GLOBALS['_lang'][172],$GLOBALS['_lang'][173],$GLOBALS['_lang'][174],$GLOBALS['_lang'][175],$GLOBALS['_lang'][176],$GLOBALS['_lang'][177],$GLOBALS['_lang'][178]);
 $_pfields=array();
 $_pcats=array();
-require_once _BASEPATH_.'/includes/fields.inc.php';
+require _BASEPATH_.'/includes/fields.inc.php';
 if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	$_SESSION[_LICENSE_KEY_]['user']['user_id']=(int)$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 	$tplvars['user_logged']=true;
