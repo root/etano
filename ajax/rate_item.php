@@ -28,10 +28,6 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 			$parent_field="photo_id";
 			$parent_table="{$dbtable_prefix}user_photos";
 			$table="{$dbtable_prefix}rating_photo";
-		} elseif ($vote_type=='video') {
-			$parent_field="video_id";
-			$parent_table="{$dbtable_prefix}user_videos";
-			$table="{$dbtable_prefix}rating_video";
 		} elseif ($vote_type=='blog') {
 			$parent_field="post_id";
 			$parent_table="{$dbtable_prefix}blog_posts";
@@ -95,9 +91,6 @@ if (isset($_REQUEST['silent'])) {
 	if ($vote_type=='photo') {
 		$nextpage='photo_view.php';
 		$qs='photo_id='.$id;
-	} elseif ($vote_type=='video') {
-		$nextpage='video_view.php';
-		$qs='video_id='.$id;
 	} elseif ($vote_type=='blog') {
 		$nextpage='blog_post_view.php';
 		$qs='pid='.$id;
