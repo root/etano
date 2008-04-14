@@ -48,7 +48,11 @@ function on_after_approve_photo() {
 	if (!empty($main_photos)) {
 		$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',array_keys($main_photos)).")";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',array_keys($main_photos)).")";
+		$query="UPDATE `{$dbtable_prefix}comments_blog` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',array_keys($main_photos)).")";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="UPDATE `{$dbtable_prefix}comments_photo` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',array_keys($main_photos)).")";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="UPDATE `{$dbtable_prefix}comments_profile` SET `last_changed`='$now' WHERE `fk_user_id` IN (".join(',',array_keys($main_photos)).")";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	}
 	if (!empty($photo_ids)) {

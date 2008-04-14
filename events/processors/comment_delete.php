@@ -8,19 +8,19 @@ function on_before_delete_comment() {
 	switch ($comment_type) {
 
 		case 'blog':
-			$table="`{$dbtable_prefix}blog_comments`";
+			$table="`{$dbtable_prefix}comments_blog`";
 			$parent_table="`{$dbtable_prefix}blog_posts`";
 			$parent_key="`post_id`";
 			break;
 
 	 	case 'photo':
-			$table="`{$dbtable_prefix}photo_comments`";
+			$table="`{$dbtable_prefix}comments_photo`";
 			$parent_table="`{$dbtable_prefix}user_photos`";
 			$parent_key="`photo_id`";
 			break;
 
 		case 'user':
-			$table="`{$dbtable_prefix}profile_comments`";
+			$table="`{$dbtable_prefix}comments_profile`";
 			$parent_table="`{$dbtable_prefix}user_profiles`";
 			$parent_key="`fk_user_id`";
 			break;
@@ -77,7 +77,7 @@ function upd_latest_comm_widg() {
 		$max_title_length=40;
 		$config=get_site_option(array('items','enabled'),'latest_blog_comments');
 		if (!empty($config['enabled'])) {
-			$query="SELECT a.`comment_id`,a.`fk_user_id`,c.`alt_url` as `profile_url`,a.`_user`,b.`post_id`,b.`title`,b.`alt_url` as `post_url` FROM `{$dbtable_prefix}blog_comments` a LEFT JOIN `{$dbtable_prefix}user_profiles` c ON a.`fk_user_id`=c.`fk_user_id`,`{$dbtable_prefix}blog_posts` b WHERE a.`fk_parent_id`=b.`post_id` AND a.`status`=".STAT_APPROVED." AND b.`is_public`=1 AND b.`status`=".STAT_APPROVED." ORDER BY a.`date_posted` DESC LIMIT ".$config['items'];
+			$query="SELECT a.`comment_id`,a.`fk_user_id`,c.`alt_url` as `profile_url`,a.`_user`,b.`post_id`,b.`title`,b.`alt_url` as `post_url` FROM `{$dbtable_prefix}comments_blog` a LEFT JOIN `{$dbtable_prefix}user_profiles` c ON a.`fk_user_id`=c.`fk_user_id`,`{$dbtable_prefix}blog_posts` b WHERE a.`fk_parent_id`=b.`post_id` AND a.`status`=".STAT_APPROVED." AND b.`is_public`=1 AND b.`status`=".STAT_APPROVED." ORDER BY a.`date_posted` DESC LIMIT ".$config['items'];
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$loop=array();
 			$i=0;
