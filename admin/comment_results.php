@@ -45,19 +45,19 @@ switch ($input['m']) {
 
 	case 'blog':
 		$where.=" AND a.`fk_parent_id`=b.`post_id`";
-		$from="`{$dbtable_prefix}blog_comments` a,`{$dbtable_prefix}blog_posts` b";
+		$from="`{$dbtable_prefix}comments_blog` a,`{$dbtable_prefix}blog_posts` b";
 		$select='b.`title` as `select1`';
 		break;
 
 	case 'user':
 		$where.=" AND a.`fk_parent_id`=b.`fk_user_id`";
-		$from="`{$dbtable_prefix}profile_comments` a,`{$dbtable_prefix}user_profiles` b";
+		$from="`{$dbtable_prefix}comments_profile` a,`{$dbtable_prefix}user_profiles` b";
 		$select='b.`_user` as `select1`';
 		break;
 
 	case 'photo':
 		$where.=" AND a.`fk_parent_id`=b.`photo_id`";
-		$from="`{$dbtable_prefix}photo_comments` a,`{$dbtable_prefix}user_photos` b";
+		$from="`{$dbtable_prefix}comments_photo` a,`{$dbtable_prefix}user_photos` b";
 		$select="b.`_user` as `select1`";
 		break;
 

@@ -80,15 +80,15 @@ switch ($output['t']) {
 		switch ($output['m']) {
 
 			case 'blog':
-				$table="`{$dbtable_prefix}blog_comments`";
+				$table="`{$dbtable_prefix}comments_blog`";
 				break;
 
 			case 'photo':
-				$table="`{$dbtable_prefix}photo_comments`";
+				$table="`{$dbtable_prefix}comments_photo`";
 				break;
 
 			case 'user':
-				$table="`{$dbtable_prefix}profile_comments`";
+				$table="`{$dbtable_prefix}comments_profile`";
 				break;
 
 		}
