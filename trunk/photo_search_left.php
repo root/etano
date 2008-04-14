@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       user_photos_left.php
+File:                       photo_search_left.php
 $Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -16,7 +16,7 @@ if (isset($input['uid'])) {
 	if (empty($input['uid'])) {
 		unset($input['uid']);
 	} elseif (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
-		require_once 'includes/network_functions.inc.php';
+		require _BASEPATH_.'/includes/network_functions.inc.php';
 		if (is_network_member($_SESSION[_LICENSE_KEY_]['user']['user_id'],$input['uid'],NET_BLOCK)) {
 			$input['unblock_user']=true;
 		}

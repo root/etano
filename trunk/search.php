@@ -14,8 +14,8 @@ Support at:                 http://www.datemill.com/forum
 /* TODO: it would be awsome if we could see which are the most popular searches and refresh them from cron */
 
 //define('CACHE_LIMITER','private');
-require_once 'includes/common.inc.php';
-require_once 'includes/user_functions.inc.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
@@ -339,7 +339,7 @@ if (!empty($output['totalrows'])) {
 			$cell_css_classes[$i]='is_online';
 		}
 	}
-	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
+	require _BASEPATH_.'/includes/classes/user_cache.class.php';
 	$user_cache=new user_cache(get_my_skin());
 	$output['results']=smart_table($user_cache->get_cache_array($user_ids,'result_user',$inject_by_uid),5,$rv_mode,$cell_css_classes);
 	unset($user_cache);

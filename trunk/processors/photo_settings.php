@@ -11,9 +11,9 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once '../includes/common.inc.php';
-require_once '../includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
+require '../includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 check_login_member('upload_photos');
 
 $error=false;
@@ -68,7 +68,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				// this sucks...the code below is taken from on_after_approve_photo(). In the future, when new functionality that depends on the main photo will be added, we'll have to change the code there and here too.
 				$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-				$query="UPDATE `{$dbtable_prefix}blog_comments` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+				$query="UPDATE `{$dbtable_prefix}comments_blog` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$query="UPDATE `{$dbtable_prefix}comments_photo` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			}
 			if ($old_main==0) {

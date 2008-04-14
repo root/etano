@@ -11,13 +11,13 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once '../includes/common.inc.php';
-require_once '../includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/comments.inc.php';
+require '../includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/comments.inc.php';
 check_login_member('auth');
 
 if (is_file(_BASEPATH_.'/events/processors/comment_delete.php')) {
-	include_once _BASEPATH_.'/events/processors/comment_delete.php';
+	include _BASEPATH_.'/events/processors/comment_delete.php';
 }
 
 $topass=array();
@@ -29,21 +29,27 @@ if (!empty($comment_id)) {
 	switch ($comment_type) {
 
 		case 'blog':
-			$table="{$dbtable_prefix}blog_comments";
+			$table="{$dbtable_prefix}comments_blog";
 			$parent_table="{$dbtable_prefix}blog_posts";
 			$parent_key="post_id";
 			break;
 
 		case 'photo':
-			$table="{$dbtable_prefix}photo_comments";
+			$table="{$dbtable_prefix}comments_photo";
 			$parent_table="{$dbtable_prefix}user_photos";
 			$parent_key="photo_id";
 			break;
 
 		case 'user':
-			$table="{$dbtable_prefix}profile_comments";
+			$table="{$dbtable_prefix}comments_profile";
 			$parent_table="{$dbtable_prefix}user_profiles";
 			$parent_key="fk_user_id";
+			break;
+
+		case 'video':
+			$table="{$dbtable_prefix}comments_video";
+			$parent_table="{$dbtable_prefix}user_videos";
+			$parent_key="video_id";
 			break;
 
 	}

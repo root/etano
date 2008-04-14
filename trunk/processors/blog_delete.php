@@ -11,13 +11,13 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once '../includes/common.inc.php';
-require_once '../includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
+require '../includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 check_login_member('write_blogs');
 
 if (is_file(_BASEPATH_.'/events/processors/blog_delete.php')) {
-	include_once _BASEPATH_.'/events/processors/blog_delete.php';
+	include _BASEPATH_.'/events/processors/blog_delete.php';
 }
 
 $topass=array();
@@ -29,7 +29,7 @@ $post_ids=array();
 for ($i=0;$i<mysql_num_rows($res);++$i) {
 	$post_ids[]=mysql_result($res,$i,0);
 }
-$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_parent_id` IN ('".join("','",$post_ids)."')";
+$query="DELETE FROM `{$dbtable_prefix}comments_blog` WHERE `fk_parent_id` IN ('".join("','",$post_ids)."')";
 if (isset($_on_before_delete)) {
 	for ($i=0;isset($_on_before_delete[$i]);++$i) {
 		call_user_func($_on_before_delete[$i]);

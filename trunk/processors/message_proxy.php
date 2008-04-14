@@ -11,10 +11,10 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once '../includes/common.inc.php';
-require_once '../includes/user_functions.inc.php';
-require_once '../includes/tables/user_spambox.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
+require '../includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/includes/tables/user_spambox.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
 
 $error=false;
 $topass=array();

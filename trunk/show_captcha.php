@@ -11,8 +11,8 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once 'includes/common.inc.php';
-require_once 'includes/classes/sco_captcha.class.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/classes/sco_captcha.class.php';
 
 $captcha_word=$_SESSION['captcha_word'];
 $c=new sco_captcha(_BASEPATH_.'/includes/fonts',4,true,13,14,10,true);

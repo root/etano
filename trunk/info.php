@@ -11,9 +11,9 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once 'includes/common.inc.php';
-require_once 'includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/info.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/info.php';
 global $tplvars;
 
 $type=isset($_GET['type']) ? $_GET['type'] : '';
@@ -65,7 +65,7 @@ switch ($type) {
 		$active_gateways=array();
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			if (is_file(_BASEPATH_.'/plugins/payment/'.$rsrow['module_code'].'/'.$rsrow['module_code'].'.class.php')) {
-				include_once _BASEPATH_.'/plugins/payment/'.$rsrow['module_code'].'/'.$rsrow['module_code'].'.class.php';
+				include _BASEPATH_.'/plugins/payment/'.$rsrow['module_code'].'/'.$rsrow['module_code'].'.class.php';
 				$temp='payment_'.$rsrow['module_code'];
 				$rsrow['call']=new $temp();
 				$rsrow['module_name']=sanitize_and_format($rsrow['module_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);

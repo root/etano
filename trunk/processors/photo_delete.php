@@ -11,13 +11,13 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once '../includes/common.inc.php';
-require_once '../includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
+require '../includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 check_login_member('upload_photos');
 
 if (is_file(_BASEPATH_.'/events/processors/photo_delete.php')) {
-	include_once _BASEPATH_.'/events/processors/photo_delete.php';
+	include _BASEPATH_.'/events/processors/photo_delete.php';
 }
 
 $topass=array();
@@ -36,7 +36,7 @@ if (mysql_num_rows($res)) {
 	}
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (!empty($input['photo'])) {
-		require_once '../includes/classes/fileop.class.php';
+		require _BASEPATH_.'/includes/classes/fileop.class.php';
 		$fileop=new fileop();
 		$fileop->delete(_PHOTOPATH_.'/t1/'.$input['photo']);
 		$fileop->delete(_PHOTOPATH_.'/t2/'.$input['photo']);
@@ -47,7 +47,7 @@ if (mysql_num_rows($res)) {
 		set_user_settings($_SESSION[_LICENSE_KEY_]['user']['user_id'],'core_photo','max_user_photos',$photos_remaining+1);
 	}
 
-	$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_parent_id`=$photo_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+	$query="DELETE FROM `{$dbtable_prefix}comments_photo` WHERE `fk_parent_id`=$photo_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 	// what to do with the cache for the deleted comments or photo page? clear_cache($photo_id) ????

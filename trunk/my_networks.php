@@ -11,15 +11,15 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once 'includes/common.inc.php';
-require_once 'includes/user_functions.inc.php';
-require_once 'includes/network_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/net.inc.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/includes/network_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/net.inc.php';
 check_login_member('manage_networks');
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
-require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
+require _BASEPATH_.'/includes/classes/user_cache.class.php';
 $user_cache=new user_cache(get_my_skin());
 
 $query="SELECT `net_id`,`network` FROM `{$dbtable_prefix}networks`";

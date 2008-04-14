@@ -11,10 +11,10 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once 'includes/common.inc.php';
-require_once 'includes/user_functions.inc.php';
-require_once 'includes/classes/sco_captcha.class.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/pass_change.inc.php';
+require 'includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/includes/classes/sco_captcha.class.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/pass_change.inc.php';
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 $output=array();
