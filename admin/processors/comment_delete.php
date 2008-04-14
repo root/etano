@@ -26,19 +26,19 @@ $return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD
 switch ($m) {
 
 	case 'blog':
-		$table="`{$dbtable_prefix}blog_comments`";
+		$table="`{$dbtable_prefix}comments_blog`";
 		$parent_table="`{$dbtable_prefix}blog_posts`";
 		$parent_key="`post_id`";
 		break;
 
 	case 'photo':
-		$table="`{$dbtable_prefix}photo_comments`";
+		$table="`{$dbtable_prefix}comments_photo`";
 		$parent_table="`{$dbtable_prefix}user_photos`";
 		$parent_key="`photo_id`";
 		break;
 
 	case 'user':
-		$table="`{$dbtable_prefix}profile_comments`";
+		$table="`{$dbtable_prefix}comments_profile`";
 		$parent_table="`{$dbtable_prefix}user_profiles`";
 		$parent_key="`fk_user_id`";
 		break;

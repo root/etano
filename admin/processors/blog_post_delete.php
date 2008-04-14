@@ -35,7 +35,7 @@ if (is_file(_BASEPATH_.'/events/processors/blog_posts_delete.php')) {
 }
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
-$query="DELETE FROM `{$dbtable_prefix}blog_comments` WHERE `fk_parent_id`=$post_id";
+$query="DELETE FROM `{$dbtable_prefix}comments_blog` WHERE `fk_parent_id`=$post_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 // what to do with the cache for the deleted blog post?

@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       admin/processors/photos_delete.php
+File:                       admin/processors/photo_delete.php
 $Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
@@ -48,7 +48,7 @@ if (mysql_num_rows($res)) {
 		$fileop->delete(_PHOTOPATH_.'/'.$input['photo']);
 	}
 
-	$query="DELETE FROM `{$dbtable_prefix}photo_comments` WHERE `fk_parent_id`=$photo_id";
+	$query="DELETE FROM `{$dbtable_prefix}comments_photo` WHERE `fk_parent_id`=$photo_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
 // what to do with the cache for the deleted comments or photo page? clear_cache($photo_id) ????
