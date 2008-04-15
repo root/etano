@@ -15,6 +15,10 @@ require_once '../../includes/common.inc.php';
 require_once '../../includes/admin_functions.inc.php';
 allow_dept(DEPT_ADMIN);
 
+if (is_file(_BASEPATH_.'/events/processors/comment_addedit.php')) {
+	include _BASEPATH_.'/events/processors/comment_addedit.php';
+}
+
 $error=false;
 $qs='';
 $qs_sep='';
@@ -23,26 +27,31 @@ $nextpage='comment_addedit.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$input['m']=sanitize_and_format_gpc($_POST,'m',TYPE_STRING,0,'');
+	$input['comment_type']=sanitize_and_format_gpc($_POST,'m',TYPE_STRING,0,'');
 
 	$default['defaults']=array();
-	if ($input['m']=='blog') {
+	if ($input['comment_type']=='blog') {
 		require _BASEPATH_.'/includes/tables/comments_blog.inc.php';
 		$default=&$comments_blog_default;
 		$table="`{$dbtable_prefix}comments_blog`";
 		$parent_table="`{$dbtable_prefix}blog_posts`";
 		$parent_key="`post_id`";
-	} elseif ($input['m']=='photo') {
+	} elseif ($input['comment_type']=='photo') {
 		require _BASEPATH_.'/includes/tables/comments_photo.inc.php';
 		$default=&$comments_photo_default;
 		$table="`{$dbtable_prefix}comments_photo`";
 		$parent_table="`{$dbtable_prefix}user_photos`";
 		$parent_key="`photo_id`";
-	} elseif ($input['m']=='user') {
+	} elseif ($input['comment_type']=='user') {
 		require _BASEPATH_.'/includes/tables/comments_profile.inc.php';
 		$default=&$comments_profile_default;
 		$table="`{$dbtable_prefix}comments_profile`";
+	} else {
+		$error=true;
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']='Unknown comment type';
 	}
+
 	foreach ($default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],$default['defaults'][$k]);
 	}
@@ -71,9 +80,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query.=" WHERE `comment_id`=".$input['comment_id'];
+			if (isset($_on_before_update)) {
+				for ($i=0;isset($_on_before_update[$i]);++$i) {
+					call_user_func($_on_before_update[$i]);
+				}
+			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Comment changed.';
+			if (isset($_on_after_update)) {
+				for ($i=0;isset($_on_after_update[$i]);++$i) {
+					call_user_func($_on_after_update[$i]);
+				}
+			}
 		} else {
 			unset($input['comment_id']);
 			$query="INSERT INTO $table SET `_user`='Admin',`date_posted`='$now',`last_changed`='$now',`status`=".STAT_APPROVED;
@@ -82,7 +101,25 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 					$query.=",`$k`='".$input[$k]."'";
 				}
 			}
+			if (isset($_on_before_insert)) {
+				for ($i=0;isset($_on_before_insert[$i]);++$i) {
+					call_user_func($_on_before_insert[$i]);
+				}
+			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$input['comment_id']=mysql_insert_id();
+			if (isset($_on_after_insert)) {
+				for ($i=0;isset($_on_after_insert[$i]);++$i) {
+					call_user_func($_on_after_insert[$i]);
+				}
+			}
+			if (isset($_on_after_approve)) {
+				$GLOBALS['comment_ids']=array($input['comment_id']);
+				$GLOBALS['comment_type']=$input['comment_type'];
+				for ($i=0;isset($_on_after_approve[$i]);++$i) {
+					call_user_func($_on_after_approve[$i]);
+				}
+			}
 			$topass['message']['type']=MESSAGE_INFO;
 			$topass['message']['text']='Comment added.';
 		}
