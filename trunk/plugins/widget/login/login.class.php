@@ -53,7 +53,7 @@ class widget_login extends icontent_widget {
 	function _finish_display() {
 		$this->tpl->set_var('tplvars',$GLOBALS['tplvars']);
 		$myreturn=$this->tpl->process('widget.content','widget.content',TPL_OPTIONAL);
-		$this->tpl->drop_var('widget.content');
+		$this->tpl->drop_var('widget');
 		return $myreturn;
 	}
 
