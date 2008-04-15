@@ -45,124 +45,6 @@ changes:
 		- moved the include_functions() call in process() to be the last one before returning the $target
 		- remove_nonjs bugfix : remove only vars that have no ( or ) or ; in them
 		+ changed the error handling to use trigger_error instead of the builtin function
-
-	2004.03.04
-		+ TPL_LOOPOPT -> TPL_OPTLOOP
-		+ TPL_PARSEDLOOP -> TPL_PARSEDLOOP
-		* v1.10
-
-	2004.03.03
-		+ TPL_LOOP_INNER_PARSED
-		+ TPL_LOOP_INNER_OPTIONAL
-		* v1.10beta2
-
-	2004.03.02
-		+ TPL_STRIP_UTF_HEADER
-		+ TPL_PARSEDLOOP
-		+ TPL_LOOPOPT
-		* v1.10beta
-		+ utf header matching
-
-	2004.03.01
-		- process() bugfix
-		* v1.9.4
-
-	2003.10.20
-		- parse() bugfix
-		* v1.9.3
-
-	2003.08.12
-		- remove_nonjs bugfix
-		* v1.9.2
-
-	2003.06.29
-		* optional now works with 0 and '0'
-		* v1.9.1
-
-	2003.06.19
-		+ custom block syntax, thanks to G. van den Hoven
-		+ set_block_syntax()
-		+ tie_loop()
-		+ tie_var()
-		* v1.9
-
-	2003.06.17
-		* parse() works faster, thanks to Sergej Kurakin
-		- remove_nonjs bugfix
-		+ error handler support
-
-	2003.06.16
-		- set_root() bug
-
-	2003.03.14
-		+ process() now accepts parameters as bits, thanks to Audrius Karabanovas
-		+ set_params() set default parameters for process()
-		* v1.8.1
-
-	2003.03.14
-		+ phpdoc comments
-		* v1.8
-
-	2002.11.13
-		- $block_names no more
-		- bug in extract blocks
-
-	2002.09.24
-		* parse now accpets string instead of handle
-		+ optional() <opt>
-		* root change
-
-	2002.03.23
-		- bug with templates caintaining { a { b }
-		* v1.7.1
-
-	2002.03.03
-		* fopen fread fclose instead of implode(file()), up to 3x faster
-		+ remove_nonjs - remove only variables that have no spaces in them
-		* speed improvements, got rid of list() = each()
-		+ license :]
-		* v1.7
-
-	2002.03.02
-		- deleted space before each line in the parsed template.
-		- error in method error() :]
-		* v1.6.2 note released :]
-
-	2001.12.06
-		- bug then text had only }
-		* v1.6.1
-
-	2001.10.31
-		+ error on unclosed block
-		+ nested blocks
-		* v1.6
-
-	2001.09.17
-		- fixed bug with 'keep'
-
-	2001.09.02
-		+ get_var_silent()
-
-	2001.08.09
-		+ error handler
-
-	2001.07.04
-		+ one pass substitution
-
-	2001.05.28
-		+ block name recording
-		* v1.5.1
-
-	2001.05.10
-		- bug in documentation
-
-	2001.05.08
-		* first public release v1.5
-
-	2001.04.04
-		* changed blocks setup, constructor parameters change
-		- error bug
-		- some warnings
 */
 
 define('TPL_LOOP',		1);
@@ -717,7 +599,15 @@ class phemplate {
 	*	free mem used by var
 	*/
 	function drop_var($handle) {
-		if (isset($this->vars[$handle])) unset($this->vars[$handle]);
+		if (isset($this->vars[$handle])) {
+			unset($this->vars[$handle]);
+		} elseif (strpos($handle,'.')===false) {
+			foreach ($this->vars as $k=>$v) {
+				if (strpos($k,$handle.'.')===0) {
+					unset($this->vars[$k]);
+				}
+			}
+		}
 	}
 
 	/**

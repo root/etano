@@ -86,7 +86,7 @@ class widget_osignal_feed extends icontent_widget {
 			$this->tpl->set_var('widget',$widget);
 			$myreturn=$this->tpl->process('temp','temp',TPL_OPTIONAL);
 			$this->tpl->drop_var('temp');
-			$this->tpl->drop_var('widget.content');
+			$this->tpl->drop_var('widget');
 		}
 		return $myreturn;
 	}
