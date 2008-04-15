@@ -51,13 +51,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$table="{$dbtable_prefix}comments_profile";
 			break;
 
-		case 'video':
-			require _BASEPATH_.'/includes/tables/comments_video.inc.php';
-			$item_default=&$comments_video_default;
-			$nextpage='video_view.php';
-			$table="{$dbtable_prefix}comments_video";
-			break;
-
 		default:
 			$error=true;
 			break;
