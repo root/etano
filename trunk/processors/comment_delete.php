@@ -46,12 +46,6 @@ if (!empty($comment_id)) {
 			$parent_key="fk_user_id";
 			break;
 
-		case 'video':
-			$table="{$dbtable_prefix}comments_video";
-			$parent_table="{$dbtable_prefix}user_videos";
-			$parent_key="video_id";
-			break;
-
 	}
 	$query="SELECT b.`fk_user_id` FROM `$table` a,`$parent_table` b WHERE a.`comment_id`=$comment_id AND a.`fk_parent_id`=b.`$parent_key`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
