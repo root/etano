@@ -22,3 +22,10 @@ php_flag session.use_trans_sid off
 	#Header set Cache-Control "max-age=60, private, proxy-revalidate"
 	#</FilesMatch>
 </IfModule>
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 3 days"
+    ExpiresByType image/jpeg "access plus 3 days"
+    ExpiresByType image/gif "access plus 3 days"
+    ExpiresByType image/png "access plus 3 days"
+</IfModule>
