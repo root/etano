@@ -6,15 +6,6 @@
 	<label for="subject">Subject: </label><input class="text" type="text" name="subject" id="subject" value="{output.subject}" tabindex="1" />
 	<!--opt name="output.flirt_reply"--><p><a class="content-link link_flirt" href="{tplvars.relative_url}flirt_send.php?to_id={output.fk_user_id}&amp;ft=1&amp;return={output.return}">Reply with a flirt instead</a></p><!--/opt name="output.flirt_reply"-->
 </fieldset>
-<!--opt name="output.bbcode_message"-->
-<div id="bb_tools">
-	<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
-	<a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a>
-	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a>
-	<a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a>
-	<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
-</div>
-<!--/opt name="output.bbcode_message"-->
 <fieldset>
 	<textarea name="message_body" id="message_body" cols="" rows="" tabindex="2">{output.message_body}</textarea>
 </fieldset>
@@ -26,7 +17,9 @@
 </form>
 
 <script type="text/javascript">
+<!--opt name="output.bbcode_message"-->
 	bbcode_field_id='#message_body';
+<!--/opt name="output.bbcode_message"-->
 	var lang=new Array('{output.lang_263}','{output.lang_264}','{output.lang_196}','{output.lang_197}');
 </script>
 <script type="text/javascript" src="{tplvars.relative_url}js/thickbox.js?v={tplvars.js_lib_v}"></script>

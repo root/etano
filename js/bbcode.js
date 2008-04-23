@@ -1,5 +1,6 @@
 $(function() {
 	if (typeof(bbcode_field_id)!='undefined') {
+		$(bbcode_field_id).before('<div id="bb_tools"><a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a><a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a><a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a><a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a><a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a></div>');
 		$('#bb_tools #bold').click(function() {
 			add_bbcode2('b',$(bbcode_field_id)[0]);
 			return false;
