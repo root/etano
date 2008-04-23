@@ -37,15 +37,6 @@
 <!--opt name="output.allow_comments"-->
 <h3 class="subtitle">Leave your comment</h3>
 
-<!--opt name="output.bbcode_comments"-->
-<div id="bb_tools">
-	<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
-	<a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a>
-	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a>
-	<a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a>
-	<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
-</div>
-<!--/opt name="output.bbcode_comments"-->
 <form action="{tplvars.relative_url}processors/comment_addedit.php" method="post" id="photocomment_form">
 <fieldset>
 	<input type="hidden" name="comment_type" value="photo" />
@@ -85,7 +76,9 @@
 
 <script type="text/javascript">
 	item_id={output.photo_id};
+<!--opt name="output.bbcode_comments"-->
 	bbcode_field_id='#comment';
+<!--/opt name="output.bbcode_comments"-->
 	var lang=[];
 	lang['256']='{output.lang_256}';
 </script>
