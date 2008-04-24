@@ -126,7 +126,7 @@ $tplvars['sitename']=_SITENAME_;
 $tplvars['baseurl']=_BASEURL_;
 $tplvars['photourl']=_PHOTOURL_;
 
-if (isset($_SERVER['PHP_SELF'])) {
+if (isset($_SERVER['REQUEST_URI'])) {
 	$_SERVER['PHP_SELF']=preg_replace('~//+~','/',$_SERVER['PHP_SELF']);
 	$relative_path=@str_repeat('../',substr_count($_SERVER['SCRIPT_NAME'],'/')-(substr_count(_BASEURL_,'/')-2)-1);
 	$_SERVER['REQUEST_URI']=preg_replace('~//+~','/',$_SERVER['REQUEST_URI']);

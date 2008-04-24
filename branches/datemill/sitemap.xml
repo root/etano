@@ -6,8 +6,13 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
-  <loc>http://www.datemill.com/blogpost/45/a_script_that_bad_that_we_won_t_create_an_integration_bridge_for_it</loc>
+  <loc>http://www.datemill.com/blogpost/46/3_million_cities_db_integration_with_etano_community_builder</loc>
   <priority>0.4</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/45/a_script_that_bad_that_we_won_t_create_an_integration_bridge_for_it</loc>
+  <priority>0.2</priority>
   <changefreq>daily</changefreq>
 </url>
 <url>
