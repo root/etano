@@ -151,6 +151,13 @@ if (mysql_num_rows($res)) {
 	} else {
 		$account['paid_until']='-';
 	}
+	$query="SELECT DISTINCT `ip` FROM `{$dbtable_prefix}site_log` WHERE `fk_user_id`=".$output['fk_user_id']." OR `user`='".$output['_user']."'";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$output['ips']=array();
+	for ($i=0;$i<mysql_num_rows($res);++$i) {
+		$output['ips'][]=long2ip(mysql_result($res,$i,0));
+	}
+	$output['ips']=join(', ',$output['ips']);
 }
 
 $output['pic_width']=get_site_option('pic_width','core_photo');
