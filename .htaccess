@@ -27,6 +27,8 @@ php_flag display_errors on
 </IfModule>
 
 RewriteEngine on
+RewriteRule products/?.* http://www.datemill.com/features.php [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule .+ - [L]

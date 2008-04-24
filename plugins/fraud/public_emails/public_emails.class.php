@@ -26,6 +26,6 @@ class fraud_public_emails extends ifraud {
 
 	function _init() {
 //		$this->config=get_site_option(array(),$this->module_code);
-		$this->config['banned_strings']=array('@yahoo','@hotmail','@gmail','@msn','@excite','@home.ro','@go.ro','@manele','@bestscriptvn.biz');
+		$this->config['banned_strings']=array('@yahoo','@hotmail','@gmail','@msn','@excite','@home.ro','@go.ro','@manele','@bestscriptvn.biz','@filehostvn.net','@wanadoo.fr','@aol.com','.mil');
 	}
 }
