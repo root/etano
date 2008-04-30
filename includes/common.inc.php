@@ -139,3 +139,4 @@ $accepted_currencies=array('USD'=>'USD','EUR'=>'EUR','GBP'=>'GBP');
 
 $tplvars['js_lib_v']=5;	// change this when you update any .js file. This should force a reload of the js scripts.
 $tplvars['remote_site']='http://www.datemill.com';
+$_cache_config=array('cacheDir'=>_BASEPATH_.'/cache2/','lifeTime'=>null,'fileLocking'=>false,'writeControl'=>false,'readControl'=>false,'hashedDirectoryLevel'=>3);

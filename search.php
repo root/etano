@@ -340,7 +340,7 @@ if (!empty($output['totalrows'])) {
 		}
 	}
 	require _BASEPATH_.'/includes/classes/user_cache.class.php';
-	$user_cache=new user_cache(get_my_skin());
+	$user_cache=new user_cache();
 	$output['results']=smart_table($user_cache->get_cache_array($user_ids,'result_user',$inject_by_uid),5,$rv_mode,$cell_css_classes);
 	unset($user_cache);
 

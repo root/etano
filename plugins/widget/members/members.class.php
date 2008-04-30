@@ -71,8 +71,8 @@ class widget_members extends icontent_widget {
 		}
 		if (!empty($user_ids)) {
 			require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
-			$user_cache=new user_cache(get_my_skin());
-			$loop=$user_cache->get_cache_beta($user_ids,'result_user','tpl');
+			$user_cache=new user_cache();
+			$loop=$user_cache->get_cache_tpl($user_ids,'result_user');
 			unset($user_cache);
 			if (!empty($loop)) {
 				$loop[0]['class']='first';
