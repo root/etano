@@ -287,10 +287,10 @@ function regenerate_langstrings_array($skin_module_code='') {
 
 function regenerate_skin_cache($skin_module_code='',$last_id=0) {
 	$timeout=120;
-	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
+	require _BASEPATH_.'/includes/classes/Cache/Lite.php';
+	$cache=new Cache_Lite($GLOBALS['_cache_config']);
 	global $dbtable_prefix,$_pfields,$_pcats,$__field2format;
 	$tpl=new phemplate(_BASEPATH_.'/skins_site/','remove_nonjs');
-	$fileop=new fileop();
 	if (empty($skin_module_code)) {
 		$query="SELECT b.`config_value` as `skin_dir` FROM `{$dbtable_prefix}modules` a,`{$dbtable_prefix}site_options3` b WHERE a.`module_type`=".MODULE_SKIN." AND a.`module_code`=b.`fk_module_code` AND b.`config_option`='skin_dir'";
 	} else {
@@ -376,15 +376,11 @@ function regenerate_skin_cache($skin_module_code='',$last_id=0) {
 			}
 
 			$tpl->set_var('profile',$profile);
-			// create the user cache folder if it doesn't exist
-			if (!is_dir(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'])) {
-				$fileop->mkdir(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id']);
-			}
 
 			// generate the user details for result lists
 			$tpl->set_file('temp',$skins[$s].'/static/result_user.html');
 			$towrite=$tpl->process('','temp',TPL_OPTIONAL);
-			$fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/result_user.html',$towrite);
+			$cache->save($towrite,'skin'.$skins[$s].$profile['fk_user_id'].'result_user');
 
 			// generate the categories to be used on profile.php page
 			$categs=array();
@@ -404,7 +400,7 @@ function regenerate_skin_cache($skin_module_code='',$last_id=0) {
 				$tpl->set_loop('fields',$fields);
 				$tpl->set_var('categs',$categs);
 				$towrite=$tpl->process('','temp',TPL_LOOP);
-				$fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/categ_'.$pcat_id.'.html',$towrite);
+				$cache->save($towrite,'skin'.$skins[$s].$profile['fk_user_id'].'pcat'.$pcat_id);
 				$tpl->drop_loop('fields');
 				$tpl->drop_var('categs');
 			}

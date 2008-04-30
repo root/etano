@@ -87,10 +87,10 @@ $rw_files[$i]['perms']='777';
 $rw_files[$i]['real_file']=array('rss');
 ++$i;
 
-$rw_files[$i]['file']='skins_site/def/cache/users/1-9';
+$rw_files[$i]['file']='cache2';
 $rw_files[$i]['type']='All folders';
 $rw_files[$i]['perms']='777';
-$rw_files[$i]['real_file']=array('skins_site/def/cache/users/1','skins_site/def/cache/users/2','skins_site/def/cache/users/3','skins_site/def/cache/users/4','skins_site/def/cache/users/5','skins_site/def/cache/users/6','skins_site/def/cache/users/7','skins_site/def/cache/users/8','skins_site/def/cache/users/9');
+$rw_files[$i]['real_file']=array('cache2');
 ++$i;
 
 $rw_files[$i]['file']='skins_site/def/cache/widgets';

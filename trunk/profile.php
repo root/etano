@@ -69,12 +69,12 @@ if (!empty($output)) {
 
 	// get the profile
 	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
-	$user_cache=new user_cache(get_my_skin());
+	$user_cache=new user_cache();
 
 	$j=0;
 	foreach ($_pcats as $pcat_id=>$pcat) {
 		if (((int)$pcat['access_level']) & ((int)$_SESSION[_LICENSE_KEY_]['user']['membership'])) {
-			$temp=$user_cache->get_cache($output['uid'],'categ_'.$pcat_id);
+			$temp=$user_cache->get_categ($output['uid'],$pcat_id);
 			if (!empty($temp)) {
 				$categs[$j]['content']=$temp;
 				// if you prefer a custom layout use {profile.categ_1},{profile.categ_2},etc in <skin>/profile.html,
@@ -92,7 +92,7 @@ if (!empty($output)) {
 	// get some friends
 	$loop_friends=get_network_members($output['uid'],NET_FRIENDS,4);
 	if (!empty($loop_friends)) {
-		$loop_friends=$user_cache->get_cache_beta($loop_friends,'result_user','tpl',$tpl);
+		$loop_friends=$user_cache->get_cache_tpl($loop_friends,'result_user');
 	}
 	unset($user_cache);
 

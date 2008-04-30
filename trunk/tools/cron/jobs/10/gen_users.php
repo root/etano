@@ -25,8 +25,8 @@ function gen_user_cache() {
 
 	$config=get_site_option(array('bbcode_profile','use_smilies'),'core');
 
-	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
-	$fileop=new fileop();
+	require _BASEPATH_.'/includes/classes/Cache/Lite.php';
+	$cache=new Cache_Lite($GLOBALS['_cache_config']);
 
 	$now=gmdate('YmdHis');
 	$select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`rad_longitude`,`rad_latitude`';
@@ -97,15 +97,11 @@ function gen_user_cache() {
 			}
 
 			$tpl->set_var('profile',$profile);
-			// create the user cache folder if it doesn't exist
-			if (!is_dir(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'])) {
-				$fileop->mkdir(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id']);
-			}
 
 			// generate the user details for result lists
 			$tpl->set_file('temp',$skins[$s].'/static/result_user.html');
 			$towrite=$tpl->process('','temp');
-			$fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/result_user.html',$towrite);
+			$cache->save($towrite,'skin'.$skins[$s].$profile['fk_user_id'].'result_user');
 
 			// generate the categories to be used on profile.php page
 			$categs=array();
@@ -125,7 +121,7 @@ function gen_user_cache() {
 				$tpl->set_loop('fields',$fields);
 				$tpl->set_var('categs',$categs);
 				$towrite=$tpl->process('','temp',TPL_LOOP);
-				$fileop->file_put_contents(_BASEPATH_.'/skins_site/'.$skins[$s].'/cache/users/'.$profile['fk_user_id']{0}.'/'.$profile['fk_user_id'].'/categ_'.$pcat_id.'.html',$towrite);
+				$cache->save($towrite,'skin'.$skins[$s].$profile['fk_user_id'].'pcat'.$pcat_id);
 				$tpl->drop_loop('fields');
 				$tpl->drop_var('categs');
 			}
