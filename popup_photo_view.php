@@ -11,11 +11,9 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require 'includes/common.inc.php';
-require _BASEPATH_.'/includes/user_functions.inc.php';
+require_once 'includes/common.inc.php';
+require_once 'includes/user_functions.inc.php';
 check_login_member('view_photo');
-
-$tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $main=sanitize_and_format_gpc($_GET,'main',TYPE_INT,0,0);
 $photo_id=sanitize_and_format_gpc($_GET,'photo_id',TYPE_INT,0,0);
@@ -32,10 +30,6 @@ if (!empty($photo_id)) {
 }
 if (isset($res) && mysql_num_rows($res)) {
 	$photo=mysql_fetch_assoc($res);
-	$photo['user']=sanitize_and_format($photo['user'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+	header('Content-type: image/jpeg',true);
+	readfile(_PHOTOPATH_.'/'.$photo['photo']);
 }
-
-$tpl->set_file('content','popup_photo_view.html');
-$tpl->set_var('photo',$photo);
-$tpl->set_var('tplvars',$tplvars);
-echo $tpl->process('','content',TPL_FINISH);
