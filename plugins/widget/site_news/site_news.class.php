@@ -21,7 +21,7 @@ class widget_site_news extends icontent_widget {
 	var $module_code='site_news';
 
 	function widget_site_news() {
-		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/plugins/widget/site_news/site_news.class.php';
+		require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/plugins/widget/site_news/site_news.class.php';
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
