@@ -96,22 +96,18 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$towrite='';
 			$querystart="INSERT INTO `".$tables[$i]."` VALUES ";
 			$towrite=$querystart;
-			$is_insert=false;
 			while ($rsrow=mysql_fetch_row($res)) {
-				if (strlen($towrite)<$query_char_limit) {
-					$rsrow=sanitize_and_format($rsrow,TYPE_STRING,FORMAT_ADDSLASH);
-					$towrite.="('".join("','",$rsrow)."'),";
-					$is_insert=true;
-				} else {
+				$rsrow=sanitize_and_format($rsrow,TYPE_STRING,FORMAT_ADDSLASH);
+				if (strlen($towrite)>=$query_char_limit) {
 					$towrite=substr($towrite,0,-1).";\n";
 					echo $towrite;
 					ob_flush();
 					flush();
 					$towrite=$querystart;
-					$is_insert=false;
 				}
+				$towrite.="('".join("','",$rsrow)."'),";
 			}
-			if ($is_insert) {
+			if ($towrite!=$querystart) {
 				$towrite=substr($towrite,0,-1).";\n\n";
 				echo $towrite;
 				ob_flush();
