@@ -403,12 +403,14 @@ class phemplate {
 				$start_pos+=15;
 				$tag_endpos=strpos($str,'"-->',$start_pos);
 				$loop_name=substr($str,$start_pos,$tag_endpos-$start_pos);
-				if (isset($loop_ar[$loop_name])) {
-					$start_pos+=strlen($loop_name)+4;
-					$endpos=strpos($str,'<!--/loop name="'.$loop_name.'"-->',$start_pos);
-					$loop_code=substr($str,$start_pos,$endpos-$start_pos);
+				$start_pos+=strlen($loop_name)+4;	// "-->
+				$endpos=strpos($str,'<!--/loop name="'.$loop_name.'"-->',$start_pos);
+				$loop_code=substr($str,$start_pos,$endpos-$start_pos);
+				if (!empty($loop_ar[$loop_name]) && is_array(($loop_ar[$loop_name]))) {
 					$new_code=$this->parse_one_loop($loop_code,$loop_name,$loop_ar[$loop_name],$loop_mode);
 					$str=str_replace('<!--loop name="'.$loop_name.'"-->'.$loop_code.'<!--/loop name="'.$loop_name.'"-->', $new_code, $str);
+				} else {
+					$str=str_replace('<!--loop name="'.$loop_name.'"-->'.$loop_code.'<!--/loop name="'.$loop_name.'"-->','',$str);
 				}
 			}
 		}
