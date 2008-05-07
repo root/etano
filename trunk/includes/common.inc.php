@@ -84,11 +84,11 @@ define('NET_FAVES',3);
 // activate db sessions?
 define('USE_DB_SESSIONS',0);
 
-require_once dirname(__FILE__).'/defines.inc.php';
-require_once _BASEPATH_.'/includes/sco_functions.inc.php';
+require dirname(__FILE__).'/defines.inc.php';
+require _BASEPATH_.'/includes/sco_functions.inc.php';
 $etano_dblink=db_connect(_DBHOST_,_DBUSER_,_DBPASS_,_DBNAME_);
 if (!defined('NO_SESSION')) {
-	require_once _BASEPATH_.'/includes/sessions.inc.php';
+	require _BASEPATH_.'/includes/sessions.inc.php';
 }
 
 // Unset globally registered vars. this should protect us against any remote file inclusion attack
@@ -121,7 +121,7 @@ define('FIELD_LOCATION',107);
 $__field2type[FIELD_LOCATION]=TYPE_INT;
 $__field2format[FIELD_LOCATION]=0;
 define('FIELD_RANGE',108);
-require_once _BASEPATH_.'/includes/classes/phemplate.class.php';
+require _BASEPATH_.'/includes/classes/phemplate.class.php';
 if (is_dir(dirname(__FILE__).'/../install')) {
 	die('Please remove the install folder.');
 }
