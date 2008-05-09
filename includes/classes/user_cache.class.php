@@ -62,7 +62,7 @@ class user_cache {
 			$user_ids=array($user_ids);
 		}
 		for ($id=0;isset($user_ids[$id]);++$id) {
-			$temp=$this->cache->get('skin'.$this->skin.$user_id.$part);
+			$temp=$this->cache->get('skin'.$this->skin.$user_ids[$id].$part);
 			if (!empty($temp)) {
 				$myreturn[$id][$part]=$temp;
 				$myreturn[$id]['uid']=$user_ids[$id];

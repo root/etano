@@ -1,11 +1,11 @@
 <div id="photo_area">
-	<!--opt name="output._photo"--><a class="thickbox" href="{tplvars.relative_url}popup_photo_view.php?uid={output.fk_user_id}&amp;main=1"><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/{output._photo}" /></a><!--/opt name="output._photo"-->
+	<!--opt name="output._photo"--><a class="thickbox" href="{tplvars.relative_url}popup_photo_view.php?TB_img=1&amp;uid={output.fk_user_id}&amp;main=1" title="My Main Photo"><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/{output._photo}" alt="My Main Photo" /></a><!--/opt name="output._photo"-->
 	<!--opt name="!output._photo"--><img id="main_photo" class="user_photo thumb1" src="{tplvars.photourl}/t1/no_photo.gif" alt="No photo uploaded" /><!--/opt name="!output._photo"-->
 
 	<!--opt name="output.num_photos"-->
 	<ul id="user_photos">
 		<!--loop name="user_photos"-->
-		<li class="{user_photos.class}"><a href="{tplvars.relative_url}photo_view.php?photo_id={user_photos.photo_id}&amp;return={output.return2me}"><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{user_photos.photo}" /></a></li>
+		<li class="{user_photos.class}"><a href="{tplvars.relative_url}photo_view.php?photo_id={user_photos.photo_id}&amp;return={output.return2me}" title=""><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{user_photos.photo}" alt="" /></a></li>
 		<!--/loop name="user_photos"-->
 		<li class="last"><a class="content-link simple" href="{tplvars.relative_url}my_photos.php?return={output.return2me}">View all photos</a>({output.num_photos})</li>
 	</ul>
@@ -75,6 +75,7 @@
 <!--/opt name="output.bbcode_comments"-->
 	var lang=new Array('{output.lang_256}');
 </script>
+<script type="text/javascript" src="{tplvars.relative_url}js/thickbox.js?v={tplvars.js_lib_v}"></script>
 <script type="text/javascript" src="{tplvars.relative_url}js/scrollto.js?v={tplvars.js_lib_v}"></script>
 <script type="text/javascript" src="{tplvars.relative_url}js/my_profile.js?v={tplvars.js_lib_v}"></script>
 <!--opt name="output.bbcode_comments"-->
