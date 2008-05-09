@@ -24,7 +24,7 @@ $edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
 $output=array();
 $output['pic_width']=get_site_option('pic_width','core_photo');
 
-$loop=array();
+$loop_comments=array();
 if (!empty($photo_id)) {
 	$query="SELECT `photo_id`,`photo`,`caption`,`fk_user_id`,`_user` as `user`,`status`,`allow_comments`,`allow_rating`,`stat_votes`,`stat_votes_total` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -47,8 +47,7 @@ if (!empty($photo_id)) {
 			}
 
 			// comments
-			$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
-			$loop_comments=create_comments_loop('photo',$output['photo_id'],$config,$output);
+			$loop_comments=create_comments_loop('photo',$output['photo_id'],$output);
 
 			// prev/next stuff
 			$query="SELECT max(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`<$photo_id AND `is_private`=0 AND `fk_user_id`=".$output['fk_user_id'];
