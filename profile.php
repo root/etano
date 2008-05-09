@@ -35,8 +35,6 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $_SESSION[_LICENSE_KE
 	redirect2page('my_profile.php');
 }
 
-$edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
-
 $output=array();
 // we don't care about user status because the cache generator will generate the profile for the user only if status is approved
 // also _photo is set only with approved photos.
@@ -113,9 +111,6 @@ $output['lang_256']=sanitize_and_format($GLOBALS['_lang'][256],TYPE_STRING,$__fi
 
 $output['return2me']='profile.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
-	if (!empty($edit_comment)) {
-		$_SERVER['QUERY_STRING']=str_replace('&edit_comment='.$edit_comment,'',$_SERVER['QUERY_STRING']);
-	}
 	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];
 }
 $output['return2me']=rawurlencode($output['return2me']);
