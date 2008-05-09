@@ -95,8 +95,7 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 $output['pic_width']=get_site_option('pic_width','core_photo');
 
 // comments
-$config=get_site_option(array('bbcode_comments','smilies_comm'),'core');
-$loop_comments=create_comments_loop('user',$_SESSION[_LICENSE_KEY_]['user']['user_id'],$config,$output);
+$loop_comments=create_comments_loop('user',$_SESSION[_LICENSE_KEY_]['user']['user_id'],$output);
 
 $output['lang_256']=sanitize_and_format($GLOBALS['_lang'][256],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 
