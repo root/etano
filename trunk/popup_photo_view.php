@@ -30,6 +30,10 @@ if (!empty($photo_id)) {
 }
 if (isset($res) && mysql_num_rows($res)) {
 	$photo=mysql_fetch_assoc($res);
-	header('Content-type: image/jpeg',true);
-	readfile(_PHOTOPATH_.'/'.$photo['photo']);
+	if (is_file(_PHOTOPATH_.'/'.$photo['photo'])) {
+		header('Content-type: image/jpeg',true);
+		readfile(_PHOTOPATH_.'/'.$photo['photo']);
+	} else {
+		header('HTTP/1.0 404 Not Found',true);
+	}
 }

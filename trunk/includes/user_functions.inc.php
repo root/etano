@@ -165,3 +165,121 @@ function get_my_skin() {
 	}
 	return $myreturn;
 }
+
+
+/**
+ *	Creates the tpl loop to show comments and the textarea where new comments could be written. Handles the cases when user is
+ *	not logged in or not allowed to post comments.
+ *
+ *	@access public
+ *	@param string $type the identifier for the item where comments are displayed. Can be one of 'user','photo','blog','video'
+ *	@param int $parent_id the ID in the parent table of the item where these comments are posted.
+ *	@param array $config reference to the $config array in the calling script. It needs 'use_captcha','bbcode_comments','smilies_comm'
+ *	@param array $output reference to the $output array in the calling script. It injects additional variables in $output to be
+ *		used by the template system.
+ *
+ */
+function create_comments_loop($type,$parent_id,&$output) {
+	global $dbtable_prefix,$__field2format,$_list_of_online_members,$page_last_modified_time;
+	$myreturn=array();
+	switch ($type) {
+		case 'user':
+			$table="{$dbtable_prefix}comments_profile";
+			$allow_comments=(!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $_SESSION[_LICENSE_KEY_]['user']['user_id']==$parent_id) ? $_SESSION[_LICENSE_KEY_]['user']['prefs']['profile_comments'] : get_user_settings($parent_id,'def_user_prefs','profile_comments');
+			break;
+
+		case 'blog':
+			$table="{$dbtable_prefix}comments_blog";
+			$allow_comments=isset($output['allow_comments']) ? $output['allow_comments'] : 1;
+			break;
+
+		case 'photo':
+			$table="{$dbtable_prefix}comments_photo";
+			$allow_comments=isset($output['allow_comments']) ? $output['allow_comments'] : 1;
+			break;
+
+		case 'video':
+			$table="{$dbtable_prefix}comments_video";
+			$allow_comments=isset($output['allow_comments']) ? $output['allow_comments'] : 1;
+			break;
+	}
+
+	$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
+	$edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
+	$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `$table` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`=$parent_id AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
+	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	while ($rsrow=mysql_fetch_assoc($res)) {
+		if ($rsrow['date_posted']>$page_last_modified_time) {
+			$page_last_modified_time=$rsrow['date_posted'];
+		}
+		// if someone has asked to edit his/her comment
+		if ($edit_comment==$rsrow['comment_id']) {
+			$output['comment_id']=$rsrow['comment_id'];
+			$output['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2EDIT]);
+		}
+		$rsrow['date_posted']=strftime($_SESSION[_LICENSE_KEY_]['user']['prefs']['datetime_format'],$rsrow['date_posted']+$_SESSION[_LICENSE_KEY_]['user']['prefs']['time_offset']);
+		$rsrow['comment']=sanitize_and_format($rsrow['comment'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+		if (!empty($config['bbcode_comments'])) {
+			$rsrow['comment']=bbcode2html($rsrow['comment']);
+		}
+		if (!empty($config['smilies_comm'])) {
+			$rsrow['comment']=text2smilies($rsrow['comment']);
+		}
+		// allow showing the edit links to rightfull owners
+		if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $rsrow['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
+			$rsrow['editme']=true;
+		}
+
+		if (empty($rsrow['fk_user_id'])) {	// for the link to member profile
+			unset($rsrow['fk_user_id']);
+		} else {
+			if (isset($_list_of_online_members[$rsrow['fk_user_id']])) {
+				$rsrow['is_online']='is_online';
+				$rsrow['user_online_status']=$GLOBALS['_lang'][102];
+			} else {
+				$rsrow['user_online_status']=$GLOBALS['_lang'][103];
+			}
+		}
+		if (empty($rsrow['photo']) || !is_file(_PHOTOPATH_.'/t1/'.$rsrow['photo'])) {
+			$rsrow['photo']='no_photo.gif';
+		}
+		$myreturn[]=$rsrow;
+	}
+	if (!empty($myreturn)) {
+		$output['num_comments']=count($myreturn);
+		$output['show_comments']=true;
+	}
+
+	if ($allow_comments) {
+		// may I post comments please?
+		if (allow_at_level('write_comments',$_SESSION[_LICENSE_KEY_]['user']['membership'])) {
+			$output['allow_comments']=true;
+			if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+				if (!empty($config['use_captcha'])) {
+					require _BASEPATH_.'/includes/classes/sco_captcha.class.php';
+					$c=new sco_captcha(_BASEPATH_.'/includes/fonts',4);
+					$_SESSION['captcha_word']=$c->gen_rnd_string(4);
+					$output['rand']=make_seed();
+					$output['use_captcha']=true;
+				}
+			}
+			// would you let me use bbcode?
+			if (!empty($config['bbcode_comments'])) {
+				$output['bbcode_comments']=true;
+			}
+			// if we came back after an error get what was previously posted
+			if (isset($_SESSION['topass']['input'])) {
+				$output=array_merge($output,$_SESSION['topass']['input']);
+				unset($_SESSION['topass']['input']);
+			}
+		} else {
+			unset($output['allow_comments']);
+		}
+	} else {
+		unset($output['allow_comments']);
+	}
+	if (!empty($edit_comment)) {
+		$_SERVER['QUERY_STRING']=str_replace('&edit_comment='.$edit_comment,'',$_SERVER['QUERY_STRING']);
+	}
+	return $myreturn;
+}

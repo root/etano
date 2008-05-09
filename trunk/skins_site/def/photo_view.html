@@ -24,14 +24,14 @@
 
 <!--opt name="output.show_comments"-->
 <!--opt name="output.num_comments"--><h3 class="subtitle">Comments ({output.num_comments})</h3><!--/opt name="output.num_comments"-->
-<!--loop name="loop"-->
-<div class="comment {loop.is_online}">
-	<!--opt name="loop.fk_user_id"--><a href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop.photo}" alt="{loop.user} {loop.user_online_status}" /><!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"-->
-	<span class="controls"><!--opt name="loop.editme"--><a id="editme_{loop.comment_id}" class="content-link link_change" href="{tplvars.relative_url}photo_view.php?photo_id={output.photo_id}&amp;return={output.return2me}&amp;edit_comment={loop.comment_id}#postarea" title="Edit comment">edit</a><!--/opt name="loop.editme"--> <!--opt name="output.photo_owner"--><a class="content-link link_delete comment_delete" href="{tplvars.relative_url}processors/comment_delete.php?comment_id={loop.comment_id}&amp;comment_type=photo&amp;return={output.return2me}" title="Remove comment">delete</a><!--/opt name="output.photo_owner"--> <a class="content-link" href="#pagetop">top</a></span> <!--opt name="loop.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop.fk_user_id}" title="{loop.user} {loop.user_online_status}"><!--/opt name="loop.fk_user_id"-->{loop.user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--> said on {loop.date_posted} :
-	<a name="comm{loop.comment_id}"></a><p id="comment_{loop.comment_id}">{loop.comment}</p>
+<!--loop name="loop_comments"-->
+<div class="comment {loop_comments.is_online}">
+	<!--opt name="loop_comments.fk_user_id"--><a href="{tplvars.relative_url}profile.php?uid={loop_comments.fk_user_id}" title="{loop_comments.user} {loop_comments.user_online_status}"><!--/opt name="loop_comments.fk_user_id"--><img class="user_photo thumb0" src="{tplvars.photourl}/t1/{loop_comments.photo}" alt="{loop_comments.user} {loop_comments.user_online_status}" /><!--opt name="loop_comments.fk_user_id"--></a><!--/opt name="loop_comments.fk_user_id"-->
+	<span class="controls"><!--opt name="loop_comments.editme"--><a id="editme_{loop_comments.comment_id}" class="content-link link_change" href="{tplvars.relative_url}photo_view.php?photo_id={output.photo_id}&amp;return={output.return2me}&amp;edit_comment={loop_comments.comment_id}#postarea" title="Edit comment">edit</a><!--/opt name="loop_comments.editme"--> <!--opt name="output.photo_owner"--><a class="content-link link_delete comment_delete" href="{tplvars.relative_url}processors/comment_delete.php?comment_id={loop_comments.comment_id}&amp;comment_type=photo&amp;return={output.return2me}" title="Remove comment">delete</a><!--/opt name="output.photo_owner"--> <a class="content-link" href="#pagetop">top</a></span> <!--opt name="loop_comments.fk_user_id"--><a class="content-link member_link" href="{tplvars.relative_url}profile.php?uid={loop_comments.fk_user_id}" title="{loop_comments.user} {loop_comments.user_online_status}"><!--/opt name="loop_comments.fk_user_id"-->{loop_comments.user}<!--opt name="loop_comments.fk_user_id"--></a><!--/opt name="loop_comments.fk_user_id"--> said on {loop_comments.date_posted} :
+	<a name="comm{loop_comments.comment_id}"></a><p id="comment_{loop_comments.comment_id}">{loop_comments.comment}</p>
 	<div class="clear"></div>
 </div>
-<!--/loop name="loop"-->
+<!--/loop name="loop_comments"-->
 <!--/opt name="output.show_comments"-->
 
 <!--opt name="output.allow_comments"-->
@@ -82,6 +82,7 @@
 	var lang=[];
 	lang['256']='{output.lang_256}';
 </script>
+<script type="text/javascript" src="{tplvars.relative_url}js/thickbox.js?v={tplvars.js_lib_v}"></script>
 <script type="text/javascript" src="{tplvars.relative_url}js/scrollto.js?v={tplvars.js_lib_v}"></script>
 <script type="text/javascript" src="{tplvars.relative_url}js/photo_view.js?v={tplvars.js_lib_v}"></script>
 <!--opt name="output.bbcode_comments"-->
