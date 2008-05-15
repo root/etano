@@ -28,7 +28,7 @@
 
 <fieldset>
 	<!--loop name="loop"-->
-	<dl class="{loop.class}" id="row_{loop.dbfield}">
+	<dl class="{loop.class} <!--opt name="loop.required"-->required<!--/opt name="loop.required"--> {loop.class_error}" id="row_{loop.dbfield}">
 		<dt>{loop.label}:</dt>
 		<dd>{loop.field}</dd>
 		<dd class="field-help">{loop.help_text}</dd>
@@ -64,13 +64,17 @@
 </form>
 
 <script type="text/javascript">
-	var ta_len={output.ta_len};
-	dbfields=Array();
-	fieldtypes=Array();
-	<!--loop name="js_loop"-->
-	dbfields[{js_loop.i}]='{js_loop.dbfield}';
-	fieldtypes[{js_loop.i}]={js_loop.field_type};
-	<!--/loop name="js_loop"-->
-	var lang=new Array('{output.lang_64}','{output.lang_272}','{output.lang_63}','{output.lang_37}','{output.lang_66}','{output.lang_259}','{output.lang_68}','{output.lang_69}');
+	var lang=[];
+	lang['37']='{output.lang_37}';
+	lang['63']='{output.lang_63}';
+	lang['64']='{output.lang_64}';
+	lang['65']='{output.lang_65}';
+	lang['66']='{output.lang_66}';
+	lang['68']='{output.lang_68}';
+	lang['69']='{output.lang_69}';
+	lang['259']='{output.lang_259}';
+	lang['272']='{output.lang_272}';
+	<!--loop name="loop"-->
+	{loop.js}<!--/loop name="loop"-->
 </script>
-<script type="text/javascript" src="{tplvars.relative_url}js/join.js.php?p={output.page}&amp;v={tplvars.js_lib_v}"></script>
+<script type="text/javascript" src="{tplvars.relative_url}js/join.js?v={tplvars.js_lib_v}"></script>

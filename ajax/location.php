@@ -12,14 +12,14 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 /* format of output:
-1. first line - the actual field (in the field_12_ format)
+1. first line - the actual field (in the f12_ format)
 2. second line - which one of the 4 location fields to show separated by pipe (|). Only the termination (country|state|city|zip)
 3. third line - the field to update with the options below. Only the termination
 4. all other lines - the options for the field above in the <option_id>|<option_text> format
 */
 
-require_once dirname(__FILE__).'/../includes/common.inc.php';
-require_once dirname(__FILE__).'/../includes/user_functions.inc.php';
+require dirname(__FILE__).'/../includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
 
 $output='';
 if ($_SERVER['REQUEST_METHOD']=='POST') {

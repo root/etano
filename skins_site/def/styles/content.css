@@ -436,7 +436,7 @@ form.edit_form dl {
 		padding: 0px 10px;
 	}
 
-	form.edit_form dl.required dt {
+	form.edit_form dl.required dt,form.edit_form div.required label {
 		font-size: 14px;
 		color: #4383D3;
 	}
@@ -661,4 +661,28 @@ input.small:hover, input.medium:hover, input.large:hover {
 .login_tease {
 	margin-top:20px;
 	text-align: right;
+}
+
+.loading {
+	background: url('../../../images/ajax-loader.gif') no-repeat left center;
+	width: 16px;
+	height: 16px;
+	line-height: 20px;
+	float: right;
+	display: block;
+	margin-right: 20px;
+}
+
+.location_sub {
+	margin-left: -150px;
+}
+
+.location_sub label {
+	display: block;
+	float: left;
+	width: 146px;
+}
+
+.location_sub select {
+	width: 50%;
 }

@@ -11,7 +11,7 @@ $(function() {
 	});
 	$('#save_search').bind('click',function() {
 		myval='';
-		myval=prompt(lang[0],myval);
+		myval=prompt(lang['253'],myval);
 		if (!myval || myval=='') {
 			return false;
 		} else {
@@ -22,7 +22,7 @@ $(function() {
 							alert(data);
 							document.location=document.location;
 						} else {
-							alert(lang[1]);
+							alert(lang['254']);
 						}
 					}
 			);

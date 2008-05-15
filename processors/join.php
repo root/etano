@@ -95,99 +95,40 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	$next_join_pages=array();
 	$my_fields=array();
+	$dbfield2pfieldid=array();
+	$on_changes=array();
 	foreach ($_pfields as $field_id=>$field) {
 		// what fields should be processed on this page?
-		if (isset($field['reg_page'])) {
-			if ($field['reg_page']==$input['page']) {
+		if (isset($field->config['reg_page'])) {
+			if ($field->config['reg_page']==$input['page']) {
 				$my_fields[]=$field_id;
+				$dbfield2pfieldid[$field->config['dbfield']]=$field_id;
 			}
 			// what pages are after us?
-			if ($field['reg_page']>$input['page']) {
-				$next_join_pages[$field['reg_page']]=1;
+			if ($field->config['reg_page']>$input['page']) {
+				$next_join_pages[$field->config['reg_page']]=1;
 			}
 		}
 	}
 
-	$textareas=array();
-	$on_changes=array();
-	$ch=0;
 	for ($i=0;isset($my_fields[$i]);++$i) {
-		$field=$_pfields[$my_fields[$i]];
-		switch ($field['field_type']) {
-
-			case FIELD_DATE:
-				$input[$field['dbfield'].'_month']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_month',TYPE_INT,0,0);
-				$input[$field['dbfield'].'_day']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_day',TYPE_INT,0,0);
-				$input[$field['dbfield'].'_year']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_year',TYPE_INT,0,0);
-				if (!empty($input[$field['dbfield'].'_year']) && !empty($input[$field['dbfield'].'_month']) && !empty($input[$field['dbfield'].'_day'])) {
-					$input[$field['dbfield']]=$input[$field['dbfield'].'_year'].'-'.str_pad($input[$field['dbfield'].'_month'],2,'0',STR_PAD_LEFT).'-'.str_pad($input[$field['dbfield'].'_day'],2,'0',STR_PAD_LEFT);
-				} else {
-					$input[$field['dbfield']]='';
-				}
-				if (isset($field['fn_on_change'])) {
-					$on_changes[$ch]['fn']=$field['fn_on_change'];
-					$on_changes[$ch]['param2']=array('year'=>$input[$field['dbfield'].'_year'],'month'=>$input[$field['dbfield'].'_month'],'day'=>$input[$field['dbfield'].'_day']);
-					$on_changes[$ch]['param3']=$field['dbfield'];
-					++$ch;
-				}
-				break;
-
-			case FIELD_LOCATION:
-				$input[$field['dbfield'].'_country']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_country',TYPE_INT,0,0);
-				$input[$field['dbfield'].'_state']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_state',TYPE_INT,0,0);
-				$input[$field['dbfield'].'_city']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_city',TYPE_INT,0,0);
-				$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_zip',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-				if (isset($field['fn_on_change'])) {
-					$on_changes[$ch]['fn']=$field['fn_on_change'];
-					$on_changes[$ch]['param2']=array('country'=>$input[$field['dbfield'].'_country'],'state'=>$input[$field['dbfield'].'_state'],'city'=>$input[$field['dbfield'].'_city'],'zip'=>$input[$field['dbfield'].'_zip']);
-					$on_changes[$ch]['param3']=$field['dbfield'];
-					++$ch;
-				}
-				break;
-
-			case FIELD_TEXTAREA:
-				$textareas[]=$field['dbfield'];
-				$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],''));
-				if (isset($field['fn_on_change'])) {
-					$on_changes[$ch]['fn']=$field['fn_on_change'];
-					$on_changes[$ch]['param2']=$input[$field['dbfield']];
-					$on_changes[$ch]['param3']=$field['dbfield'];
-					++$ch;
-				}
-				break;
-
-			case FIELD_TEXTFIELD:
-				$input[$field['dbfield']]=remove_banned_words(sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],''));
-				if (isset($field['fn_on_change'])) {
-					$on_changes[$ch]['fn']=$field['fn_on_change'];
-					$on_changes[$ch]['param2']=$input[$field['dbfield']];
-					$on_changes[$ch]['param3']=$field['dbfield'];
-					++$ch;
-				}
-				break;
-
-			default:
-				$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],'');
-				if (isset($field['fn_on_change'])) {
-					$on_changes[$ch]['fn']=$field['fn_on_change'];
-					$on_changes[$ch]['param2']=$input[$field['dbfield']];
-					$on_changes[$ch]['param3']=$field['dbfield'];
-					++$ch;
-				}
-
-		}	// switch
-		// check for input errors
-		if (isset($field['required'])) {
-			if (empty($input[$field['dbfield']]) && $field['field_type']!=FIELD_LOCATION) {
-				$error=true;
-				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text'][]=$GLOBALS['_lang'][69];
-				$input['error_'.$field['dbfield']]='red_border';
-			} elseif ($field['field_type']==FIELD_LOCATION && empty($input[$field['dbfield'].'_country'])) {
-				$error=true;
-				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text'][]=$GLOBALS['_lang'][69];
-				$input['error_'.$field['dbfield'].'_country']='red_border';
+		$field=&$_pfields[$my_fields[$i]];
+		$field->set_value($_POST);
+		if (true!==($temp=$field->validation_server())) {
+			$error=true;
+			$topass['message']['type']=MESSAGE_ERROR;
+			if (empty($temp['text'])) {
+				$topass['message']['text']=$GLOBALS['_lang'][69];
+			} else {
+				$topass['message']['text']=$temp['text'];
+			}
+			$input['error_'.$field->config['dbfield']]='red_border';
+		}
+		if (!$error) {
+			if (!empty($field->config['fn_on_change'])) {
+				$on_changes[]=array('fn'=>$field->config['fn_on_change'],
+									'param2'=>$field->get_value(),
+									'param3'=>$field->config['dbfield']);
 			}
 		}
 	}
@@ -203,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$input['uid']=$_SESSION[_LICENSE_KEY_]['user']['reg_id'];
 			send_template_email($input['email'],sprintf($GLOBALS['_lang'][70],_SITENAME_),'confirm_reg.html',get_my_skin(),$input);
 		}
-		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['reg_id']."'";
+		$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=".$_SESSION[_LICENSE_KEY_]['user']['reg_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$is_update=false;
 		if (mysql_num_rows($res)) {
@@ -224,14 +165,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			}
 		}
 		for ($i=0;isset($my_fields[$i]);++$i) {
-			if ($_pfields[$my_fields[$i]]['field_type']==FIELD_LOCATION) {
-				$query.=",`".$_pfields[$my_fields[$i]]['dbfield']."_country`=".$input[$_pfields[$my_fields[$i]]['dbfield'].'_country'].",`".$_pfields[$my_fields[$i]]['dbfield']."_state`=".$input[$_pfields[$my_fields[$i]]['dbfield'].'_state'].",`".$_pfields[$my_fields[$i]]['dbfield']."_city`=".$input[$_pfields[$my_fields[$i]]['dbfield'].'_city'].",`".$_pfields[$my_fields[$i]]['dbfield']."_zip`='".$input[$_pfields[$my_fields[$i]]['dbfield'].'_zip']."'";
-			} else {
-				$query.=",`".$_pfields[$my_fields[$i]]['dbfield']."`='".$input[$_pfields[$my_fields[$i]]['dbfield']]."'";
-			}
+			$query.=','.$_pfields[$my_fields[$i]]->query_set();
 		}
 		if ($is_update) {
-			$query.=" WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['reg_id']."'";
+			$query.=" WHERE `fk_user_id`=".$_SESSION[_LICENSE_KEY_]['user']['reg_id'];
 		}
 		if (isset($_on_before_insert)) {
 			for ($i=0;isset($_on_before_insert[$i]);++$i) {
@@ -240,6 +177,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 
+		// execute the on_change triggers of every field
 		for ($i=0;isset($on_changes[$i]);++$i) {
 			if (function_exists($on_changes[$i]['fn'])) {
 				eval($on_changes[$i]['fn'].'($_SESSION[\'user\'][\'reg_id\'],$on_changes[$i][\'param2\'],$on_changes[$i][\'param3\']);');
@@ -250,10 +188,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="SELECT a.`dbfield`,a.`field_value`,b.`subscr_id`,b.`is_recurent`,b.`m_value_to`,b.`duration` FROM `{$dbtable_prefix}subscriptions_auto` a, `{$dbtable_prefix}subscriptions` b WHERE a.`dbfield` IN ('','".join("','",array_keys($input))."') AND a.`fk_subscr_id`=b.`subscr_id` AND a.`date_start`='0000-00-00'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			while ($rsrow=mysql_fetch_assoc($res)) {
-				if ((!empty($rsrow['dbfield']) && $input[$rsrow['dbfield']]==$rsrow['field_value']) || empty($rsrow['dbfield'])) {
+				if ((!empty($rsrow['dbfield']) && $_pfields[$dbfield2pfieldid[$rsrow['dbfield']]]->get_value()==$rsrow['field_value']) || empty($rsrow['dbfield'])) {
 					$qs.=$qs_sep.'nas=1';	// no more auto_subscr checking from now on
 					$qs_sep='&';
-					$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `membership`=".$rsrow['m_value_to']." WHERE `".USER_ACCOUNT_ID."`='".$_SESSION[_LICENSE_KEY_]['user']['reg_id']."'";
+					$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `membership`=".$rsrow['m_value_to']." WHERE `".USER_ACCOUNT_ID."`=".$_SESSION[_LICENSE_KEY_]['user']['reg_id'];
 					if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					// save as a payment with amount 0
 					$query="INSERT INTO `{$dbtable_prefix}payments` (`is_active`,`fk_user_id`,`_user`,`is_subscr`,`fk_subscr_id`,`is_recurring`,`email`,`m_value_to`,`paid_from`,`paid_until`,`date`) VALUES (1,'".$_SESSION[_LICENSE_KEY_]['user']['reg_id']."','".$_SESSION[_LICENSE_KEY_]['user']['user']."',1,'".$rsrow['subscr_id']."','".$rsrow['is_recurent']."','".$_SESSION[_LICENSE_KEY_]['user']['email']."','".$rsrow['m_value_to']."','$now','$now'+INTERVAL ".$rsrow['duration'].' DAY,now())';
@@ -283,13 +221,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		}
 	} else {
 		$nextpage='join.php';
-// 		you must re-read all textareas from $_POST like this:
-//		$input['x']=addslashes_mq($_POST['x']);
-		for ($i=0;isset($textareas[$i]);++$i) {
-			$input[$textareas[$i]]=isset($_POST[$textareas[$i]]) ? addslashes_mq($_POST[$textareas[$i]]) : '';
-		}
-		$input=sanitize_and_format($input,TYPE_STRING,FORMAT_HTML2TEXT_FULL | FORMAT_STRIPSLASH);
-		$topass['input']=$input;
+		$topass['input']=$_POST;
 		if (isset($_on_error)) {
 			for ($i=0;isset($_on_error[$i]);++$i) {
 				call_user_func($_on_error[$i]);
