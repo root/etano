@@ -35,7 +35,7 @@ class user_cache {
 		$myreturn=array();
 		for ($i=0;!empty($user_ids[$i]);++$i) {
 			$user_ids[$i]=(string)$user_ids[$i];
-			$temp=$this->cache->get('skin'.$this->skin.$user_id.$part);
+			$temp=$this->cache->get('skin'.$this->skin.$user_ids[$i].$part);
 			if (!empty($temp)) {
 				if (isset($inject_by_uid[$user_ids[$i]])) {
 					$GLOBALS['tpl']->set_var('temp',$temp);
