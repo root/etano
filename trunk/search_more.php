@@ -22,21 +22,20 @@ $search_fields=array();
 foreach ($_pcats as $pcat_id=>$pcat) {
 	if (((int)$pcat['access_level']) & ((int)$_SESSION[_LICENSE_KEY_]['user']['membership'])) {
 		for ($i=0;isset($pcat['fields'][$i]);++$i) {
-			if (isset($_pfields[$pcat['fields'][$i]]['searchable'])) {
+			if (isset($_pfields[$pcat['fields'][$i]]->config['searchable'])) {
 				$search_fields[]=$pcat['fields'][$i];
 			}
 		}
 	}
 }
-
+$_pfields[$search_fields[7]]->search()->query_search();
 sort($search_fields,SORT_NUMERIC);
 $search_loop=create_search_form($search_fields);
-
 $tpl->set_file('content','search_more.html');
 $tpl->set_loop('search',$search_loop);
 $tpl->process('content','content',TPL_LOOP);
 $tpl->drop_loop('search');
-unset($search);
+unset($search_loop);
 
 $tplvars['title']=$GLOBALS['_lang'][247];
 $tplvars['page_title']=$GLOBALS['_lang'][247];

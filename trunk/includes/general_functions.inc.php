@@ -429,121 +429,20 @@ function create_search_form($search_fields) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$user_defaults=unserialize(mysql_result($res,0,0));
+			for ($i=0;isset($search_fields[$i]);++$i) {
+				$_pfields[$search_fields[$i]]->search()->set_value($user_defaults,false);
+			}
+			unset($user_defaults);
 		}
 	}
 
-	$s=0;
 	for ($i=0;isset($search_fields[$i]);++$i) {
-		$field=$_pfields[$search_fields[$i]];
-		if (isset($field['search_type'])) {
-			$myreturn[$s]['label']=$field['search_label'];
-			$myreturn[$s]['dbfield']=$field['dbfield'];
-			switch ($field['search_type']) {
-
-				case FIELD_SELECT:
-					if (isset($user_defaults[$field['dbfield']])) {
-						$field['default_search'][0]=$user_defaults[$field['dbfield']];
-					} elseif (empty($field['default_search'])) {
-						$field['default_search'][0]=0;
-					}
-					$field['accepted_values'][0]=$GLOBALS['_lang'][159];
-					$myreturn[$s]['field']='<select name="'.$field['dbfield'].'" id="'.$field['dbfield'].'" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0]).'</select>';
-					break;
-
-				case FIELD_CHECKBOX_LARGE:
-					if (isset($user_defaults[$field['dbfield']])) {
-						$field['default_search']=$user_defaults[$field['dbfield']];
-					} elseif (empty($field['default_search'])) {
-						$field['default_search']=array();
-					}
-					$myreturn[$s]['field']=vector2checkboxes_str($field['accepted_values'],array(0),$field['dbfield'],$field['default_search'],2,true,'tabindex="'.($i+4).'" class="check"');
-					break;
-
-				case FIELD_RANGE:
-					if (isset($user_defaults[$field['dbfield'].'_min'])) {
-						$field['default_search'][0]=$user_defaults[$field['dbfield'].'_min'];
-					} elseif (!isset($field['default_search'][0])) {
-						$field['default_search'][0]=0;
-					}
-					if (isset($user_defaults[$field['dbfield'].'_max'])) {
-						$field['default_search'][1]=$user_defaults[$field['dbfield'].'_max'];
-					} elseif (!isset($field['default_search'][1])) {
-						$field['default_search'][1]=0;
-					}
-					if ($field['field_type']==FIELD_DATE) {
-						$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'"><option value="0">'.$GLOBALS['_lang'][159].'</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][0]).'</select> - ';
-						$myreturn[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'"><option value="0">'.$GLOBALS['_lang'][159].'</option>'.interval2options(date('Y')-$field['accepted_values'][2],date('Y')-$field['accepted_values'][1],$field['default_search'][1]).'</select>';
-					} elseif ($field['field_type']==FIELD_SELECT) {
-						$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_min" id="'.$field['dbfield'].'_min" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][0]).'</select> - ';
-						$myreturn[$s]['field'].='<select name="'.$field['dbfield'].'_max" id="'.$field['dbfield'].'_max" tabindex="'.($i+4).'">'.vector2options($field['accepted_values'],$field['default_search'][1]).'</select>';
-					}
-					break;
-
-				case FIELD_LOCATION:
-					if (isset($user_defaults[$field['dbfield'].'_country'])) {
-						$field['default_value'][0]=$user_defaults[$field['dbfield'].'_country'];
-					} elseif (!isset($field['default_value'][0])) {
-						$field['default_value'][0]=0;
-					}
-					if (isset($user_defaults[$field['dbfield'].'_state'])) {
-						$field['default_value'][1]=$user_defaults[$field['dbfield'].'_state'];
-					} else {
-						$field['default_value'][1]=0;
-					}
-					if (isset($user_defaults[$field['dbfield'].'_city'])) {
-						$field['default_value'][2]=$user_defaults[$field['dbfield'].'_city'];
-					} else {
-						$field['default_value'][2]=0;
-					}
-					if (isset($user_defaults[$field['dbfield'].'_zip'])) {
-						$field['default_value'][3]=$user_defaults[$field['dbfield'].'_zip'];
-					} else {
-						$field['default_value'][3]=0;
-					}
-					$myreturn[$s]['dbfield']=$field['dbfield'].'_country';
-					$myreturn[$s]['field']='<select class="big_select" name="'.$field['dbfield'].'_country" id="'.$field['dbfield'].'_country" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">'.$GLOBALS['_lang'][159].'</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$field['default_value'][0]).'</select>';
-					$prefered_input='s';
-					$num_states=0;
-					$num_cities=0;
-					if (!empty($field['default_value'][0])) {
-						$query="SELECT `prefered_input`,`num_states` FROM `{$dbtable_prefix}loc_countries` WHERE `country_id`='".$field['default_value'][0]."'";
-						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-						list($prefered_input,$num_states)=mysql_fetch_row($res);
-					}
-					if (!empty($field['default_value'][1])) {
-						$query="SELECT `num_cities` FROM `{$dbtable_prefix}loc_states` WHERE `state_id`='".$field['default_value'][1]."'";
-						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-						if (mysql_num_rows($res)) {
-							$num_cities=mysql_result($res,0,0);
-						}
-					}
-					++$s;
-					$myreturn[$s]['label']=$GLOBALS['_lang'][127];
-					$myreturn[$s]['dbfield']=$field['dbfield'].'_state';
-					$myreturn[$s]['field']='<select class="big_select" name="'.$field['dbfield'].'_state" id="'.$field['dbfield'].'_state" tabindex="'.($i+4).'" onchange="req_update_location(this.id,this.value)"><option value="0">'.$GLOBALS['_lang'][159].'</option>';
-					if (isset($field['default_value'][0]) && $prefered_input=='s' && !empty($num_states)) {
-						$myreturn[$s]['field'].=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$field['default_value'][1],"`fk_country_id`='".$field['default_value'][0]."'");
-					}
-					$myreturn[$s]['field'].='</select>';
-					$myreturn[$s]['class']=(isset($field['default_value'][0]) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible';
-					++$s;
-					$myreturn[$s]['label']=$GLOBALS['_lang'][128];
-					$myreturn[$s]['dbfield']=$field['dbfield'].'_city';
-					$myreturn[$s]['field']='<select class="big_select" name="'.$field['dbfield'].'_city" id="'.$field['dbfield'].'_city" tabindex="'.($i+4).'"><option value="0">'.$GLOBALS['_lang'][159].'</option>';
-					if (isset($field['default_value'][1]) && $prefered_input=='s' && !empty($num_cities)) {
-						$myreturn[$s]['field'].=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$field['default_value'][2],"`fk_state_id`='".$field['default_value'][1]."'");
-					}
-					$myreturn[$s]['field'].='</select>';
-					$myreturn[$s]['class']=(isset($field['default_value'][1]) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible';
-					++$s;
-					$myreturn[$s]['label']=$GLOBALS['_lang'][185];
-					$myreturn[$s]['dbfield']=$field['dbfield'].'_zip';
-					$myreturn[$s]['field']='<select name="'.$field['dbfield'].'_dist" id="'.$field['dbfield'].'_dist" tabindex="'.($i+4).'">'.interval2options(1,10).'</select> <label for="'.$field['dbfield'].'_zip" class="in_field_label">'.$GLOBALS['_lang'][186].'</label> <input type="text" class="text" name="'.$field['dbfield'].'_zip" id="'.$field['dbfield'].'_zip" tabindex="'.($i+4).'" size="5" value="'.$field['default_value'][3].'" />';
-					$myreturn[$s]['class']=(isset($field['default_value'][0]) && $prefered_input=='z') ? 'visible' : 'invisible';
-					break;
-
-			}
-			++$s;
+		if (!empty($_pfields[$search_fields[$i]]->config['search_type'])) {
+			$myreturn[]=array('label'=>$_pfields[$search_fields[$i]]->search()->config['label'],
+							'dbfield'=>$_pfields[$search_fields[$i]]->search()->config['dbfield'],
+							'field'=>$_pfields[$search_fields[$i]]->search()->edit($i+4),
+							'js'=>$_pfields[$search_fields[$i]]->search()->edit_js()
+						);
 		}
 	}
 	return $myreturn;
