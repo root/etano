@@ -224,6 +224,7 @@ if (!empty($output['totalrows'])) {
 	$temp=$user_cache->get_cache_array($user_ids,'result_user',$inject_by_uid);
 	if (!empty($temp)) {
 		$output['results']=smart_table($temp,5,$rv_mode,$cell_css_classes);
+		$output['pager2']=pager($output['totalrows'],$o,$r);
 	} else {
 		unset($output['totalrows']);
 	}
@@ -233,7 +234,6 @@ if (!empty($output['totalrows'])) {
 		// set $_GET for the pager.
 		$_GET=array('search'=>$output['search_md5'],'v'=>!empty($_GET['v']) ? $_GET['v'] : 'l');
 	}
-	$output['pager2']=pager($output['totalrows'],$o,$r);
 } else {
 	unset($output['totalrows']);
 }
