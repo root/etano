@@ -11,6 +11,7 @@ function send_queue_mail() {
 	if (mysql_num_rows($res)) {
 		$config=get_site_option(array('mail_from','mail_crlf'),'core');
 		require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
+		require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 		$mail=new PHPMailer();
 		$mail->From=$config['mail_from'];
 		$mail->Sender=$config['mail_from'];
@@ -36,7 +37,6 @@ function send_queue_mail() {
 			$mail->MsgHTML($rsrow['message_body']);
 			if (!$mail->Send()) {
 				$errors[]='mail_id: '.$rsrow['mail_id'].' error: '.$mail->ErrorInfo;
-				require_once _BASEPATH_.'/includes/classes/log_error.class.php';
 				new log_error(array('module_name'=>'send_template_email','text'=>'sending mail to '.$rsrow['to'].' failed:'.$rsrow['message_body']));
 			} else {
 				$mail_ids[]=$rsrow['mail_id'];

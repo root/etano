@@ -58,6 +58,13 @@ function on_after_approve_blog_post() {
 	}
 }
 
+$_on_after_approve[]='ping_pingomatic';
+
+function ping_pingomatic() {
+	$ch=curl_init('http://pingomatic.com/ping/?title=Datemill+Community+Builder+News&blogurl=http%3A%2F%2Fwww.datemill.com%2Fdevblog%2Fcommunity-builder&rssurl=http%3A%2F%2Fwww.datemill.com%2Frss%2Flatest-blogs.xml&chk_weblogscom=on&chk_blogs=on&chk_technorati=on&chk_feedburner=on&chk_syndic8=on&chk_newsgator=on&chk_myyahoo=on&chk_pubsubcom=on&chk_blogdigger=on&chk_blogstreet=on&chk_moreover=on&chk_weblogalot=on&chk_icerocket=on&chk_newsisfree=on&chk_topicexchange=on');
+	curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+	curl_exec($ch);
+}
 
 $_on_before_update[]='update_seolink';
 

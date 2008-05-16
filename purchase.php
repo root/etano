@@ -39,7 +39,7 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $loop=array();
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$rsrow['prod_name']=sanitize_and_format($rsrow['prod_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-	$rsrow['prod_diz']=sanitize_and_format($rsrow['prod_diz'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
+//	$rsrow['prod_diz']=sanitize_and_format($rsrow['prod_diz'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	$rsrow['dev_name']=sanitize_and_format($rsrow['dev_name'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 	if ((int)$rsrow['price']==(float)$rsrow['price']) {
 		$rsrow['price']=number_format($rsrow['price'],0);

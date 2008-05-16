@@ -59,7 +59,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				} else {
 					$mail->LE="\n";
 				}
-				$mail->IsMail();
+				$mail->IsSMTP();
+			//	$mail->SMTPDebug=true;
+				$mail->Host='mail.oaki.ro:587';
+				$mail->SMTPAuth=true;
+				$mail->Username='dan@sco.ro';
+				$mail->Password='diskedit';
+
 				$mail->AddAddress($config['mail_from']);
 				$mail->Subject='DSB to Etano upgrade request';
 				$mail->Body=var_export($input,true);
