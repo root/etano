@@ -360,7 +360,7 @@ class phemplate {
 					$loop_code=str_replace('<!--noloop name="'.$loop_name.'"-->'.$noloop_code.'<!--/noloop name="'.$loop_name.'"-->','',$loop_code);
 				}
 			}
-			if (is_array($loop_ar) && !empty($loop_ar)) {
+			if (!empty($loop_ar) && is_array($loop_ar)) {
 				if ($loop_mode & TPL_LOOP_INNER_PARSED) {
 					for ($i=0;isset($loop_ar[$i]);++$i) {
 						$temp_code=$loop_code;
@@ -375,8 +375,9 @@ class phemplate {
 						$temp_code=$this->parse($temp_code);
 						$new_code.=$temp_code;
 						// cleanup loop variables for next generation
-						$array_keys = array_keys($loop_ar[$i]);
-						foreach ($array_keys as $key) unset($this->vars[$loop_name.'.'.$key]);
+						$this->drop_var($loop_name);
+//						$array_keys = array_keys($loop_ar[$i]);
+//						foreach ($array_keys as $key) unset($this->vars[$loop_name.'.'.$key]);
 					}
 				} else {
 					// repeat for every row in array
