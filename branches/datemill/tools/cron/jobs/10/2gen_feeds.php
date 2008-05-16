@@ -30,7 +30,7 @@ function gen_blog_feeds() {
 			} else {
 				$properties['description']=substr($rsrow['post_content'],0,strrpos(substr($rsrow['post_content'],0,$short_blog_chars),' '));
 			}
-			$properties['description']=sanitize_and_format($properties['description'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
+			$properties['description']=bbcode2html(sanitize_and_format($properties['description'],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]));
 			if (empty($rsrow['alt_url'])) {
 				$properties['link']=_BASEURL_.'/blog_post_view.php?pid='.$rsrow['post_id'];
 			} else {
