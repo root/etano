@@ -1,6 +1,9 @@
 $(function() {
 	// IE hack: hover for buttons
 	if($.browser.msie) {
+		try {
+			document.execCommand("BackgroundImageCache", false, true);
+		} catch(err) {}
 		$('input.large, input.medium, input.small').hover(function() {
 			$(this).css('background-position','bottom');
 		},function() {
