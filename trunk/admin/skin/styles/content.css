@@ -20,12 +20,6 @@ li {
 	list-style: none;
 }
 
-.clear {
-	height: 1%; /*IE*/
-	clear: both;
-	line-height:1px;
-}
-
 #content h2 {
 	color: #009FDA;
 	margin: 10px 0;
@@ -35,6 +29,18 @@ li {
 	color: #009FDA;
 	margin: 5px 0;
 }
+
+.clear { display: inline-block; }
+.clear:after, .container:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+* html .clear { height: 1%; }
+.clear { display: block; }
+
 
 /* ***** FORMS ***** */
 
@@ -157,8 +163,6 @@ label.checkbox {
 }
 
 .hint {
-	clear: both;
-	float: none;
 	padding: 6px 12px;
 	background-color: #9EE4FE;
 	margin-bottom: 10px;
@@ -379,11 +383,11 @@ ul.pager li.current_page, ul.pager li.dots {
 }
 
 .close {
-	background: url('../images/del.gif') no-repeat left center;
+	background: url('../images/del.png') no-repeat left center;
 	padding-left: 20px;
 }
 .add {
-	background: url('../images/add.gif') no-repeat left center;
+	background: url('../images/add.png') no-repeat left center;
 	padding-left: 20px;
 }
 .back {
@@ -488,7 +492,7 @@ h3 {
 }
 
 a.item_add {
-	background: url('../images/add.gif') no-repeat top left;
+	background: url('../images/add.png') no-repeat top left;
 	display: block;
 	width: 16px;
 	height: 16px;
@@ -496,7 +500,7 @@ a.item_add {
 }
 
 a.item_del {
-	background: url('../images/del.gif') no-repeat top left;
+	background: url('../images/del.png') no-repeat top left;
 	display: block;
 	width: 16px;
 	height: 16px;
@@ -506,7 +510,7 @@ a.item_del {
 }
 
 a.item_edit {
-	background: url('../images/edit.gif') no-repeat top left;
+	background: url('../images/edit.png') no-repeat top left;
 	display: block;
 	width: 16px;
 	height: 16px;
@@ -554,4 +558,35 @@ a.item_reject {
 
 #bottom_links {
 	margin-top: 20px;
+}
+
+.edit_form div {
+	padding: 6px 0;
+}
+
+.edit_form div label {
+	float: left;
+	width: 160px;
+}
+
+.edit_form div input.checkbox {
+	margin-bottom: 3px;
+}
+
+.edit_form div textarea {
+	width: 500px;
+	height: 200px;
+}
+
+.edit_form p.comment {
+	color: #999;
+	font-size: 90%;
+	vertical-align: top;
+}
+
+.stripe_odd {
+	background-color: #f6f6f6;
+}
+.stripe_even {
+	background-color: #fff;
 }

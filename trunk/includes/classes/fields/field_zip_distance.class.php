@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 
 class field_zip_distance extends iprofile_field {
 	var $empty_value=array('edit'=>array('zip'=>'','dist'=>0),'display'=>'');
+	var $display_name='Zip Distance';
 
 	function field_zip_distance($config=array(),$is_search=false) {
 		$this->config=$config;
@@ -54,8 +55,13 @@ class field_zip_distance extends iprofile_field {
 		return '';
 	}
 
-	function edit_admin() {
+	function edit_admin($mode='direct') {
 		return '';
+	}
+
+	function admin_processor($mode='direct') {
+		$error=false;
+		return $error;
 	}
 
 	function query_select() {
@@ -86,4 +92,8 @@ class field_zip_distance extends iprofile_field {
 		}
 		return $myreturn;
 	}
+}
+
+if (defined('IN_ADMIN')) {
+	$accepted_fieldtype['search']['field_zip_distance']='Zip Distance';
 }

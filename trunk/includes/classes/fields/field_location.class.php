@@ -14,6 +14,8 @@ Support at:                 http://www.datemill.com/forum
 
 class field_location extends iprofile_field {
 	var $empty_value=array('edit'=>array('country'=>0,'state'=>0,'city'=>0,'zip'=>''),'display'=>'');
+	var $display_name='Location';
+	var $allowed_search_types=array('field_location','field_zip_distance');
 
 	function field_location($config=array(),$is_search=false) {
 		$this->config=$config;
@@ -124,8 +126,37 @@ class field_location extends iprofile_field {
 		}
 	}
 
-	function edit_admin() {
-		return '';
+	function edit_admin($mode='direct') {
+		global $dbtable_prefix,$default_skin_code,$output,$__field2format,$search_type;
+		$myreturn='';
+		if ($mode=='direct') {
+			$output['def_country']=!empty($output['def_country']) ? $output['def_country'] : 0;
+			$myreturn.='<div class="clear">
+				<label>Default Country:</label>
+				<select id="def_country" name="def_country"><option value="0">Any</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$output['def_country']).'</select>
+			</div>';
+		}
+		return $myreturn;
+	}
+
+	function admin_processor($mode='direct') {
+		$error=false;
+		global $input,$__field2format,$dbtable_prefix,$default_skin_code;
+		$my_input=array();
+		if ($mode=='direct') {
+			$my_input['def_country']=sanitize_and_format_gpc($_POST,'def_country',TYPE_INT,0,0);
+			if (!empty($input['searchable']) && !empty($input['search_type'])) {
+				$search_field=new $input['search_type']();
+				$temp=$search_field->admin_processor('search');
+				if (is_array($temp) && !empty($temp)) {
+					$my_input=array_merge($my_input,$temp);
+				}
+			}
+			$input['custom_config']=sanitize_and_format(serialize($my_input),TYPE_STRING,FORMAT_ADDSLASH);
+		} else {
+			return array();
+		}
+		return $error;
 	}
 
 	function query_select() {
@@ -148,6 +179,10 @@ class field_location extends iprofile_field {
 			$myreturn.=' AND `'.$this->config['dbfield'].'_city`='.$this->value['city'];
 		}
 		return $myreturn;
+	}
+
+	function query_create($dbfield) {
+		return " ADD `{$dbfield}_country` int(3) not null default 0, ADD `{$dbfield}_state` int(10) not null default 0, ADD `{$dbfield}_city` int(10) not null default 0, ADD `{$dbfield}_zip` varchar(10) not null default ''";
 	}
 
 	function edit_js() {
@@ -201,4 +236,9 @@ class field_location extends iprofile_field {
 			return $this->value;
 		}
 	}
+}
+
+if (defined('IN_ADMIN')) {
+	$accepted_fieldtype['direct']['field_location']='Location';
+	$accepted_fieldtype['search']['field_location']='Location';
 }

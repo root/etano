@@ -14,6 +14,8 @@ Support at:                 http://www.datemill.com/forum
 
 class field_birthdate extends iprofile_field {
 	var $empty_value=array('edit'=>array('year'=>0,'month'=>0,'day'=>0),'display'=>'-');
+	var $display_name='Birthdate/Age';
+	var $allowed_search_types=array('field_age_range');
 
 	function field_birthdate($config=array(),$is_search=false) {
 		$this->config=$config;
@@ -86,8 +88,41 @@ class field_birthdate extends iprofile_field {
 		}
 	}
 
-	function edit_admin() {
-		return '';
+	function edit_admin($mode='direct') {
+		global $output;
+		$myreturn='';
+		if ($mode=='direct') {
+			$output['year_start']=isset($output['year_start']) ? $output['year_start'] : '';
+			$output['year_end']=isset($output['year_end']) ? $output['year_end'] : '';
+			$myreturn.='<div class="clear">
+				<label for="year_start">Year from:</label>
+				<input class="text numeric" type="text" name="year_start" id="year_start" value="'.$output['year_start'].'" size="3" maxlength="4" tabindex="13" />
+				to
+				<input class="text numeric" type="text" name="year_end" id="year_end" value="'.$output['year_end'].'" size="3" maxlength="4" tabindex="14" />
+				<p class="comment">Please enter the years with 4 digits.</p>';
+		}
+		return $myreturn;
+	}
+
+	function admin_processor($mode='direct') {
+		$error=false;
+		global $input,$__field2format,$dbtable_prefix,$default_skin_code;
+		$my_input=array();
+		if ($mode!='search') {
+			$my_input['year_start']=sanitize_and_format_gpc($_POST,'year_start',TYPE_INT,0,0);
+			$my_input['year_end']=sanitize_and_format_gpc($_POST,'year_end',TYPE_INT,0,0);
+			if (!empty($input['searchable']) && !empty($input['search_type'])) {
+				$search_field=new $input['search_type']();
+				$temp=$search_field->admin_processor('search');
+				if (is_array($temp) && !empty($temp)) {
+					$my_input=array_merge($my_input,$temp);
+				}
+			}
+			$input['custom_config']=sanitize_and_format(serialize($my_input),TYPE_STRING,FORMAT_ADDSLASH);
+		} else {
+			return array();
+		}
+		return $error;
 	}
 
 	function query_select() {
@@ -96,6 +131,10 @@ class field_birthdate extends iprofile_field {
 
 	function query_set() {
 		return '`'.$this->config['dbfield']."`='".$this->value['year'].$this->value['month'].$this->value['day']."'";
+	}
+
+	function query_create($dbfield) {
+		return " ADD `{$dbfield}` date not null";
 	}
 
 	function edit_js() {
@@ -132,4 +171,8 @@ class field_birthdate extends iprofile_field {
 			return $this->value;
 		}
 	}
+}
+
+if (defined('IN_ADMIN')) {
+	$accepted_fieldtype['direct']['field_birthdate']='Birthdate';
 }

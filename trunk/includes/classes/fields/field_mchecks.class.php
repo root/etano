@@ -14,6 +14,10 @@ Support at:                 http://www.datemill.com/forum
 
 class field_mchecks extends iprofile_field {
 	var $empty_value=array('edit'=>'','display'=>'');
+	var $display_name='Multi Checks';
+	var $allowed_search_types=array('field_select','field_mchecks');
+	// how to render the search_value input in the accepted values list (as radios or as checkboxes)
+	var $_search_defaults_input_type=array('field_select'=>'radio','field_mchecks'=>'checks');
 
 	function field_mchecks($config=array(),$is_search=false) {
 		$this->config=$config;
@@ -63,8 +67,210 @@ class field_mchecks extends iprofile_field {
 		}
 	}
 
-	function edit_admin() {
-		return '';
+	function edit_admin($mode='direct') {
+		global $dbtable_prefix,$default_skin_code,$output,$__field2format,$search_type;
+		$myreturn='';
+		if ($mode=='direct') {
+			$myreturn.='<div id="row_accvals" class="clear">
+				<label>Accepted Values</label>
+				<a href="#" id="accvals_add_first" title="Add a new value at the beginning of the list">Add new value</a> (at the beginning of the list)
+				<div id="actual_values"></div>
+			</div>';
+			$query="SELECT a.`accval_id`,b.`lang_value` as `value`,a.`def_value`,a.`search_value` FROM `{$dbtable_prefix}profile_field_accvals` a, `{$dbtable_prefix}lang_strings` b WHERE a.`fk_lk_id_name`=b.`fk_lk_id` AND b.`skin`='$default_skin_code' AND a.`fk_pfield_id`=".$output['pfield_id']." ORDER BY a.`sort`";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$accvals=array();
+			// grab the accepted values and pass them to js in json format
+			while ($rsrow=mysql_fetch_assoc($res)) {
+				$rsrow['value']=sanitize_and_format($rsrow['value'],TYPE_STRING,$__field2format[TEXT_GPC2EDIT]);
+				$accvals[]=$rsrow;
+			}
+			$json=new Services_JSON(SERVICES_JSON_SUPPRESS_ERRORS | SERVICES_JSON_LOOSE_TYPE);
+			$accvals=$json->encode($accvals);
+			$myreturn.='<script type="text/javascript">
+				$(function() {
+					search_defaults_input_type = [];';
+			foreach ($this->_search_defaults_input_type as $k=>$v) {
+				$myreturn.="search_defaults_input_type['$k'] = '$v';\n";
+			}
+			$myreturn.='my_accvals=new Etano.accvals('.$accvals.');
+					my_accvals.set_defval_type(\'checks\');
+					my_accvals.set_searchval_type(search_defaults_input_type[$(\'#search_type\').val()]);
+					my_accvals.render(\'actual_values\');
+
+					$(\'#search_type\').change(function() {
+						my_accvals.set_searchval_type(search_defaults_input_type[$(this).val()]);
+						my_accvals.render(\'actual_values\');
+						rebind_events();
+					});
+
+					// add a new field at the beginning of the list
+					$(\'#accvals_add_first\').click(function() {
+						var myval=prompt_value(\'\');
+						if (myval) {
+							my_accvals.add(0,{value:myval});
+							my_accvals.render(\'actual_values\');
+							rebind_events();
+						}
+						return false;
+					});
+
+					$(\'#profile_fields_addedit\').bind(\'submit\',function() {
+						$(this).append(my_accvals.on_submit());
+					});
+
+					rebind_events();
+				});
+
+				function prompt_value(val) {
+					if (!val) {
+						val=\'\';
+					}
+					var myval=prompt(\'Please enter the new value.\',val);
+					if (myval && myval!=\'\') {
+						return myval;
+					}
+					return false;
+				}
+
+				function rebind_events() {
+					$(\'.accvals_edit\').click(function() {
+						var my_idx=$(this).attr(\'id\').substr(5);
+						var myval=prompt_value(my_accvals.container[my_idx].value);
+						if (myval) {
+							my_accvals.change(my_idx,{value:myval});
+							my_accvals.render(\'actual_values\');
+							rebind_events();
+						}
+						return false;
+					});
+
+					$(\'.accvals_add\').click(function() {
+						var my_idx=$(this).attr(\'id\').substr(4);
+						var myval=prompt_value(\'\');
+						if (myval) {
+							my_idx++;
+							my_accvals.add(my_idx,{value:myval});
+							my_accvals.render(\'actual_values\');
+							rebind_events();
+						}
+						return false;
+					});
+
+					$(\'.accvals_del\').click(function() {
+						if (confirm(\'Are you sure you want to remove this value?\')) {
+							my_accvals.del($(this).attr(\'id\').substr(4));
+							my_accvals.render(\'actual_values\');
+							rebind_events();
+						}
+						return false;
+					});
+
+					$(\'input.defval\').click(function() {
+						var my_idx=$(this).attr(\'id\').substr(7);
+						my_accvals.set_defval(my_idx,this.checked);
+					});
+
+					$(\'input.searchval\').click(function() {
+						var my_idx=$(this).attr(\'id\').substr(10);
+						my_accvals.set_searchval(my_idx,this.checked);
+					});
+				}
+			</script>';
+		}
+		return $myreturn;
+	}
+
+	function admin_processor($mode='direct') {
+		$error=false;
+		$my_input=array();
+		global $input,$__field2format,$dbtable_prefix,$default_skin_code;
+		if ($mode!='search') {
+			$json=new Services_JSON(SERVICES_JSON_SUPPRESS_ERRORS | SERVICES_JSON_LOOSE_TYPE);
+			$temp=$json->decode(urldecode(sanitize_and_format_gpc($_POST,'accvals_new',TYPE_STRING,0,'')));
+			for ($i=0;isset($temp[$i]);++$i) {
+				$temp[$i]['value']=sanitize_and_format($temp[$i]['value'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
+				$temp[$i]['after']=(int)$temp[$i]['after'];
+				$temp[$i]['def_value']=(int)$temp[$i]['def_value'];
+				$temp[$i]['search_value']=(int)$temp[$i]['search_value'];
+			}
+			$accvals_new=$temp;
+
+			$temp=$json->decode(urldecode(sanitize_and_format_gpc($_POST,'accvals_changed',TYPE_STRING,0,'')));
+			for ($i=0;isset($temp[$i]);++$i) {
+				$temp[$i]['accval_id']=(int)$temp[$i]['accval_id'];
+				$temp[$i]['value']=sanitize_and_format($temp[$i]['value'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
+				$temp[$i]['def_value']=(int)$temp[$i]['def_value'];
+				$temp[$i]['search_value']=(int)$temp[$i]['search_value'];
+			}
+			$accvals_changed=$temp;
+
+			$temp=$json->decode(urldecode(sanitize_and_format_gpc($_POST,'accvals_deleted',TYPE_STRING,0,0)));
+			$accvals_deleted=array();
+			for ($i=0;isset($temp[$i]);++$i) {
+				$accvals_deleted[]=(int)$temp[$i]['accval_id'];
+			}
+
+			if (!empty($accvals_new)) {
+				// create the language keys and strings for the default skin
+				for ($i=0;isset($accvals_new[$i]);++$i) {
+					$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Field value',`lk_use`=".LK_FIELD;
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+					$accvals_new[$i]['fk_lk_id']=mysql_insert_id();
+					$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$accvals_new[$i]['value']."',`fk_lk_id`=".$accvals_new[$i]['fk_lk_id'].",`skin`='$default_skin_code'";
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				}
+				// insert the new values and re-sort the values for this field. Ugly and slow code with lots of queries :(
+				$last_accvalid=0;
+				for ($i=0;isset($accvals_new[$i]);++$i) {
+					if (empty($accvals_new[$i]['after'])) {
+						$accvals_new[$i]['after']=$last_accvalid;
+					}
+					$query="UPDATE `{$dbtable_prefix}profile_field_accvals` a,`{$dbtable_prefix}profile_field_accvals` b SET a.`sort`=a.`sort`+1 WHERE a.`fk_pfield_id`=".$input['pfield_id']." AND b.`fk_pfield_id`=".$input['pfield_id']." AND a.`sort`>b.`sort` AND b.`accval_id`=".$accvals_new[$i]['after'];
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+					$query="INSERT INTO `{$dbtable_prefix}profile_field_accvals` SET `fk_lk_id_name`=".$accvals_new[$i]['fk_lk_id'].",`fk_pfield_id`=".$input['pfield_id'].",`def_value`=".$accvals_new[$i]['def_value'].",`search_value`=".$accvals_new[$i]['search_value'].",`sort`=".($accvals_new[$i]['after']+1);
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+					$last_accvalid=mysql_insert_id();
+				}
+			}
+
+			if (!empty($accvals_deleted)) {
+				$query="SELECT `fk_lk_id_name` FROM `{$dbtable_prefix}profile_field_accvals` WHERE `accval_id` IN (".join(',',$accvals_deleted).")";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$temp=array();
+				while ($rsrow=mysql_fetch_assoc($res)) {
+					$temp[]=$rsrow['fk_lk_id_name'];
+				}
+				$query="DELETE FROM `{$dbtable_prefix}profile_field_accvals` WHERE `accval_id` IN ('".join("','",$accvals_deleted)."')";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$query="DELETE FROM `{$dbtable_prefix}lang_strings` WHERE `fk_lk_id` IN ('".join("','",$temp)."')";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				$query="DELETE FROM `{$dbtable_prefix}lang_keys` WHERE `lk_id` IN ('".join("','",$temp)."')";
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			}
+
+			if (!empty($accvals_changed)) {
+				for ($i=0;isset($accvals_changed[$i]);++$i) {
+					// update the language string
+					$query="UPDATE `{$dbtable_prefix}lang_strings` a,`{$dbtable_prefix}profile_field_accvals` b SET a.`lang_value`='".$accvals_changed[$i]['value']."' WHERE a.`fk_lk_id`=b.`fk_lk_id_name` AND a.`skin`='$default_skin_code' AND b.`accval_id`=".$accvals_changed[$i]['accval_id'];
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+					$query="UPDATE `{$dbtable_prefix}profile_field_accvals` SET `def_value`=".$accvals_changed[$i]['def_value'].",`search_value`=".$accvals_changed[$i]['search_value']." WHERE `accval_id`=".$accvals_changed[$i]['accval_id'];
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				}
+			}
+
+			// if the search_type field has any config to save, grab it here.
+			if (!empty($input['searchable']) && !empty($input['search_type'])) {
+				$search_field=new $input['search_type']();
+				$temp=$search_field->admin_processor('search');
+				if (is_array($temp) && !empty($temp)) {
+					$my_input=array_merge($my_input,$temp);
+				}
+			}
+			$input['custom_config']=sanitize_and_format(serialize($my_input),TYPE_STRING,FORMAT_ADDSLASH);
+		} else {
+			return array();
+		}
+		return $error;
 	}
 
 	function query_select() {
@@ -106,6 +312,10 @@ class field_mchecks extends iprofile_field {
 		return $myreturn;
 	}
 
+	function query_create($dbfield) {
+		return " ADD `{$dbfield}` text not null default ''";
+	}
+
 	function edit_js() {
 		$myreturn='';
 		if (!empty($this->config['required'])) {
@@ -141,4 +351,9 @@ class field_mchecks extends iprofile_field {
 			return $this->value;
 		}
 	}
+}
+
+if (defined('IN_ADMIN')) {
+	$accepted_fieldtype['direct']['field_mchecks']='Multi Checks';
+	$accepted_fieldtype['search']['field_mchecks']='Multi Checks';
 }

@@ -350,9 +350,9 @@ function dbtable2options($table,$key_field,$value_field,$order_field='',$selecte
 }
 
 
-function db_key2value($table,$key_field,$value_field,$key_value,$null_value='') {
+function db_key2value($table,$key_field,$value_field,$key_value,$null_value='',$more_where='') {
 	$myreturn=$null_value;
-	$query="SELECT $value_field FROM $table WHERE $key_field='$key_value'";
+	$query="SELECT $value_field FROM $table WHERE $key_field='$key_value' {$more_where}";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$myreturn=mysql_result($res,0,0);

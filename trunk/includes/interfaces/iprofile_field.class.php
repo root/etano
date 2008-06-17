@@ -26,6 +26,10 @@ Support at:                 http://www.datemill.com/forum
 
 	var $search=null;
 
+	var $display_name='';
+
+	var $allowed_search_types=array();
+
 	/**
 	 *	Sets the raw value which will later be outputed for edit/display/search/insert
 	 *
@@ -65,8 +69,32 @@ Support at:                 http://www.datemill.com/forum
 		return null;
 	}
 
-	function edit_admin() {
+	/**
+	 *	Renders the field specific options.
+	 *
+	 *	@param string $mode It has 2 modes: 'direct' and 'search'.
+	 *
+	 *	@return string the html to be displayed in profile_fields_addedit, after the general config questions.
+	 */
+	function edit_admin($mode='direct') {
 		return '';
+	}
+
+	/**
+	 *	Does all the processor work in the admin interface for this field. Can set $GLOBALS['input']['custom_config'] to a
+	 *	serialized string which will be saved into db, retrieved and unserialized in the display page
+	 *
+	 *	@param string $mode Can take the values of 'direct' or 'search'. This parameter tells the function how it should behave:
+	 *	as the search_type for another field or as a main field.
+	 *	In 'search' mode it should return whatever input it gathers from $_POST or anything else it needs saved into db as an array.
+	 *	In 'direct' mode it should at least retrieve the config from its search_type field, merge it with its own config, serialize
+	 *	it and save it in $GLOBALS['input']['custom_config']
+	 *
+	 *	@return mixed Either boolean false/true with the meaning "Error occured?" or an array with this field's config if in
+	 *	'search' mode.
+	 */
+	function admin_processor($mode='direct') {
+
 	}
 
 	/**
@@ -87,8 +115,11 @@ Support at:                 http://www.datemill.com/forum
 		return '';
 	}
 
-	/*abstract*/ public function query_search() {
+	function query_search() {
 		return '';
+	}
+
+	function query_create($dbfield) {
 	}
 
 	/**
