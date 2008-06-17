@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 
 class field_textfield extends iprofile_field {
 	var $empty_value=array('edit'=>'','display'=>'','search'=>'');
+	var $display_name='Textfield';
 
 	function field_textfield($config=array(),$is_search=false) {
 		$this->config=$config;
@@ -63,8 +64,13 @@ class field_textfield extends iprofile_field {
 		}
 	}
 
-	function edit_admin() {
+	function edit_admin($mode='direct') {
 		return '';
+	}
+
+	function admin_processor($mode='direct') {
+		$error=false;
+		return $error;
 	}
 
 	function query_select() {
@@ -79,6 +85,10 @@ class field_textfield extends iprofile_field {
 
 	function query_search() {
 		return ' AND `'.$this->config['dbfield']."` LIKE '".$this->value."%'";
+	}
+
+	function query_create($dbfield) {
+		return " ADD `{$dbfield}` varchar(100) not null default ''";
 	}
 
 	function edit_js() {
@@ -109,4 +119,8 @@ class field_textfield extends iprofile_field {
 			return $this->value;
 		}
 	}
+}
+
+if (defined('IN_ADMIN')) {
+	$accepted_fieldtype['direct']['field_textfield']='Textfield';
 }

@@ -14,6 +14,7 @@ Support at:                 http://www.datemill.com/forum
 
 class field_range extends iprofile_field {
 	var $empty_value=array('edit'=>array('min'=>0,'max'=>0),'display'=>'?');
+	var $display_name='Range';
 
 	function field_range($config=array(),$is_search=false) {
 		$this->config=$config;
@@ -85,8 +86,17 @@ class field_range extends iprofile_field {
 		}
 	}
 
-	function edit_admin() {
+	function edit_admin($mode='direct') {
 		return '';
+	}
+
+	function admin_processor($mode='direct') {
+		$error=false;
+		$my_input=array();
+		if ($mode=='search') {
+			return $my_input;
+		}
+		return $error;
 	}
 
 	function query_select() {
@@ -117,4 +127,8 @@ class field_range extends iprofile_field {
 		$myreturn=true;
 		return $myreturn;
 	}
+}
+
+if (defined('IN_ADMIN')) {
+	$accepted_fieldtype['search']['field_range']='Range';
 }

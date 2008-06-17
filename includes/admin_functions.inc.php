@@ -21,6 +21,7 @@ if (!defined('_LICENSE_KEY_')) {
 	set_error_handler('general_error');
 //}
 
+define('IN_ADMIN',1);
 require_once 'general_functions.inc.php';
 $GLOBALS['_lang']=array();
 $def_skin=isset($_SESSION[_LICENSE_KEY_]['admin']['def_skin']) ? $_SESSION[_LICENSE_KEY_]['admin']['def_skin'] : get_default_skin_dir();
@@ -48,14 +49,11 @@ define('LINKTYPE_MAIN',0);
 define('LINKTYPE_PROFILE',1);
 
 $accepted_months=array('month','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec');
-$accepted_fieldtype=array(FIELD_SELECT=>'Select box',FIELD_CHECKBOX_LARGE=>'Multi checks',FIELD_TEXTFIELD=>'Textfield',FIELD_TEXTAREA=>'Textarea',FIELD_DATE=>'Date',FIELD_LOCATION=>'Location',FIELD_RANGE=>'Range');
-$field_dbtypes=array(FIELD_TEXTFIELD=>"varchar(100) not null default ''",FIELD_SELECT=>'int(5) not null default 0',FIELD_FK_SELECT=>'int(10) not null default 0',FIELD_TEXTAREA=>"text not null default ''",FIELD_CHECKBOX_LARGE=>"text not null default ''",FIELD_FILE=>"varchar(64) not null default ''",FIELD_DATE=>'date not null',FIELD_INT=>'int(5) not null default 0',FIELD_FLOAT=>'double not null default 0');
 $accepted_admin_depts=array(DEPT_ADMIN=>'Administrator',DEPT_MODERATOR=>'Moderator');
 $accepted_astats=array(ASTAT_SUSPENDED=>'Suspended',ASTAT_UNVERIFIED=>'Unactivated',ASTAT_ACTIVE=>'Active');
 $accepted_pstats=array(STAT_PENDING=>'Awaiting approval',STAT_EDIT=>'Requires edit',STAT_APPROVED=>'Approved');
 $accepted_yesno=array(0=>'No',1=>'Yes');
 $country_prefered_input=array('s'=>'state/city selection','z'=>'zip/postal code');
-$inverse_fields=array(2=>'FIELD_TEXTFIELD',3=>'FIELD_SELECT',4=>'FIELD_TEXTAREA',9=>'FIELD_CHECKBOX',10=>'FIELD_CHECKBOX_LARGE',101=>'FIELD_FILE',102=>'FIELD_FK_SELECT',103=>'FIELD_DATE',104=>'FIELD_INT',105=>'FIELD_FLOAT',106=>'HTML_PIC',107=>'FIELD_LOCATION',108=>'FIELD_RANGE');
 $flirt_types=array(0=>'Initial flirt',1=>'Reply');
 $accepted_module_types=array(MODULE_REGULAR=>'Update',MODULE_PAYMENT=>'Payment',MODULE_FRAUD=>'Fraud Check',MODULE_WIDGET=>'Widget',MODULE_SKIN=>'Skin',MODULE_3RD=>'Integration');
 

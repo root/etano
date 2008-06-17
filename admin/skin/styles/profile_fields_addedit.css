@@ -1,57 +1,54 @@
-ul#litems li {
-	clear: both;
-	border-bottom: 1px solid #ccc;
-	height: 20px;
-	font-size: 90%;
+#help_text {
+	height: 50px;
 }
 
-* html ul#litems li {
-	list-style-type: none;
+#actual_values {
+	padding: 0 0 0 160px;
+}
+.accvals_container .accvals_row {
+	position: relative;
+	padding: 4px 0;
 }
 
-ul#litems li ul.litem_tools {
-	float: right;
-	width: 120px;
-	padding: 0;
-	margin: 2px 0 0 0;
+.accvals_container .accvals_row .tools {
+	position: absolute;
+	right: 10px;
 }
 
-* html ul#litems li ul.litem_tools {
-	width: 130px;
+.accvals_row:hover {
+	background-color: #e9e9e9;
 }
 
-ul#litems li ul.litem_tools li {
-	padding: 0 4px;
-	margin: 0;
-	width: 16px;
-	float: left;
-	clear: none;
-	border: none;
-	list-style-type: none;
+.accvals_row .tools a {
+	padding-right: 10px;
 }
 
-a.item_add {
-	background: url('../images/add.gif') no-repeat top left;
-	display: block;
-	width: 16px;
-	height: 16px;
-	margin:0;
-}
-a.item_del {
-	background: url('../images/del.gif') no-repeat top left;
-	display: block;
-	width: 16px;
-	height: 16px;
-	margin:0;
-}
-a.item_edit {
-	background: url('../images/edit.gif') no-repeat top left;
-	display: block;
-	width: 16px;
-	height: 16px;
-	margin:0;
+.accvals_row .tools input {
+	margin-right: 10px;
 }
 
-a.item_edit i, a.item_del i, a.item_add i {
-	display: none;
+.accvals_row .tools .check {
+	margin-bottom: 3px;
+}
+
+.accvals_row .tools .radio {
+	margin-top: 2px;
+}
+
+.icon_link {
+	display:block;
+	float:left;
+	height:16px;
+	width:16px;
+	text-indent:-9999px;
+}
+.icon_edit {
+	background:transparent url(../images/edit.png) no-repeat scroll left top;
+}
+.icon_add {
+	background:transparent url(../images/add.png) no-repeat scroll left top;
+}
+
+.icon_del {
+	background:transparent url(../images/del.png) no-repeat scroll left top;
 }

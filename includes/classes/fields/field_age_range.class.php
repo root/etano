@@ -13,6 +13,7 @@ Support at:                 http://www.datemill.com/forum
 
 
 class field_age_range extends field_range {
+	var $display_name='Age Range';
 
 	function field_age_range($config=array(),$is_search=false) {
 		$this->config=$config;
@@ -45,4 +46,35 @@ class field_age_range extends field_range {
 		}
 		return $myreturn;
 	}
+
+	function edit_admin($mode='direct') {
+		global $output;
+		$myreturn='';
+		if ($mode=='search') {
+			$output['search_start']=isset($output['search_start']) ? $output['search_start'] : '';
+			$output['search_end']=isset($output['search_end']) ? $output['search_end'] : '';
+			$myreturn.='<div class="clear">
+				<label for="search_start">Default search range:</label>
+				<input class="text numeric" type="text" name="search_start" id="search_start" value="'.$output['search_start'].'" size="2" maxlength="2" tabindex="15" />
+				to
+				<input class="text numeric" type="text" name="search_end" id="search_end" value="'.$output['search_end'].'" size="2" maxlength="2" tabindex="16" />
+				<p class="comment">Enter here the ages you want preselected in the search box like Age: 18 to 30. Must match the years above.</p>';
+		}
+		return $myreturn;
+	}
+
+	function admin_processor($mode='direct') {
+		$error=false;
+		$my_input=array();
+		if ($mode=='search') {
+			$my_input['search_start']=sanitize_and_format_gpc($_POST,'search_start',TYPE_INT,0,0);
+			$my_input['search_end']=sanitize_and_format_gpc($_POST,'search_end',TYPE_INT,0,0);
+			return $my_input;
+		}
+		return $error;
+	}
+}
+
+if (defined('IN_ADMIN')) {
+	$accepted_fieldtype['search']['field_age_range']='Age Range';
 }
