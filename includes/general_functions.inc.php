@@ -117,7 +117,7 @@ function get_module_codes_by_type($module_type) {
 // This function does NOT convert html to text.
 // Make sure that the string is clean before calling this function
 function bbcode2html($str) {
-	$from=array('~\[url=(http://[^<">\[\]]*?)\](.*?)\[/url\]~','~\[b\](.*?)\[/b\]~s','~\[u\](.*?)\[/u\]~s','~\[quote\](.*?)\[/quote\]~s','~\[img=(http://[a-zA-Z0-9\-_\.]*?)\]~');
+	$from=array('~\[url=(http://[^<">\[\]]*?)\](.*?)\[/url\]~','~\[b\](.*?)\[/b\]~s','~\[u\](.*?)\[/u\]~s','~\[quote\](.*?)\[/quote\]~s','~\[img=(http://[^<">\[\]]*?)\]~');
 	$to=array('<a class="content-link simple" rel="external" href="$1">$2</a>','<strong>$1</strong>','<span class="underline">$1</span>','<blockquote>$1</blockquote>','<img src="$1" />');
 	$str=preg_replace($from,$to,$str);
 	// leftovers
