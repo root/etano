@@ -83,10 +83,10 @@ if (!empty($new_field->allowed_search_types)) {
 	// we initialize the search field so we can ask for its admin config in search mode.
 	$search_field=null;
 	if (class_exists($search_type)) {
-		$search_field=new $search_type;
+		$search_field=new $search_type(array(),true);
 	}
 	if (!empty($search_field)) {
-		$output['custom_config_search']=$search_field->edit_admin('search');
+		$output['custom_config_search']=$search_field->edit_admin();
 	}
 }
 

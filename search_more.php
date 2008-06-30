@@ -28,7 +28,7 @@ foreach ($_pcats as $pcat_id=>$pcat) {
 		}
 	}
 }
-$_pfields[$search_fields[7]]->search()->query_search();
+
 sort($search_fields,SORT_NUMERIC);
 $search_loop=create_search_form($search_fields);
 $tpl->set_file('content','search_more.html');

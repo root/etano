@@ -49,7 +49,7 @@ class field_textarea extends iprofile_field {
 
 	function display() {
 		$myreturn=sanitize_and_format($this->value,TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
-		if (!empty($this->config['bbcode_profile'])) {
+		if (!empty($this->config['use_bbcode'])) {
 			$myreturn=bbcode2html($myreturn);
 		}
 		if (!empty($this->config['use_smilies'])) {
@@ -61,7 +61,7 @@ class field_textarea extends iprofile_field {
 	function search() {
 		if ($this->search!=null) {
 			return $this->search;
-		} elseif (!empty($this->config['search_type']) && is_file(_BASEPATH_.'/includes/classes/fields/'.$this->config['search_type'].'.class.php')) {
+		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
 			$new_config=$this->config;
 			if (isset($new_config['search_default'])) {
@@ -79,12 +79,61 @@ class field_textarea extends iprofile_field {
 		}
 	}
 
-	function edit_admin($mode='direct') {
-		return '';
+	function edit_admin() {
+		global $output,$__field2format;
+		$myreturn='';
+		if (!$this->is_search) {
+			if (isset($output['use_bbcode'])) {
+				if (!empty($output['use_bbcode'])) {
+					$output['use_bbcode']='checked="checked"';
+				}
+			} else {
+				$output['use_bbcode']='checked="checked"';
+			}
+			$myreturn.='<div class="clear">
+				<label for="use_bbcode">Use bbcode?</label>
+				<input type="checkbox" class="checkbox" name="use_bbcode" id="use_bbcode" value="1" '.$output['use_bbcode'].' />
+			</div>';
+			if (isset($output['use_smilies'])) {
+				if (!empty($output['use_smilies'])) {
+					$output['use_smilies']='checked="checked"';
+				}
+			} else {
+				$output['use_smilies']='checked="checked"';
+			}
+			$myreturn.='<div class="clear">
+				<label for="use_smilies">Allow smileys?</label>
+				<input type="checkbox" class="checkbox" name="use_smilies" id="use_smilies" value="1" '.$output['use_smilies'].' />
+			</div>';
+			$output['changes_status']=!empty($output['changes_status']) ? 'checked="checked"' : '';
+			$myreturn.='<div class="clear">
+				<label for="changes_status">Changes status?</label>
+				<input type="checkbox" class="checkbox" name="changes_status" id="changes_status" value="1" '.$output['changes_status'].' />
+				<p class="comment">If a member makes changes to this field, should his/her profile be re-approved by an administrator?</p>
+			</div>';
+			$output['ta_len']=!empty($output['ta_len']) ? $output['ta_len'] : 0;
+			$myreturn.='<div class="clear">
+				<label for="ta_len">Char Length:</label>
+				<input type="text" class="text numeric" name="ta_len" id="ta_len" value="'.$output['ta_len'].'" />
+				<p class="comment">Maximum number of characters users may enter into this field (use 0 for unlimited)</p>
+			</div>';
+		}
+		return $myreturn;
 	}
 
-	function admin_processor($mode='direct') {
+	function admin_processor() {
 		$error=false;
+		$my_input=array();
+		global $input,$__field2format,$dbtable_prefix,$default_skin_code;
+		if (!$this->is_search) {
+			$my_input['use_bbcode']=sanitize_and_format_gpc($_POST,'use_bbcode',TYPE_INT,0,0);
+			$my_input['use_smilies']=sanitize_and_format_gpc($_POST,'use_smilies',TYPE_INT,0,0);
+			$my_input['changes_status']=sanitize_and_format_gpc($_POST,'changes_status',TYPE_INT,0,0);
+			$my_input['ta_len']=sanitize_and_format_gpc($_POST,'ta_len',TYPE_INT,0,0);
+			$input['custom_config']=sanitize_and_format(serialize($my_input),TYPE_STRING,FORMAT_ADDSLASH);
+		} else {
+			return array();
+		}
 		return $error;
 	}
 
@@ -134,6 +183,9 @@ class field_textarea extends iprofile_field {
 				}
 			});';
 		}
+		if ($this->config['use_bbcode']) {
+			$myreturn.='$(\'#'.$this->config['dbfield'].'\').sco_bbcode();';
+		}
 		return $myreturn;
 	}
 
@@ -155,5 +207,5 @@ class field_textarea extends iprofile_field {
 }
 
 if (defined('IN_ADMIN')) {
-	$accepted_fieldtype['direct']['field_textarea']='Textarea';
+	$GLOBALS['accepted_fieldtype']['direct']['field_textarea']='Textarea';
 }

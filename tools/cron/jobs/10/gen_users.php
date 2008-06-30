@@ -2,8 +2,7 @@
 $jobs[]='gen_user_cache';
 
 function gen_user_cache() {
-	global $dbtable_prefix;
-	global $_pfields;
+	global $dbtable_prefix,$_pfields,$_pcats;
 
 	$dirname=dirname(__FILE__);
 	$temp=array();
@@ -23,20 +22,16 @@ function gen_user_cache() {
 		$skins[]=mysql_result($res,$i,0);
 	}
 
-	$config=get_site_option(array('bbcode_profile','use_smilies'),'core');
-
 	require _BASEPATH_.'/includes/classes/Cache/Lite.php';
 	$cache=new Cache_Lite($GLOBALS['_cache_config']);
 
 	$now=gmdate('YmdHis');
 	$select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`rad_longitude`,`rad_latitude`';
+	$used_fields=array();
 	foreach ($_pfields as $field_id=>$field) {
-		if ($field['field_type']==FIELD_DATE) {
-			$select.=",DATE_FORMAT('$now','%Y')-DATE_FORMAT(`".$field['dbfield']."`,'%Y')-(DATE_FORMAT('$now','%m%d')<DATE_FORMAT(`".$field['dbfield']."`,'%m%d')) as `".$field['dbfield']."`";
-		} elseif ($field['field_type']==FIELD_LOCATION) {
-			$select.=',`'.$field['dbfield'].'_country`,`'.$field['dbfield'].'_state`,`'.$field['dbfield'].'_city`,`'.$field['dbfield'].'_zip`';
-		} else {
-			$select.=',`'.$field['dbfield'].'`';
+		if ($field->config['visible']) {
+			$select.=','.$field->query_select();
+			$used_fields[]=$field_id;
 		}
 	}
 
@@ -50,45 +45,16 @@ function gen_user_cache() {
 		$query="SELECT $select FROM `{$dbtable_prefix}user_profiles` WHERE `status`=".STAT_APPROVED." AND `last_changed`>=DATE_SUB('$now',INTERVAL ".($interval+2)." MINUTE)";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($profile=mysql_fetch_assoc($res)) {
-		// set all the fields to their real (readable) values
-			foreach ($_pfields as $field_id=>$field) {
-				if ($field['visible']) {
-					$profile[$field['dbfield'].'_label']=$field['label'];
-					if ($field['field_type']==FIELD_TEXTFIELD) {
-						$profile[$field['dbfield']]=sanitize_and_format(remove_banned_words($profile[$field['dbfield']]),TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
-					} elseif ($field['field_type']==FIELD_TEXTAREA) {
-						$profile[$field['dbfield']]=sanitize_and_format(remove_banned_words($profile[$field['dbfield']]),TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
-						if ($config['bbcode_profile']) {
-							$profile[$field['dbfield']]=bbcode2html($profile[$field['dbfield']]);
-						}
-						if ($config['use_smilies']) {
-							$profile[$field['dbfield']]=text2smilies($profile[$field['dbfield']]);
-						}
-					} elseif ($field['field_type']==FIELD_SELECT) {
-						// if we sanitize here " will be rendered as &quot; which is not what we want
-		//				$profile[$field['dbfield']]=sanitize_and_format($field['accepted_values'][$profile[$field['dbfield']]],TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
-						$profile[$field['dbfield']]=isset($field['accepted_values'][$profile[$field['dbfield']]]) ? $field['accepted_values'][$profile[$field['dbfield']]] : '?';
-					} elseif ($field['field_type']==FIELD_CHECKBOX_LARGE) {
-						$profile[$field['dbfield']]=sanitize_and_format(vector2string_str($field['accepted_values'],$profile[$field['dbfield']]),TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2DISPLAY]);
-					} elseif ($field['field_type']==FIELD_INT || $field['field_type']==FIELD_FLOAT) {
-			//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
-					} elseif ($field['field_type']==FIELD_DATE) {
-						$profile[$field['dbfield'].'_label']=$field['search_label'];
-						if ($profile[$field['dbfield']]>110) {
-							$profile[$field['dbfield']]='?';
-						}
-					} elseif ($field['field_type']==FIELD_LOCATION) {
-						$profile[$field['dbfield']]=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$profile[$field['dbfield'].'_country'],'-');
-						if (!empty($profile[$field['dbfield'].'_state'])) {
-							$profile[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$profile[$field['dbfield'].'_state'],'-');
-						}
-						if (!empty($profile[$field['dbfield'].'_city'])) {
-							$profile[$field['dbfield']].=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$profile[$field['dbfield'].'_city'],'-');
-						}
-					}
-				} else {
-					unset($profile[$field['dbfield']]);
-				}
+			for ($i=0;isset($used_fields[$i]);++$i) {
+				$field=&$_pfields[$used_fields[$i]];
+				$field->set_value($profile,false);
+				$profile[$field->config['dbfield']]=$field->display();
+				// the label should be set after the call to display(). See field_birthdate::display() for explanation.
+				$profile[$field->config['dbfield'].'_label']=$field->config['label'];
+/*
+				} elseif ($field['field_type']==FIELD_INT || $field['field_type']==FIELD_FLOAT) {
+		//			$profile[$field['dbfield']]=$profile[$field['dbfield']];
+*/
 			}
 			if (empty($profile['_photo']) || !is_file(_PHOTOPATH_.'/t1/'.$profile['_photo']) || !is_file(_PHOTOPATH_.'/t2/'.$profile['_photo']) || !is_file(_PHOTOPATH_.'/'.$profile['_photo'])) {
 				$profile['_photo']='no_photo.gif';
@@ -97,23 +63,23 @@ function gen_user_cache() {
 			}
 
 			$tpl->set_var('profile',$profile);
-
 			// generate the user details for result lists
 			$tpl->set_file('temp',$skins[$s].'/static/result_user.html');
-			$towrite=$tpl->process('','temp');
+			$towrite=$tpl->process('','temp',TPL_OPTIONAL);
 			$cache->save($towrite,'skin'.$skins[$s].$profile['fk_user_id'].'result_user');
 
 			// generate the categories to be used on profile.php page
 			$categs=array();
 			$tpl->set_file('temp',$skins[$s].'/static/profile_categ.html');
-			foreach ($GLOBALS['_pcats'] as $pcat_id=>$pcat) {
+			foreach ($_pcats as $pcat_id=>$pcat) {
 				$fields=array();
 				$j=0;
-				for ($i=0;isset($pcat['fields'][$i]);++$i) {
-					if (!empty($profile[$_pfields[$pcat['fields'][$i]]['dbfield']])) {
-						$fields[$i]['label']=$profile[$_pfields[$pcat['fields'][$i]]['dbfield'].'_label'];
-						$fields[$i]['field']=$profile[$_pfields[$pcat['fields'][$i]]['dbfield']];
-						$fields[$i]['dbfield']=$_pfields[$pcat['fields'][$i]]['dbfield'];
+				for ($k=0;isset($pcat['fields'][$k]);++$k) {
+					if (!empty($profile[$_pfields[$pcat['fields'][$k]]->config['dbfield']])) {
+						$fields[$j]['label']=$profile[$_pfields[$pcat['fields'][$k]]->config['dbfield'].'_label'];
+						$fields[$j]['field']=$profile[$_pfields[$pcat['fields'][$k]]->config['dbfield']];
+						$fields[$j]['dbfield']=$_pfields[$pcat['fields'][$k]]->config['dbfield'];
+						++$j;
 					}
 				}
 				$categs['pcat_name']=$pcat['pcat_name'];

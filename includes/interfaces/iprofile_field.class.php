@@ -70,13 +70,11 @@ Support at:                 http://www.datemill.com/forum
 	}
 
 	/**
-	 *	Renders the field specific options.
-	 *
-	 *	@param string $mode It has 2 modes: 'direct' and 'search'.
+	 *	Renders the field specific options. It can behave differently depending on $this->is_search parameter.
 	 *
 	 *	@return string the html to be displayed in profile_fields_addedit, after the general config questions.
 	 */
-	function edit_admin($mode='direct') {
+	function edit_admin() {
 		return '';
 	}
 
@@ -84,7 +82,7 @@ Support at:                 http://www.datemill.com/forum
 	 *	Does all the processor work in the admin interface for this field. Can set $GLOBALS['input']['custom_config'] to a
 	 *	serialized string which will be saved into db, retrieved and unserialized in the display page
 	 *
-	 *	@param string $mode Can take the values of 'direct' or 'search'. This parameter tells the function how it should behave:
+	 *	It can behave differently depending on $this->is_search parameter:
 	 *	as the search_type for another field or as a main field.
 	 *	In 'search' mode it should return whatever input it gathers from $_POST or anything else it needs saved into db as an array.
 	 *	In 'direct' mode it should at least retrieve the config from its search_type field, merge it with its own config, serialize
@@ -93,7 +91,7 @@ Support at:                 http://www.datemill.com/forum
 	 *	@return mixed Either boolean false/true with the meaning "Error occured?" or an array with this field's config if in
 	 *	'search' mode.
 	 */
-	function admin_processor($mode='direct') {
+	function admin_processor() {
 
 	}
 

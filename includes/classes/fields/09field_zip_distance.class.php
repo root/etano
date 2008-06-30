@@ -55,11 +55,11 @@ class field_zip_distance extends iprofile_field {
 		return '';
 	}
 
-	function edit_admin($mode='direct') {
+	function edit_admin() {
 		return '';
 	}
 
-	function admin_processor($mode='direct') {
+	function admin_processor() {
 		$error=false;
 		return $error;
 	}
@@ -95,5 +95,5 @@ class field_zip_distance extends iprofile_field {
 }
 
 if (defined('IN_ADMIN')) {
-	$accepted_fieldtype['search']['field_zip_distance']='Zip Distance';
+	$GLOBALS['accepted_fieldtype']['search']['field_zip_distance']='Zip Distance';
 }

@@ -1,69 +1,69 @@
-$(function() {
-	if (typeof(bbcode_field_id)!='undefined') {
-		$(bbcode_field_id).before('<div id="bb_tools"><a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a><a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a><a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a><a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a><a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a></div>');
-		$('#bb_tools #bold').click(function() {
-			add_bbcode2('b',$(bbcode_field_id)[0]);
-			return false;
-		});
-		$('#bb_tools #underline').click(function() {
-			add_bbcode2('u',$(bbcode_field_id)[0]);
-			return false;
-		});
-		$('#bb_tools #hyperlink').click(function() {
-			add_bbcode2('url',$(bbcode_field_id)[0]);
-			return false;
-		});
-		$('#bb_tools #quote').click(function() {
-			add_bbcode2('quote',$(bbcode_field_id)[0]);
-			return false;
-		});
-		$('#bb_tools #smileys').click(function() {
-			if (!$('#smiley_set')[0]) {
-				var smiley_set='<div id="smiley_set"><table><tbody>';
-				smiley_set+='<tr>';
-				smiley_set+='<td><a href="javascript:;" title="angry" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\'&gt;:(\')"><img src="images/emoticons/angry.gif" alt="angry" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="big grin" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':D\')"><img src="images/emoticons/biggrin.gif" alt="big grin" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="blink" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\'o.O\')"><img src="images/emoticons/blink.gif" alt="blink" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="censor" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\'|o\')"><img src="images/emoticons/censor.gif" alt="censor" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="closed eyes" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\'-.-\')"><img src="images/emoticons/closedeyes.gif" alt="closed eyes" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="cool" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\'8)\')"><img src="images/emoticons/cool.gif" alt="cool" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="cry" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':~(\')"><img src="images/emoticons/cry.gif" alt="cry" /></a></td>';
-				smiley_set+='</tr>';
-				smiley_set+='<tr>';
-				smiley_set+='<td><a href="javascript:;" title="devil" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\'&gt;:)\')"><img src="images/emoticons/devil.gif" alt="devil" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="doh" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':doh:\')"><img src="images/emoticons/doh.gif" alt="doh" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="dry" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\'&lt;.&lt;\')"><img src="images/emoticons/dry.gif" alt="dry" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="grrrr" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':grr:\')"><img src="images/emoticons/grrrr.gif" alt="grrrr" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="happy" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\'^,^\')"><img src="images/emoticons/happy.gif" alt="happy" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="holy" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':h:\')"><img src="images/emoticons/holy.gif" alt="holy" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="huh" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':huh:\')"><img src="images/emoticons/huh.gif" alt="huh" /></a></td>';
-				smiley_set+='</tr>';
-				smiley_set+='<tr>';
-				smiley_set+='<td><a href="javascript:;" title="laugh" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':lol:\')"><img src="images/emoticons/laugh.gif" alt="laugh" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="lips" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':x\')"><img src="images/emoticons/lips.gif" alt="lips" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="mellow" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':,\')"><img src="images/emoticons/mellow.gif" alt="mellow" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="ohmy" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':O\')"><img src="images/emoticons/ohmy.gif" alt="ohmy" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="rolleyes" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':r:\')"><img src="images/emoticons/rolleyes.gif" alt="rolleyes" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="sad" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':(\')"><img src="images/emoticons/sad.gif" alt="sad" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="smile" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':)\')"><img src="images/emoticons/smile.gif" alt="smile" /></a></td>';
-				smiley_set+='</tr>';
-				smiley_set+='<tr>';
-				smiley_set+='<td><a href="javascript:;" title="thumbsup" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':t:\')"><img src="images/emoticons/thumbsup.gif" alt="thumbsup" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="tongue" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':P\')"><img src="images/emoticons/tongue.gif" alt="tongue" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="unsure" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':u\')"><img src="images/emoticons/unsure.gif" alt="unsure" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="wacko" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':w:\')"><img src="images/emoticons/wacko.gif" alt="wacko" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="whistling" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':.\')"><img src="images/emoticons/whistling.gif" alt="whistling" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="wink" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\';)\')"><img src="images/emoticons/wink.gif" alt="wink" /></a></td>';
-				smiley_set+='<td><a href="javascript:;" title="yay" onclick="add_bbcode2(\'smiley\',$(bbcode_field_id)[0],\':!:\')"><img src="images/emoticons/yay.gif" alt="yay" /></a></td>';
-				smiley_set+='</tr>';
-				smiley_set+='</tbody></table></div>';
-				$(smiley_set).appendTo('#bb_tools');
-			}
-			$('#smiley_set').toggle();
-			return false;
-		});
-	}
-});
+jQuery.fn.sco_bbcode = function() {
+	var ta=$(this);
+	var taz=ta[0];
+	ta.before('<div id="bb_tools"><a href="#" id="bold" class="bold" title="Bold">Bold</a><a href="#" id="underline" class="underline" title="Underline">Underline</a><a href="#" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a><a href="#" id="quote" class="quote" title="Quote">Quote</a><a href="#" id="smileys" class="smile" title="smileys">Smileys</a></div>');
+	$('#bb_tools #bold').click(function() {
+		add_bbcode2('b',taz);
+		return false;
+	});
+	$('#bb_tools #underline').click(function() {
+		add_bbcode2('u',taz);
+		return false;
+	});
+	$('#bb_tools #hyperlink').click(function() {
+		add_bbcode2('url',taz);
+		return false;
+	});
+	$('#bb_tools #quote').click(function() {
+		add_bbcode2('quote',taz);
+		return false;
+	});
+	$('#bb_tools #smileys').click(function() {
+		if (!$('#smiley_set')[0]) {
+			var smiley_set='<div id="smiley_set"><table><tbody>';
+			smiley_set+='<tr>';
+			smiley_set+='<td><a href="#" title="angry" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\'&gt;:(\'))"><img src="images/emoticons/angry.gif" alt="angry" /></a></td>';
+			smiley_set+='<td><a href="#" title="big grin" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':D\'))"><img src="images/emoticons/biggrin.gif" alt="big grin" /></a></td>';
+			smiley_set+='<td><a href="#" title="blink" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\'o.O\'))"><img src="images/emoticons/blink.gif" alt="blink" /></a></td>';
+			smiley_set+='<td><a href="#" title="censor" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\'|o\'))"><img src="images/emoticons/censor.gif" alt="censor" /></a></td>';
+			smiley_set+='<td><a href="#" title="closed eyes" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\'-.-\'))"><img src="images/emoticons/closedeyes.gif" alt="closed eyes" /></a></td>';
+			smiley_set+='<td><a href="#" title="cool" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\'8)\'))"><img src="images/emoticons/cool.gif" alt="cool" /></a></td>';
+			smiley_set+='<td><a href="#" title="cry" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':~(\'))"><img src="images/emoticons/cry.gif" alt="cry" /></a></td>';
+			smiley_set+='</tr>';
+			smiley_set+='<tr>';
+			smiley_set+='<td><a href="#" title="devil" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\'&gt;:)\'))"><img src="images/emoticons/devil.gif" alt="devil" /></a></td>';
+			smiley_set+='<td><a href="#" title="doh" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':doh:\'))"><img src="images/emoticons/doh.gif" alt="doh" /></a></td>';
+			smiley_set+='<td><a href="#" title="dry" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\'&lt;.&lt;\'))"><img src="images/emoticons/dry.gif" alt="dry" /></a></td>';
+			smiley_set+='<td><a href="#" title="grrrr" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':grr:\'))"><img src="images/emoticons/grrrr.gif" alt="grrrr" /></a></td>';
+			smiley_set+='<td><a href="#" title="happy" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\'^,^\'))"><img src="images/emoticons/happy.gif" alt="happy" /></a></td>';
+			smiley_set+='<td><a href="#" title="holy" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':h:\'))"><img src="images/emoticons/holy.gif" alt="holy" /></a></td>';
+			smiley_set+='<td><a href="#" title="huh" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':huh:\'))"><img src="images/emoticons/huh.gif" alt="huh" /></a></td>';
+			smiley_set+='</tr>';
+			smiley_set+='<tr>';
+			smiley_set+='<td><a href="#" title="laugh" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':lol:\'))"><img src="images/emoticons/laugh.gif" alt="laugh" /></a></td>';
+			smiley_set+='<td><a href="#" title="lips" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':x\'))"><img src="images/emoticons/lips.gif" alt="lips" /></a></td>';
+			smiley_set+='<td><a href="#" title="mellow" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':,\'))"><img src="images/emoticons/mellow.gif" alt="mellow" /></a></td>';
+			smiley_set+='<td><a href="#" title="ohmy" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':O\'))"><img src="images/emoticons/ohmy.gif" alt="ohmy" /></a></td>';
+			smiley_set+='<td><a href="#" title="rolleyes" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':r:\'))"><img src="images/emoticons/rolleyes.gif" alt="rolleyes" /></a></td>';
+			smiley_set+='<td><a href="#" title="sad" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':(\'))"><img src="images/emoticons/sad.gif" alt="sad" /></a></td>';
+			smiley_set+='<td><a href="#" title="smile" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':)\'))"><img src="images/emoticons/smile.gif" alt="smile" /></a></td>';
+			smiley_set+='</tr>';
+			smiley_set+='<tr>';
+			smiley_set+='<td><a href="#" title="thumbsup" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':t:\'))"><img src="images/emoticons/thumbsup.gif" alt="thumbsup" /></a></td>';
+			smiley_set+='<td><a href="#" title="tongue" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':P\'))"><img src="images/emoticons/tongue.gif" alt="tongue" /></a></td>';
+			smiley_set+='<td><a href="#" title="unsure" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':u\'))"><img src="images/emoticons/unsure.gif" alt="unsure" /></a></td>';
+			smiley_set+='<td><a href="#" title="wacko" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':w:\'))"><img src="images/emoticons/wacko.gif" alt="wacko" /></a></td>';
+			smiley_set+='<td><a href="#" title="whistling" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':.\'))"><img src="images/emoticons/whistling.gif" alt="whistling" /></a></td>';
+			smiley_set+='<td><a href="#" title="wink" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\';)\'))"><img src="images/emoticons/wink.gif" alt="wink" /></a></td>';
+			smiley_set+='<td><a href="#" title="yay" onclick="return(add_bbcode2(\'smiley\',$(\'#'+ta.attr('id')+'\')[0],\':!:\'))"><img src="images/emoticons/yay.gif" alt="yay" /></a></td>';
+			smiley_set+='</tr>';
+			smiley_set+='</tbody></table></div>';
+			$(smiley_set).appendTo('#bb_tools');
+		}
+		$('#smiley_set').toggle();
+		return false;
+	});
+}
 
 function add_bbcode2(tag,ta,smil) {
 	tagStart='';
@@ -132,6 +132,7 @@ function add_bbcode2(tag,ta,smil) {
 		ta.value+=tagStart+tagEnd;
 		ta.focus(ta.value.length-tagEnd.length);
 	}
+	return false;
 }
 
 
