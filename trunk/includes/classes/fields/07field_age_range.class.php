@@ -37,38 +37,38 @@ class field_age_range extends field_range {
 
 	function query_search() {
 		$myreturn='';
-		$now=gmdate('YmdHis');
+		$now1=(int)gmdate('Y');
+		$now2=gmdate('-m-d');
 		if ($this->value['max']!=$this->empty_value['edit']['max']) {
-			$myreturn.=' AND `'.$this->config['dbfield']."`>=DATE_SUB('$now',INTERVAL ".$this->value['max'].' YEAR)';
+			$myreturn.=' AND `'.$this->config['dbfield']."`>='".($now1-(int)$this->value['max']).$now2."'";
 		}
 		if ($this->value['min']!=$this->empty_value['edit']['min']) {
-			$myreturn.=' AND `'.$this->config['dbfield']."`<=DATE_SUB('$now',INTERVAL ".$this->value['min'].' YEAR)';
+			$myreturn.=' AND `'.$this->config['dbfield']."`<='".($now1-(int)$this->value['min']).$now2."'";
 		}
 		return $myreturn;
 	}
 
-	function edit_admin($mode='direct') {
+	function edit_admin() {
 		global $output;
 		$myreturn='';
-		if ($mode=='search') {
-			$output['search_start']=isset($output['search_start']) ? $output['search_start'] : '';
-			$output['search_end']=isset($output['search_end']) ? $output['search_end'] : '';
+		if ($this->is_search) {
+			$output['search_default']['min']=isset($output['search_default']['min']) ? $output['search_default']['min'] : '';
+			$output['search_default']['max']=isset($output['search_default']['max']) ? $output['search_default']['max'] : '';
 			$myreturn.='<div class="clear">
 				<label for="search_start">Default search range:</label>
-				<input class="text numeric" type="text" name="search_start" id="search_start" value="'.$output['search_start'].'" size="2" maxlength="2" tabindex="15" />
+				<input class="text numeric" type="text" name="search_start" id="search_start" value="'.$output['search_default']['min'].'" size="3" maxlength="3" tabindex="15" />
 				to
-				<input class="text numeric" type="text" name="search_end" id="search_end" value="'.$output['search_end'].'" size="2" maxlength="2" tabindex="16" />
-				<p class="comment">Enter here the ages you want preselected in the search box like Age: 18 to 30. Must match the years above.</p>';
+				<input class="text numeric" type="text" name="search_end" id="search_end" value="'.$output['search_default']['max'].'" size="3" maxlength="3" tabindex="16" />
+				<p class="comment">Enter here the ages you want preselected in the search box like Age: 18 to 30.</p>';
 		}
 		return $myreturn;
 	}
 
-	function admin_processor($mode='direct') {
+	function admin_processor() {
 		$error=false;
 		$my_input=array();
-		if ($mode=='search') {
-			$my_input['search_start']=sanitize_and_format_gpc($_POST,'search_start',TYPE_INT,0,0);
-			$my_input['search_end']=sanitize_and_format_gpc($_POST,'search_end',TYPE_INT,0,0);
+		if ($this->is_search) {
+			$my_input['search_default']=array('min'=>sanitize_and_format_gpc($_POST,'search_start',TYPE_INT,0,0),'max'=>sanitize_and_format_gpc($_POST,'search_end',TYPE_INT,0,0));
 			return $my_input;
 		}
 		return $error;
@@ -76,5 +76,5 @@ class field_age_range extends field_range {
 }
 
 if (defined('IN_ADMIN')) {
-	$accepted_fieldtype['search']['field_age_range']='Age Range';
+	$GLOBALS['accepted_fieldtype']['search']['field_age_range']='Age Range';
 }

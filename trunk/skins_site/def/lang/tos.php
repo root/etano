@@ -1,2 +1,2 @@
 <?php
-$GLOBALS['_lang'][250]='Terms of Service';
+$GLOBALS['_lang'][250]='Mentions LÃ©gales';

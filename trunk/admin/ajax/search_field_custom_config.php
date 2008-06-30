@@ -38,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	$search_field=null;
 	if (class_exists($search_type)) {
-		$search_field=new $search_type;
-		$towrite=$search_field->edit_admin('search');
+		$search_field=new $search_type(array(),true);
+		$towrite=$search_field->edit_admin();
 	}
 }
 

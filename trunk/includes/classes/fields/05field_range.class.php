@@ -22,13 +22,13 @@ class field_range extends iprofile_field {
 		if ($is_search) {
 			$this->config['accepted_values'][0]=$GLOBALS['_lang'][159];
 		}
-		if (isset($this->config['default_value']['min'])) {
-			$this->value['min']=(int)$this->config['default_value']['min'];
+		if (isset($this->config['default_value'][0])) {
+			$this->value['min']=(int)$this->config['default_value'][0];
 		} else {
 			$this->value['min']=$this->empty_value['edit']['min'];
 		}
-		if (isset($this->config['default_value']['max'])) {
-			$this->value['max']=(int)$this->config['default_value']['max'];
+		if (isset($this->config['default_value'][1])) {
+			$this->value['max']=(int)$this->config['default_value'][1];
 		} else {
 			$this->value['max']=$this->empty_value['edit']['max'];
 		}
@@ -46,6 +46,11 @@ class field_range extends iprofile_field {
 			if (isset($all_values[$this->config['dbfield'].'_max'])) {
 				$this->value['max']=(int)$all_values[$this->config['dbfield'].'_max'];
 			}
+		}
+		if ($this->value['min']>$this->value['max']) {
+			$temp=$this->value['max'];
+			$this->value['max']=$this->value['min'];
+			$this->value['min']=$temp;
 		}
 		return true;
 	}
@@ -68,7 +73,7 @@ class field_range extends iprofile_field {
 	function search() {
 		if ($this->search!=null) {
 			return $this->search;
-		} elseif (!empty($this->config['search_type']) && is_file(_BASEPATH_.'/includes/classes/fields/'.$this->config['search_type'].'.class.php')) {
+		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
 			$new_config=$this->config;
 			if (isset($new_config['search_default'])) {
@@ -86,14 +91,14 @@ class field_range extends iprofile_field {
 		}
 	}
 
-	function edit_admin($mode='direct') {
+	function edit_admin() {
 		return '';
 	}
 
-	function admin_processor($mode='direct') {
+	function admin_processor() {
 		$error=false;
 		$my_input=array();
-		if ($mode=='search') {
+		if ($this->is_search) {
 			return $my_input;
 		}
 		return $error;
@@ -130,5 +135,5 @@ class field_range extends iprofile_field {
 }
 
 if (defined('IN_ADMIN')) {
-	$accepted_fieldtype['search']['field_range']='Range';
+	$GLOBALS['accepted_fieldtype']['search']['field_range']='Range';
 }

@@ -244,6 +244,7 @@ ul.pager li.goto_previous a {
 	padding: 0;
 	background-image: url('../images/link_previous.gif');
 	text-indent: -9999px;
+	outline: none !important;
 }
 
 ul.pager li.goto_next a {
@@ -253,6 +254,7 @@ ul.pager li.goto_next a {
 	padding: 0;
 	background-image: url('../images/link_next.gif');
 	text-indent: -9999px;
+	outline: none !important;
 }
 
 ul.pager li.goto_first a {
@@ -262,6 +264,7 @@ ul.pager li.goto_first a {
 	padding: 0;
 	background-image: url('../images/link_first.gif');
 	text-indent: -9999px;
+	outline: none !important;
 }
 
 ul.pager li.goto_last a {
@@ -271,6 +274,7 @@ ul.pager li.goto_last a {
 	padding: 0;
 	background-image: url('../images/link_last.gif');
 	text-indent: -9999px;
+	outline: none !important;
 }
 
 	ul.pager li.goto_previous a:hover, ul.pager li.goto_next a:hover, ul.pager li.goto_first a:hover, ul.pager li.goto_last a:hover {
@@ -675,12 +679,21 @@ input.small:hover, input.medium:hover, input.large:hover {
 
 .location_sub {
 	margin-left: -150px;
+	clear: both;
 }
 
 .location_sub label {
 	display: block;
 	float: left;
 	width: 146px;
+}
+
+* html .location_sub {
+	margin: 0;
+}
+
+* html .location_sub label {
+	display: none;
 }
 
 .location_sub select {

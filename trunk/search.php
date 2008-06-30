@@ -113,7 +113,7 @@ if (!$got_from_cache) {
 			case 'online':
 				$input['acclevel_code']='search_basic';
 				$continue=true;
-				$where=" a.`fk_user_id` IN ('".join("','",array_keys($_list_of_online_members))."') AND ".$where;
+				$where=" a.`fk_user_id` IN ('".join("','",array_keys($_list_of_online_members))."')";
 				$skip_cache=true;
 				break;
 

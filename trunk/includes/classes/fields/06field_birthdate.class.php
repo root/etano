@@ -48,7 +48,8 @@ class field_birthdate extends iprofile_field {
 	function edit($tabindex=1) {
 		$myreturn='<select name="'.$this->config['dbfield'].'_month" id="'.$this->config['dbfield'].'_month" tabindex="'.$tabindex.'">'.vector2options($GLOBALS['accepted_months'],$this->value['month']).'</select>';
 		$myreturn.='<select name="'.$this->config['dbfield'].'_day" id="'.$this->config['dbfield'].'_day" tabindex="'.$tabindex.'"><option value="">'.$GLOBALS['_lang'][131].'</option>'.interval2options(1,31,$this->value['day']).'</select>';
-		$myreturn.='<select name="'.$this->config['dbfield'].'_year" id="'.$this->config['dbfield'].'_year" tabindex="'.$tabindex.'"><option value="">'.$GLOBALS['_lang'][132].'</option>'.interval2options($this->config['accepted_values'][1],$this->config['accepted_values'][2],$this->value['year'],array(),1,2).'</select>';
+		$cur_year=(int)gmdate('Y');
+		$myreturn.='<select name="'.$this->config['dbfield'].'_year" id="'.$this->config['dbfield'].'_year" tabindex="'.$tabindex.'"><option value="">'.$GLOBALS['_lang'][132].'</option>'.interval2options($cur_year-$this->config['accepted_values']['max'],$cur_year-$this->config['accepted_values']['min'],$this->value['year'],array(),1,2).'</select>';
 		return $myreturn;
 	}
 
@@ -70,7 +71,7 @@ class field_birthdate extends iprofile_field {
 	function search() {
 		if ($this->search!=null) {
 			return $this->search;
-		} elseif (!empty($this->config['search_type']) && is_file(_BASEPATH_.'/includes/classes/fields/'.$this->config['search_type'].'.class.php')) {
+		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
 			$new_config=$this->config;
 			if (isset($new_config['search_default'])) {
@@ -88,37 +89,49 @@ class field_birthdate extends iprofile_field {
 		}
 	}
 
-	function edit_admin($mode='direct') {
+	function edit_admin() {
 		global $output;
 		$myreturn='';
-		if ($mode=='direct') {
-			$output['year_start']=isset($output['year_start']) ? $output['year_start'] : '';
-			$output['year_end']=isset($output['year_end']) ? $output['year_end'] : '';
+		if (!$this->is_search) {
+			$output['accepted_values']['min']=isset($output['accepted_values']['min']) ? $output['accepted_values']['min'] : '';
+			$output['accepted_values']['max']=isset($output['accepted_values']['max']) ? $output['accepted_values']['max'] : '';
 			$myreturn.='<div class="clear">
-				<label for="year_start">Year from:</label>
-				<input class="text numeric" type="text" name="year_start" id="year_start" value="'.$output['year_start'].'" size="3" maxlength="4" tabindex="13" />
+				<label for="year_start">Ages allowed from:</label>
+				<input class="text numeric" type="text" name="age_start" id="age_start" value="'.$output['accepted_values']['min'].'" size="3" maxlength="3" tabindex="13" />
 				to
-				<input class="text numeric" type="text" name="year_end" id="year_end" value="'.$output['year_end'].'" size="3" maxlength="4" tabindex="14" />
-				<p class="comment">Please enter the years with 4 digits.</p>';
+				<input class="text numeric" type="text" name="age_end" id="age_end" value="'.$output['accepted_values']['max'].'" size="3" maxlength="3" tabindex="14" />';
 		}
 		return $myreturn;
 	}
 
-	function admin_processor($mode='direct') {
+	function admin_processor() {
 		$error=false;
 		global $input,$__field2format,$dbtable_prefix,$default_skin_code;
 		$my_input=array();
-		if ($mode!='search') {
-			$my_input['year_start']=sanitize_and_format_gpc($_POST,'year_start',TYPE_INT,0,0);
-			$my_input['year_end']=sanitize_and_format_gpc($_POST,'year_end',TYPE_INT,0,0);
-			if (!empty($input['searchable']) && !empty($input['search_type'])) {
-				$search_field=new $input['search_type']();
-				$temp=$search_field->admin_processor('search');
-				if (is_array($temp) && !empty($temp)) {
-					$my_input=array_merge($my_input,$temp);
-				}
+		if (!$this->is_search) {
+			$age_start=sanitize_and_format_gpc($_POST,'age_start',TYPE_INT,0,0);
+			$age_end=sanitize_and_format_gpc($_POST,'age_end',TYPE_INT,0,0);
+			if ($age_start>$age_end) {
+				$temp=$age_end;
+				$age_end=$age_start;
+				$age_start=$temp;
 			}
-			$input['custom_config']=sanitize_and_format(serialize($my_input),TYPE_STRING,FORMAT_ADDSLASH);
+			if ($age_start==$age_end) {
+				$error=true;
+				$GLOBALS['topass']['message']['type']=MESSAGE_ERROR;
+				$GLOBALS['topass']['message']['text']='The start and end ages must not be equal';
+			}
+			if (!$error) {
+				$my_input['accepted_values']=array('min'=>$age_start,'max'=>$age_end);
+				if (!empty($input['searchable']) && !empty($input['search_type'])) {
+					$search_field=new $input['search_type'](array(),true);
+					$temp=$search_field->admin_processor();
+					if (is_array($temp) && !empty($temp)) {
+						$my_input=array_merge($my_input,$temp);
+					}
+				}
+				$input['custom_config']=sanitize_and_format(serialize($my_input),TYPE_STRING,FORMAT_ADDSLASH);
+			}
 		} else {
 			return array();
 		}
@@ -174,5 +187,5 @@ class field_birthdate extends iprofile_field {
 }
 
 if (defined('IN_ADMIN')) {
-	$accepted_fieldtype['direct']['field_birthdate']='Birthdate';
+	$GLOBALS['accepted_fieldtype']['direct']['field_birthdate']='Birthdate';
 }

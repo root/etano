@@ -24,7 +24,7 @@ $i=0;
 while ($rsrow=mysql_fetch_assoc($res)) {
 	$memberships[$i]=$rsrow;
 	if ($memberships[$i]['is_custom']) {
-		$memberships[$i]['m_name'].=' <a href="javascript:;" onclick="del_membership('.$memberships[$i]['m_id'].')" title="Delete this membership"><img src="skin/images/del.gif" alt="Delete this membership" /></a>';
+		$memberships[$i]['m_name'].=' <a href="javascript:;" onclick="del_membership('.$memberships[$i]['m_id'].')" title="Delete this membership"><img src="skin/images/del.png" alt="Delete this membership" /></a>';
 	}
 	++$i;
 }

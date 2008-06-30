@@ -21,8 +21,8 @@ class field_location extends iprofile_field {
 		$this->config=$config;
 		$this->is_search=$is_search;
 		$this->value=$this->empty_value['edit'];
-		if (isset($this->config['default_value'])) {
-			$this->value['country']=(int)$this->config['default_value'];
+		if (isset($this->config['def_country'])) {
+			$this->value['country']=(int)$this->config['def_country'];
 		} else {
 			$this->value['country']=$this->empty_value['edit']['country'];
 		}
@@ -82,7 +82,7 @@ class field_location extends iprofile_field {
 		$myreturn.='</select></div>';
 
 		$myreturn.='<div id="row_'.$this->config['dbfield'].'_city" class="location_sub '.((!empty($this->value['state']) && $prefered_input=='s' && !empty($num_cities)) ? 'visible' : 'invisible').'">';
-		$myreturn.='<label for="'.$this->config['dbfield'].'_city">'.$GLOBALS['_lang'][128].'</label><select name="'.$this->config['dbfield'].'_city" id="'.$this->config['dbfield'].'_city" tabindex="'.$tabindex.'"><option value="0">'.$GLOBALS['_lang'][134].'</option>';
+		$myreturn.='<label for="'.$this->config['dbfield'].'_city">'.$GLOBALS['_lang'][128].'</label><select name="'.$this->config['dbfield'].'_city" id="'.$this->config['dbfield'].'_city" tabindex="'.$tabindex.'"><option value="0">'.$GLOBALS['_lang'][128].'</option>';
 		if (!empty($this->value['state']) && $prefered_input=='s' && !empty($num_cities)) {
 			$myreturn.=dbtable2options("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`','`city`',$this->value['city'],"`fk_state_id`=".$this->value['state']);
 		}
@@ -108,7 +108,7 @@ class field_location extends iprofile_field {
 	function search() {
 		if ($this->search!=null) {
 			return $this->search;
-		} elseif (!empty($this->config['search_type']) && is_file(_BASEPATH_.'/includes/classes/fields/'.$this->config['search_type'].'.class.php')) {
+		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
 			$new_config=$this->config;
 			if (isset($new_config['search_default'])) {
@@ -126,10 +126,10 @@ class field_location extends iprofile_field {
 		}
 	}
 
-	function edit_admin($mode='direct') {
+	function edit_admin() {
 		global $dbtable_prefix,$default_skin_code,$output,$__field2format,$search_type;
 		$myreturn='';
-		if ($mode=='direct') {
+		if (!$this->is_search) {
 			$output['def_country']=!empty($output['def_country']) ? $output['def_country'] : 0;
 			$myreturn.='<div class="clear">
 				<label>Default Country:</label>
@@ -139,15 +139,15 @@ class field_location extends iprofile_field {
 		return $myreturn;
 	}
 
-	function admin_processor($mode='direct') {
+	function admin_processor() {
 		$error=false;
 		global $input,$__field2format,$dbtable_prefix,$default_skin_code;
 		$my_input=array();
-		if ($mode=='direct') {
-			$my_input['def_country']=sanitize_and_format_gpc($_POST,'def_country',TYPE_INT,0,0);
+		if (!$this->is_search) {
+			$my_input['default_value']=sanitize_and_format_gpc($_POST,'def_country',TYPE_INT,0,0);
 			if (!empty($input['searchable']) && !empty($input['search_type'])) {
-				$search_field=new $input['search_type']();
-				$temp=$search_field->admin_processor('search');
+				$search_field=new $input['search_type'](array(),true);
+				$temp=$search_field->admin_processor();
 				if (is_array($temp) && !empty($temp)) {
 					$my_input=array_merge($my_input,$temp);
 				}
@@ -189,31 +189,33 @@ class field_location extends iprofile_field {
 		$myreturn='$(\'#'.$this->config['dbfield'].'_country,#'.$this->config['dbfield'].'_state\').bind(\'change\',function() {
 			req_update_location($(this).attr(\'id\'),$(this).val());
 		});';
-		if (!empty($this->config['required'])) {
-			$myreturn.='$(\'#'.$this->config['dbfield'].'_country\').parents(\'form\').bind(\'submit\',function() {
-				if ($(\'#'.$this->config['dbfield'].'_country\').val()=='.$this->empty_value['edit']['country'].') {
-					alert(\'"'.$this->config['label'].'" cannot be empty\');
-					return false;
-				}
-			});';
-/*	to make the state/city/zip required too we would have to query the db to see if prefered_input is 's' or 'z'
-			$myreturn.='$(\'#'.$this->config['dbfield'].'_state\').parents(\'form\').bind(\'submit\',function() {
-				var stateField=$(\'#'.$this->config['dbfield'].'_state\');
-				if (stateField[0].options.length>1 && stateField.val()=='.$this->empty_value['edit']['state'].') {
-					alert(\'"'.$GLOBALS['_lang'][127].'" cannot be empty\');
-					stateField.focus();
-					return false;
-				}
-			});';
-			$myreturn.='$(\'#'.$this->config['dbfield'].'_city\').parents(\'form\').bind(\'submit\',function() {
-				var cityField=$(\'#'.$this->config['dbfield'].'_city\');
-				if (cityField[0].options.length>1 && cityField.val()=='.$this->empty_value['edit']['city'].') {
-					alert(\'"'.$GLOBALS['_lang'][128].'" cannot be empty\');
-					cityField.focus();
-					return false;
-				}
-			});';
-*/
+		if (empty($this->is_search)) {
+			if (!empty($this->config['required'])) {
+				$myreturn.='$(\'#'.$this->config['dbfield'].'_country\').parents(\'form\').bind(\'submit\',function() {
+					if ($(\'#'.$this->config['dbfield'].'_country\').val()=='.$this->empty_value['edit']['country'].') {
+						alert(\'"'.$this->config['label'].'" cannot be empty\');
+						return false;
+					}
+				});';
+	/*	to make the state/city/zip required too we would have to query the db to see if prefered_input is 's' or 'z'
+				$myreturn.='$(\'#'.$this->config['dbfield'].'_state\').parents(\'form\').bind(\'submit\',function() {
+					var stateField=$(\'#'.$this->config['dbfield'].'_state\');
+					if (stateField[0].options.length>1 && stateField.val()=='.$this->empty_value['edit']['state'].') {
+						alert(\'"'.$GLOBALS['_lang'][127].'" cannot be empty\');
+						stateField.focus();
+						return false;
+					}
+				});';
+				$myreturn.='$(\'#'.$this->config['dbfield'].'_city\').parents(\'form\').bind(\'submit\',function() {
+					var cityField=$(\'#'.$this->config['dbfield'].'_city\');
+					if (cityField[0].options.length>1 && cityField.val()=='.$this->empty_value['edit']['city'].') {
+						alert(\'"'.$GLOBALS['_lang'][128].'" cannot be empty\');
+						cityField.focus();
+						return false;
+					}
+				});';
+	*/
+			}
 		}
 		return $myreturn;
 	}
@@ -239,6 +241,6 @@ class field_location extends iprofile_field {
 }
 
 if (defined('IN_ADMIN')) {
-	$accepted_fieldtype['direct']['field_location']='Location';
-	$accepted_fieldtype['search']['field_location']='Location';
+	$GLOBALS['accepted_fieldtype']['direct']['field_location']='Location';
+	$GLOBALS['accepted_fieldtype']['search']['field_location']='Location';
 }

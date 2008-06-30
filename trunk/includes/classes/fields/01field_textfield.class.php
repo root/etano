@@ -46,7 +46,7 @@ class field_textfield extends iprofile_field {
 	function search() {
 		if ($this->search!=null) {
 			return $this->search;
-		} elseif (!empty($this->config['search_type']) && is_file(_BASEPATH_.'/includes/classes/fields/'.$this->config['search_type'].'.class.php')) {
+		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
 			$new_config=$this->config;
 			if (isset($new_config['search_default'])) {
@@ -64,11 +64,21 @@ class field_textfield extends iprofile_field {
 		}
 	}
 
-	function edit_admin($mode='direct') {
-		return '';
+	function edit_admin() {
+		global $output,$__field2format;
+		$myreturn='';
+		if (!$this->is_search) {
+			$output['changes_status']=!empty($output['changes_status']) ? 'checked="checked"' : '';
+			$myreturn.='<div class="clear">
+				<label for="changes_status">Changes status?</label>
+				<input type="checkbox" class="checkbox" name="changes_status" id="changes_status" value="1" '.$output['changes_status'].' />
+				<p class="comment">If a member makes changes to this field, should his/her profile be re-approved by an administrator?</p>
+			</div>';
+		}
+		return $myreturn;
 	}
 
-	function admin_processor($mode='direct') {
+	function admin_processor() {
 		$error=false;
 		return $error;
 	}
@@ -122,5 +132,5 @@ class field_textfield extends iprofile_field {
 }
 
 if (defined('IN_ADMIN')) {
-	$accepted_fieldtype['direct']['field_textfield']='Textfield';
+	$GLOBALS['accepted_fieldtype']['direct']['field_textfield']='Textfield';
 }
