@@ -1,2 +1,2 @@
 <?php
-$GLOBALS['_lang'][215]='Site news';
+$GLOBALS['_lang'][215]='News';
