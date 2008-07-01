@@ -94,9 +94,9 @@ if (!$error) {
 			$topass['message']['text']=sprintf($GLOBALS['_lang'][83],get_user_by_userid($input['uid']));
 			$request['fk_user_id']=$input['uid'];
 			$request['fk_user_id_other']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
-			$request['_user_other']=$_SESSION[_LICENSE_KEY_]['user']['user'];
-			$request['subject']=sprintf($GLOBALS['_lang'][84],$_SESSION[_LICENSE_KEY_]['user']['user']);
-			$request['message_body']=sprintf($GLOBALS['_lang'][85],$_SESSION[_LICENSE_KEY_]['user']['user'],get_net_name($input['net_id']));
+			$request['_user_other']=sanitize_and_format($_SESSION[_LICENSE_KEY_]['user']['user'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
+			$request['subject']=sanitize_and_format(sprintf($GLOBALS['_lang'][84],$_SESSION[_LICENSE_KEY_]['user']['user']),TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
+			$request['message_body']=sanitize_and_format(sprintf($GLOBALS['_lang'][85],$_SESSION[_LICENSE_KEY_]['user']['user'],get_net_name($input['net_id'])),TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 			$request['message_type']=MESS_SYSTEM;
 			queue_or_send_message($request);
 		} else {

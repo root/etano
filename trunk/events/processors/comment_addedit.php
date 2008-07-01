@@ -95,18 +95,18 @@ function on_after_approve_comment() {
 		switch ($comment_type) {
 
 			case 'blog':
-				$notification['subject']=$GLOBALS['_lang'][160];
-				$notification['message_body']=sprintf($GLOBALS['_lang'][161],$v['comment_poster'],$v['parent_id'],$v['comment_id']);
+				$notification['subject']=sanitize_and_format($GLOBALS['_lang'][160],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
+				$notification['message_body']=sanitize_and_format(sprintf($GLOBALS['_lang'][161],$v['comment_poster'],$v['parent_id'],$v['comment_id']),TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 				break;
 
 			case 'photo':
-				$notification['subject']=$GLOBALS['_lang'][162];
-				$notification['message_body']=sprintf($GLOBALS['_lang'][163],$v['comment_poster'],$v['parent_id'],$v['comment_id']);
+				$notification['subject']=sanitize_and_format($GLOBALS['_lang'][162],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
+				$notification['message_body']=sanitize_and_format(sprintf($GLOBALS['_lang'][163],$v['comment_poster'],$v['parent_id'],$v['comment_id']),TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 				break;
 
 			case 'user':
-				$notification['subject']=$GLOBALS['_lang'][164];
-				$notification['message_body']=sprintf($GLOBALS['_lang'][165],$v['comment_poster'],$v['comment_id']);
+				$notification['subject']=sanitize_and_format($GLOBALS['_lang'][164],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
+				$notification['message_body']=sanitize_and_format(sprintf($GLOBALS['_lang'][165],$v['comment_poster'],$v['comment_id']),TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 				break;
 
 		}
