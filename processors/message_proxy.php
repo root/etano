@@ -100,6 +100,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		$query="DELETE FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('".$input['mail_id']."') AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$query="SELECT `fk_user_id_other` FROM `{$dbtable_prefix}user_inbox` WHERE `mail_id` IN ('".$input['mail_id']."')";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		// set the 'spam_sent' property of the sender(s)
+		$spammers=array();
+		while ($rsrow=mysql_fetch_row($res)) {
+			if (!isset($spammers[$rsrow[0]])) {
+				$spammers[$rsrow[0]]=1;
+			} else {
+				++$spammers[$rsrow[0]];
+			}
+		}
+		foreach ($spammers as $k=>$v) {
+			update_stats($k,'spam_sent',$v);
+		}
 	} elseif ($_POST['act']=='reply') {
 		check_login_member('message_reply');
 		$nextpage='message_send.php?mail_id='.$input['mail_id'];
