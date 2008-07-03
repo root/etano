@@ -59,6 +59,8 @@ class field_select extends iprofile_field {
 			$new_config['label']=$new_config['search_label'];
 			if (isset($new_config['search_default'])) {
 				$new_config['default_value']=$new_config['search_default'];
+			} else {
+				unset($new_config['default_value']);
 			}
 			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			$new_config['parent_class']=get_class();
