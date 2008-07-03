@@ -52,11 +52,11 @@ class field_mchecks extends iprofile_field {
 		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
 			$new_config=$this->config;
+			$new_config['label']=$new_config['search_label'];
 			if (isset($new_config['search_default'])) {
-				$new_config['label']=$new_config['search_label'];
 				$new_config['default_value']=$new_config['search_default'];
-				unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			}
+			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			$new_config['parent_class']=get_class();
 			$this->search=new $class_name($new_config,true);
 //			$temp=array($this->config['dbfield']=>$this->value);
@@ -320,23 +320,33 @@ class field_mchecks extends iprofile_field {
 			$all_values=explode('|',substr($this->value,1,-1));
 			if (count($all_values)) {
 				if ($this->config['parent_class']=='field_select') {
-					$myreturn.=' AND (';
+					$temp=' AND (';
 					for ($j=0;isset($all_values[$j]);++$j) {
-						$myreturn.='`'.$this->config['dbfield'].'`='.$all_values[$j].' OR ';
+						if (!empty($all_values[$j])) {
+							$temp.='`'.$this->config['dbfield'].'`='.$all_values[$j].' OR ';
+						}
 					}
-					if (substr($myreturn,-4)==' OR ') {
-						$myreturn=substr($myreturn,0,-4);	// substract the last ' OR '
+					if (substr($temp,-4)==' OR ') {
+						$temp=substr($temp,0,-4);	// substract the last ' OR '
 					}
-					$myreturn.=')';
+					$temp.=')';
+					if ($temp!=' AND ()') {
+						$myreturn.=$temp;
+					}
 				} elseif ($this->config['parent_class']=='field_mchecks') {
-					$myreturn.=' AND (';
+					$temp=' AND (';
 					for ($j=0;isset($all_values[$j]);++$j) {
-						$myreturn.='`'.$this->config['dbfield']."` LIKE '%|".$all_values[$j]."|%' OR ";
+						if (!empty($all_values[$j])) {
+							$temp.='`'.$this->config['dbfield']."` LIKE '%|".$all_values[$j]."|%' OR ";
+						}
 					}
-					if (substr($myreturn,-4)==' OR ') {
-						$myreturn=substr($myreturn,0,-4);	// substract the last ' OR '
+					if (substr($temp,-4)==' OR ') {
+						$temp=substr($temp,0,-4);	// substract the last ' OR '
 					}
-					$myreturn.=')';
+					$temp.=')';
+					if ($temp!=' AND ()') {
+						$myreturn.=$temp;
+					}
 				}
 			}
 		}

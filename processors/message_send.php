@@ -65,18 +65,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$input['_user_other']=$_SESSION[_LICENSE_KEY_]['user']['user'];
 		$input['subject']=remove_banned_words($input['subject']);
 		$input['message_body']=remove_banned_words($input['message_body']);
-		$query="INSERT INTO `{$dbtable_prefix}queue_message` SET `date_sent`='".gmdate('YmdHis')."'";
-		foreach ($queue_message_default['defaults'] as $k=>$v) {
-			if (isset($input[$k])) {
-				$query.=",`$k`='".$input[$k]."'";
-			}
-		}
 		if (isset($_on_before_insert)) {
 			for ($i=0;isset($_on_before_insert[$i]);++$i) {
 				call_user_func($_on_before_insert[$i]);
 			}
 		}
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		queue_or_send_message($input,true);
 
 		// save the message in my outbox
 		$input['fk_user_id_other']=$input['fk_user_id'];

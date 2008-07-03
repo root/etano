@@ -219,9 +219,9 @@ function send_template_email($to,$subject,$template,$skin,$output=array(),$messa
 
 // $mess_array must contain keys from $queue_message_default and should be already sanitized
 function queue_or_send_message($mess_array,$force_send=false) {
-	require_once 'tables/queue_message.inc.php';
 	global $dbtable_prefix;
 	if (!$force_send) {
+		require _BASEPATH_.'/includes/tables/queue_message.inc.php';
 		$query="INSERT INTO `{$dbtable_prefix}queue_message` SET `date_sent`='".gmdate('YmdHis')."'";
 		foreach ($queue_message_default['defaults'] as $k=>$v) {
 			if (isset($mess_array[$k])) {
@@ -230,14 +230,69 @@ function queue_or_send_message($mess_array,$force_send=false) {
 		}
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	} else {
-		$query="INSERT INTO `{$dbtable_prefix}user_inbox` SET `date_sent`='".gmdate('YmdHis')."'";
-		foreach ($queue_message_default['defaults'] as $k=>$v) {
-			if (isset($mess_array[$k])) {
-				$query.=",`$k`='".$mess_array[$k]."'";
+		require _BASEPATH_.'/includes/tables/user_inbox.inc.php';
+		$was_sent=false;	// was sent by a filter?
+		$notify_receiver=get_user_settings($mess_array['fk_user_id'],'def_user_prefs','notify_me');
+		// see if the receiver has any filters in place to re-route our message
+		$query="SELECT `filter_type`,`field`,`field_value`,`fk_folder_id` FROM `{$dbtable_prefix}message_filters` WHERE `fk_user_id`=".$mess_array['fk_user_id'];
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$filters=array();
+		$filters[$mess_array['fk_user_id']]=array();
+		while ($rsrow=mysql_fetch_assoc($res)) {
+			$filters[$mess_array['fk_user_id']][]=$rsrow;
+		}
+		if (!empty($filters[$mess_array['fk_user_id']])) {
+			for ($i=0;isset($filters[$mess_array['fk_user_id']][$i]);++$i) {
+				$filter=&$filters[$mess_array['fk_user_id']][$i];
+				switch ($filter['filter_type']) {
+
+					case FILTER_SENDER:
+						if ($mess_array['fk_user_id_other']==$filter['field_value']) {
+							if ($filter['fk_folder_id']==FOLDER_SPAMBOX) {
+								$into="`{$dbtable_prefix}user_spambox`";
+								$notify_receiver=false;
+								require _BASEPATH_.'/includes/tables/user_inbox.inc.php';
+								$defaults_table=&$user_spambox_default;
+							} else {
+								$into="`{$dbtable_prefix}user_inbox`";
+								$mess_array['fk_folder_id']=$filter['fk_folder_id'];
+								$defaults_table=&$user_inbox_default;
+							}
+							$query="INSERT INTO $into SET `date_sent`='".gmdate('YmdHis')."'";
+							foreach ($defaults_table['defaults'] as $k=>$v) {
+								if (isset($mess_array[$k])) {
+									$query.=",`$k`='".$mess_array[$k]."'";
+								}
+							}
+							if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+							$was_sent=true;
+						}
+						break 2;	// exit the filters for() too
+
+				}
 			}
 		}
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		// new message notification?????????????????????????
+
+		if (!$was_sent) {
+			// no filter here - insert directly in inbox
+			$query="INSERT INTO `{$dbtable_prefix}user_inbox` SET `date_sent`='".gmdate('YmdHis')."'";
+			foreach ($user_inbox_default['defaults'] as $k=>$v) {
+				if (isset($mess_array[$k])) {
+					$query.=",`$k`='".$mess_array[$k]."'";
+				}
+			}
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		}
+
+		if ($notify_receiver) {	//	new message notification
+			$mess_array['subject']=sanitize_and_format($mess_array['subject'],TYPE_STRING,FORMAT_STRIPSLASH | FORMAT_TEXT2HTML);
+			$def_skin=get_default_skin_dir();
+			if (empty($mess_array['_user_other']) && $mess_array['message_type']==MESS_SYSTEM) {
+				include_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/mailbox.inc.php';
+				$mess_array['_user_other']=&$GLOBALS['_lang'][135];
+			}
+			send_template_email($receiver_email,$mess_array['subject'],'new_message.html',$def_skin,$mess_array);
+		}
 	}
 }
 

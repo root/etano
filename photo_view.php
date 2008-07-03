@@ -15,6 +15,7 @@ Support at:                 http://www.datemill.com/forum
 require 'includes/common.inc.php';
 require _BASEPATH_.'/includes/user_functions.inc.php';
 require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
+require _BASEPATH_.'/includes/network_functions.inc.php';
 check_login_member('view_photo');
 
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
@@ -25,11 +26,15 @@ $output['pic_width']=get_site_option('pic_width','core_photo');
 
 $loop_comments=array();
 if (!empty($photo_id)) {
-	$query="SELECT `photo_id`,`photo`,`caption`,`fk_user_id`,`_user` as `user`,`status`,`allow_comments`,`allow_rating`,`stat_votes`,`stat_votes_total` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
+	$query="SELECT `photo_id`,`is_private`,`photo`,`caption`,`fk_user_id`,`_user` as `user`,`status`,`allow_comments`,`allow_rating`,`stat_votes`,`stat_votes_total` FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`=$photo_id";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
-		if ($output['status']==STAT_APPROVED || (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $output['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+		if (!empty($output['is_private']) && (empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) || !is_network_member($output['fk_user_id'],$_SESSION[_LICENSE_KEY_]['user']['user_id'],NET_FRIENDS))) {
+			$topass['message']['type']=MESSAGE_ERROR;
+			$topass['message']['text']=sprintf($GLOBALS['_lang'][277],_BASEURL_.'/profile.php?uid='.$output['fk_user_id'],get_user_by_userid($output['fk_user_id']));
+			redirect2page('info.php',$topass);
+		} elseif ($output['status']==STAT_APPROVED || (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $output['fk_user_id']==$_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 			$output['caption']=sanitize_and_format($output['caption'],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
 			if (!empty($output['allow_rating'])) {
 				if ($output['stat_votes']>0) {

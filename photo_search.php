@@ -30,7 +30,7 @@ $r=!empty($_GET['r']) ? (int)$_GET['r'] : current($accepted_results_per_page);
 $tplvars['page_title']='';
 $input['acclevel_code']='search_photo'; // default access level
 $from="`{$dbtable_prefix}user_photos` a";
-$where="a.`is_private`=0 AND a.`status`=".STAT_APPROVED." AND a.`del`=0";
+$where="a.`status`=".STAT_APPROVED." AND a.`del`=0";
 $orderby="a.`date_posted` DESC";
 
 $error=false;
@@ -69,11 +69,38 @@ if (isset($_GET['st'])) {
 				redirect2page('my_photos.php');
 			}
 			if (!empty($input['uid'])) {
-				$where="a.`fk_user_id`=".$input['uid']." AND ".$where;
+				$where.=" AND a.`fk_user_id`=".$input['uid'];
+				require _BASEPATH_.'/includes/network_functions.inc.php';
+				// if I am a friend with this gorgeous girl show me the hidden stuff also :)
+				if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) || !is_network_member($input['uid'],$_SESSION[_LICENSE_KEY_]['user']['user_id'],NET_FRIENDS)) {
+					$where.=" AND a.`is_private`=0";
+				}
 			} else {
 				$error=true;
 			}
 			$tplvars['page_title']=sprintf($GLOBALS['_lang'][143],get_user_by_userid($input['uid']));
+			break;
+
+		case 'priv':
+			$input['acclevel_code']='auth';
+			$input['uid']=sanitize_and_format_gpc($_GET,'uid',TYPE_INT,0,0);
+			if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && $input['uid']==$_SESSION[_LICENSE_KEY_]['user']['user_id']) {
+				redirect2page('my_photos.php');
+			}
+			$user_name=get_user_by_userid($input['uid']);
+			if (!empty($input['uid'])) {
+				require _BASEPATH_.'/includes/network_functions.inc.php';
+				// if I am a friend with this gorgeous girl show me the hidden stuff :)
+				if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && is_network_member($input['uid'],$_SESSION[_LICENSE_KEY_]['user']['user_id'],NET_FRIENDS)) {
+					$where.=" AND a.`fk_user_id`=".$input['uid']." AND `is_private`=1";
+				} else {
+					$output['no_results']=sprintf($GLOBALS['_lang'][277],_BASEURL_.'/profile.php?uid='.$input['uid'],$user_name);
+					$error=true;
+				}
+			} else {
+				$error=true;
+			}
+			$tplvars['page_title']=sprintf('Private Photos from %s',$user_name);
 			break;
 
 		case 'field':
@@ -92,7 +119,7 @@ if (isset($_GET['st'])) {
 				}
 				if ($field_ok) {
 					$from.=",`{$dbtable_prefix}user_profiles` b";
-					$where="a.`fk_user_id`=b.`fk_user_id` AND ".$where." AND b.`".$input['f']."`='".$input['v']."'";
+					$where.=" AND a.`is_private`=0 AND a.`fk_user_id`=b.`fk_user_id` AND b.`".$input['f']."`='".$input['v']."'";
 					$field_value=isset($_pfields[$fid]['accepted_values'][$input['v']]) ? $_pfields[$fid]['accepted_values'][$input['v']] : '';
 					$tplvars['page_title']=sprintf($GLOBALS['_lang'][143],$field_value);
 				} else {
@@ -108,7 +135,7 @@ if (isset($_GET['st'])) {
 			// remove extra spaces and words with less than 3 chars
 			$input['tags']=trim(preg_replace(array("/['\"%<>\+-]/","/\s\s+/","/\b[^\s]{1,3}\b/"),array(' ',' ',''),$input['tags']));
 			if (!empty($input['tags'])) {
-				$where="MATCH (a.`caption`) AGAINST ('".$input['tags']."') AND ".$where;
+				$where.=" AND a.`is_private`=0 AND MATCH (a.`caption`) AGAINST ('".$input['tags']."')";
 			} else {
 				$error=true;
 			}
@@ -176,6 +203,9 @@ if (!$error) {
 	}
 }
 
+if (empty($loop_rows) && empty($output['no_results'])) {
+	$output['no_results']=$GLOBALS['_lang'][278];
+}
 $output['return2me']='photo_search.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
 	$output['return2me'].='?'.$_SERVER['QUERY_STRING'];

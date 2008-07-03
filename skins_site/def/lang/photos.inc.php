@@ -22,3 +22,5 @@ $GLOBALS['_lang'][213]='Photos';
 $GLOBALS['_lang'][214]='More Photos';
 $GLOBALS['_lang'][241]='Photo Settings';
 $GLOBALS['_lang'][257]='Please select at least one photo to upload!';
+$GLOBALS['_lang'][278]='No photos found matching your search criteria. Please refine your search and try again.';
+$GLOBALS['_lang'][277]='You must be friends with <a href="%1$s" title="%2$s">%2$s</a> in order to view the private photos.';
