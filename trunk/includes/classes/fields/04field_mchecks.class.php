@@ -13,7 +13,7 @@ Support at:                 http://www.datemill.com/forum
 
 
 class field_mchecks extends iprofile_field {
-	var $empty_value=array('edit'=>'','display'=>'');
+	var $empty_value=array('edit'=>array(),'display'=>'');
 	var $display_name='Multi Checks';
 	var $allowed_search_types=array('field_select','field_mchecks');
 	// how to render the search_value input in the accepted values list (as radios or as checkboxes)
@@ -55,6 +55,8 @@ class field_mchecks extends iprofile_field {
 			$new_config['label']=$new_config['search_label'];
 			if (isset($new_config['search_default'])) {
 				$new_config['default_value']=$new_config['search_default'];
+			} else {
+				unset($new_config['default_value']);
 			}
 			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			$new_config['parent_class']=get_class();
