@@ -44,4 +44,5 @@ $tplvars['css']='search_more.css';
 if (is_file('search_more_left.php')) {
 	include 'search_more_left.php';
 }
+$no_timeout=true;
 include 'frame.php';

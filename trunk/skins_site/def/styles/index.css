@@ -150,6 +150,13 @@
 		width: 35px;
 	}
 
+	#search .location_sub {
+		margin: 0 !important;
+	}
+	#search .location_sub select {
+		width: 100%;
+	}
+
 	#row_photo dt {
 		float: left;
 		padding-right: 10px;
@@ -253,4 +260,3 @@
 .blogs_small p {
 	margin: 10px 0;
 }
-

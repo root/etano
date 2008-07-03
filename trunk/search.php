@@ -140,6 +140,7 @@ if (!$got_from_cache) {
 	if (!empty($where)) {	// if $where is empty then a condition above prevents us from searching. There must be a message to display.
 		$serialized_input=mysql_real_escape_string(serialize($input));
 		$query="SELECT $select FROM $from WHERE $where $orderby";
+//print $query;die;
 		$output['search_md5']=md5($query);
 		if (!$skip_cache) {
 			// let's give the cache one more chance. This is useful for the first page of results when we didn't know the search_md5 until now
@@ -152,7 +153,6 @@ if (!$got_from_cache) {
 			}
 		}
 		if (!$got_from_cache) {	// this is where we absolutely must search the users...it's the most expensive search
-	//print $query;die;
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			for ($i=0;$i<mysql_num_rows($res);++$i) {
 				$user_ids[]=mysql_result($res,$i,0);

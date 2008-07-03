@@ -56,11 +56,11 @@ class field_select extends iprofile_field {
 		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
 			$new_config=$this->config;
+			$new_config['label']=$new_config['search_label'];
 			if (isset($new_config['search_default'])) {
-				$new_config['label']=$new_config['search_label'];
 				$new_config['default_value']=$new_config['search_default'];
-				unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			}
+			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			$new_config['parent_class']=get_class();
 			$this->search=new $class_name($new_config,true);
 //			$temp=array($this->config['dbfield']=>$this->value);
@@ -85,14 +85,15 @@ class field_select extends iprofile_field {
 			$accvals=array();
 			// grab the accepted values and pass them to js in json format
 			while ($rsrow=mysql_fetch_assoc($res)) {
-				$rsrow['value']=sanitize_and_format($rsrow['value'],TYPE_STRING,$__field2format[TEXT_GPC2EDIT]);
+				// no need to sanitize the value because encoding it to json below solves it for us.
 				$accvals[]=$rsrow;
 			}
 			$json=new Services_JSON(SERVICES_JSON_SUPPRESS_ERRORS | SERVICES_JSON_LOOSE_TYPE);
 			$accvals=$json->encode($accvals);
 			$myreturn.='<script type="text/javascript">
 				$(function() {
-					search_defaults_input_type = [];';
+					search_defaults_input_type = [];
+					';
 			foreach ($this->_search_defaults_input_type as $k=>$v) {
 				$myreturn.="search_defaults_input_type['$k'] = '$v';\n";
 			}
@@ -207,7 +208,6 @@ class field_select extends iprofile_field {
 				$temp[$i]['search_value']=(int)$temp[$i]['search_value'];
 			}
 			$accvals_changed=$temp;
-
 			$temp=$json->decode(urldecode(sanitize_and_format_gpc($_POST,'accvals_deleted',TYPE_STRING,0,0)));
 			$accvals_deleted=array();
 			for ($i=0;isset($temp[$i]);++$i) {

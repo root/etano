@@ -56,7 +56,7 @@ class field_location extends iprofile_field {
 
 	function edit($tabindex=1) {
 		global $dbtable_prefix;
-		$myreturn='<select name="'.$this->config['dbfield'].'_country" id="'.$this->config['dbfield'].'_country" tabindex="'.$tabindex.'"><option value="0">'.$GLOBALS['_lang'][126].'</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$this->value['country']).'</select>';
+		$myreturn='<select name="'.$this->config['dbfield'].'_country" id="'.$this->config['dbfield'].'_country" tabindex="'.$tabindex.'" class="big_select"><option value="0">'.$GLOBALS['_lang'][126].'</option>'.dbtable2options("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`','`country`',$this->value['country']).'</select>';
 		$prefered_input='s';
 		$num_states=0;
 		$num_cities=0;
@@ -75,7 +75,8 @@ class field_location extends iprofile_field {
 			}
 		}
 		$myreturn.='<div id="row_'.$this->config['dbfield'].'_state" class="location_sub '.((!empty($this->value['country']) && $prefered_input=='s' && !empty($num_states)) ? 'visible' : 'invisible').' '.(!empty($this->config['required']) ? 'required' : '').'">';
-		$myreturn.='<label for="'.$this->config['dbfield'].'_state">'.$GLOBALS['_lang'][127].'</label><select name="'.$this->config['dbfield'].'_state" id="'.$this->config['dbfield'].'_state" tabindex="'.$tabindex.'"><option value="0">'.$GLOBALS['_lang'][127].'</option>';
+		$myreturn.='<label for="'.$this->config['dbfield'].'_state">'.$GLOBALS['_lang'][127].'</label>';
+		$myreturn.='<select name="'.$this->config['dbfield'].'_state" id="'.$this->config['dbfield'].'_state" tabindex="'.$tabindex.'"><option value="0">'.$GLOBALS['_lang'][127].'</option>';
 		if (!empty($this->value['country']) && $prefered_input=='s' && !empty($num_states)) {
 			$myreturn.=dbtable2options("`{$dbtable_prefix}loc_states`",'`state_id`','`state`','`state`',$this->value['state'],"`fk_country_id`=".$this->value['country']);
 		}
