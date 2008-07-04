@@ -31,88 +31,39 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$on_changes=array();
 	$ch=0;
 	$texts=array();
-	foreach ($_pfields as $field_id=>$field) {
-//		if ($field['editable']) {
-			switch ($field['field_type']) {
-
-				case FIELD_DATE:
-					$input[$field['dbfield'].'_month']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_month',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_day']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_day',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_year']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_year',TYPE_INT,0,0);
-					if (!empty($input[$field['dbfield'].'_year']) && !empty($input[$field['dbfield'].'_month']) && !empty($input[$field['dbfield'].'_day'])) {
-						$input[$field['dbfield']]=$input[$field['dbfield'].'_year'].'-'.str_pad($input[$field['dbfield'].'_month'],2,'0',STR_PAD_LEFT).'-'.str_pad($input[$field['dbfield'].'_day'],2,'0',STR_PAD_LEFT);
-					}
-					if (isset($field['fn_on_change'])) {
-						$on_changes[$ch]['fn']=$field['fn_on_change'];
-						$on_changes[$ch]['param2']=array('year'=>$input[$field['dbfield'].'_year'],'month'=>$input[$field['dbfield'].'_month'],'day'=>$input[$field['dbfield'].'_day']);
-						$on_changes[$ch]['param3']=$field['dbfield'];
-						++$ch;
-					}
-					break;
-
-				case FIELD_LOCATION:
-					$input[$field['dbfield'].'_country']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_country',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_state']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_state',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_city']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_city',TYPE_INT,0,0);
-					$input[$field['dbfield'].'_zip']=sanitize_and_format_gpc($_POST,$field['dbfield'].'_zip',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
-					if (isset($field['fn_on_change'])) {
-						$on_changes[$ch]['fn']=$field['fn_on_change'];
-						$on_changes[$ch]['param2']=array('country'=>$input[$field['dbfield'].'_country'],'state'=>$input[$field['dbfield'].'_state'],'city'=>$input[$field['dbfield'].'_city'],'zip'=>$input[$field['dbfield'].'_zip']);
-						$on_changes[$ch]['param3']=$field['dbfield'];
-						++$ch;
-					}
-					break;
-
-				default:
-					$input[$field['dbfield']]=sanitize_and_format_gpc($_POST,$field['dbfield'],$__field2type[$field['field_type']],$__field2format[$field['field_type']],'');
-					if ($field['field_type']==FIELD_TEXTAREA) {
-						$texts[]=$field['dbfield'];
-					}
-					if (isset($field['fn_on_change'])) {
-						$on_changes[$ch]['fn']=$field['fn_on_change'];
-						$on_changes[$ch]['param2']=$input[$field['dbfield']];
-						$on_changes[$ch]['param3']=$field['dbfield'];
-						++$ch;
-					}
-
+	foreach ($_pfields as $field_id=>&$field) {
+		$field->set_value($_POST);
+		// check for input errors
+		if (true!==($temp=$field->validation_server())) {
+			$error=true;
+			$topass['message']['type']=MESSAGE_ERROR;
+			if (empty($temp['text'])) {
+				$topass['message']['text']=$GLOBALS['_lang'][69];
+			} else {
+				$topass['message']['text']=$temp['text'];
 			}
-			// check for input errors
-			if (isset($field['required']) && ((empty($input[$field['dbfield']]) && $field['field_type']!=FIELD_LOCATION) || ($field['field_type']==FIELD_LOCATION && empty($input[$field['dbfield'].'_country'])))) {
-				$error=true;
-				$topass['message']['type']=MESSAGE_ERROR;
-				$topass['message']['text']='The fields outlined below are required and must not be empty';
-				$input['error_'.$field['dbfield']]='red_border';
+			$input['error_'.$field->config['dbfield']]='red_border';
+		}
+		if (!$error) {
+			if (!empty($field->config['fn_on_change'])) {
+				$on_changes[]=array('fn'=>$field->config['fn_on_change'],
+									'param2'=>$field->get_value(),
+									'param3'=>$field->config['dbfield']);
 			}
-//		}
+		}
 	}
 
 	if (!$error) {
-		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."',`status`=".STAT_APPROVED;
-		foreach ($_pfields as $field_id=>$field) {
-//			if ($field['editable']) {
-				if ($field['field_type']==FIELD_LOCATION) {
-					$query.=",`".$field['dbfield']."_country`=".$input[$field['dbfield'].'_country'].",`".$field['dbfield']."_state`=".$input[$field['dbfield'].'_state'].",`".$field['dbfield']."_city`=".$input[$field['dbfield'].'_city'].",`".$field['dbfield']."_zip`='".$input[$field['dbfield'].'_zip']."'";
-				} else {
-					if (isset($input[$field['dbfield']])) {
-						$query.=',`'.$field['dbfield']."`='".$input[$field['dbfield']]."'";
-					}
-				}
-//			}
+		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."'";
+		foreach ($_pfields as $field_id=>&$field) {
+			$query.=','.$field->query_set();
 		}
 		$query.=" WHERE `fk_user_id`=".$input['fk_user_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (!mysql_affected_rows()) {
 			$query="INSERT IGNORE INTO `{$dbtable_prefix}user_profiles` SET `fk_user_id`='".$input['fk_user_id']."',`last_changed`='".gmdate('YmdHis')."',`status`=".STAT_APPROVED;
 			foreach ($_pfields as $field_id=>$field) {
-//				if ($field['editable']) {
-					if ($field['field_type']==FIELD_LOCATION) {
-						$query.=",`".$field['dbfield']."_country`=".$input[$field['dbfield'].'_country'].",`".$field['dbfield']."_state`=".$input[$field['dbfield'].'_state'].",`".$field['dbfield']."_city`=".$input[$field['dbfield'].'_city'].",`".$field['dbfield']."_zip`='".$input[$field['dbfield'].'_zip']."'";
-					} else {
-						if (isset($input[$field['dbfield']])) {
-							$query.=',`'.$field['dbfield']."`='".$input[$field['dbfield']]."'";
-						}
-					}
-//				}
+				$query.=','.$field->query_set();
 			}
 		}
 

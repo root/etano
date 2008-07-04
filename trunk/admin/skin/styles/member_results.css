@@ -25,6 +25,7 @@ dl.member_details dt,dl.member_details dd {
 
 dl.member_details dd {
 	margin-left: 10px;
+	width: 600px;
 }
 
 dl.member_details dd.actions {

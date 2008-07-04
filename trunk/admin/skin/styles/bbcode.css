@@ -12,6 +12,7 @@
 	background-position: top left;
 	background-repeat: no-repeat;
 	text-indent: -9999px;
+	outline: none !important;
 }
 
 #bb_tools a:hover {
@@ -40,16 +41,17 @@
 
 #smiley_set {
 	display: none;
-	position: absolute;
-	z-index: 2;
-	top: -100px;
-	left: 140px;
 	padding: 4px;
 	border: 2px solid #000;
 	background: #fff;
 	color: #000;
-	overflow: hidden;
 	width: 190px;
+	left: 140px;
+	position: absolute;
+}
+
+#smiley_set table {
+	display: block;
 }
 
 #smiley_set a {

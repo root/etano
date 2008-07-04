@@ -70,7 +70,7 @@ if (isset($_GET['st'])) {
 			}
 			if (!empty($input['uid'])) {
 				$where.=" AND a.`fk_user_id`=".$input['uid'];
-				require _BASEPATH_.'/includes/network_functions.inc.php';
+				require_once _BASEPATH_.'/includes/network_functions.inc.php';
 				// if I am a friend with this gorgeous girl show me the hidden stuff also :)
 				if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) || !is_network_member($input['uid'],$_SESSION[_LICENSE_KEY_]['user']['user_id'],NET_FRIENDS)) {
 					$where.=" AND a.`is_private`=0";
@@ -89,7 +89,7 @@ if (isset($_GET['st'])) {
 			}
 			$user_name=get_user_by_userid($input['uid']);
 			if (!empty($input['uid'])) {
-				require _BASEPATH_.'/includes/network_functions.inc.php';
+				require_once _BASEPATH_.'/includes/network_functions.inc.php';
 				// if I am a friend with this gorgeous girl show me the hidden stuff :)
 				if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && is_network_member($input['uid'],$_SESSION[_LICENSE_KEY_]['user']['user_id'],NET_FRIENDS)) {
 					$where.=" AND a.`fk_user_id`=".$input['uid']." AND `is_private`=1";
@@ -100,7 +100,7 @@ if (isset($_GET['st'])) {
 			} else {
 				$error=true;
 			}
-			$tplvars['page_title']=sprintf('Private Photos from %s',$user_name);
+			$tplvars['page_title']=sprintf($GLOBALS['_lang'][279],$user_name);
 			break;
 
 		case 'field':
@@ -110,8 +110,8 @@ if (isset($_GET['st'])) {
 			if (!empty($input['f']) && !empty($input['v'])) {
 				$field_ok=false;
 				$fid=0;
-				foreach ($_pfields as $k=>$field) {
-					if ($field['dbfield']==$input['f'] && $field['field_type']==FIELD_SELECT) {
+				foreach ($_pfields as $k=>&$field) {
+					if ($field->config['dbfield']==$input['f'] && get_class($field)=='field_select') {
 						$field_ok=true;
 						$fid=$k;
 						break;
@@ -120,7 +120,7 @@ if (isset($_GET['st'])) {
 				if ($field_ok) {
 					$from.=",`{$dbtable_prefix}user_profiles` b";
 					$where.=" AND a.`is_private`=0 AND a.`fk_user_id`=b.`fk_user_id` AND b.`".$input['f']."`='".$input['v']."'";
-					$field_value=isset($_pfields[$fid]['accepted_values'][$input['v']]) ? $_pfields[$fid]['accepted_values'][$input['v']] : '';
+					$field_value=isset($_pfields[$fid]->config['accepted_values'][$input['v']]) ? $_pfields[$fid]->config['accepted_values'][$input['v']] : '';
 					$tplvars['page_title']=sprintf($GLOBALS['_lang'][143],$field_value);
 				} else {
 					$error=true;

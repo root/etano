@@ -18,7 +18,7 @@ check_login_member('auth');
 $tpl=new phemplate(_BASEPATH_.'/skins_site/'.get_my_skin().'/','remove_nonjs');
 
 $query="SELECT `fk_user_id`,`_photo`,`_user`,`alt_url`,`rad_longitude`,`rad_latitude`,`score`,`status`,`reject_reason`";
-foreach ($_pfields as $field_id=>$field) {
+foreach ($_pfields as $field_id=>&$field) {
 	if ($field->config['visible']) {
 		$query.=','.$field->query_select();
 	}
@@ -29,7 +29,7 @@ if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output=mysql_fetch_assoc($res);
 	// set all the fields to their real (readable) values
-	foreach ($_pfields as $field_id=>$field) {
+	foreach ($_pfields as $field_id=>&$field) {
 		if ($field->config['visible']) {
 			$field->set_value($output,false);
 		}

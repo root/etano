@@ -36,9 +36,9 @@ if (!empty($output['search_md5'])) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$got_from_cache=true;
-		$user_ids=mysql_result($res,0,0);
+		list($user_ids,$input)=mysql_fetch_row($res);
 		$user_ids=explode(',',$user_ids);
-		$input=unserialize(mysql_result($res,0,1));	// sanitized already
+		$input=unserialize($input);	// sanitized already
 		check_login_member($input['acclevel_code']);
 	}
 }
@@ -71,7 +71,7 @@ if (!$got_from_cache) {
 			case 'adv':
 				$input['acclevel_code']='search_advanced';
 				// for advanced search we get all fields
-				foreach ($_pfields as $field_id=>$field) {
+				foreach ($_pfields as $field_id=>&$field) {
 					if (!empty($field->config['searchable'])) {
 						$search_fields[]=$field_id;
 					}

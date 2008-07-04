@@ -38,7 +38,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$page=(int)$_GET['p'];
 }
 
-foreach ($_pfields as $field_id=>$field) {
+foreach ($_pfields as $field_id=>&$field) {
 	if (isset($field->config['reg_page']) && $field->config['reg_page']==$page) {
 		$my_fields[]=$field_id;
 		$_pfields[$field_id]->set_value($output,false);

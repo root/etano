@@ -11,8 +11,8 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once '../includes/common.inc.php';
-require_once '../includes/admin_functions.inc.php';
+require '../includes/common.inc.php';
+require _BASEPATH_.'/includes/admin_functions.inc.php';
 allow_dept(DEPT_MODERATOR | DEPT_ADMIN);
 
 // cleanup after an 'impersonate user' action
@@ -45,12 +45,17 @@ if (!empty($_GET['uid'])) {
 	redirect2page('admin/cpanel.php',$topass);
 }
 
-$config=get_site_option(array('bbcode_profile','datetime_format','time_offset'),'core');
-$config=array_merge($config,get_site_option(array('datetime_format','time_offset'),'def_user_prefs'));
+$config=get_site_option(array('datetime_format','time_offset'),'def_user_prefs');
 
 $categs=array();
 $account=array();
-$query="SELECT *,UNIX_TIMESTAMP(`date_added`) as `date_added` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=$uid";
+$query="SELECT `fk_user_id`,`_photo`,`_user`,`alt_url`,`rad_longitude`,`rad_latitude`,`score`,`status`,`reject_reason`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`del`";
+foreach ($_pfields as $field_id=>&$field) {
+	if ($field->config['visible']) {
+		$query.=','.$field->query_select();
+	}
+}
+$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=$uid";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 if (mysql_num_rows($res)) {
 	$output=array_merge($output,mysql_fetch_assoc($res));
@@ -68,55 +73,21 @@ if (mysql_num_rows($res)) {
 	if (empty($output['total_photos'])) {
 		unset($output['total_photos']);
 	}
+	// set all the fields to their real (readable) values
+	foreach ($_pfields as $field_id=>&$field) {
+		if ($field->config['visible']) {
+			$field->set_value($output,false);
+		}
+	}
 	$c=0;
 	foreach ($_pcats as $pcat_id=>$pcat) {
 		$categs[$c]['pcat_name']=$pcat['pcat_name'];
 		$categs[$c]['pcat_id']=$pcat_id;
 		$cat_content=array();
 		for ($i=0;isset($pcat['fields'][$i]);++$i) {
-			$field=$_pfields[$pcat['fields'][$i]];
-			$cat_content[$i]['label']=$field['label'];
-			$cat_content[$i]['dbfield']=$field['dbfield'];
-			switch ($field['field_type']) {
-
-				case FIELD_TEXTFIELD:
-					$cat_content[$i]['field']=sanitize_and_format($output[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-					break;
-
-				case FIELD_TEXTAREA:
-					$cat_content[$i]['field']=sanitize_and_format($output[$field['dbfield']],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-					if ($config['bbcode_profile']) {
-						$cat_content[$i]['field']=bbcode2html($cat_content[$i]['field']);
-					}
-					break;
-
-				case FIELD_SELECT:
-					// if we sanitize here " will be rendered as &quot; which is not what we want
-					//$cat_content[$i]['field']=sanitize_and_format($field['accepted_values'][$output[$field['dbfield']]],TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-					$cat_content[$i]['field']=isset($field['accepted_values'][$output[$field['dbfield']]]) ? $field['accepted_values'][$output[$field['dbfield']]] : '?';
-					break;
-
-				case FIELD_CHECKBOX_LARGE:
-					$cat_content[$i]['field']=sanitize_and_format(vector2string_str($field['accepted_values'],$output[$field['dbfield']]),TYPE_STRING,$__field2format[TEXT_DB2DISPLAY]);
-					break;
-
-				case FIELD_DATE:
-					if ($output[$field['dbfield']]=='0000-00-00') {
-						$output[$field['dbfield']]='?';
-					}
-					$cat_content[$i]['field']=$output[$field['dbfield']];
-					break;
-
-				case FIELD_LOCATION:
-					$cat_content[$i]['field']=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$output[$field['dbfield'].'_country'],'-');
-					if (!empty($output[$field['dbfield'].'_state'])) {
-						$cat_content[$i]['field'].=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$output[$field['dbfield'].'_state'],'-');
-					}
-					if (!empty($output[$field['dbfield'].'_city'])) {
-						$cat_content[$i]['field'].=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$output[$field['dbfield'].'_city'],'-');
-					}
-					break;
-
+			$field=&$_pfields[$pcat['fields'][$i]];
+			if ($field->config['visible']) {
+				$cat_content[]=array('field'=>$field->display(),'label'=>$field->config['label'],'dbfield'=>$field->config['dbfield']);
 			}
 		}
 		$categs[$c]['cat_content']=$cat_content;

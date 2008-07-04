@@ -152,7 +152,7 @@ class field_birthdate extends iprofile_field {
 
 	function edit_js() {
 		$myreturn='';
-		if ($this->config['required']) {
+		if (!empty($this->config['required'])) {
 			$myreturn.='$(\'#'.$this->config['dbfield'].'_year\').parents(\'form\').bind(\'submit\',function() {
 				var is_empty=true;
 				if ($(\'#'.$this->config['dbfield'].'_day\').val()!='.$this->empty_value['edit']['day'].' && $(\'#'.$this->config['dbfield'].'_month\').val()!='.$this->empty_value['edit']['month'].' && $(\'#'.$this->config['dbfield'].'_year\').val()!='.$this->empty_value['edit']['year'].') {

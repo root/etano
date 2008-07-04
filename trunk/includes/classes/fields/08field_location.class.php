@@ -223,7 +223,7 @@ class field_location extends iprofile_field {
 
 	function validation_server() {
 		$myreturn=true;
-		if ($this->config['required']) {
+		if (!empty($this->config['required'])) {
 			if (((int)$this->value['country'])==$this->empty_value['edit']['country']) {
 				$myreturn=false;
 			}

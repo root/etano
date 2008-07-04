@@ -31,9 +31,16 @@ class field_mchecks extends iprofile_field {
 
 	function set_value(&$all_values,$sanitize=true) {
 		if ($sanitize) {
-			$this->value=sanitize_and_format_gpc($all_values,$this->config['dbfield'],TYPE_ARRAY_LARGE,$GLOBALS['__field2format'][FIELD_CHECKBOX_LARGE],$this->empty_value['edit']);
+			$this->value=sanitize_and_format_gpc($all_values,$this->config['dbfield'],TYPE_INT,$GLOBALS['__field2format'][FIELD_CHECKBOX_LARGE],$this->empty_value['edit']);
 		} elseif (isset($all_values[$this->config['dbfield']])) {
 			$this->value=$all_values[$this->config['dbfield']];
+			if (is_string($this->value)) {
+				if (empty($this->value) || $this->value=='||') {
+					$this->value=$this->empty_value['edit'];
+				} else {
+					$this->value=explode('|',substr($this->value,1,-1));
+				}
+			}
 		}
 		return true;
 	}
@@ -61,8 +68,6 @@ class field_mchecks extends iprofile_field {
 			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			$new_config['parent_class']=get_class();
 			$this->search=new $class_name($new_config,true);
-//			$temp=array($this->config['dbfield']=>$this->value);
-//			$this->search->set_value($temp,false);
 			return $this->search;
 		} else {
 			return $this;
@@ -313,19 +318,22 @@ class field_mchecks extends iprofile_field {
 	function query_set() {
 		// $this->value should be sanitized for DB if set_value() didn't sanitize the input.
 		// This means that we should call this function only in an addedit processor!!!!
-		return '`'.$this->config['dbfield']."`='".$this->value."'";
+		$temp='';
+		if (!empty($this->value)) {
+			$temp='|'.join('|',$this->value).'|';
+		}
+		return '`'.$this->config['dbfield']."`='$temp'";
 	}
 
 	function query_search() {
 		$myreturn='';
 		if ($this->value!=$this->empty_value['edit']) {
-			$all_values=explode('|',substr($this->value,1,-1));
-			if (count($all_values)) {
+			if (count($this->value)) {
 				if ($this->config['parent_class']=='field_select') {
 					$temp=' AND (';
-					for ($j=0;isset($all_values[$j]);++$j) {
-						if (!empty($all_values[$j])) {
-							$temp.='`'.$this->config['dbfield'].'`='.$all_values[$j].' OR ';
+					for ($j=0;isset($this->value[$j]);++$j) {
+						if (!empty($this->value[$j])) {
+							$temp.='`'.$this->config['dbfield'].'`='.$this->value[$j].' OR ';
 						}
 					}
 					if (substr($temp,-4)==' OR ') {
@@ -337,9 +345,9 @@ class field_mchecks extends iprofile_field {
 					}
 				} elseif ($this->config['parent_class']=='field_mchecks') {
 					$temp=' AND (';
-					for ($j=0;isset($all_values[$j]);++$j) {
-						if (!empty($all_values[$j])) {
-							$temp.='`'.$this->config['dbfield']."` LIKE '%|".$all_values[$j]."|%' OR ";
+					for ($j=0;isset($this->value[$j]);++$j) {
+						if (!empty($this->value[$j])) {
+							$temp.='`'.$this->config['dbfield']."` LIKE '%|".$this->value[$j]."|%' OR ";
 						}
 					}
 					if (substr($temp,-4)==' OR ') {
@@ -390,8 +398,7 @@ class field_mchecks extends iprofile_field {
 
 	function get_value($as_array=false) {
 		if ($as_array) {
-			$all_values=explode('|',substr($this->value,1,-1));
-			return array($this->config['dbfield']=>$all_values);
+			return array($this->config['dbfield']=>$this->value);
 		} else {
 			return $this->value;
 		}

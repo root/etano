@@ -88,6 +88,10 @@ $GLOBALS['_pfields'][5]=new field_textarea(
 									'dbfield'=>'f5',
 									'fk_pcat_id'=>6,
 									'help_text'=>&$GLOBALS['_lang'][2298],
+									'use_bbcode'=>1,
+									'use_smilies'=>1,
+									'changes_status'=>0,
+									'ta_len'=>1000,
 								)
 							);
 
