@@ -38,16 +38,16 @@ if (empty($subscriptions_auto['dbfield'])) {
 	$subscriptions_auto['to_members_2']='checked="checked"';
 }
 $dbfields=array();
-foreach ($_pfields as $pfield_id=>$pfield) {
-	if ($pfield['field_type']==FIELD_SELECT) {
-		$dbfields[$pfield['dbfield']]=$pfield['label'].' ('.$pfield['dbfield'].')';
+foreach ($_pfields as $pfield_id=>&$pfield) {
+	if (get_class($pfield)=='field_select') {
+		$dbfields[$pfield['dbfield']]=$pfield->config['label'].' ('.$pfield->config['dbfield'].')';
 	}
 }
 if (!empty($subscriptions_auto['dbfield'])) {
 	$accepted_values=array();
-	foreach ($_pfields as $pfield_id=>$pfield) {
-		if ($pfield['dbfield']==$subscriptions_auto['dbfield']) {
-			$accepted_values=$pfield['accepted_values'];
+	foreach ($_pfields as $pfield_id=>&$pfield) {
+		if ($pfield->config['dbfield']==$subscriptions_auto['dbfield']) {
+			$accepted_values=$pfield->config['accepted_values'];
 		}
 	}
 	$subscriptions_auto['field_value']=vector2options($accepted_values,$subscriptions_auto['field_value']);

@@ -103,7 +103,7 @@ class field_textfield extends iprofile_field {
 
 	function edit_js() {
 		$myreturn='';
-		if ($this->config['required']) {
+		if (!empty($this->config['required'])) {
 			$myreturn.='$(\'#'.$this->config['dbfield'].'\').parents(\'form\').bind(\'submit\',function() {
 				if ($(\'#'.$this->config['dbfield'].'\',this).val()==\''.$this->empty_value['edit'].'\') {
 					alert(\''.$this->config['label'].' cannot be empty\');

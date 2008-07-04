@@ -19,9 +19,9 @@ $output='';
 if (!empty($_POST['field'])) {
 	$dbfield=$_POST['field'];
 	$accepted_values=array();
-	foreach ($_pfields as $pfield_id=>$pfield) {
-		if ($pfield['dbfield']==$dbfield) {
-			$accepted_values=$pfield['accepted_values'];
+	foreach ($_pfields as $pfield_id=>&$pfield) {
+		if ($pfield->config['dbfield']==$dbfield) {
+			$accepted_values=$pfield->config['accepted_values'];
 		}
 	}
 	for ($i=0;isset($accepted_values[$i]);++$i) {

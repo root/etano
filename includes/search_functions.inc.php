@@ -45,7 +45,7 @@ function search_results($search,$my_membership=1) {
 			case 'adv':
 				$input['acclevel_code']='search_advanced';
 				// for advanced search we get all fields
-				foreach ($_pfields as $field_id=>$field) {
+				foreach ($_pfields as $field_id=>&$field) {
 					if (!empty($field->config['searchable'])) {
 						$search_fields[]=$field_id;
 					}

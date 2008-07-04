@@ -64,9 +64,9 @@ if (!empty($totalrows)) {
 	$filtered_sender_profiles=array();
 	if (!empty($field_values[FILTER_SENDER_PROFILE]['value'])) {
 		for ($i=0;isset($field_values[FILTER_SENDER_PROFILE]['value'][$i]);++$i) {
-			foreach ($_pfields as $k=>$field) {
-				if ($field['dbfield']==$field_values[FILTER_SENDER_PROFILE]['field'][$i]) {
-					$filtered_sender_profiles[$field_values[FILTER_SENDER_PROFILE]['field'][$i].'_'.$field_values[FILTER_SENDER_PROFILE]['value'][$i]]=$field['label'].': '.$field['accepted_values'][$field_values[FILTER_SENDER_PROFILE]['value'][$i]];
+			foreach ($_pfields as $k=>&$field) {
+				if ($field->config['dbfield']==$field_values[FILTER_SENDER_PROFILE]['field'][$i]) {
+					$filtered_sender_profiles[$field_values[FILTER_SENDER_PROFILE]['field'][$i].'_'.$field_values[FILTER_SENDER_PROFILE]['value'][$i]]=$field->config['label'].': '.$field->config['accepted_values'][$field_values[FILTER_SENDER_PROFILE]['value'][$i]];
 					break;
 				}
 			}

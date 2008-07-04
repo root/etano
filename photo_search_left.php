@@ -16,7 +16,7 @@ if (isset($input['uid'])) {
 	if (empty($input['uid'])) {
 		unset($input['uid']);
 	} elseif (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
-		require _BASEPATH_.'/includes/network_functions.inc.php';
+		require_once _BASEPATH_.'/includes/network_functions.inc.php';
 		if (is_network_member($_SESSION[_LICENSE_KEY_]['user']['user_id'],$input['uid'],NET_BLOCK)) {
 			$input['unblock_user']=true;
 		}

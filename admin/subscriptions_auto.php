@@ -29,10 +29,10 @@ $subscriptions_auto=array();
 if (!empty($totalrows)) {
 	// create the $pfields helper array for easier access to fields by dbfield
 	$pfields=array();
-	foreach ($_pfields as $pfield_id=>$pfield) {
-		if ($pfield['field_type']==FIELD_SELECT) {
-			$pfields[$pfield['dbfield']]['label']=$pfield['label'];
-			$pfields[$pfield['dbfield']]['accepted_values']=$pfield['accepted_values'];
+	foreach ($_pfields as $pfield_id=>&$pfield) {
+		if (get_class($pfield)=='field_select') {
+			$pfields[$pfield->config['dbfield']]['label']=$pfield->config['label'];
+			$pfields[$pfield->config['dbfield']]['accepted_values']=$pfield->config['accepted_values'];
 		}
 	}
 

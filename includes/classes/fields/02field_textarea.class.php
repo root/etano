@@ -174,7 +174,7 @@ class field_textarea extends iprofile_field {
 				$(\'#'.$this->config['dbfield'].'_chars\').html(remaining.toString());
 			});';
 		}
-		if ($this->config['required']) {
+		if (!empty($this->config['required'])) {
 			$myreturn.='$(\'#'.$this->config['dbfield'].'\').parents(\'form\').bind(\'submit\',function() {
 				if ($(\'#'.$this->config['dbfield'].'\',this).val()==\''.$this->empty_value['edit'].'\') {
 					alert(\'"'.$this->config['label'].'" cannot be empty\');
@@ -183,7 +183,7 @@ class field_textarea extends iprofile_field {
 				}
 			});';
 		}
-		if ($this->config['use_bbcode']) {
+		if (!empty($this->config['use_bbcode'])) {
 			$myreturn.='$(\'#'.$this->config['dbfield'].'\').sco_bbcode();';
 		}
 		return $myreturn;

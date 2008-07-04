@@ -590,3 +590,14 @@ a.item_reject {
 .stripe_even {
 	background-color: #fff;
 }
+
+.loading {
+	background: url('../../../images/ajax-loader.gif') no-repeat left center;
+	width: 16px;
+	height: 16px;
+	line-height: 20px;
+	float: right;
+	display: block;
+	margin-right: 20px;
+}
+
