@@ -11,9 +11,9 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require_once dirname(__FILE__).'/../includes/common.inc.php';
-require_once dirname(__FILE__).'/../includes/user_functions.inc.php';
-require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/comments.inc.php';
+require dirname(__FILE__).'/../includes/common.inc.php';
+require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/comments.inc.php';
 
 $output='';
 if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) && !empty($_POST['comment_id']) && !empty($_POST['t'])) {

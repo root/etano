@@ -23,36 +23,36 @@ $pfield_id=isset($_GET['pfield_id']) ? (int)$_GET['pfield_id'] : 0;
 // no need to urldecode because of the GET
 $return=sanitize_and_format_gpc($_GET,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],'');
 
-$query="SELECT `order_num` FROM `{$dbtable_prefix}profile_fields` WHERE `pfield_id`=$pfield_id";
+$query="SELECT `order_num` FROM `{$dbtable_prefix}profile_fields2` WHERE `pfield_id`=$pfield_id";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $mynum=mysql_result($res,0,0);
 if ($_GET['move']=='d') {
-	$query="SELECT min(`order_num`) FROM `{$dbtable_prefix}profile_fields` WHERE `order_num`>$mynum";
+	$query="SELECT min(`order_num`) FROM `{$dbtable_prefix}profile_fields2` WHERE `order_num`>$mynum";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$downnum=mysql_result($res,0,0);
-		$query="SELECT `pfield_id` FROM `{$dbtable_prefix}profile_fields` WHERE `order_num`=$downnum";
+		$query="SELECT `pfield_id` FROM `{$dbtable_prefix}profile_fields2` WHERE `order_num`=$downnum";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$downpfield_id=mysql_result($res,0,0);
-			$query="UPDATE `{$dbtable_prefix}profile_fields` SET `order_num`=$downnum WHERE `pfield_id`=$pfield_id";
+			$query="UPDATE `{$dbtable_prefix}profile_fields2` SET `order_num`=$downnum WHERE `pfield_id`=$pfield_id";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="UPDATE `{$dbtable_prefix}profile_fields` SET `order_num`=$mynum WHERE `pfield_id`=$downpfield_id";
+			$query="UPDATE `{$dbtable_prefix}profile_fields2` SET `order_num`=$mynum WHERE `pfield_id`=$downpfield_id";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	}
 } elseif ($_GET['move']=='u') {
-	$query="SELECT max(`order_num`) FROM `{$dbtable_prefix}profile_fields` WHERE `order_num`<$mynum";
+	$query="SELECT max(`order_num`) FROM `{$dbtable_prefix}profile_fields2` WHERE `order_num`<$mynum";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$upnum=mysql_result($res,0,0);
-		$query="SELECT `pfield_id` FROM `{$dbtable_prefix}profile_fields` WHERE `order_num`=$upnum";
+		$query="SELECT `pfield_id` FROM `{$dbtable_prefix}profile_fields2` WHERE `order_num`=$upnum";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$uppfield_id=mysql_result($res,0,0);
-			$query="UPDATE `{$dbtable_prefix}profile_fields` SET `order_num`=$upnum WHERE `pfield_id`=$pfield_id";
+			$query="UPDATE `{$dbtable_prefix}profile_fields2` SET `order_num`=$upnum WHERE `pfield_id`=$pfield_id";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-			$query="UPDATE `{$dbtable_prefix}profile_fields` SET `order_num`=$mynum WHERE `pfield_id`=$uppfield_id";
+			$query="UPDATE `{$dbtable_prefix}profile_fields2` SET `order_num`=$mynum WHERE `pfield_id`=$uppfield_id";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		}
 	}

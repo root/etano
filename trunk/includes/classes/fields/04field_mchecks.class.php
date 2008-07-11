@@ -367,6 +367,10 @@ class field_mchecks extends iprofile_field {
 		return " ADD `{$dbfield}` text not null default ''";
 	}
 
+	function query_drop($dbfield) {
+		return " DROP `{$dbfield}`";
+	}
+
 	function edit_js() {
 		$myreturn='';
 		if (empty($this->is_search)) {

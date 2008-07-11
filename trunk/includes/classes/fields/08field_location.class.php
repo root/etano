@@ -112,11 +112,13 @@ class field_location extends iprofile_field {
 		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
 			$new_config=$this->config;
+			$new_config['label']=$new_config['search_label'];
 			if (isset($new_config['search_default'])) {
-				$new_config['label']=$new_config['search_label'];
 				$new_config['default_value']=$new_config['search_default'];
-				unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
+			} else {
+				unset($new_config['default_value']);
 			}
+			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			$new_config['parent_class']=get_class();
 			$this->search=new $class_name($new_config,true);
 //			$temp=array($this->config['dbfield'].'_country'=>$this->value['country'],$this->config['dbfield'].'_state'=>$this->value['state'],$this->config['dbfield'].'_city'=>$this->value['city'],$this->config['dbfield'].'_zip'=>$this->value['zip']);
@@ -186,9 +188,41 @@ class field_location extends iprofile_field {
 		return " ADD `{$dbfield}_country` int(3) not null default 0, ADD `{$dbfield}_state` int(10) not null default 0, ADD `{$dbfield}_city` int(10) not null default 0, ADD `{$dbfield}_zip` varchar(10) not null default ''";
 	}
 
+	function query_drop($dbfield) {
+		return " DROP `{$dbfield}_country`,DROP `{$dbfield}_state`,DROP `{$dbfield}_city`,DROP `{$dbfield}_zip`";
+	}
+
 	function edit_js() {
 		$myreturn='$(\'#'.$this->config['dbfield'].'_country,#'.$this->config['dbfield'].'_state\').bind(\'change\',function() {
-			req_update_location($(this).attr(\'id\'),$(this).val());
+			$(\'#\'+$(this).attr(\'id\')).before(\'<span class="loading"></span>\');
+			$.post(\'http://\'+window.location.hostname+\'/ajax/location.php\',
+					{\'field\':$(this).attr(\'id\'),\'val\':$(this).val()},
+					function(data) {
+						if (data!=null && data!=\'\') {
+							var allopts=data.split("\n");
+							var str_field=allopts[0];
+							var toshow=allopts[1].split(\'|\');
+							$(\'#row_\'+str_field+\'state\').addClass(\'invisible\').removeClass(\'visible\');
+							$(\'#row_\'+str_field+\'city\').addClass(\'invisible\').removeClass(\'visible\');
+							$(\'#row_\'+str_field+\'zip\').addClass(\'invisible\').removeClass(\'visible\');
+							for (i=0;i<toshow.length;i++) {
+								$(\'#row_\'+toshow[i]).addClass(\'visible\').removeClass(\'invisible\');
+							}
+							if (allopts.length>3) {
+								var to_update=$(\'#\'+str_field+allopts[2]);
+								to_update.html(\'<option>Loading</option>\');
+								var towrite=\'\';
+								for (i=3;i<allopts.length;i++) {
+									oneopt=allopts[i].split(\'|\');
+									towrite+=\'<option value="\'+oneopt[0]+\'">\'+oneopt[1]+\'</option>\';
+								}
+								to_update.html(towrite);
+								to_update.focus();
+							}
+							$(\'.loading\').remove();
+						}
+					}
+			);
 		});';
 		if (empty($this->is_search)) {
 			if (!empty($this->config['required'])) {

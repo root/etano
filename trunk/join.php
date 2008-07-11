@@ -22,7 +22,7 @@ $output=array();
 $page=1;
 $my_fields=array();
 if (isset($_SESSION['topass']['input'])) {
-	$output=&$_SESSION['topass']['input'];
+	$output=$_SESSION['topass']['input'];
 	$output=sanitize_and_format($output,TYPE_STRING,FORMAT_STRIP_MQ);
 	$page=$output['page'];
 	$agree=false;
@@ -30,7 +30,6 @@ if (isset($_SESSION['topass']['input'])) {
 		$agree=true;
 	}
 	unset($_SESSION['topass']['input']);
-	$output=array();
 	if ($agree) {
 		$output['agree']='checked="checked"';
 	}

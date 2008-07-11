@@ -20,13 +20,14 @@ regenerate_fields_array();
 if (empty($_GET['fields_only'])) {
 	regenerate_langstrings_array();
 
-	$query="SELECT `dbfield`,`field_type`,`search_type` FROM `{$dbtable_prefix}profile_fields` WHERE `searchable`=1 AND `for_basic`=1 ORDER BY `order_num`";
+	$query="SELECT `dbfield`,`field_type` FROM `{$dbtable_prefix}profile_fields2` WHERE `searchable`=1 AND `for_basic`=1 ORDER BY `order_num`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$fields=array();
+	// this should be rewritten with the new pfields system...
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		if ($rsrow['field_type']==FIELD_LOCATION) {
+		if ($rsrow['field_type']=='field_location') {
 			$fields[]=$rsrow['dbfield'].'_country';
-		} elseif ($rsrow['field_type']==FIELD_CHECKBOX_LARGE) {
+		} elseif ($rsrow['field_type']=='field_mchecks') {
 		} else {
 			$fields[]=$rsrow['dbfield'];
 		}

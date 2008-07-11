@@ -116,14 +116,20 @@ function regenerate_fields_array() {
 	$basic_search_fields=array();
 	$towrite="<?php\nif (!defined('_LICENSE_KEY_')) {\n\tdie('Hacking attempt');\n}\n";
 	$towrite.="require_once _BASEPATH_.'/includes/interfaces/iprofile_field.class.php';\n";
-	$d = dir(_BASEPATH_.'/includes/classes/fields');
-	while (false!==($entry=$d->read())) {
-		if (substr($entry,2,6)=='field_') {
-			$towrite.="require_once _BASEPATH_.'/includes/classes/fields/$entry';\n";
+	if ($d = opendir(_BASEPATH_.'/includes/classes/fields')) {
+		$includes=array();
+		while (false!==($entry=readdir($d))) {
+			if (substr($entry,2,6)=='field_') {
+				$includes[]=$entry;
+			}
+		}
+		closedir($d);
+		unset($d);
+		sort($includes);
+		for ($i=0;isset($includes[$i]);++$i) {
+			$towrite.="require_once _BASEPATH_.'/includes/classes/fields/".$includes[$i]."';\n";
 		}
 	}
-	$d->close();
-	unset($d);
 	$towrite.="\n";
 
 	$query="SELECT * FROM `{$dbtable_prefix}profile_fields2` ORDER BY `order_num` ASC";

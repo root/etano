@@ -120,6 +120,9 @@ Support at:                 http://www.datemill.com/forum
 	function query_create($dbfield) {
 	}
 
+	function query_drop($dbfield) {
+	}
+
 	/**
 	 *	Method responsible for client side validation and field behavior
 	 */
