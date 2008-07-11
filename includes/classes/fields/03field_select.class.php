@@ -346,6 +346,10 @@ class field_select extends iprofile_field {
 		return " ADD `{$dbfield}` int(5) not null default 0";
 	}
 
+	function query_drop($dbfield) {
+		return " DROP `{$dbfield}`";
+	}
+
 	function edit_js() {
 		$myreturn='';
 		if (empty($this->is_search)) {

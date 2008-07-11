@@ -76,11 +76,13 @@ class field_range extends iprofile_field {
 		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
 			$new_config=$this->config;
+			$new_config['label']=$new_config['search_label'];
 			if (isset($new_config['search_default'])) {
-				$new_config['label']=$new_config['search_label'];
 				$new_config['default_value']=$new_config['search_default'];
-				unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
+			} else {
+				unset($new_config['default_value']);
 			}
+			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			$new_config['parent_class']=get_class();
 			$this->search=new $class_name($new_config,true);
 			$temp=array($this->config['dbfield'].'_min'=>$this->value['min'],$this->config['dbfield'].'_max'=>$this->value['max']);
