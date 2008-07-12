@@ -168,7 +168,9 @@ function regenerate_fields_array() {
 		if (is_array($custom_config)) {
 			foreach ($custom_config as $k=>$v) {
 				if (!is_array($v)) {
-					$towrite.="\t\t\t\t\t\t\t\t\t'$k'=>$v,\n";
+					if ($v!=='') {
+						$towrite.="\t\t\t\t\t\t\t\t\t'$k'=>$v,\n";
+					}
 				} else {
 					$towrite.="\t\t\t\t\t\t\t\t\t'$k'=>".str_replace("\n",'',var_export($v,true)).",\n";
 				}
