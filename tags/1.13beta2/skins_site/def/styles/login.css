@@ -1,0 +1,46 @@
+#content_column1.login {
+	float: none;
+}
+
+#login_tease {
+	padding: 5px 0px 0px 0;
+	font-size: 14px;
+	float: right;
+	width: 400px;
+}
+
+#login_tease ul {
+	list-style-type: disc;
+	margin-left: 25px;
+}
+
+#relogin dl {
+	width: 280px;
+	overflow: hidden;
+}
+
+* html #relogin dl {
+	height: 1%;
+}
+
+#relogin dt {
+	float: left;
+	width: 70px;
+	font-size: 13px;
+	padding: 5px 0 5px 10px;
+}
+
+#relogin dd {
+	float: left;
+	width: 200px;
+	padding: 5px 0 5px;
+}
+
+#relogin dd input, #relogin dd select {
+	font: 12px "Trebuchet MS", Arial, sans-serif;
+	margin: -2px 0 0;
+}
+
+.controls a {
+	margin-left: 10px;
+}

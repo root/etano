@@ -1,0 +1,10 @@
+#file_content {
+	width: 100%;
+	height: 400px;
+	overflow: scroll;
+	white-space: nowrap;
+}
+
+fieldset {
+	margin: 10px 0;
+}
