@@ -30,7 +30,8 @@ if (!empty($photo_id)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
-		if (!empty($output['is_private']) && (empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) || !is_network_member($output['fk_user_id'],$_SESSION[_LICENSE_KEY_]['user']['user_id'],NET_FRIENDS))) {
+		$is_friend=is_network_member($output['fk_user_id'],$_SESSION[_LICENSE_KEY_]['user']['user_id'],NET_FRIENDS);
+		if (!empty($output['is_private']) && (empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) || ($output['fk_user_id']!=$_SESSION[_LICENSE_KEY_]['user']['user_id'] && !$is_friend))) {
 			$topass['message']['type']=MESSAGE_ERROR;
 			$topass['message']['text']=sprintf($GLOBALS['_lang'][277],_BASEURL_.'/profile.php?uid='.$output['fk_user_id'],get_user_by_userid($output['fk_user_id']));
 			redirect2page('info.php',$topass);
@@ -54,12 +55,18 @@ if (!empty($photo_id)) {
 			$loop_comments=create_comments_loop('photo',$output['photo_id'],$output);
 
 			// prev/next stuff
-			$query="SELECT max(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`<$photo_id AND `is_private`=0 AND `fk_user_id`=".$output['fk_user_id'];
+			$query="SELECT max(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`<$photo_id AND `fk_user_id`=".$output['fk_user_id'];
+			if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) || ($output['fk_user_id']!=$_SESSION[_LICENSE_KEY_]['user']['user_id'] && !$is_friend)) {
+				$query.=" AND `is_private`=0";
+			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$output['previous']=mysql_result($res,0,0);
 			}
-			$query="SELECT min(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`>$photo_id AND `is_private`=0 AND `fk_user_id`=".$output['fk_user_id'];
+			$query="SELECT min(`photo_id`) FROM `{$dbtable_prefix}user_photos` WHERE `photo_id`>$photo_id AND `fk_user_id`=".$output['fk_user_id'];
+			if (empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) || ($output['fk_user_id']!=$_SESSION[_LICENSE_KEY_]['user']['user_id'] && !$is_friend)) {
+				$query.=" AND `is_private`=0";
+			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			if (mysql_num_rows($res)) {
 				$output['next']=mysql_result($res,0,0);
