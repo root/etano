@@ -87,12 +87,6 @@ $rw_files[$i]['perms']='777';
 $rw_files[$i]['real_file']=array('rss');
 ++$i;
 
-$rw_files[$i]['file']='cache2';
-$rw_files[$i]['type']='All folders';
-$rw_files[$i]['perms']='777';
-$rw_files[$i]['real_file']=array('cache2');
-++$i;
-
 $rw_files[$i]['file']='skins_site/def/cache/widgets';
 $rw_files[$i]['type']='Folder';
 $rw_files[$i]['perms']='777';
@@ -213,6 +207,14 @@ if ($temp=='777') {
 } else {
 	$error=true;
 	$output['tmpadmin_perm']='state_red';
+}
+
+$temp=substr(sprintf('%o',fileperms(dirname(__FILE__).'/../cache2/')),-3);
+if ($temp=='777') {
+	$output['tmpcache2_perm']='state_green';
+} else {
+	$error=true;
+	$output['tmpcache2_perm']='state_red';
 }
 
 // check if we can use any exec function to find out where php-cli and mysql binaries are
