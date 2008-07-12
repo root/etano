@@ -1,0 +1,31 @@
+.subscriptions .row {
+	overflow: hidden;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px dashed #ccc;
+}
+
+.subscriptions .row div {
+	float: left;
+	margin: 3px 0;
+	padding: 0 2px 0 8px;
+	overflow: hidden;
+}
+
+.subscriptions .header {
+	font-weight: bold;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.subscriptions .price {
+	width: 70px;
+}
+
+.subscriptions .subscr_diz {
+	width: 450px;
+}
+
+.subscriptions .subscr_diz strong {
+	display: block;
+}

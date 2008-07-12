@@ -1,0 +1,35 @@
+<form action="processors/blog_post_edit.php" method="post" id="post_form">
+<fieldset>
+	<input type="hidden" name="post_id" value="{output.post_id}" />
+	<input type="hidden" name="fk_user_id" value="{output.fk_user_id}" />
+	<input type="hidden" name="return" value="{output.return}" />
+	<label for="title">Title: </label><input type="text" name="title" id="title" value="{output.title}" tabindex="1" />
+</fieldset>
+<!--opt name="output.bbcode_blogs"-->
+<div id="bb_tools">
+	<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
+	<a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a>
+	<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a>
+	<a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a>
+	<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
+</div>
+<!--/opt name="output.bbcode_blogs"-->
+<fieldset>
+	<textarea name="post_content" id="post_content" cols="" rows="" tabindex="2">{output.post_content}</textarea>
+	<p>
+		<input type="checkbox" name="allow_comments" id="allow_comments" value="1" tabindex="3" {output.allow_comments} />
+		<label for="allow_comments">Allow reader comments?</label>
+	</p>
+</fieldset>
+<fieldset class="controls">
+	<input class="button medium" type="submit" value="Save" />
+</fieldset>
+</form>
+
+<script type="text/javascript" src="js/blog_post_edit.js?v={tplvars.js_lib_v}"></script>
+<!--opt name="output.bbcode_blogs"-->
+<script type="text/javascript">
+	bbcode_field_id='#post_content';
+</script>
+<script type="text/javascript" src="js/bbcode.js?v={tplvars.js_lib_v}"></script>
+<!--/opt name="output.bbcode_blogs"-->
