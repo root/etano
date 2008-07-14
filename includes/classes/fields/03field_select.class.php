@@ -231,7 +231,15 @@ class field_select extends iprofile_field {
 					if (empty($accvals_new[$i]['after'])) {
 						$accvals_new[$i]['after']=$last_accvalid;
 					}
-					$query="UPDATE `{$dbtable_prefix}profile_field_accvals` a,`{$dbtable_prefix}profile_field_accvals` b SET a.`sort`=a.`sort`+1 WHERE a.`fk_pfield_id`=".$input['pfield_id']." AND b.`fk_pfield_id`=".$input['pfield_id']." AND a.`sort`>b.`sort` AND b.`accval_id`=".$accvals_new[$i]['after'];
+					$mysort=0;
+					if (!empty($accvals_new[$i]['after'])) {
+						$query="SELECT `sort` FROM `{$dbtable_prefix}profile_field_accvals` WHERE `accval_id`=".$accvals_new[$i]['after'];
+						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+						if (mysql_num_rows($res)) {
+							$mysort=((int)mysql_result($res,0,0))+1;
+						}
+					}
+					$query="UPDATE `{$dbtable_prefix}profile_field_accvals` SET `sort`=`sort`+1 WHERE `fk_pfield_id`=".$input['pfield_id']." AND `sort`>$mysort ORDER BY `sort` DESC";
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					// since this is a select box, there can be only one selected value.
 					// unselect all other values if this one is the selected one
@@ -239,7 +247,7 @@ class field_select extends iprofile_field {
 						$query="UPDATE `{$dbtable_prefix}profile_field_accvals` SET `def_value`=0 WHERE `fk_pfield_id`=".$input['pfield_id'];
 						if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					}
-					$query="INSERT INTO `{$dbtable_prefix}profile_field_accvals` SET `fk_lk_id_name`=".$accvals_new[$i]['fk_lk_id'].",`fk_pfield_id`=".$input['pfield_id'].",`def_value`=".$accvals_new[$i]['def_value'].",`search_value`=".$accvals_new[$i]['search_value'].",`sort`=".($accvals_new[$i]['after']+1);
+					$query="INSERT INTO `{$dbtable_prefix}profile_field_accvals` SET `fk_lk_id_name`=".$accvals_new[$i]['fk_lk_id'].",`fk_pfield_id`=".$input['pfield_id'].",`def_value`=".$accvals_new[$i]['def_value'].",`search_value`=".$accvals_new[$i]['search_value'].",`sort`=$mysort";
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					$last_accvalid=mysql_insert_id();
 				}
