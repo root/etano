@@ -11,7 +11,7 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-require _BASEPATH_.'/includes/classes/Cache/Lite.php';
+require_once _BASEPATH_.'/includes/classes/Cache/Lite.php';
 
 class user_cache {
 	var $skin='';
