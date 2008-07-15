@@ -239,7 +239,7 @@ class field_select extends iprofile_field {
 							$mysort=((int)mysql_result($res,0,0))+1;
 						}
 					}
-					$query="UPDATE `{$dbtable_prefix}profile_field_accvals` SET `sort`=`sort`+1 WHERE `fk_pfield_id`=".$input['pfield_id']." AND `sort`>$mysort ORDER BY `sort` DESC";
+					$query="UPDATE `{$dbtable_prefix}profile_field_accvals` SET `sort`=`sort`+1 WHERE `fk_pfield_id`=".$input['pfield_id']." AND `sort`>=$mysort ORDER BY `sort` DESC";
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					// since this is a select box, there can be only one selected value.
 					// unselect all other values if this one is the selected one
