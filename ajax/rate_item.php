@@ -18,6 +18,8 @@ require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/rating.inc.php';
 $output='';
 $error=false;
 $id=0;
+$qs='';
+$vote_type='';
 $topass=array();
 if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	if (!empty($_REQUEST['t']) && !empty($_REQUEST['id']) && !empty($_REQUEST['vote'])) {
@@ -97,6 +99,10 @@ if (isset($_REQUEST['silent'])) {
 	} elseif ($vote_type=='profile') {
 		$nextpage='profile.php';
 		$qs='uid='.$id;
+	} else {
+		$nextpage='info.php';
+		$topass['message']['type']=MESSAGE_ERROR;
+		$topass['message']['text']=$GLOBALS['_lang'][11];
 	}
 	redirect2page($nextpage,$topass,$qs);
 }
