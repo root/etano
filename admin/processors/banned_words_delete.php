@@ -29,6 +29,7 @@ if (!$error) {
 	require_once _BASEPATH_.'/includes/classes/fileop.class.php';
 	$query="SELECT `word` FROM `{$dbtable_prefix}banned_words`";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+	$towrite=array();
 	for ($i=0;$i<mysql_num_rows($res);++$i) {
 		$towrite[]=mysql_result($res,$i,0);
 	}
