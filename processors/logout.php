@@ -29,7 +29,7 @@ if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
 	}
 	@mysql_query($query);
 
-	if ($_SESSION[_LICENSE_KEY_]['user']['loginout']<$time-$score_threshold) {
+	if (isset($_SESSION[_LICENSE_KEY_]['user']['loginout']) && $_SESSION[_LICENSE_KEY_]['user']['loginout']<$time-$score_threshold) {
 		add_member_score($_SESSION[_LICENSE_KEY_]['user']['user_id'],'logout');
 	}
 
