@@ -113,11 +113,6 @@ class field_location extends iprofile_field {
 			$class_name=$this->config['search_type'];
 			$new_config=$this->config;
 			$new_config['label']=$new_config['search_label'];
-			if (isset($new_config['search_default'])) {
-				$new_config['default_value']=$new_config['search_default'];
-			} else {
-				unset($new_config['default_value']);
-			}
 			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			$new_config['parent_class']=get_class();
 			$this->search=new $class_name($new_config,true);
@@ -147,7 +142,7 @@ class field_location extends iprofile_field {
 		global $input,$__field2format,$dbtable_prefix,$default_skin_code;
 		$my_input=array();
 		if (!$this->is_search) {
-			$my_input['default_value']=sanitize_and_format_gpc($_POST,'def_country',TYPE_INT,0,0);
+			$my_input['def_country']=sanitize_and_format_gpc($_POST,'def_country',TYPE_INT,0,0);
 			if (!empty($input['searchable']) && !empty($input['search_type'])) {
 				$search_field=new $input['search_type'](array(),true);
 				$temp=$search_field->admin_processor();

@@ -344,7 +344,7 @@ class field_select extends iprofile_field {
 			if ($this->config['parent_class']=='field_select') {
 				$myreturn=" AND `".$this->config['dbfield']."`=".$this->value;
 			} elseif ($this->config['parent_class']=='field_mchecks') {
-				$myreturn=' AND `'.$this->config['dbfield']."` LIKE '%|".$this->value.'|%';
+				$myreturn=' AND `'.$this->config['dbfield']."` LIKE '%|".$this->value."|%'";
 			}
 		}
 		return $myreturn;
