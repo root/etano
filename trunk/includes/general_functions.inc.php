@@ -291,7 +291,12 @@ function queue_or_send_message($mess_array,$force_send=false) {
 				include_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/mailbox.inc.php';
 				$mess_array['_user_other']=&$GLOBALS['_lang'][135];
 			}
-			send_template_email($receiver_email,$mess_array['subject'],'new_message.html',$def_skin,$mess_array);
+			$query="SELECT `email` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."`='".$mess_array['fk_user_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				$receiver_email=mysql_result($res,0,0);
+				send_template_email($receiver_email,$mess_array['subject'],'new_message.html',$def_skin,$mess_array);
+			}
 		}
 	}
 }
