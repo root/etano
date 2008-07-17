@@ -54,7 +54,7 @@ if (!empty($totalrows)) {
 
 	$filtered_senders=array();
 	if (!empty($field_values[FILTER_SENDER]['value'])) {
-		$query="SELECT `".USER_ACCOUNT_ID."` as `user_id`,`".USER_ACCOUNT_USER."` as `user` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_ID."` IN ('".join("','",$field_values[FILTER_SENDER]['value'])."')";
+		$query="SELECT `fk_user_id` as `user_id`,`_user` as `user` FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id` IN ('".join("','",$field_values[FILTER_SENDER]['value'])."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		while ($rsrow=mysql_fetch_row($res)) {
 			$filtered_senders[$rsrow[0]]=$rsrow[1];
