@@ -4,7 +4,7 @@ $_on_after_approve[]='on_after_approve_comment';
 
 // the calling script MUST HAVE $comment_ids array and $comment_type as GLOBALS
 function on_after_approve_comment() {
-	global $dbtable_prefix,$comment_ids,$comment_type;
+	global $dbtable_prefix,$comment_ids,$comment_type,$__field2format;
 	switch ($comment_type) {
 
 		case 'blog':
