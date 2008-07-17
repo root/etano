@@ -40,23 +40,27 @@ if (isset($_GET['st'])) {
 	switch ($_GET['st']) {
 
 		case 'new':
+			$where.=" AND a.`is_private`=0";
 			//$orderby="a.`date_posted` DESC";	// default
 			$tplvars['page_title']=$GLOBALS['_lang'][144];
 			break;
 
 		case 'views':
+			$where.=" AND a.`is_private`=0";
 			$input['acclevel_code']='search_photo';
 			$orderby="a.`stat_views` DESC";
 			$tplvars['page_title']=$GLOBALS['_lang'][145];
 			break;
 
 		case 'vote':
+			$where.=" AND a.`is_private`=0";
 			$input['acclevel_code']='search_photo';
 			$orderby="a.`stat_votes_total` DESC";
 			$tplvars['page_title']=$GLOBALS['_lang'][146];
 			break;
 
 		case 'comm':
+			$where.=" AND a.`is_private`=0";
 			$input['acclevel_code']='search_photo';
 			$orderby="a.`stat_comments` DESC";
 			$tplvars['page_title']=$GLOBALS['_lang'][147];
