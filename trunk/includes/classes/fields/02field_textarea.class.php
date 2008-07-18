@@ -40,7 +40,11 @@ class field_textarea extends iprofile_field {
 	}
 
 	function edit($tabindex=1) {
-		$myreturn='<textarea name="'.$this->config['dbfield'].'" id="'.$this->config['dbfield'].'" rows="" cols="" tabindex="'.$tabindex.'">'.sanitize_and_format($this->value,TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]).'</textarea>';
+		$myreturn='<textarea name="'.$this->config['dbfield'].'" id="'.$this->config['dbfield'].'" rows="" cols="" tabindex="'.$tabindex.'"';
+		if (!empty($this->config['use_bbcode'])) {
+			$myreturn.=' class="sco_bbcode"';
+		}
+		$myreturn.='>'.sanitize_and_format($this->value,TYPE_STRING,$GLOBALS['__field2format'][TEXT_DB2EDIT]).'</textarea>';
 		if (!empty($this->config['ta_len'])) {
 			$myreturn.='<p class="comment char_counter">'.$GLOBALS['_lang'][125].' <span id="'.$this->config['dbfield'].'_chars">'.((int)$this->config['ta_len']-strlen($this->value)).'</span></p>';
 		}
@@ -188,9 +192,6 @@ class field_textarea extends iprofile_field {
 					return false;
 				}
 			});';
-		}
-		if (!empty($this->config['use_bbcode'])) {
-			$myreturn.='$(\'#'.$this->config['dbfield'].'\').sco_bbcode();';
 		}
 		return $myreturn;
 	}

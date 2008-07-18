@@ -43,7 +43,7 @@
 	<input type="hidden" name="comment_id" id="comment_id" value="{output.comment_id}" />
 	<input type="hidden" name="fk_parent_id" value="{output.photo_id}" />
 	<input type="hidden" name="return" value="{output.return2me}" />
-	<a name="postarea" id="postarea"></a><textarea rows="" cols="" id="comment" name="comment" tabindex="1">{output.comment}</textarea>
+	<a name="postarea" id="postarea"></a><textarea rows="" cols="" id="comment" name="comment" tabindex="1" class="sco_bbcode">{output.comment}</textarea>
 </fieldset>
 <!--opt name="!tplvars.user_logged"-->
 <!--opt name="output.use_captcha"-->
@@ -85,9 +85,6 @@
 <!--/opt name="output.allow_rating"-->
 <script type="text/javascript">
 	item_id={output.photo_id};
-<!--opt name="output.bbcode_comments"-->
-	$('#comment').sco_bbcode();
-<!--/opt name="output.bbcode_comments"-->
 	var lang=[];
 	lang['256']='{output.lang_256}';
 </script>
