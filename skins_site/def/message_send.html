@@ -7,7 +7,7 @@
 	<!--opt name="output.flirt_reply"--><p><a class="content-link link_flirt" href="{tplvars.relative_url}flirt_send.php?to_id={output.fk_user_id}&amp;ft=1&amp;return={output.return}">Reply with a flirt instead</a></p><!--/opt name="output.flirt_reply"-->
 </fieldset>
 <fieldset>
-	<textarea name="message_body" id="message_body" cols="" rows="" tabindex="2">{output.message_body}</textarea>
+	<textarea name="message_body" id="message_body" cols="" rows="" tabindex="2" class="sco_bbcode">{output.message_body}</textarea>
 </fieldset>
 <fieldset class="controls">
 	<p><a class="content-link plain thickbox" href="{tplvars.relative_url}popup_use_tpl.php?mail_id={output.mail_id}&amp;return={output.return}&amp;keepThis=true&amp;TB_iframe=true&amp;height=500&amp;width=750" id="popup_use_tpl">Use a saved message</a></p>
@@ -22,8 +22,5 @@
 <script type="text/javascript" src="{tplvars.relative_url}js/bbcode.js?v={tplvars.js_lib_v}"></script>
 <!--/opt name="output.bbcode_message"-->
 <script type="text/javascript">
-<!--opt name="output.bbcode_message"-->
-	$('#message_body').sco_bbcode();
-<!--/opt name="output.bbcode_message"-->
 	var lang=new Array('{output.lang_263}','{output.lang_264}','{output.lang_196}','{output.lang_197}');
 </script>
