@@ -1,3 +1,7 @@
+$(function() {
+	$('.sco_bbcode').sco_bbcode();
+});
+
 jQuery.fn.sco_bbcode = function() {
 	var ta=$(this);
 	var taz=ta[0];
