@@ -18,7 +18,7 @@ function send_queue_message() {
 	$emails=array();
 	$mail_ids=array();
 	$receivers=array();
-	$query="SELECT a.`mail_id`,a.`fk_user_id`,a.`fk_user_id_other`,a.`_user_other`,a.`subject`,a.`message_body`,a.`date_sent`,a.`message_type`,b.`email`,b.`".USER_ACCOUNT_USER."` as `user` FROM `{$dbtable_prefix}queue_message` a,`".USER_ACCOUNTS_TABLE."` b WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` ORDER BY a.`mail_id` ASC LIMIT $limit";
+	$query="SELECT a.`mail_id`,a.`fk_user_id`,a.`fk_user_id_other`,a.`_user_other`,a.`subject`,a.`message_body`,a.`date_sent`,a.`message_type`,b.`email`,c.`_user` as `user` FROM `{$dbtable_prefix}queue_message` a,`".USER_ACCOUNTS_TABLE."` b,`{$dbtable_prefix}user_profiles` c WHERE a.`fk_user_id`=b.`".USER_ACCOUNT_ID."` AND a.`fk_user_id`=c.`fk_user_id` ORDER BY a.`mail_id` ASC LIMIT $limit";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		while ($rsrow=mysql_fetch_assoc($res)) {
