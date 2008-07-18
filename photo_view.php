@@ -30,7 +30,10 @@ if (!empty($photo_id)) {
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$output=array_merge($output,mysql_fetch_assoc($res));
-		$is_friend=is_network_member($output['fk_user_id'],$_SESSION[_LICENSE_KEY_]['user']['user_id'],NET_FRIENDS);
+		$is_friend=false;
+		if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
+			$is_friend=is_network_member($output['fk_user_id'],$_SESSION[_LICENSE_KEY_]['user']['user_id'],NET_FRIENDS);
+		}
 		if (!empty($output['is_private']) && (empty($_SESSION[_LICENSE_KEY_]['user']['user_id']) || ($output['fk_user_id']!=$_SESSION[_LICENSE_KEY_]['user']['user_id'] && !$is_friend))) {
 			$topass['message']['type']=MESSAGE_ERROR;
 			$topass['message']['text']=sprintf($GLOBALS['_lang'][277],_BASEURL_.'/profile.php?uid='.$output['fk_user_id'],get_user_by_userid($output['fk_user_id']));
