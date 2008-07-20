@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	for ($i=0;isset($my_fields[$i]);++$i) {
 		$field=&$_pfields[$my_fields[$i]];
-		$field->set_value($_POST);
+		$field->set_value($_POST,true);
 		if (true!==($temp=$field->validation_server())) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;

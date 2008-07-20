@@ -132,7 +132,7 @@ if (!$got_from_cache) {
 
 	for ($i=0;isset($search_fields[$i]);++$i) {
 		$field=&$_pfields[$search_fields[$i]];
-		$field->search()->set_value($_GET);
+		$field->search()->set_value($_GET,true);
 		$where.=$field->search()->query_search();
 		$input=array_merge($input,$field->search()->get_value(true));
 	}

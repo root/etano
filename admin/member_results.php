@@ -109,7 +109,7 @@ if (isset($input['album'])) {	// only members with photo album
 // continue building the where clause of the query based on the input values we have.
 for ($i=0;isset($basic_search_fields[$i]);++$i) {
 	$field=&$_pfields[$basic_search_fields[$i]];
-	$field->search()->set_value($_GET);
+	$field->search()->set_value($_GET,true);
 	$where.=$field->search()->query_search();
 	$input=array_merge($input,$field->search()->get_value(true));
 } // the for() that constructs the where

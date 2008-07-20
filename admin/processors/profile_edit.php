@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$ch=0;
 	$texts=array();
 	foreach ($_pfields as $field_id=>&$field) {
-		$field->set_value($_POST);
+		$field->set_value($_POST,true);
 		// check for input errors
 		if (true!==($temp=$field->validation_server())) {
 			$error=true;

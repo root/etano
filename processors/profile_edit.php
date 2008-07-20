@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		foreach ($_pcats[$pcat_id]['fields'] as $field_id) {
 			$field=&$_pfields[$field_id];
 			if ($field->config['editable']) {
-				$field->set_value($_POST);
+				$field->set_value($_POST,true);
 				// check for input errors
 				if (true!==($temp=$field->validation_server())) {
 					$error=true;
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$is_update=true;
 				$rsrow=mysql_fetch_assoc($res);
 				for ($i=0;isset($changes_status[$i]);++$i) {
-					$old_field=$_pfields[$changes_status[$i]];
+					$old_field=(version_compare(PHP_VERSION,'5.0')==-1) ? $_pfields[$changes_status[$i]] : clone $_pfields[$changes_status[$i]];
 					$old_field->set_value($rsrow,false);
 					if ($old_field->get_value()!=$_pfields[$changes_status[$i]]->get_value()) {
 						$force_pending=true;		// if new!=old need to set profile status to pending.
