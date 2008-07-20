@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$log['ip']=sprintf('%u',ip2long($_SERVER['REMOTE_ADDR']));
 		log_user_action($log);
 		rate_limiter($log);
-		$query="SELECT a.`".USER_ACCOUNT_ID."` as `user_id`,a.`".USER_ACCOUNT_USER."` as `user`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity`,a.`email`,b.`status` as `pstat` FROM `".USER_ACCOUNTS_TABLE."` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`".USER_ACCOUNT_ID."`=b.`fk_user_id` WHERE a.`".USER_ACCOUNT_USER."`='$user' AND a.`".USER_ACCOUNT_PASS."`=".PASSWORD_ENC_FUNC."('$pass')";
+		$query="SELECT a.`".USER_ACCOUNT_ID."` as `user_id`,b.`_user` as `user`,a.`status`,a.`membership`,UNIX_TIMESTAMP(a.`last_activity`) as `last_activity`,a.`email`,b.`status` as `pstat` FROM `".USER_ACCOUNTS_TABLE."` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`".USER_ACCOUNT_ID."`=b.`fk_user_id` WHERE a.`".USER_ACCOUNT_USER."`='$user' AND a.`".USER_ACCOUNT_PASS."`=".PASSWORD_ENC_FUNC."('$pass')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		if (mysql_num_rows($res)) {
 			$user=mysql_fetch_assoc($res);
