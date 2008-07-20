@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       admin/processors/flirts_addedit.php
+File:                       admin/processors/comment_addedit.php
 $Revision$
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
