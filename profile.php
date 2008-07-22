@@ -69,6 +69,7 @@ if (!empty($output)) {
 	require_once _BASEPATH_.'/includes/classes/user_cache.class.php';
 	$user_cache=new user_cache();
 
+	$tpl->set_file('no_access','static/pcat_no_access.html');
 	$j=0;
 	foreach ($_pcats as $pcat_id=>$pcat) {
 		if (((int)$pcat['access_level']) & ((int)$_SESSION[_LICENSE_KEY_]['user']['membership'])) {
@@ -82,7 +83,11 @@ if (!empty($output)) {
 			}
 		} else {
 			// not allowed to view this member info
-	// maybe we should say something here like "upgrade your membership to view this info"...
+			// maybe we should say something here like "upgrade your membership to view this info"...
+			$tpl->set_var('temp',$pcat);
+			$temp=$tpl->process('','no_access');
+			$categs[$j]['content']=$temp;
+			++$j;
 		}
 	}
 	$categs[count($categs)-1]['class']='last';
