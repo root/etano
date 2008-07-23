@@ -6,24 +6,39 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
+  <loc>http://www.datemill.com/blogpost/52/version_1_13_of_our_networking_script_is_released</loc>
+  <priority>0.4</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/51/a_review_of_the_previous_weeks</loc>
+  <priority>0.4</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>http://www.datemill.com/blogpost/50/reaching_the_critical_mass_with_your_site</loc>
+  <priority>0.4</priority>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
   <loc>http://www.datemill.com/blogpost/49/upcoming_features_for_your_community</loc>
-  <priority>0.3</priority>
-  <changefreq>daily</changefreq>
+  <priority>0.4</priority>
+  <changefreq>monthly</changefreq>
 </url>
 <url>
   <loc>http://www.datemill.com/blogpost/48/video_support_for_etano_community_builder</loc>
-  <priority>0.3</priority>
-  <changefreq>daily</changefreq>
+  <priority>0.4</priority>
+  <changefreq>monthly</changefreq>
 </url>
 <url>
   <loc>http://www.datemill.com/blogpost/47/google_launches_an_web_application_platform</loc>
-  <priority>0.3</priority>
-  <changefreq>daily</changefreq>
+  <priority>0.4</priority>
+  <changefreq>monthly</changefreq>
 </url>
 <url>
   <loc>http://www.datemill.com/blogpost/46/3_million_cities_db_integration_with_etano_community_builder</loc>
   <priority>0.4</priority>
-  <changefreq>weekly</changefreq>
+  <changefreq>monthly</changefreq>
 </url>
 <url>
   <loc>http://www.datemill.com/blogpost/45/a_script_that_bad_that_we_won_t_create_an_integration_bridge_for_it</loc>

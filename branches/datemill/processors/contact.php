@@ -73,8 +73,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$input['email']=mysql_result($res,0,0);
 		}
-		require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
-		$mail=new PHPMailer();
+		require_once _BASEPATH_.'/includes/classes/gmailer.class.php';
+		$mail=new GmailMailer();
+		$mail->Username='dancaragea@gmail.com';
+		$mail->Password='diskedit';
 		$mail->IsHTML(false);
 		$mail->From=$input['email'];
 		$mail->Sender=$input['email'];
@@ -90,17 +92,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		} else {
 			$mail->LE="\n";
 		}
-		$mail->IsSMTP();
-//		$mail->SMTPDebug=true;
-		$mail->Host='mail.oaki.ro:587';
-		$mail->SMTPAuth=true;
-		$mail->Username='dan@sco.ro';
-		$mail->Password='diskedit';
 
 		$mail->AddAddress($config['mail_from']);
 		$mail->Subject=$input['subject'];
 		$mail->Body=$input['message_body'];
-		if (!$mail->Send()) {
+		if (!$mail->send_email()) {
 			$myreturn=false;
 			$topass['message']['type']=MESSAGE_ERROR;
 			$topass['message']['text']='Your message could not be sent: '.$mail->ErrorInfo;
