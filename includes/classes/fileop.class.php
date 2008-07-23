@@ -219,11 +219,11 @@ class fileop {
 	}
 
 
-	function mkdir($fullpath) {
+	function mkdir($fullpath,$mask=0755) {
 		$myreturn=false;
 		if (!is_dir($fullpath)) {
 			if ($this->op_mode=='disk') {
-				$myreturn=@mkdir($fullpath,0755);
+				$myreturn=@mkdir($fullpath,$mask);
 			} elseif ($this->op_mode=='ftp') {
 				$ftp_fullpath=str_replace(_BASEPATH_.'/',_FTPPATH_,$fullpath);
 				$old_de=ini_get('display_errors');
