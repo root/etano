@@ -12,7 +12,7 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 define('CACHE_LIMITER','private');
-require _BASEPATH_.'/includes/common.inc.php';
+require 'includes/common.inc.php';
 require _BASEPATH_.'/includes/user_functions.inc.php';
 require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/email_change.inc.php';
 
