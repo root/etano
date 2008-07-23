@@ -12,6 +12,7 @@ dl.photo_details {
 
 dl.photo_details dd {
 	float: left;
+	width: 500px;
 }
 
 dl.photo_details dd.actions {
