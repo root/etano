@@ -46,6 +46,12 @@ if (empty($input['net_id'])) {
 	$topass['message']['type']=MESSAGE_ERROR;
 	$topass['message']['text']=$GLOBALS['_lang'][82];
 }
+$other_user_name=get_user_by_userid($input['uid']);
+if (is_network_member($_SESSION[_LICENSE_KEY_]['user']['user_id'],$input['uid'],$input['net_id'])) {
+	$error=true;
+	$topass['message']['type']=MESSAGE_ERROR;
+	$topass['message']['text']=sprintf($GLOBALS['_lang'][280],$other_user_name);
+}
 
 if (!$error) {
 	$query="SELECT `is_bidi` FROM `{$dbtable_prefix}networks` WHERE `net_id`=".$input['net_id'];
@@ -86,12 +92,12 @@ if (!$error) {
 			$query="UPDATE `{$dbtable_prefix}user_networks` SET `nconn_status`=1 WHERE `nconn_id`=$force_connect";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		} elseif ($input['net_id']==NET_BLOCK) {
-			add_message_filter(array('filter_type'=>FILTER_SENDER,'fk_user_id'=>$_SESSION[_LICENSE_KEY_]['user']['user_id'],'field_value'=>$input['uid'],'fk_folder_id'=>FOLDER_SPAMBOX));
+			add_message_filter(array('filter_type'=>FILTER_SENDER,'fk_user_id'=>$_SESSION[_LICENSE_KEY_]['user']['user_id'],'field_value'=>$input['uid'],'fk_folder_id'=>FOLDER_TRASH));
 			add_member_score($input['uid'],'block_member');
 		}
 		$topass['message']['type']=MESSAGE_INFO;
 		if (!empty($is_bidi) && empty($force_connect)) {
-			$topass['message']['text']=sprintf($GLOBALS['_lang'][83],get_user_by_userid($input['uid']));
+			$topass['message']['text']=sprintf($GLOBALS['_lang'][83],$other_user_name);
 			$request['fk_user_id']=$input['uid'];
 			$request['fk_user_id_other']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 			$request['_user_other']=sanitize_and_format($_SESSION[_LICENSE_KEY_]['user']['user'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
