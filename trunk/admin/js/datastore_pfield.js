@@ -18,7 +18,7 @@ if (!Array.prototype.indexOf) {
 Etano = new function(){};
 
 Etano.record = function(detail) {
-	this.value = '';
+	this.valo = '';
 	this.def_value = 0;
 	this.search_value = 0;
 	this.accval_id = 0;
@@ -26,15 +26,15 @@ Etano.record = function(detail) {
 	this.is_dirty = true;
 
 	this.get = function() {
-		return {accval_id : this.accval_id, value: this.value, after: this.after, def_value: this.def_value, search_value: this.search_value};
+		return {accval_id : this.accval_id, valo: this.valo, after: this.after, def_value: this.def_value, search_value: this.search_value};
 	};
 
 	this.set = function(detail) {
 		if (typeof detail.accval_id != 'undefined') {
 			this.accval_id = detail.accval_id;
 		}
-		if (typeof detail.value != 'undefined') {
-			this.value = detail.value;
+		if (typeof detail.valo != 'undefined') {
+			this.valo = detail.valo;
 		}
 		if (typeof detail.after != 'undefined') {
 			this.after = detail.after;
@@ -144,46 +144,48 @@ Etano.accvals = function(details) {
 	this.render = function(parentId) {
 		var towrite='<ul class="accvals_container">'+"\n";
 		var i=0;
-		for (var idx in this.container) {
-			towrite+='<li class="accvals_row';
-			if (i==0) {
-				towrite+=' first';
+		for (var idx=0;idx<=this.container.length;idx++) {
+			if (typeof this.container[idx] != 'undefined') {
+				towrite+='<li class="accvals_row';
+				if (i==0) {
+					towrite+=' first';
+				}
+				towrite+='">'+"\n";
+				towrite+=this.container[idx].valo.replace(/</g,'&lt;').replace(/>/g,'&gt;')+"\n";
+				towrite+='<span class="tools">'+"\n";
+				towrite+='<a href="#" id="edit_'+idx+'" class="accvals_edit icon_link icon_edit" title="Edit value">Edit</a> '+"\n";
+				towrite+='<a href="#" id="add_'+idx+'" class="accvals_add icon_link icon_add" title="Add new value after this one">Add after</a> '+"\n";
+				towrite+='<a href="#" id="del_'+idx+'" class="accvals_del icon_link icon_del" title="Delete value">Delete</a> '+"\n";
+				if (this.defval_type == 'radio') {
+					towrite+='<input type="radio" class="radio defval" id="defval_'+idx+'" name="default_value" title="Click to make this the default value for edit"';
+					if (this.container[idx].def_value == 1) {
+						towrite+=' checked="checked"';
+					}
+					towrite+='/>';
+				} else if (this.defval_type == 'checks') {
+					towrite+='<input type="checkbox" class="check defval" id="defval_'+idx+'" title="Click to make this one of the default values for edit"';
+					if (this.container[idx].def_value == 1) {
+						towrite+=' checked="checked"';
+					}
+					towrite+='/>';
+				}
+				if (this.searchval_type == 'radio') {
+					towrite+='<input type="radio" class="radio searchval" id="searchval_'+idx+'" name="search_value" title="Click to make this the default value in searches"';
+					if (this.container[idx].search_value == 1) {
+						towrite+=' checked="checked"';
+					}
+					towrite+='/>';
+				} else if (this.searchval_type == 'checks') {
+					towrite+='<input type="checkbox" class="check searchval" id="searchval_'+idx+'" title="Click to make this one of the default values in searches"';
+					if (this.container[idx].search_value == 1) {
+						towrite+=' checked="checked"';
+					}
+					towrite+='/>';
+				}
+				towrite+='</span>'+"\n";
+				towrite+='</li>'+"\n";
+				i++;
 			}
-			towrite+='">'+"\n";
-			towrite+=this.container[idx].value.replace(/</g,'&lt;').replace(/>/g,'&gt;')+"\n";
-			towrite+='<span class="tools">'+"\n";
-			towrite+='<a href="#" id="edit_'+idx+'" class="accvals_edit icon_link icon_edit" title="Edit value">Edit</a> '+"\n";
-			towrite+='<a href="#" id="add_'+idx+'" class="accvals_add icon_link icon_add" title="Add new value after this one">Add after</a> '+"\n";
-			towrite+='<a href="#" id="del_'+idx+'" class="accvals_del icon_link icon_del" title="Delete value">Delete</a> '+"\n";
-			if (this.defval_type == 'radio') {
-				towrite+='<input type="radio" class="radio defval" id="defval_'+idx+'" name="default_value" title="Click to make this the default value for edit"';
-				if (this.container[idx].def_value == 1) {
-					towrite+=' checked="checked"';
-				}
-				towrite+='/>';
-			} else if (this.defval_type == 'checks') {
-				towrite+='<input type="checkbox" class="check defval" id="defval_'+idx+'" title="Click to make this one of the default values for edit"';
-				if (this.container[idx].def_value == 1) {
-					towrite+=' checked="checked"';
-				}
-				towrite+='/>';
-			}
-			if (this.searchval_type == 'radio') {
-				towrite+='<input type="radio" class="radio searchval" id="searchval_'+idx+'" name="search_value" title="Click to make this the default value in searches"';
-				if (this.container[idx].search_value == 1) {
-					towrite+=' checked="checked"';
-				}
-				towrite+='/>';
-			} else if (this.searchval_type == 'checks') {
-				towrite+='<input type="checkbox" class="check searchval" id="searchval_'+idx+'" title="Click to make this one of the default values in searches"';
-				if (this.container[idx].search_value == 1) {
-					towrite+=' checked="checked"';
-				}
-				towrite+='/>';
-			}
-			towrite+='</span>'+"\n";
-			towrite+='</li>'+"\n";
-			i++;
 		}
 		towrite+='</ul>'+"\n";
 
@@ -194,13 +196,13 @@ Etano.accvals = function(details) {
 		var towrite='';
 		var temp=[];
 		for (i in this.new_fields) {
-			temp.push({'value':this.new_fields[i].value,'after':this.new_fields[i].after,'def_value':this.new_fields[i].def_value,'search_value':this.new_fields[i].search_value});
+			temp.push({'valo':this.new_fields[i].valo,'after':this.new_fields[i].after,'def_value':this.new_fields[i].def_value,'search_value':this.new_fields[i].search_value});
 		}
 		towrite+='<input type="hidden" name="accvals_new" value="'+escape(JSON.encode(temp))+'" />'+"\n";
 
 		temp=[];
 		for (i in this.changed_fields) {
-			temp.push({'value':this.changed_fields[i].value,'accval_id':this.changed_fields[i].accval_id,'def_value':this.changed_fields[i].def_value,'search_value':this.changed_fields[i].search_value});
+			temp.push({'valo':this.changed_fields[i].valo,'accval_id':this.changed_fields[i].accval_id,'def_value':this.changed_fields[i].def_value,'search_value':this.changed_fields[i].search_value});
 		}
 		towrite+='<input type="hidden" name="accvals_changed" value="'+escape(JSON.encode(temp))+'" />'+"\n";
 
@@ -219,9 +221,9 @@ Etano.accvals = function(details) {
 	 *	@param val {mixed} the value to match the property against
 	 *	@returns {int} the index where the property was found or -1 if no match.
 	 */
-	this.prop_find = function(prop, val) {
+	this.prop_find = function(prop, valo) {
 		for (var idx in this.container) {
-			if (typeof this.container[idx] == 'record' && typeof this.container[idx][prop] != 'undefined' && this.container[idx][prop] == val) {
+			if (typeof this.container[idx] == 'record' && typeof this.container[idx][prop] != 'undefined' && this.container[idx][prop] == valo) {
 				return idx;
 			}
 		}
@@ -301,7 +303,7 @@ Etano.accvals = function(details) {
 	}
 
 	if (typeof details != 'undefined') {
-		for (var idx in details) {
+		for (var idx=0;idx<details.length;idx++) {
 			this.add( -1, details[idx] );
 		}
 		this.clear_dirty();
