@@ -17,6 +17,15 @@ require _BASEPATH_.'/includes/tables/profile_fields.inc.php';
 require _BASEPATH_.'/includes/classes/services_json.class.php';
 allow_dept(DEPT_ADMIN);
 
+if ($dh=opendir(_BASEPATH_.'/includes/classes/fields')) {
+	while (($file=readdir($dh)) !== false) {
+		if (substr($file,-3)=='php') {
+			require_once _BASEPATH_.'/includes/classes/fields/'.$file;
+		}
+	}
+	closedir($dh);
+}
+
 $tpl=new phemplate('skin/','remove_nonjs');
 
 $output=$profile_fields_default['defaults'];
