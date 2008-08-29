@@ -105,7 +105,7 @@ if (!empty($output['search_md5'])) {
 		for ($i=0;$i<mysql_num_rows($res);++$i) {
 			$post_ids[]=mysql_result($res,$i,0);
 		}
-		$serialized_input=serialize($input);
+		$serialized_input=sanitize_and_format(serialize($input),TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 		$output['search_md5']=md5($serialized_input);
 		$query="INSERT IGNORE INTO `{$dbtable_prefix}site_searches` SET `search_md5`='".$output['search_md5']."',`search_type`=".SEARCH_BLOG.",`search`='$serialized_input',`results`='".join(',',$post_ids)."'";
 		if (!empty($_SESSION[_LICENSE_KEY_]['user']['user_id'])) {
