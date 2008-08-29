@@ -24,10 +24,10 @@ $(function() {
 	showhide('searchable','custom_config_search');
 	showhide('at_registration','row_reg_page');
 	$('#label').focus();
-	$('#at_registration').bind('change',function() {
+	$('#at_registration').bind('click',function() {
 		showhide('at_registration','row_reg_page');
 	});
-	$('#searchable').bind('change',function() {
+	$('#searchable').bind('click',function() {
 		if ($('#search_type')[0].length>0) {
 			showhide('searchable','row_st');
 		}
