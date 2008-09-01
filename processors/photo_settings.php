@@ -13,8 +13,13 @@ Support at:                 http://www.datemill.com/forum
 
 require '../includes/common.inc.php';
 require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/includes/tables/user_photos.inc.php';
 require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 check_login_member('upload_photos');
+
+if (is_file(_BASEPATH_.'/events/processors/photo_settings.php')) {
+	include _BASEPATH_.'/events/processors/photo_settings.php';
+}
 
 $error=false;
 $qs='';
@@ -24,13 +29,18 @@ $nextpage='my_photos.php';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$input=array();
 // get the input we need and sanitize it
-	$input['is_private']=sanitize_and_format_gpc($_POST,'is_private',TYPE_INT,0,0);
-	$input['allow_comments']=sanitize_and_format_gpc($_POST,'allow_comments',TYPE_INT,0,0);
-	$input['is_main']=sanitize_and_format_gpc($_POST,'is_main',TYPE_INT,0,0);
-	$input['caption']=sanitize_and_format_gpc($_POST,'caption',TYPE_STRING,$__field2format[FIELD_TEXTFIELD],array());
+	foreach ($user_photos_default['types'] as $k=>$v) {
+		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],array());
+	}
 	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
+	}
+
+	if (isset($_on_after_post)) {
+		for ($i=0;isset($_on_after_post[$i]);++$i) {
+			call_user_func($_on_after_post[$i]);
+		}
 	}
 
 	if (!$error) {
@@ -62,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_main`=0 WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 // if photo approvals are automatic then we can make this photo the main photo now. Otherwise it will have to be done upon approval!!!
-			if (empty($config['manual_photo_approval']) || $statuses[$input['is_main']]==STAT_APPROVED) {
+			if (empty($config['manual_photo_approval']) || (isset($statuses[$input['is_main']]) && $statuses[$input['is_main']]==STAT_APPROVED)) {
 				$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='".$photos[$input['is_main']]."',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				// this sucks...the code below is taken from on_after_approve_photo(). In the future, when new functionality that depends on the main photo will be added, we'll have to change the code there and here too.
@@ -94,7 +104,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			$query.=" WHERE `photo_id`=$photo_id AND `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+			if (isset($_on_before_update)) {
+				for ($i=0;isset($_on_before_update[$i]);++$i) {
+					call_user_func($_on_before_update[$i]);
+				}
+			}
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (isset($_on_after_update)) {
+				for ($i=0;isset($_on_after_update[$i]);++$i) {
+					call_user_func($_on_after_update[$i]);
+				}
+			}
 		}
 		$topass['message']['type']=MESSAGE_INFO;
 		$topass['message']['text']=$GLOBALS['_lang'][92];
