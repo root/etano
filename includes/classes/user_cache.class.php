@@ -17,8 +17,11 @@ class user_cache {
 	var $skin='';
 	var $cache=null;
 
-	function user_cache() {
-		$this->skin=get_my_skin();
+	function user_cache($skin='') {
+		if (empty($skin)) {
+			$skin=get_my_skin();
+		}
+		$this->skin=$skin;
 		$this->cache=new Cache_Lite($GLOBALS['_cache_config']);
 	}
 
