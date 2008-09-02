@@ -10,3 +10,4 @@ $GLOBALS['_lang'][86]='%1$s has been added to your %2$s.';
 $GLOBALS['_lang'][87]='%1$s has been removed from your %2$s.';
 $GLOBALS['_lang'][226]='Friendship Requests';
 $GLOBALS['_lang'][240]='How I am connected';
+$GLOBALS['_lang'][280]='You\'re already connected to %1$s';
