@@ -45,7 +45,7 @@ function search_results($search,$my_membership=1) {
 			case 'adv':
 				$input['acclevel_code']='search_advanced';
 				// for advanced search we get all fields
-				foreach ($_pfields as $field_id=>&$field) {
+				foreach ($_pfields as $field_id=>$field) {
 					if (!empty($field->config['searchable'])) {
 						$search_fields[]=$field_id;
 					}
@@ -105,10 +105,10 @@ function search_results($search,$my_membership=1) {
 	}
 	if (allow_at_level($input['acclevel_code'],$my_membership)) {
 		for ($i=0;isset($search_fields[$i]);++$i) {
-			$field=&$_pfields[$search_fields[$i]];
-			$field->search()->set_value($search);
-			$where.=$field->search()->query_search();
-			$input=array_merge($input,$field->search()->get_value(true));
+			$field=&$_pfields[$search_fields[$i]]->search();
+			$field->set_value($search);
+			$where.=$field->query_search();
+			$input=array_merge($input,$field->get_value(true));
 		}
 
 		if (!empty($where)) {	// if $where is empty then a condition above prevents us from searching.

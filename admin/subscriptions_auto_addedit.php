@@ -38,14 +38,14 @@ if (empty($subscriptions_auto['dbfield'])) {
 	$subscriptions_auto['to_members_2']='checked="checked"';
 }
 $dbfields=array();
-foreach ($_pfields as $pfield_id=>&$pfield) {
+foreach ($_pfields as $pfield_id=>$pfield) {
 	if (get_class($pfield)=='field_select') {
 		$dbfields[$pfield['dbfield']]=$pfield->config['label'].' ('.$pfield->config['dbfield'].')';
 	}
 }
 if (!empty($subscriptions_auto['dbfield'])) {
 	$accepted_values=array();
-	foreach ($_pfields as $pfield_id=>&$pfield) {
+	foreach ($_pfields as $pfield_id=>$pfield) {
 		if ($pfield->config['dbfield']==$subscriptions_auto['dbfield']) {
 			$accepted_values=$pfield->config['accepted_values'];
 		}

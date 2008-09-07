@@ -56,7 +56,7 @@ class field_textfield extends iprofile_field {
 				unset($new_config['default_value']);
 			}
 			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
-			$new_config['parent_class']=get_class();
+			$new_config['parent_class']=get_class($this);
 			$this->search=new $class_name($new_config,true);
 //			$temp=array($this->config['dbfield']=>$this->value);
 //			$this->search->set_value($temp,false);

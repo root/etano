@@ -44,7 +44,7 @@ switch ($output['filter_type']) {
 		break;
 
 	case FILTER_SENDER_PROFILE:
-		foreach ($_pfields as $k=>&$field) {
+		foreach ($_pfields as $k=>$field) {
 			if ($field->config['dbfield']==$output['field']) {
 				$output['field_label']=sprintf($GLOBALS['_lang'][118],$field->config['label']);
 				$output['field_value']='<select name="field_value" id="field_value">'.vector2options($field->config['accepted_values'],$output['field_value'],array(0)).'</select>';

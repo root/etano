@@ -25,12 +25,12 @@ $output['membership']=dbtable2options("`{$dbtable_prefix}memberships`",'`m_value
 $loop=array();
 $s=0;
 for ($i=0;isset($basic_search_fields[$i]);++$i) {
-	$field=&$_pfields[$basic_search_fields[$i]];
-	if (!empty($field->config['search_type'])) {
-		$loop[]=array('label'=>$field->search()->config['label'],
-						'dbfield'=>$field->search()->config['dbfield'],
-						'field'=>$field->search()->edit($i+4),
-						'js'=>$field->search()->edit_js()
+	if (!empty($_pfields[$basic_search_fields[$i]]->config['search_type'])) {
+		$field=$_pfields[$basic_search_fields[$i]]->search();
+		$loop[]=array('label'=>$field->config['label'],
+						'dbfield'=>$field->config['dbfield'],
+						'field'=>$field->edit($i+4),
+						'js'=>$field->edit_js()
 					);
 	}
 }

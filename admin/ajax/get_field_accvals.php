@@ -19,7 +19,7 @@ $output='';
 if (!empty($_POST['field'])) {
 	$dbfield=$_POST['field'];
 	$accepted_values=array();
-	foreach ($_pfields as $pfield_id=>&$pfield) {
+	foreach ($_pfields as $pfield_id=>$pfield) {
 		if ($pfield->config['dbfield']==$dbfield) {
 			$accepted_values=$pfield->config['accepted_values'];
 		}

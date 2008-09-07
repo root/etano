@@ -32,15 +32,15 @@ if (isset($_SESSION['topass']['input'])) {
 	$uid=(int)$_GET['uid'];
 
 	$query='SELECT `fk_user_id`,`_user`';
-	foreach ($_pfields as $field_id=>&$field) {
+	foreach ($_pfields as $field_id=>$field) {
 		$query.=','.$field->query_select();
 	}
 	$query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=$uid";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	if (mysql_num_rows($res)) {
 		$user_details=mysql_fetch_assoc($res);
-		foreach ($_pfields as $field_id=>&$field) {
-			$field->set_value($user_details,false);
+		foreach ($_pfields as $field_id=>$field) {
+			$_pfields[$field_id]->set_value($user_details,false);
 		}
 		$output['fk_user_id']=$user_details['fk_user_id'];
 		$output['_user']=$user_details['_user'];

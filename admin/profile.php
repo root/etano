@@ -50,7 +50,7 @@ $config=get_site_option(array('datetime_format','time_offset'),'def_user_prefs')
 $categs=array();
 $account=array();
 $query="SELECT `fk_user_id`,`_photo`,`_user`,`alt_url`,`rad_longitude`,`rad_latitude`,`score`,`status`,`reject_reason`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`del`";
-foreach ($_pfields as $field_id=>&$field) {
+foreach ($_pfields as $field_id=>$field) {
 	if ($field->config['visible']) {
 		$query.=','.$field->query_select();
 	}
@@ -74,9 +74,9 @@ if (mysql_num_rows($res)) {
 		unset($output['total_photos']);
 	}
 	// set all the fields to their real (readable) values
-	foreach ($_pfields as $field_id=>&$field) {
+	foreach ($_pfields as $field_id=>$field) {
 		if ($field->config['visible']) {
-			$field->set_value($output,false);
+			$_pfields[$field_id]->set_value($output,false);
 		}
 	}
 	$c=0;

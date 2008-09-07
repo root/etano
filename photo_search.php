@@ -114,7 +114,7 @@ if (isset($_GET['st'])) {
 			if (!empty($input['f']) && !empty($input['v'])) {
 				$field_ok=false;
 				$fid=0;
-				foreach ($_pfields as $k=>&$field) {
+				foreach ($_pfields as $k=>$field) {
 					if ($field->config['dbfield']==$input['f'] && get_class($field)=='field_select') {
 						$field_ok=true;
 						$fid=$k;

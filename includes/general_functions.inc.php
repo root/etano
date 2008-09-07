@@ -491,7 +491,9 @@ function create_search_form($search_fields) {
 		if (mysql_num_rows($res)) {
 			$user_defaults=unserialize(mysql_result($res,0,0));
 			for ($i=0;isset($search_fields[$i]);++$i) {
-				$_pfields[$search_fields[$i]]->search()->set_value($user_defaults,false);
+				$temp=$_pfields[$search_fields[$i]]->search();
+				$temp->set_value($user_defaults,false);
+				$_pfields[$search_fields[$i]]->search=$temp;	// php4 sucks
 			}
 			unset($user_defaults);
 		}
@@ -499,10 +501,11 @@ function create_search_form($search_fields) {
 
 	for ($i=0;isset($search_fields[$i]);++$i) {
 		if (!empty($_pfields[$search_fields[$i]]->config['search_type'])) {
-			$myreturn[]=array('label'=>$_pfields[$search_fields[$i]]->search()->config['label'],
-							'dbfield'=>$_pfields[$search_fields[$i]]->search()->config['dbfield'],
-							'field'=>$_pfields[$search_fields[$i]]->search()->edit($i+4),
-							'js'=>$_pfields[$search_fields[$i]]->search()->edit_js()
+			$temp=$_pfields[$search_fields[$i]]->search();
+			$myreturn[]=array('label'=>$temp->config['label'],
+							'dbfield'=>$temp->config['dbfield'],
+							'field'=>$temp->edit($i+4),
+							'js'=>$temp->edit_js()
 						);
 		}
 	}

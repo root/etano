@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$my_fields=array();
 	$dbfield2pfieldid=array();
 	$on_changes=array();
-	foreach ($_pfields as $field_id=>&$field) {
+	foreach ($_pfields as $field_id=>$field) {
 		// what fields should be processed on this page?
 		if (isset($field->config['reg_page'])) {
 			if ($field->config['reg_page']==$input['page']) {

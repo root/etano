@@ -31,10 +31,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	$on_changes=array();
 	$ch=0;
 	$texts=array();
-	foreach ($_pfields as $field_id=>&$field) {
-		$field->set_value($_POST,true);
+	foreach ($_pfields as $field_id=>$field) {
+		$_pfields[$field_id]->set_value($_POST,true);
 		// check for input errors
-		if (true!==($temp=$field->validation_server())) {
+		if (true!==($temp=$_pfields[$field_id]->validation_server())) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
 			if (empty($temp['text'])) {
@@ -42,20 +42,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			} else {
 				$topass['message']['text']=$temp['text'];
 			}
-			$input['error_'.$field->config['dbfield']]='red_border';
+			$input['error_'.$_pfields[$field_id]->config['dbfield']]='red_border';
 		}
 		if (!$error) {
-			if (!empty($field->config['fn_on_change'])) {
-				$on_changes[]=array('fn'=>$field->config['fn_on_change'],
-									'param2'=>$field->get_value(),
-									'param3'=>$field->config['dbfield']);
+			if (!empty($_pfields[$field_id]->config['fn_on_change'])) {
+				$on_changes[]=array('fn'=>$_pfields[$field_id]->config['fn_on_change'],
+									'param2'=>$_pfields[$field_id]->get_value(),
+									'param3'=>$_pfields[$field_id]->config['dbfield']);
 			}
 		}
 	}
 
 	if (!$error) {
 		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."'";
-		foreach ($_pfields as $field_id=>&$field) {
+		foreach ($_pfields as $field_id=>$field) {
 			$query.=','.$field->query_set();
 		}
 		$query.=" WHERE `fk_user_id`=".$input['fk_user_id'];
