@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$is_update=true;
 				$rsrow=mysql_fetch_assoc($res);
 				for ($i=0;isset($changes_status[$i]);++$i) {
-					$old_field=(version_compare(PHP_VERSION,'5.0')==-1) ? $_pfields[$changes_status[$i]] : clone $_pfields[$changes_status[$i]];
+					$old_field=(version_compare(PHP_VERSION,'5.0','<')) ? $_pfields[$changes_status[$i]] : clone($_pfields[$changes_status[$i]]);
 					$old_field->set_value($rsrow,false);
 					if ($old_field->get_value()!=$_pfields[$changes_status[$i]]->get_value()) {
 						$force_pending=true;		// if new!=old need to set profile status to pending.

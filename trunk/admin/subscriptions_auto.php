@@ -29,7 +29,7 @@ $subscriptions_auto=array();
 if (!empty($totalrows)) {
 	// create the $pfields helper array for easier access to fields by dbfield
 	$pfields=array();
-	foreach ($_pfields as $pfield_id=>&$pfield) {
+	foreach ($_pfields as $pfield_id=>$pfield) {
 		if (get_class($pfield)=='field_select') {
 			$pfields[$pfield->config['dbfield']]['label']=$pfield->config['label'];
 			$pfields[$pfield->config['dbfield']]['accepted_values']=$pfield->config['accepted_values'];

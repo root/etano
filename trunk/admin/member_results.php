@@ -108,10 +108,10 @@ if (isset($input['album'])) {	// only members with photo album
 
 // continue building the where clause of the query based on the input values we have.
 for ($i=0;isset($basic_search_fields[$i]);++$i) {
-	$field=&$_pfields[$basic_search_fields[$i]];
-	$field->search()->set_value($_GET,true);
-	$where.=$field->search()->query_search();
-	$input=array_merge($input,$field->search()->get_value(true));
+	$field=$_pfields[$basic_search_fields[$i]]->search();
+	$field->set_value($_GET,true);
+	$where.=$field->query_search();
+	$input=array_merge($input,$field->get_value(true));
 } // the for() that constructs the where
 
 $query="SELECT a.`fk_user_id` FROM $from WHERE $where";
@@ -147,16 +147,16 @@ if (!empty($totalrows)) {
 		}
 	}
 	$query="SELECT a.`fk_user_id`,a.`_user`,a.`_photo`,a.`status`,a.`del`";
-	foreach ($_pfields as $k=>&$field) {
+	foreach ($_pfields as $k=>$field) {
 		$query.=','.$field->query_select();
 	}
 	$query.=" FROM `{$dbtable_prefix}user_profiles` a WHERE a.`fk_user_id` IN ('".join("','",$user_ids)."') ORDER BY ".$sorts[$sortby]." LIMIT $o,$r";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		foreach ($_pfields as $k=>&$field) {
-			$field->set_value($rsrow,false);
-			$rsrow[$field->config['dbfield'].'_label']=$field->config['label'];
-			$rsrow[$field->config['dbfield']]=$field->display();
+		foreach ($_pfields as $k=>$field) {
+			$_pfields[$k]->set_value($rsrow,false);
+			$rsrow[$_pfields[$k]->config['dbfield'].'_label']=$_pfields[$k]->config['label'];
+			$rsrow[$_pfields[$k]->config['dbfield']]=$_pfields[$k]->display();
 		}
 		if (empty($rsrow['_photo']) || !is_file(_BASEPATH_.'/media/pics/t1/'.$rsrow['_photo']) || !is_file(_BASEPATH_.'/media/pics/t2/'.$rsrow['_photo']) || !is_file(_BASEPATH_.'/media/pics/'.$rsrow['_photo'])) {
 			$rsrow['_photo']='no_photo.gif';

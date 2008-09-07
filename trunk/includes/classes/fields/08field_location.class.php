@@ -114,7 +114,7 @@ class field_location extends iprofile_field {
 			$new_config=$this->config;
 			$new_config['label']=$new_config['search_label'];
 			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
-			$new_config['parent_class']=get_class();
+			$new_config['parent_class']=get_class($this);
 			$this->search=new $class_name($new_config,true);
 //			$temp=array($this->config['dbfield'].'_country'=>$this->value['country'],$this->config['dbfield'].'_state'=>$this->value['state'],$this->config['dbfield'].'_city'=>$this->value['city'],$this->config['dbfield'].'_zip'=>$this->value['zip']);
 //			$this->search->set_value($temp,false);

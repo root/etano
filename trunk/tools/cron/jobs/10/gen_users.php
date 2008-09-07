@@ -28,7 +28,7 @@ function gen_user_cache() {
 	$now=gmdate('YmdHis');
 	$select='`fk_user_id`,`status`,`del`,UNIX_TIMESTAMP(`last_changed`) as `last_changed`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`_user`,`_photo`,`rad_longitude`,`rad_latitude`';
 	$used_fields=array();
-	foreach ($_pfields as $field_id=>&$field) {
+	foreach ($_pfields as $field_id=>$field) {
 		if ($field->config['visible']) {
 			$select.=','.$field->query_select();
 			$used_fields[]=$field_id;
