@@ -1,0 +1,61 @@
+<form action="{tplvars.relative_url}processors/message_proxy.php" method="post" id="mread_form">
+<fieldset class="invisible">
+<input type="hidden" name="act" value="" />
+<input type="hidden" name="mail_id" value="{output.mail_id}" />
+<input type="hidden" name="fid" value="{output.fid}" />
+<input type="hidden" name="return" value="{output.return}" />
+<input type="hidden" name="moveto_fid" value="" />
+</fieldset>
+</form>
+
+<!--opt name="output.other_id"--><a href="{tplvars.relative_url}profile.php?uid={output.other_id}" title="{output._user_other}"><!--/opt name="output.other_id"--><img class="user_photo thumb1" id="user_photo" src="{tplvars.photourl}/t1/{output.photo}" alt="{output._user_other}" /><!--opt name="output.other_id"--></a><!--/opt name="output.other_id"-->
+<ul id="message_details">
+	<li>
+		<span>
+			<!--opt name="!is_outbox"-->Message from:<!--/opt name="!is_outbox"-->
+			<!--opt name="is_outbox"-->Message to:<!--/opt name="is_outbox"-->
+		</span>
+		<strong>
+			<!--opt name="output.other_id"--><a class="content-link member_link {output.is_online}" href="{tplvars.relative_url}profile.php?uid={output.other_id}" title="{output._user_other}"><!--/opt name="output.other_id"-->{output._user_other}<!--opt name="output.other_id"--></a>
+			<span>|</span>
+			<!--opt name="output.is_blocked"--><a class="content-link link_block" href="{tplvars.relative_url}processors/net_deluser.php?uid={output.other_id}&amp;net_id={output.net_block}&amp;return={output.return2me}">Unblock user</a><!--/opt name="output.is_blocked"-->
+			<!--opt name="!output.is_blocked"--><a class="content-link link_block" href="{tplvars.relative_url}processors/net_adduser.php?uid={output.other_id}&amp;net_id={output.net_block}&amp;return={output.return2me}">Block user</a><!--/opt name="!output.is_blocked"-->
+			<!--/opt name="output.other_id"-->
+		</strong>
+	</li>
+	<li><span>Sent on:</span> <strong>{output.date_sent}</strong></li>
+	<li><span>Subject:</span> <strong>{output.subject}</strong></li>
+</ul>
+
+<div id="message_body">
+	{output.message_body}
+</div>
+
+<div id="controls">
+	<!--opt name="!is_outbox"--><!--opt name="output.other_id"-->
+	<input type="submit" id="btn_reply" class="button medium" value="Reply" />
+	<span>|</span>
+	<!--/opt name="output.other_id"--><!--/opt name="!is_outbox"-->
+
+	<input type="submit" id="btn_delete" class="button medium" value="Delete" />
+
+	<!--opt name="spam_controls"-->
+	<span>|</span>
+	<input type="submit" id="btn_spam" class="button medium" value="Spam" />
+	<!--/opt name="spam_controls"-->
+
+	<!--opt name="!is_outbox"-->
+	<span>|</span>
+	<input type="submit" id="btn_move" class="button medium" value="Move" />
+	to
+	<select name="folder_id" id="folder_id">
+		{output.moveto_folders}
+	</select>
+	<!--/opt name="!is_outbox"-->
+
+</div>
+<div id="bottom_links">
+	<a class="content-link link_previous" href="{tplvars.relative_url}{output.return2}">Back to {output.mailbox_name}</a>
+</div>
+
+<script type="text/javascript" src="{tplvars.relative_url}js/message_read.js?v={tplvars.js_lib_v}"></script>

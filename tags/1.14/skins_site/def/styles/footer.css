@@ -1,0 +1,31 @@
+#copyright {
+	float: right;
+	text-align: right;
+	color: #173459;
+	font-size: 12px;
+}
+
+#secondary-nav {
+	list-style-type: none;
+}
+
+#secondary-nav li {
+	float: left;
+	border-left: 1px solid #FFFFFF;
+	padding: 0 7px;
+}
+
+#secondary-nav li.first {
+	border: 0;
+}
+
+#secondary-nav a {
+	color: #FFFFFF;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+#secondary-nav a:hover, #secondary-nav a:active, #secondary-nav li.active a {
+	color: #FFFFFF;
+	text-decoration: underline;
+}

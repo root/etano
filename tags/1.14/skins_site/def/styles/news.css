@@ -1,0 +1,14 @@
+#site_news_feed h3 {
+	padding: 0;
+}
+
+#site_news_feed ol {
+	margin-left: 20px;
+}
+
+#site_news_feed ol li {
+	border-bottom: none;
+	padding: 0;
+	margin: 0;
+	list-style-type: decimal;
+}

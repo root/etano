@@ -1,0 +1,71 @@
+<h2>Manage Subscriptions</h2>
+
+<div class="hint">Please enter the subscription info:</div>
+
+<form action="processors/subscriptions_addedit.php" method="post" id="subscriptions_addedit">
+<input type="hidden" name="subscr_id" value="{subscriptions.subscr_id}" />
+<table id="subscr_addedit" class="form_table">
+<tr>
+	<td class="label"><label for="subscr_name">Short description:</label></td>
+	<td class="field {subscriptions.error_subscr_name}">
+		<input class="text" type="text" name="subscr_name" id="subscr_name" value="{subscriptions.subscr_name}" size="40" tabindex="1" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="subscr_diz">Description:</label></td>
+	<td class="field {subscriptions.error_subscr_diz}">
+		<textarea name="subscr_diz" id="subscr_diz" tabindex="2" cols="30">{subscriptions.subscr_diz}</textarea>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="price">Price:</label></td>
+	<td class="field {subscriptions.error_price}">
+		<input class="text" type="text" name="price" id="price" value="{subscriptions.price}" size="5" tabindex="3" />
+		<select name="currency" id="currency" tabindex="4">
+		{subscriptions.currency}
+		</select>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="duration">Duration:</label></td>
+	<td colspan="2" class="field {subscriptions.error_duration}">
+		<input class="text" type="text" name="duration" id="duration" value="{subscriptions.duration}" size="5" tabindex="4" />
+		<span class="comment">days (use 0 for unlimited)</span>
+	</td>
+</tr>
+<tr>
+	<td class="label"><label for="is_recurent">Is Recurent?</label></td>
+	<td colspan="2" class="field {subscriptions.error_is_recurent}">
+		<input type="checkbox" name="is_recurent" id="is_recurent" value="1" {subscriptions.is_recurent} tabindex="5" />
+		<span class="comment">Check this if you want members to be automatically rebilled at the end of the current period. Note that this works only for payment gateways that support recurring transactions (currently only Paypal).</span>
+	</td>
+</tr>
+<tr>
+	<td class="label"><label for="is_visible">Is Visible?</label></td>
+	<td colspan="2" class="field {subscriptions.error_is_visible}">
+		<input type="checkbox" name="is_visible" id="is_visible" value="1" {subscriptions.is_visible} tabindex="6" />
+		<span class="comment">Check this to show the subscription in the list of payable subscriptions.</span>
+	</td>
+</tr>
+<tr>
+	<td class="label"><label for="m_value_to">Upgrades to Membership:</label></td>
+	<td class="field {subscriptions.error_m_value_to}">
+		<select name="m_value_to" id="m_value_to" tabindex="8">
+		{subscriptions.m_value_to}
+		</select>
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" id="btn_save" tabindex="9" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+<div id="bottom_links"><a class="back" href="subscriptions.php">Back to list</a></div>
+
+<script type="text/javascript" src="js/subscriptions_addedit.js?v={tplvars.js_lib_v}"></script>

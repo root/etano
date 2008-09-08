@@ -1,0 +1,11 @@
+#content_column1 {
+	float: none;
+}
+
+.pass_lost .edit_form dt {
+	width: 80px;
+}
+
+#email {
+	width: 230px;
+}
