@@ -94,14 +94,23 @@ class field_location extends iprofile_field {
 		return $myreturn;
 	}
 
-	function display() {
+	function display($type='all') {
 		global $dbtable_prefix;
-		$myreturn=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$this->value['country'],$this->empty_value['display']);
-		if (!empty($this->value['state'])) {
-			$myreturn.=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$this->value['state'],$this->empty_value['display']);
-		}
-		if (!empty($this->value['city'])) {
-			$myreturn.=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$this->value['city'],$this->empty_value['display']);
+		$myreturn='';
+		if ($type=='all') {
+			$myreturn.=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$this->value['country'],$this->empty_value['display']);
+			if (!empty($this->value['state'])) {
+				$myreturn.=' / '.db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$this->value['state'],$this->empty_value['display']);
+			}
+			if (!empty($this->value['city'])) {
+				$myreturn.=' / '.db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$this->value['city'],$this->empty_value['display']);
+			}
+		} elseif ($type=='country') {
+			$myreturn.=db_key2value("`{$dbtable_prefix}loc_countries`",'`country_id`','`country`',$this->value['country'],$this->empty_value['display']);
+		} elseif ($type=='state' && !empty($this->value['state'])) {
+			$myreturn.=db_key2value("`{$dbtable_prefix}loc_states`",'`state_id`','`state`',$this->value['state'],$this->empty_value['display']);
+		} elseif ($type=='city' && !empty($this->value['city'])) {
+			$myreturn.=db_key2value("`{$dbtable_prefix}loc_cities`",'`city_id`','`city`',$this->value['city'],$this->empty_value['display']);
 		}
 		return $myreturn;
 	}
@@ -111,7 +120,7 @@ class field_location extends iprofile_field {
 			return $this->search;
 		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
-			$new_config=$this->config;
+			$new_config=unserialize(serialize($this->config));
 			$new_config['label']=$new_config['search_label'];
 			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			$new_config['parent_class']=get_class($this);
