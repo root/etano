@@ -155,8 +155,8 @@ if (!empty($totalrows)) {
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		foreach ($_pfields as $k=>$field) {
 			$_pfields[$k]->set_value($rsrow,false);
-			$rsrow[$_pfields[$k]->config['dbfield'].'_label']=$_pfields[$k]->config['label'];
 			$rsrow[$_pfields[$k]->config['dbfield']]=$_pfields[$k]->display();
+			$rsrow[$_pfields[$k]->config['dbfield'].'_label']=$_pfields[$k]->config['label'];
 		}
 		if (empty($rsrow['_photo']) || !is_file(_BASEPATH_.'/media/pics/t1/'.$rsrow['_photo']) || !is_file(_BASEPATH_.'/media/pics/t2/'.$rsrow['_photo']) || !is_file(_BASEPATH_.'/media/pics/'.$rsrow['_photo'])) {
 			$rsrow['_photo']='no_photo.gif';

@@ -48,7 +48,7 @@ class field_textfield extends iprofile_field {
 			return $this->search;
 		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
-			$new_config=$this->config;
+			$new_config=unserialize(serialize($this->config));
 			$new_config['label']=$new_config['search_label'];
 			if (isset($new_config['search_default'])) {
 				$new_config['default_value']=$new_config['search_default'];

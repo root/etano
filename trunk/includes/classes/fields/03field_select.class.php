@@ -55,7 +55,7 @@ class field_select extends iprofile_field {
 			return $this->search;
 		} elseif (!empty($this->config['search_type'])) {
 			$class_name=$this->config['search_type'];
-			$new_config=$this->config;
+			$new_config=unserialize(serialize($this->config));
 			$new_config['label']=$new_config['search_label'];
 			if (isset($new_config['search_default'])) {
 				$new_config['default_value']=$new_config['search_default'];
@@ -65,6 +65,7 @@ class field_select extends iprofile_field {
 			unset($new_config['search_default'],$new_config['search_label'],$new_config['searchable'],$new_config['required'],$new_config['search_type'],$new_config['reg_page']);
 			$new_config['parent_class']=get_class($this);
 			$this->search=new $class_name($new_config,true);
+			unset($new_config);
 //			$temp=array($this->config['dbfield']=>$this->value);
 //			$this->search->set_value($temp,false);
 			return $this->search;
