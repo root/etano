@@ -22,13 +22,13 @@ if (!defined('_LICENSE_KEY_')) {
 //}
 
 define('IN_ADMIN',1);
-require_once 'general_functions.inc.php';
+require_once _BASEPATH_.'/includes/general_functions.inc.php';
 $GLOBALS['_lang']=array();
 $def_skin=isset($_SESSION[_LICENSE_KEY_]['admin']['def_skin']) ? $_SESSION[_LICENSE_KEY_]['admin']['def_skin'] : get_default_skin_dir();
 require_once _BASEPATH_.'/skins_site/'.$def_skin.'/lang/global.inc.php';
 $_pfields=array();
 $_pcats=array();
-require_once 'fields.inc.php';
+require_once _BASEPATH_.'/includes/fields.inc.php';
 
 define('DEPT_MODERATOR',2);
 define('DEPT_ADMIN',4);
