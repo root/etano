@@ -105,7 +105,7 @@ function search_results($search,$my_membership=1) {
 	}
 	if (allow_at_level($input['acclevel_code'],$my_membership)) {
 		for ($i=0;isset($search_fields[$i]);++$i) {
-			$field=&$_pfields[$search_fields[$i]]->search();
+			$field=$_pfields[$search_fields[$i]]->search();
 			$field->set_value($search);
 			$where.=$field->query_search();
 			$input=array_merge($input,$field->get_value(true));
