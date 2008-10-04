@@ -46,7 +46,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 	if (!empty($rsrow['is_subscr'])) {
 		$rsrow['m_value_to']=isset($memberships[$rsrow['m_value_to']]) ? $memberships[$rsrow['m_value_to']] : '?';
 		$rsrow['paid_from']=strftime($config['date_format'],$rsrow['paid_from']+$config['time_offset']);
-		$rsrow['paid_until']=strftime($config['date_format'],$rsrow['paid_until']+$config['time_offset']);
+		$rsrow['paid_until']=!empty($rsrow['paid_until']) ? strftime($config['date_format'],$rsrow['paid_until']+$config['time_offset']) : 'Forever';
 	} else {
 		$rsrow['paid_from']=strftime($config['date_format'],$rsrow['date']+$config['time_offset']);
 		$rsrow['m_value_to']='Product';

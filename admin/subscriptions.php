@@ -41,6 +41,11 @@ if (!empty($totalrows)) {
 		} else {
 			unset($rsrow['is_visible']);
 		}
+		if (empty($rsrow['duration'])) {
+			$rsrow['duration']='Lifetime';
+		} else {
+			$rsrow['duration'].=' days';
+		}
 		$subscriptions[]=$rsrow;
 	}
 }
