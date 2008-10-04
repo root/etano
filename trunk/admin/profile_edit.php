@@ -54,6 +54,7 @@ if (isset($_SESSION['topass']['input'])) {
 	redirect2page('admin/cpanel.php',$topass);
 }
 
+$js_loop=array();
 $l=0;
 foreach ($_pcats as $pcat_id=>$pcat) {
 	$loop[$l]['pcat_name']=$pcat['pcat_name'];
