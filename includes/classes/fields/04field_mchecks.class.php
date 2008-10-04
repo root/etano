@@ -83,12 +83,12 @@ class field_mchecks extends iprofile_field {
 				<a href="#" id="accvals_add_first" title="Add a new value at the beginning of the list">Add new value</a> (at the beginning of the list)
 				<div id="actual_values"></div>
 			</div>';
-			$query="SELECT a.`accval_id`,b.`lang_value` as `val`,a.`def_value`,a.`search_value` FROM `{$dbtable_prefix}profile_field_accvals` a, `{$dbtable_prefix}lang_strings` b WHERE a.`fk_lk_id_name`=b.`fk_lk_id` AND b.`skin`='$default_skin_code' AND a.`fk_pfield_id`=".$output['pfield_id']." ORDER BY a.`sort`";
+			$query="SELECT a.`accval_id`,b.`lang_value` as `valo`,a.`def_value`,a.`search_value` FROM `{$dbtable_prefix}profile_field_accvals` a, `{$dbtable_prefix}lang_strings` b WHERE a.`fk_lk_id_name`=b.`fk_lk_id` AND b.`skin`='$default_skin_code' AND a.`fk_pfield_id`=".$output['pfield_id']." ORDER BY a.`sort`";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 			$accvals=array();
 			// grab the accepted values and pass them to js in json format
 			while ($rsrow=mysql_fetch_assoc($res)) {
-				$rsrow['val']=sanitize_and_format($rsrow['val'],TYPE_STRING,$__field2format[TEXT_GPC2EDIT]);
+//				$rsrow['valo']=sanitize_and_format($rsrow['valo'],TYPE_STRING,$__field2format[TEXT_GPC2EDIT]);
 				$accvals[]=$rsrow;
 			}
 			$json=new Services_JSON(SERVICES_JSON_SUPPRESS_ERRORS | SERVICES_JSON_LOOSE_TYPE);
@@ -195,7 +195,7 @@ class field_mchecks extends iprofile_field {
 			$json=new Services_JSON(SERVICES_JSON_SUPPRESS_ERRORS | SERVICES_JSON_LOOSE_TYPE);
 			$temp=$json->decode(urldecode(sanitize_and_format_gpc($_POST,'accvals_new',TYPE_STRING,0,'')));
 			for ($i=0;isset($temp[$i]);++$i) {
-				$temp[$i]['val']=sanitize_and_format($temp[$i]['val'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
+				$temp[$i]['valo']=sanitize_and_format($temp[$i]['valo'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 				$temp[$i]['after']=(int)$temp[$i]['after'];
 				$temp[$i]['def_value']=(int)$temp[$i]['def_value'];
 				$temp[$i]['search_value']=(int)$temp[$i]['search_value'];
@@ -205,7 +205,7 @@ class field_mchecks extends iprofile_field {
 			$temp=$json->decode(urldecode(sanitize_and_format_gpc($_POST,'accvals_changed',TYPE_STRING,0,'')));
 			for ($i=0;isset($temp[$i]);++$i) {
 				$temp[$i]['accval_id']=(int)$temp[$i]['accval_id'];
-				$temp[$i]['val']=sanitize_and_format($temp[$i]['val'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
+				$temp[$i]['valo']=sanitize_and_format($temp[$i]['valo'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 				$temp[$i]['def_value']=(int)$temp[$i]['def_value'];
 				$temp[$i]['search_value']=(int)$temp[$i]['search_value'];
 			}
@@ -223,7 +223,7 @@ class field_mchecks extends iprofile_field {
 					$query="INSERT INTO `{$dbtable_prefix}lang_keys` SET `lk_type`=".FIELD_TEXTFIELD.",`lk_diz`='Field value',`lk_use`=".LK_FIELD;
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					$accvals_new[$i]['fk_lk_id']=mysql_insert_id();
-					$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$accvals_new[$i]['val']."',`fk_lk_id`=".$accvals_new[$i]['fk_lk_id'].",`skin`='$default_skin_code'";
+					$query="INSERT INTO `{$dbtable_prefix}lang_strings` SET `lang_value`='".$accvals_new[$i]['valo']."',`fk_lk_id`=".$accvals_new[$i]['fk_lk_id'].",`skin`='$default_skin_code'";
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				}
 				// insert the new values and re-sort the values for this field. Ugly and slow code with lots of queries :(
@@ -266,7 +266,7 @@ class field_mchecks extends iprofile_field {
 			if (!empty($accvals_changed)) {
 				for ($i=0;isset($accvals_changed[$i]);++$i) {
 					// update the language string
-					$query="UPDATE `{$dbtable_prefix}lang_strings` a,`{$dbtable_prefix}profile_field_accvals` b SET a.`lang_value`='".$accvals_changed[$i]['val']."' WHERE a.`fk_lk_id`=b.`fk_lk_id_name` AND a.`skin`='$default_skin_code' AND b.`accval_id`=".$accvals_changed[$i]['accval_id'];
+					$query="UPDATE `{$dbtable_prefix}lang_strings` a,`{$dbtable_prefix}profile_field_accvals` b SET a.`lang_value`='".$accvals_changed[$i]['valo']."' WHERE a.`fk_lk_id`=b.`fk_lk_id_name` AND a.`skin`='$default_skin_code' AND b.`accval_id`=".$accvals_changed[$i]['accval_id'];
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 					$query="UPDATE `{$dbtable_prefix}profile_field_accvals` SET `def_value`=".$accvals_changed[$i]['def_value'].",`search_value`=".$accvals_changed[$i]['search_value']." WHERE `accval_id`=".$accvals_changed[$i]['accval_id'];
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
