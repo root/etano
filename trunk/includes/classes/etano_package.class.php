@@ -664,7 +664,7 @@ class etano_package {
 			foreach ($_SESSION[_LICENSE_KEY_]['admin']['install_options'] as $v) {
 				$query="INSERT IGNORE INTO `{$dbtable_prefix}site_options3` SET `fk_module_code`='".$this->module_code."'";
 				foreach ($v as $vk=>$vv) {
-					$query.=",`$vk`='$vv'";
+					$query.=",`$vk`='".sanitize_and_format($vv,TYPE_STRING,FORMAT_ADDSLASH)."'";
 				}
 				@mysql_query($query);
 			}
