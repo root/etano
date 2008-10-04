@@ -16,6 +16,15 @@ require_once '../includes/admin_functions.inc.php';
 require_once '../includes/tables/profile_fields.inc.php';
 allow_dept(DEPT_ADMIN);
 
+if ($dh=opendir(_BASEPATH_.'/includes/classes/fields')) {
+	while (($file=readdir($dh)) !== false) {
+		if (substr($file,-3)=='php') {
+			require_once _BASEPATH_.'/includes/classes/fields/'.$file;
+		}
+	}
+	closedir($dh);
+}
+
 $tpl=new phemplate('skin/','remove_nonjs');
 
 $o=isset($_GET['o']) ? (int)$_GET['o'] : 0;
@@ -55,14 +64,6 @@ if (!empty($totalrows)) {
 	$output['pager2']=pager($totalrows,$o,$r);
 }
 
-if ($dh=opendir(_BASEPATH_.'/includes/classes/fields')) {
-	while (($file=readdir($dh)) !== false) {
-		if (substr($file,-3)=='php') {
-			require_once _BASEPATH_.'/includes/classes/fields/'.$file;
-		}
-	}
-	closedir($dh);
-}
 $output['field_type']=vector2options($accepted_fieldtype['direct']);
 $output['return2me']='profile_fields.php';
 if (!empty($_SERVER['QUERY_STRING'])) {
