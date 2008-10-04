@@ -16,6 +16,7 @@ require_once '../includes/admin_functions.inc.php';
 require_once '../includes/tables/profile_fields.inc.php';
 allow_dept(DEPT_ADMIN);
 
+require_once _BASEPATH_.'/includes/interfaces/iprofile_field.class.php';
 if ($dh=opendir(_BASEPATH_.'/includes/classes/fields')) {
 	while (($file=readdir($dh)) !== false) {
 		if (substr($file,-3)=='php') {
