@@ -96,7 +96,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			foreach ($_pcats[$pcat_id]['fields'] as $field_id) {
-				$query.=','.$_pfields[$field_id]->query_set();
+				if ($_pfields[$field_id]->config['editable']) {
+					$query.=','.$_pfields[$field_id]->query_set();
+				}
 			}
 			if ($is_update) {
 				$query.=" WHERE `fk_user_id`=".$_SESSION[_LICENSE_KEY_]['user']['user_id'];
