@@ -111,7 +111,7 @@ class feedReader {
 	function parseFeed() {
 		$myreturn=false;
 		if (!empty($this->raw_xml)) {
-			$this->feedReader=xml_parser_create();
+			$this->feedReader=xml_parser_create('UTF-8');
 			xml_set_object($this->feedReader,$this);
 			xml_parser_set_option($this->feedReader,XML_OPTION_CASE_FOLDING,true);
 			xml_set_element_handler($this->feedReader,'openTag','closeTag');
