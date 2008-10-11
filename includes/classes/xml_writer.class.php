@@ -78,10 +78,14 @@ class xml_writer_class
 		return $escapeddata;
 	}
 
-	Function encodedata($data,&$encodeddata)
+	Function encodedata($data,&$encodeddata,$escape=true)
 	{
 		if(!strcmp($this->inputencoding,$this->outputencoding))
-			$encodeddata=$this->escapedata($data);
+			if ($escape) {
+				$encodeddata=$this->escapedata($data);
+			} else {
+				$encodeddata='<![CDATA['.$data.']]>';
+			}
 		else
 		{
 			switch(strtolower($this->outputencoding))
@@ -89,8 +93,11 @@ class xml_writer_class
 				case "utf-8":
 					if(!strcmp(strtolower($this->inputencoding),"iso-8859-1"))
 					{
-						$encoded_data=utf8_encode($this->escapedata($data));
-						$encodeddata=$encoded_data;
+						if ($escape) {
+							$encodeddata=utf8_encode($this->escapedata($data));
+						} else {
+							$encodeddata='<![CDATA['.utf8_encode($data).']]>';
+						}
 					}
 					else
 					{
@@ -101,8 +108,11 @@ class xml_writer_class
 				case "iso-8859-1":
 					if(!strcmp(strtolower($this->inputencoding),"utf-8"))
 					{
-						$decoded=utf8_decode($data);
-						$encodeddata=$this->escapedata($decoded);
+						if ($escape) {
+							$encodeddata=$this->escapedata(utf8_decode($data));
+						} else {
+							$encodeddata='<![CDATA['.utf8_decode($data).']]>';
+						}
 					}
 					else
 					{
@@ -276,7 +286,7 @@ class xml_writer_class
 		if(!strcmp($data,""))
 			return 1;
 		$path=($parent.",".strval($this->structure[$parent]["Elements"]));
-		if(!($this->encodedata($data,$encoded_data)))
+		if(!($this->encodedata($data,$encoded_data,false)))
 			return 0;
 		$this->structure[$path]=$encoded_data;
 		$this->structure[$parent]["Elements"]=($this->structure[$parent]["Elements"]+1);
