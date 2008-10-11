@@ -28,7 +28,7 @@ function check_form(theform) {
 
 function save_template() {
 	tinyMCE.triggerSave(true,true);
-	var mycontent=tinyMCE.getContent();
+	var mycontent=tinyMCE.get('reject_reason').getContent();
 	$.ajax({url:'ajax/save_admin_mtpl.php',
 			type: 'POST',
 			dataType:'html',

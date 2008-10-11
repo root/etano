@@ -6,7 +6,7 @@ $(function() {
 
 function check_form(the) {
 	tinyMCE.triggerSave(true,true);
-	var mycontent=tinyMCE.getContent();
+	var mycontent=tinyMCE.get('flirt_text').getContent();
 	if (mycontent=='') {
 		alert('Please enter the flirt');
 		return false;
