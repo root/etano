@@ -36,7 +36,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		while ($rsrow=mysql_fetch_assoc($res)) {
 			$towrite.="\n\t`".$rsrow['Field'].'` '.$rsrow['Type'];
 			if ($rsrow['Extra']!='auto_increment' && $rsrow['Default']!=null) {
-				$towrite.=" DEFAULT '".$rsrow['Default']."'";
+				if (strcasecmp($rsrow['Type'],'timestamp')==0 && strcasecmp($rsrow['Default'],'CURRENT_TIMESTAMP')==0) {
+					$towrite.=" DEFAULT ".$rsrow['Default'];
+				} else {
+					$towrite.=" DEFAULT '".$rsrow['Default']."'";
+				}
 			}
 			if ($rsrow['Null']!='YES') {
 				$towrite.=' NOT NULL';
@@ -61,7 +65,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			} else {
 				$rsrow['Key_name']='KEY `'.$rsrow['Key_name'].'`';
 			}
-			$keys[$rsrow['Key_name']][$rsrow['Seq_in_index']]=$rsrow['Column_name'];
+			if (!empty($rsrow['Sub_part'])) {
+				$keys[$rsrow['Key_name']][$rsrow['Seq_in_index']]=$rsrow['Column_name'].'('.$rsrow['Sub_part'].')';
+			} else {
+				$keys[$rsrow['Key_name']][$rsrow['Seq_in_index']]=$rsrow['Column_name'];				
+			}
 		}
 		foreach ($keys as $keyname=>$fields) {
 			$towrite.="\n\t{$keyname} (`".join('`,`',$fields)."`),";
