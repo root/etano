@@ -473,7 +473,7 @@ function text2smilies($str) {
 
 
 function remove_banned_words($str) {
-	include_once _BASEPATH_.'/includes/banned_words.inc.php';
+	include _BASEPATH_.'/includes/banned_words.inc.php';
 	if (!empty($_banned_words)) {
 		$str=str_replace($_banned_words,'#######',$str);
 	}
