@@ -13,6 +13,7 @@ Support at:                 http://www.datemill.com/forum
 
 require '../includes/common.inc.php';
 require _BASEPATH_.'/includes/user_functions.inc.php';
+require _BASEPATH_.'/includes/network_functions.inc.php';
 require _BASEPATH_.'/includes/tables/queue_message.inc.php';
 require _BASEPATH_.'/includes/tables/user_outbox.inc.php';
 require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/mailbox.inc.php';
@@ -60,35 +61,38 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	}
 
 	if (!$error) {
-		// sender of the message: me
-		$input['fk_user_id_other']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
-		$input['_user_other']=$_SESSION[_LICENSE_KEY_]['user']['user'];
-		$input['subject']=remove_banned_words($input['subject']);
-		$input['message_body']=remove_banned_words($input['message_body']);
-		if (isset($_on_before_insert)) {
-			for ($i=0;isset($_on_before_insert[$i]);++$i) {
-				call_user_func($_on_before_insert[$i]);
+		// if the receiver didn't block me...
+		if (!is_network_member($_SESSION[_LICENSE_KEY_]['user']['user_id'],$input['fk_user_id'],NET_BLOCK)) {
+			// sender of the message: me
+			$input['fk_user_id_other']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
+			$input['_user_other']=$_SESSION[_LICENSE_KEY_]['user']['user'];
+			$input['subject']=remove_banned_words($input['subject']);
+			$input['message_body']=remove_banned_words($input['message_body']);
+			if (isset($_on_before_insert)) {
+				for ($i=0;isset($_on_before_insert[$i]);++$i) {
+					call_user_func($_on_before_insert[$i]);
+				}
 			}
-		}
-		queue_or_send_message($input,true);
-
-		// save the message in my outbox
-		$input['fk_user_id_other']=$input['fk_user_id'];
-		$input['fk_user_id']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
-		$input['_user_other']=get_user_by_userid($input['fk_user_id_other']);
-		$query="INSERT INTO `{$dbtable_prefix}user_outbox` SET `date_sent`='".gmdate('YmdHis')."'";
-		foreach ($user_outbox_default['defaults'] as $k=>$v) {
-			if (isset($input[$k])) {
-				$query.=",`$k`='".$input[$k]."'";
+			queue_or_send_message($input,true);
+	
+			// save the message in my outbox
+			$input['fk_user_id_other']=$input['fk_user_id'];
+			$input['fk_user_id']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
+			$input['_user_other']=get_user_by_userid($input['fk_user_id_other']);
+			$query="INSERT INTO `{$dbtable_prefix}user_outbox` SET `date_sent`='".gmdate('YmdHis')."'";
+			foreach ($user_outbox_default['defaults'] as $k=>$v) {
+				if (isset($input[$k])) {
+					$query.=",`$k`='".$input[$k]."'";
+				}
 			}
-		}
-		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		update_stats($_SESSION[_LICENSE_KEY_]['user']['user_id'],'mess_sent',1);
-		$topass['message']['type']=MESSAGE_INFO;
-		$topass['message']['text']=$GLOBALS['_lang'][198];
-		if (isset($_on_after_insert)) {
-			for ($i=0;isset($_on_after_insert[$i]);++$i) {
-				call_user_func($_on_after_insert[$i]);
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			update_stats($_SESSION[_LICENSE_KEY_]['user']['user_id'],'mess_sent',1);
+			$topass['message']['type']=MESSAGE_INFO;
+			$topass['message']['text']=$GLOBALS['_lang'][198];
+			if (isset($_on_after_insert)) {
+				for ($i=0;isset($_on_after_insert[$i]);++$i) {
+					call_user_func($_on_after_insert[$i]);
+				}
 			}
 		}
 		unset($_SESSION[_LICENSE_KEY_]['user'][$_POST['refnum']]);
