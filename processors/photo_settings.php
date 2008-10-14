@@ -32,6 +32,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	foreach ($user_photos_default['types'] as $k=>$v) {
 		$input[$k]=sanitize_and_format_gpc($_POST,$k,$__field2type[$v],$__field2format[$v],array());
 	}
+	if (empty($input['is_main'])) {
+		$input['is_main']=0;
+	}
 	if (!empty($_POST['return'])) {
 		$input['return']=sanitize_and_format_gpc($_POST,'return',TYPE_STRING,$__field2format[FIELD_TEXTFIELD] | FORMAT_RUDECODE,'');
 		$nextpage=$input['return'];
@@ -68,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 		$now=gmdate('YmdHis');
 		$config=get_site_option(array('manual_photo_approval'),'core_photo');
-		if ($input['is_main']!=$old_main) {
+		if (!empty($input['is_main']) && $input['is_main']!=$old_main) {
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_main`=0 WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 // if photo approvals are automatic then we can make this photo the main photo now. Otherwise it will have to be done upon approval!!!
