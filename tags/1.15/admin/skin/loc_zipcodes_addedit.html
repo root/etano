@@ -1,0 +1,55 @@
+<h2>Zip / Postal Code Info</h2>
+
+<div class="hint">Please enter the zip / postal code info:</div>
+
+<form action="processors/loc_zipcodes_addedit.php" method="post" id="addedit_form">
+<input type="hidden" name="zip_id" value="{zipcode.zip_id}" />
+<input type="hidden" name="fk_city_id" value="{zipcode.fk_city_id}" />
+<input type="hidden" name="fk_state_id" value="{zipcode.fk_state_id}" />
+<input type="hidden" name="fk_country_id" value="{zipcode.fk_country_id}" />
+<input type="hidden" name="o" value="{o}" />
+<input type="hidden" name="r" value="{r}" />
+<input type="hidden" name="cio" value="{cio}" />
+<input type="hidden" name="cir" value="{cir}" />
+<input type="hidden" name="so" value="{so}" />
+<input type="hidden" name="sr" value="{sr}" />
+<input type="hidden" name="co" value="{co}" />
+<input type="hidden" name="cr" value="{cr}" />
+<table id="cities_addedit" class="form_table">
+<tr>
+	<td class="label">City:</td>
+	<td class="field">{zipcode.country} / {zipcode.state} / {zipcode.city}</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="zipcode">Code:</label></td>
+	<td class="field {zipcode.error_zipcode}">
+		<input class="text" type="text" name="zipcode" id="zipcode" value="{zipcode.zipcode}" tabindex="1" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="latitude">Latitude:</label></td>
+	<td class="field {zipcode.error_latitude}">
+		<input class="text" type="text" name="latitude" id="latitude" value="{zipcode.latitude}" tabindex="2" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td class="label"><label for="longitude">Longitude:</label></td>
+	<td class="field {zipcode.error_longitude}">
+		<input class="text" type="text" name="longitude" id="longitude" value="{zipcode.longitude}" tabindex="3" />
+	</td>
+	<td class="comment"></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" class="button" value="Save" id="btn_save" tabindex="4" /></td>
+	<td></td>
+</tr>
+</table>
+</form>
+
+<div id="bottom_links"><a class="back" href="loc_zipcodes.php?city_id={zipcode.fk_city_id}&amp;state_id={zipcode.fk_state_id}&amp;country_id={zipcode.fk_country_id}&amp;o={o}&amp;r={r}&amp;cio={cio}&amp;cir={cir}&amp;so={so}&amp;sr={sr}&amp;co={co}&amp;cr={cr}">Back to zipcodes list</a></div>
+
+<script type="text/javascript" src="js/loc_zipcodes_addedit.js?v={tplvars.js_lib_v}"></script>
