@@ -88,6 +88,7 @@ class field_mchecks extends iprofile_field {
 			$accvals=array();
 			// grab the accepted values and pass them to js in json format
 			while ($rsrow=mysql_fetch_assoc($res)) {
+				// no need to sanitize the value because encoding it to json below solves it for us.
 //				$rsrow['valo']=sanitize_and_format($rsrow['valo'],TYPE_STRING,$__field2format[TEXT_GPC2EDIT]);
 				$accvals[]=$rsrow;
 			}
@@ -95,7 +96,8 @@ class field_mchecks extends iprofile_field {
 			$accvals=$json->encode($accvals);
 			$myreturn.='<script type="text/javascript">
 				$(function() {
-					search_defaults_input_type = [];';
+					search_defaults_input_type = [];
+					';
 			foreach ($this->_search_defaults_input_type as $k=>$v) {
 				$myreturn.="search_defaults_input_type['$k'] = '$v';\n";
 			}
@@ -114,7 +116,7 @@ class field_mchecks extends iprofile_field {
 					$(\'#accvals_add_first\').click(function() {
 						var myval=prompt_value(\'\');
 						if (myval) {
-							my_accvals.add(0,{val:myval});
+							my_accvals.add(0,{valo:myval});
 							my_accvals.render(\'actual_values\');
 							rebind_events();
 						}
@@ -128,11 +130,11 @@ class field_mchecks extends iprofile_field {
 					rebind_events();
 				});
 
-				function prompt_value(val) {
-					if (!val) {
-						val=\'\';
+				function prompt_value(valo) {
+					if (!valo) {
+						valo=\'\';
 					}
-					var myval=prompt(\'Please enter the new value.\',val);
+					var myval=prompt(\'Please enter the new value.\',valo);
 					if (myval && myval!=\'\') {
 						return myval;
 					}
@@ -142,9 +144,9 @@ class field_mchecks extends iprofile_field {
 				function rebind_events() {
 					$(\'.accvals_edit\').click(function() {
 						var my_idx=$(this).attr(\'id\').substr(5);
-						var myval=prompt_value(my_accvals.container[my_idx].val);
+						var myval=prompt_value(my_accvals.container[my_idx].valo);
 						if (myval) {
-							my_accvals.change(my_idx,{val:myval});
+							my_accvals.change(my_idx,{valo:myval});
 							my_accvals.render(\'actual_values\');
 							rebind_events();
 						}
@@ -156,7 +158,7 @@ class field_mchecks extends iprofile_field {
 						var myval=prompt_value(\'\');
 						if (myval) {
 							my_idx++;
-							my_accvals.add(my_idx,{val:myval});
+							my_accvals.add(my_idx,{valo:myval});
 							my_accvals.render(\'actual_values\');
 							rebind_events();
 						}

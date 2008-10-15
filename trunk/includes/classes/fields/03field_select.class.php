@@ -211,6 +211,7 @@ class field_select extends iprofile_field {
 				$temp[$i]['search_value']=(int)$temp[$i]['search_value'];
 			}
 			$accvals_changed=$temp;
+
 			$temp=$json->decode(urldecode(sanitize_and_format_gpc($_POST,'accvals_deleted',TYPE_STRING,0,0)));
 			$accvals_deleted=array();
 			for ($i=0;isset($temp[$i]);++$i) {
