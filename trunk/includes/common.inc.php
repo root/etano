@@ -21,7 +21,7 @@ ini_set('error_reporting',2047);
 
 setlocale(LC_CTYPE,'C');
 setlocale(LC_COLLATE,'C');
-define('_DEBUG_',0);// Set to 0 for production! 0-No,1-Yes,2-Verbose. Used for debug in case of errors.
+define('_DEBUG_',1);// Set to 0 for production! 0-No,1-Yes,2-Verbose. Used for debug in case of errors.
 if (_DEBUG_!=0) {
 	ini_set('display_errors',1);
 } else {
@@ -137,6 +137,6 @@ if (isset($_SERVER['REQUEST_URI'])) {
 
 $accepted_currencies=array('USD'=>'USD','EUR'=>'EUR','GBP'=>'GBP');
 
-$tplvars['js_lib_v']=7;	// change this when you update any .js file. This should force a reload of the js scripts.
+$tplvars['js_lib_v']=8;	// change this when you update any .js file. This should force a reload of the js scripts.
 $tplvars['remote_site']='http://www.datemill.com';
 $_cache_config=array('cacheDir'=>_BASEPATH_.'/cache2/','lifeTime'=>null,'fileLocking'=>false,'writeControl'=>false,'readControl'=>false,'hashedDirectoryLevel'=>3);
