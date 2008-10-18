@@ -56,7 +56,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 	if (!$error) {
 		$query="UPDATE `{$dbtable_prefix}user_profiles` SET `last_changed`='".gmdate('YmdHis')."'";
 		foreach ($_pfields as $field_id=>$field) {
-			$query.=','.$field->query_set();
+			$temp=$field->query_set();
+			if (!empty($temp)) {
+				$query.=','.$temp;
+			}
 		}
 		$query.=" WHERE `fk_user_id`=".$input['fk_user_id'];
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
