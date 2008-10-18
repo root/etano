@@ -81,6 +81,14 @@ function get_userid_by_user($user) {
 		if (mysql_num_rows($res)) {
 			$myreturn=mysql_result($res,0,0);
 		}
+		// for migrated DSB, we should really make sure that the account does not exist:
+		if ($myreturn==0) {
+			$query="SELECT `".USER_ACCOUNT_ID."` FROM `".USER_ACCOUNTS_TABLE."` WHERE `".USER_ACCOUNT_USER."`='$user'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			if (mysql_num_rows($res)) {
+				$myreturn=mysql_result($res,0,0);
+			}
+		}
 	}
 	return $myreturn;
 }
