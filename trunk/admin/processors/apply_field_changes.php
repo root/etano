@@ -25,7 +25,7 @@ if (empty($_GET['fields_only'])) {
 	$fields=array();
 	// this should be rewritten with the new pfields system...
 	while ($rsrow=mysql_fetch_assoc($res)) {
-		if ($rsrow['field_type']=='field_location') {
+		if ($rsrow['field_type']=='field_location' || $rsrow['field_type']=='field_loc_req') {
 			$fields[]=$rsrow['dbfield'].'_country';
 		} elseif ($rsrow['field_type']=='field_mchecks') {
 		} else {
