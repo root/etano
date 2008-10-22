@@ -47,6 +47,7 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 		$rsrow['price']=number_format($rsrow['price'],2);
 	}
 	$payment['internal_name']=$rsrow['subscr_name'];
+	$payment['internal_diz']=$rsrow['subscr_diz'];
 	$payment['internal_id']=$rsrow['subscr_id'];
 	$payment['price']=$rsrow['price'];
 	$payment['is_recurent']=$rsrow['is_recurent'];
