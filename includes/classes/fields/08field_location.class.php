@@ -197,9 +197,15 @@ class field_location extends iprofile_field {
 	}
 
 	function edit_js() {
+		$temp=explode($_SERVER['HTTP_HOST'],_BASEURL_);
+		if (count($temp)==3) {
+			$post_url='http://'.$_SERVER['HTTP_HOST'].$temp[2];
+		} else {
+			$post_url=_BASEURL_;
+		}
 		$myreturn='$(\'#'.$this->config['dbfield'].'_country,#'.$this->config['dbfield'].'_state\').bind(\'change\',function() {
 			$(\'#\'+$(this).attr(\'id\')).before(\'<span class="loading"></span>\');
-			$.post(\'http://\'+window.location.hostname+\'/ajax/location.php\',
+			$.post(\''.$post_url.'/ajax/location.php\',
 					{\'field\':$(this).attr(\'id\'),\'val\':$(this).val()},
 					function(data) {
 						if (data!=null && data!=\'\') {
