@@ -53,11 +53,11 @@ foreach ($prefs as $module_code=>$v) {
 					break;
 
 				case FIELD_TEXTFIELD:
-					$loop[$i]['field']='<input type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" tabindex="'.($i+1).'" />';
+					$loop[$i]['field']='<input type="text" class="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" tabindex="'.($i+1).'" />';
 					break;
 
 				case FIELD_INT:
-					$loop[$i]['field']='<input class="number" type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" tabindex="'.($i+1).'" />';
+					$loop[$i]['field']='<input class="number text" type="text" name="'.$module_code.'_'.$config_option.'" id="'.$module_code.'_'.$config_option.'" value="'.$kv['config_value'].'" tabindex="'.($i+1).'" />';
 					break;
 
 				case FIELD_TEXTAREA:
