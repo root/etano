@@ -51,9 +51,9 @@ $categs=array();
 $account=array();
 $query="SELECT `fk_user_id`,`_photo`,`_user`,`alt_url`,`rad_longitude`,`rad_latitude`,`score`,`status`,`reject_reason`,UNIX_TIMESTAMP(`date_added`) as `date_added`,`del`";
 foreach ($_pfields as $field_id=>$field) {
-	if ($field->config['visible']) {
+//	if ($field->config['visible']) {
 		$query.=','.$field->query_select();
-	}
+//	}
 }
 $query.=" FROM `{$dbtable_prefix}user_profiles` WHERE `fk_user_id`=$uid";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -75,9 +75,9 @@ if (mysql_num_rows($res)) {
 	}
 	// set all the fields to their real (readable) values
 	foreach ($_pfields as $field_id=>$field) {
-		if ($field->config['visible']) {
+//		if ($field->config['visible']) {
 			$_pfields[$field_id]->set_value($output,false);
-		}
+//		}
 	}
 	$c=0;
 	foreach ($_pcats as $pcat_id=>$pcat) {
@@ -86,9 +86,9 @@ if (mysql_num_rows($res)) {
 		$cat_content=array();
 		for ($i=0;isset($pcat['fields'][$i]);++$i) {
 			$field=&$_pfields[$pcat['fields'][$i]];
-			if ($field->config['visible']) {
+//			if ($field->config['visible']) {
 				$cat_content[]=array('field'=>$field->display(),'label'=>$field->config['label'],'dbfield'=>$field->config['dbfield']);
-			}
+//			}
 		}
 		$categs[$c]['cat_content']=$cat_content;
 		++$c;
