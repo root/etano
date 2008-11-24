@@ -76,7 +76,7 @@ function gen_user_cache() {
 				$fields=array();
 				$j=0;
 				for ($k=0;isset($pcat['fields'][$k]);++$k) {
-					if (!empty($profile[$_pfields[$pcat['fields'][$k]]->config['dbfield']])) {
+					if (in_array($pcat['fields'][$k],$used_fields) && !empty($profile[$_pfields[$pcat['fields'][$k]]->config['dbfield']])) {
 						$fields[$j]['label']=$profile[$_pfields[$pcat['fields'][$k]]->config['dbfield'].'_label'];
 						$fields[$j]['field']=$profile[$_pfields[$pcat['fields'][$k]]->config['dbfield']];
 						$fields[$j]['dbfield']=$_pfields[$pcat['fields'][$k]]->config['dbfield'];
