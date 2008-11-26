@@ -9,12 +9,11 @@ function clean_online_table() {
 	$query="SELECT a.`fk_user_id` FROM `{$dbtable_prefix}online` a WHERE a.`last_activity`<'$now'-INTERVAL '".$config['inactive_time']."' MINUTE";
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	$to_del=array();
-	$to_score=array();
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$to_del[]=$rsrow['fk_user_id'];
 	}
 	if (!empty($to_del)) {
-		add_member_score($to_score,'login',-1);
+		add_member_score($to_del,'login',-1);
 
 		$query="DELETE FROM `{$dbtable_prefix}online` WHERE `fk_user_id` IN ('".join("','",$to_del)."')";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
