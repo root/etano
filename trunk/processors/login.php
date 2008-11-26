@@ -46,9 +46,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if ($user['status']==ASTAT_ACTIVE) {
 				$time=mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y'));
 				$user['prefs']=get_user_settings($user['user_id'],'def_user_prefs',array('date_format','datetime_format','time_offset','rate_my_photos','profile_comments'));
+				$score=add_member_score($user['user_id'],'login',1,true);	// just read the value
 				if ($user['last_activity']<$time-$score_threshold) {
-					add_member_score($user['user_id'],'login');
+					$score+=add_member_score($user['user_id'],'login_bonus',1,true);
 				}
+				add_member_score($user['user_id'],'force',1,false,$score);
 				$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$user['user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (USE_DB_SESSIONS==1) {
