@@ -1,0 +1,22 @@
+.hint p {
+	color: #f00;
+	font-weight: bold;
+}
+
+.form_table {
+	width: 100%;
+}
+
+.form_table .field {
+	width: 30%;
+}
+
+#reason {
+	width: 300px;
+}
+
+.form_table .field ul li {
+	float: left;
+	list-style-type: none;
+	margin-right: 10px;
+}

@@ -1,0 +1,34 @@
+<h3>Add a description and change various settings to your pictures below:</h3>
+
+<form action="{tplvars.relative_url}processors/photo_settings.php" method="post" id="photosettings_form" class="edit_form">
+<!--loop name="loop"-->
+<fieldset class="one_photo">
+	<img class="user_photo thumb2" src="{tplvars.photourl}/t2/{loop.photo}" alt="{loop.caption}" />
+	<dl>
+		<dt><label for="caption_{loop.photo_id}">Description:</label></dt>
+		<dd><input type="text" class="caption" name="caption[{loop.photo_id}]" id="caption_{loop.photo_id}" value="{loop.caption}" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="is_main_{loop.photo_id}">Main profile photo?</label></dt>
+		<dd><input type="radio" name="is_main" value="{loop.photo_id}" id="is_main_{loop.photo_id}" {loop.is_main} /></dd>
+	</dl>
+	<dl>
+		<dt><label for="is_private_{loop.photo_id}">Private photo?</label></dt>
+		<dd><input type="checkbox" name="is_private[{loop.photo_id}]" value="1" id="is_private_{loop.photo_id}" {loop.is_private} /></dd>
+	</dl>
+	<dl>
+		<dt><label for="allow_comments_{loop.photo_id}">Allow comments on photo?</label></dt>
+		<dd><input type="checkbox" name="allow_comments[{loop.photo_id}]" value="1" id="allow_comments_{loop.photo_id}" {loop.allow_comments} /></dd>
+	</dl>
+</fieldset>
+<!--/loop name="loop"-->
+<fieldset class="controls">
+	<input type="hidden" name="return" value="{output.return}" />
+	<input type="submit" class="button medium" value="Save" />
+</fieldset>
+</form>
+
+<div id="bottom_links">
+	<a class="content-link link_previous" href="{tplvars.relative_url}{output.return2}">Return to your photos</a>
+</div>
+<script type="text/javascript" src="{tplvars.relative_url}js/photo_settings.js?v={tplvars.js_lib_v}"></script>

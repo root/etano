@@ -1,0 +1,11 @@
+@import url('bbcode.css');
+
+textarea#comment {
+	width: 90%;
+	height: 240px;
+}
+
+#comment_addedit_form .controls {
+	padding-top: 15px;
+	margin-top: 15px;
+}
