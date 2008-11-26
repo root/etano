@@ -26,16 +26,6 @@ jQuery.fn.sco_bbcode = function() {
 			add_bbcode2('quote',$('#'+my_ta));
 			return false;
 		});
-		$('#bbmenu_'+ta.attr('id')+' .bb_image').click(function() {
-			var my_ta=$(this).parents('.bb_tools').attr('id').substr(7);
-			add_bbcode2('img',$('#'+my_ta));
-			return false;
-		});
-		$('#bbmenu_'+ta.attr('id')+' .bb_video').click(function() {
-			tb_show('','http://localhost/cust/humanit/index.php');
-	//		add_bbcode2('video',ta);
-			return false;
-		});
 		$('#bbmenu_'+ta.attr('id')+' .smileys').click(function() {
 			var my_ta=$(this).parents('.bb_tools').attr('id').substr(7);
 //			if (!$('.smiley_set')[0]) {
@@ -86,6 +76,9 @@ jQuery.fn.sco_bbcode = function() {
 }
 
 function add_bbcode2(tag,ta,smil) {
+	if (typeof ta=='string') {
+		ta=$('#'+ta);
+	}
 	tagStart='';
 	tagEnd='';
 	if (tag=='b') {
