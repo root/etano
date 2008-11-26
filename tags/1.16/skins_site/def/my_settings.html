@@ -1,0 +1,42 @@
+<form action="{tplvars.relative_url}processors/my_settings.php" id="prefs_form" method="post" class="edit_form">
+<fieldset>
+<!--loop name="loop"-->
+<dl>
+	<dt>{loop.config_diz}</dt>
+	<dd>{loop.field}</dd>
+</dl>
+<!--/loop name="loop"-->
+</fieldset>
+<fieldset>
+	<input type="submit" class="button medium" value="Save" tabindex="50" />
+</fieldset>
+</form>
+
+<p class="comment">The email address we're using to communicate with you is <strong>{output.email}</strong>. If you want to change it, you can use the form below:</p>
+<h3>Change your email address</h3>
+<form action="{tplvars.relative_url}processors/email_change.php" id="email_form" method="post" class="edit_form">
+<fieldset>
+<dl>
+	<dt>New email:</dt>
+	<dd><input class="text" type="text" name="email" tabindex="51" /></dd>
+</dl>
+<dl>
+	<dt>New email again:</dt>
+	<dd><input class="text" type="text" name="email2" tabindex="52" /></dd>
+</dl>
+</fieldset>
+<fieldset class="controls">
+	<input type="submit" class="button medium" value="Change" tabindex="53" />
+	<p class="comment">Note that a confirmation email will be sent to the new email address you provide here. You must read it and click on the confirmation link inside it in order for your email address to be changed.</p>
+</fieldset>
+</form>
+
+<h3>Cancel your account</h3>
+<p>If you no longer wish to stay with us you can cancel your account at anytime by clicking on this link: <a class="content-link simple" href="processors/cancel_account.php" id="cancel_link">Cancel account</a></p>
+<p>Please note that if you have an active Paypal subscription with us you will have to cancel it from your Paypal account.</p>
+
+<script type="text/javascript">
+	server_time=new Date('{output.gmtime}');
+	var lang=new Array('{output.lang_260}','{output.lang_261}','{output.lang_276}');
+</script>
+<script type="text/javascript" src="{tplvars.relative_url}js/my_settings.js?v={tplvars.js_lib_v}"></script>

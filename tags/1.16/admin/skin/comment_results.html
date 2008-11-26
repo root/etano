@@ -1,0 +1,24 @@
+<h2>Search Results - Comments</h2>
+
+<!--loop name="loop"-->
+<dl class="comment_details">
+	<dd>
+		<p>Comment by: <!--opt name="loop.fk_user_id"--><a href="profile.php?uid={loop.fk_user_id}"><!--/opt name="loop.fk_user_id"-->{loop._user}<!--opt name="loop.fk_user_id"--></a><!--/opt name="loop.fk_user_id"--></p>
+		<p>{loop.owner}</p>
+		<p>Posted on: {loop.date_posted}</p>
+		<p>Status: <!--opt name="loop.pending"--><span class="alert_ppending">Needs your approval</span><!--/opt name="loop.pending"--><!--opt name="loop.need_edit"--><span class="alert_pedit">Needs editing</span><!--/opt name="loop.need_edit"--><!--opt name="loop.approved"--><span class="alert_papproved">Approved</span><!--/opt name="loop.approved"--></p>
+		<p>{loop.comment}</p>
+	</dd>
+	<dd class="actions">
+		<a class="item_del" href="processors/comment_delete.php?m={output.m}&amp;comment_id={loop.comment_id}&amp;return={output.return2me}" title="Delete" onclick="return(confirm('Are you sure you want to delete this comment?'))">Delete blog</a>
+		<a class="item_edit" href="comment_addedit.php?m={output.m}&amp;comment_id={loop.comment_id}&amp;return={output.return2me}" title="Edit">Edit</a>
+		<!--opt name="!loop.approved"--><a href="processors/comment_approve.php?m={output.m}&amp;cids%5B%5D={loop.comment_id}&amp;return={output.return2me}" title="Approve"><img src="skin/images/approve.gif" alt="Approve" /></a><!--/opt name="!loop.approved"-->
+	</dd>
+	<div class="clear"></div>
+<!--noloop name="loop"-->
+	No comments found meeting your search criteria.
+<!--/noloop name="loop"-->
+</dl>
+<!--/loop name="loop"-->
+
+{output.pager2}
