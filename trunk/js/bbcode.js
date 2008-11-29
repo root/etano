@@ -28,7 +28,7 @@ jQuery.fn.sco_bbcode = function() {
 		});
 		$('#bbmenu_'+ta.attr('id')+' .smileys').click(function() {
 			var my_ta=$(this).parents('.bb_tools').attr('id').substr(7);
-//			if (!$('.smiley_set')[0]) {
+			if (!$('#bbmenu_'+my_ta+' .smiley_set')[0]) {
 				var smiley_set='<div class="smiley_set"><table><tbody>';
 				smiley_set+='<tr>';
 				smiley_set+='<td><a href="#" title="angry" onclick="return(add_bbcode2(\'smiley\',$(\'#'+my_ta+'\'),\'&gt;:(\'))"><img src="'+baseurl+'/images/emoticons/angry.gif" alt="angry" /></a></td>';
@@ -68,8 +68,8 @@ jQuery.fn.sco_bbcode = function() {
 				smiley_set+='</tr>';
 				smiley_set+='</tbody></table></div>';
 				$(smiley_set).appendTo($('#bbmenu_'+my_ta));
-//			}
-			$('#'+my_ta+' .smiley_set').toggle();
+			}
+			$('#bbmenu_'+my_ta+' .smiley_set').toggle();
 			return false;
 		});
 	});
