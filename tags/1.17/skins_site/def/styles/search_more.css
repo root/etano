@@ -1,0 +1,37 @@
+#search_form dd {
+	width: 400px;
+}
+
+.table_row li {
+	width: 160px;
+}
+
+
+/* LEFT MENU */
+
+.content-link.gview {
+	background-image: url('../images/menu_gallery_view.gif');
+}
+
+.content-link.lview {
+	background-image: url('../images/menu_list_view.gif');
+}
+
+.content-link.saved_search {
+	background-image: url('../images/menu_saved_search.gif');
+}
+
+#my_searches ul.menu li {
+	border: none;
+	padding: 0;
+}
+
+#my_searches ul.menu li.controls {
+	border-top: 1px dashed #ccc;
+	padding-top: 10px;
+	margin-top: 5px;
+}
+
+input#byname {
+	width: 110px;
+}

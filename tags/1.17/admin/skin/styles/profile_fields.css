@@ -1,0 +1,48 @@
+.hint p {
+	color: #f00;
+	font-weight: bold;
+}
+
+.control {
+	width: 50px;
+}
+
+.plabel {
+	width: 220px;
+}
+
+.field_type {
+	width: 80px;
+}
+
+.results_table .searchable {
+	width: 20px;
+	text-align: center;
+}
+
+.results_table .at_reg {
+	width: 20px;
+	text-align: center;
+}
+
+.results_table .required {
+	width: 20px;
+	text-align: center;
+}
+
+.pcat {
+	width: 120px;
+}
+
+.accvals {
+	width: 350px;
+}
+
+.order {
+	width: 30px;
+}
+
+#bottom_links form {
+	display: inline;
+	margin: 0;
+}
