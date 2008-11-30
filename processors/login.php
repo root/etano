@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$user['user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (USE_DB_SESSIONS==1) {
-					$query="UPDATE `{$dbtable_prefix}online` SET `fk_user_id`=".$user['user_id']." WHERE `sess`='".session_id()."'";
+					$query="REPLACE INTO `{$dbtable_prefix}online` SET `fk_user_id`=".$user['user_id'].",`sess`='".session_id()."',`sess_data`='".sanitize_and_format(serialize($_SESSION),TYPE_STRING,FORMAT_ADDSLASH)."'";
 					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				}
 				unset($user['last_activity'],$user['email']);
