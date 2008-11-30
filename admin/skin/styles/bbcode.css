@@ -1,11 +1,10 @@
-#bb_tools {
-	width: 150px;
+.bb_tools {
 	height: 28px;
 	margin: 15px 0 10px;
 	position:relative;
 }
 
-#bb_tools a {
+.bb_tools a {
 	float: left;
 	height: 28px;
 	width: 28px;
@@ -15,31 +14,31 @@
 	outline: none !important;
 }
 
-#bb_tools a:hover {
+.bb_tools a:hover {
 	background-position: bottom center;
 }
 
-#bb_tools a#bold {
+.bb_tools a.bold {
 	background-image: url('../images/bbcode_bold.gif');
 }
 
-#bb_tools a#underline {
+.bb_tools a.underline {
 	background-image: url('../images/bbcode_underline.gif');
 }
 
-#bb_tools a#hyperlink {
+.bb_tools a.hyperlink {
 	background-image: url('../images/bbcode_hyperlink.gif');
 }
 
-#bb_tools a#quote {
+.bb_tools a.quote {
 	background-image: url('../images/bbcode_quote.gif');
 }
 
-#bb_tools a#smileys {
+.bb_tools a.smileys {
 	background-image: url('../images/bbcode_smiley.gif');
 }
 
-#smiley_set {
+.smiley_set {
 	display: none;
 	padding: 4px;
 	border: 2px solid #000;
@@ -50,21 +49,21 @@
 	position: absolute;
 }
 
-#smiley_set table {
+.smiley_set table {
 	display: block;
 }
 
-#smiley_set a {
+.smiley_set a {
 	text-indent:0;
 	padding: 0px;
 	margin:0;
 	width:28px;
 }
 
-#smiley_set a:hover {
+.smiley_set a:hover {
 	background-color: #eee;
 }
 
-#smiley_set a img {
+.smiley_set a img {
 	padding:3px 0 0 3px;
 }
