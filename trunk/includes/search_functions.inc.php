@@ -88,7 +88,7 @@ function search_results($search,$my_membership=1) {
 				$input['acclevel_code']='search_basic';
 				$continue=true;
 				$from="`{$dbtable_prefix}online` b,".$from;
-				$where.=" AND b.`fk_user_id`<>0 AND b.`fk_user_id`=a.`fk_user_id`";
+				$where.=" AND b.`fk_user_id` IS NOT NULL AND b.`fk_user_id`=a.`fk_user_id`";
 				$orderby="GROUP BY b.`fk_user_id` ".$orderby;
 				break;
 
