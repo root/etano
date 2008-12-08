@@ -46,11 +46,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			if ($user['status']==ASTAT_ACTIVE) {
 				$time=mktime(gmdate('H'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y'));
 				$user['prefs']=get_user_settings($user['user_id'],'def_user_prefs',array('date_format','datetime_format','time_offset','rate_my_photos','profile_comments'));
-				$score=add_member_score($user['user_id'],'login',1,true);	// just read the value
-				if ($user['last_activity']<$time-$score_threshold) {
-					$score+=add_member_score($user['user_id'],'login_bonus',1,true);
+				$score=0;
+				// it might happen that the user is already logged in. Don't add the login score if that's the case.
+				$query="SELECT `fk_user_id` FROM `{$dbtable_prefix}online` WHERE `fk_user_id`=".$user['user_id'];
+				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+				if (!mysql_num_rows($res)) {
+					$score+=add_member_score($user['user_id'],'login',1,true);	// just read the value
 				}
-				add_member_score($user['user_id'],'force',1,false,$score);
+				if ($user['last_activity']<$time-$score_threshold) {
+					$score+=add_member_score($user['user_id'],'login_bonus',1,true);	// just read the value
+				}
+				if (!empty($score)) {
+					add_member_score($user['user_id'],'force',1,false,$score);
+				}
 				$query="UPDATE `".USER_ACCOUNTS_TABLE."` SET `last_activity`='".gmdate('YmdHis')."' WHERE `".USER_ACCOUNT_ID."`=".$user['user_id'];
 				if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 				if (USE_DB_SESSIONS==1) {
