@@ -2,7 +2,7 @@
 /******************************************************************************
 Etano
 ===============================================================================
-File:                       includes/classes/fields/field_textfield.class.php
+File:                       includes/classes/fields/field_select.class.php
 $Revision: 207 $
 Software by:                DateMill (http://www.datemill.com)
 Copyright by:               DateMill (http://www.datemill.com)
