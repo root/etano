@@ -303,6 +303,68 @@ function queue_or_send_message($mess_array,$force_send=false) {
 }
 
 
+//	$email must have the keys: 'subject','message_body'
+//	Both the subject and the message_body are assumed to be NOT sanitized but STRIPSLASH_MQ'ed
+function queue_or_send_email($email_addrs,$email,$force_send=false) {
+	$myreturn=true;
+	if (is_string($email_addrs)) {
+		$email_addrs=array($email_addrs);
+	}
+	$config=get_site_option(array('mail_from','mail_crlf'),'core');
+	$query_len=10000;
+	if (!$force_send) {
+		$email['subject']=sanitize_and_format($email['subject'],TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTFIELD]);
+		$email['message_body']=sanitize_and_format($email['message_body'],TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTAREA]);
+		global $dbtable_prefix;
+		$base="INSERT INTO `{$dbtable_prefix}queue_email` (`to`,`subject`,`message_body`) VALUES ";
+		$query=$base;
+		for ($i=0;isset($email_addrs[$i]);++$i) {
+			$temp="('".$email_addrs[$i]."','".$email['subject']."','".$email['message_body']."')";
+			if (strlen($query)+strlen($temp)<$query_len) {
+				$query.=$temp.',';
+			} else {
+				if ($query!=$base) {
+					$query=substr($query,0,-1);
+					if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+					$query=$base.$temp.',';
+				}
+			}
+		}
+		if ($query!=$base) {
+			$query=substr($query,0,-1);
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		}
+	} else {
+		$email['subject']=sanitize_and_format($email['subject'],TYPE_STRING,FORMAT_STRIP_MQ | FORMAT_ONELINE | FORMAT_TRIM);
+		$email['message_body']=sanitize_and_format($email['message_body'],TYPE_STRING,FORMAT_STRIP_MQ);
+		require_once _BASEPATH_.'/includes/classes/phpmailer.class.php';
+		$mail=new PHPMailer();
+		$mail->IsHTML(true);
+		$mail->From=$config['mail_from'];
+		$mail->Sender=$config['mail_from'];
+		$mail->FromName=_SITENAME_;
+		if ($config['mail_crlf']) {
+			$mail->LE="\r\n";
+		} else {
+			$mail->LE="\n";
+		}
+		$mail->IsMail();
+		for ($i=0;isset($email_addrs[$i]);++$i) {
+			$mail->ClearAddresses();
+			$mail->AddAddress($email_addrs[$i]);
+			$mail->Subject=$email['subject'];
+			$mail->Body=$email['message_body'];
+			if (!$mail->Send()) {
+				$myreturn=false;
+				$GLOBALS['topass']['message']['type']=MESSAGE_ERROR;
+				$GLOBALS['topass']['message']['text']=$mail->ErrorInfo;
+			}
+		}
+	}
+	return $myreturn;
+}
+
+
 function add_member_score($user_ids,$act,$times=1,$just_read_value=false,$points=0) {
 	$myreturn=0;
 	$scores=array('force'=>0,'login'=>15,'login_bonus'=>1,'approved'=>10,'rejected'=>-10,'add_main_photo'=>10,'del_main_photo'=>-10,'add_photo'=>2,'del_photo'=>-2,'add_blog'=>5,'del_blog'=>-5,'payment'=>50,'unpayment'=>-50,'received_comment'=>0.4,'removed_comment'=>-0.4,'pview'=>0.1,'block_member'=>-5,'unblock_member'=>5,'join'=>40,'inactivity'=>-2);
