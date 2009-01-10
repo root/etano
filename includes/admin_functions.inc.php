@@ -366,9 +366,9 @@ function queue_or_send_email($email_addrs,$email,$force_send=false) {
 	if (is_string($email_addrs)) {
 		$email_addrs=array($email_addrs);
 	}
-	$config=get_site_option(array('use_queue','mail_from','mail_crlf'),'core');
+	$config=get_site_option(array('mail_from','mail_crlf'),'core');
 	$query_len=10000;
-	if (!$force_send && !empty($config['use_queue'])) {
+	if (!$force_send) {
 		$email['subject']=sanitize_and_format($email['subject'],TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTFIELD]);
 		$email['message_body']=sanitize_and_format($email['message_body'],TYPE_STRING,$GLOBALS['__field2format'][FIELD_TEXTAREA]);
 		global $dbtable_prefix;
