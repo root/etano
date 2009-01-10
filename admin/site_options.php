@@ -22,6 +22,7 @@ if (!empty($_GET['module_code'])) {
 	$active_module_code=sanitize_and_format($_GET['module_code'],TYPE_STRING,$__field2format[FIELD_TEXTFIELD]);
 }
 
+$output=array();
 $query="SELECT a.*,b.`module_name`,b.`module_type` FROM `{$dbtable_prefix}site_options3` a,`{$dbtable_prefix}modules` b WHERE b.`module_code`=a.`fk_module_code` AND a.`option_type`<>".OPTION_NA." ORDER BY b.`sort` ASC, a.`fk_module_code` ASC,a.`config_id` ASC";
 if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 $site_options=array();
@@ -102,9 +103,11 @@ while ($rsrow=mysql_fetch_assoc($res)) {
 
 //print_r($site_options);
 
+$output['gmtime']=gmdate('F d, Y, h:i:s A');
 $tpl->set_file('content','site_options.html');
 $tpl->set_loop('site_options',$site_options);
 $tpl->set_var('module_code',$active_module_code);
+$tpl->set_var('output',$output);
 $tpl->process('content','content',TPL_MULTILOOP);
 
 $tplvars['title']='Site Options';
