@@ -13,6 +13,7 @@ Support at:                 http://www.datemill.com/forum
 
 require_once '../../includes/common.inc.php';
 require_once '../../includes/admin_functions.inc.php';
+require _BASEPATH_.'/skins_site/'.$def_skin.'/lang/comments.inc.php';
 allow_dept(DEPT_ADMIN);
 
 if (is_file(_BASEPATH_.'/events/processors/comment_addedit.php')) {
