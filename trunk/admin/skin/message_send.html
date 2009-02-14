@@ -12,14 +12,7 @@
 <tr>
 	<td class="label"><label for="message_body">Message:</label></td>
 	<td class="field {profile_fields.error_message_body}">
-		<div id="bb_tools">
-			<a href="javascript:;" id="bold" class="bold" title="Bold">Bold</a>
-			<a href="javascript:;" id="underline" class="underline" title="Underline">Underline</a>
-			<a href="javascript:;" id="hyperlink" class="hyperlink" title="Hyperlink">Hyperlink</a>
-			<a href="javascript:;" id="quote" class="quote" title="Quote">Quote</a>
-			<a href="javascript:;" id="smileys" class="smile" title="smileys">Smileys</a>
-		</div>
-		<textarea name="message_body" id="message_body" cols="" rows="" wrap="off" tabindex="2">{output.message_body}</textarea>
+		<textarea name="message_body" id="message_body" cols="" rows="" wrap="off" tabindex="2" class="sco_bbcode">{output.message_body}</textarea>
 	</td>
 	<td class="comment"></td>
 </tr>
@@ -37,4 +30,4 @@
 <script type="text/javascript">
 	bbcode_field_id='#message_body';
 </script>
-<script type="text/javascript" src="js/bbcode.js?v={tplvars.js_lib_v}"></script>
+<script type="text/javascript" src="{tplvars.baseurl}/js/bbcode.js?v={tplvars.js_lib_v}"></script>
