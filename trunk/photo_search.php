@@ -146,6 +146,9 @@ if (isset($_GET['st'])) {
 			$tplvars['page_title']=sprintf($GLOBALS['_lang'][148],$tags);
 			break;
 
+		default:
+			$where.=" AND a.`is_private`=0";
+
 	}
 }
 check_login_member($input['acclevel_code']);
