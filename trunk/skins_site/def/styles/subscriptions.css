@@ -29,3 +29,7 @@
 .subscriptions .subscr_diz strong {
 	display: block;
 }
+
+.subscriptions .row div.payment_links {
+	width: 150px;
+}
