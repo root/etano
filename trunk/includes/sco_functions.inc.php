@@ -3,7 +3,7 @@
 File:                       includes/sco_functions.inc.php
 $Revision$
 Info:   					general purpose functions library
-File version:				1.2008050501
+File version:				1.2009022201
 Created by:                 Dan Caragea (http://www.sco.ro - dan@sco.ro)
 ******************************************************************************/
 
@@ -651,7 +651,15 @@ function upload_file($destdir,$actual_field_name,$desired_filename='',$required=
 	if (isset($_FILES[$actual_field_name]['tmp_name']) && is_uploaded_file($_FILES[$actual_field_name]['tmp_name'])) {
 		$filename=addslashes_mq($_FILES[$actual_field_name]['name']);
 		$ext=strtolower(substr(strrchr($_FILES[$actual_field_name]['name'],"."),1));
-		if ($_FILES[$actual_field_name]['size']==0) {
+		global $accepted_images;
+		if (empty($accepted_images)) {
+			$accepted_images=array('jpg','jpeg','png');
+		}
+		if (!in_array($ext,$accepted_images)) {
+			$error=true;
+			$GLOBALS['topass']['message']['type']=MESSAGE_ERROR;
+			$GLOBALS['topass']['message']['text']='Invalid file uploaded';
+		} elseif ($_FILES[$actual_field_name]['size']==0) {
 			$error=true;
 			$GLOBALS['topass']['message']['type']=MESSAGE_ERROR;
 			$GLOBALS['topass']['message']['text']='File upload error';
