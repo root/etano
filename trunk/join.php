@@ -26,7 +26,7 @@ if (isset($_SESSION['topass']['input'])) {
 	$output=sanitize_and_format($output,TYPE_STRING,FORMAT_STRIP_MQ);
 	$page=$output['page'];
 	$agree=false;
-	if ($page==1 && $output['agree']==1) {
+	if ($page==1 && isset($output['agree']) && $output['agree']==1) {
 		$agree=true;
 	}
 	unset($_SESSION['topass']['input']);
