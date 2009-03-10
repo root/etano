@@ -136,8 +136,8 @@ function check_login_member($level_code) {
 	$log['membership']=$_SESSION[_LICENSE_KEY_]['user']['membership'];
 	$log['ip']=sprintf('%u',ip2long($_SERVER['REMOTE_ADDR']));
 	if ($level_code!='all' && $level_code!='auth') {
-		log_user_action($log);
 		rate_limiter($log);
+		log_user_action($log);
 	}
 }
 
