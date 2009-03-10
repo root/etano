@@ -39,7 +39,7 @@ function rate_limiter(&$log) {
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		$query="SELECT count(*) FROM `{$dbtable_prefix}site_log` WHERE `level_code`='".$log['level']."' AND `time`>=DATE_SUB('".gmdate('YmdHis')."',INTERVAL ".$rsrow['interval']." MINUTE) $where";
 		if (!($res2=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
-		if (mysql_result($res2,0,0)>$rsrow['limit']) {
+		if (mysql_result($res2,0,0)>=$rsrow['limit']) {
 			$punish[$rsrow['punishment']]=$rsrow['fk_lk_id_error_message'];
 		}
 	}
