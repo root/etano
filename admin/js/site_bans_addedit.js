@@ -5,7 +5,7 @@ $(function() {
 });
 
 function check_form(the) {
-	if (!$('#ban_type_2')[0].checked && !$('#ban_type_3')[0].checked) {
+	if (!$('#ban_type_2')[0].checked && !$('#ban_type_3')[0].checked && !$('#ban_type_5')[0].checked) {
 		alert('Please select the ban type');
 		return false;
 	}

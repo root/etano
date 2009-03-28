@@ -101,6 +101,8 @@ function check_login_member($level_code) {
 		die;
 	} elseif (isset($_bans[_PUNISH_BANIP_]) && in_array(sprintf('%u',ip2long($_SERVER['REMOTE_ADDR'])),$_bans[_PUNISH_BANIP_])) {
 		die;
+	} elseif (isset($_bans[_PUNISH_BANEMAIL_]) && in_array($_SESSION[_LICENSE_KEY_]['user']['email'],$_bans[_PUNISH_BANEMAIL_])) {
+		die;
 	}
 	global $dbtable_prefix;
 	if (!isset($GLOBALS['_access_level'][$level_code])) {
