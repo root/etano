@@ -15,7 +15,8 @@ define('_PUNISH_ERROR_',1);
 define('_PUNISH_BANUSER_',2);
 define('_PUNISH_BANIP_',3);
 define('_PUNISH_UPGRADE_',4);
-$accepted_punishments=array(_PUNISH_ERROR_=>'Sorry page',_PUNISH_UPGRADE_=>'Membership Upgrade Options',_PUNISH_BANUSER_=>'Ban user',_PUNISH_BANIP_=>'Ban IP');
+define('_PUNISH_BANEMAIL_',5);
+$accepted_punishments=array(_PUNISH_ERROR_=>'Sorry page',_PUNISH_UPGRADE_=>'Membership Upgrade Options',_PUNISH_BANUSER_=>'Ban user',_PUNISH_BANIP_=>'Ban IP',_PUNISH_BANEMAIL_=>'Ban email');
 
 function log_user_action(&$log) {
 	global $dbtable_prefix;
@@ -54,6 +55,11 @@ function rate_limiter(&$log) {
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 		regenerate_ban_array();
 	}
+	if (isset($punish[_PUNISH_BANEMAIL_])) {
+		$query="INSERT IGNORE INTO `{$dbtable_prefix}site_bans` SET `ban_type`="._PUNISH_BANEMAIL_.",`what`='".$log['email']."',`reason`='".$punish[_PUNISH_BANEMAIL_]."'";
+		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		regenerate_ban_array();
+	}
 	if (isset($punish[_PUNISH_ERROR_])) {
 		$topass['message']['type']=MESSAGE_ERROR;
 		$topass['message']['text']=isset($GLOBALS['_lang'][$punish[_PUNISH_ERROR_]]) ? $GLOBALS['_lang'][$punish[_PUNISH_ERROR_]] : '';
@@ -82,6 +88,9 @@ function regenerate_ban_array() {
 	}
 	if (!empty($_bans[_PUNISH_BANUSER_])) {
 		$towrite.='$_bans[_PUNISH_BANUSER_]=array(\''.join("','",$_bans[_PUNISH_BANUSER_])."');\n";
+	}
+	if (!empty($_bans[_PUNISH_BANEMAIL_])) {
+		$towrite.='$_bans[_PUNISH_BANEMAIL_]=array(\''.join("','",$_bans[_PUNISH_BANEMAIL_])."');\n";
 	}
 	$fileop=new fileop();
 	$fileop->file_put_contents(_BASEPATH_.'/includes/site_bans.inc.php',$towrite);
