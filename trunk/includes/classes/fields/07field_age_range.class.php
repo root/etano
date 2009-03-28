@@ -55,11 +55,12 @@ class field_age_range extends field_range {
 			$output['search_default']['min']=isset($output['search_default']['min']) ? $output['search_default']['min'] : '';
 			$output['search_default']['max']=isset($output['search_default']['max']) ? $output['search_default']['max'] : '';
 			$myreturn.='<div class="clear">
-				<label for="search_start">Default search range:</label>
-				<input class="text numeric" type="text" name="search_start" id="search_start" value="'.$output['search_default']['min'].'" size="3" maxlength="3" tabindex="15" />
-				to
-				<input class="text numeric" type="text" name="search_end" id="search_end" value="'.$output['search_default']['max'].'" size="3" maxlength="3" tabindex="16" />
-				<p class="comment">Enter here the ages you want preselected in the search box like Age: 18 to 30.</p>';
+					<label for="search_start">Default search range:</label>
+					<input class="text numeric" type="text" name="search_start" id="search_start" value="'.$output['search_default']['min'].'" size="3" maxlength="3" tabindex="15" />
+					to
+					<input class="text numeric" type="text" name="search_end" id="search_end" value="'.$output['search_default']['max'].'" size="3" maxlength="3" tabindex="16" />
+					<p class="comment">Enter here the ages you want preselected in the search box like Age: 18 to 30.</p>
+				</div>';
 		}
 		return $myreturn;
 	}

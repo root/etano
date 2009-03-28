@@ -98,10 +98,11 @@ class field_birthdate extends iprofile_field {
 			$output['accepted_values']['min']=isset($output['accepted_values']['min']) ? $output['accepted_values']['min'] : '';
 			$output['accepted_values']['max']=isset($output['accepted_values']['max']) ? $output['accepted_values']['max'] : '';
 			$myreturn.='<div class="clear">
-				<label for="year_start">Ages allowed from:</label>
-				<input class="text numeric" type="text" name="age_start" id="age_start" value="'.$output['accepted_values']['min'].'" size="3" maxlength="3" tabindex="13" />
-				to
-				<input class="text numeric" type="text" name="age_end" id="age_end" value="'.$output['accepted_values']['max'].'" size="3" maxlength="3" tabindex="14" />';
+					<label for="year_start">Ages allowed from:</label>
+					<input class="text numeric" type="text" name="age_start" id="age_start" value="'.$output['accepted_values']['min'].'" size="3" maxlength="3" tabindex="13" />
+					to
+					<input class="text numeric" type="text" name="age_end" id="age_end" value="'.$output['accepted_values']['max'].'" size="3" maxlength="3" tabindex="14" />
+				</div>';
 		}
 		return $myreturn;
 	}
