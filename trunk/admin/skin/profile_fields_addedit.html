@@ -15,7 +15,7 @@
 <div class="clear">
 	<label for="label">Label:</label>
 	<input class="text" type="text" name="label" id="label" value="{output.label}" tabindex="1" />
-	<p class="comment">Note: the value you enter here is for the default skin ({output.default_skin}) <a class="translate" href="popup_lang_string.php?lk_id={output.fk_lk_id_label}">Translate!</a></p>
+	<p class="comment">Note: the value you enter here is for the default skin ({output.default_skin}) <a class="thickbox translate" href="popup_lang_string.php?lk_id={output.fk_lk_id_label}&amp;TB_modal=true&amp;height=300&amp;width=750">Translate!</a></p>
 </div>
 <div class="clear">
 	<label for="at_registration">At registration?</label>
@@ -74,7 +74,7 @@
 <div class="{output.row_sl} clear" id="row_sl">
 	<label for="search_label">Search Label:</label>
 	<input class="text" type="text" name="search_label" id="search_label" value="{output.search_label}" tabindex="12" />
-	<p class="comment">Note: the value you enter here is for the default skin ({output.default_skin}) <a class="translate" href="popup_lang_string.php?lk_id={output.fk_lk_id_search}">Translate!</a></p>
+	<p class="comment">Note: the value you enter here is for the default skin ({output.default_skin}) <a class="thickbox translate" href="popup_lang_string.php?lk_id={output.fk_lk_id_search}&amp;TB_modal=true&amp;height=300&amp;width=750">Translate!</a></p>
 </div>
 <!--/opt name="output.row_searchable"-->
 
@@ -96,6 +96,7 @@
 <script type="text/javascript">
 	var field_type='{output.field_type}';
 </script>
+<script type="text/javascript" src="../js/thickbox.js?v={tplvars.js_lib_v}"></script>
 <script type="text/javascript" src="js/json.js?v={tplvars.js_lib_v}"></script>
 <script type="text/javascript" src="js/datastore_pfield.js?v={tplvars.js_lib_v}"></script>
 <script type="text/javascript" src="js/profile_fields_addedit.js?v={tplvars.js_lib_v}"></script>
