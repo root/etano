@@ -11,7 +11,7 @@ $(function() {
 		});
 	}
 
-	$('a[@rel=external]').attr('target','_blank');
+	$('a[rel=external]').attr('target','_blank');
 
 	last_ka_check=new Date().getTime();
 	if (typeof(in_admin)=='undefined') {

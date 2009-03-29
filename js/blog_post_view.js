@@ -1,5 +1,5 @@
 $(function() {
-	$('div.comment a.link_change[@id^=editme_]').bind('click',function() {
+	$('div.comment a.link_change[id^=editme_]').bind('click',function() {
 		c_id=$(this).attr('id').substr(7);
 		$.post(baseurl+'/ajax/get_comment.php',
 				{'comment_id':c_id,'t':'blog'},
@@ -27,4 +27,3 @@ $(function() {
 		return confirm(lang[0]);
 	});
 });
-

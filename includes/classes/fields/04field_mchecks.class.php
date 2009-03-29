@@ -385,9 +385,9 @@ class field_mchecks extends iprofile_field {
 		$myreturn='';
 		if (empty($this->is_search)) {
 			if (!empty($this->config['required'])) {
-				$myreturn.='$(\'input[@id^='.$this->config['dbfield'].']\').parents(\'form\').bind(\'submit\',function() {
+				$myreturn.='$(\'input[id^='.$this->config['dbfield'].']\').parents(\'form\').bind(\'submit\',function() {
 					var is_empty=true;
-					$(\'input[@id^='.$this->config['dbfield'].']\').each(function() {
+					$(\'input[id^='.$this->config['dbfield'].']\').each(function() {
 						if (this.checked) {
 							is_empty=false;
 						}
