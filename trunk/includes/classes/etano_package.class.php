@@ -27,7 +27,7 @@ class etano_package {
 	var $manual_actions=array();
 	var $ui='';	// user input content. It is set to some html content if a user input page must be displayed.
 
-	function etano_package($manifest_file='') {
+	function __construct($manifest_file='') {
 		if (!empty($manifest_file)) {
 			$this->set_file($manifest_file);
 		}

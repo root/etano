@@ -12,7 +12,7 @@ Support at:                 http://www.datemill.com/forum
 ******************************************************************************/
 
 
-/*abstract*/ class iprofile_field {
+abstract class iprofile_field {
 	/**
 	 * The $config array holds the field configuration data.
 	 */
@@ -38,7 +38,7 @@ Support at:                 http://www.datemill.com/forum
 	 *	@param boolean $sanitize (optional) Sanitize the input or take it as it is. When setting the value from GPC it should be sanitized, otherwise it can be taken as is.
 	 *	@return boolean true
 	 */
-	function set_value($all_values,$sanitize=true) {
+	public function set_value($all_values,$sanitize=true) {
 	}
 
 	/**
@@ -47,7 +47,7 @@ Support at:                 http://www.datemill.com/forum
 	 *	@param int $tabindex (optional) The html tabindex attribute for the element.
 	 *	@return string html code
 	 */
-	function edit($tabindex=1) {
+	public function edit($tabindex=1) {
 		return '';
 	}
 
@@ -56,7 +56,7 @@ Support at:                 http://www.datemill.com/forum
 	 *
 	 *	@return string the value
 	 */
-	function display() {
+	public function display() {
 		return '';
 	}
 
@@ -65,7 +65,7 @@ Support at:                 http://www.datemill.com/forum
 	 *
 	 *	@return field object the new field. If 'search_type' is not specified or is invalid, $this should be returned.
 	 */
-	function search() {
+	public function search() {
 		return null;
 	}
 
@@ -74,7 +74,7 @@ Support at:                 http://www.datemill.com/forum
 	 *
 	 *	@return string the html to be displayed in profile_fields_addedit, after the general config questions.
 	 */
-	function edit_admin() {
+	public function edit_admin() {
 		return '';
 	}
 
@@ -91,7 +91,7 @@ Support at:                 http://www.datemill.com/forum
 	 *	@return mixed Either boolean false/true with the meaning "Error occured?" or an array with this field's config if in
 	 *	'search' mode.
 	 */
-	function admin_processor() {
+	public function admin_processor() {
 
 	}
 
@@ -100,7 +100,7 @@ Support at:                 http://www.datemill.com/forum
 	 *
 	 *	@return string sql part
 	 */
-	function query_select() {
+	protected function query_select() {
 		return '1';
 	}
 
@@ -109,24 +109,24 @@ Support at:                 http://www.datemill.com/forum
 	 *
 	 *	@return string sql part
 	 */
-	function query_set() {
+	protected function query_set() {
 		return '';
 	}
 
-	function query_search() {
+	protected function query_search() {
 		return '';
 	}
 
-	function query_create($dbfield) {
+	protected function query_create($dbfield) {
 	}
 
-	function query_drop($dbfield) {
+	protected function query_drop($dbfield) {
 	}
 
 	/**
 	 *	Method responsible for client side validation and field behavior
 	 */
-	function edit_js() {
+	public function edit_js() {
 		return '';
 	}
 
@@ -135,11 +135,11 @@ Support at:                 http://www.datemill.com/forum
 	 *
 	 *	@return mixed true if validation went ok, false or array('text'=>'error description') if validation did not succeed.
 	 */
-	function validation_server() {
+	public function validation_server() {
 		return true;
 	}
 
-	function get_value($as_array=false) {
+	public function get_value($as_array=false) {
 		return $this->value;
 	}
 }

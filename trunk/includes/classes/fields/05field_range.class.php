@@ -16,7 +16,7 @@ class field_range extends iprofile_field {
 	var $empty_value=array('edit'=>array('min'=>0,'max'=>0),'display'=>'?');
 	var $display_name='Range';
 
-	function field_range($config=array(),$is_search=false) {
+	function __construct($config=array(),$is_search=false) {
 		$this->config=$config;
 		$this->is_search=$is_search;
 		if ($is_search) {

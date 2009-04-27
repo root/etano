@@ -17,7 +17,7 @@ class user_cache {
 	var $skin='';
 	var $cache=null;
 
-	function user_cache($skin='') {
+	function __construct($skin='') {
 		if (empty($skin)) {
 			$skin=get_my_skin();
 		}

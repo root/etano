@@ -11,13 +11,10 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-class ifraud {
+abstract class ifraud {
 	var $config=array();
 	var $module_code='';
 	var $fraud_reason='';
-
-	function ifraud() {
-	}
 
 	function is_fraud() {
 		return false;
@@ -31,6 +28,6 @@ class ifraud {
 		$this->fraud_reason=$fraud_reason;
 	}
 
-	function _init() {
+	protected function _init() {
 	}
 }

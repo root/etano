@@ -15,7 +15,7 @@ Support at:                 http://www.datemill.com/forum
 class field_age_range extends field_range {
 	var $display_name='Age Range';
 
-	function field_age_range($config=array(),$is_search=false) {
+	function __construct($config=array(),$is_search=false) {
 		$this->config=$config;
 		$this->is_search=$is_search;
 		if ($is_search) {

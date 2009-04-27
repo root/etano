@@ -19,7 +19,7 @@ class field_mchecks extends iprofile_field {
 	// how to render the search_value input in the accepted values list (as radios or as checkboxes)
 	var $_search_defaults_input_type=array('field_select'=>'radio','field_mchecks'=>'checks');
 
-	function field_mchecks($config=array(),$is_search=false) {
+	function __construct($config=array(),$is_search=false) {
 		$this->config=$config;
 		$this->is_search=$is_search;
 		if (isset($this->config['default_value'])) {

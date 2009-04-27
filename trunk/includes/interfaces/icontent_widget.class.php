@@ -11,40 +11,40 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-class icontent_widget {
+abstract class icontent_widget {
 	var $config=array();
 	var $module_code='';
 	var $tpl=false;
 
-	function display() {
+	public function display() {
 	}
 
 
-	function _title() {
+	protected function _title() {
 	}
 
 
-	function _content() {
+	protected function _content() {
 	}
 
 
-	function _bottom() {
+	protected function _bottom() {
 	}
 
 
-	function process() {
+	public function process() {
 	}
 
 
-	function settings_display() {
+	public function settings_display() {
 		return '';
 	}
 
 
-	function settings_process() {
+	public function settings_process() {
 	}
 
 
-	function _init() {
+	protected function _init() {
 	}
 }

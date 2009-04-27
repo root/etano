@@ -33,7 +33,7 @@ class sco_captcha {
 	var $b;
 
 
-	function sco_captcha($ttf_folder,$chars=6,$noise=false,$minsize=13,$maxsize=14,$maxrotation=10,$websafecolors=false) {
+	function __construct($ttf_folder,$chars=6,$noise=false,$minsize=13,$maxsize=14,$maxrotation=10,$websafecolors=false) {
 		$this->ttf_folder=$ttf_folder;
 		$this->chars=$chars;
 		$this->noise=$noise;

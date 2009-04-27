@@ -14,7 +14,7 @@ Support at:                 http://www.datemill.com/forum
 class blog_posts_cache {
 	var $disk_path='';
 
-	function blog_posts_cache() {
+	function __construct() {
 		$this->disk_path=_CACHEPATH_.'/blogs/posts';
 	}
 

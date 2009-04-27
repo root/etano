@@ -16,7 +16,7 @@ class field_zip_distance extends iprofile_field {
 	var $empty_value=array('edit'=>array('zip'=>'','dist'=>0),'display'=>'');
 	var $display_name='Zip Distance';
 
-	function field_zip_distance($config=array(),$is_search=false) {
+	function __construct($config=array(),$is_search=false) {
 		$this->config=$config;
 		$this->is_search=$is_search;
 		if (isset($this->config['default_value'])) {

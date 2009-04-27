@@ -11,15 +11,12 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
-class ipayment {
+abstract class ipayment {
 	var $config=array();
 	var $payment=array();
 	var $module_code='';
 	var $is_fraud=false;
 	var $fraud_reason='';
-
-	function ipayment() {
-	}
 
 	function get_buy_button() {
 		return '';
@@ -41,7 +38,7 @@ class ipayment {
 	}
 
 
-	function _init() {
+	protected function _init() {
 	}
 
 
