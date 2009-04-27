@@ -14,7 +14,7 @@ define('_FTPHOST_','{input.ftphost}');
 define('_FTPPATH_','{input.ftppath}');
 define('_FTPUSER_','{input.ftpuser}');
 define('_FTPPASS_','{input.ftppass}');
-$dbtable_prefix='{input.dbtable_prefix}';
+$dbtable_prefix=$GLOBALS['dbtable_prefix']='{input.dbtable_prefix}';
 define('USER_ACCOUNTS_TABLE',"{$dbtable_prefix}user_accounts");
 define('USER_ACCOUNT_ID','user_id');
 define('USER_ACCOUNT_USER','user');
@@ -22,7 +22,7 @@ define('USER_ACCOUNT_PASS','pass');
 define('PASSWORD_ENC_FUNC','md5');
 
 define('_LICENSE_KEY_','{input.license_key}'); // md5()={input.license_key_md5}
-define('_INTERNAL_VERSION_','1.17');
+define('_INTERNAL_VERSION_','1.18');
 
 $accepted_results_per_page=array(10=>10,5=>5,15=>15,20=>20);
 $accepted_images=array('jpg','jpeg','png');
