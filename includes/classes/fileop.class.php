@@ -16,7 +16,7 @@ class fileop {
 	var $op_mode='disk';	// 'disk' or 'ftp'
 	var $ftp_id=null;
 
-	function fileop() {
+	function __construct() {
 		$ftp_error=false;
 		if (defined('_FILEOP_MODE_') && _FILEOP_MODE_=='ftp' && defined('_FTPHOST_') && defined('_FTPUSER_') && defined('_FTPPASS_') && function_exists('ftp_connect')) {
 			$this->ftp_id=ftp_connect(_FTPHOST_);
@@ -239,7 +239,7 @@ class fileop {
 
 // internal function, do not call from outside. Call fileop->copy() instead
 // both params should have a full basepath
-	function _disk_copy($source,$destination,$exclude=array()) {
+	private function _disk_copy($source,$destination,$exclude=array()) {
 		$myreturn=false;
 		for ($i=0;isset($exclude[$i]);++$i) {
 			if (strpos($source,$exclude[$i])!==false) {
@@ -267,7 +267,7 @@ class fileop {
 
 // internal function, do not call from outside. Call fileop->copy() instead
 // source must have a disk path and destination must have a ftp path
-	function _ftp_copy($source,$destination,$exclude=array()) {
+	private function _ftp_copy($source,$destination,$exclude=array()) {
 		$myreturn=false;
 		for ($i=0;isset($exclude[$i]);++$i) {
 			if (strpos($source,$exclude[$i])!==false) {
@@ -296,7 +296,7 @@ class fileop {
 
 // internal function, do not call from outside. Call fileop->delete() instead
 // $source should have a full basepath
-	function _disk_delete($source) {
+	private function _disk_delete($source) {
 		$myreturn=false;
 		if (is_dir($source)) {
 			$d=dir($source);
@@ -316,7 +316,7 @@ class fileop {
 
 // internal function, do not call from outside. Call fileop->delete() instead
 // $source should have a full ftppath
-	function _ftp_delete($source) {
+	private function _ftp_delete($source) {
 		$myreturn=false;
 		if (substr($source,-1)=='/') {
 			@ftp_chdir($this->ftp_id,$source);

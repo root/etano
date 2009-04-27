@@ -19,7 +19,7 @@ class package_downloader {
 	var $error=false;
 	var $error_text='';
 
-	function package_downloader($remote_file) {
+	function __construct($remote_file) {
 		if (substr($remote_file,0,23)==substr($GLOBALS['tplvars']['remote_site'],0,23)) {
 			$this->remote_file=$remote_file;
 		}

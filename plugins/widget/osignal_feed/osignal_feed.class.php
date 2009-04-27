@@ -20,7 +20,7 @@ require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 class widget_osignal_feed extends icontent_widget {
 	var $module_code='osignal_feed';
 
-	function widget_osignal_feed() {
+	function __construct() {
 		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/plugins/widget/osignal_feed/osignal_feed.class.php';
 		$this->_init();
 		if (func_num_args()==1) {
@@ -67,7 +67,7 @@ class widget_osignal_feed extends icontent_widget {
 	/*
 	*	Used to wrap the content in the widget html code
 	*/
-	function _finish_display() {
+	protected function _finish_display() {
 		$myreturn='';
 		if ($this->tpl->get_var_silent('widget.content')!='') {
 			$widget['title']=$GLOBALS['_lang'][212];
@@ -105,7 +105,7 @@ class widget_osignal_feed extends icontent_widget {
 	}
 
 
-	function _init() {
+	protected function _init() {
 		$this->config['module_name']=$GLOBALS['_lang'][212];
 		$this->config['num_stories']=5;
 		$this->config['refresh_interval']=5;

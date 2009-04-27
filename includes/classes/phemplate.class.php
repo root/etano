@@ -115,7 +115,7 @@ class phemplate {
 	/**
 	*	constructor
 	*/
-	function phemplate( $root_dir = '', $unknowns = 'keep', $params = 0) {
+	function __construct( $root_dir = '', $unknowns = 'keep', $params = 0) {
 		$this->set_root($root_dir);
 		$this->set_unknowns($unknowns);
 		$this->set_params($params);

@@ -16,7 +16,7 @@ class field_textfield extends iprofile_field {
 	var $empty_value=array('edit'=>'','display'=>'','search'=>'');
 	var $display_name='Textfield';
 
-	function field_textfield($config=array(),$is_search=false) {
+	function __construct($config=array(),$is_search=false) {
 		$this->config=$config;
 		$this->is_search=$is_search;
 		if (isset($this->config['default_value'])) {

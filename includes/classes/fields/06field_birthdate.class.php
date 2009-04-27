@@ -17,7 +17,7 @@ class field_birthdate extends iprofile_field {
 	var $display_name='Birthdate/Age';
 	var $allowed_search_types=array('field_age_range');
 
-	function field_birthdate($config=array(),$is_search=false) {
+	function __construct($config=array(),$is_search=false) {
 		$this->config=$config;
 		$this->is_search=$is_search;
 		if (isset($this->config['default_value'])) {

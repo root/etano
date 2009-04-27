@@ -17,7 +17,7 @@ class field_location extends iprofile_field {
 	var $display_name='Location';
 	var $allowed_search_types=array('field_location','field_zip_distance');
 
-	function field_location($config=array(),$is_search=false) {
+	function __construct($config=array(),$is_search=false) {
 		$this->config=$config;
 		$this->is_search=$is_search;
 		$this->value=$this->empty_value['edit'];
