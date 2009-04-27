@@ -137,7 +137,11 @@ class field_range extends iprofile_field {
 
 	function get_value($as_array=false) {
 		if ($as_array) {
-			return array($this->config['dbfield']=>$this->value);
+			$myreturn=array();
+			foreach ($this->value as $k=>$v) {
+				$myreturn[$this->config['dbfield'].'_'.$k]=$v;
+			}
+			return $myreturn;
 		} else {
 			return $this->value;
 		}

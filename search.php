@@ -131,12 +131,11 @@ if (!$got_from_cache) {
 	check_login_member($input['acclevel_code']);
 
 	for ($i=0;isset($search_fields[$i]);++$i) {
-		$temp=$_pfields[$search_fields[$i]]->search();	//php4 compat mode
-		$temp->set_value($_GET,true);
-		$where.=$temp->query_search();
-		$input=array_merge($input,$temp->get_value(true));
+		$field=&$_pfields[$search_fields[$i]];
+		$field->search()->set_value($_GET,true);
+		$where.=$field->search()->query_search();
+		$input=array_merge($input,$field->search()->get_value(true));
 	}
-
 	if (!empty($where)) {	// if $where is empty then a condition above prevents us from searching. There must be a message to display.
 		$serialized_input=mysql_real_escape_string(serialize($input));
 		$query="SELECT $select FROM $from WHERE $where $orderby";
