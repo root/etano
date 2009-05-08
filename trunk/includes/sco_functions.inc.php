@@ -868,6 +868,7 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 	}
 	$dotsbefore=false;
 	$dotsafter=false;
+	$page_select_options='';
 	for ($i=1;$i<=$total_pages;++$i) {
 		if (((($i-1)*$results)<=$offset) && ($offset<$i*$results)) {
 			$myreturn.='<li class="current_page';
@@ -900,6 +901,7 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 			}
 			$myreturn.='">'.$i."</a></li>\n";
 		}
+		$page_select_options.='<option value="'.(($i-1)*$results).'">'.$i.'</option>';
 	}
 	if ($offset+$results<$totalrows) {
 		$myreturn.='<li class="goto_next"><a href="'.$phpself.'?o='.($offset+$results).'&amp;r='.$results;
@@ -913,6 +915,11 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 		}
 		$myreturn.='" title="'.(isset($lang_strings['goto_last']) ? $lang_strings['goto_last'] : 'Go to last page')."\">&gt;&gt;</a></li>\n";
 	}
+	$myreturn.="<li class=\"goto_page\">\n";
+	$myreturn.="<select>\n";
+	$myreturn.=$page_select_options;
+	$myreturn.="</select>\n";
+	$myreturn.="</li>\n";
 	$myreturn.="<li class=\"rpp\">\n";
 	$myreturn.="\t<input type=\"hidden\" name=\"o\" value=\"$offset\" />\n";
 	while (list($k,$v)=each($params)) {
@@ -924,7 +931,7 @@ function create_pager2($totalrows,$offset,$results,$lang_strings=array()) {
 			$myreturn.="\t<input type=\"hidden\" name=\"$k\" value=\"$v\" />\n";
 		}
 	}
-	$myreturn.="\t".(isset($lang_strings['rpp']) ? $lang_strings['rpp'] : '')."<select name=\"r\" onchange=\"document.getElementById('pagerform$myrand').submit()\">\n";
+	$myreturn.="\t".(isset($lang_strings['rpp']) ? $lang_strings['rpp'] : '')."<select name=\"r\" onchange=\"$('#pagerform$myrand').submit()\">\n";
 	$myreturn.=vector2options($accepted_results_per_page,$results);
 	$myreturn.="\t</select>\n";
 	$myreturn.="</li>\n";

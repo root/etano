@@ -134,6 +134,7 @@ function pager($totalrows,$offset,$results) {
 	$lang_strings['goto_last']=$GLOBALS['_lang'][182];
 	$lang_strings['goto_next']=$GLOBALS['_lang'][183];
 	$lang_strings['goto_prev']=$GLOBALS['_lang'][184];
+	$lang_strings['goto_page']='';
 	return create_pager2($totalrows,$offset,$results,$lang_strings);
 }
 
