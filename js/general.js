@@ -17,6 +17,12 @@ $(function() {
 	if (typeof(in_admin)=='undefined') {
 		window.setTimeout("keep_alive();",270000);
 	}
+
+	$('.goto_page select').bind('change',function() {
+		var myform=$(this).parents('form');
+		$('input[name="o"]',myform).val($(this).val());
+		myform.submit();
+	})
 });
 
 function keep_alive() {
@@ -252,3 +258,5 @@ function readCookie(name) {
 function eraseCookie(name) {
 	createCookie(name,"",-1);
 }
+
+
