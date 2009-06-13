@@ -30,7 +30,7 @@ class field_age_range extends field_range {
 
 	function edit($tabindex=1) {
 		$myreturn='<select name="'.$this->config['dbfield'].'_min" id="'.$this->config['dbfield'].'_min" tabindex="'.$tabindex.'"><option value="'.$this->empty_value['edit']['min'].'">'.$GLOBALS['_lang'][159].'</option>'.interval2options($this->config['accepted_values']['min'],$this->config['accepted_values']['max'],$this->value['min']).'</select>';
-		$myreturn.=' - ';
+		$myreturn.=' <span>-</span> ';
 		$myreturn.='<select name="'.$this->config['dbfield'].'_max" id="'.$this->config['dbfield'].'_max" tabindex="'.$tabindex.'"><option value="'.$this->empty_value['edit']['max'].'">'.$GLOBALS['_lang'][159].'</option>'.interval2options($this->config['accepted_values']['min'],$this->config['accepted_values']['max'],$this->value['max']).'</select>';
 		return $myreturn;
 	}
