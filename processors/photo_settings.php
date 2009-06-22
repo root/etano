@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 		$now=gmdate('YmdHis');
 		$config=get_site_option(array('manual_photo_approval'),'core_photo');
-		if (!empty($input['is_main']) && $input['is_main']!=$old_main) {
+		if (!empty($input['is_main']) && $input['is_main']!=$old_main && !isset($input['is_private'][$input['is_main']])) {
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_main`=0 WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 // if photo approvals are automatic then we can make this photo the main photo now. Otherwise it will have to be done upon approval!!!
@@ -90,6 +90,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				add_member_score($_SESSION[_LICENSE_KEY_]['user']['user_id'],'add_main_photo');
 			}
 		}
+		if (isset($input['is_private'][$old_main])) {
+			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_main`=0 WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$query="UPDATE `{$dbtable_prefix}user_profiles` SET `_photo`='',`last_changed`='".gmdate('YmdHis')."' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			// this sucks...the code below is taken from on_after_approve_photo(). In the future, when new functionality that depends on the main photo will be added, we'll have to change the code there and here too.
+			$query="UPDATE `{$dbtable_prefix}blog_posts` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$query="UPDATE `{$dbtable_prefix}comments_blog` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			$query="UPDATE `{$dbtable_prefix}comments_photo` SET `last_changed`='$now' WHERE `fk_user_id`='".$_SESSION[_LICENSE_KEY_]['user']['user_id']."'";
+			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+			add_member_score($_SESSION[_LICENSE_KEY_]['user']['user_id'],'del_main_photo');
+		}
+
 		foreach ($input['caption'] as $photo_id=>$caption) {
 			$query="UPDATE `{$dbtable_prefix}user_photos` SET `is_private`=".(isset($input['is_private'][$photo_id]) ? 1 : 0).",`allow_comments`=".(isset($input['allow_comments'][$photo_id]) ? 1 : 0).",`last_changed`='$now'";
 			if ($input['is_main']==$photo_id) {
