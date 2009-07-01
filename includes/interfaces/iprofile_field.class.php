@@ -38,7 +38,7 @@ abstract class iprofile_field {
 	 *	@param boolean $sanitize (optional) Sanitize the input or take it as it is. When setting the value from GPC it should be sanitized, otherwise it can be taken as is.
 	 *	@return boolean true
 	 */
-	public function set_value($all_values,$sanitize=true) {
+	public function set_value(&$all_values,$sanitize=true) {
 	}
 
 	/**

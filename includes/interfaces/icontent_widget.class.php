@@ -16,7 +16,7 @@ abstract class icontent_widget {
 	var $module_code='';
 	var $tpl=false;
 
-	public function display() {
+	public function display(&$tpl) {
 	}
 
 
