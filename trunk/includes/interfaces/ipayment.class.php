@@ -18,14 +18,14 @@ abstract class ipayment {
 	var $is_fraud=false;
 	var $fraud_reason='';
 
-	function get_buy_button() {
+	function get_buy_button($payment=array()) {
 		return '';
 	}
 
-	function redirect2gateway() {
+	function redirect2gateway($payment=array()) {
 	}
 
-	function thankyou() {
+	function thankyou(&$tpl) {
 		return '';
 	}
 

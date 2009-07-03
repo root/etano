@@ -55,9 +55,8 @@ class payment_paypal extends ipayment {
 												'custom'=>FIELD_TEXTFIELD
 											));
 
-	function payment_paypal() {
+	function __construct() {
 		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/payment.inc.php';
-		$this->ipayment();
 		$this->_init();
 	}
 

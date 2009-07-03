@@ -40,7 +40,7 @@ class widget_osignal_feed extends icontent_widget {
 	}
 
 
-	function _content() {
+	protected function _content() {
 		global $dbtable_prefix;
 		$query="SELECT `feed_xml` FROM `{$dbtable_prefix}feed_cache` WHERE `module_code`='".$this->module_code."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}

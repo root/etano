@@ -20,7 +20,7 @@ require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 class widget_dummy extends icontent_widget {
 	var $module_code='widget_dummy';
 
-	function widget_dummy() {
+	function __construct() {
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -42,7 +42,7 @@ class widget_dummy extends icontent_widget {
 	}
 
 
-	function _content() {
+	protected function _content() {
 //		$this->tpl->set_file('widget_content','widgets/dummy/display.html');
 		$this->tpl->set_var('widget_content','');
 	}
@@ -75,7 +75,7 @@ class widget_dummy extends icontent_widget {
 	}
 
 
-	function _init() {
+	protected function _init() {
 		$this->config['module_name']='';
 	}
 }

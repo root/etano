@@ -20,7 +20,7 @@ require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 class widget_site_news extends icontent_widget {
 	var $module_code='site_news';
 
-	function widget_site_news() {
+	function __construct() {
 		require _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/plugins/widget/site_news/site_news.class.php';
 		$this->_init();
 		if (func_num_args()==1) {
@@ -43,7 +43,7 @@ class widget_site_news extends icontent_widget {
 	}
 
 
-	function _content() {
+	protected function _content() {
 		if (is_file($GLOBALS['tplvars']['tplrelpath'].'/cache/widgets/site_news/display.html')) {
 			$this->tpl->set_file('widget.content','cache/widgets/site_news/display.html');
 		}
@@ -85,7 +85,7 @@ class widget_site_news extends icontent_widget {
 	}
 
 
-	function _init() {
+	protected function _init() {
 		$this->config['module_name']=$GLOBALS['_lang'][215];
 		$this->config['total']=3;
 	}

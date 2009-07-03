@@ -23,7 +23,7 @@ class widget_members extends icontent_widget {
 	var $module_code='members';
 	var $widget=array();
 
-	function widget_members() {
+	function __construct() {
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -39,7 +39,7 @@ class widget_members extends icontent_widget {
 	}
 
 
-	function _content() {
+	protected function _content() {
 		global $dbtable_prefix;
 		global $page_last_modified_time;
 		switch ($this->config['mode']) {
@@ -130,7 +130,7 @@ class widget_members extends icontent_widget {
 	}
 
 
-	function _init() {
+	protected function _init() {
 		$this->config['total']=6;
 	}
 }

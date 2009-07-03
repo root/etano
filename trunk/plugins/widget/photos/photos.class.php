@@ -23,7 +23,7 @@ class widget_photos extends icontent_widget {
 	var $module_code='photos';
 	var $widget=array();
 
-	function widget_photos() {
+	function __construct() {
 		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/photos.inc.php';
 		$this->_init();
 		if (func_num_args()==1) {
@@ -40,7 +40,7 @@ class widget_photos extends icontent_widget {
 	}
 
 
-	function _content() {
+	protected function _content() {
 		global $dbtable_prefix;
 		$query="SELECT `photo_id`,`photo`,`_user` as `user` FROM `{$dbtable_prefix}user_photos` WHERE `is_private`=0 AND `status`=".STAT_APPROVED." AND `del`=0";
 		switch ($this->config['mode']) {
@@ -140,7 +140,7 @@ class widget_photos extends icontent_widget {
 	}
 
 
-	function _init() {
+	protected function _init() {
 		$this->config['total']=6;
 		$this->config['mode']='new';
 	}

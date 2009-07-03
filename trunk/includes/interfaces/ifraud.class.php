@@ -16,7 +16,7 @@ abstract class ifraud {
 	var $module_code='';
 	var $fraud_reason='';
 
-	function is_fraud() {
+	function is_fraud(&$pay_result) {
 		return false;
 	}
 

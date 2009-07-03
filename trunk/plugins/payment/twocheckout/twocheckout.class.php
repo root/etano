@@ -58,9 +58,8 @@ class payment_twocheckout extends ipayment {
 											'internal_id'=>FIELD_INT,
 											'user_id'=>FIELD_INT));
 
-	function payment_twocheckout() {
+	function __construct() {
 		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/payment.inc.php';
-		$this->ipayment();
 		$this->_init();
 	}
 

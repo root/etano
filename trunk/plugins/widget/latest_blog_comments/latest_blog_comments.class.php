@@ -20,7 +20,7 @@ require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 class widget_latest_blog_comments extends icontent_widget {
 	var $module_code='latest_blog_comments';
 
-	function widget_latest_blog_comments() {
+	function __construct() {
 		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 		$this->_init();
 		if (func_num_args()==1) {
@@ -43,7 +43,7 @@ class widget_latest_blog_comments extends icontent_widget {
 	}
 
 
-	function _content() {
+	protected function _content() {
 		if (is_file(_CACHEPATH_.'/widgets/latest_blog_comments/comments.inc.php')) {
 			require_once _CACHEPATH_.'/widgets/latest_blog_comments/comments.inc.php';
 			$this->tpl->set_file('widget.content','widgets/latest_blog_comments/display.html');
@@ -87,7 +87,7 @@ class widget_latest_blog_comments extends icontent_widget {
 	}
 
 
-	function _init() {
+	protected function _init() {
 		$this->config['module_name']=$GLOBALS['_lang'][207];
 	}
 }

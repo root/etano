@@ -20,7 +20,7 @@ require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 class widget_site_news_feed extends icontent_widget {
 	var $module_code='site_news_feed';
 
-	function widget_site_news_feed() {
+	function __construct() {
 		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/plugins/widget/site_news/site_news.class.php';
 		$this->_init();
 		if (func_num_args()==1) {
@@ -43,7 +43,7 @@ class widget_site_news_feed extends icontent_widget {
 	}
 
 
-	function _content() {
+	protected function _content() {
 		if (is_file(_BASEPATH_.'/rss/site_news.xml')) {
 			require_once _BASEPATH_.'/includes/classes/feed_reader.class.php';
 			$fr=new feedReader();
@@ -100,7 +100,7 @@ class widget_site_news_feed extends icontent_widget {
 	}
 
 
-	function _init() {
+	protected function _init() {
 		$this->config['module_name']=$GLOBALS['_lang'][215];
 		$this->config['total']=3;
 	}
