@@ -23,7 +23,7 @@ class widget_blogs extends icontent_widget {
 	var $module_code='blogs';
 	var $widget=array();
 
-	function widget_blogs() {
+	function __construct() {
 		require_once _BASEPATH_.'/skins_site/'.get_my_skin().'/lang/blogs.inc.php';
 		$this->_init();
 		if (func_num_args()==1) {
@@ -40,7 +40,7 @@ class widget_blogs extends icontent_widget {
 	}
 
 
-	function _content() {
+	protected function _content() {
 		global $dbtable_prefix;
 		global $page_last_modified_time;
 		$query="SELECT a.`post_id`,UNIX_TIMESTAMP(a.`last_changed`) as `last_changed` FROM `{$dbtable_prefix}blog_posts` a WHERE a.`is_public`=1 AND a.`status`=".STAT_APPROVED;
@@ -133,7 +133,7 @@ class widget_blogs extends icontent_widget {
 	}
 
 
-	function _init() {
+	protected function _init() {
 		$this->config['total']=3;
 		$this->config['mode']='new';
 	}

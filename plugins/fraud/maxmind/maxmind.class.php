@@ -21,8 +21,7 @@ class fraud_maxmind extends ifraud {
 	var $module_code='maxmind';
 
 
-	function fraud_maxmind() {
-		$this->ifraud();
+	function __construct() {
 		$this->_init();
 	}
 

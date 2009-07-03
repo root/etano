@@ -20,7 +20,7 @@ require_once _BASEPATH_.'/includes/interfaces/icontent_widget.class.php';
 class widget_datemill_feed extends icontent_widget {
 	var $module_code='datemill_feed';
 
-	function widget_datemill_feed() {
+	function __construct() {
 		$this->_init();
 		if (func_num_args()==1) {
 			$more_args=func_get_arg(0);
@@ -37,7 +37,7 @@ class widget_datemill_feed extends icontent_widget {
 	}
 
 
-	function _content() {
+	protected function _content() {
 		global $dbtable_prefix;
 		$query="SELECT `feed_xml` FROM `{$dbtable_prefix}feed_cache` WHERE `module_code`='".$this->module_code."'";
 		if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
@@ -98,7 +98,7 @@ class widget_datemill_feed extends icontent_widget {
 	}
 
 
-	function _init() {
+	protected function _init() {
 		$this->config['module_name']='Latest Datemill News';
 		$this->config['num_stories']=5;
 		$this->config['refresh_interval']=5;
