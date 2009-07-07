@@ -11,6 +11,9 @@ Support at:                 http://www.datemill.com/forum
 * See the "docs/licenses/etano.txt" file for license.                         *
 ******************************************************************************/
 
+/**
+ *
+ */
 function get_network_members($user_id,$net_id,$limit=0) {
 	$myreturn=array();
 	global $dbtable_prefix;
