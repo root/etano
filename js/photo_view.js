@@ -24,6 +24,6 @@ $(function() {
 	});
 
 	$('.comment_delete').bind('click',function() {
-		return confirm(lang[1]);
+		return confirm(lang['256']);
 	});
 });
