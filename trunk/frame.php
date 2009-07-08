@@ -23,7 +23,6 @@ if (!empty($message)) {
 	}
 	$tpl->set_var('message',$message);
 }
-$tpl->set_var('tplvars',$tplvars);
 if (empty($no_timeout)) {
 	$_SESSION[_LICENSE_KEY_]['user']['timedout']=array('url'=>(((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']),'method'=>$_SERVER['REQUEST_METHOD'],'qs'=>($_SERVER['REQUEST_METHOD']=='GET' ? $_GET : $_POST));
 }
@@ -37,6 +36,7 @@ if (isset($_on_before_display)) {
 	}
 }
 
+$tpl->set_var('tplvars',$tplvars);
 if (!empty($page_last_modified_time)) {
 	header('Cache-Control: private, max-age=0',true);
 	header('Last-Modified: '.date('D,d M Y H:i:s',$page_last_modified_time).' GMT',true);
