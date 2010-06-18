@@ -66,13 +66,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				$rsrow['Key_name']='KEY `'.$rsrow['Key_name'].'`';
 			}
 			if (!empty($rsrow['Sub_part'])) {
-				$keys[$rsrow['Key_name']][$rsrow['Seq_in_index']]=$rsrow['Column_name'].'('.$rsrow['Sub_part'].')';
+				$keys[$rsrow['Key_name']][$rsrow['Seq_in_index']]='`'.$rsrow['Column_name'].'`('.$rsrow['Sub_part'].')';
 			} else {
-				$keys[$rsrow['Key_name']][$rsrow['Seq_in_index']]=$rsrow['Column_name'];				
+				$keys[$rsrow['Key_name']][$rsrow['Seq_in_index']]='`'.$rsrow['Column_name'].'`';
 			}
 		}
 		foreach ($keys as $keyname=>$fields) {
-			$towrite.="\n\t{$keyname} (`".join('`,`',$fields)."`),";
+			$towrite.="\n\t{$keyname} (".join(',',$fields)."),";
 		}
 		$towrite=substr($towrite,0,-1);
 		$towrite.="\n)";

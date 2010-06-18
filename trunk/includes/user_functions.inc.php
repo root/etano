@@ -189,7 +189,7 @@ function get_my_skin() {
  *		used by the template system.
  *
  */
-function create_comments_loop($type,$parent_id,&$output) {
+function create_comments_loop($type,$parent_id,&$output, $params = array()) {
 	global $dbtable_prefix,$__field2format,$_list_of_online_members,$page_last_modified_time;
 	$myreturn=array();
 	switch ($type) {
@@ -217,6 +217,12 @@ function create_comments_loop($type,$parent_id,&$output) {
 	$config=get_site_option(array('use_captcha','bbcode_comments','smilies_comm'),'core');
 	$edit_comment=sanitize_and_format_gpc($_GET,'edit_comment',TYPE_INT,0,0);
 	$query="SELECT a.`comment_id`,a.`comment`,a.`fk_user_id`,a.`_user` as `user`,UNIX_TIMESTAMP(a.`date_posted`) as `date_posted`,b.`_photo` as `photo` FROM `$table` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`=$parent_id AND a.`status`=".STAT_APPROVED." ORDER BY a.`comment_id` ASC";
+	if (isset($params['offset']) && isset($params['limit'])) {
+		$query .= " LIMIT ".$params['offset'].','.$params['limit'];
+		$count_query="SELECT count(*) FROM `$table` a LEFT JOIN `{$dbtable_prefix}user_profiles` b ON a.`fk_user_id`=b.`fk_user_id` WHERE a.`fk_parent_id`=$parent_id AND a.`status`=".STAT_APPROVED;
+		if (!($res=@mysql_query($count_query))) {trigger_error(mysql_error(),E_USER_ERROR);}
+		$totalrows = mysql_result($res,0,0);
+	}
 	if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
 	while ($rsrow=mysql_fetch_assoc($res)) {
 		if ($rsrow['date_posted']>$page_last_modified_time) {
@@ -256,8 +262,13 @@ function create_comments_loop($type,$parent_id,&$output) {
 		$myreturn[]=$rsrow;
 	}
 	if (!empty($myreturn)) {
-		$output['num_comments']=count($myreturn);
 		$output['show_comments']=true;
+		if (isset($totalrows)) {
+			$output['pager'] = pager($totalrows,$params['offset'],$params['limit']);
+			$output['num_comments']=$totalrows;
+		} else {
+			$output['num_comments']=count($myreturn);
+		}
 	}
 
 	if ($allow_comments) {

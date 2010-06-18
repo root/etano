@@ -274,6 +274,8 @@ class fileop {
 				return true;
 			}
 		}
+		$source = str_replace('//', '/', $source);
+		$destination = str_replace('//', '/', $destination);
 		if (is_dir($source)) {
 			// dir to dir copy
 			if (!@ftp_chdir($this->ftp_id,$destination)) {
@@ -318,6 +320,7 @@ class fileop {
 // $source should have a full ftppath
 	private function _ftp_delete($source) {
 		$myreturn=false;
+		$source = str_replace('//', '/', $source);
 		if (substr($source,-1)=='/') {
 			@ftp_chdir($this->ftp_id,$source);
 			$files=ftp_nlist($this->ftp_id,'-aF .');	// array or false on error. -F will append / to dirs
@@ -331,7 +334,7 @@ class fileop {
 			}
 			if ($files!==false) {
 				for ($i=0;isset($files[$i]);++$i) {
-					if ($files[$i]!='./' && $files[$i]!='../') {
+					if ($files[$i]!='./' && $files[$i]!='../' && $files[$i]!='.' && $files[$i]!='..') {
 						$myreturn=$this->_ftp_delete($source.'/'.$files[$i]);
 					}
 				}
