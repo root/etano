@@ -100,7 +100,7 @@ abstract class iprofile_field {
 	 *
 	 *	@return string sql part
 	 */
-	protected function query_select() {
+	function query_select() {
 		return '1';
 	}
 
@@ -109,18 +109,18 @@ abstract class iprofile_field {
 	 *
 	 *	@return string sql part
 	 */
-	protected function query_set() {
+	function query_set() {
 		return '';
 	}
 
-	protected function query_search() {
+	function query_search() {
 		return '';
 	}
 
-	protected function query_create($dbfield) {
+	function query_create($dbfield) {
 	}
 
-	protected function query_drop($dbfield) {
+	function query_drop($dbfield) {
 	}
 
 	/**
