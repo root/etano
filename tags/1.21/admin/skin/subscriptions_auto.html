@@ -1,0 +1,34 @@
+<h2>Auto Subscriptions</h2>
+
+<ul class="content_submenu clear">
+	<li><a href="subscriptions.php">Subscriptions</a></li>
+	<li class="active">Auto Subscriptions</li>
+</ul>
+<div class="hint"><strong>Manage auto subscriptions:</strong></div>
+
+<table id="asubscr" class="results_table">
+<tr>
+	<th width="50"></th>
+	<th>Assign Subscription</th>
+	<th>To Members</th>
+	<th>When?</th>
+</tr>
+<!--loop name="subscriptions_auto"-->
+<tr align="center" class="{subscriptions_auto.myclass}">
+	<td align="center">
+		<a class="item_del" href="processors/subscriptions_auto_delete.php?asubscr_id={subscriptions_auto.asubscr_id}" onclick="return(confirm('Are you sure you want to delete this auto subscription?'))" title="Delete this subscription">Delete</a>
+		<a class="item_edit" href="subscriptions_auto_addedit.php?asubscr_id={subscriptions_auto.asubscr_id}" title="Edit this auto subscription">Edit</a>
+	</td>
+	<td>{subscriptions_auto.subscr_name}</td>
+	<td>{subscriptions_auto.dbfield}</td>
+	<td>On {subscriptions_auto.date_start}</td>
+</tr>
+<!--noloop name="subscriptions_auto"-->
+<tr>
+	<td colspan="4" class="no_result_item">No auto subscriptions found!</td>
+</tr>
+<!--/noloop name="subscriptions_auto"-->
+<!--/loop name="subscriptions_auto"-->
+</table>
+
+<div id="bottom_links"><a class="add" href="subscriptions_auto_addedit.php" title="Add new auto subscription">Add new</a></div>
