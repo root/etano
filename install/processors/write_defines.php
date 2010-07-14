@@ -143,14 +143,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text'][]='Server configuration does not allow ftp connections.';
 		}
 	}
-	if (empty($input['license_key']) || strlen($input['license_key'])!=22) {
-		$error=true;
-		$topass['message']['type']=MESSAGE_ERROR;
-		$topass['message']['text'][]='The license key is invalid';
-	}
 
 	if (!$error) {
 		$input['fileop_mode']=$_SESSION['install']['write'];
+		$input['license_key'] = strtoupper(gen_pass(22));
 		$input['license_key_md5']=md5($input['license_key']);
 		$tpl=new phemplate('../skin/','remove_nonjs');
 		$tpl->set_file('content','defines.inc.php');
