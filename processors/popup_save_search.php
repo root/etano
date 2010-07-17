@@ -44,6 +44,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		if (mysql_num_rows($res)) {
 			$ser_search=mysql_result($res,0,0);
 			$search=unserialize($ser_search);
+			foreach ($search as $k=>$v) {
+				if (is_array($v)) {
+					foreach ($v as $key=>$val) {
+						$search[$k.'_'.$key] = $val;
+					}
+				} else {
+					$search[$k] = $v;
+				}
+			}
 			unset($search['acclevel_code']);
 			$query="INSERT INTO `{$dbtable_prefix}user_searches` (`fk_user_id`,`title`,`search_qs`,`search`,`alert`) VALUES ('".$_SESSION[_LICENSE_KEY_]['user']['user_id']."','".$input['title']."','".array2qs($search,array(),'&amp;')."','$ser_search',1)";
 			if (!($res=@mysql_query($query))) {trigger_error(mysql_error(),E_USER_ERROR);}
