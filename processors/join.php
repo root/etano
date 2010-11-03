@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$topass['message']['text'][]=$GLOBALS['_lang'][37];
 			$input['error_email']='red_border';
 		}
-		if (!$error && !preg_match('/^[a-z0-9\-\._]+@[a-z0-9\-]+(\.[a-z0-9\-]+)+$/',$input['email'])) {
+		if (!$error && !preg_match('/^[a-z0-9\-\._\+]+@[a-z0-9\-]+(\.[a-z0-9\-]+)+$/',$input['email'])) {
 			$error=true;
 			$topass['message']['type']=MESSAGE_ERROR;
 			$topass['message']['text'][]=$GLOBALS['_lang'][66];
