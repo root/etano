@@ -117,6 +117,7 @@
 
 #login-box #login {
 	padding: 0;
+	vertical-align: top;
 }
 #login-box fieldset > #login {
 	margin-bottom: 2px;
