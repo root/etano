@@ -109,6 +109,7 @@ if (!$error) {
 							break;
 						}
 					}
+
 					if ($req_ok) {
 						// see if we're not blocked by some module
 						for ($k=0;isset($p->install[$install_index]['blockedby'][$k]);++$k) {
@@ -119,6 +120,7 @@ if (!$error) {
 							}
 						}
 					}
+
 					if ($req_ok) {	// if all requirements of this install are satisfied....
 						if (($changes=$p->dry_run($install_index))!==false) {	// ...test to see if we can install the package
 							// $changes holds most of the files that will be changed
@@ -166,7 +168,7 @@ if (!$error) {
 					} else {
 						// some of the requirements of this install are not satisfied, moving on to next install instruction
 						// this shouldn't be executed but just to be sure:
-						break;
+						continue;
 					}
 				}
 				if (!$ui_request && !$p->error && !$p->is_helper) {
