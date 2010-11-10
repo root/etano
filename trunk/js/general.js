@@ -194,7 +194,7 @@ function checkByteLength(str,minlen,maxlen) {
 
 
 function validate_email(str) {
-	var patn=/^[_a-zA-Z0-9\-\.]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)+$/;
+	var patn=/^[_a-zA-Z0-9\-\.\+]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)+$/;
 	if (patn.test(str)) {
 		return true;
 	}
@@ -258,5 +258,3 @@ function readCookie(name) {
 function eraseCookie(name) {
 	createCookie(name,"",-1);
 }
-
-
