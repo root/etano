@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 	if (!$error) {
 		// if the receiver didn't block me...
-		if (!is_network_member($_SESSION[_LICENSE_KEY_]['user']['user_id'],$input['fk_user_id'],NET_BLOCK)) {
+		if (!is_network_member($input['fk_user_id'],$_SESSION[_LICENSE_KEY_]['user']['user_id'],NET_BLOCK)) {
 			// sender of the message: me
 			$input['fk_user_id_other']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];
 			$input['_user_other']=$_SESSION[_LICENSE_KEY_]['user']['user'];
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 				}
 			}
 			queue_or_send_message($input,true);
-	
+
 			// save the message in my outbox
 			$input['fk_user_id_other']=$input['fk_user_id'];
 			$input['fk_user_id']=$_SESSION[_LICENSE_KEY_]['user']['user_id'];

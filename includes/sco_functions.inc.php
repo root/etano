@@ -296,7 +296,7 @@ function db_connect($dbhost,$dbuser,$dbpass,$dbname='') {
 	}
 	if (!empty($dbname) && $myreturn) {
 		if (mysql_select_db($dbname,$myreturn)) {
-			mysql_query("SET CHARACTER SET utf8");
+//			mysql_query("SET CHARACTER SET utf8");
 		} else {
 			$myreturn=false;
 		}
