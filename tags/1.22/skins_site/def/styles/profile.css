@@ -1,0 +1,112 @@
+@import url('bbcode.css');
+@import url('thickbox.css');
+
+#main_photo {
+	float: left;
+	display: block;
+}
+
+#user_photos li {
+	float: left;
+	height: 60px;
+	width: 60px;
+	margin: 0 10px;
+}
+
+#user_photos li.first {
+	  margin-left: 20px;
+}
+
+#user_photos li.last {
+	width: 120px;
+	padding-top: 30px;
+}
+
+#online_stat {
+	font-weight: bold;
+	font-size: 13px;
+	background: url('../images/member_online_medium.gif') no-repeat left top;
+	height: 22px;
+	padding-left: 20px;
+}
+
+.profile_cat {
+	padding-bottom: 10px;
+}
+
+.profile_cat h3 {
+	padding-left: 0;
+	padding-bottom: 5px;
+	color: #3969A5;
+	border-bottom: 1px dashed #ccc;
+}
+
+.profile_cat li p {
+	display: inline;
+}
+.profile_cat li label {
+	font-weight: bold;
+}
+
+#profile_area {
+	width: 500px;
+}
+
+#user_friends {
+	position: absolute;
+	right: 10px;
+	top:47px;
+}
+
+* html #user_friends {
+	top: 50px;
+}
+
+.comment {
+	padding-top: 10px;
+	margin-top: 20px;
+	border-top: 1px dashed #ccc;
+}
+
+.comment .user_photo {
+	float: left;
+	margin: 0 10px 10px 0;
+}
+
+.comment p {
+	font-size: 13px;
+}
+
+textarea#comment {
+	width: 50%;
+	height: 140px;
+}
+
+#blogcomment_form .controls {
+	padding-top: 15px;
+}
+
+.comment .controls {
+	float: right;
+}
+
+
+/* LEFT MENU */
+
+#user_friends li {
+	width: 100%;
+}
+
+#user_friends .user_photo {
+	float: left;
+	padding: 0 5px 5px 0;
+}
+
+#user_friends .thumb1 {
+	width: 60px;
+	height: 60px;
+}
+
+#user_friends .info {
+	display: none;
+}

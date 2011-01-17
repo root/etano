@@ -1,0 +1,35 @@
+<h2>Subscriptions</h2>
+
+<ul class="content_submenu clear">
+	<li class="active">Subscriptions</li>
+	<li><a href="subscriptions_auto.php">Auto Subscriptions</a></li>
+</ul>
+<div class="hint"><strong>Add, edit, remove subscriptions:</strong></div>
+
+<table id="subscriptions_list" class="results_table">
+<tr>
+	<th width="3%"></th>
+	<th width="15%">Name</th>
+	<th>Price</th>
+	<th>Duration</th>
+	<th>Upgrades To</th>
+	<th>Visible</th>
+</tr>
+<!--loop name="subscriptions"-->
+<tr align="center" class="{subscriptions.myclass}">
+	<td align="center"><a href="processors/subscriptions_delete.php?subscr_id={subscriptions.subscr_id}" onclick="return(confirm('Are you sure you want to delete this subscription?'))" title="Delete this subscription"><img alt="Delete this subscription" src="skin/images/del.png" /></a></td>
+	<td><a href="subscriptions_addedit.php?subscr_id={subscriptions.subscr_id}" title="Edit this subscription">{subscriptions.subscr_name}</a></td>
+	<td align="right">{subscriptions.is_recurent} {subscriptions.price} {subscriptions.currency}</td>
+	<td>{subscriptions.duration}</td>
+	<td>{subscriptions.m_value_to}</td>
+	<td>{subscriptions.is_visible}</td>
+</tr>
+<!--noloop name="subscriptions"-->
+<tr>
+	<td colspan="6" class="no_result_item">No subscriptions found!</td>
+</tr>
+<!--/noloop name="subscriptions"-->
+<!--/loop name="subscriptions"-->
+</table>
+
+<div id="bottom_links"><a class="add" href="subscriptions_addedit.php" title="Add new subscription">Add new</a></div>

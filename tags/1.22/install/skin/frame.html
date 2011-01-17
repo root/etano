@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Etano - Install</title>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	<meta name="distribution" content="global" />
+	<meta name="robots" content="index,follow" />
+	<link href="skin/styles/common.css" rel="stylesheet" type="text/css" />
+	<!--opt name="tplvars.css"--><link href="skin/styles/{tplvars.css}" rel="stylesheet" type="text/css" /><!--/opt name="tplvars.css"-->
+	<script type="text/javascript">
+		baseurl='{tplvars.baseurl}';
+	</script>
+	<script type="text/javascript" src="../js/jquery.js?v={tplvars.js_lib_v}"></script>
+	<script type="text/javascript" src="../js/general.js?v={tplvars.js_lib_v}"></script>
+</head>
+<body>
+<div id="expandable-container">
+	<div id="header-container">
+		<div id="header-body">
+			<div id="logo-box">
+				<a href="#">E t a n o</a>
+			</div>
+		</div>	<!-- end of header -->
+	</div>
+
+	<div id="content-container">
+		<div id="content_column1" class="{tplvars.page} content_area large">
+			<h2>{tplvars.page_title}</h2>
+<!--opt name="message.text"-->
+			<div id="message_wrapper" class="content_area medium {message.type}">
+				<h2></h2>
+				<div class="box_content">
+					<div class="message_text">{message.text}</div>
+				</div>
+			</div>
+<!--/opt name="message.text"-->
+			<div class="box_content">
+				{content}
+				&nbsp;
+			</div>
+		</div>	<!-- end of middle column -->
+
+	</div>	<!-- end of content -->
+	<div id="footer-cleaner">&nbsp;</div>
+</div>
+
+<div id="footer-container">
+	<div id="footer-body">
+		<p id="copyright">&copy; Copyright 2007 <a href="http://www.datemill.com">datemill.com</a>. All Rights Reserved.</p>
+	</div>
+</div>
+</body>
+</html>

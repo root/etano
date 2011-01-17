@@ -1,0 +1,88 @@
+<p>All fields below are mandatory and must not be left empty.</p>
+
+<h3>Step 2 - site configuration</h3>
+
+<form action="processors/write_defines.php" method="post" id="install_form" class="edit_form">
+<fieldset>
+	<legend>Site Location & Name</legend>
+	<dl>
+		<dt><label for="site_name">Site Name:</label></dt>
+		<dd><input type="text" name="site_name" id="site_name" value="{output.site_name}" /></dd>
+		<dd class="field-help">The name you put here will appear in the site header, in the title tag and in all pages where there are references to this site.</dd>
+	</dl>
+	<dl>
+		<dt><label for="baseurl">Base URL of the Site:</label></dt>
+		<dd><input type="text" name="baseurl" id="baseurl" value="{output.baseurl}" /></dd>
+		<dd class="field-help">This is the URL where your site will be installed. Usually autodetected. Please note that http://myserver.com is not the same with http://<strong>www</strong>.myserver.com</dd>
+	</dl>
+	<dl>
+		<dt><label for="basepath">Base Path of the Site:</label></dt>
+		<dd><input type="text" name="basepath" id="basepath" value="{output.basepath}" /></dd>
+		<dd class="field-help">The disk path on the server to where your site is installed. Usually autodetected.</dd>
+	</dl>
+</fieldset>
+
+<fieldset>
+	<legend>Database Settings</legend>
+	<dl>
+		<dt><label for="dbhost">Database Server Host/IP:</label></dt>
+		<dd><input type="text" name="dbhost" id="dbhost" value="{output.dbhost}" /></dd>
+		<dd class="field-help">This is the host where your mysql database is installed. Usually 'localhost' but could be any IP or server name. You must have received details about the database in the welcome email from your host.</dd>
+	</dl>
+	<dl>
+		<dt><label for="dbuser">Database User:</label></dt>
+		<dd><input type="text" name="dbuser" id="dbuser" value="{output.dbuser}" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="dbpass">Database Password:</label></dt>
+		<dd><input type="password" name="dbpass" id="dbpass" value="{output.dbpass}" /></dd>
+		<dd class="field-help"><a id="test_db" href="javascript:;">Test DB connection</a>. Once you fill in the database server, user, password and database name you can check if the application can connect using the supplied info.</dd>
+	</dl>
+	<dl>
+		<dt><label for="dbname">Database Name:</label></dt>
+		<dd><input type="text" name="dbname" id="dbname" value="{output.dbname}" /></dd>
+		<dd class="field-help">This database must already exist. You must create a database in your server control panel prior to installing Etano.</dd>
+	</dl>
+	<dl>
+		<dt><label for="dbtable_prefix">Database Tables Prefix:</label></dt>
+		<dd><input type="text" name="dbtable_prefix" id="dbtable_prefix" value="{output.dbtable_prefix}" disabled="disabled" /></dd>
+		<dd class="field-help">All Etano-related tables in the database will be prefixed with this string.</dd>
+	</dl>
+</fieldset>
+
+<!--opt name="output.has_ftp"-->
+<fieldset>
+	<legend>Connection Settings</legend>
+	<dl>
+		<dt><label for="ftphost">FTP Server Host/IP:</label></dt>
+		<dd><input type="text" name="ftphost" id="ftphost" value="{output.ftphost}" /></dd>
+		<dd class="field-help">In order for the application to write files to disk, it needs to connect by ftp. You must have received details about the ftp connection in the welcome email from your host. Please leave the ftp host as 'localhost' and only if it fails the check below enter the server IP address.</dd>
+	</dl>
+	<dl>
+		<dt><label for="ftpuser">FTP User:</label></dt>
+		<dd><input type="text" name="ftpuser" id="ftpuser" value="{output.ftpuser}" /></dd>
+		<dd class="field-help"><a id="test_ftp" href="javascript:;">Test FTP connection</a>. Once you fill in the ftp server, user, password and path you can check if the application can connect using the supplied info.</dd>
+	</dl>
+	<dl>
+		<dt><label for="ftppass">FTP Password:</label></dt>
+		<dd><input type="password" name="ftppass" id="ftppass" value="{output.ftppass}" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="ftppath">FTP Path to Site:</label></dt>
+		<dd><input type="text" name="ftppath" id="ftppath" value="{output.ftppath}" /></dd>
+		<dd class="field-help">This is the equivalent of the Base Path above but when you connect by ftp. Usually this is the ending part of the Base Path. Autodetected on Unix systems. Must end in a forward slash (<strong>/</strong>). At the very least this field should contain a forward slash.</dd>
+	</dl>
+</fieldset>
+<!--/opt name="output.has_ftp"-->
+
+<fieldset class="controls">
+	<input type="submit" class="button medium" value="Next &gt;" />
+</fieldset>
+</form>
+
+<script type="text/javascript">
+	<!--opt name="output.has_ftp"-->
+	has_ftp=1;
+	<!--/opt name="output.has_ftp"-->
+</script>
+<script type="text/javascript" src="js/step2.js"></script>
